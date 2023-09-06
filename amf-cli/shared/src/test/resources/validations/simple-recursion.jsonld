@@ -219,7 +219,7 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#/declares/shape/B"
+        "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B"
       },
       "sourcemaps:sources": [
         {
@@ -252,7 +252,7 @@
       "sourcemaps:value": "[(16,4)-(21,0)]"
     },
     {
-      "@id": "#/declares/shape/B",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -263,13 +263,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp"
         }
       ],
       "shacl:name": "B",
       "sourcemaps:sources": [
         {
-          "@id": "#/declares/shape/B/source-map"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map"
         }
       ]
     },
@@ -295,7 +295,7 @@
       "sourcemaps:value": "[(18,8)-(21,0)]"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -308,37 +308,37 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/declares/shape/A/recursive"
+        "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive"
       },
       "shacl:minCount": 0,
       "shacl:name": "a",
       "sourcemaps:sources": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map"
         }
       ]
     },
     {
-      "@id": "#/declares/shape/B/source-map",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/declares/shape/B/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/declares/shape/B/source-map/lexical/element_1"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/lexical/element_1"
         },
         {
-          "@id": "#/declares/shape/B/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:declared-element": [
         {
-          "@id": "#/declares/shape/B/source-map/declared-element/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/declared-element/element_0"
         }
       ]
     },
@@ -348,7 +348,7 @@
       "sourcemaps:value": "[(19,10)-(21,0)]"
     },
     {
-      "@id": "#/declares/shape/A/recursive",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive",
       "@type": [
         "raml-shapes:RecursiveShape",
         "shacl:Shape",
@@ -357,113 +357,113 @@
       ],
       "raml-shapes:fixPoint": [
         {
-          "@id": "#/declares/shape/A"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A"
         }
       ],
       "doc:recursive": true,
       "shacl:name": "A",
       "sourcemaps:sources": [
         {
-          "@id": "#/declares/shape/A/recursive/source-map"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map"
         }
       ]
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_1"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_1"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/lexical/element_1"
         },
         {
-          "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/declares/shape/B/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/synthesized-field/element_0",
       "sourcemaps:element": "shacl:closed",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/declares/shape/B/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B",
       "sourcemaps:value": "[(10,2)-(14,0)]"
     },
     {
-      "@id": "#/declares/shape/B/source-map/lexical/element_0",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/lexical/element_0",
       "sourcemaps:element": "shacl:name",
       "sourcemaps:value": "[(10,2)-(10,3)]"
     },
     {
-      "@id": "#/declares/shape/B/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B",
       "sourcemaps:value": ""
     },
     {
-      "@id": "#/declares/shape/A/recursive/source-map",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/declares/shape/A/recursive/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/declares/shape/A/recursive/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:declared-element": [
         {
-          "@id": "#/declares/shape/A/recursive/source-map/declared-element/element_0"
+          "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_1",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_1",
       "sourcemaps:element": "shacl:path",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/synthesized-field/element_0",
       "sourcemaps:element": "shacl:minCount",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/B/property/property/a/recursiveProp",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp",
       "sourcemaps:value": "[(12,6)-(14,0)]"
     },
     {
-      "@id": "#/declares/shape/B/property/property/a/recursiveProp/source-map/lexical/element_0",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/recursiveProp/source-map/lexical/element_0",
       "sourcemaps:element": "raml-shapes:range",
       "sourcemaps:value": "[(12,10)-(12,11)]"
     },
     {
-      "@id": "#/declares/shape/A/recursive/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map/synthesized-field/element_0",
       "sourcemaps:element": "doc:recursive",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/declares/shape/A/recursive/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/A/recursive",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive",
       "sourcemaps:value": "[(7,2)-(10,0)]"
     },
     {
-      "@id": "#/declares/shape/A/recursive/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/declares/shape/A/recursive",
+      "@id": "#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/simple-recursion.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/B/property/property/a/shape/A/recursive",
       "sourcemaps:value": ""
     },
     {

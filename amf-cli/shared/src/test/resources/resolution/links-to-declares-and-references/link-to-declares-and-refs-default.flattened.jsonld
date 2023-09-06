@@ -492,7 +492,7 @@
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -557,7 +557,7 @@
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -598,7 +598,7 @@
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -672,7 +672,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,4)-(44,43)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -683,19 +683,19 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "type",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map"
         }
       ]
     },
@@ -742,7 +742,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,12)-(13,41)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -753,13 +753,13 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "declared-type",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map"
         }
       ]
     },
@@ -785,7 +785,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,8)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -796,13 +796,13 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "A",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map"
         }
       ]
     },
@@ -874,7 +874,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(42,8)-(44,43)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -887,18 +887,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "external",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -911,18 +911,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "data",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -935,39 +935,39 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "type",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/auto-generated-name/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/auto-generated-name/element_0"
         }
       ]
     },
@@ -987,7 +987,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,12)-(13,41)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -1000,42 +1000,42 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "declared",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/declared-element/element_0"
         }
       ]
     },
@@ -1045,7 +1045,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,10)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -1058,37 +1058,37 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "a",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/declared-element/element_0"
         }
       ]
     },
@@ -1182,7 +1182,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(43,10)-(44,43)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1198,34 +1198,34 @@
       "http://www.w3.org/ns/shacl#name": "external",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1241,34 +1241,34 @@
       "http://www.w3.org/ns/shacl#name": "data",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type",
       "@type": [
         "http://a.ml/vocabularies/shapes#NilShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -1278,54 +1278,54 @@
       "http://www.w3.org/ns/shacl#name": "type",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,4)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(6,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1341,59 +1341,59 @@
       "http://www.w3.org/ns/shacl#name": "declared",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(6,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(10,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1409,50 +1409,50 @@
       "http://www.w3.org/ns/shacl#name": "a",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(5,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,3)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
@@ -1551,169 +1551,169 @@
       "http://a.ml/vocabularies/document-source-maps#value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\"\n  ]\n}"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,1)-(5,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,11)-(4,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,1)-(6,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,7)-(5,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,1)-(6,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,7)-(6,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(10,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,16)-(8,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,6)-(5,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,9)-(5,15)]"
     },
@@ -1776,47 +1776,47 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,4)-(14,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,1)-(5,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/external/scalar/external/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/external/scalar/external/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,11)-(4,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,1)-(6,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/data/scalar/data/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/data/scalar/data/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,7)-(5,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/2/shape/type/property/property/type/nil/type",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-data-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/type/property/property/type/nil/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,1)-(6,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(10,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/declares/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fdeclared-type/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/declared-type/property/property/declared/scalar/declared/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,16)-(8,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,6)-(5,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/references/0/declares/shape/A/property/property/a/scalar/a/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/endpoint/%2Fexternal-lib/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/A/property/property/a/scalar/a/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,9)-(5,15)]"
     },
