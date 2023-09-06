@@ -23,7 +23,11 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
+import amf.core.client.scala.model.domain.{
+  ArrayNode => InternalArrayNode,
+  ObjectNode => InternalObjectNode,
+  ScalarNode => InternalScalarNode
+}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -1373,7 +1377,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       shape.examples.asSeq
         .find(
           _.id.equals(
-            "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declares/shape/A/examples/example/declared"
+            "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/endpoint/%2Fendpoint1/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/inherits/shape/A/examples/example/declared"
           )
         )
         .head
@@ -2169,9 +2173,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Stackoverflow in minShape with overriden cyclic properties") {
     val client = RAMLConfiguration.RAML10().baseUnitClient()
-    val path = "file://amf-cli/shared/src/test/resources/overriden-cyclic-properties.raml"
+    val path   = "file://amf-cli/shared/src/test/resources/overriden-cyclic-properties.raml"
     for {
-      parsingResult <- client.parse(path).asFuture
+      parsingResult    <- client.parse(path).asFuture
       resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
     } yield {
       assert(parsingResult.conforms)
@@ -2181,9 +2185,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("NPE in minShape with baseUnion with empty anyOf involved in inheritance") {
     val client = RAMLConfiguration.RAML10().baseUnitClient()
-    val path = "file://amf-cli/shared/src/test/resources/base-union-empty-anyof.raml"
+    val path   = "file://amf-cli/shared/src/test/resources/base-union-empty-anyof.raml"
     for {
-      parsingResult <- client.parse(path).asFuture
+      parsingResult    <- client.parse(path).asFuture
       resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
     } yield {
       assert(parsingResult.conforms)

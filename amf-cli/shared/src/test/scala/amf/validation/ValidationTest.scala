@@ -282,6 +282,23 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  /** type: string | integer example: "120"
+    *
+    * At the header trait, used to produce string | string because of duplicated id, after resolve inheritance
+    */
+  test(
+    "Test union of scalars with example at trait (duplicate id for scalar ending to have same scalar duplicated)"
+  ) {
+    for {
+      report <- parseAndValidate(
+        productionPath + "scalar-union-inheritance-trait/api.raml",
+        RAMLConfiguration.RAML10()
+      )
+    } yield {
+      assert(report.conforms)
+    }
+  }
   private def parseAndValidate(url: String, config: => AMFGraphConfiguration): Future[AMFValidationReport] = {
     val client = config.baseUnitClient()
     for {

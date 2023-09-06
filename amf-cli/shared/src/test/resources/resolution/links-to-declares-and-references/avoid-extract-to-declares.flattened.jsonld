@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#7",
+      "@id": "#8",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "Shopper Customers",
       "apiContract:endpoint": [
         {
-          "@id": "#9"
+          "@id": "#10"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#8": "[(2,0)-(20,42)]"
+          "#9": "[(2,0)-(20,42)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,18 +39,18 @@
       "apiContract:path": "/organizations",
       "apiContract:supportedOperation": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(15,0)-(15,14)]",
-          "#9": "[(15,0)-(20,42)]"
+          "#10": "[(15,0)-(20,42)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -59,17 +59,17 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#11"
+          "@id": "#12"
         }
       ],
       "smaps": {
         "lexical": {
-          "#10": "[(16,2)-(20,42)]"
+          "#11": "[(16,2)-(20,42)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "apiContract:Request",
         "core:Request",
@@ -78,21 +78,21 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(17,4)-(20,42)]",
-          "#11": "[(17,9)-(20,42)]"
+          "#12": "[(17,9)-(20,42)]"
         },
         "virtual-element": {
-          "#11": "true"
+          "#12": "true"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -100,16 +100,16 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#13"
+        "@id": "#14"
       },
       "smaps": {
         "lexical": {
-          "#12": "[(18,6)-(20,42)]"
+          "#13": "[(18,6)-(20,42)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -130,14 +130,14 @@
           "shacl:name": "amf://id#1"
         },
         "inherited-shapes": {
-          "#13": "amf://id#1"
+          "#14": "amf://id#1"
         },
         "lexical": {
           "core:description": "[(20,8)-(20,42)]",
-          "#13": "[(18,6)-(20,42)]"
+          "#14": "[(18,6)-(20,42)]"
         },
         "type-property-lexical-info": {
-          "#13": "[(19,8)-(19,12)]"
+          "#14": "[(19,8)-(19,12)]"
         },
         "synthesized-field": {
           "shacl:closed": "true"
@@ -223,11 +223,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#8"
+        "@id": "#9"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#7"
+        "@id": "#8"
       }
     },
     {
@@ -251,7 +251,7 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#1": "amf://id#5"
+          "#1": "amf://id#1"
         },
         "lexical": {
           "shacl:name": "[(5,2)-(5,21)]",
@@ -261,7 +261,7 @@
           "#1": ""
         },
         "resolved-link-target": {
-          "#1": "amf://id#1"
+          "#1": "amf://id#5"
         }
       }
     },
@@ -282,7 +282,7 @@
       "shacl:name": "CustomerProductListRegistrant",
       "smaps": {
         "resolved-link-target": {
-          "#4": "amf://id#4"
+          "#4": "amf://id#7"
         },
         "declared-element": {
           "#4": ""

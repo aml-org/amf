@@ -13,18 +13,18 @@ Level: Violation
   Range: [(4,10)-(4,35)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
 
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'other-lib.raml#A'
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml#/references/0/declares/any/A/inherits/unresolved
-  Property: 
-  Range: [(4,10)-(4,35)]
-  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
-
 - Constraint: http://a.ml/vocabularies/amf/core#expected-module
   Message: Libraries must be applied by using 'uses'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml#/references/0/references/0
+  Property: 
+  Range: [(4,10)-(4,35)]
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'other-lib.raml#A'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml#/web-api/endpoint/%2Fclaims%2F%7Bclaim-id%7D/supportedOperation/patch/expects/request/payload/application%2Fjson/any/schema/inherits/any/A/inherits/unresolved
   Property: 
   Range: [(4,10)-(4,35)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
