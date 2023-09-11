@@ -1183,7 +1183,14 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
   private def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
     resolver.log(s"computeMinProperty: ${baseProperty.debugInfo()} => ${superProperty.debugInfo()}")
-    if (isExactlyAny(baseProperty.range) && !isInferred(baseProperty) && isSubtypeOfAny(superProperty.range)) {
+    val resolvedRange = resolver.getCached(
+      baseProperty.range
+    ) // search at index in case that any shape has been already computed into a more specfic range)
+    if (
+      isExactlyAny(resolvedRange.getOrElse(baseProperty.range)) && !isInferred(baseProperty) && isSubtypeOfAny(
+        superProperty.range
+      )
+    ) {
       resolver.context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
         baseProperty,
