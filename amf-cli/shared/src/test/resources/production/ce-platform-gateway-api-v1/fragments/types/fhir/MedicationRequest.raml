@@ -1,0 +1,13 @@
+#%RAML 1.0 DataType
+displayName: 'MedicationRequest'
+
+uses:
+  FHIR_commons: fhir_commons.raml
+
+description: This resource contains a list of a patient’s current prescribed medications, as documented by one organization. 
+type: FHIR_commons.DomainResource
+properties:
+  id:
+  identifier?:
+    description: External Ids for this item
+    type: FHIR_commons.Identifier[]

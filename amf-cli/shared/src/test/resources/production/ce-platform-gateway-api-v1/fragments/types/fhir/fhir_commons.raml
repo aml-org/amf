@@ -1,0 +1,75 @@
+#%RAML 1.0 Library
+
+types:
+
+  code:
+    type: string
+    description: |
+      Indicates that the value is taken from a set of controlled strings defined elsewhere (see Using codes for further discussion).
+      Technically, a code is restricted to a string which has at least one character and no leading or trailing whitespace, and where there is no whitespace other than single spaces in the contents.
+    pattern: ^[^\s]+([\s]+[^\s]+)*
+
+  id:
+    type: string
+    pattern: ^[A-Za-z0-9\-\.]{1,64}$
+    description: |
+      Any combination of upper or lower case ASCII letters ('A'..'Z', and 'a'..'z', numerals ('0'..'9'), '-' and '.', with a length limit of 64 characters.
+      (This might be an integer, an un-prefixed OID, UUID or any other identifier pattern that meets these constraints.)
+
+  Identifier:
+    description: |
+      A numeric or alphanumeric string that is associated with a single object or entity within a given system.
+      Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols.
+      Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.
+    properties:
+      use?:
+        description: usual | official | temp | secondary (If known)
+        type: string
+        enum: [usual, official, temp, secondary]
+
+  Element:
+    type: object
+    properties:
+      id?:
+        description: Internal id
+        type: id
+      extension?:
+        description: |
+          Additional Content defined by implementations - from Element: extension (recursive)
+        type: array
+        items: Extension
+
+  Extension:
+    properties:
+      url:
+       description: Value of extension.
+       type: string
+
+  BackboneElement:
+    type: Element
+    properties:
+      modifierExtension?:
+        description: Modifier Extensions
+        type: Extension
+
+  Reference:
+    type: Element
+    description: Many of the defined elements in a resource are references to other resources.
+      Using these references, the resources combine to build a web of information about healthcare.
+    properties:
+      reference?:
+        description: Literal reference, Relative, internal or absolute URL
+        type: string
+      display?:
+        description: Text alternative for the resource
+        type: string
+
+  DomainResource:
+    type: Resource
+
+  Resource:
+    description: Base Resource
+    properties:
+      id?:
+        description: Logical id of this artifact
+        type: id
