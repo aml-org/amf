@@ -1,0 +1,22 @@
+#%RAML 1.0 Library
+
+uses:
+  FHIR_entry_types: ./fhir_entry_types.raml
+  FHIR_commons: ./fhir_commons.raml
+
+types:
+  Resource: FHIR_commons.Resource
+
+  Bundle:
+    type: Resource
+    properties:
+      resourceType: string
+
+      link?:
+        type: array
+        items:
+          properties:
+            relation: string
+            url: string
+
+

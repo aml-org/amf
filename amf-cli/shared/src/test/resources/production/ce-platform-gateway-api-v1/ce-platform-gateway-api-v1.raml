@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: 'ce-platform-gateway-api-v1'
+description: 'An Api gateway for symplr'
+version: 'v1'
+mediaType: 
+- application/json
+uses:
+  FHIR_bundles: fragments/types/fhir/fhir_bundle_types.raml
+  FHIR_commons: fragments/types/fhir/fhir_commons.raml
+
+types:
+
+  Practitioner:
+    type: FHIR_commons.DomainResource
+
+/practitioner:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Practitioner
+
