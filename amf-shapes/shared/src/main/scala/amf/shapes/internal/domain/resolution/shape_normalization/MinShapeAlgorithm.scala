@@ -1200,7 +1200,15 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     } else {
       val shouldComputeMinRange =
         (baseProperty.range, superProperty.range) match {
-          case (c, p) if c.id == p.id          => false
+          case (c, p) if c.id == p.id => false
+          // Almost a hack. Spec says that a property can be overrided by a narrowed type. We should analyze each
+          // bu union member against the whole list of super union members and check that is equal or more restricted that all
+          // the types of the same meta type.
+          case (_: UnionShape, _: UnionShape) => false
+
+          // same question that above, should be the same of all range of overrided properties?
+          // the range that works is the one of the base shape?? maybe just properties of iinner objects?
+          // what about arrays? items should be merged?
           case (_: ScalarShape, _: UnionShape) =>
             // if scalar is not a member of union.anyOf should throw violation
             // should extend to all shapes?
