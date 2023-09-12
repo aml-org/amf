@@ -299,6 +299,24 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test complex FHIR example with property overrided cross different files and inheritances") {
+    val source = productionPath + "ce-platform-gateway-api-v1/ce-platform-gateway-api-v1.raml"
+
+    val config = RAMLConfiguration.RAML10()
+    for {
+      report     <- config.baseUnitClient().parse(source)
+      transform  <- Future.successful(config.baseUnitClient().transform(report.baseUnit, PipelineId.Editing))
+      validation <- config.baseUnitClient().validate(transform.baseUnit)
+    } yield {
+      val parseReport     = AMFValidationReport.unknownProfile(report)
+      val transformReport = AMFValidationReport.unknownProfile(transform)
+
+      assert(validation.merge(transformReport).merge(parseReport).conforms)
+
+    }
+
+  }
   private def parseAndValidate(url: String, config: => AMFGraphConfiguration): Future[AMFValidationReport] = {
     val client = config.baseUnitClient()
     for {
