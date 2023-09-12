@@ -134,7 +134,7 @@
         }
       ],
       "aws:integration": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/element"
+        "@id": "#/web-api/endpoint/%2Fpets/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element"
       }
     },
     {
@@ -156,7 +156,7 @@
         }
       ],
       "aws:integration": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/element"
+        "@id": "#/web-api/endpoint/%2Fpets/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element"
       }
     },
     {
@@ -178,7 +178,7 @@
         }
       ],
       "aws:integration": {
-        "@id": "#/customDomainProperties/amazon-apigateway-integrations/element_1"
+        "@id": "#/web-api/endpoint/%2Fcheckout/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element"
       }
     },
     {
@@ -256,7 +256,7 @@
       ]
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/element",
+      "@id": "#/web-api/endpoint/%2Fpets/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element",
       "@type": [
         "aws:Integration",
         "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationNodeMapping",
@@ -295,7 +295,7 @@
       "core:description": "OK"
     },
     {
-      "@id": "#/customDomainProperties/amazon-apigateway-integrations/element_1",
+      "@id": "#/web-api/endpoint/%2Fcheckout/supportedOperation/get/customDomainProperties/amazon-apigateway-integration/element",
       "@type": [
         "aws:Integration",
         "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/IntegrationNodeMapping",

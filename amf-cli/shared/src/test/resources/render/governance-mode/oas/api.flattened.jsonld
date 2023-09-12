@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "amf://id#11",
+      "@id": "amf://id#13",
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 3.0"
     },
     {
-      "@id": "amf://id#12",
+      "@id": "amf://id#14",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -21,12 +21,12 @@
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "amf://id#13"
+          "@id": "amf://id#15"
         }
       ]
     },
     {
-      "@id": "amf://id#13",
+      "@id": "amf://id#15",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -34,12 +34,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/echo",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "amf://id#14"
+          "@id": "amf://id#16"
         }
       ]
     },
     {
-      "@id": "amf://id#14",
+      "@id": "amf://id#16",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/core#Operation",
@@ -48,17 +48,17 @@
       "http://a.ml/vocabularies/apiContract#method": "post",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "amf://id#9"
+          "@id": "amf://id#10"
         }
       ],
       "http://a.ml/vocabularies/apiContract#returns": [
         {
-          "@id": "amf://id#15"
+          "@id": "amf://id#17"
         }
       ]
     },
     {
-      "@id": "amf://id#9",
+      "@id": "amf://id#10",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/core#Request",
@@ -74,12 +74,12 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "amf://id#9/source-map"
+          "@id": "amf://id#10/source-map"
         }
       ]
     },
     {
-      "@id": "amf://id#15",
+      "@id": "amf://id#17",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/core#Response",
@@ -103,18 +103,18 @@
       }
     },
     {
-      "@id": "amf://id#9/source-map",
+      "@id": "amf://id#10/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "amf://id#9/source-map/declared-element/element_0"
+          "@id": "amf://id#10/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#virtual-element": [
         {
-          "@id": "amf://id#9/source-map/virtual-element/element_0"
+          "@id": "amf://id#10/source-map/virtual-element/element_0"
         }
       ]
     },
@@ -147,13 +147,13 @@
       ]
     },
     {
-      "@id": "amf://id#9/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#9",
+      "@id": "amf://id#10/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#10",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "amf://id#9/source-map/virtual-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#9",
+      "@id": "amf://id#10/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#10",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
@@ -275,7 +275,7 @@
           "@id": "amf://id#1"
         },
         {
-          "@id": "amf://id#9"
+          "@id": "amf://id#10"
         }
       ],
       "@type": [
@@ -285,11 +285,11 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "amf://id#12"
+        "@id": "amf://id#14"
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "amf://id#11"
+        "@id": "amf://id#13"
       }
     }
   ]

@@ -89,11 +89,11 @@
       ],
       "core:name": "myAuthorizer",
       "security:scheme": {
-        "@id": "#/declares/scheme/myAuthorizer"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer"
       }
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer",
       "@type": [
         "security:SecurityScheme",
         "raml-doc:DomainElement"
@@ -101,12 +101,12 @@
       "core:name": "myAuthorizer",
       "security:type": "Api Key",
       "security:settings": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key"
       },
       "aws:authType": "Custom scheme with corporate claims"
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key",
       "@type": [
         "security:ApiKeySettings",
         "security:Settings",
@@ -114,18 +114,18 @@
       ],
       "core:name": "Authorization",
       "security:in": "header",
-      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/auth-type.yaml#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/amazon-apigateway-authtype": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/scalar_1"
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/auth-type.yaml#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/amazon-apigateway-authtype": {
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/scalar_1"
       },
       "raml-doc:customDomainProperties": [
         {
-          "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/amazon-apigateway-authtype"
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/amazon-apigateway-authtype"
         }
       ]
     },
     {
       "core:extensionName": "amazon-apigateway-authtype",
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/scalar_1",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/scalar_1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -143,7 +143,7 @@
       "@id": "",
       "raml-doc:declares": [
         {
-          "@id": "#/declares/scheme/myAuthorizer"
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer"
         }
       ],
       "@type": [

@@ -32,12 +32,12 @@
       "apiContract:path": "/inlined",
       "apiContract:supportedOperation": [
         {
-          "@id": "#19"
+          "@id": "#18/supportedOperation/post"
         }
       ]
     },
     {
-      "@id": "#19",
+      "@id": "#18/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "core:Operation",
@@ -46,12 +46,12 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#20"
+          "@id": "#18/supportedOperation/post/returns/resp/200"
         }
       ]
     },
     {
-      "@id": "#20",
+      "@id": "#18/supportedOperation/post/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "core:Response",
@@ -63,12 +63,12 @@
       "core:description": "Ok",
       "apiContract:payload": [
         {
-          "@id": "#21"
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson"
         }
       ]
     },
     {
-      "@id": "#21",
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -76,20 +76,203 @@
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#1"
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal"
       }
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "raml-shapes:discriminator": "petType",
+      "raml-shapes:discriminatorMapping": [
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorMapping/mapping/dog"
+        },
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorMapping/mapping/cat"
+        }
+      ],
+      "raml-shapes:discriminatorValueMapping": [
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog"
+        },
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat"
+        }
+      ],
+      "shacl:property": [],
+      "doc:recursive": true,
+      "shacl:name": "Animal",
+      "shacl:xone": [
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog"
+        },
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat"
+        }
+      ]
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorMapping/mapping/dog",
+      "@type": [
+        "apiContract:IriTemplateMapping",
+        "doc:DomainElement"
+      ],
+      "apiContract:templateVariable": "dog",
+      "apiContract:linkExpression": "#/components/schemas/Dog"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorMapping/mapping/cat",
+      "@type": [
+        "apiContract:IriTemplateMapping",
+        "doc:DomainElement"
+      ],
+      "apiContract:templateVariable": "cat",
+      "apiContract:linkExpression": "#/components/schemas/Cat"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog",
+      "@type": [
+        "raml-shapes:DiscriminatorValueMapping",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:discriminatorValue": "dog",
+      "raml-shapes:discriminatorValueTarget": {
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog"
+      }
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat",
+      "@type": [
+        "raml-shapes:DiscriminatorValueMapping",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:discriminatorValue": "cat",
+      "raml-shapes:discriminatorValueTarget": {
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat"
+      }
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark"
+        }
+      ],
+      "shacl:name": "Dog"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name"
+        }
+      ],
+      "shacl:name": "Cat"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#bark"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark/scalar/bark"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "bark"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name/scalar/name"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark/scalar/bark",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "bark"
+    },
+    {
+      "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name/scalar/name",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name"
     },
     {
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#1"
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal"
         },
         {
-          "@id": "#11"
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat"
         },
         {
-          "@id": "#5"
+          "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog"
         }
       ],
       "@type": [
@@ -106,110 +289,6 @@
       "doc:processingData": {
         "@id": "#1"
       }
-    },
-    {
-      "@id": "#11",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [
-        {
-          "@id": "#12"
-        }
-      ],
-      "shacl:name": "Cat"
-    },
-    {
-      "@id": "#5",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [
-        {
-          "@id": "#6"
-        }
-      ],
-      "shacl:name": "Dog"
-    },
-    {
-      "@id": "#12",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#name"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#13"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "name"
-    },
-    {
-      "@id": "#6",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#bark"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#7"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "bark"
-    },
-    {
-      "@id": "#13",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "name"
-    },
-    {
-      "@id": "#7",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "bark"
     }
   ],
   "@context": {

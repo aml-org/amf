@@ -24,8 +24,8 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: JSONObject, found: String
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/declares/parameter/query/query-with-content/payload/application%2Fjson/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/declares/parameter/query/query-with-content/payload/application%2Fjson/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/%2Ftest%2F%7BitemId%7D/supportedOperation/get/expects/request%2FrequestBody/parameter/parameter/query/query-with-content/payload/application%2Fjson/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/%2Ftest%2F%7BitemId%7D/supportedOperation/get/expects/request%2FrequestBody/parameter/parameter/query/query-with-content/payload/application%2Fjson/examples/example/default-example
   Range: [(53,23)-(53,42)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json
 

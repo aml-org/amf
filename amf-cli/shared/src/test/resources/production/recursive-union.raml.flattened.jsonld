@@ -153,7 +153,7 @@
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType"
+        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -183,7 +183,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,2)-(24,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType",
       "@type": [
         "http://a.ml/vocabularies/shapes#UnionShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -193,16 +193,16 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "SomeType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map"
         }
       ]
     },
@@ -228,7 +228,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array",
       "@type": [
         "http://a.ml/vocabularies/shapes#ArrayShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -237,16 +237,16 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType"
+        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1",
       "@type": [
         "http://a.ml/vocabularies/shapes#ArrayShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -255,35 +255,35 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType"
+        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -293,7 +293,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(24,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType",
       "@type": [
         "http://a.ml/vocabularies/shapes#UnionShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -303,32 +303,32 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "AnotherType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType",
       "@type": [
         "http://a.ml/vocabularies/shapes#UnionShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -338,52 +338,52 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "OneMoreType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(8,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/SomeType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(6,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive",
       "@type": [
         "http://a.ml/vocabularies/shapes#RecursiveShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -392,48 +392,48 @@
       ],
       "http://a.ml/vocabularies/shapes#fixPoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array"
         }
       ],
       "http://a.ml/vocabularies/document#recursive": true,
       "http://www.w3.org/ns/shacl#name": "default-recursion",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,21)-(9,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive",
       "@type": [
         "http://a.ml/vocabularies/shapes#RecursiveShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -442,136 +442,136 @@
       ],
       "http://a.ml/vocabularies/shapes#fixPoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1"
         }
       ],
       "http://a.ml/vocabularies/document#recursive": true,
       "http://www.w3.org/ns/shacl#name": "default-recursion",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,37)-(9,39)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(14,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(11,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/AnotherType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/any/AnotherType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(12,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(18,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(14,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/any/OneMoreType",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/any/OneMoreType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(15,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array/recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,21)-(9,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declares/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive",
+      "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/inherits/any/SomeType/inherits/array/SomeUnion/inherits/union/default-union/anyOf/array/default-array_1/recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,37)-(9,39)]"
     },
     {
