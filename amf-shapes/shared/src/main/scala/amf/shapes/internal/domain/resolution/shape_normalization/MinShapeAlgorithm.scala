@@ -1237,8 +1237,11 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     } else {
       val updatedChild = resolver.getCached(child).getOrElse(child)
       if (updatedChild != parent && !areTheSame(updatedChild, parent)) {
-        resolver.remove(updatedChild)
-        val r = updatedChild.setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
+        if (updatedChild.id == child.id) resolver.remove(updatedChild)
+        val r = updatedChild
+          .copyShape()
+          .withId(child.id)
+          .setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
         resolver.queue(r)
         r
       } else updatedChild
