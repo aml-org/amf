@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: demo-jsonapi
+version: v1
+
+
+# the API's resources:
+types:
+  success:
+    type: object
+    additionalProperties: false
+    properties:
+      data:
+        type: data
+        required: true
+
+  data:
+    type: resource_post | resource_post[] | nil
+
+  relationshipToOne:
+    type: nil | resource_post
+
+  resource_post:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        type: string
+        required: true
+      id:
+        type: string
+        required: false
+  exInliedType:
+    type: success
+    properties:
+      data: relationshipToOne
+
