@@ -1206,9 +1206,6 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
           // the types of the same meta type.
           case (_: UnionShape, _: UnionShape) => false
 
-          // if is any because the inheritance has already been solved at cache.
-          case (_: UnionShape, su: AnyShape) => !isAnyInheritedFromResolvedUnion(su)
-
           // same question that above, should be the same of all range of overrided properties?
           // the range that works is the one of the base shape?? maybe just properties of iinner objects?
           // what about arrays? items should be merged?
@@ -1216,6 +1213,12 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
             // if scalar is not a member of union.anyOf should throw violation
             // should extend to all shapes?
             false
+
+          // if is any because the inheritance has already been solved at cache.
+          case (_: UnionShape, su: AnyShape) => !isAnyInheritedFromResolvedUnion(su)
+          // Only for anyShapes that implies expressions of future declaration. Specific types inheritance should be handled at that paritcular inheritance resolution
+          case (bu: AnyShape, su: AnyShape) =>
+            !(isAnyInheritedFromResolvedUnion(su) && isAnyInheritedFromResolvedUnion(bu))
           case _ => true
         }
 
