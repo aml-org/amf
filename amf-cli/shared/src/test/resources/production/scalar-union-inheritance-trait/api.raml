@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: test
+
+version: v1
+traits:
+    CommonError:
+        responses:
+          503:
+            headers:
+              Retry-After:
+                type: integer | string
+                required: false
+                example: "120"
+/{businessId}:
+    patch:
+      displayName: resourceById
+      is : [CommonError]

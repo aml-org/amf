@@ -80,7 +80,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/link-1391410207",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/link-1391410207",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -90,7 +90,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension"
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -307,7 +307,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension",
+        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -322,7 +322,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -336,7 +336,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#RecursiveShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -345,7 +345,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#fixPoint": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity"
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity"
                   }
                 ],
                 "http://a.ml/vocabularies/document#recursive": [
@@ -360,13 +360,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#recursive"
@@ -381,10 +381,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -396,10 +396,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -411,10 +411,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#declared-element": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive/source-map/declared-element/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive/source-map/declared-element/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Quantity/recursive"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/any/valueQuantity%3F/inherits/shape/Quantity/recursive"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -440,13 +440,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/synthesized-field/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/synthesized-field/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#path"
@@ -459,7 +459,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -474,10 +474,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp"
+                        "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -487,7 +487,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueQuantity/recursiveProp/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/shapes#range"
@@ -504,7 +504,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -518,7 +518,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -533,7 +533,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -547,7 +547,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#RecursiveShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -556,7 +556,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#fixPoint": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension"
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension"
                           }
                         ],
                         "http://a.ml/vocabularies/document#recursive": [
@@ -571,13 +571,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/document#recursive"
@@ -592,10 +592,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive"
+                                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -607,10 +607,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#declared-element": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive/source-map/declared-element/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive/source-map/declared-element/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/recursive"
+                                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/recursive"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -636,13 +636,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp/source-map/synthesized-field/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp/source-map/synthesized-field/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#path"
@@ -655,7 +655,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp/source-map/synthesized-field/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -670,10 +670,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp"
+                                "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -683,7 +683,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/property/property/extension/recursiveProp/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/property/property/extension/recursiveProp/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/shapes#range"
@@ -707,13 +707,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#closed"
@@ -728,10 +728,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -741,7 +741,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#name"
@@ -756,10 +756,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#declared-element": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element/source-map/declared-element/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element/source-map/declared-element/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Element"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/shape/valueSchedule/inherits/shape/Element"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -785,13 +785,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule/source-map/synthesized-field/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/source-map/synthesized-field/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#path"
@@ -804,7 +804,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -819,10 +819,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule"
+                        "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -832,7 +832,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/property/property/valueSchedule/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/property/property/valueSchedule/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/shapes#range"
@@ -1281,13 +1281,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/source-map/synthesized-field/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#closed"
@@ -1302,10 +1302,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1315,7 +1315,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -1330,10 +1330,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/declares/shape/Extension"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/Extension"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

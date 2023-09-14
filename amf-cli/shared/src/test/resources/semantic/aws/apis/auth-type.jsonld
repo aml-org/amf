@@ -1,0 +1,174 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "raml-doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.8.2",
+      "raml-doc:transformed": true,
+      "raml-doc:sourceSpec": "AWS OAS 3.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "raml-doc:RootDomainElement",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "openapi3 for REST API",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer",
+      "@type": [
+        "apiContract:EndPoint",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:path": "/protected-by-lambda-authorizer",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "core:Operation",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/returns/resp/200"
+        }
+      ],
+      "security:security": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/requirement_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "core:Response",
+        "apiContract:Message",
+        "raml-doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "Default response"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/requirement_1",
+      "@type": [
+        "security:SecurityRequirement",
+        "raml-doc:DomainElement"
+      ],
+      "security:schemes": [
+        {
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer",
+      "@type": [
+        "security:ParametrizedSecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "myAuthorizer",
+      "security:scheme": {
+        "@id": "#/declares/scheme/myAuthorizer"
+      }
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer",
+      "@type": [
+        "security:SecurityScheme",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "myAuthorizer",
+      "security:type": "Api Key",
+      "security:settings": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key"
+      },
+      "aws:authType": "Custom scheme with corporate claims"
+    },
+    {
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key",
+      "@type": [
+        "security:ApiKeySettings",
+        "security:Settings",
+        "raml-doc:DomainElement"
+      ],
+      "core:name": "Authorization",
+      "security:in": "header",
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/auth-type.yaml#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/amazon-apigateway-authtype": {
+        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/scalar_1"
+      },
+      "raml-doc:customDomainProperties": [
+        {
+          "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/amazon-apigateway-authtype"
+        }
+      ]
+    },
+    {
+      "core:extensionName": "amazon-apigateway-authtype",
+      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authtype/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "raml-doc:DomainElement"
+      ],
+      "data:value": "Custom scheme with corporate claims",
+      "sh:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1"
+    },
+    {
+      "@id": "",
+      "raml-doc:declares": [
+        {
+          "@id": "#/declares/scheme/myAuthorizer"
+        }
+      ],
+      "@type": [
+        "raml-doc:Document",
+        "raml-doc:Fragment",
+        "raml-doc:Module",
+        "raml-doc:Unit"
+      ],
+      "raml-doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "raml-doc:root": true,
+      "raml-doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/aws/apis/auth-type.yaml",
+    "security": "http://a.ml/vocabularies/security#",
+    "data": "http://a.ml/vocabularies/data#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "aws": "http://a.ml/vocabularies/aws#",
+    "raml-doc": "http://a.ml/vocabularies/document#"
+  }
+}

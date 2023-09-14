@@ -1,0 +1,16 @@
+#%RAML 1.0 Library
+uses:
+  FHIR_commons: fhir_commons.raml
+
+types:
+  Entry:
+    properties:
+      resource?:
+        type: FHIR_commons.DomainResource
+
+  MedicationRequestEntry:
+    type: Entry
+    properties:
+      resource?: !include MedicationRequest.raml
+    
+
