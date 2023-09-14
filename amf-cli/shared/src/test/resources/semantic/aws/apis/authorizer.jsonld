@@ -89,11 +89,11 @@
       ],
       "core:name": "myAuthorizer",
       "security:scheme": {
-        "@id": "#/declares/scheme/myAuthorizer"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer"
       }
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer",
       "@type": [
         "security:SecurityScheme",
         "raml-doc:DomainElement"
@@ -101,14 +101,14 @@
       "core:name": "myAuthorizer",
       "security:type": "Api Key",
       "security:settings": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key"
       },
       "aws:authorizer": {
-        "@id": "#/declares/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element"
       }
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key",
       "@type": [
         "security:ApiKeySettings",
         "security:Settings",
@@ -116,17 +116,17 @@
       ],
       "core:name": "Authorization",
       "security:in": "header",
-      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1"
+      "file://amf-cli/shared/src/test/resources/semantic/aws/apis/authorizer.yaml#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer": {
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1"
       },
       "raml-doc:customDomainProperties": [
         {
-          "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer"
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/amazon-apigateway-authorizer"
         }
       ]
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/customDomainProperties/amazon-apigateway-authorizer/element",
       "@type": [
         "aws:Authorizer",
         "http://a.ml/amf/default_document/awsextensions/1.0#/declarations/AuthorizerNodeMapping",
@@ -141,31 +141,31 @@
     },
     {
       "core:extensionName": "amazon-apigateway-authorizer",
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1",
       "@type": [
         "data:Object",
         "data:Node",
         "raml-doc:DomainElement"
       ],
       "data:identitySource": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource"
       },
       "data:authorizerUri": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri"
       },
       "data:authorizerResultTtlInSeconds": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds"
       },
       "data:type": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type"
       },
       "data:enableSimpleResponses": {
-        "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses"
+        "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses"
       },
       "core:name": "object_1"
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/identitySource",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -180,7 +180,7 @@
       "core:name": "identitySource"
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerUri",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -195,7 +195,7 @@
       "core:name": "authorizerUri"
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/authorizerResultTtlInSeconds",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -210,7 +210,7 @@
       "core:name": "authorizerResultTtlInSeconds"
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/type",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -225,7 +225,7 @@
       "core:name": "type"
     },
     {
-      "@id": "#/declares/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses",
+      "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer/settings/api-key/customDomainProperties/amazon-apigateway-authorizer/object_1/enableSimpleResponses",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -243,7 +243,7 @@
       "@id": "",
       "raml-doc:declares": [
         {
-          "@id": "#/declares/scheme/myAuthorizer"
+          "@id": "#/web-api/endpoint/%2Fprotected-by-lambda-authorizer/supportedOperation/get/security/requirement_1/schemes/myAuthorizer/scheme/myAuthorizer"
         },
         {
           "@id": "#/declares/scheme/jwt-authorizer-oauth"

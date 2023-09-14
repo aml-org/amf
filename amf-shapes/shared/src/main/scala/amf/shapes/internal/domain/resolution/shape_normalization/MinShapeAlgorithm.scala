@@ -1183,7 +1183,14 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
   private def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
     resolver.log(s"computeMinProperty: ${baseProperty.debugInfo()} => ${superProperty.debugInfo()}")
-    if (isExactlyAny(baseProperty.range) && !isInferred(baseProperty) && isSubtypeOfAny(superProperty.range)) {
+    val resolvedRange = resolver.getCached(
+      baseProperty.range
+    ) // search at index in case that any shape has been already computed into a more specfic range)
+    if (
+      isExactlyAny(resolvedRange.getOrElse(baseProperty.range)) && !isInferred(baseProperty) && isSubtypeOfAny(
+        superProperty.range
+      )
+    ) {
       resolver.context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
         baseProperty,
@@ -1193,11 +1200,25 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     } else {
       val shouldComputeMinRange =
         (baseProperty.range, superProperty.range) match {
-          case (c, p) if c.id == p.id          => false
+          case (c, p) if c.id == p.id => false
+          // Almost a hack. Spec says that a property can be overrided by a narrowed type. We should analyze each
+          // bu union member against the whole list of super union members and check that is equal or more restricted that all
+          // the types of the same meta type.
+          case (_: UnionShape, _: UnionShape) => false
+
+          // same question that above, should be the same of all range of overrided properties?
+          // the range that works is the one of the base shape?? maybe just properties of iinner objects?
+          // what about arrays? items should be merged?
           case (_: ScalarShape, _: UnionShape) =>
             // if scalar is not a member of union.anyOf should throw violation
             // should extend to all shapes?
             false
+
+          // if is any because the inheritance has already been solved at cache.
+          case (_: UnionShape, su: AnyShape) => !isAnyInheritedFromResolvedUnion(su)
+          // Only for anyShapes that implies expressions of future declaration. Specific types inheritance should be handled at that paritcular inheritance resolution
+          case (bu: AnyShape, su: AnyShape) =>
+            !(isAnyInheritedFromResolvedUnion(su) && isAnyInheritedFromResolvedUnion(bu))
           case _ => true
         }
 
@@ -1224,14 +1245,21 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
     baseProperty
   }
+
+  private def isAnyInheritedFromResolvedUnion(shape: AnyShape): Boolean =
+    isExactlyAny(shape) && resolver.getCached(shape).exists(_.isInstanceOf[UnionShape])
+
   private def createNewInheritanceAndQueue(child: Shape, parent: Shape): Shape = {
     if (child.inherits.exists(_.id == parent.id)) {
       child // already in inherits
     } else {
       val updatedChild = resolver.getCached(child).getOrElse(child)
       if (updatedChild != parent && !areTheSame(updatedChild, parent)) {
-        resolver.remove(updatedChild)
-        val r = updatedChild.setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
+        if (updatedChild.id == child.id) resolver.remove(updatedChild)
+        val r = updatedChild
+          .copyShape()
+          .withId(child.id)
+          .setArrayWithoutId(ShapeModel.Inherits, updatedChild.inherits :+ parent)
         resolver.queue(r)
         r
       } else updatedChild
