@@ -631,6 +631,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("tracked element in example defined in trait", "example-in-trait.%s") { config =>
+    cycle(
+      "example-in-trait.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      resolutionPath + "example-in-trait/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   multiGoldenTest("recursivity in additional properties", "recursive-additional-properties.%s") { config =>
     cycle(
       "recursive-additional-properties.yaml",
@@ -1363,6 +1374,31 @@ class EditingResolutionTest extends ResolutionTest {
       directory = s"${cyclePath}raml10/multiple-non-nested-unions-in-traits/",
       eh = Some(UnhandledErrorHandler),
       transformWith = Some(Raml10)
+    )
+  }
+
+  multiGoldenTest("Union combinatorial", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withPrettyPrint),
+      directory = s"${cyclePath}raml10/union-combinatorial/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
+
+  }
+
+  test("Object with property that inherits from union of objects") {
+    cycle(
+      "inline-prop-inheritance.raml",
+      "inline-prop-inheritance.raml.raml",
+      Raml10YamlHint,
+      target = Raml10YamlHint,
+      transformWith = Some(Raml10),
+      directory = s"$cyclePath/raml10/"
     )
   }
 

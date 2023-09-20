@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#19",
+                "@id": "#18/supportedOperation/post",
                 "@type": [
                   "apiContract:Operation",
                   "core:Operation",
@@ -53,7 +53,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#20",
+                    "@id": "#18/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "core:Response",
@@ -77,7 +77,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#21",
+                        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "core:Payload",
@@ -90,7 +90,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/link-1965718044",
+                            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/link-1965718044",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -100,7 +100,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#1"
+                                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal"
                               }
                             ],
                             "doc:link-label": [
@@ -145,7 +145,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -165,7 +165,7 @@
         ],
         "raml-shapes:discriminatorMapping": [
           {
-            "@id": "#2",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorMapping/mapping/dog",
             "@type": [
               "apiContract:IriTemplateMapping",
               "doc:DomainElement"
@@ -182,7 +182,7 @@
             ]
           },
           {
-            "@id": "#3",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorMapping/mapping/cat",
             "@type": [
               "apiContract:IriTemplateMapping",
               "doc:DomainElement"
@@ -201,7 +201,7 @@
         ],
         "raml-shapes:discriminatorValueMapping": [
           {
-            "@id": "#4",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/dog",
             "@type": [
               "raml-shapes:DiscriminatorValueMapping",
               "doc:DomainElement"
@@ -213,7 +213,7 @@
             ],
             "raml-shapes:discriminatorValueTarget": [
               {
-                "@id": "#5",
+                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -228,7 +228,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#6",
+                    "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -242,7 +242,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#7",
+                        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark/scalar/bark",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "raml-shapes:AnyShape",
@@ -283,7 +283,7 @@
             ]
           },
           {
-            "@id": "#10",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/discriminatorValueMapping/discriminator-value-mapping/cat",
             "@type": [
               "raml-shapes:DiscriminatorValueMapping",
               "doc:DomainElement"
@@ -295,7 +295,7 @@
             ],
             "raml-shapes:discriminatorValueTarget": [
               {
-                "@id": "#11",
+                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat",
                 "@type": [
                   "shacl:NodeShape",
                   "raml-shapes:AnyShape",
@@ -310,7 +310,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "#12",
+                    "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -324,7 +324,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "#13",
+                        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name/scalar/name",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "raml-shapes:AnyShape",
@@ -378,7 +378,7 @@
         ],
         "shacl:xone": [
           {
-            "@id": "#5",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -393,7 +393,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#6",
+                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -407,7 +407,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#7",
+                    "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark/scalar/bark",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -446,7 +446,7 @@
             ]
           },
           {
-            "@id": "#11",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -461,7 +461,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#12",
+                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -475,7 +475,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#13",
+                    "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name/scalar/name",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -516,7 +516,7 @@
         ]
       },
       {
-        "@id": "#11",
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -531,7 +531,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#12",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -545,7 +545,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#13",
+                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Cat/property/property/name/scalar/name",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -584,7 +584,7 @@
         ]
       },
       {
-        "@id": "#5",
+        "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -599,7 +599,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#6",
+            "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -613,7 +613,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#7",
+                "@id": "#18/supportedOperation/post/returns/resp/200/payload/application%2Fjson/shape/Animal/exclusiveOr/shape/Dog/property/property/bark/scalar/bark",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",

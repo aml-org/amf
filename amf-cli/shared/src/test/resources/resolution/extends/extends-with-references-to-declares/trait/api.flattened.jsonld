@@ -53,7 +53,7 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/request"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request"
         }
       ]
     },
@@ -67,7 +67,7 @@
       "http://a.ml/vocabularies/apiContract#method": "post",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/request"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/expects/request"
         }
       ]
     },
@@ -81,12 +81,12 @@
       "http://a.ml/vocabularies/apiContract#method": "put",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/request"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/expects/request"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/request",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/core#Request",
@@ -95,12 +95,12 @@
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/request/parameter/query/myParam"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/request",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/core#Request",
@@ -109,12 +109,12 @@
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/request/parameter/query/myParam"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/expects/request/parameter/parameter/query/myParam"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/request",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/core#Request",
@@ -123,12 +123,12 @@
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/request/parameter/query/myParam"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/expects/request/parameter/parameter/query/myParam"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/request/parameter/query/myParam",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/core#Parameter",
@@ -139,11 +139,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/declares/trait/MyTrait/applied/expects/request/parameter/parameter/query/myParam/scalar/myParam/scalar/MyString"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request/parameter/parameter/query/myParam/scalar/MyString"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/request/parameter/query/myParam",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/post/expects/request/parameter/parameter/query/myParam",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/core#Parameter",
@@ -154,11 +154,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/declares/trait/MyTrait/applied/expects/request/parameter/parameter/query/myParam/scalar/myParam/scalar/MyString"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request/parameter/parameter/query/myParam/scalar/MyString"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/request/parameter/query/myParam",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/put/expects/request/parameter/parameter/query/myParam",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/core#Parameter",
@@ -169,11 +169,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/declares/trait/MyTrait/applied/expects/request/parameter/parameter/query/myParam/scalar/myParam/scalar/MyString"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request/parameter/parameter/query/myParam/scalar/MyString"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/declares/trait/MyTrait/applied/expects/request/parameter/parameter/query/myParam/scalar/myParam/scalar/MyString",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/trait/api.raml#/web-api/endpoint/%2FmyEndpoint/supportedOperation/get/expects/request/parameter/parameter/query/myParam/scalar/MyString",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",

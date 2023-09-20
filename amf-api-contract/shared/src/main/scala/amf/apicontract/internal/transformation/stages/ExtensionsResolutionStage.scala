@@ -31,6 +31,7 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -77,7 +78,13 @@ abstract class MergingRestrictions() {
 }
 
 trait DomainElementArrayMergeStrategy {
-  def merge(target: DomainElement, field: Field, o: AmfArray, extensionId: String, extensionLocation: Option[String])
+  def merge(
+      target: DomainElement,
+      field: Field,
+      o: AmfArray,
+      extensionId: String,
+      extensionLocation: Option[String]
+  ): Unit
 }
 
 abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElement]](
@@ -113,7 +120,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     document
   }
 
-  def mergeReferences(
+  private def mergeReferences(
       document: Document,
       extension: ExtensionLike[Api],
       extensionId: String,
@@ -133,7 +140,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     document.withReferences(refs)
   }
 
-  def mergeAliases(document: Document, extension: ExtensionLike[_ <: DomainElement]): Unit = {
+  private def mergeAliases(document: Document, extension: ExtensionLike[_ <: DomainElement]): Unit = {
     val extensionsAliases = extension.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
     val documentAliases   = document.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
 
@@ -231,13 +238,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     }
   }
 
-  case class IriMerger(main: String = "", extension: String = "") {
+  private case class IriMerger(main: String = "", extension: String = "") {
     def merge(element: DomainElement, field: Field, value: AmfElement): Unit =
       element.set(field, value.asInstanceOf[AmfScalar].toString.replaceFirst(extension, main))
   }
 
   /** Merge annotation types, types, security schemes, resource types, */
-  def mergeDeclarations(
+  private def mergeDeclarations(
       main: Document,
       extension: ExtensionLike[Api],
       iriMerger: IriMerger,
@@ -282,7 +289,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       extensionLocation: Option[String]
   ): Unit
 
-  def adoptIris(iriMerger: IriMerger, target: DomainElement, tracker: IdTracker): Unit = {
+  private def adoptIris(iriMerger: IriMerger, target: DomainElement, tracker: IdTracker): Unit = {
     if (tracker.notTracking(target.id)) {
       tracker.track(target.id)
       target.fields.foreach { case (field, value) =>
@@ -299,7 +306,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     }
   }
 
-  def extensionsQueue(collector: ListBuffer[BaseUnit], model: BaseUnit): List[BaseUnit] = model match {
+  @tailrec
+  private def extensionsQueue(collector: ListBuffer[BaseUnit], model: BaseUnit): List[BaseUnit] = model match {
     case extension: ExtensionLike[_] =>
       model.findInReferences(extension.extend) match {
         case Some(e) =>

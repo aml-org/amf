@@ -1,0 +1,114 @@
+#%RAML 1.0
+title: Ipright Management B2C Filer API
+description: This API can be used to create and manage Iprights in Australia
+version: v1
+baseUri: https://test.api.ipaustralia.gov.au/public/ipright-management-b2c-filer-api/v1
+mediaType: application/json
+
+
+
+types:
+  RestrictedObject:
+    type: object
+    additionalProperties: false
+
+  NotBlankString:
+    type: string
+    pattern: (?=[\d\D]*\w)[\d\D]*
+
+  ElectronicAddress:
+    type: RestrictedObject
+    properties:
+      emailAddress?:
+        type: string
+        description: Email Address
+        example: "mdb-tds@ipaustralia.gov.au"
+      phoneNumber?:
+        type: string
+        description: Phone Number. Country code is required
+        example: "+61 1300 651 010"
+
+  B2CAccount:
+    type: Customer
+    description: CRM account party fields
+    properties:
+
+      electronicAddress:
+        type: ElectronicAddress
+        properties:
+          emailAddress:
+            type: string
+            description: Email Address
+            required: true
+
+  Customer:
+    type: CustomerParty
+
+  PersonNameFields:
+    type: RestrictedObject
+    properties:
+      firstName?:
+        type: NotBlankString
+      familyName?:
+        type: NotBlankString
+      middleName?:
+        type: NotBlankString
+      title?: PersonTitle
+
+  PersonName:
+    type: PersonNameFields
+    properties:
+      firstName:
+        type: NotBlankString
+        maxLength: 40
+      familyName:
+        type: NotBlankString
+        maxLength: 40
+      middleName?:
+        type: NotBlankString
+        maxLength: 40
+      title?: PersonTitle
+  Person:
+    type: PersonName
+    properties:
+      abn?: ABNType
+  PersonTitle:
+    type: string
+    enum: ['MR','MS','MISS','MRS','MX','SIR','MADAM','DAME','LORD','LADY','DR','PROF','BR','SR','FR','REV','PR','ELDER']
+
+  ABNType:
+    type: string
+    pattern: ^([0-9]{11})?$
+    description: "Australian Business Number as registered on abr.gov.au. Mandatory for Organisations with Australian Physical Address if ACN is not supplied."
+    example: "38113072755"
+
+  CustomerParty:
+    type: Person
+    description: Customer Type
+    additionalProperties: false
+    properties:
+      electronicAddress?: ElectronicAddress
+
+#Customer API
+/me:
+
+  post:
+    displayName: Register Account
+    description: |
+      Enables creation/registration of a new customer account. 
+      Note that while a customer identifier may be specified in the payload, it must
+      match the authenticated customer id in all cases when specified.
+    body:
+      application/json:
+        type: B2CAccount
+        example: |
+          {
+            "firstName": "Test",
+            "middleName": "Account",
+            "familyName": "030911",
+            "title": "MR",
+            "electronicAddress": {
+              "phoneNumber": "+61410235356",
+              "emailAddress": "test@email.ipa.gov.au"
+            }
+          }

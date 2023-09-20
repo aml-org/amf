@@ -230,7 +230,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
       // This is required in the case where the extension comes from an overlay/extension
       if (!keepEditingInfo && !fromOverlay) endpoint.fields.removeField(DomainElementModel.Extends)
-
+      extendsContext.wrapped.config.idAdopterProvider.idAdopter(endpoint.id).adoptFromRelative(endpoint)
       extendsContext.futureDeclarations.resolve()
       if (resourceTypes.nonEmpty || traitList.nonEmpty)
         new ReferenceResolutionStage(keepEditingInfo)

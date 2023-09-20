@@ -41,10 +41,12 @@ object ExampleTracking {
     shape match {
       case a: AnyShape =>
         a.examples.foreach { example =>
-          example.annotations
-            .find(classOf[TrackedElement])
-            .filter(_.parents.contains(mustExistId))
-            .foreach { _ => example.annotations += tracked(newId, example, Some(mustExistId)) }
+          val trackedElement = example.annotations.find(classOf[TrackedElement])
+          val filtered       = trackedElement.filter(_.parents.contains(mustExistId))
+          filtered.foreach { _ =>
+            val newTrackedElement = tracked(newId, example, Some(mustExistId))
+            example.annotations += newTrackedElement
+          }
         }
       case _ => // ignore
     }
@@ -59,12 +61,20 @@ object ExampleTracking {
     shape
   }
 
-  def tracked(parent: AmfObject, e: Example, remove: Option[String]): TrackedElement =
-    e.annotations
-      .find(classOf[TrackedElement])
-      .fold(TrackedElement.fromInstance(parent)) { t =>
+  def tracked(parent: AmfObject, e: Example, remove: Option[String]): TrackedElement = {
+    val trackedElement = e.annotations.find(classOf[TrackedElement])
+    trackedElement match {
+      case Some(t) =>
         e.annotations.reject(_.isInstanceOf[TrackedElement])
         val withElement = t.addElement(parent)
-        remove.map(withElement.removeId).getOrElse(withElement)
-      }
+        remove match {
+          case Some(id) =>
+            if (id != parent.id) withElement.removeId(id) else withElement
+          case None =>
+            withElement
+        }
+
+      case None => TrackedElement.fromInstance(parent)
+    }
+  }
 }

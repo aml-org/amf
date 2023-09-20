@@ -7,6 +7,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations
+import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -254,6 +255,76 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     // assert(true)
   }
 
+  test("Object that inherits from union payload validation") {
+    for {
+      report <- parseAndValidate(productionPath + "object-inherits-union.raml", RAMLConfiguration.RAML10())
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test complex object inherits several levels with root overrided property") {
+    for {
+      report <- parseAndValidate(productionPath + "missing-property-inherits.raml", RAMLConfiguration.RAML10())
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test(
+    "Test the most complex case of two endpoint with same resource types but different objects converging at same recursion"
+  ) {
+    for {
+      report <- parseAndValidate(
+        productionPath + "delete-test-fhir-r5/delete-test-fhir-r5.raml",
+        RAMLConfiguration.RAML10()
+      )
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  /** type: string | integer example: "120"
+    *
+    * At the header trait, used to produce string | string because of duplicated id, after resolve inheritance
+    */
+  test(
+    "Test union of scalars with example at trait (duplicate id for scalar ending to have same scalar duplicated)"
+  ) {
+    for {
+      report <- parseAndValidate(
+        productionPath + "scalar-union-inheritance-trait/api.raml",
+        RAMLConfiguration.RAML10()
+      )
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test complex FHIR example with property overrided cross different files and inheritances") {
+    conformsWithEditing("ce-platform-gateway-api-v1/ce-platform-gateway-api-v1.raml")
+  }
+
+  test("Test override property with same union range than super") {
+    conformsWithEditing("simple-union-override/library.raml")
+  }
+
+  test("Test overrided union range property with future declaration") {
+    conformsWithEditing("override-union-range-future-declaration/api.raml")
+  }
+
+  private def conformsWithEditing(source: String): Future[Assertion] = {
+    val config = RAMLConfiguration.RAML10()
+    for {
+      report     <- config.baseUnitClient().parse(productionPath + source)
+      transform  <- Future.successful(config.baseUnitClient().transform(report.baseUnit, PipelineId.Editing))
+      validation <- config.baseUnitClient().validate(transform.baseUnit)
+    } yield {
+      val parseReport     = AMFValidationReport.unknownProfile(report)
+      val transformReport = AMFValidationReport.unknownProfile(transform)
+      assert(validation.merge(transformReport).merge(parseReport).conforms)
+    }
+  }
   private def parseAndValidate(url: String, config: => AMFGraphConfiguration): Future[AMFValidationReport] = {
     val client = config.baseUnitClient()
     for {

@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: tracked-element test
+version: v1
+
+traits:
+  trait1:
+    responses:
+      400:
+        body:
+          application/json:
+            type: string
+            example: this is an example
+
+  trait2: # equal to trait1 (with different example)
+    responses:
+      400:
+        body:
+          application/json:
+            type: string
+            example: this example never gets applied to test endpoint
+
+/test: # an endpoint that uses a resourceType that uses trait2, and it also uses trait1
+  get:
+    is: [ trait1, trait2 ]
