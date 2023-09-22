@@ -1181,31 +1181,33 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     filteredBase
   }
 
-  private def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
-    resolver.log(s"computeMinProperty: ${baseProperty.debugInfo()} => ${superProperty.debugInfo()}")
-    val resolvedRange = resolver.getCached(
-      baseProperty.range
-    ) // search at index in case that any shape has been already computed into a more specfic range)
-    if (
-      isExactlyAny(resolvedRange.getOrElse(baseProperty.range)) && !isInferred(baseProperty) && isSubtypeOfAny(
-        superProperty.range
-      )
-    ) {
-      val childProp  = baseProperty.id
-      val parentProp = superProperty.id
-      val parentRange = superProperty.range match {
+  private def computeMinProperty(childProperty: PropertyShape, parentProperty: PropertyShape): Shape = {
+    resolver.log(s"computeMinProperty: ${childProperty.debugInfo()} => ${parentProperty.debugInfo()}")
+
+    val childRange  = childProperty.range
+    val parentRange = parentProperty.range
+
+    val shouldThrowAnyCantOverrideError = resolver.getCached(childRange) match {
+      case Some(resolvedRange) => isIllegalOverride(resolvedRange, parentRange) && !isInferred(childProperty)
+      case None if childRange.inherits.nonEmpty =>
+        false // TODO what to do here? Still don't know if it is an illegal override because child range has not been resolved
+      case None => isIllegalOverride(childRange, parentRange) && !isInferred(childProperty)
+    }
+
+    if (shouldThrowAnyCantOverrideError) {
+      val superRangeType = parentProperty.range match {
         case s: ScalarShape if !s.hasExplicitName => s.dataType.value()
         case s                                    => s.meta.`type`.head.iri()
       }
       resolver.context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
-        baseProperty,
+        childProperty,
         Some(ShapeModel.Inherits.value.iri()),
-        s"Invalid inheritance: property '$childProp' of type 'any' can't override parent property '$parentProp' of type '$parentRange'"
+        s"Invalid inheritance: property '${childProperty.id}' of type 'any' can't override parent property '${parentProperty.id}' of type '$superRangeType'"
       )
     } else {
       val shouldComputeMinRange =
-        (baseProperty.range, superProperty.range) match {
+        (childProperty.range, parentProperty.range) match {
           case (c, p) if c.id == p.id => false
           // Almost a hack. Spec says that a property can be overrided by a narrowed type. We should analyze each
           // bu union member against the whole list of super union members and check that is equal or more restricted that all
@@ -1225,27 +1227,27 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
         }
 
       val newRange = if (shouldComputeMinRange) {
-        val childRangeCopy = baseProperty.range.copyShape().simpleAdoption(baseProperty.id)
-        createNewInheritanceAndQueue(childRangeCopy, superProperty.range)
+        val childRangeCopy = childProperty.range.copyShape().simpleAdoption(childProperty.id)
+        createNewInheritanceAndQueue(childRangeCopy, parentProperty.range)
       } else {
-        baseProperty.range
+        childProperty.range
       }
 
-      baseProperty.fields.setWithoutId(
+      childProperty.fields.setWithoutId(
         PropertyShapeModel.Range,
         newRange,
-        baseProperty.fields.getValue(PropertyShapeModel.Range).annotations
+        childProperty.fields.getValue(PropertyShapeModel.Range).annotations
       )
 
       computeNarrowRestrictions(
         PropertyShapeModel.fields,
-        baseProperty,
-        superProperty,
+        childProperty,
+        parentProperty,
         filteredFields = Seq(PropertyShapeModel.Range)
       )
     }
 
-    baseProperty
+    childProperty
   }
 
   private def isAnyInheritedFromResolvedUnion(shape: AnyShape): Boolean =
@@ -1308,6 +1310,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
   private def isExactlyAny(shape: Shape)       = shape.meta == AnyShapeModel
   private def isSubtypeOfAny(shape: Shape)     = shape.meta != AnyShapeModel && shape.isInstanceOf[AnyShape]
   private def isInferred(shape: PropertyShape) = shape.range.annotations.contains(classOf[Inferred])
+  private def isIllegalOverride(child: Shape, parent: Shape): Boolean = isExactlyAny(child) && isSubtypeOfAny(parent)
 
   val keepEditingInfo: Boolean = resolver.context.keepEditingInfo
 }
