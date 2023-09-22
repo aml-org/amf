@@ -7,16 +7,12 @@ import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
-import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
-import amf.core.internal.utils.IdCounter
+import amf.core.internal.parser.domain.{Annotations, Fields, Value}
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{ParsedJSONSchema, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
-import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
-  InvalidTypeInheritanceErrorSpecification,
-  InvalidTypeInheritanceWarningSpecification
-}
+import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
@@ -1192,11 +1188,17 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
         superProperty.range
       )
     ) {
+      val childProp  = baseProperty.id
+      val parentProp = superProperty.id
+      val parentRange = superProperty.range match {
+        case s: ScalarShape if !s.hasExplicitName => s.dataType.value()
+        case s                                    => s.meta.`type`.head.iri()
+      }
       resolver.context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
         baseProperty,
         Some(ShapeModel.Inherits.value.iri()),
-        s"Resolution error: Invalid scalar inheritance base type 'any' can't override"
+        s"Invalid inheritance: property '$childProp' of type 'any' can't override parent property '$parentProp' of type '$parentRange'"
       )
     } else {
       val shouldComputeMinRange =
