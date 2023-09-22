@@ -788,7 +788,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
     val superItems = superMatrix.items
     val baseItems  = baseMatrix.items
-    if (Option(superItems).isDefined && Option(baseItems).isDefined) {
+    if (Option(superItems).isDefined && Option(baseItems).isDefined && !isExactlyAny(superItems)) {
 
       val newItems = createNewInheritanceAndQueue(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
@@ -813,7 +813,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
     val superItems = superArray
     val baseItems  = baseMatrix.items
-    if (Option(superItems).isDefined && Option(baseItems).isDefined) {
+    if (Option(superItems).isDefined && Option(baseItems).isDefined && !isExactlyAny(superItems)) {
 
       val newItems = createNewInheritanceAndQueue(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
@@ -856,7 +856,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
       } yield {
-        createNewInheritanceAndQueue(baseItem, superItems(i))
+        superItems(i) match {
+          case s: AnyShape if isExactlyAny(s) => baseItem
+          case s                              => createNewInheritanceAndQueue(baseItem, s)
+        }
       }
 
       baseTuple.fields.setWithoutId(
@@ -884,7 +887,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     val newItems = baseItemsOption
       .map { baseItems =>
         superItemsOption match {
-          case Some(superItems) =>
+          case Some(superItems) if !isExactlyAny(superItems) =>
             createNewInheritanceAndQueue(baseItems.copyShape().simpleAdoption(baseArray.id), superItems)
           case _ => baseItems
         }
@@ -1218,11 +1221,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
             false
 
           // if is any because the inheritance has already been solved at cache.
-          case (_: UnionShape, su: AnyShape) => !isAnyInheritedFromResolvedUnion(su)
-          // Only for anyShapes that implies expressions of future declaration. Specific types inheritance should be handled at that paritcular inheritance resolution
-          case (bu: AnyShape, su: AnyShape) =>
-            !(isAnyInheritedFromResolvedUnion(su) && isAnyInheritedFromResolvedUnion(bu))
-          case _ => true
+          case (_, su: AnyShape) => !isExactlyAny(su)
         }
 
       val newRange = if (shouldComputeMinRange) {
