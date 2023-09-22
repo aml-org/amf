@@ -316,4 +316,8 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/any-cant-override/case1/api.raml")
   }
 
+  test("Any can't override case 2") {
+    checkValid("/raml/any-cant-override/case2/api.raml")
+  }
+
 }

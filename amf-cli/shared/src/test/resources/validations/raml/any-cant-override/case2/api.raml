@@ -1,0 +1,21 @@
+#%RAML 1.0 Library
+types:
+  ObjectArray:
+    type: array
+    items: object
+
+  Parent:
+    properties:
+      myProperty:
+        type: ObjectArray
+
+  Child:
+    type: Parent
+    properties:
+      myProperty:
+        type: AnotherObjectArray
+
+  AnotherObjectArray:
+    type: array
+    items: object
+
