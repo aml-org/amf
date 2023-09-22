@@ -1401,7 +1401,18 @@ class EditingResolutionTest extends ResolutionTest {
       transformWith = Some(Raml10),
       directory = directory
     )
+  }
 
+  test("Any can't override case 2") {
+    val directory = s"$validationsPath/raml/any-cant-override/case2/"
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      transformWith = Some(Raml10),
+      directory = directory
+    )
   }
 
   override val basePath: String = ""
