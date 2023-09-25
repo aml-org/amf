@@ -1,0 +1,9 @@
+#%RAML 1.0
+
+title: test empty fragment
+
+/v1:
+  get:
+    body:
+      application/json:
+        type: !include empty-file.raml
