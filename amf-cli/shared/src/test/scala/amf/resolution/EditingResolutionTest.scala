@@ -1388,7 +1388,19 @@ class EditingResolutionTest extends ResolutionTest {
       eh = Some(UnhandledErrorHandler),
       transformWith = Some(Raml10)
     )
+  }
 
+  test("Array override") {
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(renderOptions().withPrettyPrint),
+      directory = s"${cyclePath}raml10/array-override/",
+      eh = Some(UnhandledErrorHandler),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Object with property that inherits from union of objects") {
@@ -1399,6 +1411,30 @@ class EditingResolutionTest extends ResolutionTest {
       target = Raml10YamlHint,
       transformWith = Some(Raml10),
       directory = s"$cyclePath/raml10/"
+    )
+  }
+
+  test("Any can't override case 1") {
+    val directory = s"$validationsPath/raml/any-cant-override/case1/"
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      transformWith = Some(Raml10),
+      directory = directory
+    )
+  }
+
+  test("Any can't override case 2") {
+    val directory = s"$validationsPath/raml/any-cant-override/case2/"
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      transformWith = Some(Raml10),
+      directory = directory
     )
   }
 

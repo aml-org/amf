@@ -312,4 +312,16 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/complex-case-with-unions-and-proxy-types.raml")
   }
 
+  test("Any can't override case 1") {
+    checkValid("/raml/any-cant-override/case1/api.raml")
+  }
+
+  test("Any can't override case 2") {
+    checkValid("/raml/any-cant-override/case2/api.raml")
+  }
+
+  test("Any can't override case 3") {
+    checkValid("/raml/any-cant-override/case3/api.raml") // TODO this test should fail!
+  }
+
 }
