@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Invoice API
+mediaType: application/json
+
+types:
+  GrandParent:
+    properties:
+      grandParentProp: string
+
+  Parent:
+    type: GrandParent
+    properties:
+      parentProp: string
+
+  Another:
+    properties:
+      anotherProp: string
+
+  MyArray:
+    type: Parent[]
+    items: Another

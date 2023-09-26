@@ -7,16 +7,12 @@ import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
-import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
-import amf.core.internal.utils.IdCounter
+import amf.core.internal.parser.domain.{Annotations, Fields, Value}
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{ParsedJSONSchema, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
-import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
-  InvalidTypeInheritanceErrorSpecification,
-  InvalidTypeInheritanceWarningSpecification
-}
+import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
@@ -792,7 +788,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
     val superItems = superMatrix.items
     val baseItems  = baseMatrix.items
-    if (Option(superItems).isDefined && Option(baseItems).isDefined) {
+    if (Option(superItems).isDefined && Option(baseItems).isDefined && !isExactlyAny(superItems)) {
 
       val newItems = createNewInheritanceAndQueue(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
@@ -817,7 +813,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
 
     val superItems = superArray
     val baseItems  = baseMatrix.items
-    if (Option(superItems).isDefined && Option(baseItems).isDefined) {
+    if (Option(superItems).isDefined && Option(baseItems).isDefined && !isExactlyAny(superItems)) {
 
       val newItems = createNewInheritanceAndQueue(baseItems, superItems)
       baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
@@ -860,7 +856,10 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
       } yield {
-        createNewInheritanceAndQueue(baseItem, superItems(i))
+        superItems(i) match {
+          case s: AnyShape if isExactlyAny(s) => baseItem
+          case s                              => createNewInheritanceAndQueue(baseItem, s)
+        }
       }
 
       baseTuple.fields.setWithoutId(
@@ -888,7 +887,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     val newItems = baseItemsOption
       .map { baseItems =>
         superItemsOption match {
-          case Some(superItems) =>
+          case Some(superItems) if !isExactlyAny(superItems) =>
             createNewInheritanceAndQueue(baseItems.copyShape().simpleAdoption(baseArray.id), superItems)
           case _ => baseItems
         }
@@ -1182,25 +1181,33 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     filteredBase
   }
 
-  private def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
-    resolver.log(s"computeMinProperty: ${baseProperty.debugInfo()} => ${superProperty.debugInfo()}")
-    val resolvedRange = resolver.getCached(
-      baseProperty.range
-    ) // search at index in case that any shape has been already computed into a more specfic range)
-    if (
-      isExactlyAny(resolvedRange.getOrElse(baseProperty.range)) && !isInferred(baseProperty) && isSubtypeOfAny(
-        superProperty.range
-      )
-    ) {
+  private def computeMinProperty(childProperty: PropertyShape, parentProperty: PropertyShape): Shape = {
+    resolver.log(s"computeMinProperty: ${childProperty.debugInfo()} => ${parentProperty.debugInfo()}")
+
+    val childRange  = childProperty.range
+    val parentRange = parentProperty.range
+
+    val shouldThrowAnyCantOverrideError = resolver.getCached(childRange) match {
+      case Some(resolvedRange) => isIllegalOverride(resolvedRange, parentRange) && !isInferred(childProperty)
+      case None if childRange.inherits.nonEmpty =>
+        false // TODO what to do here? Still don't know if it is an illegal override because child range has not been resolved
+      case None => isIllegalOverride(childRange, parentRange) && !isInferred(childProperty)
+    }
+
+    if (shouldThrowAnyCantOverrideError) {
+      val superRangeType = parentProperty.range match {
+        case s: ScalarShape if !s.hasExplicitName => s.dataType.value()
+        case s                                    => s.meta.`type`.head.iri()
+      }
       resolver.context.errorHandler.violation(
         InvalidTypeInheritanceErrorSpecification,
-        baseProperty,
+        childProperty,
         Some(ShapeModel.Inherits.value.iri()),
-        s"Resolution error: Invalid scalar inheritance base type 'any' can't override"
+        s"Invalid inheritance: property '${childProperty.id}' of type 'any' can't override parent property '${parentProperty.id}' of type '$superRangeType'"
       )
     } else {
       val shouldComputeMinRange =
-        (baseProperty.range, superProperty.range) match {
+        (childProperty.range, parentProperty.range) match {
           case (c, p) if c.id == p.id => false
           // Almost a hack. Spec says that a property can be overrided by a narrowed type. We should analyze each
           // bu union member against the whole list of super union members and check that is equal or more restricted that all
@@ -1216,35 +1223,31 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
             false
 
           // if is any because the inheritance has already been solved at cache.
-          case (_: UnionShape, su: AnyShape) => !isAnyInheritedFromResolvedUnion(su)
-          // Only for anyShapes that implies expressions of future declaration. Specific types inheritance should be handled at that paritcular inheritance resolution
-          case (bu: AnyShape, su: AnyShape) =>
-            !(isAnyInheritedFromResolvedUnion(su) && isAnyInheritedFromResolvedUnion(bu))
-          case _ => true
+          case (_, su: AnyShape) => !isExactlyAny(su)
         }
 
       val newRange = if (shouldComputeMinRange) {
-        val childRangeCopy = baseProperty.range.copyShape().simpleAdoption(baseProperty.id)
-        createNewInheritanceAndQueue(childRangeCopy, superProperty.range)
+        val childRangeCopy = childProperty.range.copyShape().simpleAdoption(childProperty.id)
+        createNewInheritanceAndQueue(childRangeCopy, parentProperty.range)
       } else {
-        baseProperty.range
+        childProperty.range
       }
 
-      baseProperty.fields.setWithoutId(
+      childProperty.fields.setWithoutId(
         PropertyShapeModel.Range,
         newRange,
-        baseProperty.fields.getValue(PropertyShapeModel.Range).annotations
+        childProperty.fields.getValue(PropertyShapeModel.Range).annotations
       )
 
       computeNarrowRestrictions(
         PropertyShapeModel.fields,
-        baseProperty,
-        superProperty,
+        childProperty,
+        parentProperty,
         filteredFields = Seq(PropertyShapeModel.Range)
       )
     }
 
-    baseProperty
+    childProperty
   }
 
   private def isAnyInheritedFromResolvedUnion(shape: AnyShape): Boolean =
@@ -1307,6 +1310,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
   private def isExactlyAny(shape: Shape)       = shape.meta == AnyShapeModel
   private def isSubtypeOfAny(shape: Shape)     = shape.meta != AnyShapeModel && shape.isInstanceOf[AnyShape]
   private def isInferred(shape: PropertyShape) = shape.range.annotations.contains(classOf[Inferred])
+  private def isIllegalOverride(child: Shape, parent: Shape): Boolean = isExactlyAny(child) && isSubtypeOfAny(parent)
 
   val keepEditingInfo: Boolean = resolver.context.keepEditingInfo
 }
