@@ -54,13 +54,13 @@ declare module "amf-client-js" {
 
     renderToBuilder<T>(
       element: DomainElement,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): void;
   }
   export class AMFElementRenderer {
     static renderToBuilder<T>(
       element: DomainElement,
-      builder: org.yaml.builder.JsOutputBuilder,
+      builder: JsOutputBuilder,
       config: AMFGraphConfiguration
     ): void;
   }
@@ -88,7 +88,7 @@ declare module "amf-client-js" {
 
     renderGraphToBuilder<T>(
       baseUnit: BaseUnit,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): T;
 
     setBaseUri(unit: BaseUnit, base: string): void;
@@ -197,7 +197,7 @@ declare module "amf-client-js" {
 
     static renderGraphToBuilder<T>(
       baseUnit: BaseUnit,
-      builder: org.yaml.builder.JsOutputBuilder,
+      builder: JsOutputBuilder,
       configuration: AMFGraphConfiguration
     ): T;
   }
@@ -349,7 +349,7 @@ declare module "amf-client-js" {
 
     renderToBuilder<T>(
       element: DomainElement,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): void;
   }
   export class AMLVocabularyResult extends AMFResult {
@@ -597,7 +597,7 @@ declare module "amf-client-js" {
     static emitToBuilder<T>(
       element: DomainElement,
       amlConfig: BaseAMLConfiguration,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): void;
   }
   export class Amqp091ChannelBinding implements ChannelBinding {
@@ -1336,7 +1336,7 @@ declare module "amf-client-js" {
   export class BaseAMLElementClient extends AMFGraphElementClient {
     renderToBuilder<T>(
       element: DomainElement,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): void;
   }
   export interface BaseFileResourceLoader extends ResourceLoader {
@@ -1408,7 +1408,7 @@ declare module "amf-client-js" {
 
     renderToBuilder<T>(
       element: DomainElement,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): void;
 
     toJsonSchema(element: AnyShape): string;
@@ -3598,7 +3598,7 @@ declare module "amf-client-js" {
 
     renderToBuilder<T>(
       element: DomainElement,
-      builder: org.yaml.builder.JsOutputBuilder
+      builder: JsOutputBuilder
     ): void;
   }
   export class JsonLDSchemaResult extends AMFParseResult {

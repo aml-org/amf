@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
-  Message: Resolution error: Invalid scalar inheritance base type 'any' can't override
+  Message: Invalid inheritance: property 'file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml#/declares/shape/Father/property/property/age' of type 'any' can't override parent property 'file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml#/declares/shape/Grandfather/property/property/age' of type 'http://www.w3.org/2001/XMLSchema#integer'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml#/declares/shape/Father/property/property/age
   Property: http://a.ml/vocabularies/shapes#inherits
