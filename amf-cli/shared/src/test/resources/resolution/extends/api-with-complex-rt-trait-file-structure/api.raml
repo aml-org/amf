@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: API
+version: 1.0.0
+uses:
+  Resource: /libraries/rc-lib.raml
+  Traits: /libraries/tr-lib.raml
+
+/endpoint:
+  type: Resource.collection
+  get:
+    description: some endpoint
+    is: 
+      - Traits.queryParams
