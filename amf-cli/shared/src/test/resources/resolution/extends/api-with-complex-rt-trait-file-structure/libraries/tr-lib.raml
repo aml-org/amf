@@ -1,0 +1,10 @@
+#%RAML 1.0 Library
+usage: traits library
+uses:
+  RequestHeader: /exchange_modules/my-org/library-dependency/1.0.0/library-dependency.raml
+
+traits:
+  queryParams: !include ../traits/queryParams.raml
+  headers:
+    is:
+      - RequestHeader.required-headers
