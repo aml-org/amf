@@ -35,7 +35,12 @@ import amf.shapes.internal.spec.jsonschema.parser.{
   Draft4ShapeDependenciesParser,
   UnevaluatedParser
 }
-import amf.shapes.internal.spec.oas.parser.field.{OrConstraintParser, ShapeParser, XoneConstraintParser}
+import amf.shapes.internal.spec.oas.parser.field.{
+  OrConstraintParser,
+  PropertiesParser,
+  ShapeParser,
+  XoneConstraintParser
+}
 import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{
   AdditionalProperties,
   AllOf,
@@ -51,6 +56,7 @@ import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{
   ExclusiveMinimumBoolean,
   ExclusiveMinimumNumeric,
   ExternalDocs,
+  FacetsExtension,
   Id,
   If,
   MaxLength,
@@ -70,6 +76,7 @@ import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{
   UnevaluatedProperties,
   WriteOnly,
   Xml,
+  `$Comment`,
   setValue
 }
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
@@ -637,7 +644,7 @@ case class InlineOasTypeParser(
       map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
       if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
-        map.key("$comment", AnyShapeModel.Comment in shape)
+        `$Comment`.parse(map, shape)
 
       shape
     }
@@ -681,6 +688,18 @@ case class InlineOasTypeParser(
         UnevaluatedProperties(version).parse(map, shape)
       }
 
+      parseDiscriminator()
+
+      parseProperties(shape)
+
+      parseShapeDependencies(shape)
+
+      parseAmfMergeAnnotation(shape)
+
+      shape
+    }
+
+    private def parseDiscriminator(): Unit = {
       if (isOas3) {
         map.key("discriminator", DiscriminatorParser(shape, _).parse())
       } else {
@@ -696,7 +715,9 @@ case class InlineOasTypeParser(
           }
         )
       }
+    }
 
+    private def parseProperties(shape: NodeShape) = {
       val requiredFields = parseRequiredFields(map, shape)
 
       val properties      = mutable.LinkedHashMap[String, PropertyShape]()
@@ -704,7 +725,7 @@ case class InlineOasTypeParser(
       propertiesEntry.foreach(entry => {
         Option(entry.value.as[YMap]) match {
           case Some(m) =>
-            val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
+            val props = PropertiesParser(m, version, shape.withProperty, requiredFields).parse()
             properties ++= props.map(p => p.name.value() -> p)
           case _ => // Empty properties node.
         }
@@ -719,7 +740,7 @@ case class InlineOasTypeParser(
         entry.value.toOption[YMap] match {
           case Some(m) =>
             properties ++=
-              PropertiesParser(m, shape.withProperty, requiredFields, patterned = true)
+              PropertiesParser(m, version, shape.withProperty, requiredFields, patterned = true)
                 .parse()
                 .map(p => p.name.value() -> p)
           case _ => // Empty properties node.
@@ -732,7 +753,9 @@ case class InlineOasTypeParser(
         patternPropEntry.map { pp =>
           (Annotations(pp.value), Annotations(pp))
         }
-      } getOrElse { (virtual(), inferred()) }
+      } getOrElse {
+        (virtual(), inferred())
+      }
 
       if (properties.nonEmpty || propertiesEntry.nonEmpty)
         shape.setWithoutId(
@@ -740,19 +763,17 @@ case class InlineOasTypeParser(
           AmfArray(properties.values.toSeq, propertiesAnnotations),
           propertiesFieldAnnotations
         )
-
-      parseShapeDependencies(shape)
-
-      map.key(
-        "x-amf-merge",
-        entry => {
-          val inherits = AllOfParser(entry.value.as[Seq[YNode]], s => Unit, version).parse()
-          shape.setWithoutId(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
-        }
-      )
-
-      shape
     }
+  }
+
+  private def parseAmfMergeAnnotation(shape: Shape): Unit = {
+    map.key(
+      "x-amf-merge",
+      entry => {
+        val inherits = AllOfParser(entry.value.as[Seq[YNode]], s => Unit, version).parse()
+        shape.setWithoutId(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
+      }
+    )
   }
 
   private def generateUndefinedRequiredProperties(
@@ -908,105 +929,6 @@ case class InlineOasTypeParser(
     }
   }
 
-  case class PropertiesParser(
-      map: YMap,
-      producer: (String, Annotations) => PropertyShape,
-      requiredFields: Map[String, YNode],
-      patterned: Boolean = false
-  ) {
-    def parse(): Seq[PropertyShape] = {
-      map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields, patterned).parse())
-    }
-  }
-
-  case class PropertyShapeParser(
-      entry: YMapEntry,
-      producer: (String, Annotations) => PropertyShape,
-      requiredFields: Map[String, YNode],
-      patterned: Boolean
-  ) {
-
-    def parse(): PropertyShape = {
-
-      val name            = entry.key.as[YScalar].text
-      val nameAnnotations = Annotations(entry.key)
-      val required        = requiredFields.contains(name)
-      val requiredAnnotations =
-        requiredFields.get(name).map(node => Annotations(node)).getOrElse(synthesized())
-      val property = producer(name, nameAnnotations)
-        .add(Annotations(entry))
-        .setWithoutId(
-          PropertyShapeModel.MinCount,
-          AmfScalar(if (required) 1 else 0, synthesized()),
-          requiredAnnotations += ExplicitField()
-        )
-
-      property.setWithoutId(
-        PropertyShapeModel.Path,
-        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)),
-        inferred()
-      )
-
-      if (version.isInstanceOf[OAS20SchemaVersion])
-        validateReadOnlyAndRequired(entry.value.toOption[YMap], property, required)
-
-      // This comes from JSON Schema draft-3, we will parse it for backward compatibility but we will not generate it
-      entry.value
-        .toOption[YMap]
-        .foreach(
-          _.key(
-            "required",
-            entry => {
-              if (entry.value.tagType == YType.Bool) {
-                if (version != JSONSchemaDraft3SchemaVersion) {
-                  ctx.eh.warning(
-                    InvalidRequiredBooleanForSchemaVersion,
-                    property,
-                    "Required property boolean value is only supported in JSON Schema draft-3",
-                    entry.location
-                  )
-                }
-                val required =
-                  amf.core.internal.parser.domain.ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-                property.setWithoutId(
-                  PropertyShapeModel.MinCount,
-                  AmfScalar(if (required) 1 else 0),
-                  synthesized()
-                )
-              }
-            }
-          )
-        )
-
-      var shape = AnyShape()
-      parser.OasTypeParser(entry, shape => Unit, version).parse().foreach(shape = _)
-      property.setWithoutId(PropertyShapeModel.Range, shape, Annotations.inferred())
-
-      if (patterned) property.withPatternName(name)
-
-      property
-    }
-
-    private def validateReadOnlyAndRequired(map: Option[YMap], property: PropertyShape, isRequired: Boolean): Unit = {
-      map.foreach(
-        _.key(
-          "readOnly",
-          readOnlyEntry => {
-            val readOnly = Try(readOnlyEntry.value.as[YScalar].text.toBoolean).getOrElse(false)
-            if (readOnly && isRequired) {
-              ctx.eh.warning(
-                ReadOnlyPropertyMarkedRequired,
-                property,
-                "Read only property should not be marked as required by a schema",
-                readOnlyEntry.location
-              )
-            }
-          }
-        )
-      )
-    }
-  }
-
   abstract class ShapeParser(implicit ctx: ShapeParserContext) {
 
     val shape: Shape
@@ -1040,12 +962,8 @@ case class InlineOasTypeParser(
       ExternalDocs.parse(map, shape)
       Xml.parse(map, shape)
 
-      map.key(
-        "facets".asOasExtension,
-        entry => PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Map()).parse()
-      )
+      FacetsExtension(version).parse(map, shape)
 
-      // Explicit annotation for the type property
       Type.parse(map, shape)
 
       // Logical constraints

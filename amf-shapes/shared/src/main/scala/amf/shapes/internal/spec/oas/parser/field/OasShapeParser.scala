@@ -6,6 +6,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.domain.Annotations.synthesized
+import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.{JSONSchemaId, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, NodeShapeModel, ScalarShapeModel}
@@ -92,8 +93,21 @@ object ShapeParser {
     }
   }
 
+  val FacetsExtension: SchemaVersion => FieldParser = version =>
+    new FieldParser {
+      override def parse(map: YMap, shape: Shape)(implicit ctx: ShapeParserContext): Shape = {
+        map.key(
+          "facets".asOasExtension,
+          entry =>
+            PropertiesParser(entry.value.as[YMap], version, shape.withCustomShapePropertyDefinition, Map()).parse()
+        )
+        shape
+      }
+    }
+
   val Type: FieldParser = new FieldParser {
     override def parse(map: YMap, shape: Shape)(implicit ctx: ShapeParserContext): Shape = {
+      // Explicit annotation for the type property
       map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(entry.key.range))
       shape
     }
@@ -380,6 +394,13 @@ object ShapeParser {
         shape
       }
     }
+
+  val `$Comment`: FieldParser = new FieldParser {
+    override def parse(map: YMap, shape: Shape)(implicit ctx: ShapeParserContext): Shape = {
+      map.key("$comment", AnyShapeModel.Comment in shape)
+      shape
+    }
+  }
 
   def setValue(key: String, map: YMap, field: Field, shape: Shape): Unit =
     map.key(
