@@ -1,20 +1,17 @@
 package amf.shapes.internal.spec.jsonschema.parser
 
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
-import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.SchemaDependencies
-import amf.shapes.client.scala.model.domain.{Dependencies, NodeShape, PropertyDependencies}
+import amf.shapes.client.scala.model.domain.{Dependencies, PropertyDependencies, SchemaDependencies}
 import amf.shapes.internal.domain.metamodel.{
   DependenciesModel,
   NodeShapeModel,
   PropertyDependenciesModel,
   SchemaDependenciesModel
 }
-import amf.shapes.internal.spec.common.parser.{ShapeParserContext, SingleArrayNode, YMapEntryLike}
 import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.parser.{ShapeParserContext, SingleArrayNode, YMapEntryLike}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
-import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{DependentRequired, DependentSchemas}
 import org.yaml.model._
 
 /** */
@@ -58,15 +55,6 @@ case class Draft4ShapeDependenciesParser(shape: Shape, map: YMap, parentId: Stri
       case entry: YMapEntry => entry.value.tagType.equals(tagType)
       case _                => false
     }._1
-}
-
-case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(
-    implicit ctx: ShapeParserContext
-) {
-  def parse(): Unit = {
-    DependentSchemas(version, parentId).parse(map, shape)
-    DependentRequired(parentId).parse(map, shape)
-  }
 }
 
 trait SpecializedDependencyParser {
