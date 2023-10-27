@@ -35,6 +35,23 @@ import amf.shapes.internal.spec.jsonschema.parser.{
   Draft4ShapeDependenciesParser,
   UnevaluatedParser
 }
+import amf.shapes.internal.spec.oas.parser.field.{OrConstraintParser, ShapeParser, XoneConstraintParser}
+import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{
+  AllOf,
+  AnyOf,
+  Default,
+  Description,
+  Enum,
+  ExternalDocs,
+  Id,
+  Not,
+  OneOf,
+  ReadOnly,
+  Title,
+  Type,
+  WriteOnly,
+  Xml
+}
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
@@ -438,64 +455,6 @@ case class InlineOasTypeParser(
       )
 
       shape
-    }
-  }
-
-  case class OrConstraintParser(map: YMap, shape: Shape) {
-
-    def parse(): Unit = {
-      map.key(
-        "anyOf",
-        { entry =>
-          entry.value.to[Seq[YNode]] match {
-            case Right(seq) =>
-              val unionNodes = seq.zipWithIndex
-                .flatMap { case (node, index) =>
-                  val entry = YMapEntryLike(node)
-                  OasTypeParser(entry, s"item$index", _ => Unit, version).parse()
-                }
-              shape.fields
-                .setWithoutId(ShapeModel.Or, AmfArray(unionNodes, Annotations(entry.value)), Annotations(entry))
-            case _ =>
-              ctx.eh.violation(
-                InvalidOrType,
-                shape,
-                "Or constraints are built from multiple shape nodes",
-                entry.value.location
-              )
-
-          }
-        }
-      )
-    }
-  }
-
-  case class XoneConstraintParser(map: YMap, shape: Shape) {
-
-    def parse(): Unit = {
-      map.key(
-        "oneOf",
-        { entry =>
-          adopt(shape)
-          entry.value.to[Seq[YNode]] match {
-            case Right(seq) =>
-              val nodes = seq.zipWithIndex
-                .flatMap { case (node, index) =>
-                  val entry = YMapEntryLike(node)
-                  OasTypeParser(entry, s"item$index", _ => Unit, version).parse()
-                }
-              shape.fields.setWithoutId(ShapeModel.Xone, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
-            case _ =>
-              ctx.eh.violation(
-                InvalidXoneType,
-                shape,
-                "Xone constraints are built from multiple shape nodes",
-                entry.value.location
-              )
-
-          }
-        }
-      )
     }
   }
 
@@ -1067,25 +1026,30 @@ case class InlineOasTypeParser(
     lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(new IdCounter())
     lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id)
 
+//    val parsers = List(
+//      Title,
+//      Description,
+//      Default,
+//      Enum(enumParser),
+//      ExternalDocs,
+//      Xml,
+//      // Facet,
+//      Type,
+//      AnyOf,
+//      AllOf,
+//      OneOf,
+//      Not,
+//      ReadOnly
+//    )
+
     def parse(): Shape = {
 
-      map.key("title", ShapeModel.DisplayName in shape)
-      map.key("description", ShapeModel.Description in shape)
-
-      map.key(
-        "default",
-        node => {
-          shape.setDefaultStrValue(node)
-          NodeDataNodeParser(node.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
-            shape.setWithoutId(ShapeModel.Default, dn, Annotations(node))
-          }
-
-        }
-      )
-
-      map.key("enum", ShapeModel.Values in shape using enumParser)
-      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
-      map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
+      Title.parse(map, shape)
+      Description.parse(map, shape)
+      Default.parse(map, shape)
+      Enum(enumParser).parse(map, shape)
+      ExternalDocs.parse(map, shape)
+      Xml.parse(map, shape)
 
       map.key(
         "facets".asOasExtension,
@@ -1093,26 +1057,26 @@ case class InlineOasTypeParser(
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(entry.key.range))
+      Type.parse(map, shape)
 
       // Logical constraints
-      OrConstraintParser(map, shape).parse()
-      AndConstraintParser(map, shape, adopt, version).parse()
-      XoneConstraintParser(map, shape).parse()
-      InnerShapeParser("not", ShapeModel.Not, map, shape, adopt, version).parse()
+      AnyOf(version).parse(map, shape)
+      AllOf(version, adopt).parse(map, shape)
+      OneOf(version, adopt).parse(map, shape)
+      Not(version, adopt).parse(map, shape)
 
-      map.key("readOnly", ShapeModel.ReadOnly in shape)
+      ReadOnly.parse(map, shape)
 
       if (version.isInstanceOf[OAS30SchemaVersion] || version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
-        map.key("writeOnly", ShapeModel.WriteOnly in shape)
-        map.key("deprecated", ShapeModel.Deprecated in shape)
+        WriteOnly.parse(map, shape)
+        ShapeParser.Deprecated.parse(map, shape)
       }
 
       if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) parseDraft7Fields()
       // normal annotations
       AnnotationParser(shape, map).parse()
 
-      map.key("id", node => shape.annotations += JSONSchemaId(node.value.as[YScalar].text))
+      Id.parse(map, shape)
       shape
     }
 
