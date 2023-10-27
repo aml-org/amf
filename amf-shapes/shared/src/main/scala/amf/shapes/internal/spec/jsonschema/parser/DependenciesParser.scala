@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.jsonschema.parser
 
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.SchemaDependencies
@@ -14,10 +14,11 @@ import amf.shapes.internal.domain.metamodel.{
 import amf.shapes.internal.spec.common.parser.{ShapeParserContext, SingleArrayNode, YMapEntryLike}
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{DependentRequired, DependentSchemas}
 import org.yaml.model._
 
 /** */
-case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(implicit
+case class Draft4ShapeDependenciesParser(shape: Shape, map: YMap, parentId: String, version: SchemaVersion)(implicit
     ctx: ShapeParserContext
 ) {
 
@@ -63,30 +64,8 @@ case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentI
     implicit ctx: ShapeParserContext
 ) {
   def parse(): Unit = {
-    map.key("dependentSchemas").foreach { entry =>
-      val schemaDependencies = entry.value
-        .as[YMap]
-        .entries
-        .map(e => DependenciesParser(e, parentId, SchemaDependencyParser(e.value, version)).parse())
-      shape.setWithoutId(
-        NodeShapeModel.SchemaDependencies,
-        AmfArray(schemaDependencies, Annotations(entry.value)),
-        Annotations(entry)
-      )
-    }
-
-    map.key("dependentRequired").foreach { entry =>
-      val propertyDependencies = entry.value
-        .as[YMap]
-        .entries
-        .map(e => DependenciesParser(e, parentId, PropertyDependencyParser(e.value)).parse())
-      shape
-        .setWithoutId(
-          NodeShapeModel.Dependencies,
-          AmfArray(propertyDependencies, Annotations(entry.value)),
-          Annotations(entry)
-        )
-    }
+    DependentSchemas(version, parentId).parse(map, shape)
+    DependentRequired(parentId).parse(map, shape)
   }
 }
 

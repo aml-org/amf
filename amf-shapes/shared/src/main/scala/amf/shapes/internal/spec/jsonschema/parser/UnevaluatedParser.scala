@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.jsonschema.parser
 
-import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
@@ -49,7 +49,7 @@ class UnevaluatedParser(version: SchemaVersion, info: UnevaluatedInfo)(implicit 
 
   private val UnevaluatedInfo(key, booleanField, schemaField, error, message) = info
 
-  def parse(map: YMap, shape: AnyShape) {
+  def parse(map: YMap, shape: Shape) {
     map.key(key).foreach { entry =>
       entry.value.tagType match {
         case YType.Bool => (booleanField in shape).explicit(entry)

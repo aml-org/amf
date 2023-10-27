@@ -37,20 +37,40 @@ import amf.shapes.internal.spec.jsonschema.parser.{
 }
 import amf.shapes.internal.spec.oas.parser.field.{OrConstraintParser, ShapeParser, XoneConstraintParser}
 import amf.shapes.internal.spec.oas.parser.field.ShapeParser.{
+  AdditionalProperties,
   AllOf,
   AnyOf,
+  Const,
   Default,
+  Dependencies,
   Description,
+  Else,
   Enum,
+  ExclusiveMaximumBoolean,
+  ExclusiveMaximumNumeric,
+  ExclusiveMinimumBoolean,
+  ExclusiveMinimumNumeric,
   ExternalDocs,
   Id,
+  If,
+  MaxLength,
+  MaxProperties,
+  Maximum,
+  MinLength,
+  MinProperties,
+  Minimum,
+  MultipleOf,
   Not,
   OneOf,
+  Pattern,
   ReadOnly,
+  Then,
   Title,
   Type,
+  UnevaluatedProperties,
   WriteOnly,
-  Xml
+  Xml,
+  setValue
 }
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
@@ -325,13 +345,13 @@ case class InlineOasTypeParser(
 
       typeDef match {
         case TypeDef.StrType | TypeDef.FileType =>
-          map.key("pattern", ScalarShapeModel.Pattern in shape)
-          map.key("minLength", ScalarShapeModel.MinLength in shape)
-          map.key("maxLength", ScalarShapeModel.MaxLength in shape)
+          Pattern.parse(map, shape)
+          MinLength.parse(map, shape)
+          MaxLength.parse(map, shape)
         case n if n.isNumber =>
-          setValue("minimum", map, ScalarShapeModel.Minimum, shape)
-          setValue("maximum", map, ScalarShapeModel.Maximum, shape)
-          map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
+          Minimum.parse(map, shape)
+          Maximum.parse(map, shape)
+          MultipleOf.parse(map, shape)
           if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion) {
             parseNumericExclusive(map, shape)
           } else {
@@ -343,23 +363,14 @@ case class InlineOasTypeParser(
     }
 
     private def parseNumericExclusive(map: YMap, shape: Shape): Unit = {
-      map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimumNumeric in shape)
-      map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximumNumeric in shape)
+      ExclusiveMinimumNumeric.parse(map, shape)
+      ExclusiveMaximumNumeric.parse(map, shape)
     }
 
     private def parseBooleanExclusive(map: YMap, shape: Shape): Unit = {
-      map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
-      map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+      ExclusiveMinimumBoolean.parse(map, shape)
+      ExclusiveMaximumBoolean.parse(map, shape)
     }
-
-    private def setValue(key: String, map: YMap, field: Field, shape: Shape): Unit =
-      map.key(
-        key,
-        entry => {
-          val value = amf.core.internal.parser.domain.ScalarNode(entry.value)
-          shape.setWithoutId(field, value.text(), Annotations(entry))
-        }
-      )
   }
 
   private def checkPatternAndFormatCombination(map: YMap, shape: Shape): Unit = {
@@ -661,30 +672,13 @@ case class InlineOasTypeParser(
 
       map.key("type", _ => shape.add(ExplicitField()))
 
-      map.key("minProperties", NodeShapeModel.MinProperties in shape)
-      map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
+      MinProperties.parse(map, shape)
+      MaxProperties.parse(map, shape)
 
-      shape.setWithoutId(NodeShapeModel.Closed, AmfScalar(value = false), synthesized())
-
-      map.key("additionalProperties").foreach { entry =>
-        entry.value.tagType match {
-          case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
-          case YType.Map =>
-            parser.OasTypeParser(entry, s => Unit, version).parse().foreach { s =>
-              shape.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, s, synthesized())
-            }
-          case _ =>
-            ctx.eh.violation(
-              InvalidAdditionalPropertiesType,
-              shape,
-              "Invalid part type for additional properties node. Should be a boolean or a map",
-              entry.location
-            )
-        }
-      }
+      AdditionalProperties(version).parse(map, shape)
 
       if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
-        new UnevaluatedParser(version, UnevaluatedParser.unevaluatedPropertiesInfo).parse(map, shape)
+        UnevaluatedProperties(version).parse(map, shape)
       }
 
       if (isOas3) {
@@ -781,12 +775,7 @@ case class InlineOasTypeParser(
     if (version == JSONSchemaDraft201909SchemaVersion) {
       Draft2019ShapeDependenciesParser(shape, map, shape.id, version).parse()
     } else {
-      map.key(
-        "dependencies",
-        entry => {
-          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, version).parse()
-        }
-      )
+      Dependencies(version).parse(map, shape)
     }
   }
 
@@ -1081,10 +1070,10 @@ case class InlineOasTypeParser(
     }
 
     private def parseDraft7Fields(): Unit = {
-      InnerShapeParser("if", ShapeModel.If, map, shape, adopt, version).parse()
-      InnerShapeParser("then", ShapeModel.Then, map, shape, adopt, version).parse()
-      InnerShapeParser("else", ShapeModel.Else, map, shape, adopt, version).parse()
-      map.key("const", (ShapeModel.Values in shape using dataNodeParser).allowingSingleValue)
+      If(version, adopt).parse(map, shape)
+      Then(version, adopt).parse(map, shape)
+      Else(version, adopt).parse(map, shape)
+      Const(dataNodeParser).parse(map, shape)
     }
   }
 

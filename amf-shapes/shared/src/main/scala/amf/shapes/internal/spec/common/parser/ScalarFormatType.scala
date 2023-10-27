@@ -6,6 +6,7 @@ import amf.shapes.internal.spec.common.TypeDef.{DoubleType, FloatType, IntType, 
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.oas.parser.field.ShapeParser.Format
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidShapeFormat
 import org.yaml.model.{YMap, YScalar}
 
@@ -28,23 +29,17 @@ object FormatValidator {
 case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: ShapeParserContext)
     extends QuickFieldParserOps {
   def parse(map: YMap): TypeDef = {
+    Format(typeDef).parse(map, shape)
+    parseFormatAsTypeDef(map).getOrElse(typeDef)
+  }
+
+  private def parseFormatAsTypeDef(map: YMap) = {
     map
       .key("format")
       .map { n =>
         val format = n.value.as[YScalar].text
-
-        if (!FormatValidator.isValid(format, typeDef))
-          ctx.eh.warning(
-            InvalidShapeFormat,
-            shape,
-            s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
-            n.location
-          )
-
-        (ScalarShapeModel.Format in shape).allowingAnnotations(n)
         fromFormat(format)
       }
-      .getOrElse(typeDef)
   }
 
   private def fromFormat(format: String) = {
