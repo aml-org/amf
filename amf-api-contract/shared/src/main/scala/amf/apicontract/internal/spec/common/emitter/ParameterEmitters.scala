@@ -286,12 +286,8 @@ case class OasParametersEmitter(
   }
 
   def emitters(): Seq[EntryEmitter] = {
-    val results = ListBuffer[EntryEmitter]()
-    val (oasParameters, ramlParameters) =
-      parameters.partition(p =>
-        Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
-          .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape]
-      )
+    val results                         = ListBuffer[EntryEmitter]()
+    val (oasParameters, ramlParameters) = parameters.partition(isValidOasParam)
 
     if (oasParameters.nonEmpty || payloads.nonEmpty)
       results += OasParameterEmitter(oasParameters, references)

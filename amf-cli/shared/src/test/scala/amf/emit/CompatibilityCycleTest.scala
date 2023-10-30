@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.transform.AMFTransformer
-import amf.core.internal.remote.{Hint, Oas30YamlHint, Raml10YamlHint}
+import amf.core.internal.remote.{Hint, Oas30JsonHint, Oas30YamlHint, Raml10YamlHint}
 import amf.core.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
 import org.scalatest.Assertion
@@ -36,6 +36,15 @@ class CompatibilityCycleTest extends AsyncFunSuite with FileAssertionTest {
       "oas30/union-nil-plus-elements.yaml",
       Raml10YamlHint,
       Oas30YamlHint
+    )
+  }
+
+  test("OAS 3.0 with nullable parameter to JSON") {
+    compatibility(
+      "oas30/nullable-query-param.yaml",
+      "oas30/nullable-query-param.json",
+      Oas30YamlHint,
+      Oas30JsonHint
     )
   }
 
