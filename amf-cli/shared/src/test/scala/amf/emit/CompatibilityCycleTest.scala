@@ -22,11 +22,21 @@ class CompatibilityCycleTest extends AsyncFunSuite with FileAssertionTest {
   private val basePath = "amf-cli/shared/src/test/resources/compatibility/"
 
   test("RAML with union of nil + type to OAS 3.0") {
-    compatibility("raml10/union-nil-plus-element.raml", "oas30/union-nil-plus-element.yaml", Raml10YamlHint, Oas30YamlHint)
+    compatibility(
+      "raml10/union-nil-plus-element.raml",
+      "oas30/union-nil-plus-element.yaml",
+      Raml10YamlHint,
+      Oas30YamlHint
+    )
   }
 
   test("RAML with union of nil + multiple types to OAS 3.0") {
-    compatibility("raml10/union-nil-plus-elements.raml", "oas30/union-nil-plus-elements.yaml", Raml10YamlHint, Oas30YamlHint)
+    compatibility(
+      "raml10/union-nil-plus-elements.raml",
+      "oas30/union-nil-plus-elements.yaml",
+      Raml10YamlHint,
+      Oas30YamlHint
+    )
   }
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
