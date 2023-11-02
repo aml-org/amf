@@ -253,6 +253,11 @@ object ShapeParserSideValidations extends Validations {
     "Union should be a sequence"
   )
 
+  val InvalidObjectType = validation(
+    "invalid-object-type",
+    "Object should be a map"
+  )
+
   val ItemsFieldRequired = validation(
     "items-field-required",
     "'items' field is required when type is array"

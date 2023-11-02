@@ -832,6 +832,14 @@ sealed abstract class RamlTypeParser(
                 shape.withLinkTarget(unresolve).withLinkLabel(text)
               }
             }
+        case _ =>
+          ctx.eh.violation(
+            InvalidObjectType,
+            shape,
+            s"Invalid node '${node.toString()}' with type '${node.tagType}'. Expected map or reference.",
+            node.location
+          )
+          shape
       }
     }
   }

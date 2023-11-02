@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/unexpected-yaml-type-map.raml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-object-type
+  Message: Invalid node '{type: A}' with type '!!null'. Expected map or reference.
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/unexpected-yaml-type-map.raml#/web-api/endpoint/%2Fdocuments/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema
+  Property: 
+  Range: [(15,27)-(16,19)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/unexpected-yaml-type-map.raml
