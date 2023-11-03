@@ -1,0 +1,19 @@
+#%RAML 1.0 Library
+
+types:
+  IntObject:
+    properties:
+      prop1: Int64Type
+
+  DerivedIntObject:
+    type: IntObject
+    properties:
+      prop1: Int32Type
+
+  Int64Type:
+    type: integer
+    format: int64
+
+  Int32Type:
+    type: integer
+    format: int32

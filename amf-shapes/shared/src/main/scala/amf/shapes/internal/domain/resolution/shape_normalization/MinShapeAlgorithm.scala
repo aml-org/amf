@@ -12,7 +12,10 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{ParsedJSONSchema, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
-import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
+import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
+  InvalidTypeInheritanceErrorSpecification,
+  InvalidTypeInheritanceWarningSpecification
+}
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
@@ -671,8 +674,8 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     case _                => false
   }
   private def isNumeric(dataType: String): Boolean = dataType match {
-    case DataType.Float | DataType.Double | DataType.Number | DataType.Integer => true
-    case _                                                                     => false
+    case DataType.Float | DataType.Double | DataType.Number | DataType.Integer | DataType.Long => true
+    case _                                                                                     => false
   }
 
   private def areSameShape(child: Shape, parent: Shape): Boolean = child.id == parent.id && child.id != null
