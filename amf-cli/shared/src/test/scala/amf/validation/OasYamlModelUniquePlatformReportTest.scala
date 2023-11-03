@@ -19,4 +19,8 @@ class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("ymap-exception/api.yaml", Some("ymap-exception.report"))
   }
 
+  test("Avoid exception with ref to empty file") {
+    validate("empty-file-ref-oas/api.yaml", Some("empty-file-ref-oas.report"))
+  }
+
 }
