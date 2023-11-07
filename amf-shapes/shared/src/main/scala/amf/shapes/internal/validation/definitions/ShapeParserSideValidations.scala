@@ -190,7 +190,7 @@ object ShapeParserSideValidations extends Validations {
 
   val InvalidRequiredBooleanForSchemaVersion = validation(
     "invalid-required-boolean-for-schema-version",
-    "Required property boolean value is only supported in JSON Schema draft-3"
+    "Should be an array of property names required within an object schema"
   )
 
   val InvalidAdditionalPropertiesType = validation(

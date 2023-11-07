@@ -1014,7 +1014,7 @@ case class InlineOasTypeParser(
                   ctx.eh.warning(
                     InvalidRequiredBooleanForSchemaVersion,
                     property,
-                    "Required property boolean value is only supported in JSON Schema draft-3",
+                    InvalidRequiredBooleanForSchemaVersion.message,
                     entry.location
                   )
                 }
