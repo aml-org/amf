@@ -37,7 +37,7 @@ object BaseUnitSourceLocationIndex {
 
     segments.foreach {
       case "." => // do nothing
-      case ".." =>
+      case ".." if resolvedSegments.nonEmpty =>
         val lastIndex = resolvedSegments.length - 1
         resolvedSegments.remove(lastIndex)
       case segment => resolvedSegments.append(segment)
