@@ -1,0 +1,16 @@
+openapi: '3.0.0'
+
+info:
+  title: test component ref invalid
+  version: "1.0"
+
+paths: {}
+
+components:
+  parameters:
+    someParam:
+      name: header-param
+      in: header
+      required: false
+      schema:
+        type: string
