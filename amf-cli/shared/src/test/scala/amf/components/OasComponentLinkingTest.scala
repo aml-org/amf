@@ -39,6 +39,25 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  // W-14138352
+  test("Oas component module with header parameter referenced in document") {
+    val componentPath                      = "header-component.yaml"
+    val errorHandler: ErrorHandlerProvider = () => UnhandledErrorHandler
+    for {
+      component <- withComponent(`componentPath`)
+      doc <- {
+        val cache = buildCache("header-component.yaml", component)
+        getConfig(errorHandler, cache)
+          .parseDocument(computePath("header-api.yaml"))
+      }
+    } yield {
+      all(shouldBeLink(doc)) shouldBe true
+      all(
+        doc.document.declares.filter(!_.isInstanceOf[Request]).map(linkTarget(_).location().get)
+      ) should include("header-component.yaml")
+    }
+  }
+
   private def linkTarget(elem: DomainElement) = elem.asInstanceOf[Linkable].linkTarget.get
 
   private def findRequest(doc: AMFDocumentResult) = doc.document.declares.find(_.isInstanceOf[Request]).get

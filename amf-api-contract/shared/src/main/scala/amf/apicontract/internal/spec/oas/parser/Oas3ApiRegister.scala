@@ -6,6 +6,7 @@ import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiRegiste
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Shape}
+import amf.core.internal.annotations.DeclaredHeader
 import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.Example
 
@@ -26,16 +27,18 @@ class Oas3ApiRegister()(implicit ctx: WebApiContext) extends WebApiRegister {
   private def isOas3Component(module: Module) = module.processingData.sourceSpec.option().contains(Spec.OAS30.id)
 
   private def componentMapping(element: DomainElement) = element match {
-    case shape: Shape                                 => Some(withComponentPrefix("schemas", shape))
-    case scheme: SecurityScheme                       => Some(withComponentPrefix("securitySchemes", scheme))
-    case request: Request                             => Some(withComponentPrefix("requestBodies", request))
-    case parameter: Parameter if !isHeader(parameter) => Some(withComponentPrefix("parameters", parameter))
-    case link: TemplatedLink                          => Some(withComponentPrefix("links", link))
-    case header: Parameter                            => Some(withComponentPrefix("headers", header))
-    case example: Example                             => Some(withComponentPrefix("examples", example))
-    case callback: Callback                           => Some(withComponentPrefix("callbacks", callback))
-    case response: Response                           => Some(withComponentPrefix("responses", response))
-    case _                                            => None
+    case shape: Shape           => Some(withComponentPrefix("schemas", shape))
+    case scheme: SecurityScheme => Some(withComponentPrefix("securitySchemes", scheme))
+    case request: Request       => Some(withComponentPrefix("requestBodies", request))
+    case header: Parameter if header.annotations.contains(classOf[DeclaredHeader]) =>
+      Some(withComponentPrefix("headers", header))
+    case parameter: Parameter =>
+      Some(withComponentPrefix("parameters", parameter))
+    case link: TemplatedLink => Some(withComponentPrefix("links", link))
+    case example: Example    => Some(withComponentPrefix("examples", example))
+    case callback: Callback  => Some(withComponentPrefix("callbacks", callback))
+    case response: Response  => Some(withComponentPrefix("responses", response))
+    case _                   => None
   }
 
   private def withComponentPrefix(component: String, element: NamedDomainElement) =
