@@ -42,7 +42,6 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
       ctx.closedShape(module, rootMap, "root")
     }
     module
-
   }
 
   private def parseRootFields(map: YMap, module: ComponentModule): Unit = {
