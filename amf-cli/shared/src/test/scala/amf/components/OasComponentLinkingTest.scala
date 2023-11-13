@@ -58,6 +58,22 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  // W-14138352
+  test("Oas component module references another oas component response") {
+    val componentPath                      = "response-component.yaml"
+    val errorHandler: ErrorHandlerProvider = () => UnhandledErrorHandler
+    for {
+      component <- withComponent(`componentPath`)
+      doc <- {
+        val cache = buildCache("response-component.yaml", component)
+        getComponentConfig(errorHandler, cache)
+          .parseLibrary(computePath("response-api.yaml"))
+      }
+    } yield {
+      doc.results.size shouldBe 0
+    }
+  }
+
   private def linkTarget(elem: DomainElement) = elem.asInstanceOf[Linkable].linkTarget.get
 
   private def findRequest(doc: AMFDocumentResult) = doc.document.declares.find(_.isInstanceOf[Request]).get
@@ -73,6 +89,14 @@ class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
   private def getConfig(errorHandler: ErrorHandlerProvider, cache: CustomUnitCache) = {
     OASConfiguration
       .OAS30()
+      .withUnitCache(cache)
+      .withErrorHandlerProvider(errorHandler)
+      .baseUnitClient()
+  }
+
+  private def getComponentConfig(errorHandler: ErrorHandlerProvider, cache: CustomUnitCache) = {
+    OASConfiguration
+      .OAS30Component()
       .withUnitCache(cache)
       .withErrorHandlerProvider(errorHandler)
       .baseUnitClient()

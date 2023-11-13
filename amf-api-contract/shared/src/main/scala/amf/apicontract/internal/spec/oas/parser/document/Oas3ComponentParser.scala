@@ -2,17 +2,12 @@ package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, ComponentModule}
 import amf.apicontract.internal.metamodel.document.ComponentModuleModel
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiLikeReferencesParser}
+import amf.apicontract.internal.spec.common.parser.WebApiContext
+import amf.apicontract.internal.spec.oas.parser.Oas3ReferencesParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  MandatoryEmptyPaths,
-  MandatoryPathsProperty,
-  MandatoryProperty
-}
-import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{MandatoryEmptyPaths, MandatoryProperty}
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
@@ -31,7 +26,7 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
       val references =
-        WebApiLikeReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
+        Oas3ReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
       Oas3DocumentParser(root).parseDeclarations(root, rootMap, module)
       addDeclarationsToModel(module)
