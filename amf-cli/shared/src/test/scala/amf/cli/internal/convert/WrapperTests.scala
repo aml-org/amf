@@ -14,6 +14,7 @@ import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.platform.config.RenderOptions
+import amf.core.client.platform.model.DataTypes
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document, EncodesModel}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
@@ -23,11 +24,7 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{
-  ArrayNode => InternalArrayNode,
-  ObjectNode => InternalObjectNode,
-  ScalarNode => InternalScalarNode
-}
+import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -41,11 +38,13 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
+import amf.shapes.internal.convert.ShapeClientConverters
 import org.mulesoft.common.client.lexical.PositionRange
 import org.mulesoft.common.test.Diff
 import org.scalatest.matchers.should.Matchers
 import org.yaml.builder.JsonOutputBuilder
 
+import java.util
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
@@ -2291,6 +2290,55 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
 
   }
+
+  test("Test W-14487501") {
+    val configuration = RAMLConfiguration.RAML10()
+    val unitClient  = configuration.baseUnitClient()
+    val api     = "file://amf-cli/shared/src/test/resources/test/api/api.raml"
+    val payload = fs.syncFile("amf-cli/shared/src/test/resources/test/valid_payload_error.json").read().toString
+    for {
+      parsingResult    <- unitClient.parse(api).asFuture
+      resolutionResult <- Future.successful(unitClient.transform(parsingResult.baseUnit, PipelineId.Editing))
+      shape <- Future.successful(
+        resolutionResult.baseUnit
+          .asInstanceOf[Document]
+          .encodes
+          .asInstanceOf[WebApi]
+          .endPoints
+          .asSeq
+          .head
+          .operations
+          .asSeq
+          .head
+          .request
+          .payloads
+          .asSeq
+          .head
+          .schema
+      )
+      payloadValidator <- Future.successful(configuration.elementClient().payloadValidatorFor(shape, Mimes.`application/json`, ValidationMode.StrictValidationMode))
+      validationReport <- Future.successful(payloadValidator.syncValidate(payload))
+    } yield {
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
+      println(validationReport)
+      assert(validationReport.conforms)
+    }
+  }
+
+//  test("Test W-14487501 Reduced") {
+//    val configuration = RAMLConfiguration.RAML10()
+//    val payload = fs.syncFile("amf-cli/shared/src/test/resources/test/valid_payload_error.json").read().toString
+//    val range = new ScalarShape().withDataType(DataTypes.String).withPattern("(\\s*([0-9a-zA-Z\\+\\=]){4}\\s*)+")
+//    val property = new PropertyShape().withName("Base64").withRange(range)
+//    val shape = new NodeShape().withProperties(Seq(property._internal).asClient)
+//    for {
+//      payloadValidator <- Future.successful(configuration.elementClient().payloadValidatorFor(shape, Mimes.`application/json`, ValidationMode.StrictValidationMode))
+//      validationReport <- Future.successful(payloadValidator.syncValidate(payload))
+//    } yield {
+//      assert(validationReport.conforms)
+//    }
+//  }
 
 //
 //  // todo: move to common (file system)

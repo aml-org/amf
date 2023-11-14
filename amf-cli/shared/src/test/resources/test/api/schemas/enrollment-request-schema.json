@@ -1,0 +1,398 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"type": "object",
+	"properties": {
+		"patients": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"patientId":{
+					"description": "Unique Id of patient",
+					"type":["string"],					
+					"maxLength": 50
+				},
+				"ConsumerName": {
+					"description": "Name of the vendor other than for CGT",
+					"type": "string"
+				},
+				"BusinessSegment": {
+					"description": "Segment name other than for CGT",
+					"type": "string"
+				},
+				"ExternalIdentifier": {
+					"description": "External ID",
+					"type": "string"
+				},
+				"ExpediteBV": {
+					"description": "Whether to Expedite BV or not",
+					"type": ["string", "null"],
+					"example": "TRUE"
+				},
+				"ProductName":{
+					"description": "Name of Product",
+					"type":["string", "null"]
+					},
+				"COINumber":{
+					"description": "Chain of Identification Number",
+					"type":["string", "null"],					
+					"maxLength": 80   
+					},	
+				"therapyDef": {
+					"description": "Therapy Definition ID",
+					"type": ["string", "null"],
+					"maxLength": 32     
+				},
+				"patientFirstName": {
+					"description": "Patient first name",
+					"type": ["string"],
+					"maxLength": 40
+				},
+				"patientLastName": {
+					"description": "Patient last name",
+					"type": ["string"],
+					"maxLength": 80
+				},
+				"patientMiddleInitial": {
+					"description": "Patient Middle Initial",
+					"type": ["string", "null"],
+					"maxLength": 1
+				},
+				"patientDOB": {
+					"description": "Patient Data of birth. Date Format Must Be YYYY-MM-DD",
+					"type": ["string"],
+					"pattern": "^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1]))?)?$",
+					"example": "2019-11-23",	
+					"maxLength": 10
+				},
+				"patientGender": {
+					"description": "Patient Gender",
+					"enum": ["Male", "Female", "Other","Unknown","M","F","O"],
+					"type": ["string"]
+				},
+				"patientCountry": {
+					"description": "Patient's Country (an ISO-3166-1 alpha-2 country code)",
+					"type": ["string","null"],
+					"example": "US",
+					"maxLength": 2,
+					"minLength": 2
+				},
+			  "vendor": {
+					"description": "Source system",
+					"type": ["string"]
+				},
+				"travelAssistanceNeeded": {
+					"description": "This field is populated for treatment coordination case creation",
+					"enum": ["Yes", "No", null],
+					"type": ["string", "null"]
+				},
+				"contactDetails": {
+					"description": "Patient Contact Details",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"properties": {
+							"type": {
+								"description": "Patient Contact Type",
+								"type": ["string", "null"],
+								"enum": ["Self", "Caregiver","Caseworker","Child","Family Member/Friend","Grandparent","Legal Guardian","Neighbor","Other","Parent","Patient Advocate","Sibling","Spouse/Partner", "Assistant", "Billing", "Clinical Liaison", "Discharge Planner", "Infusion Sites", "Lab Tech", "Nurse", "Office Manager", "Out-Patient Service Providers", "Pharmacist", "Power of Attorney", "Referral Contact", "Sales Representative", "Shipping", "Social Worker/Case Manager", null]
+							},
+							"contactFirstName": {
+								"description": "First name of patient’s contact",
+								"type": ["string", "null"],
+								"maxLength": 40
+							},
+							"contactLastName": {
+								"description": "Last name of patient’s contact",
+								"type": ["string", "null"],
+								"maxLength": 80
+							},
+							"contactAddress1": {
+								"description": "Primary address line 1 for patient’s contact",
+								"type": ["string", "null"]
+							},
+							"contactAddress2": {
+								"description": "Primary address line 2 for patient’s contact",
+								"type": ["string", "null"],
+								"maxLength": 50
+							},
+							"contactCity": {
+								"description": "Primary city for patient's contact",
+								"type": ["string", "null"],
+								"maxLength": 40
+							},
+							"contactState": {
+								"description": "Primary state for patient's contact",
+								"type": ["string", "null"],
+								"maxLength": 40
+							},
+							"contactZip": {
+								"description": "Primary zip for patient's contact",
+								"type": ["string", "null"],
+								"maxLength": 5
+							},
+							"email": {
+								"description": "Primary email for patient's contact",
+								"type": ["string", "null"],
+								"maxLength": 80
+							},
+							"fax": {
+								"description": "Fax for Office/Patient contact",
+								"type": ["string", "null"],
+								"maxLength": 10
+							},
+							"primary": {
+								"description": "Flag that indicates if the patient contact is the primary for the patient",
+								"type": ["string", "null"],
+								"enum": ["Yes", "No", null]
+								
+							},
+							"phone": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"phoneNumber": {
+											"description": "Phone number - Must be xxxxxxxxxx format",
+											"type": ["string", "null"],
+											"example": "1111111111"
+										},
+										"phoneType": {
+											"description": "Phone type - should be Home, Mobile or Work",
+											"type": ["string", "null"],
+											"enum": ["Home", "Mobile","Work", null]
+											
+										},
+										"preferred": {
+											"description": "Used to specifiy if the phone number provided is the Primary phone number for the specified patient contact",
+											"type": ["string", "null"],
+											"enum": ["Yes", "No", null],
+											"example": "Yes",
+											"maxLength": 3
+										},
+										"Type": {
+											"description": "Used to specifiy if the phone number provided is the Primary phone number for the specified patient contact",
+											"type": ["string", "null"],
+											"enum": ["Primary", "Secondary", null]
+										}
+									}
+								}
+								
+							}
+						}
+					}
+				},
+				"insurances": {
+					"type": "array",
+					"items": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"patientInsuranceCategory": {
+									"description": "Patient Insurance Category",
+									"type": ["string", "null"],
+									"enum":["Primary","Secondary","Tertiary", null],
+									"maxLength": 10
+								},
+								"insuranceName": {
+									"description": "Insurance Payer Name for CGT",
+									"type": ["string", "null"],
+									"maxLength": 255
+								},
+								"insurancePayerName": {
+									"description": "Insurance Payer Name for other than CGT",
+									"type": ["string", "null"],
+									"maxLength": 255
+								},
+								"insurancePolicyNumber": {
+									"description": "Insurance Policy Number",
+									"type": ["string", "null"],
+									"maxLength": 80
+								},
+								"insuranceGroupNumber": {
+									"description": "Insurance Group Number",
+									"type": ["string", "null"]
+								},
+								"coverage": {
+									"description": "Insurance coverage",
+									"type": ["string", "null"],
+									"maxLength": 30
+							     },
+								"insuranceHolderName": {
+									"description": "Insurance Holder Name",
+									"type": ["string", "null"],
+									"maxLength": 80
+								},
+								"insuranceHolderEmployer": {
+									"description": "Insurance Holder Employer",
+									"type": ["string", "null"],
+									"maxLength": 30
+								},
+								"insurancePhone": {
+									"description": "Insurance Phone",
+									"type": ["string", "null"],
+									"example": "(111) 111-1111",
+									"maxLength": 40
+								},								
+								"insurancePayerFUSIONID": {
+									"description": "Insurance payer Fusion ID",
+									"type": ["string", "null"]
+								},								
+								"insurancePayerID": {
+									"description": "Insurance Payer ID",
+									"type": ["string", "null"]
+								},								
+								"insuranceHolderDOB": {
+									"description": "Insurance Holder Date of Birth",
+									"type": ["string", "null"],
+									"pattern": "^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1]))?)?$",
+									"example": "2019-11-23",	
+									"maxLength": 10
+								},								 
+							  "insuranceHolderRelationship": {
+									"description": "Insurance Holder Relationship",
+									"type": ["string", "null"]
+								},								 
+							  "insuranceHolderGender": {
+									"description": "Insurance Holder Gender",
+									"required": false,
+									"enum": ["Male", "Female", "Other","Unknown","M","F","O","U","N/A","",null],
+									"type": ["string", "null"]
+								}
+							}
+						}
+					
+				},
+				"providers": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"properties": {
+							"providerId": {
+								"description": "Provider ID from AmerisourceBergen",
+								"type": ["string", "null"],
+								"maxLength": 32
+							},
+
+							"ProviderNPI": {
+								"description": "Provider NPI ID",
+								"type": ["string", "null"]
+							},
+
+							"siteId": {
+								"description": "Site ID from AmerisourceBergen",
+								"type": ["string", "null"],
+								"maxLength": 32
+							}
+							
+						}
+						
+					}
+				},
+			
+				"consent": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"patientAuthOnFile": {
+							"description": "Indicates whether Patient Authorization is on File",
+							"type": ["string", "null"],
+							"enum":["Yes","No", null]
+						},
+
+						"patientAuthSignedDate": {
+							"description": "Indicates Patient Authorization signed date",
+							"type": ["string", "null"],
+							"pattern": "^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1]))?)?$",
+							"example": "2019-11-23",
+							"maxLength": 10
+						},
+
+						"providerAuthOnFile": {
+							"description": "Indicates whether Provider Authorization is on File",
+							"type": ["string", "null"],
+							"enum":["Yes","No", null]
+						},
+
+						"providerAuthSignedDate": {
+							"description": "Indicates Provider Authorization signed date",
+							"type": ["string", "null"],
+							"pattern": "^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1]))?)?$",
+							"example": "2019-11-23",
+							"maxLength": 10
+						}
+					}
+				},
+				"diagnosis": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"primaryDiagnosisCode": {
+							"type": ["string", "null"],
+							"maxLength": 80
+						},
+						"secondaryDiagnosisCode": {
+							"type": ["string", "null"],
+							"maxLength": 80
+						},
+						"tertiaryDiagnosisCode": {
+							"type": ["string", "null"],
+							"maxLength": 80
+						},
+						"NDC10code": {
+							"type": ["string", "null"],
+							"maxLength": 255
+						},
+						"NDC11code": {
+							"type": ["string", "null"],
+							"maxLength": 255
+						}
+					}
+				},
+				"Documents": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"DocumentName": {
+							"type": ["string", "null"]
+						},
+						"Base64": {
+							"type": ["string", "null"],
+							"pattern": "(\\s*([0-9a-zA-Z\\+\\=]){4}\\s*)+",
+							"description": "There is no specified upper limit to the size of a binary, but systems will have to impose some implementation based limit to the size they support. This should be clearly documented, though there is no computable for this at this time"
+						}
+					}
+				},
+				"CPT": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"properties": {
+							"code": {
+								"type": ["string", "null"]
+							}
+						}
+					}
+				},
+				"AdditionalData": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"properties": {
+							"AdditionalDataAttributeName": {
+								"type": ["string", "null"]
+							},
+							"AdditionalDataAttributeValue": {
+								"type": ["string", "null"]
+							}
+						}
+					}
+				}
+		
+			}
+		}
+	}
+}

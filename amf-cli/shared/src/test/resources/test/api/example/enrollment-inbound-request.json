@@ -1,0 +1,90 @@
+{
+  "patients": {
+    "therapyDef": "1",
+    "patientFirstName": "firstname",
+    "patientLastName": "ABCDEFGHIJKLMNOPQRSTUVW",
+    "patientId": "Lino",
+    "patientMiddleInitial": "M",
+    "patientDOB": "1990-05-22",
+    "patientGender": "Male",
+    "patientCountry": "US",
+    "vendor": "Ocellos",
+    "travelAssistanceNeeded": "Yes",
+    "contactDetails": [
+      {
+        "type": "Self",
+        "contactFirstName": "firstname",
+        "contactLastName": "lastname",
+        "contactAddress1": null,
+        "contactAddress2": null,
+        "contactCity": null,
+        "contactState": null,
+        "contactZip": "ABCD",
+        "email": null,
+        "primary": "Yes",
+        "phone": [
+          {
+            "phoneNumber": "1234567890",
+            "phoneType": "Home",
+            "preferred": "Yes"
+          },
+          {
+            "phoneNumber": "1234567890",
+            "phoneType": "Mobile",
+            "preferred": "No"
+          }
+        ]
+      }
+    ],
+    "insurances": [
+      {
+        "patientInsuranceCategory": "Primary",
+        "insuranceName": "GOLDEN_PAYER_1",
+        "insurancePolicyNumber": "62987",
+        "insuranceGroupNumber": "2343",
+        "coverage": "Medical",
+        "insuranceHolderName": "Amb ray o",
+        "insuranceHolderEmployer": "Insurance Testing",
+        "insurancePhone": "4345570967"
+      },
+      {
+        "patientInsuranceCategory": "Secondary",
+        "insuranceName": "GOLDEN_PAYER_1",
+        "insurancePolicyNumber": "62987",
+        "insuranceGroupNumber": "2343",
+        "coverage": "Medical",
+        "insuranceHolderName": "Amb ray o",
+        "insuranceHolderEmployer": "Insurance Testing",
+        "insurancePhone": "4345570967"
+      },
+      {
+        "patientInsuranceCategory": "Tertiary",
+        "insuranceName": "GOLDEN_PAYER_1",
+        "insurancePolicyNumber": "62987",
+        "insuranceGroupNumber": "2343",
+        "coverage": "Medical",
+        "insuranceHolderName": "Amb ray o",
+        "insuranceHolderEmployer": "Insurance Testing",
+        "insurancePhone": "4345570967"
+      }
+    ],
+    "providers": [
+      {
+        "providerId": "12892031",
+        "siteId": "13293469"
+      }
+    ],
+    "consent": {
+      "patientAuthOnFile": "Yes",
+      "patientAuthSignedDate": "2020-05-07",
+      "providerAuthOnFile": "Yes",
+      "providerAuthSignedDate": "2020-05-07"
+    },
+    "diagnosis": {
+      "primaryDiagnosisCode": "115.02",
+      "secondaryDiagnosisCode": "115.02",
+      "NDC10code": "64890666101",
+      "NDC11code": "64890666101"
+    }
+  }
+}

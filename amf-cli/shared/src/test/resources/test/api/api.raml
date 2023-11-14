@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: hse-nonfhir-enrollment-sample-api
+version: v1
+protocols: [ HTTPS ]
+mediaType: application/json
+
+traits:
+  client-id-required: !include traits/client-id-specification.raml
+
+types:
+  enrollmentRequestSchema:
+    type: !include schemas/enrollment-request-schema.json
+
+/patientenrollment:
+  is: [ client-id-required ]
+
+  displayName: hse-nonfhir-enrollment-sample-api
+  description: Sample API for support
+  post:
+    body:
+      application/json:
+        type: enrollmentRequestSchema
+        example: !include example/enrollment-inbound-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include example/enrollment-response-200.json
