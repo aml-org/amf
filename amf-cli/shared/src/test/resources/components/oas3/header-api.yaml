@@ -1,0 +1,14 @@
+openapi: '3.0.0'
+
+info:
+  title: test component ref invalid
+  version: "1.0"
+
+paths:
+  /something:
+    post:
+      parameters:
+        - $ref: "header-component.yaml#/components/parameters/someParam"
+      responses:
+        '200':
+          description: OK

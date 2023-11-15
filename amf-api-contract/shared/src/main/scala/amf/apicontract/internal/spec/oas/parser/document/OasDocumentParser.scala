@@ -242,7 +242,6 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
                 parameter
             }
             ctx.declarations.registerOasParameter(oasParameter)
-
           })
       }
     )

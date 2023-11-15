@@ -743,4 +743,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("RAML type with JSON & XML examples should only fail XML") {
     validate("/raml/examples/different-formats/api.raml", Some("raml/different-example-formats.report"))
   }
+
+  test("Unexpected YAML type when expected ObjectType should register an error") {
+    validate("/raml/unexpected-yaml-type-map.raml", Some("raml/unexpected-yaml-type-map.report"))
+  }
+
+  test("Avoid exception with ref to empty file") {
+    validate("/empty-file-ref-raml/api.raml", None)
+  }
 }

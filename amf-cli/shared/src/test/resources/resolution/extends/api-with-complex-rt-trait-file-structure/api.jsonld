@@ -1,0 +1,1846 @@
+[
+  {
+    "@id": "amf://id",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "amf://id#50",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "API"
+          }
+        ],
+        "http://a.ml/vocabularies/core#version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "amf://id#51",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/endpoint"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "amf://id#53",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#description": [
+                  {
+                    "@value": "some endpoint"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "amf://id#58",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#parameter": [
+                      {
+                        "@id": "amf://id#59",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "confirmationCode"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#paramName": [
+                          {
+                            "@value": "confirmationCode"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "amf://id#60",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#header": [
+                      {
+                        "@id": "amf://id#61",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "x-header-from-library-dependency"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#paramName": [
+                          {
+                            "@value": "x-header-from-library-dependency"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#binding": [
+                          {
+                            "@value": "header"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "amf://id#62",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "amf://id#55",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "amf://id#56",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "amf://id#57",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document#extends": [
+                  {
+                    "@id": "amf://id#54",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
+                      "http://a.ml/vocabularies/document#ParametrizedDeclaration",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "Traits.queryParams"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#target": [
+                      {
+                        "@id": "amf://id#42",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Trait",
+                          "http://a.ml/vocabularies/document#AbstractDeclaration",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "queryParams"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#dataNode": [
+                          {
+                            "@id": "amf://id#15",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#queryParameters": [
+                              {
+                                "@id": "amf://id#16",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#confirmationCode": [
+                                  {
+                                    "@id": "amf://id#17",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#type": [
+                                      {
+                                        "@id": "amf://id#18",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Scalar",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#value": [
+                                          {
+                                            "@value": "string"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "type"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "confirmationCode"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "queryParameters"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#extends": [
+              {
+                "@id": "amf://id#52",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#ParametrizedResourceType",
+                  "http://a.ml/vocabularies/document#ParametrizedDeclaration",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Resource.collection"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#target": [
+                  {
+                    "@id": "amf://id#38",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#ResourceType",
+                      "http://a.ml/vocabularies/document#AbstractDeclaration",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "collection"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#dataNode": [
+                      {
+                        "@id": "amf://id#28",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#get%3F": [
+                          {
+                            "@id": "amf://id#29",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#is": [
+                              {
+                                "@id": "amf://id#30",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Array",
+                                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/2000/01/rdf-schema#member": [
+                                  {
+                                    "@id": "amf://id#31",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Scalar",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#value": [
+                                      {
+                                        "@value": "Traits.headers"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "scalar_4"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "is"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/data#responses": [
+                              {
+                                "@id": "amf://id#32",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#200": [
+                                  {
+                                    "@id": "amf://id#33",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#body": [
+                                      {
+                                        "@id": "amf://id#34",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Object",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#application%2Fjson": [
+                                          {
+                                            "@id": "amf://id#35",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Object",
+                                              "http://a.ml/vocabularies/data#Node",
+                                              "http://a.ml/vocabularies/document#DomainElement"
+                                            ],
+                                            "http://a.ml/vocabularies/data#type": [
+                                              {
+                                                "@id": "amf://id#36",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/data#Scalar",
+                                                  "http://a.ml/vocabularies/data#Node",
+                                                  "http://a.ml/vocabularies/document#DomainElement"
+                                                ],
+                                                "http://a.ml/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "string"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/core#name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/core#name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "200"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "get?"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "amf://id#49",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.8.2"
+          }
+        ],
+        "http://a.ml/vocabularies/document#transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "amf://id#1",
+        "@type": [
+          "http://a.ml/vocabularies/document#Module",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#declares": [
+          {
+            "@id": "amf://id#38",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#ResourceType",
+              "http://a.ml/vocabularies/document#AbstractDeclaration",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "collection"
+              }
+            ],
+            "http://a.ml/vocabularies/document#dataNode": [
+              {
+                "@id": "amf://id#28",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#get%3F": [
+                  {
+                    "@id": "amf://id#29",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#is": [
+                      {
+                        "@id": "amf://id#30",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Array",
+                          "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/2000/01/rdf-schema#member": [
+                          {
+                            "@id": "amf://id#31",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Traits.headers"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "scalar_4"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "is"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#responses": [
+                      {
+                        "@id": "amf://id#32",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#200": [
+                          {
+                            "@id": "amf://id#33",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#body": [
+                              {
+                                "@id": "amf://id#34",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#application%2Fjson": [
+                                  {
+                                    "@id": "amf://id#35",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#type": [
+                                      {
+                                        "@id": "amf://id#36",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Scalar",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#value": [
+                                          {
+                                            "@value": "string"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "type"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "application/json"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "body"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "200"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "responses"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "get?"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#references": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#ResourceTypeFragment",
+              "http://a.ml/vocabularies/document#Fragment",
+              "http://a.ml/vocabularies/document#Unit"
+            ],
+            "http://a.ml/vocabularies/document#encodes": [
+              {
+                "@id": "amf://id#27",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#ResourceType",
+                  "http://a.ml/vocabularies/document#AbstractDeclaration",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#dataNode": [
+                  {
+                    "@id": "amf://id#28",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#get%3F": [
+                      {
+                        "@id": "amf://id#29",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#is": [
+                          {
+                            "@id": "amf://id#30",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Array",
+                              "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/2000/01/rdf-schema#member": [
+                              {
+                                "@id": "amf://id#31",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Scalar",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#value": [
+                                  {
+                                    "@value": "Traits.headers"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "scalar_4"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "is"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#responses": [
+                          {
+                            "@id": "amf://id#32",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#200": [
+                              {
+                                "@id": "amf://id#33",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#body": [
+                                  {
+                                    "@id": "amf://id#34",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#application%2Fjson": [
+                                      {
+                                        "@id": "amf://id#35",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Object",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#type": [
+                                          {
+                                            "@id": "amf://id#36",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Scalar",
+                                              "http://a.ml/vocabularies/data#Node",
+                                              "http://a.ml/vocabularies/document#DomainElement"
+                                            ],
+                                            "http://a.ml/vocabularies/data#value": [
+                                              {
+                                                "@value": "string"
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/core#name": [
+                                              {
+                                                "@value": "type"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "application/json"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "body"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "200"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "responses"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "get?"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "object_1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#references": [
+              {
+                "@id": "amf://id#3",
+                "@type": [
+                  "http://a.ml/vocabularies/document#Module",
+                  "http://a.ml/vocabularies/document#Unit"
+                ],
+                "http://a.ml/vocabularies/document#declares": [
+                  {
+                    "@id": "amf://id#20",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Trait",
+                      "http://a.ml/vocabularies/document#AbstractDeclaration",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "queryParams"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#dataNode": [
+                      {
+                        "@id": "amf://id#15",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#queryParameters": [
+                          {
+                            "@id": "amf://id#16",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#confirmationCode": [
+                              {
+                                "@id": "amf://id#17",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#type": [
+                                  {
+                                    "@id": "amf://id#18",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Scalar",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#value": [
+                                      {
+                                        "@value": "string"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "type"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "confirmationCode"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "queryParameters"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#21",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Trait",
+                      "http://a.ml/vocabularies/document#AbstractDeclaration",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "headers"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#dataNode": [
+                      {
+                        "@id": "amf://id#22",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#is": [
+                          {
+                            "@id": "amf://id#23",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Array",
+                              "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/2000/01/rdf-schema#member": [
+                              {
+                                "@id": "amf://id#24",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Scalar",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#value": [
+                                  {
+                                    "@value": "RequestHeader.required-headers"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "scalar_3"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "is"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document#references": [
+                  {
+                    "@id": "amf://id#4",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Module",
+                      "http://a.ml/vocabularies/document#Unit"
+                    ],
+                    "http://a.ml/vocabularies/document#declares": [
+                      {
+                        "@id": "amf://id#5",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Trait",
+                          "http://a.ml/vocabularies/document#AbstractDeclaration",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "required-headers"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#dataNode": [
+                          {
+                            "@id": "amf://id#6",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#headers": [
+                              {
+                                "@id": "amf://id#7",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#x-header-from-library-dependency": [
+                                  {
+                                    "@id": "amf://id#8",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#type": [
+                                      {
+                                        "@id": "amf://id#9",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Scalar",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#value": [
+                                          {
+                                            "@value": "string"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "type"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/data#required": [
+                                      {
+                                        "@id": "amf://id#10",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Scalar",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "required"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "x-header-from-library-dependency"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "headers"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#root": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#processingData": [
+                      {
+                        "@id": "amf://id#12",
+                        "@type": [
+                          "http://a.ml/vocabularies/document#APIContractProcessingData"
+                        ],
+                        "http://a.ml/vocabularies/apiContract#modelVersion": [
+                          {
+                            "@value": "3.8.2"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#sourceSpec": [
+                          {
+                            "@value": "RAML 1.0"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#13",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
+                      "http://a.ml/vocabularies/document#Fragment",
+                      "http://a.ml/vocabularies/document#Unit"
+                    ],
+                    "http://a.ml/vocabularies/document#encodes": [
+                      {
+                        "@id": "amf://id#14",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Trait",
+                          "http://a.ml/vocabularies/document#AbstractDeclaration",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#dataNode": [
+                          {
+                            "@id": "amf://id#15",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#queryParameters": [
+                              {
+                                "@id": "amf://id#16",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Object",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#confirmationCode": [
+                                  {
+                                    "@id": "amf://id#17",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/data#type": [
+                                      {
+                                        "@id": "amf://id#18",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Scalar",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#value": [
+                                          {
+                                            "@value": "string"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/core#name": [
+                                          {
+                                            "@value": "type"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "confirmationCode"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "queryParameters"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#root": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#processingData": [
+                      {
+                        "@id": "amf://id#19",
+                        "@type": [
+                          "http://a.ml/vocabularies/document#APIContractProcessingData"
+                        ],
+                        "http://a.ml/vocabularies/apiContract#modelVersion": [
+                          {
+                            "@value": "3.8.2"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#sourceSpec": [
+                          {
+                            "@value": "RAML 1.0"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document#usage": [
+                  {
+                    "@value": "traits library"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#root": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "http://a.ml/vocabularies/document#processingData": [
+                  {
+                    "@id": "amf://id#26",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#APIContractProcessingData"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#modelVersion": [
+                      {
+                        "@value": "3.8.2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#sourceSpec": [
+                      {
+                        "@value": "RAML 1.0"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "amf://id#37",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.8.2"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#usage": [
+          {
+            "@value": "resource types library"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "amf://id#40",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.8.2"
+              }
+            ],
+            "http://a.ml/vocabularies/document#sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#41",
+        "@type": [
+          "http://a.ml/vocabularies/document#Module",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#declares": [
+          {
+            "@id": "amf://id#42",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Trait",
+              "http://a.ml/vocabularies/document#AbstractDeclaration",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "queryParams"
+              }
+            ],
+            "http://a.ml/vocabularies/document#dataNode": [
+              {
+                "@id": "amf://id#15",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#queryParameters": [
+                  {
+                    "@id": "amf://id#16",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#confirmationCode": [
+                      {
+                        "@id": "amf://id#17",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#type": [
+                          {
+                            "@id": "amf://id#18",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "type"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "confirmationCode"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "queryParameters"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#44",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Trait",
+              "http://a.ml/vocabularies/document#AbstractDeclaration",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "headers"
+              }
+            ],
+            "http://a.ml/vocabularies/document#dataNode": [
+              {
+                "@id": "amf://id#45",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#is": [
+                  {
+                    "@id": "amf://id#46",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Array",
+                      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/2000/01/rdf-schema#member": [
+                      {
+                        "@id": "amf://id#47",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "RequestHeader.required-headers"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "scalar_3"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "is"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#references": [
+          {
+            "@id": "amf://id#4",
+            "@type": [
+              "http://a.ml/vocabularies/document#Module",
+              "http://a.ml/vocabularies/document#Unit"
+            ],
+            "http://a.ml/vocabularies/document#declares": [
+              {
+                "@id": "amf://id#5",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Trait",
+                  "http://a.ml/vocabularies/document#AbstractDeclaration",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "required-headers"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#dataNode": [
+                  {
+                    "@id": "amf://id#6",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#headers": [
+                      {
+                        "@id": "amf://id#7",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#x-header-from-library-dependency": [
+                          {
+                            "@id": "amf://id#8",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#type": [
+                              {
+                                "@id": "amf://id#9",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Scalar",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#value": [
+                                  {
+                                    "@value": "string"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "type"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/data#required": [
+                              {
+                                "@id": "amf://id#10",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Scalar",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "required"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "x-header-from-library-dependency"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "headers"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "object_1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "amf://id#12",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.8.2"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#13",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
+              "http://a.ml/vocabularies/document#Fragment",
+              "http://a.ml/vocabularies/document#Unit"
+            ],
+            "http://a.ml/vocabularies/document#encodes": [
+              {
+                "@id": "amf://id#14",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Trait",
+                  "http://a.ml/vocabularies/document#AbstractDeclaration",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#dataNode": [
+                  {
+                    "@id": "amf://id#15",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#queryParameters": [
+                      {
+                        "@id": "amf://id#16",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#confirmationCode": [
+                          {
+                            "@id": "amf://id#17",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object",
+                              "http://a.ml/vocabularies/data#Node",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/data#type": [
+                              {
+                                "@id": "amf://id#18",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Scalar",
+                                  "http://a.ml/vocabularies/data#Node",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/data#value": [
+                                  {
+                                    "@value": "string"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "type"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#name": [
+                              {
+                                "@value": "confirmationCode"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "queryParameters"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "object_1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "amf://id#19",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.8.2"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#usage": [
+          {
+            "@value": "traits library"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "amf://id#48",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.8.2"
+              }
+            ],
+            "http://a.ml/vocabularies/document#sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

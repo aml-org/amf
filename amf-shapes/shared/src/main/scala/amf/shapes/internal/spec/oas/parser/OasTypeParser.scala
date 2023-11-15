@@ -11,6 +11,7 @@ import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserC
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.oas.parser
 import amf.shapes.internal.spec.oas.parser.TypeDetector.LinkCriteria
+import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YPart, YScalar, YType}
 
 /** OpenAPI Type Parser.
@@ -72,10 +73,14 @@ case class OasTypeParser(
     extends QuickFieldParserOps {
 
   def parse(): Option[AnyShape] = {
-    if (isBooleanSchema(entryOrNode.value)) BooleanSchemaParser(entryOrNode, node, version) else parseType
+    if (isEmpty(entryOrNode.value))
+      None
+    else if (isBooleanSchema(entryOrNode.value))
+      BooleanSchemaParser(entryOrNode, node, version)
+    else parseType
   }
 
-  private def parseType = {
+  private def parseType: Option[AnyShape] = {
     val map = node.as[YMap]
     if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
       Draft2019TypeParser(entryOrNode, name, map, adopt, version, isDeclaration).parse
@@ -85,6 +90,8 @@ case class OasTypeParser(
   }
 
   private def isBooleanSchema(node: YNode) = node.tagType == YType.Bool
+
+  private def isEmpty(node: YNode) = node.tagType == YType.Null && node.location == SourceLocation.Unknown
 }
 
 case class Draft2019TypeParser(

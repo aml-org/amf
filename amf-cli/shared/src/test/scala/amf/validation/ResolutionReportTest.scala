@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.core.client.common.validation.{Oas20Profile, Raml08Profile}
-import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
+import amf.core.client.common.validation.{Oas20Profile, Raml10Profile}
+import amf.core.internal.remote.{Hint, Raml10YamlHint}
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
@@ -188,6 +188,14 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
       "/duplicate-parameters/endpoint-parameter-duplicate-in-operation.json",
       Some("endpoint-parameter-duplicate-in-operation.report"),
       profile = Oas20Profile
+    )
+  }
+
+  test("Valid scalar numeric format inheritance should conforms") {
+    checkReport(
+      "/scalar-numeric-inheritance.raml",
+      Some("scalar-numeric-inheritance.report"),
+      profile = Raml10Profile
     )
   }
 

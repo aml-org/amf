@@ -1,0 +1,16 @@
+#%RAML 1.0
+version: v1
+title: some title
+
+types:
+  A:
+    type: object
+
+/documents:
+  get:
+    responses:
+      200:
+        body:
+          application/octet-stream: !!null
+          application/json: !!null
+            type: A

@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/scalar-numeric-inheritance.raml
+Profile: RAML 1.0
+Conforms: true
+Number of results: 1
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+  Message: different values for format constraint
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/scalar-numeric-inheritance.raml#/declares/shape/DerivedIntObject/property/property/prop1/scalar/Int32Type
+  Property: http://a.ml/vocabularies/shapes#format
+  Range: [(19,12)-(19,17)]
+  Location: file://amf-cli/shared/src/test/resources/validations/scalar-numeric-inheritance.raml

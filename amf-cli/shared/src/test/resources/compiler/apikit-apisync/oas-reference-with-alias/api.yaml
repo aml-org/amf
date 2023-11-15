@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  version: "1"
+  title: Some APi
+paths:
+  /v1/events:
+    post:
+      responses:
+        default:
+          description: Something
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: "#/components/schemas/PublishPayload"
+
+components:
+  schemas:
+    PublishPayload:
+      type: object
+      properties:
+        payload:
+          description: Payload can be a Program, a Course, a Class or a ProgramRules
+          type: object
+          properties:
+            components:
+              type: array
+              items:
+                $ref: "#/components/schemas/Comportent"
+    Comportent:
+      oneOf:
+        - $ref: "#/components/schemas/CSingleLineText"
+
+    CSingleLineText:
+      description: Supports a single line of free-form text being entered.

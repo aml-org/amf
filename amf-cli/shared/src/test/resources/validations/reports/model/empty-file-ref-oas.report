@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/empty-file-ref-oas/api.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unable-to-parse-json-schema
+  Message: Cannot find path components/schemas/mySchema in JSON schema file://amf-cli/shared/src/test/resources/validations/empty-file-ref-oas/empty-file.yaml
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/empty-file-ref-oas/empty-file.yaml#/components/schemas/mySchema
+  Property: 
+  Range: 
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unable-to-parse-json-schema
+  Message: Cannot parse JSON Schema at file://amf-cli/shared/src/test/resources/validations/empty-file-ref-oas/empty-file.yaml#/components/schemas/mySchema
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/empty-file-ref-oas/empty-file.yaml#/components/schemas/mySchema
+  Property: 
+  Range: 
+  Location: 
