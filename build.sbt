@@ -15,7 +15,7 @@ name := "amf"
 
 ThisBuild / version      := versions("amf.apicontract")
 ThisBuild / organization := "com.github.amlorg"
-ThisBuild / scalaVersion := "2.12.15"
+ThisBuild / scalaVersion := "2.12.18"
 ThisBuild / resolvers ++= List(
   ivyLocal,
   Common.releases,
@@ -38,7 +38,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
-    "org.mule.common" %%% "scala-common-test" % "0.1.13" % Test,
+    "org.mule.common" %%% "scala-common-test" % versions("scala-common-test") % Test,
     "org.slf4j"         % "slf4j-nop"         % "1.7.36" % Test
   ),
   Test / logBuffered := false
@@ -366,8 +366,8 @@ addCommandAlias(
 )
 
 ThisBuild / libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.6" cross CrossVersion.constant("2.12.15")),
-  "com.github.ghik" % "silencer-lib" % "1.7.6" % Provided cross CrossVersion.constant("2.12.15")
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.14" cross CrossVersion.constant("2.12.18")),
+  "com.github.ghik" % "silencer-lib" % "1.7.14" % Provided cross CrossVersion.constant("2.12.18")
 )
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
