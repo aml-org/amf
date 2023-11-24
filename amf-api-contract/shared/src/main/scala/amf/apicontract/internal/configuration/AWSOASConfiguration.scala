@@ -9,14 +9,15 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.apicontract.internal.spec.oas.AwsOas30ParsePlugin
 import amf.apicontract.internal.transformation.compatibility.Oas3CompatibilityPipeline
 import amf.apicontract.internal.transformation.{Oas30TransformationPipeline, Oas3CachePipeline, Oas3EditingPipeline}
+import amf.core.client.scala.execution.ExecutionEnvironment
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import scala.io.Source.fromResource
+import scala.concurrent.{ExecutionContext, Future}
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 @JSExportTopLevel("AWSOASConfiguration")
 object AWSOASConfiguration {
+
+  private implicit val ec: ExecutionContext = ExecutionEnvironment().context
 
   def forScala(): Future[AMFConfiguration] = {
     val baseConfiguration = common()

@@ -1,13 +1,10 @@
 package amf.cli.client
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.cli.internal.commands._
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.grpc.client.scala.GRPCConfiguration
+import amf.core.internal.unsafe.PlatformSecretsWithImplicitGlobalExecutionContext
 
-import java.time.Instant
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.JSRichFutureNonThenable
@@ -17,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   */
 @JSExportTopLevel("Main")
 @JSExportAll
-object Main extends PlatformSecrets {
+object Main extends PlatformSecretsWithImplicitGlobalExecutionContext {
 
   private val reportBuilder               = AMFEventReportBuilder()
   private var amfConfig: AMFConfiguration = APIConfiguration.API()

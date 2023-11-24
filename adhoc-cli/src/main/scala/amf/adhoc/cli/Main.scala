@@ -7,16 +7,18 @@ import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.resource.{ClasspathResourceLoader, ResourceLoader}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Mimes
 import amf.shapes.client.scala.config.JsonLDSchemaConfiguration
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 object Main {
+
+  private implicit val ec: ExecutionContext = ExecutionEnvironment().context
 
   def main(args: Array[String]): Unit = {
     args(0) match {
@@ -150,6 +152,8 @@ object Main {
 }
 
 case class AdaptedClassPathResourceLoader() extends ResourceLoader {
+
+  private implicit val ec: ExecutionContext = ExecutionEnvironment().context
 
   override def fetch(resource: String): Future[Content] = {
     val strippedPrefix  = resource.stripPrefix("file://")
