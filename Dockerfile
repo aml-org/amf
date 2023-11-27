@@ -1,6 +1,6 @@
-# This eclipse-temurin version depends on ubuntu 22:04 as base image. It is the same image used before. Jammy == 22.04
+# This eclipse-temurin version depends on ubuntu 20:04 as base image. It is the same image used before. Focal == 20.04
 
-FROM eclipse-temurin:21-jammy
+FROM eclipse-temurin:17-focal
 
 ARG USER_HOME_DIR="/root"
 
