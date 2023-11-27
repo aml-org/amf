@@ -7,15 +7,14 @@ import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote._
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.testing.ConfigProvider.configFor
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
@@ -78,9 +77,7 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
   }
 }
 
-trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+trait ApiShapePayloadValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   protected val basePath: String
 

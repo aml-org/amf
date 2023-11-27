@@ -14,11 +14,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.concurrent.ExecutionContext
-
 class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuilder {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)

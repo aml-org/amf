@@ -20,8 +20,9 @@ import amf.core.internal.parser._
 import amf.core.internal.remote.{AmfJsonHint, AsyncApi20}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
+import amf.core.io.FileAssertionTest
 import amf.emit.AMFRenderer
-import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.io.MultiJsonldAsyncFunSuite
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.mulesoft.common.io.Fs
 import org.scalatest.Assertion
@@ -30,15 +31,14 @@ import org.yaml.model.{YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with FileAssertionTest {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val basePath                                             = "amf-cli/shared/src/test/resources/resolution/merge"
-  val operationBuilder: OperationDocumentHandler           = OperationDocumentHandler()
-  val messageBuilder: MessageDocumentHandler               = MessageDocumentHandler()
-  val dataNodeBuilder: DataNodeDocumentHandler             = DataNodeDocumentHandler()
+  val basePath                                   = "amf-cli/shared/src/test/resources/resolution/merge"
+  val operationBuilder: OperationDocumentHandler = OperationDocumentHandler()
+  val messageBuilder: MessageDocumentHandler     = MessageDocumentHandler()
+  val dataNodeBuilder: DataNodeDocumentHandler   = DataNodeDocumentHandler()
 
   class Fixture(
       val testName: String,

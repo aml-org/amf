@@ -3,8 +3,8 @@ package amf.resolution
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
-import amf.io.FunSuiteCycleTests
 import amf.core.client.common.transform._
+import amf.io.FunSuiteCycleTests
 
 abstract class ResolutionTest extends FunSuiteCycleTests with ResolutionCapabilities {
 

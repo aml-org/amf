@@ -3,19 +3,17 @@ package amf.parser
 import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec._
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-import scala.concurrent.{ExecutionContext, Future}
 
-class ParseContentTest extends AsyncFunSuite with Matchers with PlatformSecrets {
+import scala.concurrent.Future
 
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ParseContentTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val basePath = "amf-cli/shared/src/test/resources/configuration/"
 

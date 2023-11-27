@@ -7,23 +7,20 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.plugins.render.EmptyRenderConfiguration
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Spec
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.io.FileAssertionTest
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
-import amf.io.FileAssertionTest
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.testing.HintProvider
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.render.JsonRender
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssertionTest with JsonSchemaSuite {
+class JsonSchemaCycle extends FileAssertionTest with JsonSchemaSuite {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  private val basePath                                     = "amf-cli/shared/src/test/resources/cycle/jsonschema/"
+  private val basePath = "amf-cli/shared/src/test/resources/cycle/jsonschema/"
 
   test("PoC Test") {
     cycle("schema.json", "schema.json", DRAFT_7_EMITTER, `application/json`)

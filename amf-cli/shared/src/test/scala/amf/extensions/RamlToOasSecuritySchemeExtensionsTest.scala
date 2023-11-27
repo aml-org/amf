@@ -7,19 +7,16 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote._
 import amf.core.internal.render.AMFSerializer
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.testing.ConfigProvider
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest with Matchers {
+class RamlToOasSecuritySchemeExtensionsTest extends FileAssertionTest with Matchers {
 
   val basePath = "file://amf-cli/shared/src/test/resources/extensions/security-schemes"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Raml oauth 1.0 scheme should be emitted as OAS extension") {
     withBaseUnitPair(s"$basePath/oauth1.raml", Oas20JsonHint) { x =>

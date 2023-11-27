@@ -9,15 +9,13 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type._
 import amf.core.internal.remote.Mimes
-import amf.io.FileAssertionTest
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.io.FileAssertionTest
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class JsonLdSemanticCornerCases extends AsyncFunSuite with Matchers with FileAssertionTest {
+class JsonLdSemanticCornerCases extends FileAssertionTest with Matchers  {
 
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
   private val basePath                                     = "file://amf-cli/shared/src/test/resources/semantic/corner"
 
   test("Semantic extension in wrong domain shouldn't be rendered") {

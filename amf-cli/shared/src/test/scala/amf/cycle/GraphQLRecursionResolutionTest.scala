@@ -6,11 +6,10 @@ import amf.core.client.common.validation.GraphQLProfile
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.{AmfJsonHint, GraphQLHint}
+import amf.core.io.FileAssertionTest
 import amf.graphql.client.scala.GraphQLConfiguration
-import amf.io.FileAssertionTest
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class GraphQLRecursionResolutionTest extends GraphQLFunSuiteCycleTests {
   // valid
@@ -39,8 +38,7 @@ class GraphQLRecursionResolutionTest extends GraphQLFunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/"
 }
 
-class GraphQLRecursionValidationTest extends AsyncFunSuite with FileAssertionTest {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class GraphQLRecursionValidationTest extends FileAssertionTest {
 
   val basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/recursion/"
 

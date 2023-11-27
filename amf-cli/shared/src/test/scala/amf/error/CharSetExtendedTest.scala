@@ -4,16 +4,14 @@ import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.common.remote.Content
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class CharSetExtendedTest extends AsyncFunSuite with PlatformSecrets with Matchers {
+class CharSetExtendedTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val basePath = "file://amf-cli/shared/src/test/resources/parser-results/charset/"
-  implicit override def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   test("test parse UTF-8 with BOM") {
     checkContent("utf-8-bom.json")

@@ -13,6 +13,7 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.matchers.should.Matchers
 
 class ParsedCloneTest extends FunSuiteCycleTests with Matchers {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/clone/"
 
   test("Test error trait clone") {
@@ -27,7 +28,7 @@ class ParsedCloneTest extends FunSuiteCycleTests with Matchers {
   }
 
   test("Test clone http settings of security scheme") {
-    val config    = CycleConfig("api-key-name.json", "", Oas30JsonHint, AmfJsonHint, basePath, None, None)
+    val config = CycleConfig("api-key-name.json", "", Oas30JsonHint, AmfJsonHint, basePath, None, None)
     val amfConfig = buildConfig(None, Some(IgnoreError))
     for {
       model <- build(config, amfConfig)

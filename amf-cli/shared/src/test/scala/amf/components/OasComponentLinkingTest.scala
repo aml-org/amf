@@ -8,17 +8,15 @@ import amf.core.client.scala.config.CachedReference
 import amf.core.client.scala.errorhandling.{ErrorHandlerProvider, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.VirtualElement
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class OasComponentLinkingTest extends AsyncFunSuite with Matchers {
+class OasComponentLinkingTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath: String = "file://amf-cli/shared/src/test/resources/components/oas3/"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Oas component module can be used from document when injected in cache") {
     val componentPath                      = "simple-components.yaml"

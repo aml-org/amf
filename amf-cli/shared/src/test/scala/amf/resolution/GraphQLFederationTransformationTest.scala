@@ -14,11 +14,9 @@ import amf.parser.GraphQLFederationFunSuiteCycleTests
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, UnionShape}
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class GraphQLFederationTransformationTest extends GraphQLFederationFunSuiteCycleTests with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/transformation/"
 

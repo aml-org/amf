@@ -9,14 +9,9 @@ import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class JsonSchemaLinkerModelTest extends AsyncFunSuite with Matchers with JsonSchemaDocumentTest {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class JsonSchemaLinkerModelTest extends JsonSchemaDocumentTest with Matchers {
 
   protected val basePath = "file://amf-cli/shared/src/test/resources/jsonschema/"
 

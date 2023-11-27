@@ -1,16 +1,12 @@
 package amf.jsonschema
 
 import amf.core.client.scala.model.document.Document
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.config.JsonSchemaConfiguration.JsonSchema
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class JsonSchemaDocumentModelTest extends AsyncFunSuite with Matchers {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class JsonSchemaDocumentModelTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val base = "file://amf-cli/shared/src/test/resources/jsonschema/doc/"
 

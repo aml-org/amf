@@ -1,21 +1,15 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.common.remote.Content
-import amf.core.client.common.transform.PipelineId
-import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
-import amf.core.internal.remote.{Cache, Context, FileNotFound}
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
+import amf.core.internal.remote.FileNotFound
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class PathNormalizationTest extends AsyncBeforeAndAfterEach with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class PathNormalizationTest extends AsyncBeforeAndAfterEach with AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   test("Reference file located outside of root directory") {
     val rootUrl = "file:///api.raml"

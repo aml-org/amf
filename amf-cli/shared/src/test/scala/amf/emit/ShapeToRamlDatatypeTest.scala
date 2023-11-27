@@ -4,18 +4,14 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.{APIConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.RamlShapeRenderer.toRamlDatatype
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ShapeToRamlDatatypeTest extends FileAssertionTest {
 
   val generalFindShapeFunc: BaseUnit => Option[AnyShape] = (u: BaseUnit) =>
     encodedWebApi(u)

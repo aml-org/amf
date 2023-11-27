@@ -3,11 +3,7 @@ package amf.resolution
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, Raml10, Raml10YamlHint}
 
-import scala.concurrent.ExecutionContext
-
 class ExtensionResolutionTest extends ResolutionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-cli/shared/src/test/resources/resolution/extension/"
 

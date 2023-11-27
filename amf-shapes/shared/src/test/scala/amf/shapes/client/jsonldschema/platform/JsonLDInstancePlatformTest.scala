@@ -1,16 +1,15 @@
 package amf.shapes.client.jsonldschema.platform
 
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.convert.NativeOps
 import amf.shapes.client.platform.config.JsonLDSchemaConfiguration
 import amf.shapes.client.platform.model.document.JsonLDInstanceDocument
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-trait JsonLDInstancePlatformTest extends AsyncFunSuite with NativeOps with Matchers {
+trait JsonLDInstancePlatformTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with NativeOps with Matchers {
 
-  override implicit val executionContext = ExecutionContext.Implicits.global
-  private val basePath                   = "amf-shapes/shared/src/test/resources/jsonld-schema/gcl/"
+  private val basePath = "amf-shapes/shared/src/test/resources/jsonld-schema/gcl/"
+
   test("Test parse and get jsonls instance") {
     val configuration = JsonLDSchemaConfiguration.JsonLDSchema()
 

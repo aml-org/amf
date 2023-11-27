@@ -5,24 +5,17 @@ import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.config.{JsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient}
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
-import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
-  InvalidCharacteristicsUse,
-  InvalidTypeUse,
-  UnsupportedContainer
-}
+import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{InvalidCharacteristicsUse, InvalidTypeUse, UnsupportedContainer}
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class SemanticContextTransformationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SemanticContextTransformationTest extends FileAssertionTest with Matchers {
 
   private lazy val basePath: String = "amf-shapes/shared/src/test/resources/jsonld-schema/transformation/"
 
@@ -34,6 +27,7 @@ class SemanticContextTransformationTest extends AsyncFunSuite with FileAssertion
       .parseJsonLDSchema("file://" + basePath + source)
       .map(r => client.transform(r.jsonDocument, PipelineId.Editing))
   }
+
   private def shouldHaveCharacteristicsUseError(results: Seq[AMFValidationResult]): Assertion = {
     results.length shouldBe (1)
     results.head.message shouldBe (InvalidCharacteristicsUse.message)
@@ -45,6 +39,7 @@ class SemanticContextTransformationTest extends AsyncFunSuite with FileAssertion
     propertyRange.semanticContext.isDefined shouldBe true
     propertyRange.semanticContext.get.overrideMappings.head.value() shouldBe "alias:A"
   }
+
   private def getAnnotatedProperty(bu: BaseUnit): AnyShape = bu
     .asInstanceOf[JsonSchemaDocument]
     .encodes

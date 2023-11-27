@@ -5,16 +5,15 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class SemanticCompatibilitySettingsTest extends AsyncFunSuite with Matchers {
+class SemanticCompatibilitySettingsTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-  private val basePath                                     = "amf-cli/shared/src/test/resources/semantic/compatibility/"
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  private val basePath = "amf-cli/shared/src/test/resources/semantic/compatibility/"
 
   test("Conversion to RAML 1.0 from OAS 2.0 shouldn't flatten semantic extensions") {
     run("api.oas20.json", RAMLConfiguration.RAML10())

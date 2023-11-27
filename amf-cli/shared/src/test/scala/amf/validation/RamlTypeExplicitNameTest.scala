@@ -1,19 +1,21 @@
 package amf.validation
+
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-import scala.concurrent.{ExecutionContext, Future}
 
-class RamlTypeExplicitNameTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+class RamlTypeExplicitNameTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
+
   val basePath = "file://amf-cli/shared/src/test/resources/validations/raml/type-explicit-name"
   def modelAssertion(path: String)(
       assertion: BaseUnit => Assertion

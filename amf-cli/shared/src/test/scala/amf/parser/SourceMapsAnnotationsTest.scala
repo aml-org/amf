@@ -4,27 +4,25 @@ import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AvroCon
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import amf.shapes.internal.spec.raml.parser.expression.ExpressionMember
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 /** iterates the BaseUnit checking if both field and value have the SourceAST or a VirtualNode annotation. The value may
   * not be checked if its synthesized or an expression.
   */
-class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
+class SourceMapsAnnotationsTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  private val directory: String                            = "amf-cli/shared/src/test/resources/parser/annotations/"
+  private val directory: String = "amf-cli/shared/src/test/resources/parser/annotations/"
 
   test("Test raml 1.0 annotations") {
     runTest("raml10.raml")
