@@ -2,20 +2,10 @@ package amf.event
 
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEvent}
 import amf.core.client.scala.config.{AMFEvent, GroupedEvent}
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
-import org.mulesoft.common.test.AsyncBeforeAndAfterEach
+import amf.core.io.FileAssertionTest
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class AMFEventReportBuilderTest
-    extends AsyncBeforeAndAfterEach
-    with PlatformSecrets
-    with Matchers
-    with FileAssertionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class AMFEventReportBuilderTest extends FileAssertionTest with Matchers {
 
   test("Report creation") {
     val report = AMFEventReportBuilder(events).build()

@@ -3,16 +3,13 @@ package amf.error
 import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{Assertion, Succeeded}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+trait ParserErrorTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   protected val basePath: String
 

@@ -1,15 +1,14 @@
 package amf.render
+
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, Raml10YamlHint}
 import amf.resolution.ResolutionTest
-import scala.concurrent.ExecutionContext
 
 class GovernanceModeTest extends ResolutionTest {
 
-  override val defaultPipeline: String                     = PipelineId.Editing
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override val basePath: String                            = "amf-cli/shared/src/test/resources/render/"
+  override val defaultPipeline: String = PipelineId.Editing
+  override val basePath: String        = "amf-cli/shared/src/test/resources/render/"
 
   test("Generate flattened jsonld with Governance Mode for RAML") {
     cycle(

@@ -4,13 +4,12 @@ import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.BaseUnit
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class SourceInformationTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SourceInformationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   test("Correct location of element defined in external trait using source information") {
     val api = "file://amf-cli/shared/src/test/resources/production/lib-trait-location/api.raml"

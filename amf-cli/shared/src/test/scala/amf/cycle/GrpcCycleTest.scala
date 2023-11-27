@@ -8,6 +8,7 @@ import amf.grpc.client.scala.GRPCConfiguration
 import amf.io.FunSuiteCycleTests
 
 class GrpcCycleTest extends FunSuiteCycleTests {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/grpc/"
 
   override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {

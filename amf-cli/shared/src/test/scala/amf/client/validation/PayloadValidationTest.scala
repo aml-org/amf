@@ -7,14 +7,12 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.ExecutionContext
 
 trait PayloadValidationUtils {
   protected def defaultConfig: ShapesConfiguration = ShapesConfiguration.predefined()
@@ -41,7 +39,11 @@ trait PayloadValidationUtils {
     defaultConfig.withPlugin(plugin).elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
-trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
+trait PayloadValidationTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with NativeOps
+    with Matchers
+    with PayloadValidationUtils {
 
   test("Test parameter validator int payload") {
     val test = ScalarShape().withDataType(DataTypes.String).withName("test")
@@ -292,11 +294,10 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
 
   test("Leap year DateTime CRI Case") {
 
-    val shape = ScalarShape().withDataType(DataTypes.DateTime).withFormat("rfc3339")
+    val shape     = ScalarShape().withDataType(DataTypes.DateTime).withFormat("rfc3339")
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""2022-02-29T23:59:59Z""").conforms shouldBe false
     validator.syncValidate(""""2024-02-29T23:59:59Z"""").conforms shouldBe true
   }
 
-  override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }

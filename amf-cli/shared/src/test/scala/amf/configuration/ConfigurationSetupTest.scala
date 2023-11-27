@@ -1,6 +1,5 @@
 package amf.configuration
 
-import amf.apicontract.client.scala.{AMFConfiguration, ConfigurationAdapter}
 import amf.apicontract.client.scala.APIConfiguration.{API, APIWithJsonSchema}
 import amf.apicontract.client.scala.AsyncAPIConfiguration.{Async20 => Async20Config}
 import amf.apicontract.client.scala.OASConfiguration.{OAS => OASConfig, OAS20 => OAS20Config, OAS30 => OAS30Config}
@@ -10,15 +9,16 @@ import amf.apicontract.client.scala.RAMLConfiguration.{
   RAML10 => RAML10Config
 }
 import amf.apicontract.client.scala.WebAPIConfiguration.WebAPI
+import amf.apicontract.client.scala.{AMFConfiguration, ConfigurationAdapter}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec._
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.language.postfixOps
 
-trait ConfigurationSetupTest extends AsyncFunSuite with Matchers {
+trait ConfigurationSetupTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   protected val basePath                            = "file://amf-cli/shared/src/test/resources/configuration/"
   protected val apiConfig: AMFConfiguration         = API()

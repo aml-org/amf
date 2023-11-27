@@ -5,15 +5,16 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.core.internal.remote.{AmfJsonHint, Hint, Spec}
+import amf.core.io.FileAssertionTest
 import amf.rdf.client.scala.{RdfModel, RdfUnitConverter}
 import amf.testing.ConfigProvider.configFor
 import org.scalactic.Fail
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 /** Cycle tests using temporary file and directory creator
   */
@@ -32,7 +33,9 @@ trait JsonLdSerializationSuite {
   }
 }
 
-abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSerializationSuite {
+abstract class MultiJsonldAsyncFunSuite
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with JsonLdSerializationSuite {
 
   private def validatePattern(pattern: String, patternName: String): Unit = {
     if (!pattern.contains("%s")) {
@@ -95,20 +98,16 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSeriali
 }
 
 case class MultiGoldenTestConfig(golden: String, renderOptions: RenderOptions)
+
 case class MultiSourceTestConfig(source: String)
+
 case class MultiTestConfig(source: String, golden: String, renderOptions: RenderOptions)
 
-abstract class FunSuiteCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleTests {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-}
+abstract class FunSuiteCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleTests {}
 
-abstract class FunSuiteRdfCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleRdfTests {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-}
+abstract class FunSuiteRdfCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleRdfTests {}
 
 trait BuildCycleTestCommon extends FileAssertionTest {
-
-  protected implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   def basePath: String
 
@@ -144,6 +143,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     amfConfig.baseUnitClient().render(unit, config.targetMediaType)
   }
+
   def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
@@ -231,7 +231,9 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transformThroughRdf(_, config))
-      .map { render(_, config, amfConfig) }
+      .map {
+        render(_, config, amfConfig)
+      }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

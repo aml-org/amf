@@ -1,32 +1,30 @@
 package amf.maker
 
-import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfObject
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.metamodel.Field
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, CreativeWork, ScalarShape, XMLSerializer}
+import amf.shapes.client.scala.model.domain._
 import org.mulesoft.common.test.ListAssertions
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{Assertion, Succeeded}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait WebApiMakerTest
-    extends AsyncFunSuite
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
     with CompilerTestBuilder
     with ListAssertions
     with Matchers
     with AmfObjectTestMatcher {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "file://amf-cli/shared/src/test/resources/maker/"
 

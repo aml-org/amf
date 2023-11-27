@@ -18,10 +18,7 @@ import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
-
 class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)

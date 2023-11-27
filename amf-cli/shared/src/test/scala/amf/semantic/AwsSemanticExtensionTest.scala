@@ -3,15 +3,12 @@ package amf.semantic
 import amf.apicontract.internal.configuration.AWSOASConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.Mimes
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class AwsSemanticExtensionTest extends AsyncFunSuite with SemanticExtensionParseTest with FileAssertionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class AwsSemanticExtensionTest extends SemanticExtensionParseTest with FileAssertionTest {
 
   override protected val basePath = "amf-cli/shared/src/test/resources/semantic/aws"
 

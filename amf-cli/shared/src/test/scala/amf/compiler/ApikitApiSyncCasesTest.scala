@@ -4,25 +4,25 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.{AMFBaseUnitClient, APIConfiguration}
 import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.common.transform.PipelineId.{Cache, Editing}
+import amf.core.client.common.transform.PipelineId.Cache
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.resource.ResourceLoader
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Spec.{OAS20, OAS30, RAML10}
 import amf.core.internal.remote.{FileNotFound, Mimes, Spec}
-import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.matchers.should.Matchers
-import scopt.Validation
 
 import scala.collection.mutable
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecrets with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ApikitApiSyncCasesTest
+    extends AsyncBeforeAndAfterEach
+    with AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers {
 
   private val base = "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync"
 

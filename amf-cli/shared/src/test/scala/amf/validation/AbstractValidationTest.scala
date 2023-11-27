@@ -1,18 +1,15 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFConfiguration, RAMLConfiguration}
-import amf.core.client.common.transform.PipelineId
-import amf.core.client.common.validation.{ProfileName, Raml10Profile}
+import amf.apicontract.client.scala.AMFConfiguration
+import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-abstract class AbstractValidationTest extends AsyncFunSuite with FileAssertionTest {
+abstract class AbstractValidationTest extends FileAssertionTest {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   protected def config: AMFConfiguration
   protected val pipeline: String
   protected val profile: ProfileName

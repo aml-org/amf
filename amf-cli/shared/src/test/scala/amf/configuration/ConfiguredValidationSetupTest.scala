@@ -1,14 +1,10 @@
 package amf.configuration
 
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.core.client.common.validation.{Async20Profile, Oas20Profile, Oas30Profile, Raml08Profile, Raml10Profile}
+import amf.core.client.common.validation._
 import amf.core.client.scala.model.document.Document
 
-import scala.concurrent.ExecutionContext
-
 class ConfiguredValidationSetupTest extends ConfigurationSetupTest {
-
-  implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   private val model = Document()
     .withId("someId")

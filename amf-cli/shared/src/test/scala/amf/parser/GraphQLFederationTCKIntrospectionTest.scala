@@ -11,6 +11,7 @@ import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import scala.concurrent.Future
 
 class GraphQLFederationTCKIntrospectionTest extends GraphQLFederationFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/"
 
   // Test valid APIs

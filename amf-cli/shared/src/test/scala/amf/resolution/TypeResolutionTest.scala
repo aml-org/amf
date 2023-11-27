@@ -14,10 +14,11 @@ import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Raml10YamlHint
 import amf.io.FunSuiteCycleTests
 import amf.shapes.client.scala.model.domain.{ArrayShape, MatrixShape, ScalarShape, UnionShape}
-import amf.shapes.internal.spec.common.parser.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 
 class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
+
+
 
   test("TypeExpressions") {
     val adopt: Shape => Unit = shape => { shape.adopted("/test") }

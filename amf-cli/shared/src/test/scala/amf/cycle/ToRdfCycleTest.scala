@@ -6,26 +6,16 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Spec
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.rdf.client.scala.RdfUnitConverter
 import amf.resolution.ResolutionCapabilities
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ToRdfCycleTest
-    extends AsyncFunSuite
-    with FileAssertionTest
-    with AsyncBeforeAndAfterEach
-    with Matchers
-    with ResolutionCapabilities
-    with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ToRdfCycleTest extends FileAssertionTest with AsyncBeforeAndAfterEach with Matchers with ResolutionCapabilities {
 
   val basePath = "file://amf-cli/shared/src/test/resources/rdf/"
 

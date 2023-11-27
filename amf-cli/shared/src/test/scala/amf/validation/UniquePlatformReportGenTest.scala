@@ -6,18 +6,15 @@ import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
+sealed trait AMFValidationReportGenTest extends FileAssertionTest {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath: String
   val reportsPath: String
 

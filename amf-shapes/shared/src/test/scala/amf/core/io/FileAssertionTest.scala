@@ -1,15 +1,13 @@
-package amf.io
+package amf.core.io
 
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.mulesoft.common.test.Tests.{checkDiff, checkLinesDiff}
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-trait FileAssertionTest extends PlatformSecrets {
-
-  private implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+trait FileAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   protected val fs: FileSystem = platform.fs
 

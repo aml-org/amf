@@ -7,6 +7,7 @@ import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import amf.io.FunSuiteCycleTests
 
 trait GraphQLFederationFunSuiteCycleTests extends FunSuiteCycleTests {
+
   override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
     val amfConfig: AMFConfiguration = GraphQLFederationConfiguration.GraphQLFederation()
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {

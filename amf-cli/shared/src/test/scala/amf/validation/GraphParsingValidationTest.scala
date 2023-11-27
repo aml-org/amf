@@ -1,15 +1,13 @@
 package amf.validation
 
 import amf.apicontract.client.scala.{AMFBaseUnitClient, AMFConfiguration, APIConfiguration}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class GraphParsingValidationTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class GraphParsingValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private def basePath: String = "file://amf-cli/shared/src/test/resources/graphs/"
 

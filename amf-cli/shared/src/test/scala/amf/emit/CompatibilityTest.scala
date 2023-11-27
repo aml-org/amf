@@ -8,15 +8,12 @@ import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.resource.StringResourceLoader
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class CompatibilityTest extends FileAssertionTest {
 
   private val basePath = "amf-cli/shared/src/test/resources/upanddown/"
 

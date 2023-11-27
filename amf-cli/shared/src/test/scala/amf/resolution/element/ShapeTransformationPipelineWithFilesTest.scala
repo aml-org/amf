@@ -6,18 +6,15 @@ import amf.core.client.common.validation.ProfileNames
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.Shape
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.resolution.elements.CompleteShapeTransformationPipeline
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
 import scala.reflect.ClassTag
 
-class ShapeTransformationPipelineWithFilesTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ShapeTransformationPipelineWithFilesTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val base = "file://amf-cli/shared/src/test/resources/shape-transformation-pipeline-test"
 
@@ -63,20 +60,20 @@ class ShapeTransformationPipelineWithFilesTest extends AsyncFunSuite with Matche
         .head
         .schema
 
-        val resolvedShape = resolveShape(shape, conf)
-        resolvedShape mustBe a[NodeShape]
+      val resolvedShape = resolveShape(shape, conf)
+      resolvedShape mustBe a[NodeShape]
 
-        val nodeShape = resolvedShape.asInstanceOf[NodeShape]
+      val nodeShape = resolvedShape.asInstanceOf[NodeShape]
 
-        nodeShape.properties.size shouldBe 3
+      nodeShape.properties.size shouldBe 3
 
-        val maybeProp = nodeShape.properties.find(p => p.name.value() == "application")
-        maybeProp.nonEmpty shouldBe true
-        val propRange = maybeProp.get.range
-        propRange mustBe a[NodeShape]
-        val nodeProp = propRange.asInstanceOf[NodeShape]
-        nodeProp.inherits should have size 0
-        nodeProp.properties should have size 3
+      val maybeProp = nodeShape.properties.find(p => p.name.value() == "application")
+      maybeProp.nonEmpty shouldBe true
+      val propRange = maybeProp.get.range
+      propRange mustBe a[NodeShape]
+      val nodeProp = propRange.asInstanceOf[NodeShape]
+      nodeProp.inherits should have size 0
+      nodeProp.properties should have size 3
     }
   }
 

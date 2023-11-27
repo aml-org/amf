@@ -2,15 +2,12 @@ package amf.cycle
 
 import amf.apicontract.client.scala.OASConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.rdf.client.scala.RdfUnitConverter
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class RdfModelRoundTripTest extends AsyncFunSuite with FileAssertionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class RdfModelRoundTripTest extends FileAssertionTest {
 
   test("oas 20 api rdf round trip results in correct model") {
     val src    = "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json"

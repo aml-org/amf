@@ -7,17 +7,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationPipelineRunner
-import amf.core.internal.remote.{
-  Amf,
-  AmfJsonHint,
-  Oas20,
-  Oas20YamlHint,
-  Oas30,
-  Oas30YamlHint,
-  Raml08,
-  Raml10,
-  Raml10YamlHint
-}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Oas20, Oas20YamlHint, Oas30, Oas30YamlHint, Raml08, Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class JapaneseResolvedCycleTest extends FunSuiteCycleTests {

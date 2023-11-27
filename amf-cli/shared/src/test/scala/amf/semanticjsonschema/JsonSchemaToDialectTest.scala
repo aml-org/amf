@@ -5,19 +5,15 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, AmlHint, Hint}
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.io.FileAssertionTest
 import amf.emit.AMFRenderer
-import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
-import org.scalatest.{Assertion, Succeeded}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class JsonSchemaToDialectTest extends FileAssertionTest with Matchers {
 
   private val jsonSchemaPath = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/"
   private val dialectPath    = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/dialects/"
