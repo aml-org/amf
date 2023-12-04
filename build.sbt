@@ -340,6 +340,8 @@ lazy val adhocCli = (project in file("adhoc-cli"))
     addArtifact(assembly / artifact, assembly)
   )
   .dependsOn(apiContractJVM)
+  .dependsOn(graphqlJVM)
+  .dependsOn(grpcJVM)
   .disablePlugins(SonarPlugin, NpmOpsPlugin, ScoverageSbtPlugin)
 
 addCommandAlias(

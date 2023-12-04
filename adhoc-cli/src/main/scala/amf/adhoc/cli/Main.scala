@@ -10,6 +10,9 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.resource.{ClasspathResourceLoader, ResourceLoader}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Mimes
+import amf.core.internal.validation.core.ValidationReport
+import amf.graphql.client.scala.GraphQLConfiguration
+import org.apache.commons.io.IOUtils
 import amf.shapes.client.scala.config.JsonLDSchemaConfiguration
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -34,6 +37,19 @@ object Main {
             APIConfiguration.fromSpec(parsing.sourceSpec).baseUnitClient().transform(parsing.baseUnit, PipelineId.Cache)
           }
           validation <- APIConfiguration.fromSpec(parsing.sourceSpec).baseUnitClient().validate(transform.baseUnit)
+        } yield {
+          val all = parsing.results ++ transform.results ++ validation.results
+          AMFValidationReport(validation.model, validation.profile, results = all)
+        }
+        val report = Await.result(fut, Duration.Inf)
+        println(report.toString)
+      case "validate-graphql" =>
+        val path = s"file://${args(1)}"
+        val client = GraphQLConfiguration.GraphQL().baseUnitClient()
+        val fut = for {
+          parsing <- client.parse(path)
+          transform <- Future.successful { client.transform(parsing.baseUnit, PipelineId.Cache) }
+          validation <- client.validate(transform.baseUnit)
         } yield {
           val all = parsing.results ++ transform.results ++ validation.results
           AMFValidationReport(validation.model, validation.profile, results = all)
