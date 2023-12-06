@@ -1,14 +1,4 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/corner-cases/recursion-with-unions.graphql
 Profile: GraphQL
-Conforms: false
-Number of results: 1
-
-Level: Violation
-
-- Constraint: http://a.ml/vocabularies/amf/parser#invalid-union-members
-  Message: 'null' is not a valid union member (only Object types)
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/corner-cases/recursion-with-unions.graphql#/declares/union/IssueTimelineItems
-  Property: http://a.ml/vocabularies/shapes#anyOf
-  Range: [(1,0)-(1,53)]
-  Location: 
+Conforms: true
+Number of results: 0
