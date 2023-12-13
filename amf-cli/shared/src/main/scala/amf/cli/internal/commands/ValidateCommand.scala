@@ -72,7 +72,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
   def processOutput(report: AMFValidationReport, config: ParserConfig)(implicit ec: ExecutionContext): Unit = {
     val json = ValidationReportJSONLDEmitter.emitJSON(report)
     config.output match {
-      case Some(f) => platform.write(f, json)
+      case Some(f) => platform.fs.asyncFile(f).write(json)
       case None    => config.stdout.print(json)
     }
     if (!report.conforms) {

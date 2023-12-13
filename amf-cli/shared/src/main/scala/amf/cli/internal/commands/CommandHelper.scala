@@ -105,7 +105,7 @@ trait CommandHelper {
         .render(unit)
     config.output match {
       case Some(f) =>
-        platform.write(f, result)
+        platform.fs.asyncFile(f).write(result)
       case None =>
         Future.successful(config.stdout.print(result))
     }

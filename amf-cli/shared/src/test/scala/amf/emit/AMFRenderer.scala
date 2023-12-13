@@ -21,12 +21,6 @@ class AMFRenderer(unit: BaseUnit, target: Hint, options: RenderOptions) extends 
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): String = render()
 
-  /** Print ast to file. */
-  def renderToFile(remote: Platform, path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val result = render()
-    remote.write(path, result)
-  }
-
   private def render()(implicit executionContext: ExecutionContext): String = {
     val config = configFor(target.spec).withRenderOptions(options)
     new AMFSerializer(unit, config.renderConfiguration, Some(target.syntax.mediaType)).renderToString
