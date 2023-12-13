@@ -11,11 +11,13 @@ import amf.core.client.scala.resource.{ClasspathResourceLoader, ResourceLoader}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Mimes
 import amf.core.internal.validation.core.ValidationReport
+import amf.graphql.client.scala.GraphQLConfiguration
 import org.apache.commons.io.IOUtils
+import amf.shapes.client.scala.config.JsonLDSchemaConfiguration
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 object Main {
 
@@ -23,6 +25,9 @@ object Main {
     args(0) match {
       case "parse" =>
         apiParse(args)
+
+      case "parse-with-schema" =>
+        parseWithSchema(args)
 
       case "validate-api" =>
         val path = s"file://${args(1)}"
@@ -33,7 +38,20 @@ object Main {
           }
           validation <- APIConfiguration.fromSpec(parsing.sourceSpec).baseUnitClient().validate(transform.baseUnit)
         } yield {
-          val all    = parsing.results ++ transform.results ++ validation.results
+          val all = parsing.results ++ transform.results ++ validation.results
+          AMFValidationReport(validation.model, validation.profile, results = all)
+        }
+        val report = Await.result(fut, Duration.Inf)
+        println(report.toString)
+      case "validate-graphql" =>
+        val path = s"file://${args(1)}"
+        val client = GraphQLConfiguration.GraphQL().baseUnitClient()
+        val fut = for {
+          parsing <- client.parse(path)
+          transform <- Future.successful { client.transform(parsing.baseUnit, PipelineId.Cache) }
+          validation <- client.validate(transform.baseUnit)
+        } yield {
+          val all = parsing.results ++ transform.results ++ validation.results
           AMFValidationReport(validation.model, validation.profile, results = all)
         }
         val report = Await.result(fut, Duration.Inf)
@@ -47,7 +65,9 @@ object Main {
           System.exit(1)
         }
       case c =>
-        System.err.println(s"Unrecognized command $c. Accepted commands are 'parse' and 'validate' (rulesets) and 'validate-api' (apis)")
+        System.err.println(
+          s"Unrecognized command $c. Accepted commands are 'parse' and 'validate' (rulesets) and 'validate-api' (apis)"
+        )
         System.exit(1)
     }
   }
@@ -108,6 +128,19 @@ object Main {
         .baseUnitClient()
         .render(baseUnit, Mimes.`application/ld+json`)
     }
+  }
+
+  private def parseWithSchema(args: Array[String]): Unit = {
+    val renderOptions = RenderOptions().withPrettyPrint
+    val client        = JsonLDSchemaConfiguration.JsonLDSchema().withRenderOptions(renderOptions).baseUnitClient()
+    val res = for {
+      schemaResult   <- client.parseJsonLDSchema(s"file://${args(1)}")
+      instanceResult <- client.parseJsonLDInstance(s"file://${args(2)}", schemaResult.jsonDocument)
+    } yield {
+      val rendered = client.render(instanceResult.baseUnit, Mimes.`application/ld+json`)
+      println(rendered)
+    }
+    Await.result(res, Duration.Inf)
   }
 
   def validateInstance(path: String): AMFResult = {
