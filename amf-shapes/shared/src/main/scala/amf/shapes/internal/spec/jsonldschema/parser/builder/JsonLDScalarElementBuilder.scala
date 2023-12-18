@@ -3,17 +3,19 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.internal.metamodel.Type
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDElement, JsonLDScalar}
 import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleScalarDataType
-import org.mulesoft.common.client.lexical.SourceLocation
+import org.mulesoft.common.client.lexical.{PositionRange, SourceLocation}
+import org.yaml.model.YValue
 
 class JsonLDScalarElementBuilder(
     var dataType: String,
     var value: Any,
-    override val location: SourceLocation,
+    override val annotation: Annotations,
     path: JsonPath
-) extends JsonLDElementBuilder(location, path) {
+) extends JsonLDElementBuilder(annotation, path) {
 
   override type THIS = JsonLDScalarElementBuilder
 
@@ -31,7 +33,7 @@ class JsonLDScalarElementBuilder(
       case DataTypes.Number if other.dataType == DataTypes.Integer =>
         dataType = other.dataType
       case _ =>
-        ctx.violation(IncompatibleScalarDataType, "", IncompatibleScalarDataType.message, location)
+        ctx.violation(IncompatibleScalarDataType, "", IncompatibleScalarDataType.message)
         dataType = other.dataType
         value = other.value
     }
@@ -56,5 +58,5 @@ class JsonLDScalarElementBuilder(
 }
 
 object JsonLDScalarElementBuilder {
-  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, SourceLocation.Unknown, path)
+  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, Annotations.virtual(), path)
 }

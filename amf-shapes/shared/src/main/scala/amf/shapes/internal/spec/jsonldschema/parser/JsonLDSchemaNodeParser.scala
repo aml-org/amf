@@ -2,11 +2,9 @@ package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.internal.parser.domain.Annotations
 import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.internal.spec.jsonldschema.parser.builder.{JsonLDElementBuilder, JsonLDErrorBuilder}
-import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
-  UnsupportedRootLevel,
-  UnsupportedScalarRootLevel
-}
+import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{UnsupportedRootLevel, UnsupportedScalarRootLevel}
 import org.yaml.model._
 
 object JsonPath {
@@ -32,12 +30,15 @@ case class JsonLDSchemaNodeParser(shape: Shape, node: YNode, key: String, path: 
       case _ if isScalarNode && !isRoot =>
         JsonLDScalarElementParser(node.as[YScalar], node.tagType, path).parse(shape)
       case _ if isScalarNode && isRoot =>
-        ctx.eh.violation(UnsupportedScalarRootLevel, shape, UnsupportedScalarRootLevel.message, Annotations(node))
-        JsonLDErrorBuilder(path)
+        generateErrorBuilder(UnsupportedScalarRootLevel)
       case _ =>
-        ctx.eh.violation(UnsupportedRootLevel, shape, UnsupportedRootLevel.message, Annotations(node))
-        JsonLDErrorBuilder(path)
+        generateErrorBuilder(UnsupportedRootLevel)
     }
+  }
+  private def generateErrorBuilder(validation: ValidationSpecification): JsonLDErrorBuilder = {
+    ctx.eh.violation(validation, shape, validation.message, Annotations(node))
+    val annotation = Annotations(node.value)
+    JsonLDErrorBuilder(annotation, path)
   }
 
   private def isScalarNode = {

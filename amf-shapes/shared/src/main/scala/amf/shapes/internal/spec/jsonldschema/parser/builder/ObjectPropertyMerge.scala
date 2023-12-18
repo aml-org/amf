@@ -20,12 +20,12 @@ object ObjectPropertyMerge {
       case (currScalar: JsonLDScalarElementBuilder, otherScalar: JsonLDScalarElementBuilder) =>
         currScalar.merge(otherScalar)
       case (_: JsonLDErrorBuilder, _: JsonLDErrorBuilder) =>
-        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.location)
+        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.annotation.sourceLocation)
         other
       case (_: JsonLDErrorBuilder, _) => other
       case (_, _: JsonLDErrorBuilder) => current
       case _ =>
-        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.location)
+        ctx.violation(IncompatibleNodes, "", IncompatibleNodes.message, current.annotation.sourceLocation)
         other
     }
   }
