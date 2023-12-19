@@ -7,6 +7,8 @@ import amf.graphql.client.scala.GraphQLConfiguration
 import scala.concurrent.Future
 
 class GraphQLCornerCasesValidationTest extends GraphQLValidationTest {
+
+  // todo: fix Query recursion inside not-fixed folder
   override def basePath: String = "amf-cli/shared/src/test/resources/graphql/corner-cases"
 
   fs.syncFile(basePath)
