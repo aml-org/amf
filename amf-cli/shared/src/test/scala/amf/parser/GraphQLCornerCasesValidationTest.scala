@@ -31,12 +31,12 @@ class GraphQLCornerCasesValidationTest extends GraphQLValidationTest {
   private def apiName(api: String): String = api.split('.').dropRight(1).mkString(".")
 
   def dumpJsonLDFor(api: String): Future[Unit] = {
-    val ro = RenderOptions().withPrettyPrint.withCompactUris.withoutFlattenedJsonLd
+    val ro     = RenderOptions().withPrettyPrint.withCompactUris.withoutFlattenedJsonLd
     val client = GraphQLConfiguration.GraphQL().withRenderOptions(ro).baseUnitClient()
     for {
       parsing <- client.parse(s"file://$basePath/$api.graphql")
-      content <- Future.successful(client.render(parsing.baseUnit, `application/ld+json`))
-      _       <- fs.asyncFile(s"$basePath/$api.jsonld").write(content)
+      content = client.render(parsing.baseUnit, `application/ld+json`)
+      _ <- fs.asyncFile(s"$basePath/$api.jsonld").write(content)
     } yield {
       Unit
     }
