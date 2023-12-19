@@ -14,7 +14,6 @@ import amf.shapes.internal.spec.jsonldschema.parser.builder.ObjectPropertyMerge.
 import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import org.mulesoft.common.client.lexical.{PositionRange, SourceLocation}
 
-
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -109,22 +108,22 @@ object JsonLDObjectElementBuilder {
     val fields = termIndex.map {
       case (term, List(builder)) =>
         val (element, elementType) = builder.element.build(ctxBuilder)
-        createField(builder, elementType) -> element
+        createField(builder, elementType) -> PropertyData(element, builder.annotation)
       case (term, builders) =>
         val (elements, types) = TupleOps.reduce(builders.map(_.element.build(ctxBuilder)))
-        val element           = JsonLDArray(elements)
+        val element           = JsonLDArray(elements) // pasar Annotations.virtual() cuando se pase el annotation al JsonLDArray
         val arrayType         = computeType(types)
         Field(
           Type.Array(arrayType),
           ValueType(term),
           ModelDoc(displayName = displayNameForMultipleValuedTerm(builders))
-        ) -> element
+        ) -> PropertyData(element, Annotations.inferred())
     }
     createObjectElement(fields, classTerms, path, ctxBuilder)
   }
 
   private def createObjectElement(
-      fields: mutable.LinkedHashMap[Field, JsonLDElement],
+      fields: mutable.LinkedHashMap[Field, PropertyData],
       classTerms: List[String],
       path: JsonPath,
       ctxBuilder: EntityContextBuilder
@@ -132,7 +131,7 @@ object JsonLDObjectElementBuilder {
     val entityModel = new JsonLDEntityModel(asValueTerms(classTerms), fields.keys.toList, path)
     ctxBuilder + entityModel
     val dObject = JsonLDObject.empty(entityModel, path.last)
-    fields.foreach { case (field, value) => dObject.set(field, value) }
+    fields.foreach { case (field, prop) => dObject.set(field, prop.propertyElement, prop.propertyAnnotations) }
     dObject
   }
 
@@ -145,5 +144,9 @@ object JsonLDObjectElementBuilder {
     val finalType = builder.element.getOverriddenType.getOrElse(elementType)
     Field(finalType, ValueType(builder.term), ModelDoc(displayName = builder.key))
   }
+
+}
+
+case class PropertyData(propertyElement: JsonLDElement, propertyAnnotations: Annotations){
 
 }

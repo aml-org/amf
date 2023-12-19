@@ -18,10 +18,10 @@ object JsonLDArray {
   }
 }
 
-class JsonLDArray extends AmfArray(Nil) with JsonLDElement {
+class JsonLDArray extends AmfArray(Nil) with JsonLDElement { //pasar annotations como parametro
 
   /** Set of annotations for element. */
-  override val annotations: Annotations = Annotations.virtual()
+  override val annotations: Annotations = Annotations.virtual() //volar esto, ya las pasamos por parametro
 
   def +=(value: JsonLDElement): Unit = {
     values = values :+ value

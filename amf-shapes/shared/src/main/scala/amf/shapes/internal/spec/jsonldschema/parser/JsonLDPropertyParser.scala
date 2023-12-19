@@ -3,6 +3,7 @@ package amf.shapes.internal.spec.jsonldschema.parser
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.metamodel.Type
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
@@ -51,7 +52,8 @@ case class JsonLDPropertyParser(
   }
 
   private def generateBuilder(element: JsonLDElementBuilder, term: String, entry: YMapEntry) = {
-    JsonLDPropertyBuilder(term, entry.key, None, element, element.path, entry.location)
+    val annotation = Annotations(entry)
+    JsonLDPropertyBuilder(term, entry.key, None, element, element.path, annotation)
   }
 
   private def literalMatcher(property: PropertyShape, entryKey: String): Boolean = {
