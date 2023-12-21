@@ -1,0 +1,155 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "recursion-with-query.graphql"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/endpoint/%2Fquery%2Frelay",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/query/relay"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Query.relay"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay",
+                "@type": [
+                  "apiContract:Operation",
+                  "core:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "Query.relay"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/expects/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "core:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ]
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default",
+                    "@type": [
+                      "apiContract:Response",
+                      "core:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "core:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default/unresolved",
+                            "@type": [
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "apiContract:operationId": [
+                  {
+                    "@value": "Query.relay"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.8.2"
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-cli/shared/src/test/resources/graphql/corner-cases/recursion-with-query.graphql",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

@@ -198,8 +198,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val configuration = RAMLConfiguration.RAML08()
     val client        = configuration.baseUnitClient()
     for {
-      unit   <- client.parse(zencoder08).asFuture
-      output <- Future.successful(client.render(unit.baseUnit, `application/yaml`))
+      unit <- client.parse(zencoder08).asFuture
+      output = client.render(unit.baseUnit, `application/yaml`)
       result <- AMFParser.parseContent(output, configuration).asFuture
     } yield {
       assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
@@ -211,8 +211,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client        = configuration.baseUnitClient()
 
     for {
-      unit   <- client.parse(zencoder).asFuture
-      output <- Future.successful(client.render(unit.baseUnit, `application/yaml`))
+      unit <- client.parse(zencoder).asFuture
+      output = client.render(unit.baseUnit, `application/yaml`)
       result <- AMFParser.parseContent(output, configuration).asFuture
     } yield {
       assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
@@ -232,8 +232,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val oas20Conf  = configFor(Spec.OAS20)
     val client     = raml10Conf.baseUnitClient()
     for {
-      unit   <- client.parse(zencoder).asFuture
-      output <- Future.successful(oas20Conf.baseUnitClient().render(unit.baseUnit, `application/json`))
+      unit <- client.parse(zencoder).asFuture
+      output = oas20Conf.baseUnitClient().render(unit.baseUnit, `application/json`)
       result <- AMFParser.parseContent(output, oas20Conf).asFuture
     } yield {
       assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
@@ -243,8 +243,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Render / parse test OAS 3.0") {
     val client = OASConfiguration.OAS30().baseUnitClient()
     for {
-      unit   <- client.parse(oas3).asFuture
-      output <- Future.successful(client.render(unit.baseUnit, `application/yaml`))
+      unit <- client.parse(oas3).asFuture
+      output = client.render(unit.baseUnit, `application/yaml`)
     } yield {
       output should include("openIdConnectUrl")
     }
@@ -253,8 +253,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Render / parse test Async 2.0") {
     val client = AsyncAPIConfiguration.Async20().baseUnitClient()
     for {
-      unit   <- client.parse(async2).asFuture
-      output <- Future.successful(client.render(unit.baseUnit, `application/yaml`))
+      unit <- client.parse(async2).asFuture
+      output = client.render(unit.baseUnit, `application/yaml`)
     } yield {
       output should include("Correlation ID Example")
     }
@@ -264,8 +264,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val configuration = RAMLConfiguration.RAML()
     val client        = configuration.baseUnitClient()
     for {
-      unit   <- client.parse(zencoder).asFuture
-      output <- Future.successful(client.render(unit.baseUnit, `application/ld+json`))
+      unit <- client.parse(zencoder).asFuture
+      output = client.render(unit.baseUnit, `application/ld+json`)
       result <- AMFParser.parseContent(output, configuration).asFuture
     } yield {
       assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
@@ -275,9 +275,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Resolution test") {
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parse(zencoder).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit))
-      report   <- client.validate(resolved.baseUnit).asFuture
+      unit <- client.parse(zencoder).asFuture
+      resolved = client.transform(unit.baseUnit)
+      report <- client.validate(resolved.baseUnit).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -288,9 +288,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val transformClient = RAMLConfiguration.RAML10().baseUnitClient()
     val renderClient    = OASConfiguration.OAS20().baseUnitClient()
     for {
-      unit     <- client.parse(security).asFuture
-      resolved <- Future.successful(transformClient.transform(unit.baseUnit).baseUnit)
-      output   <- Future.successful(renderClient.render(resolved))
+      unit <- client.parse(security).asFuture
+      resolved = transformClient.transform(unit.baseUnit).baseUnit
+      output   = renderClient.render(resolved)
     } yield {
       assert(output.nonEmpty)
     }
@@ -562,8 +562,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val builder = JsonOutputBuilder()
     val client  = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit   <- client.parseContent(input, Raml10.mediaType + "+yaml").asFuture
-      result <- Future.successful(client.renderGraphToBuilder(unit.baseUnit, builder))
+      unit <- client.parseContent(input, Raml10.mediaType + "+yaml").asFuture
+      result = client.renderGraphToBuilder(unit.baseUnit, builder)
     } yield {
       result.toString should include("\"http://a.ml/vocabularies/core#version\"")
     }
@@ -654,8 +654,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Missing converter error") {
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parse(amflight).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit))
+      unit <- client.parse(amflight).asFuture
+      resolved = client.transform(unit.baseUnit)
     } yield {
       val webapi = resolved.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
       webapi.endPoints.asSeq.foreach { ep =>
@@ -1077,7 +1077,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     } yield {
       val res = client.transform(unit.baseUnit).baseUnit
       val gen = client.render(res, `application/yaml`)
-      gen should not include ("!include")
+      gen should not include "!include"
       gen should include("type: string")
     }
   }
@@ -1144,33 +1144,33 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Generate unit with source maps") {
-    val options = new RenderOptions().withSourceMaps
+    val options = new RenderOptions().withSourceMaps()
     val client  = RAMLConfiguration.RAML10().withRenderOptions(options).baseUnitClient()
     for {
-      unit   <- client.parse(banking).asFuture // could be use a smaller api for this test?
-      jsonld <- Future.successful(client.render(unit.baseUnit, Mimes.`application/ld+json`))
+      unit <- client.parse(banking).asFuture // could be use a smaller api for this test?
+      jsonld = client.render(unit.baseUnit, Mimes.`application/ld+json`)
     } yield {
       jsonld should include("[(1,0)-(252,0)]")
     }
   }
 
   test("Generate unit without source maps") {
-    val options = new RenderOptions().withoutSourceMaps
+    val options = new RenderOptions().withoutSourceMaps()
     val client  = RAMLConfiguration.RAML10().withRenderOptions(options).baseUnitClient()
     for {
-      unit   <- client.parse(banking).asFuture // could be use a smaller api for this test?
-      jsonld <- Future.successful(client.render(unit.baseUnit, Mimes.`application/ld+json`))
+      unit <- client.parse(banking).asFuture // could be use a smaller api for this test?
+      jsonld = client.render(unit.baseUnit, Mimes.`application/ld+json`)
     } yield {
       jsonld should not include "[(3,0)-(252,0)]"
     }
   }
 
   test("Generate unit with compact uris") {
-    val options = new RenderOptions().withCompactUris.withSourceMaps
+    val options = new RenderOptions().withCompactUris().withSourceMaps()
     val client  = RAMLConfiguration.RAML10().withRenderOptions(options).baseUnitClient()
     for {
-      unit   <- client.parse(banking).asFuture
-      jsonld <- Future.successful(client.render(unit.baseUnit, Mimes.`application/ld+json`))
+      unit <- client.parse(banking).asFuture
+      jsonld = client.render(unit.baseUnit, Mimes.`application/ld+json`)
     } yield {
       jsonld should include("@context")
     }
@@ -1275,7 +1275,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = RAMLConfiguration.RAML08().baseUnitClient()
     for {
       unit <- client.parse("file://amf-cli/shared/src/test/resources/clients/params-order.raml").asFuture
-      v    <- Future.successful(client.transform(unit.baseUnit))
+      v = client.transform(unit.baseUnit)
     } yield {
       val seq = v.baseUnit
         .asInstanceOf[Document]
@@ -1325,14 +1325,12 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         client.setBaseUri(doc, url)
         doc
       }
-      s       <- Future.successful(client.render(doc, `application/yaml`))
-      loaders <- Future.successful(List(StringResourceLoader(url, s, Some(Mimes.`application/yaml`))))
-      withLoader <- Future.successful(
-        client
-          .getConfiguration()
-          .withResourceLoaders(loaders.asInstanceOf[List[ResourceLoader]].asClient)
-          .baseUnitClient()
-      )
+      s       = client.render(doc, `application/yaml`)
+      loaders = List(StringResourceLoader(url, s, Some(Mimes.`application/yaml`)))
+      withLoader = client
+        .getConfiguration()
+        .withResourceLoaders(loaders.asInstanceOf[List[ResourceLoader]].asClient)
+        .baseUnitClient()
       parsed <- withLoader.parse(url).asFuture
     } yield {
       val buildedProp: CustomDomainProperty =
@@ -1637,9 +1635,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val file   = "file://amf-cli/shared/src/test/resources/validations/recursion-union.raml"
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parseDocument(file).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit))
-      report   <- client.validate(resolved.baseUnit).asFuture
+      unit <- client.parseDocument(file).asFuture
+      resolved = client.transform(unit.baseUnit)
+      report <- client.validate(resolved.baseUnit).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -1697,9 +1695,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |      a3: 256.3""".stripMargin
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parseContent(api).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit, PipelineId.Editing))
-      report   <- client.validate(resolved.baseUnit).asFuture
+      unit <- client.parseContent(api).asFuture
+      resolved = client.transform(unit.baseUnit, PipelineId.Editing)
+      report <- client.validate(resolved.baseUnit).asFuture
     } yield {
       val expectedSchema =
         """{
@@ -1760,9 +1758,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val file   = "file://amf-cli/shared/src/test/resources/validations/rt-type-merging/api.raml"
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parse(file).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit, PipelineId.Editing))
-      report   <- client.validate(resolved.baseUnit).asFuture
+      unit <- client.parse(file).asFuture
+      resolved = client.transform(unit.baseUnit, PipelineId.Editing)
+      report <- client.validate(resolved.baseUnit).asFuture
     } yield {
       assert(report.conforms && unit.conforms && resolved.conforms)
     }
@@ -1788,8 +1786,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                 |""".stripMargin
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parseContent(api).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit, PipelineId.Editing))
+      unit <- client.parseContent(api).asFuture
+      resolved = client.transform(unit.baseUnit, PipelineId.Editing)
     } yield {
       assert(!resolved.conforms)
     }
@@ -1995,8 +1993,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Resolve KG Service API") {
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      parsed   <- client.parse(knowledgeGraphServiceApi).asFuture
-      resolved <- Future.successful(client.transform(parsed.baseUnit, PipelineId.Editing))
+      parsed <- client.parse(knowledgeGraphServiceApi).asFuture
+      resolved = client.transform(parsed.baseUnit, PipelineId.Editing)
     } yield {
       assert(resolved.baseUnit.references().asSeq.forall(_.id != null))
     }
@@ -2066,8 +2064,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       "file://amf-cli/shared/src/test/resources/validations/oas3/several-single-examples-for-same-type/api.json"
     val client = OASConfiguration.OAS30().baseUnitClient()
     for {
-      unit     <- client.parse(file).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit, PipelineId.Editing))
+      unit <- client.parse(file).asFuture
+      resolved = client.transform(unit.baseUnit, PipelineId.Editing)
     } yield {
       val exampleIds =
         resolved.baseUnit
@@ -2098,8 +2096,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val api    = "file://amf-cli/shared/src/test/resources/validations/raml/invalid-json-example-included/api.raml"
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      parsed   <- client.parse(api).asFuture
-      resolved <- Future.successful(client.transform(parsed.baseUnit, PipelineId.Editing))
+      parsed <- client.parse(api).asFuture
+      resolved = client.transform(parsed.baseUnit, PipelineId.Editing)
     } yield {
       assert(!parsed.conforms)
       assert(parsed.results.asSeq.size == 1)
@@ -2144,8 +2142,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = OASConfiguration.OAS20().baseUnitClient()
     val path   = "file://amf-cli/shared/src/test/resources/wrapper/cycle-fragment/api.yaml"
     for {
-      parsingResult    <- client.parse(path).asFuture
-      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
     } yield {
       val references = resolutionResult.baseUnit.references()
       references.asSeq.size shouldBe 1
@@ -2158,8 +2156,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     val path   = "file://amf-cli/shared/src/test/resources/small-api/api.raml"
     for {
-      parsingResult    <- client.parse(path).asFuture
-      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
     } yield {
       resolutionResult.baseUnit match {
         case e: EncodesModel =>
@@ -2177,8 +2175,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     val path   = "file://amf-cli/shared/src/test/resources/overriden-cyclic-properties.raml"
     for {
-      parsingResult    <- client.parse(path).asFuture
-      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
     } yield {
       assert(parsingResult.conforms)
       assert(resolutionResult.conforms)
@@ -2189,8 +2187,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     val path   = "file://amf-cli/shared/src/test/resources/base-union-empty-anyof.raml"
     for {
-      parsingResult    <- client.parse(path).asFuture
-      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
     } yield {
       assert(parsingResult.conforms)
       assert(resolutionResult.conforms)
@@ -2221,8 +2219,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |        type: dummy1 | dummy2
       """.stripMargin
     for {
-      parsingResult    <- client.parseContent(api).asFuture
-      resolutionResult <- Future.successful(client.transform(parsingResult.baseUnit, PipelineId.Editing))
+      parsingResult <- client.parseContent(api).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
     } yield {
       assert(parsingResult.conforms)
       assert(resolutionResult.conforms)
