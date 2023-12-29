@@ -12,16 +12,14 @@ import scala.collection.mutable
 
 object JsonLDArray {
   def apply(elements: Seq[JsonLDElement]): JsonLDArray = {
-    val result = new JsonLDArray
+    val annotations = new Annotations
+    val result = new JsonLDArray(annotations)
     elements.foreach(elem => result += elem)
     result
   }
 }
 
-class JsonLDArray extends AmfArray(Nil) with JsonLDElement { //pasar annotations como parametro
-
-  /** Set of annotations for element. */
-  override val annotations: Annotations = Annotations.virtual() //volar esto, ya las pasamos por parametro
+class JsonLDArray(annotations: Annotations) extends AmfArray(Nil, annotations) with JsonLDElement {
 
   def +=(value: JsonLDElement): Unit = {
     values = values :+ value

@@ -54,7 +54,7 @@ class JsonLDArrayElementBuilder(annotation: Annotations, path: JsonPath) extends
   }
 
   override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
-    val starter = (new JsonLDArray, JsonLDElementModel)
+    val starter = (new JsonLDArray(annotation), JsonLDElementModel)
     val (result, meta) = items.foldLeft[(JsonLDArray, Type)](starter) { (tuple, builder) =>
       val (array, meta) = tuple
       build(builder, array, meta, ctxBuilder)

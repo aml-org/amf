@@ -47,16 +47,16 @@ case class JsonLDObject(
     def toFloatListField: Field = Field(Type.Array(Type.Float), ValueType(property))
   }
 
-  private def buildString(value: String) = new JsonLDScalar(value, DataTypes.String)
+  private def buildString(value: String) = new JsonLDScalar(value, DataTypes.String, annotations)
 
-  private def buildDateTime(value: SimpleDateTime) = new JsonLDScalar(value, DataTypes.DateTime)
-  private def buildDate(value: SimpleDateTime)     = new JsonLDScalar(value, DataTypes.Date)
+  private def buildDateTime(value: SimpleDateTime) = new JsonLDScalar(value, DataTypes.DateTime, annotations)
+  private def buildDate(value: SimpleDateTime)     = new JsonLDScalar(value, DataTypes.Date, annotations)
 
-  private def buildInteger(value: Int) = new JsonLDScalar(value, DataTypes.Integer)
+  private def buildInteger(value: Int) = new JsonLDScalar(value, DataTypes.Integer, annotations)
 
-  private def buildBoolean(value: Boolean) = new JsonLDScalar(value, DataTypes.Boolean)
-  private def buildFloat(value: Float)     = new JsonLDScalar(value, DataTypes.Float)
-  private def buildDouble(value: Double)   = new JsonLDScalar(value, DataTypes.Double)
+  private def buildBoolean(value: Boolean) = new JsonLDScalar(value, DataTypes.Boolean, annotations)
+  private def buildFloat(value: Float)     = new JsonLDScalar(value, DataTypes.Float, annotations)
+  private def buildDouble(value: Double)   = new JsonLDScalar(value, DataTypes.Double, annotations)
 
   private def buildArray(values: Seq[JsonLDElement]) = JsonLDArray(values)
 

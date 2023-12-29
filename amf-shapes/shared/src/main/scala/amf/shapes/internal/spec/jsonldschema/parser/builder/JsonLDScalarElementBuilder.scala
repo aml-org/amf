@@ -41,7 +41,7 @@ class JsonLDScalarElementBuilder(
   }
 
   override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
-    (new JsonLDScalar(value, dataType), getType)
+    (new JsonLDScalar(value, dataType, annotation), getType)
   }
 
   private def getType = {
@@ -58,5 +58,5 @@ class JsonLDScalarElementBuilder(
 }
 
 object JsonLDScalarElementBuilder {
-  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, Annotations.virtual(), path)
+  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, Annotations.empty, path)// esta ok sacar annotation.virtual y dejarla como empty?
 }
