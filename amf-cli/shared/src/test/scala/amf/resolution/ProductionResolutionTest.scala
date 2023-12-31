@@ -1,6 +1,7 @@
 package amf.resolution
 
 import amf.apicontract.internal.transformation.AmfEditingPipeline
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
@@ -319,7 +320,21 @@ class ProductionResolutionTest extends RamlResolutionTest {
       Raml10YamlHint,
       AmfJsonHint,
       validationPath,
-      renderOptions = Some(RenderOptions().withPrettyPrint.withoutSourceMaps.withoutRawSourceMaps.withSourceMaps.withCompactUris)
+      renderOptions =
+        Some(RenderOptions().withPrettyPrint.withoutSourceMaps.withoutRawSourceMaps.withSourceMaps.withCompactUris)
+    )
+  }
+
+  test("Simple @list emission using withGovernanceMode") {
+    cycle(
+      "simple-list.raml",
+      "simple-list.jsonld",
+      Raml10YamlHint,
+      AmfJsonHint,
+      validationPath,
+      transformWith = Some(Raml10),
+      pipeline = Option(PipelineId.Editing),
+      renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps.withGovernanceMode)
     )
   }
 
