@@ -111,7 +111,7 @@ object JsonLDObjectElementBuilder {
         createField(builder, elementType) -> PropertyData(element, builder.annotation)
       case (term, builders) =>
         val (elements, types) = TupleOps.reduce(builders.map(_.element.build(ctxBuilder)))
-        val element           = JsonLDArray(elements) // pasar Annotations.virtual() cuando se pase el annotation al JsonLDArray
+        val element           = JsonLDArray(elements, Annotations.virtual())
         val arrayType         = computeType(types)
         Field(
           Type.Array(arrayType),

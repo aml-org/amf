@@ -13,7 +13,7 @@ class JsonLDScalar(private[amf] val _internal: InternalJsonLDScalar) extends Jso
   val dataType: String = _internal.dataType
 
   @JSExportTopLevel("JsonLDScalar")
-  def this(value: Any, dataType: String, annotations: Annotations) = this(new InternalJsonLDScalar(value, dataType, annotations))
+  def this(value: Any, dataType: String) = this(new InternalJsonLDScalar(value, dataType))
 
   override def annotations(): model.Annotations = _internal.annotations
 }
