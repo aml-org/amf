@@ -1,0 +1,526 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "recursion-with-unions.graphql"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/endpoint/%2Fquery%2Frelay",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/query/relay"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Query.relay"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay",
+                "@type": [
+                  "apiContract:Operation",
+                  "core:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "Query.relay"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/expects/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "core:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ]
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default",
+                    "@type": [
+                      "apiContract:Response",
+                      "core:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "core:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default/union/default-union",
+                            "@type": [
+                              "raml-shapes:UnionShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "raml-shapes:anyOf": [
+                              {
+                                "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default/union/default-union/anyOf/nil/default-nil",
+                                "@type": [
+                                  "raml-shapes:NilShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default/union/default-union/anyOf/scalar/default-scalar",
+                                "@type": [
+                                  "raml-shapes:ScalarShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "apiContract:operationId": [
+                  {
+                    "@value": "Query.relay"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.8.2"
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declares/shape/IssueComment",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/IssueComment/property/property/issue",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/IssueComment/property/property/issue/shape/Issue",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "doc:link-target": [
+                  {
+                    "@id": "#/declares/shape/Issue"
+                  }
+                ],
+                "doc:link-label": [
+                  {
+                    "@value": "Issue"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "Issue"
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "issue"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "IssueComment"
+          }
+        ]
+      },
+      {
+        "@id": "#/declares/shape/IssueTimelineItemsConnection",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/IssueTimelineItemsConnection/property/property/nodes",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/IssueTimelineItemsConnection/property/property/nodes/array/default-array",
+                "@type": [
+                  "raml-shapes:ArrayShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:items": [
+                  {
+                    "@id": "#/declares/shape/IssueTimelineItemsConnection/property/property/nodes/array/default-array/union/default-union",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "#/declares/shape/IssueTimelineItemsConnection/property/property/nodes/array/default-array/union/default-union/anyOf/nil/default-nil",
+                        "@type": [
+                          "raml-shapes:NilShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "#/declares/shape/IssueTimelineItemsConnection/property/property/nodes/array/default-array/union/default-union/anyOf/union/default-union",
+                        "@type": [
+                          "raml-shapes:UnionShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "doc:link-target": [
+                          {
+                            "@id": "#/declares/union/IssueTimelineItems"
+                          }
+                        ],
+                        "doc:link-label": [
+                          {
+                            "@value": "IssueTimelineItems"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "nodes"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "IssueTimelineItemsConnection"
+          }
+        ]
+      },
+      {
+        "@id": "#/declares/union/IssueTimelineItems",
+        "@type": [
+          "raml-shapes:UnionShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "raml-shapes:anyOf": [
+          {
+            "@id": "#/declares/union/IssueTimelineItems/anyOf/shape/IssueComment",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#/declares/shape/IssueComment"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "IssueComment"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "IssueComment"
+              }
+            ]
+          },
+          {
+            "@id": "#/declares/union/IssueTimelineItems/anyOf/shape/PinnedEvent",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#/declares/shape/PinnedEvent"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "PinnedEvent"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "PinnedEvent"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "IssueTimelineItems"
+          }
+        ]
+      },
+      {
+        "@id": "#/declares/shape/Issue",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/Issue/property/property/timelineItems",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/Issue/property/property/timelineItems/shape/default-node",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "doc:link-target": [
+                  {
+                    "@id": "#/declares/shape/IssueTimelineItemsConnection"
+                  }
+                ],
+                "doc:link-label": [
+                  {
+                    "@value": "IssueTimelineItemsConnection"
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "timelineItems"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Issue"
+          }
+        ]
+      },
+      {
+        "@id": "#/declares/shape/PinnedEvent",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/PinnedEvent/property/property/issue",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/PinnedEvent/property/property/issue/shape/Issue",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "doc:link-target": [
+                  {
+                    "@id": "#/declares/shape/Issue"
+                  }
+                ],
+                "doc:link-label": [
+                  {
+                    "@value": "Issue"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "Issue"
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "issue"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "PinnedEvent"
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-cli/shared/src/test/resources/graphql/corner-cases/recursion-with-unions.graphql",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

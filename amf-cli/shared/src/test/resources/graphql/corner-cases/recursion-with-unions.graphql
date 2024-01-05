@@ -1,0 +1,16 @@
+union IssueTimelineItems = IssueComment | PinnedEvent
+type Issue {
+    timelineItems: IssueTimelineItemsConnection!
+}
+type IssueComment {
+    issue: Issue!
+}
+type IssueTimelineItemsConnection {
+    nodes: [IssueTimelineItems]
+}
+type PinnedEvent {
+    issue: Issue!
+}
+type Query {
+    relay: String
+}

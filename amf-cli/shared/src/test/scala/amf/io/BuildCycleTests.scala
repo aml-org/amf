@@ -202,11 +202,11 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     val renderConfig = amfConfig.getOrElse(buildConfig(configFor(target.spec), renderOptions, eh))
 
     for {
-      parsed       <- build(config, parseConfig)
-      resolved     <- Future.successful(transform(parsed, config, transformConfig))
-      actualString <- Future.successful(render(resolved, config, renderConfig))
-      actualFile   <- writeTemporaryFile(golden)(actualString)
-      assertion    <- assertDifferences(actualFile, config.goldenPath)
+      parsed <- build(config, parseConfig)
+      resolved     = transform(parsed, config, transformConfig)
+      actualString = render(resolved, config, renderConfig)
+      actualFile <- writeTemporaryFile(golden)(actualString)
+      assertion  <- assertDifferences(actualFile, config.goldenPath)
     } yield {
       assertion
     }
