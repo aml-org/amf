@@ -30,13 +30,19 @@ object GraphQLDirectiveLocationValidator {
     } yield {
       val expected           = declaration.domain.map(_.value())
       val isValidApplication = expected.contains(actual.iri.iri())
-      (actual, isValidApplication)
+      (actual, isValidApplication || GraphQLUtils.isInsideRootType(element))
     }
 
     result match {
       case Some((actual, false)) =>
         val message = buildErrorMessage(directiveApplication, element, actual.name)
-        Some(ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations)))
+        Some(
+          ValidationInfo(
+            DomainElementModel.CustomDomainProperties,
+            Some(message),
+            Some(directiveApplication.annotations)
+          )
+        )
       case _ => None
     }
   }

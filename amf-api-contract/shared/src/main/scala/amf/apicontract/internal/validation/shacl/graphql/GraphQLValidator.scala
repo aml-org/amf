@@ -16,7 +16,7 @@ import scala.annotation.tailrec
 
 object GraphQLValidator {
 
-  def checkValidPath(path: Seq[PropertyShape], key: Key): Seq[ValidationInfo] = {
+  private def checkValidPath(path: Seq[PropertyShape], key: Key): Seq[ValidationInfo] = {
     path.flatMap { propertyShape =>
       propertyShape.range match {
         case n: NodeShape =>
@@ -69,7 +69,7 @@ object GraphQLValidator {
     }
   }
 
-  case class RequiredField(interface: String, field: GraphQLField)
+  private case class RequiredField(interface: String, field: GraphQLField)
 
   def validateRequiredFields(obj: GraphQLObject): Seq[ValidationInfo] = {
 
@@ -207,7 +207,7 @@ object GraphQLValidator {
     if (!obj.isInput) {
       // fields from an output type can return anything except an input type (`input Foo {...})
       val propertiesValidations = fields.properties.flatMap { prop =>
-        if (!prop.isValidOutputType) {
+        if (!prop.isValidOutputType && !GraphQLUtils.isInsideRootType(obj.node)) {
           validationInfo(
             NodeShapeModel.Properties,
             s"Type '${getShapeName(prop.range)}' from field '${prop.name}' must be an output type",
@@ -216,15 +216,8 @@ object GraphQLValidator {
         } else None
       }
 
-      val operationValidations = obj.operations.flatMap { op =>
-        if (!op.isValidOutputType) {
-          validationInfo(
-            NodeShapeModel.Properties,
-            s"Type '${getShapeName(op.payload.get.schema)}' from field '${op.name}' must be an output type",
-            op.annotations
-          )
-        } else None
-      }
+      val operations           = obj.operations
+      val operationValidations = validateOperations(operations)
 
       operationValidations ++ propertiesValidations
     } else {
@@ -234,8 +227,13 @@ object GraphQLValidator {
   }
 
   def validateOutputTypes(endpoint: GraphQLEndpoint): Seq[ValidationInfo] = {
-    endpoint.operations.flatMap { op =>
-      if (!op.isValidOutputType) {
+    val operations = endpoint.operations
+    validateOperations(operations)
+  }
+
+  private def validateOperations(operations: Seq[GraphQLOperation]): Seq[ValidationInfo] = {
+    operations.flatMap { op =>
+      if (!op.isValidOutputType && !GraphQLUtils.isInsideRootType(op.operation)) {
         validationInfo(
           NodeShapeModel.Properties,
           s"Type '${getShapeName(op.payload.get.schema)}' from field '${op.name}' must be an output type",
@@ -247,21 +245,19 @@ object GraphQLValidator {
 
   def validateInputTypes(obj: GraphQLObject): Seq[ValidationInfo] = {
     // fields arguments cannot be output types
-    val operationValidations = obj.operations.flatMap { op =>
-      op.parameters.flatMap { param =>
-        if (!param.isValidInputType) {
-          validationInfo(
-            NodeShapeModel.Properties,
-            s"Type '${getShapeName(param.schema)}' from argument '${param.name}' must be an input type",
-            param.annotations
-          )
-        } else None
-      }
-    }
+    val parameters: Seq[GraphQLParameter] = obj.operations.flatMap(_.parameters)
+    val operationValidations              = validateParameters(parameters)
 
     // input type fields or directive arguments cannot be output types
-    val propertiesValidations = obj.properties.flatMap { prop =>
-      if (!prop.isValidInputType && obj.isInput) {
+    val properties: Seq[GraphQLProperty] = obj.properties
+    val propertiesValidations            = validateProperties(properties, obj)
+
+    operationValidations ++ propertiesValidations
+  }
+
+  private def validateProperties(properties: Seq[GraphQLProperty], obj: GraphQLObject): Seq[ValidationInfo] = {
+    properties.flatMap { prop =>
+      if (!prop.isValidInputType && obj.isInput && !GraphQLUtils.isInsideRootType(obj.node)) {
         val message = s"Type '${getShapeName(prop.range)}' from field '${prop.name}' must be an input type"
         validationInfo(
           NodeShapeModel.Properties,
@@ -270,13 +266,15 @@ object GraphQLValidator {
         )
       } else None
     }
-
-    operationValidations ++ propertiesValidations
   }
 
   def validateInputTypes(endpoint: GraphQLEndpoint): Seq[ValidationInfo] = {
-    endpoint.parameters.flatMap { param =>
-      if (!param.isValidInputType) {
+    validateParameters(endpoint.parameters)
+  }
+
+  private def validateParameters(parameters: Seq[GraphQLParameter]): Seq[ValidationInfo] = {
+    parameters.flatMap { param =>
+      if (!param.isValidInputType && !GraphQLUtils.isInsideRootType(param.parameter)) {
         validationInfo(
           NodeShapeModel.Properties,
           s"Type '${getShapeName(param.schema)}' from argument '${param.name}' must be an input type",

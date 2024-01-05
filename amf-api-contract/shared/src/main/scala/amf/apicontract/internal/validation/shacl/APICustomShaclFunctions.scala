@@ -764,10 +764,15 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   // Obtained from the BNF in: https://tools.ietf.org/html/rfc7230#section-3.2
   private def isInvalidHttpHeaderName(name: String): Boolean =
-    !name.matches("^[!#$%&'*\\+\\-\\.^\\_\\`\\|\\~0-9a-zA-Z]+$")
+    !name.matches("^[!#$%&'*+\\-.^_`|~0-9a-zA-Z]+$")
 
-  private def hasIntrospectionName(element: NamedDomainElement): Boolean =
-    element.name.nonNull && element.name.value().startsWith("__")
+  private def hasIntrospectionName(element: NamedDomainElement): Boolean = {
+    element.name.value() match {
+      case null => false
+      case name: String =>
+        name.startsWith("__") && !GraphQLUtils.isInsideRootType(element)
+    }
+  }
 
   def checkDuplicates(
       s: Seq[NamedDomainElement],

@@ -29,6 +29,19 @@ type Subscription {
 }
 
 union LivingThing = Person | Animal
+type CustomQuery {
+  """
+  Get all the people
+  """
+  allPeople(
+    """
+    Last parameter
+    """
+    last: Int
+  ): [Person!]!
+  allAnimals(animalRequest: AnimalRequest): [Animal]!
+}
+
 type Person {
   name: String!
   age: Int!

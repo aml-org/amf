@@ -1,7 +1,9 @@
 package amf.graphql.internal.spec.emitter.document
 
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.rootTypes
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.StringParsedDocument
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.graphql.internal.spec.emitter.domain.{
@@ -62,9 +64,17 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
     }
   }
 
+  private def isRootType(shape: AnyShape, doc: StringDocBuilder): Boolean = {
+    val lines = doc.parsedDocument.asInstanceOf[StringParsedDocument].ast.lines.map(_._1)
+    if (lines.nonEmpty && lines.head.startsWith("schema")) {
+      lines.head.contains(shape.name.value())
+    } else rootTypes.contains(shape.name.value())
+  }
+
   private def emitDeclarations(doc: StringDocBuilder): Unit = {
     document.asInstanceOf[Document].declares.foreach {
-      case shape: AnyShape =>
+      // W-14608042: avoid rendering root types a second time, already emitted in emitTopLevelTypes()
+      case shape: AnyShape if !isRootType(shape, doc) =>
         GraphQLTypeEmitter(shape, ctx, doc).emit()
       case directive: CustomDomainProperty if !isStandardDirective(directive) =>
         GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()

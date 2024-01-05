@@ -1,6 +1,6 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.shapes.client.scala.model.domain._
 
 import scala.annotation.tailrec
@@ -33,5 +33,11 @@ object GraphQLUtils {
       case arr: ArrayShape => isValidOutputType(arr.items)
       case _               => true
     }
+  }
+
+  val rootTypes = Seq("Query", "Mutation", "Subscription")
+
+  def isInsideRootType(obj: AmfObject): Boolean = {
+    obj.id.contains("declares/shape/") && rootTypes.map(root => obj.id.contains(root)).exists(b => b)
   }
 }

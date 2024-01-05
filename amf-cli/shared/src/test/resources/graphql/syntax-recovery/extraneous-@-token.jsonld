@@ -49,6 +49,21 @@
     ],
     "doc:declares": [
       {
+        "@id": "#/declares/shape/Query",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:name": [
+          {
+            "@value": "Query"
+          }
+        ]
+      },
+      {
         "@id": "#/declares/shape/Person",
         "@type": [
           "shacl:NodeShape",
