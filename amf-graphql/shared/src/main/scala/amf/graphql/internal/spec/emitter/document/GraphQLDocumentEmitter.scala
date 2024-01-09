@@ -64,17 +64,16 @@ class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) exte
     }
   }
 
-  private def isRootType(shape: AnyShape, doc: StringDocBuilder): Boolean = {
-    val lines = doc.parsedDocument.asInstanceOf[StringParsedDocument].ast.lines.map(_._1)
-    if (lines.nonEmpty && lines.head.startsWith("schema")) {
-      lines.head.contains(shape.name.value())
-    } else rootTypes.contains(shape.name.value())
+  private def isRootType(shape: AnyShape): Boolean = {
+    val shapeName = shape.name.value()
+    val rootNames = Seq(ctx.queryType, ctx.mutationType, ctx.subscriptionType).collect { case Some(root) => root.name }
+    rootNames.contains(shapeName)
   }
 
   private def emitDeclarations(doc: StringDocBuilder): Unit = {
     document.asInstanceOf[Document].declares.foreach {
       // W-14608042: avoid rendering root types a second time, already emitted in emitTopLevelTypes()
-      case shape: AnyShape if !isRootType(shape, doc) =>
+      case shape: AnyShape if !isRootType(shape) =>
         GraphQLTypeEmitter(shape, ctx, doc).emit()
       case directive: CustomDomainProperty if !isStandardDirective(directive) =>
         GraphQLDirectiveDeclarationEmitter(directive, ctx, doc).emit()
