@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "parent",
+  "type": "object",
+  "required": ["parentProp"],
+  "properties": {
+    "parentProp": {
+      "$ref": "test-object.json"
+    }
+  }}

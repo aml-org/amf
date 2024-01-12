@@ -23,11 +23,7 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.core.client.scala.model.domain.{
-  ArrayNode => InternalArrayNode,
-  ObjectNode => InternalObjectNode,
-  ScalarNode => InternalScalarNode
-}
+import amf.core.client.scala.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
@@ -41,6 +37,7 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
+import amf.shapes.client.platform.config.JsonSchemaConfiguration
 import org.mulesoft.common.client.lexical.PositionRange
 import org.mulesoft.common.test.Diff
 import org.scalatest.matchers.should.Matchers
@@ -2288,6 +2285,23 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       declarations should have size 1
     }
 
+  }
+
+  test("Test W-14796249") {
+    val client = JsonSchemaConfiguration.JsonSchema().baseUnitClient()
+    val path   = "file://amf-cli/shared/src/test/resources/TEST-W-14796249-REDUCED/simple-test.json"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
+      validationReport <- client.validate(resolutionResult.baseUnit).asFuture
+    } yield {
+      print(parsingResult)
+      print(resolutionResult)
+      print(validationReport)
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
+      assert(validationReport.conforms)
+    }
   }
 
 //
