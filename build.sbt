@@ -46,11 +46,11 @@ val amlVersion = versions("amf.aml")
 
 lazy val amlJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amlJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJS")
-lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml"        % amlVersion
+lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml"      % amlVersion
 lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs1" % amlVersion
 
 lazy val rdfJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJVM")
-lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf"        % amlVersion
+lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf"      % amlVersion
 lazy val rdfJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJS")
 lazy val rdfLibJS  = "com.github.amlorg" %% "amf-rdf_sjs1" % amlVersion
 
@@ -73,6 +73,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js"                     %% "scalajs-stubs"          % "1.1.0" % "provided",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
     libraryDependencies += "org.json"                          % "json"                   % "20231013",
+    excludeDependencies += "com.fasterxml.jackson.core"        % "jackson-databind", // transitive from everit
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
@@ -114,8 +115,8 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
   )
   .dependsOn(shapes)
   .jvmSettings(
-    libraryDependencies += "org.scala-js"   %% "scalajs-stubs" % "1.1.0" % "provided",
-    libraryDependencies += "org.reflections" % "reflections"   % "0.10.2"       % Test,
+    libraryDependencies += "org.scala-js"   %% "scalajs-stubs" % "1.1.0"  % "provided",
+    libraryDependencies += "org.reflections" % "reflections"   % "0.10.2" % Test,
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
@@ -142,7 +143,7 @@ lazy val apiContractJS =
 lazy val antlrv4JVMRef = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJVM")
 lazy val antlrv4JSRef  = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJS")
 val antlr4Version      = versions("antlr4Version")
-lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast"        % antlr4Version
+lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast"      % antlr4Version
 lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs1" % antlr4Version
 
 lazy val antlr = crossProject(JSPlatform, JVMPlatform)
@@ -201,7 +202,6 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-grpc.js",
-
     npmDependencies ++= npmDeps
   )
   .settings(AutomaticModuleName.settings("amf.grpc"))
@@ -313,10 +313,14 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .settings(
     version                                    := "0.1-SNAPSHOT",
     publishTo                                  := Some(snapshots),
-    libraryDependencies += "com.github.amlorg" %% "amf-validation-profile-dialect" % versions("amf.validation.profile.dialect"),
-    libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect"  % versions("amf.validation.report.dialect"),
-    libraryDependencies += "commons-io"         % "commons-io"                     % "2.11.0",
-    libraryDependencies += "org.mule.common"  %%% "scala-common-test"              % "0.1.13" % Test
+    libraryDependencies += "com.github.amlorg" %% "amf-validation-profile-dialect" % versions(
+      "amf.validation.profile.dialect"
+    ),
+    libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect" % versions(
+      "amf.validation.report.dialect"
+    ),
+    libraryDependencies += "commons-io"        % "commons-io"        % "2.11.0",
+    libraryDependencies += "org.mule.common" %%% "scala-common-test" % "0.1.13" % Test
   )
   .settings(
     assembly / aggregate          := true,
