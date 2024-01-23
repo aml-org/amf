@@ -1,5 +1,6 @@
 package amf.shapes.client.platform.model.domain.jsonldinstance
 import amf.core.client.platform.model
+import amf.core.client.platform.model.Annotations
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDScalar => InternalJsonLDScalar}
 import amf.shapes.internal.convert.ShapeClientConverters._
 

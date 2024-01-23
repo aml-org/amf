@@ -5,23 +5,21 @@ import amf.core.client.scala.vocabulary.Namespace.Data
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.internal.parser.domain
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 
 import scala.collection.mutable
 
 object JsonLDArray {
-  def apply(elements: Seq[JsonLDElement]): JsonLDArray = {
-    val result = new JsonLDArray
+  def apply(elements: Seq[JsonLDElement], annotations: Annotations = Annotations()): JsonLDArray = {
+    val result = new JsonLDArray(annotations)
     elements.foreach(elem => result += elem)
     result
   }
 }
 
-class JsonLDArray extends AmfArray(Nil) with JsonLDElement {
-
-  /** Set of annotations for element. */
-  override val annotations: Annotations = Annotations.virtual()
+class JsonLDArray(annotations: Annotations) extends AmfArray(Nil, annotations) with JsonLDElement {
 
   def +=(value: JsonLDElement): Unit = {
     values = values :+ value

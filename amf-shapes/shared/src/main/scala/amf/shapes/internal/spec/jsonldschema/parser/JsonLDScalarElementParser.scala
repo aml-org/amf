@@ -2,14 +2,11 @@ package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SemanticContext}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDScalarElementBuilder
-import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
-  IncompatibleScalarDataType,
-  UnsupportedScalarTagType,
-  UnsupportedShape
-}
+import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{IncompatibleScalarDataType, UnsupportedScalarTagType, UnsupportedShape}
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.common.time.SimpleDateTime.parseDate
 import org.yaml.model.{YScalar, YType}
@@ -89,6 +86,7 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
         SimpleDateTime.parse(value).map(value => (DataTypes.DateTime, value)).getOrElse((DataTypes.String, value))
       case (_, _, value) => (dataType, value)
     }
-    new JsonLDScalarElementBuilder(finalDataType, value, location = scalar.location, path = path)
+    val annotation = Annotations(scalar)
+    new JsonLDScalarElementBuilder(finalDataType, value, annotation, path = path)
   }
 }
