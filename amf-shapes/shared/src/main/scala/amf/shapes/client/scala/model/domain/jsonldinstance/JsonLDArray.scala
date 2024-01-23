@@ -12,7 +12,7 @@ import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 import scala.collection.mutable
 
 object JsonLDArray {
-  def apply(elements: Seq[JsonLDElement], annotations: Annotations = new Annotations): JsonLDArray = {
+  def apply(elements: Seq[JsonLDElement], annotations: Annotations = Annotations()): JsonLDArray = {
     val result = new JsonLDArray(annotations)
     elements.foreach(elem => result += elem)
     result

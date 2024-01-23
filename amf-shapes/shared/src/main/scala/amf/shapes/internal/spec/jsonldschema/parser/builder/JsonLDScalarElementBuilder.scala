@@ -58,5 +58,5 @@ class JsonLDScalarElementBuilder(
 }
 
 object JsonLDScalarElementBuilder {
-  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, Annotations.empty, path)// esta ok sacar annotation.virtual y dejarla como empty?
+  def empty(path: JsonPath) = new JsonLDScalarElementBuilder(DataTypes.Nil, null, Annotations.empty, path)
 }

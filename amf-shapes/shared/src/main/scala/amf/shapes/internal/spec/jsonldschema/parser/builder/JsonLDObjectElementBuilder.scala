@@ -55,7 +55,7 @@ class JsonLDObjectElementBuilder(annotation: Annotations, key: String, base: Str
   }
 
   override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
-    val obj = buildObj(termIndex, classTerms.toList, path, ctxBuilder)
+    val obj = buildObj(termIndex, classTerms.toList, path, ctxBuilder, annotation)
     (obj, obj.meta)
   }
 
@@ -103,34 +103,42 @@ object JsonLDObjectElementBuilder {
       termIndex: mutable.LinkedHashMap[Term, List[JsonLDPropertyBuilder]],
       classTerms: List[String],
       path: JsonPath,
-      ctxBuilder: EntityContextBuilder
+      ctxBuilder: EntityContextBuilder,
+      annotations: Annotations
   ): JsonLDObject = {
-    val fields = termIndex.map {
+    val fields = termIndex.map(mapTermBuildersToField(ctxBuilder))
+    createObjectElement(fields, classTerms, path, ctxBuilder, annotations)
+  }
+
+  private def mapTermBuildersToField(ctxBuilder: EntityContextBuilder)(tuple:(Term, List[JsonLDPropertyBuilder])): (Field, PropertyData) = {
+        tuple match {
       case (term, List(builder)) =>
         val (element, elementType) = builder.element.build(ctxBuilder)
         createField(builder, elementType) -> PropertyData(element, builder.annotation)
       case (term, builders) =>
         val (elements, types) = TupleOps.reduce(builders.map(_.element.build(ctxBuilder)))
-        val element           = JsonLDArray(elements, Annotations.virtual())
-        val arrayType         = computeType(types)
+        val element = JsonLDArray(elements, Annotations.virtual())
+        val arrayType = computeType(types)
         Field(
           Type.Array(arrayType),
           ValueType(term),
           ModelDoc(displayName = displayNameForMultipleValuedTerm(builders))
         ) -> PropertyData(element, Annotations.inferred())
     }
-    createObjectElement(fields, classTerms, path, ctxBuilder)
+
+
   }
 
   private def createObjectElement(
       fields: mutable.LinkedHashMap[Field, PropertyData],
       classTerms: List[String],
       path: JsonPath,
-      ctxBuilder: EntityContextBuilder
+      ctxBuilder: EntityContextBuilder,
+      annotations: Annotations
   ) = {
     val entityModel = new JsonLDEntityModel(asValueTerms(classTerms), fields.keys.toList, path)
     ctxBuilder + entityModel
-    val dObject = JsonLDObject.empty(entityModel, path.last)
+    val dObject = JsonLDObject.empty(entityModel, path.last, annotations)
     fields.foreach { case (field, prop) => dObject.set(field, prop.propertyElement, prop.propertyAnnotations) }
     dObject
   }
@@ -147,6 +155,6 @@ object JsonLDObjectElementBuilder {
 
 }
 
-case class PropertyData(propertyElement: JsonLDElement, propertyAnnotations: Annotations){
+case class PropertyData(propertyElement: JsonLDElement, propertyAnnotations: Annotations)
 
-}
+

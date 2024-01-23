@@ -10,8 +10,8 @@ import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 import org.mulesoft.common.time.SimpleDateTime
 
 object JsonLDObject {
-  def empty(model: JsonLDEntityModel, path: JsonPath): JsonLDObject =
-    new JsonLDObject(Fields(), Annotations(), model, path)
+  def empty(model: JsonLDEntityModel, path: JsonPath, annotations: Annotations = Annotations()): JsonLDObject =
+    new JsonLDObject(Fields(), annotations, model, path)
 }
 
 case class JsonLDObject(
