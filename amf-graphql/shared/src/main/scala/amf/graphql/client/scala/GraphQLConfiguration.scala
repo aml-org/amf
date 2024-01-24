@@ -10,8 +10,8 @@ import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.transformation.{GraphQLCachePipeline, GraphQLEditingPipeline}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GraphQLEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GraphQLValidationProfile
-import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
-import amf.core.client.common.validation.{ProfileNames, SeverityLevels}
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLShaclModelValidationPlugin
+import amf.core.client.common.validation.SeverityLevels
 import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.plugins.parse.GraphQLParsePlugin
 import amf.graphql.internal.spec.plugins.render.GraphQLRenderPlugin
@@ -26,7 +26,7 @@ object GraphQLConfiguration extends APIConfigurationBuilder {
           GraphQLSyntaxParsePlugin,
           GraphQLRenderPlugin,
           AntlrSyntaxRenderPlugin,
-          APIShaclModelValidationPlugin(ProfileNames.GRAPHQL)
+          GraphQLShaclModelValidationPlugin()
         )
       )
       .withTransformationPipelines(

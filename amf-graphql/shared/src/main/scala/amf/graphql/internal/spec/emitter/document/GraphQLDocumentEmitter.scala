@@ -1,9 +1,7 @@
 package amf.graphql.internal.spec.emitter.document
 
-import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils.rootTypes
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.parse.document.StringParsedDocument
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.graphql.internal.spec.emitter.context.GraphQLEmitterContext
 import amf.graphql.internal.spec.emitter.domain.{
