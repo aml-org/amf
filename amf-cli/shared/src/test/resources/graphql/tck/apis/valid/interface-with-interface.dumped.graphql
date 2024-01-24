@@ -12,13 +12,13 @@ interface HasName {
   name: String!
 }
 
-interface HasSurname {
-  surname: String!
-}
-
 interface HasFullName implements HasName & HasSurname {
   name: String!
   middleName: String!
+  surname: String!
+}
+
+interface HasSurname {
   surname: String!
 }
 

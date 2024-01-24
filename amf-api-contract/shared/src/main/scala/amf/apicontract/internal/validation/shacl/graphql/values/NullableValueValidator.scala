@@ -13,7 +13,9 @@ object NullableValueValidator extends ValueValidator[UnionShape] {
     }
   }
 
-  private def validateNonNullValue(shape: UnionShape, other: DataNode)(implicit targetField: Field): Seq[ValidationInfo] = {
+  private def validateNonNullValue(shape: UnionShape, other: DataNode)(implicit
+      targetField: Field
+  ): Seq[ValidationInfo] = {
     val concreteShape = shape.anyOf.filter(!_.isInstanceOf[NilShape]).head
     ValueValidator.validate(concreteShape, other)
   }

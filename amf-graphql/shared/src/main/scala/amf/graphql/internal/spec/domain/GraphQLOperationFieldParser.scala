@@ -1,15 +1,24 @@
 package amf.graphql.internal.spec.domain
 
+import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
+import amf.core.internal.parser.domain.Fields
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
 import amf.graphql.internal.spec.document.GraphQLFieldSetter
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload}
+import amf.shapes.client.scala.model.domain.operations.{
+  ShapeOperation,
+  ShapeParameter,
+  ShapePayload,
+  ShapeRequest,
+  ShapeResponse
+}
 import amf.shapes.internal.domain.metamodel.operations.{
   AbstractPayloadModel,
+  ShapeOperationModel,
   ShapeParameterModel,
   ShapeRequestModel,
   ShapeResponseModel
@@ -31,8 +40,8 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   }
 
   private def parseArguments(): Unit = {
-    val request = operation.withRequest()
-    request.annotations ++= virtual()
+    val request = new ShapeRequest(Fields(), virtual()).withName("default")
+    operation set AmfArray(Seq(request), virtual()) as ShapeOperationModel.Request
 
     val arguments = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).map { case argument: Node =>
       parseArgument(argument)
@@ -70,8 +79,8 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLBaseW
   }
 
   private def parseRange(): Unit = {
-    val response = operation.withResponse()
-    response.annotations ++= virtual()
+    val response = ShapeResponse(Fields(), virtual()).withName("default")
+    operation set AmfArray(Seq(response), virtual()) as ShapeOperationModel.Responses
     val payload = ShapePayload(virtual()).withName("default", synthesized())
     payload set parseType(ast) as AbstractPayloadModel.Schema
     response set payload as ShapeResponseModel.Payload

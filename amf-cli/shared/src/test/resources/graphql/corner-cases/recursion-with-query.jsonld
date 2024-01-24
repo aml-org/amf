@@ -96,12 +96,23 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default/unresolved",
+                            "@id": "#/web-api/endpoint/%2Fquery%2Frelay/supportedOperation/query/Query.relay/returns/resp/default/payload/default/shape/default-node",
                             "@type": [
+                              "shacl:NodeShape",
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#/declares/shape/Query"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "Query"
+                              }
                             ]
                           }
                         ]
@@ -139,6 +150,66 @@
         "doc:sourceSpec": [
           {
             "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declares/shape/Query",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/Query/property/property/relay",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/Query/property/property/relay/shape/default-node",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "doc:link-target": [
+                  {
+                    "@id": "#/declares/shape/Query"
+                  }
+                ],
+                "doc:link-label": [
+                  {
+                    "@value": "Query"
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "relay"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Query"
           }
         ]
       }

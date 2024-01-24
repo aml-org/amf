@@ -1285,8 +1285,8 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         uri = amfParser("reserved-endpoints"),
-        owlClass = apiContract("EndPoint"),
-        owlProperty = apiContract("path"),
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("EndPoints"),
         constraint = shape("reservedEndpoints"),
         message = "Endpoint is reserved by Federation"
       )

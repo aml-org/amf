@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 12
+Number of results: 13
 
 Level: Violation
 
@@ -11,6 +11,14 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/web-api
   Property: http://a.ml/vocabularies/document#customDomainProperties
   Range: [(1,7)-(1,19)]
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application
+  Message: Directive 'MyDirective' cannot be applied to FIELD_DEFINITION 'name'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/wrong-directive-location-enum-value.api.graphql#/declares/shape/Query/property/property/name
+  Property: http://a.ml/vocabularies/document#customDomainProperties
+  Range: [(6,17)-(6,29)]
   Location: 
 
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-directive-application

@@ -278,7 +278,7 @@
         ]
       },
       {
-        "@id": "#/declares/shape/DType",
+        "@id": "#/declares/shape/Query",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -288,7 +288,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declares/shape/DType/property/property/D",
+            "@id": "#/declares/shape/Query/property/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -297,7 +297,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declares/shape/DType/property/property/D/scalar/default-scalar",
+                "@id": "#/declares/shape/Query/property/property/name/scalar/default-scalar",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -319,14 +319,14 @@
             ],
             "shacl:name": [
               {
-                "@value": "D"
+                "@value": "name"
               }
             ]
           }
         ],
         "shacl:name": [
           {
-            "@value": "DType"
+            "@value": "Query"
           }
         ]
       },
@@ -378,6 +378,59 @@
         "shacl:name": [
           {
             "@value": "UnionType"
+          }
+        ]
+      },
+      {
+        "@id": "#/declares/shape/DType",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/DType/property/property/D",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/DType/property/property/D/scalar/default-scalar",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "D"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "DType"
           }
         ]
       }

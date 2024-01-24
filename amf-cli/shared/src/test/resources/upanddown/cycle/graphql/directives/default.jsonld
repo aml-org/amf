@@ -215,6 +215,102 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/shape/Query",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/shape/Query/property/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/shape/Query/property/property/name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/deprecated": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "deprecated"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/shape/Query/property/property/name/customDomainProperties/deprecated/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#reason": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/shape/Query/property/property/name/customDomainProperties/deprecated/data-node/reason",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "no reason"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "reason"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/deprecated"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Query"
+          }
+        ]
+      },
+      {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/directives/default.graphql#/declares/scalar/ShipType",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",

@@ -20,7 +20,9 @@ object ObjectValueValidator extends ValueValidator[NodeShape] {
 
   sealed case class ReportingInfo(shapeName: String, annotations: Annotations)
 
-  private def validateProperties(shape: NodeShape, value: ObjectNode)(implicit targetField: Field): Seq[ValidationInfo] = {
+  private def validateProperties(shape: NodeShape, value: ObjectNode)(implicit
+      targetField: Field
+  ): Seq[ValidationInfo] = {
     val actual: Map[String, DataNode] = value.allPropertiesWithName()
     val expected                      = shape.properties
     implicit val info: ReportingInfo  = ReportingInfo(shape.name.value(), value.annotations)
@@ -29,7 +31,8 @@ object ObjectValueValidator extends ValueValidator[NodeShape] {
   }
 
   private def validateExpectedProperties(expected: Seq[PropertyShape], actual: Map[String, DataNode])(implicit
-      info: ReportingInfo, targetField: Field
+      info: ReportingInfo,
+      targetField: Field
   ): Seq[ValidationInfo] = {
     expected.flatMap { expectedProperty => validateExpectedProperty(expectedProperty, actual) }
   }

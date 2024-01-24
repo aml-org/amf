@@ -205,6 +205,92 @@
     ],
     "doc:declares": [
       {
+        "@id": "#/declares/shape/Query",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/Query/property/property/names",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/Query/property/property/names/array/default-array",
+                "@type": [
+                  "raml-shapes:ArrayShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:items": [
+                  {
+                    "@id": "#/declares/shape/Query/property/property/names/array/default-array/union/default-union",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "#/declares/shape/Query/property/property/names/array/default-array/union/default-union/anyOf/nil/default-nil",
+                        "@type": [
+                          "raml-shapes:NilShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ]
+                      },
+                      {
+                        "@id": "#/declares/shape/Query/property/property/names/array/default-array/union/default-union/anyOf/scalar/default-scalar",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "names"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Query"
+          }
+        ]
+      },
+      {
         "@id": "#/declares/shape/Person",
         "@type": [
           "shacl:NodeShape",

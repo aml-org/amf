@@ -36,7 +36,13 @@ object GraphQLDirectiveLocationValidator {
     result match {
       case Some((actual, false)) =>
         val message = buildErrorMessage(directiveApplication, element, actual.name)
-        Some(ValidationInfo(DomainElementModel.CustomDomainProperties, Some(message), Some(directiveApplication.annotations)))
+        Some(
+          ValidationInfo(
+            DomainElementModel.CustomDomainProperties,
+            Some(message),
+            Some(directiveApplication.annotations)
+          )
+        )
       case _ => None
     }
   }

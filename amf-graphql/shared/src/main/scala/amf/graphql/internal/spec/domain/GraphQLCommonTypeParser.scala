@@ -19,11 +19,11 @@ trait GraphQLCommonTypeParser extends GraphQLASTParserHelper {
     collectNodes(objTypeNode, fieldsAstPath).foreach { fieldNode =>
       GraphQLFieldParser(fieldNode, obj).parse {
         case Left(propertyShape: PropertyShape) =>
-          val properties = obj.properties ++ Seq(propertyShape)
+          val properties = obj.properties :+ propertyShape
           obj set properties as NodeShapeModel.Properties
 
         case Right(shapeOperation: ShapeOperation) =>
-          val operations = obj.operations ++ Seq(shapeOperation)
+          val operations = obj.operations :+ shapeOperation
           obj set operations as NodeShapeModel.Operations
       }
     }
