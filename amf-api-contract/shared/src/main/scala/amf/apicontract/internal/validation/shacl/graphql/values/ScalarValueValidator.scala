@@ -1,7 +1,6 @@
 package amf.apicontract.internal.validation.shacl.graphql.values
 
 import amf.apicontract.internal.validation.shacl.graphql.GraphQLDataTypes.friendlyName
-import amf.apicontract.internal.validation.shacl.graphql.GraphQLUtils
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.core.internal.metamodel.Field
@@ -10,13 +9,11 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object ScalarValueValidator extends ValueValidator[ScalarShape] {
   override def validate(shape: ScalarShape, value: DataNode)(implicit targetField: Field): Seq[ValidationInfo] = {
-    if (!GraphQLUtils.isInsideRootType(shape)) {
-      value match {
-        case s: ScalarNode => validateDataType(shape, s)
-        case a: ArrayNode  => Seq(typeError("scalar", "list", a.annotations))
-        case o: ObjectNode => Seq(typeError("scalar", "object", o.annotations))
-      }
-    } else Nil
+    value match {
+      case s: ScalarNode => validateDataType(shape, s)
+      case a: ArrayNode  => Seq(typeError("scalar", "list", a.annotations))
+      case o: ObjectNode => Seq(typeError("scalar", "object", o.annotations))
+    }
   }
 
   private def validateDataType(shape: ScalarShape, value: ScalarNode)(implicit

@@ -30,7 +30,7 @@ object GraphQLDirectiveLocationValidator {
     } yield {
       val expected           = declaration.domain.map(_.value())
       val isValidApplication = expected.contains(actual.iri.iri())
-      (actual, isValidApplication || GraphQLUtils.isInsideRootType(element))
+      (actual, isValidApplication)
     }
 
     result match {

@@ -1,6 +1,6 @@
 package amf.apicontract.internal.validation.shacl.graphql.values
 
-import amf.apicontract.internal.validation.shacl.graphql.{GraphQLProperty, GraphQLUtils}
+import amf.apicontract.internal.validation.shacl.graphql.GraphQLProperty
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.core.internal.metamodel.Field
@@ -10,14 +10,12 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo
 
 object ObjectValueValidator extends ValueValidator[NodeShape] {
   override def validate(shape: NodeShape, value: DataNode)(implicit targetField: Field): Seq[ValidationInfo] = {
-    if (!GraphQLUtils.isInsideRootType(shape)) {
-      value match {
-        case s: ScalarNode if isNull(s) => Seq(typeError("object", "null", s.annotations))
-        case s: ScalarNode              => Seq(typeError("object", "scalar", s.annotations))
-        case a: ArrayNode               => Seq(typeError("object", "list", a.annotations))
-        case o: ObjectNode              => validateProperties(shape, o)
-      }
-    } else Nil
+    value match {
+      case s: ScalarNode if isNull(s) => Seq(typeError("object", "null", s.annotations))
+      case s: ScalarNode              => Seq(typeError("object", "scalar", s.annotations))
+      case a: ArrayNode               => Seq(typeError("object", "list", a.annotations))
+      case o: ObjectNode              => validateProperties(shape, o)
+    }
   }
 
   sealed case class ReportingInfo(shapeName: String, annotations: Annotations)

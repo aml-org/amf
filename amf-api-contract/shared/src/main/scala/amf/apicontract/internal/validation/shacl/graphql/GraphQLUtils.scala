@@ -16,6 +16,7 @@ object GraphQLUtils {
     }
   }
 
+  @tailrec
   def isValidInputType(schema: Shape): Boolean = {
     schema match {
       case a: ArrayShape => isValidInputType(a.items)
@@ -33,11 +34,5 @@ object GraphQLUtils {
       case arr: ArrayShape => isValidOutputType(arr.items)
       case _               => true
     }
-  }
-
-  val rootTypes = Seq("Query", "Mutation", "Subscription")
-
-  def isInsideRootType(obj: AmfObject): Boolean = {
-    obj.id.contains("declares/shape/") && rootTypes.map(root => obj.id.contains(root)).exists(b => b)
   }
 }
