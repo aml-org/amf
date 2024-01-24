@@ -5,6 +5,22 @@ Number of results: 9
 
 Level: Violation
 
+- Constraint: http://a.ml/vocabularies/amf/parser#reserved-endpoints
+  Message: Cannot declare field '_entities' in type Query since it is reserved by Federation
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/web-api
+  Property: http://a.ml/vocabularies/apiContract#path
+  Range: 
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/parser#reserved-endpoints
+  Message: Cannot declare field '_service' in type Query since it is reserved by Federation
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/web-api
+  Property: http://a.ml/vocabularies/apiContract#path
+  Range: 
+  Location: 
+
 - Constraint: http://a.ml/vocabularies/amf/parser#reserved-type-names
   Message: Cannot declare scalar with name '_Any' since it is reserved by Federation
   Severity: Violation
@@ -59,20 +75,4 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/declares/shape/_Service
   Property: http://www.w3.org/ns/shacl#name
   Range: [(12,0)-(14,1)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#reserved-endpoints
-  Message: Cannot declare field '_entities' in type Query since it is reserved by Federation
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/web-api/endpoint/%2Fquery%2F_entities
-  Property: http://a.ml/vocabularies/apiContract#path
-  Range: [(17,4)-(17,52)]
-  Location: 
-
-- Constraint: http://a.ml/vocabularies/amf/parser#reserved-endpoints
-  Message: Cannot declare field '_service' in type Query since it is reserved by Federation
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql-federation/tck/apis/invalid/federation-reserved.graphql#/web-api/endpoint/%2Fquery%2F_service
-  Property: http://a.ml/vocabularies/apiContract#path
-  Range: [(18,4)-(18,23)]
   Location: 
