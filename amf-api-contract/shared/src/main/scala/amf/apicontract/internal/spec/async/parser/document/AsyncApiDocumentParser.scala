@@ -26,6 +26,7 @@ import amf.apicontract.internal.spec.async.parser.bindings.{
 }
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain._
+import amf.apicontract.internal.spec.async.parser.domain.declarations.{Async20DeclarationParser, AsyncDeclarationParser}
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser}
@@ -36,7 +37,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.{DeclaredElement}
+import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
@@ -45,8 +46,9 @@ import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
-abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiContext)
-    extends AsyncApiSpecParser
+abstract class AsyncApiDocumentParser(root: Root, declarationParser: AsyncDeclarationParser)(implicit
+    val ctx: AsyncWebApiContext
+) extends AsyncApiSpecParser
     with OasLikeDeclarationsHelper {
 
   def parseDocument(): Document = parseDocument(Document())
@@ -75,7 +77,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key("components").foreach { components =>
       val parent        = root.location + "#/declarations"
       val componentsMap = components.value.as[YMap]
-      AsyncApiDeclarationParser(definitionsKey).parseDeclarations(componentsMap, parent)
+      declarationParser.parseDeclarations(componentsMap, parent)
       ctx.closedShape(parentObj, componentsMap, "components")
       validateNames()
     }

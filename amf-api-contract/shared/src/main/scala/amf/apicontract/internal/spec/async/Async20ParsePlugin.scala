@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.async
 import amf.apicontract.internal.spec.async.AsyncHeader.Async20Header
 import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.document
+import amf.apicontract.internal.spec.async.parser.domain.declarations.Async20DeclarationParser
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.apicontract.internal.spec.oas.OasLikeParsePlugin
 import amf.apicontract.internal.spec.raml.Raml10ParsePlugin
@@ -33,7 +34,7 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
 
   private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
     AsyncHeader(root) match {
-      case Some(Async20Header) => document.AsyncApi20DocumentParser(root).parseDocument()
+      case Some(Async20Header) => document.AsyncApi20DocumentParser(root, Async20DeclarationParser).parseDocument()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(spec.id)
     }
