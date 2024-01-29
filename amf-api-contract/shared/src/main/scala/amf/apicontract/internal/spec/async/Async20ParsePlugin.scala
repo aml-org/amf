@@ -9,7 +9,7 @@ import amf.apicontract.internal.spec.async.AsyncHeader.{
   Async25Header,
   Async26Header
 }
-import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
+import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.document
 import amf.apicontract.internal.spec.async.parser.domain.declarations.{
   Async20DeclarationParser,
@@ -38,22 +38,27 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`, Mimes.`application/json`)
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    implicit val newCtx: AsyncWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
+    val header = parseHeader(document)
+    implicit val newCtx: AsyncWebApiContext =
+      context(document.location, document.references, ctx.parsingOptions, ctx, spec = header.spec)
     restrictCrossSpecReferences(document, ctx)
-    val parsed = parseAsyncUnit(document)
+    val parsed = parseAsyncUnit(header, document)
     promoteFragments(parsed, newCtx)
   }
 
-  private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
-    AsyncHeader(root) match {
-      case Some(Async20Header) => document.AsyncApi20DocumentParser(root).parseDocument()
-      case Some(Async21Header) => document.AsyncApi21DocumentParser(root).parseDocument()
-      case Some(Async22Header) => document.AsyncApi22DocumentParser(root).parseDocument()
-      case Some(Async23Header) => document.AsyncApi23DocumentParser(root).parseDocument()
-      case Some(Async24Header) => document.AsyncApi24DocumentParser(root).parseDocument()
-      case Some(Async25Header) => document.AsyncApi25DocumentParser(root).parseDocument()
-      case Some(Async26Header) => document.AsyncApi26DocumentParser(root).parseDocument()
-      case _ => // unreachable as it is covered in canParse()
+  private def parseHeader(root: Root): AsyncHeader =
+    AsyncHeader(root).getOrElse(throw new InvalidDocumentHeaderException(spec.id))
+
+  private def parseAsyncUnit(header: AsyncHeader, root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
+    header match {
+      case Async20Header => document.AsyncApi20DocumentParser(root).parseDocument()
+      case Async21Header => document.AsyncApi21DocumentParser(root).parseDocument()
+      case Async22Header => document.AsyncApi22DocumentParser(root).parseDocument()
+      case Async23Header => document.AsyncApi23DocumentParser(root).parseDocument()
+      case Async24Header => document.AsyncApi24DocumentParser(root).parseDocument()
+      case Async25Header => document.AsyncApi25DocumentParser(root).parseDocument()
+      case Async26Header => document.AsyncApi26DocumentParser(root).parseDocument()
+      case _ =>
         throw new InvalidDocumentHeaderException(spec.id)
     }
   }
@@ -63,11 +68,12 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
       refs: Seq[ParsedReference],
       options: ParsingOptions,
       wrapped: ParserContext,
-      ds: Option[AsyncWebApiDeclarations] = None
-  ): Async20WebApiContext = {
+      ds: Option[AsyncWebApiDeclarations] = None,
+      spec: Spec
+  ): Async2WebApiContext = {
     // ensure unresolved references in external fragments are not resolved with main api definitions
     val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
     cleanContext.globalSpace = wrapped.globalSpace
-    new Async20WebApiContext(loc, refs, cleanContext, ds, options = options)
+    Async2WebApiContext(loc, refs, cleanContext, ds, options, spec)
   }
 }
