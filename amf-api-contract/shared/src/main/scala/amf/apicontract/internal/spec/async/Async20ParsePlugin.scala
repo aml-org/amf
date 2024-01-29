@@ -1,9 +1,21 @@
 package amf.apicontract.internal.spec.async
 
-import amf.apicontract.internal.spec.async.AsyncHeader.Async20Header
+import amf.apicontract.internal.spec.async.AsyncHeader.{
+  Async20Header,
+  Async21Header,
+  Async22Header,
+  Async23Header,
+  Async24Header,
+  Async25Header,
+  Async26Header
+}
 import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.document
-import amf.apicontract.internal.spec.async.parser.domain.declarations.Async20DeclarationParser
+import amf.apicontract.internal.spec.async.parser.domain.declarations.{
+  Async20DeclarationParser,
+  Async23DeclarationParser,
+  Async24DeclarationParser
+}
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.apicontract.internal.spec.oas.OasLikeParsePlugin
 import amf.apicontract.internal.spec.raml.Raml10ParsePlugin
@@ -18,7 +30,7 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
 
   override def spec: Spec = AsyncApi20
 
-  override def applies(element: Root): Boolean = AsyncHeader(element).contains(Async20Header)
+  override def applies(element: Root): Boolean = AsyncHeader(element).isDefined
 
   override def validSpecsToReference: Seq[Spec] =
     super.validSpecsToReference :+ Raml10ParsePlugin.spec
@@ -34,7 +46,13 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
 
   private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
     AsyncHeader(root) match {
-      case Some(Async20Header) => document.AsyncApi20DocumentParser(root, Async20DeclarationParser).parseDocument()
+      case Some(Async20Header) => document.AsyncApi20DocumentParser(root).parseDocument()
+      case Some(Async21Header) => document.AsyncApi21DocumentParser(root).parseDocument()
+      case Some(Async22Header) => document.AsyncApi22DocumentParser(root).parseDocument()
+      case Some(Async23Header) => document.AsyncApi23DocumentParser(root).parseDocument()
+      case Some(Async24Header) => document.AsyncApi24DocumentParser(root).parseDocument()
+      case Some(Async25Header) => document.AsyncApi25DocumentParser(root).parseDocument()
+      case Some(Async26Header) => document.AsyncApi26DocumentParser(root).parseDocument()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(spec.id)
     }
