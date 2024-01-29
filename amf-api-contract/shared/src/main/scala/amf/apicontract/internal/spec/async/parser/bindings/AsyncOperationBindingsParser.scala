@@ -6,6 +6,12 @@ import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBi
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.{OperationBinding, OperationBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
+import amf.apicontract.internal.spec.async.parser.bindings.operation.{
+  Amqp091OperationBindingParser,
+  HttpOperationBindingParser,
+  KafkaOperationBindingParser,
+  MqttOperationBindingParser
+}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationBindings
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -46,76 +52,24 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: 
   override protected def parseHttp(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): OperationBinding = {
-    val binding = HttpOperationBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key("type", HttpOperationBindingModel.OperationType in binding)
-    if (binding.operationType.is("request")) map.key("method", HttpOperationBindingModel.Method in binding)
-    map.key("query", entry => parseSchema(HttpOperationBindingModel.Query, binding, entry, binding.id))
-    parseBindingVersion(binding, HttpOperationBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "httpOperationBinding")
-
-    binding
+    HttpOperationBindingParser.parse(entry, parent)
   }
 
   override protected def parseAmqp(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): OperationBinding = {
-    val binding = Amqp091OperationBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key("expiration", Amqp091OperationBindingModel.Expiration in binding)
-    map.key("userId", Amqp091OperationBindingModel.UserId in binding)
-    map.key("cc", Amqp091OperationBindingModel.CC in binding)
-    map.key("priority", Amqp091OperationBindingModel.Priority in binding)
-    map.key("deliveryMode", Amqp091OperationBindingModel.DeliveryMode in binding)
-    map.key("mandatory", Amqp091OperationBindingModel.Mandatory in binding)
-    map.key("bcc", Amqp091OperationBindingModel.BCC in binding)
-    map.key("replyTo", Amqp091OperationBindingModel.ReplyTo in binding)
-    map.key("timestamp", Amqp091OperationBindingModel.Timestamp in binding)
-    map.key("ack", Amqp091OperationBindingModel.Ack in binding)
-
-    parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "amqpOperationBinding")
-
-    binding
+    Amqp091OperationBindingParser.parse(entry, parent)
   }
 
   override protected def parseKafka(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): OperationBinding = {
-    val binding = KafkaOperationBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key(
-      "groupId",
-      entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry, binding.id + "/group-id")
-    )
-    map.key(
-      "clientId",
-      entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry, binding.id + "/client-id")
-    )
-    parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "kafkaOperationBinding")
-
-    binding
+    KafkaOperationBindingParser.parse(entry, parent)
   }
 
   override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): OperationBinding = {
-    val binding = MqttOperationBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key("qos", MqttOperationBindingModel.Qos in binding)
-    map.key("retain", MqttOperationBindingModel.Retain in binding)
-    parseBindingVersion(binding, MqttOperationBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "mqttOperationBinding")
-
-    binding
+    MqttOperationBindingParser.parse(entry, parent)
   }
 }

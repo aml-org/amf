@@ -6,6 +6,12 @@ import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBind
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.{MessageBinding, MessageBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
+import amf.apicontract.internal.spec.async.parser.bindings.message.{
+  Amqp091MessageBindingParser,
+  HttpMessageBindingParser,
+  KafkaMessageBindingParser,
+  MqttMessageBindingParser
+}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessageBindings
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -47,57 +53,24 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: As
   override protected def parseAmqp(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): MessageBinding = {
-    val binding = Amqp091MessageBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key("contentEncoding", Amqp091MessageBindingModel.ContentEncoding in binding)
-    map.key("messageType", Amqp091MessageBindingModel.MessageType in binding)
-    parseBindingVersion(binding, Amqp091MessageBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "amqpMessageBinding")
-
-    binding
+    Amqp091MessageBindingParser.parse(entry, parent)
   }
 
   override protected def parseHttp(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): MessageBinding = {
-    val binding = HttpMessageBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key("headers", parseSchema(HttpMessageBindingModel.Headers, binding, _, binding.id))
-    parseBindingVersion(binding, HttpMessageBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "httpMessageBinding")
-
-    binding
+    HttpMessageBindingParser.parse(entry, parent)
   }
 
   override protected def parseKafka(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): MessageBinding = {
-    val binding = KafkaMessageBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
-
-    map.key("key", entry => parseSchema(KafkaMessageBindingModel.MessageKey, binding, entry, binding.id + "/key"))
-    parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "kafkaMessageBinding")
-
-    binding
+    KafkaMessageBindingParser.parse(entry, parent)
   }
 
   override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): MessageBinding = {
-    val binding = MqttMessageBinding(Annotations(entry))
-
-    val map = entry.value.as[YMap]
-
-    parseBindingVersion(binding, MqttMessageBindingModel.BindingVersion, map)
-
-    ctx.closedShape(binding, map, "mqttMessageBinding")
-
-    binding
+    MqttMessageBindingParser.parse(entry, parent)
   }
 }

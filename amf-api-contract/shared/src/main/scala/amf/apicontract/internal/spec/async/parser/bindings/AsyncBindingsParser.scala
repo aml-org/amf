@@ -131,53 +131,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
     parseEmptyBinding(entry, parent)
 
   protected def parseEmptyBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
-    val binding = EmptyBinding(Annotations(entry))
-
-    validateEmptyMap(entry.value, binding, entry.key.as[String])
-
-    binding.asInstanceOf[Binding]
-  }
-
-  private def validateEmptyMap(value: YNode, node: AmfObject, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
-    if (value.as[YMap].entries.nonEmpty) {
-      ctx.eh.violation(
-        ParserSideValidations.NonEmptyBindingMap,
-        node,
-        s"Reserved name binding '${`type`}' must have an empty map",
-        value.location
-      )
-    }
-
-  protected def parseBindingVersion(binding: BindingVersion, field: Field, map: YMap)(implicit
-      ctx: AsyncWebApiContext
-  ): Unit = {
-    map.key("bindingVersion", field in binding)
-
-    if (bindingVersionIsEmpty(binding)) setDefaultBindingVersionValue(binding, field)
-  }
-
-  private def setDefaultBindingVersionValue(binding: BindingVersion, field: Field) = {
-    binding.setWithoutId(field, AmfScalar("latest"), Annotations.synthesized())
-  }
-
-  private def bindingVersionIsEmpty(binding: BindingVersion) = {
-    binding.bindingVersion.isNullOrEmpty
-  }
-
-  protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(implicit
-      ctx: AsyncWebApiContext
-  ): Unit = {
-    OasTypeParser(
-      YMapEntryLike(entry.value),
-      "schema",
-      shape => shape.withName("schema"),
-      JSONSchemaDraft7SchemaVersion
-    )
-      .parse()
-      .foreach { shape =>
-        binding.setWithoutId(field, shape, Annotations(entry))
-        shape
-      }
+    EmptyBindingParser.parse(entry, parent).asInstanceOf[Binding]
   }
 
   private def setBindingType(entry: YMapEntry, binding: Binding): Binding = {
