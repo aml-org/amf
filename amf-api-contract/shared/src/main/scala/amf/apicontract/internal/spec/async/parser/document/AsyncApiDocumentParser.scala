@@ -46,7 +46,7 @@ import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
-abstract class AsyncApiDocumentParser(root: Root, declarationParser: AsyncDeclarationParser)(implicit
+abstract class AsyncApiDocumentParser(root: Root, spec: Spec, declarationParser: AsyncDeclarationParser)(implicit
     val ctx: AsyncWebApiContext
 ) extends AsyncApiSpecParser
     with OasLikeDeclarationsHelper {
@@ -54,7 +54,7 @@ abstract class AsyncApiDocumentParser(root: Root, declarationParser: AsyncDeclar
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(Spec.ASYNC20))
+    document.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)
@@ -83,7 +83,7 @@ abstract class AsyncApiDocumentParser(root: Root, declarationParser: AsyncDeclar
     }
   }
 
-  def parseApi(map: YMap): AsyncApi = {
+  protected def parseApi(map: YMap): AsyncApi = {
     YamlTagValidator.validate(root)
     val api = AsyncApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node)
     map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
