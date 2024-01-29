@@ -169,7 +169,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       security.withEncodes(
         ctx.factory
           .securitySchemeParser(
-            map,
+            YMapEntryLike(map),
             (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security
           )
           .parse()

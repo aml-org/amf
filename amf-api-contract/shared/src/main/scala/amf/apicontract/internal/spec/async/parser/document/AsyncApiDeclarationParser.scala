@@ -105,7 +105,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += ctx.factory
             .securitySchemeParser(
-              entry,
+              YMapEntryLike(entry),
               (scheme) => {
                 val name = entry.key.as[String]
                 scheme.setWithoutId(

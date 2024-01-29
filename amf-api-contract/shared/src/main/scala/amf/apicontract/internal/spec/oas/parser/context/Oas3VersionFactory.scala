@@ -26,7 +26,7 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
 
-  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+  override def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     Oas3SecuritySchemeParser.apply
 
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =

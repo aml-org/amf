@@ -12,6 +12,7 @@ import amf.apicontract.internal.spec.raml.parser.document.{
 import amf.apicontract.internal.spec.raml.parser.domain._
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.parser.Root
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.raml.parser._
 import org.yaml.model._
 
@@ -22,7 +23,7 @@ trait RamlSpecAwareContext extends SpecAwareContext {}
 
 abstract class RamlSpecVersionFactory(implicit val ctx: RamlWebApiContext) extends SpecVersionFactory {
 
-  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+  override def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     RamlSecuritySchemeParser.apply
 
   def securitySettingsParser: (YNode, String, DomainElement with WithSettings) => RamlSecuritySettingsParser

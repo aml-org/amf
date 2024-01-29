@@ -161,7 +161,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       security.setWithoutId(
         FragmentModel.Encodes,
         RamlSecuritySchemeParser(
-          map,
+          YMapEntryLike(map),
           (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security
         )
           .parse(),
