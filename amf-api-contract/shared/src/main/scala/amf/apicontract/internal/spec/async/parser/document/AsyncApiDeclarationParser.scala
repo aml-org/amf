@@ -57,7 +57,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     parseMessageDeclarations(map, parent + "/messages")
   }
 
-  def parseMessageDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
+  private def parseMessageDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
     componentsMap.key(
       "messages",
       e => {
@@ -70,7 +70,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
       }
     )
 
-  def parseOperationTraits(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
+  private def parseOperationTraits(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
     componentsMap.key(
       "operationTraits",
       entry => {
@@ -84,7 +84,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
       }
     )
 
-  def parseMessageTraits(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
+  private def parseMessageTraits(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
     componentsMap.key(
       "messageTraits",
       entry => {
@@ -97,7 +97,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
       }
     )
 
-  protected def parseSecuritySchemeDeclarations(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def parseSecuritySchemeDeclarations(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
       "securitySchemes",
       e => {
@@ -123,7 +123,9 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseParameterDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def parseParameterDeclarations(componentsMap: YMap, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     componentsMap.key(
       "parameters",
       paramsMap => {
@@ -137,7 +139,9 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseCorrelationIdDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def parseCorrelationIdDeclarations(componentsMap: YMap, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     componentsMap.key(
       "correlationIds",
       e => {
@@ -150,7 +154,9 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseMessageBindingsDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def parseMessageBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     parseBindingsDeclarations[MessageBindings](
       "messageBindings",
       componentsMap,
@@ -161,7 +167,9 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseServerBindingsDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def parseServerBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     parseBindingsDeclarations[ServerBindings](
       "serverBindings",
       componentsMap,
@@ -172,7 +180,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseOperationBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
+  private def parseOperationBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
     parseBindingsDeclarations[OperationBindings](
@@ -185,7 +193,9 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseChannelBindingsDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def parseChannelBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     parseBindingsDeclarations[ChannelBindings](
       "channelBindings",
       componentsMap,
@@ -196,7 +206,7 @@ case class AsyncApiDeclarationParser(override val definitionsKey: String)
     )
   }
 
-  def parseBindingsDeclarations[T <: DomainElement](
+  private def parseBindingsDeclarations[T <: DomainElement](
       keyword: String,
       componentsMap: YMap,
       parse: YMapEntry => T,
