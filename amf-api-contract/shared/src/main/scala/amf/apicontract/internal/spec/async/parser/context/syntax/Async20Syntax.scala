@@ -1,4 +1,4 @@
-package amf.apicontract.internal.spec.async.parser.context
+package amf.apicontract.internal.spec.async.parser.context.syntax
 
 import amf.shapes.internal.spec.async.parser.Async20ShapeSyntax
 import amf.shapes.internal.spec.common.parser.SpecSyntax
