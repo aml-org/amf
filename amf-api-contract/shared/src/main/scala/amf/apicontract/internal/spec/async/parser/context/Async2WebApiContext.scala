@@ -123,6 +123,7 @@ object Async2WebApiContext {
       mutable.HashSet.empty,
       options,
       settings(spec),
+      bindingSet(spec),
       factory(spec)
     )
   }
@@ -146,6 +147,16 @@ object Async2WebApiContext {
     case AsyncApi25 => ctx => Async20VersionFactory()(ctx)
     case AsyncApi26 => ctx => Async20VersionFactory()(ctx)
   }
+
+  private def bindingSet(spec: Spec): AsyncValidBindingSet = spec match {
+    case AsyncApi20 => AsyncValidBindingSet.async20
+    case AsyncApi21 => AsyncValidBindingSet.async21
+    case AsyncApi22 => AsyncValidBindingSet.async22
+    case AsyncApi23 => AsyncValidBindingSet.async23
+    case AsyncApi24 => AsyncValidBindingSet.async24
+    case AsyncApi25 => AsyncValidBindingSet.async25
+    case AsyncApi26 => AsyncValidBindingSet.async26
+  }
 }
 
 class Async2WebApiContext private (
@@ -155,7 +166,8 @@ class Async2WebApiContext private (
     private val ds: Option[AsyncWebApiDeclarations] = None,
     private val operationIds: mutable.Set[String] = mutable.HashSet(),
     options: ParsingOptions = ParsingOptions(),
-    settings: SpecSettings,
+    settings: Async2Settings,
+    bindings: AsyncValidBindingSet,
     factoryFactory: Async2WebApiContext => AsyncSpecVersionFactory
 ) extends AsyncWebApiContext(
       loc,
@@ -164,7 +176,8 @@ class Async2WebApiContext private (
       wrapped,
       ds,
       operationIds,
-      settings
+      settings,
+      bindings
     ) {
 
   override val factory: AsyncSpecVersionFactory = factoryFactory(this)
@@ -177,6 +190,7 @@ class Async2WebApiContext private (
       operationIds,
       options,
       settings,
+      bindings,
       factoryFactory
     )
 }

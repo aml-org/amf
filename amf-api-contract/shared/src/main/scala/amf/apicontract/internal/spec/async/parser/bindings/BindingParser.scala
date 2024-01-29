@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.async.parser.bindings
 import amf.apicontract.client.scala.model.domain.bindings.BindingVersion
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Linkable}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
@@ -12,7 +12,7 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry}
 
-trait BindingParser[Binding <: DomainElement] extends SpecParserOps {
+trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
   def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding
 

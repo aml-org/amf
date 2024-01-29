@@ -7,6 +7,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   MqttServerLastWillModel,
   ServerBindingsModel
 }
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, Kafka, Mqtt}
 import amf.apicontract.internal.spec.async.parser.bindings.server.MqttServerBindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServerBindings
@@ -18,12 +19,18 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
+object AsyncServerBindingsParser {
+  private val parserMap: Map[String, BindingParser[ServerBinding]] = Map(
+    Mqtt -> MqttServerBindingParser
+  )
+}
 case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike) {
 
   override type Binding  = ServerBinding
   override type Bindings = ServerBindings
-  override val bindingsField: Field = ServerBindingsModel.Bindings
+  override val bindingsField: Field                                         = ServerBindingsModel.Bindings
+  override protected val parsers: Map[String, BindingParser[ServerBinding]] = AsyncServerBindingsParser.parserMap
 
   override protected def createParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext): AsyncBindingsParser =
     AsyncServerBindingsParser(entryLike)
@@ -45,10 +52,4 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Asy
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): ServerBindings =
     new ErrorServerBindings(fullRef, entryLike.asMap)
-
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit
-      ctx: AsyncWebApiContext
-  ): ServerBinding = {
-    MqttServerBindingParser.parse(entry, parent)
-  }
 }

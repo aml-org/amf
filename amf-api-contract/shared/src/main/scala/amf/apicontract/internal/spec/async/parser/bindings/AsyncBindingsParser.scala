@@ -21,6 +21,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
   protected type Binding <: DomainElement
   protected val bindingsField: Field
   protected type Bindings <: NamedDomainElement with Linkable
+  protected val parsers: Map[String, BindingParser[Binding]]
 
   def parse(): Bindings = {
     val map: YMap = entryLike.asMap
@@ -79,56 +80,22 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
     }
   }
 
+  private def canParse(binding: String) = ctx.validBindingSet().canParse(binding)
+
   protected def parseElements(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Seq[Binding] = {
     map.regex("^(?!x-).*").flatMap(parseElement(_, parent)).toSeq
   }
 
   private def parseElement(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Option[Binding] = {
-    val bindingOption = entry.key.as[String] match {
-      case Http       => Some(parseHttp(entry, parent))
-      case WebSockets => Some(parseWs(entry, parent))
-      case Kafka      => Some(parseKafka(entry, parent))
-      case Amqp       => Some(parseAmqp(entry, parent))
-      case Amqp1      => Some(parseAmqp1(entry, parent))
-      case Mqtt       => Some(parseMqtt(entry, parent))
-      case Mqtt5      => Some(parseMqtt5(entry, parent))
-      case Nats       => Some(parseNats(entry, parent))
-      case Jms        => Some(parseJms(entry, parent))
-      case Sns        => Some(parseSns(entry, parent))
-      case Sqs        => Some(parseSqs(entry, parent))
-      case Stomp      => Some(parseStomp(entry, parent))
-      case Redis      => Some(parseRedis(entry, parent))
-      case _          => None
-    }
-    bindingOption.map(setBindingType(entry, _))
+    val bindingType = entry.key.as[String]
+    if (canParse(bindingType)) {
+      val binding: Binding = parsers
+        .get(bindingType)
+        .map(_.parse(entry, parent))
+        .getOrElse(parseEmptyBinding(entry, parent))
+      Some(setBindingType(entry, binding))
+    } else None // TODO: maybe we should throw an error here? I'm not changing behaviour
   }
-
-  protected def parseHttp(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseWs(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseKafka(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseAmqp(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseAmqp1(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseMqtt5(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseNats(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseJms(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseSns(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseSqs(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseStomp(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseRedis(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
 
   protected def parseEmptyBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
     EmptyBindingParser.parse(entry, parent).asInstanceOf[Binding]
