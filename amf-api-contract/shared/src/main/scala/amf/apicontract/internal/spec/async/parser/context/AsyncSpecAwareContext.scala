@@ -19,6 +19,7 @@ import amf.apicontract.internal.spec.oas.parser.domain.{
   OasLikeSecuritySettingsParser,
   OasLikeServerVariableParser
 }
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry, YPart}
 
 // TODO ASYNC complete all this
@@ -35,7 +36,7 @@ case class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends Asy
   override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
     AsyncEndpointParser(entry, parentId, collector)(ctx)
 
-  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+  override def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     Async2SecuritySchemeParser.apply
 
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
