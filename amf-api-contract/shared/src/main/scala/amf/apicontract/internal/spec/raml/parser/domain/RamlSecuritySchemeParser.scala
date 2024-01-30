@@ -15,7 +15,7 @@ import amf.core.internal.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
-import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
@@ -23,17 +23,17 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+case class RamlSecuritySchemeParser(entry: YMapEntryLike, adopt: SecurityScheme => SecurityScheme)(implicit
     ctx: RamlWebApiContext
-) extends SecuritySchemeParser(part, adopt) {
+) extends SecuritySchemeParser(entry) {
   override def parse(): SecurityScheme = {
-    val node           = getNode
+    val node           = entry.value
     val (key, partKey) = getName
 
     ctx.link(node) match {
-      case Left(link) => parseReferenced(key, partKey, link, Annotations(part), adopt)
+      case Left(link) => parseReferenced(key, partKey, link, Annotations(entry.ast), adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme(part))
+        val scheme = adopt(SecurityScheme(entry.ast))
 
         val map = value.as[YMap]
         ctx.closedShape(scheme, map, "securitySchema")
@@ -92,7 +92,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
   ): SecurityScheme = {
 
     val scheme = ctx.declarations
-      .findSecuritySchemeOrError(part)(parsedUrl, SearchScope.All)
+      .findSecuritySchemeOrError(entry.ast)(parsedUrl, SearchScope.All)
 
     val copied: SecurityScheme = scheme.link(AmfScalar(parsedUrl), annotations, Annotations.synthesized())
     adopt(copied)

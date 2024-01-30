@@ -18,7 +18,8 @@ abstract class AsyncWebApiContext(
     private val wrapped: ParserContext,
     private val ds: Option[AsyncWebApiDeclarations] = None,
     private val operationIds: mutable.Set[String] = mutable.HashSet(),
-    specSettings: SpecSettings
+    specSettings: SpecSettings,
+    protected val bindings: AsyncValidBindingSet
 ) extends OasLikeWebApiContext(loc, refs, options, wrapped, ds, operationIds, specSettings = specSettings) {
 
   override val factory: AsyncSpecVersionFactory
@@ -47,4 +48,6 @@ abstract class AsyncWebApiContext(
         futureDeclarations = futureDeclarations
       )
     )
+
+  def validBindingSet(): AsyncValidBindingSet = bindings
 }

@@ -10,9 +10,7 @@ import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVer
 import amf.shapes.internal.spec.oas.parser.{OasLikeIgnoreCriteria, OasLink}
 import org.yaml.model.YNode
 
-case class Async2Settings(syntax: SpecSyntax) extends SpecSettings {
-  override val spec: Spec = ASYNC20
-
+case class Async2Settings private (syntax: SpecSyntax, spec: Spec) extends SpecSettings {
   override def link(node: YNode)(implicit eh: SyamlAMFErrorHandler): Either[String, YNode] = OasLink.getLinkValue(node)
 
   override def ignoreCriteria: IgnoreCriteria = OasLikeIgnoreCriteria

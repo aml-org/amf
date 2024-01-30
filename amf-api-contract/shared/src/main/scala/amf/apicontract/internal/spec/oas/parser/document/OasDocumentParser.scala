@@ -196,7 +196,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
         e.value.as[YMap].entries.foreach { entry =>
           val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
-              entry,
+              YMapEntryLike(entry),
               (scheme) => {
                 val name = entry.key.as[String]
                 scheme.setWithoutId(
