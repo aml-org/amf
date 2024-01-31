@@ -1,6 +1,5 @@
 package amf.validation
 
-import amf.core.internal.remote.{Async20JsonHint, Async20YamlHint, Hint}
 import org.scalatest.matchers.should.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
