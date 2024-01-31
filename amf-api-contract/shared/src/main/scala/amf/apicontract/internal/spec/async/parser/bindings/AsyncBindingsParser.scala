@@ -1,19 +1,14 @@
 package amf.apicontract.internal.spec.async.parser.bindings
 
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
 import amf.core.client.scala.model.domain._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.validation.CoreValidations
 import amf.apicontract.internal.metamodel.domain.bindings.BindingType
-import amf.apicontract.client.scala.model.domain.bindings._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
-import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext) extends SpecParserOps {
@@ -121,4 +116,5 @@ object Bindings {
   val Sqs        = "sqs"
   val Stomp      = "stomp"
   val Redis      = "redis"
+  val Mercure    = "mercure"
 }
