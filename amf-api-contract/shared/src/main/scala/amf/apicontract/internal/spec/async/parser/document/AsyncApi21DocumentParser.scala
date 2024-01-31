@@ -1,15 +1,10 @@
 package amf.apicontract.internal.spec.async.parser.document
 
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
-import amf.apicontract.internal.spec.async.{AsyncApi21, AsyncApi22}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.async.parser.domain.declarations.{
-  Async21DeclarationParser,
-  Async22DeclarationParser,
-  AsyncDeclarationParser
-}
+import amf.apicontract.internal.spec.async.parser.domain.declarations.{Async21DeclarationParser, AsyncDeclarationParser}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.Spec
+import amf.core.internal.remote.{AsyncApi21, Spec}
 import org.yaml.model.YMap
 
 object AsyncApi21DocumentParser {

@@ -124,7 +124,15 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Draft 7 schemas cycle", "draft-7-schemas-cycle.yaml", "draft-7-schemas-output.yaml"),
     FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.yaml"),
     FixtureData("Operation and message traits", "operation-message-traits.yaml", "operation-message-traits.yaml"),
-    FixtureData("components emission", "components-cycle.yaml", "components-cycle.yaml")
+    FixtureData("components emission", "components-cycle.yaml", "components-cycle.yaml"),
+    FixtureData("Async 2.1 doc - empty", "empty-async21.yaml", "empty-async21.yaml"),
+    FixtureData("Async 2.2 doc - empty", "empty-async22.yaml", "empty-async22.yaml"),
+    FixtureData("Async 2.3 doc - empty", "empty-async23.yaml", "empty-async23.yaml"),
+    FixtureData("Async 2.4 doc - empty", "empty-async24.yaml", "empty-async24.yaml"),
+    FixtureData("Async 2.5 doc - empty", "empty-async25.yaml", "empty-async25.yaml"),
+    FixtureData("Async 2.6 doc - empty", "empty-async26.yaml", "empty-async26.yaml")
+
+// TODO: figure out why this test is commented out
 //    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
   )
 }

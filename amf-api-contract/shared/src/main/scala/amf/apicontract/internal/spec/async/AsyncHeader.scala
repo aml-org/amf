@@ -2,7 +2,16 @@ package amf.apicontract.internal.spec.async
 
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
-import amf.core.internal.remote.{AsyncApi20, Spec}
+import amf.core.internal.remote.{
+  AsyncApi20,
+  AsyncApi21,
+  AsyncApi22,
+  AsyncApi23,
+  AsyncApi24,
+  AsyncApi25,
+  AsyncApi26,
+  Spec
+}
 import org.yaml.model.YMap
 
 /** */

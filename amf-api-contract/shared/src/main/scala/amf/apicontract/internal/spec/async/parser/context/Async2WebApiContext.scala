@@ -13,7 +13,16 @@ import amf.apicontract.internal.spec.async.parser.context.syntax.{
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{AsyncApi20, Spec}
+import amf.core.internal.remote.{
+  AsyncApi20,
+  AsyncApi21,
+  AsyncApi22,
+  AsyncApi23,
+  AsyncApi24,
+  AsyncApi25,
+  AsyncApi26,
+  Spec
+}
 import amf.shapes.internal.spec.async.parser.Async2Settings
 import amf.shapes.internal.spec.common.parser.SpecSettings
 

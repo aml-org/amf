@@ -3,7 +3,6 @@ package amf.apicontract.internal.spec.async.emitters.document
 import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.spec.async.{AsyncApi21, AsyncApi22, AsyncApi23, AsyncApi24, AsyncApi25, AsyncApi26}
 import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterContext
 import amf.apicontract.internal.spec.async.emitters.domain.{
   AsyncApiCreativeWorksEmitter,
@@ -15,7 +14,16 @@ import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{AsyncApi20, Spec}
+import amf.core.internal.remote.{
+  AsyncApi20,
+  AsyncApi21,
+  AsyncApi22,
+  AsyncApi23,
+  AsyncApi24,
+  AsyncApi25,
+  AsyncApi26,
+  Spec
+}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -78,6 +86,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
     Seq(emitter.DeclarationsEmitterWrapper(emitters, ordering))
 
   def versionEntry(b: YDocument.EntryBuilder): Unit = {
+    val default = "2.6.0" // the default is the latest version to always emit a valid Async Api spec
     val versionToEmit = document.sourceSpec
       .map {
         case AsyncApi20 => "2.0.0"
@@ -87,8 +96,9 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
         case AsyncApi24 => "2.4.0"
         case AsyncApi25 => "2.5.0"
         case AsyncApi26 => "2.6.0"
+        case _          => default
       }
-      .getOrElse("2.0.0")
+      .getOrElse(default)
 
     b.asyncapi = YNode(YScalar(versionToEmit), YType.Str) // this should not be necessary but for use the same logic
   }
