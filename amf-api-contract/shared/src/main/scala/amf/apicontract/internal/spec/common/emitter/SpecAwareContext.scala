@@ -2,6 +2,7 @@ package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.spec.common.parser.SecuritySchemeParser
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.YPart
 
 trait SpecAwareContext {
@@ -9,5 +10,5 @@ trait SpecAwareContext {
 }
 
 trait SpecVersionFactory {
-  def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser
+  def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser
 }

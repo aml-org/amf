@@ -1,6 +1,7 @@
 package amf.io
 
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
+import amf.apicontract.internal.spec.async.NotFinishedAsync20ParsePlugin
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
@@ -147,7 +148,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
-    val amfConfig: AMFConfiguration = APIConfiguration.API()
+    val amfConfig: AMFConfiguration = APIConfiguration.API().withPlugin(NotFinishedAsync20ParsePlugin)
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
       amfConfig.withRenderOptions(r)
     })

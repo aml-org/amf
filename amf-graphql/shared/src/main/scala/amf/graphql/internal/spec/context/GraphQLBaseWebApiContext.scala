@@ -17,12 +17,13 @@ import amf.shapes.internal.spec.common.parser.{
   IgnoreAnnotationSchemaValidatorBuilder,
   IgnoreCriteria,
   SpecSettings,
-  SpecSyntax
+  SpecSyntax,
+  YMapEntryLike
 }
 import org.yaml.model.{YNode, YPart}
 
 object GraphQLBaseVersionFactory extends SpecVersionFactory {
-  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+  override def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     throw new Exception("GraphQL specs don't support security schemes")
 }
 

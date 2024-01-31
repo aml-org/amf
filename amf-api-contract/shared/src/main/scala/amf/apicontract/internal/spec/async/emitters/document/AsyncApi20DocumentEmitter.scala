@@ -4,13 +4,26 @@ import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterContext
-import amf.apicontract.internal.spec.async.emitters.domain.{AsyncApiCreativeWorksEmitter, AsyncApiEndpointsEmitter, AsyncApiServersEmitter}
+import amf.apicontract.internal.spec.async.emitters.domain.{
+  AsyncApiCreativeWorksEmitter,
+  AsyncApiEndpointsEmitter,
+  AsyncApiServersEmitter
+}
 import amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{AsyncApi20, Spec}
+import amf.core.internal.remote.{
+  AsyncApi20,
+  AsyncApi21,
+  AsyncApi22,
+  AsyncApi23,
+  AsyncApi24,
+  AsyncApi25,
+  AsyncApi26,
+  Spec
+}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -19,6 +32,7 @@ import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
+
 import scala.collection.mutable
 
 class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncSpecEmitterContext) {
@@ -71,8 +85,23 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
   def wrapDeclarations(emitters: Seq[EntryEmitter], ordering: SpecOrdering): Seq[EntryEmitter] =
     Seq(emitter.DeclarationsEmitterWrapper(emitters, ordering))
 
-  def versionEntry(b: YDocument.EntryBuilder): Unit =
-    b.asyncapi = YNode(YScalar("2.0.0"), YType.Str) // this should not be necessary but for use the same logic
+  def versionEntry(b: YDocument.EntryBuilder): Unit = {
+    val default = "2.6.0" // the default is the latest version to always emit a valid Async Api spec
+    val versionToEmit = document.sourceSpec
+      .map {
+        case AsyncApi20 => "2.0.0"
+        case AsyncApi21 => "2.1.0"
+        case AsyncApi22 => "2.2.0"
+        case AsyncApi23 => "2.3.0"
+        case AsyncApi24 => "2.4.0"
+        case AsyncApi25 => "2.5.0"
+        case AsyncApi26 => "2.6.0"
+        case _          => default
+      }
+      .getOrElse(default)
+
+    b.asyncapi = YNode(YScalar(versionToEmit), YType.Str) // this should not be necessary but for use the same logic
+  }
 
   case class WebApiEmitter(api: Api, ordering: SpecOrdering, spec: Option[Spec], references: Seq[BaseUnit]) {
     val emitters: Seq[EntryEmitter] = {
