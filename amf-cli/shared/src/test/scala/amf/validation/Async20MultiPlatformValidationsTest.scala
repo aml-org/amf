@@ -1,7 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Async20Profile
-import amf.core.internal.remote.{Async20YamlHint, Hint}
 import org.scalatest.matchers.should.Matchers
 
 class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest with Matchers {
