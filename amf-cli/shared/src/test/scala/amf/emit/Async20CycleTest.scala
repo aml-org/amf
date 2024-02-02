@@ -64,6 +64,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
 
   def cyclesAsyncAsync: Seq[FixtureData] = Seq(
     FixtureData("Empty cycle", "empty.yaml", "empty.yaml"),
+    FixtureData("Default Content Type", "default-content-type.yaml", "default-content-type.yaml"),
     FixtureData("Info cycle", "info.yaml", "info.yaml"),
     FixtureData("Tags cycle", "tags.yaml", "tags.yaml"),
     FixtureData("Documentation cycle", "documentation.yaml", "documentation.yaml"),
