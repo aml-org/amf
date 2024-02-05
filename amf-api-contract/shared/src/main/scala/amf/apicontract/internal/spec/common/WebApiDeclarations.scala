@@ -60,6 +60,8 @@ class WebApiDeclarations(
   var serverBindings: Map[String, ServerBindings]       = Map()
   var operationTraits: Map[String, Operation]           = Map()
   var messageTraits: Map[String, Message]               = Map()
+  var servers: Map[String, Server]                      = Map()
+  var channels: Map[String, EndPoint]                   = Map()
   var others: Map[String, BaseUnit]                     = Map()
 
   override def addLibrary(alias: String, declarations: Declarations): Unit = {
@@ -92,6 +94,8 @@ class WebApiDeclarations(
     responses.foreach { case (k, s) => merged.responses += (k -> s) }
     other.responses.foreach { case (k, s) => merged.responses += (k -> s) }
     extensions.foreach { case (k, s) => merged.extensions = merged.extensions + (k -> s) }
+    servers.foreach { case (k, s) => merged.servers = merged.servers + (k -> s) }
+    channels.foreach { case (k, s) => merged.channels = merged.channels + (k -> s) }
   }
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
@@ -123,6 +127,8 @@ class WebApiDeclarations(
     next.serverBindings = serverBindings
     next.operationTraits = operationTraits
     next.messageTraits = next.messageTraits
+    next.servers = next.servers
+    next.channels = next.channels
     next.others = others
     next
   }
@@ -163,12 +169,15 @@ class WebApiDeclarations(
         channelBindings = channelBindings + (indexKey -> b)
       case b: OperationBindings =>
         operationBindings = operationBindings + (indexKey -> b)
-
       case c: Callback =>
         callbacks.get(indexKey) match {
           case Some(prev) => callbacks = callbacks + (indexKey -> (c :: prev))
           case None       => callbacks = callbacks + (indexKey -> List(c))
         }
+      case s: Server =>
+        servers = servers + (indexKey -> s)
+      case c: EndPoint =>
+        channels = channels + (c.path.value() -> c)
       case _ => super.+=(indexKey, element)
     }
     this
@@ -215,7 +224,7 @@ class WebApiDeclarations(
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values ++ correlationIds.values ++ messageBindings.values ++ operationBindings.values ++ channelBindings.values ++ serverBindings.values ++ messages.values ++ operationTraits.values ++ messageTraits.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values ++ correlationIds.values ++ messageBindings.values ++ operationBindings.values ++ channelBindings.values ++ serverBindings.values ++ messages.values ++ operationTraits.values ++ messageTraits.values ++ servers.values ++ channels.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -310,6 +319,12 @@ class WebApiDeclarations(
       case Some(callbacks: List[DomainElement]) => Some(callbacks.collect { case callback: Callback => callback })
       case _                                    => None
     }
+
+  def findServer(key: String, scope: SearchScope.Scope): Option[Server] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].servers, scope) collect { case s: Server => s }
+
+  def findChannel(key: String, scope: SearchScope.Scope): Option[EndPoint] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].channels, scope) collect { case c: EndPoint => c }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {
@@ -582,5 +597,25 @@ object WebApiDeclarations {
 
     override protected def newErrorInstance: ErrorDeclaration[RequestModel.type] = ErrorRequest(idPart, ast)
     override val model: RequestModel.type                                        = RequestModel
+  }
+
+  case class ErrorServer(idPart: String, ast: YPart)
+      extends Server(Fields(), Annotations(ast))
+      with ErrorDeclaration[ServerModel.type] {
+    override val namespace: String = "http://amferror.com/#errorServer/"
+    withId(idPart)
+
+    override protected def newErrorInstance: ErrorDeclaration[ServerModel.type] = ErrorServer(idPart, ast)
+    override val model: ServerModel.type                                        = ServerModel
+  }
+
+  case class ErrorChannel(idPart: String, ast: YPart)
+      extends EndPoint(Fields(), Annotations(ast))
+      with ErrorDeclaration[EndPointModel.type] {
+    override val namespace: String = "http://amferror.com/#errorChannel/"
+    withId(idPart)
+
+    override protected def newErrorInstance: ErrorDeclaration[EndPointModel.type] = ErrorChannel(idPart, ast)
+    override val model: EndPointModel.type                                        = EndPointModel
   }
 }

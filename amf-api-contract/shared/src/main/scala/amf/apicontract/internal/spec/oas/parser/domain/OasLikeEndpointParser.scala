@@ -31,7 +31,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     parseEndpoint(endpoint)
   }
 
-  private def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
+  protected def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
     ctx.link(entry.value) match {
       case Left(value) =>
         ctx.navigateToRemoteYNode(value) match {
