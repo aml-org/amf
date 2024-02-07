@@ -328,4 +328,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
       hideValidationResultsIfParseNotConforms = false
     )
   }
+
+  test("Mercure binding should be empty") {
+    validate("mercure-binding-nonempty.yaml", Some("mercure-binding-nonempty.report"))
+  }
 }
