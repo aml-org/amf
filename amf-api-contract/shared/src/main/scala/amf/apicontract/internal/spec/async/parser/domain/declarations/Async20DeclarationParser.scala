@@ -1,14 +1,35 @@
 package amf.apicontract.internal.spec.async.parser.domain.declarations
 
 import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.scala.model.domain.{Operation, Parameter}
-import amf.apicontract.internal.metamodel.domain.bindings.{ChannelBindingsModel, MessageBindingsModel, OperationBindingsModel, ServerBindingsModel}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  ChannelBindingsModel,
+  MessageBindingsModel,
+  OperationBindingsModel,
+  ServerBindingsModel
+}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.internal.spec.async.parser.bindings.{AsyncChannelBindingsParser, AsyncMessageBindingsParser, AsyncOperationBindingsParser, AsyncServerBindingsParser}
+import amf.apicontract.internal.spec.async.parser.bindings.{
+  AsyncChannelBindingsParser,
+  AsyncMessageBindingsParser,
+  AsyncOperationBindingsParser,
+  AsyncServerBindingsParser
+}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.async.parser.domain.{AsyncCorrelationIdParser, AsyncMessageParser, AsyncOperationParser, AsyncParametersParser}
+import amf.apicontract.internal.spec.async.parser.domain.{
+  AsyncCorrelationIdParser,
+  AsyncMessageParser,
+  AsyncOperationParser,
+  AsyncParametersParser
+}
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
+import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.metamodel.domain.DomainElementModel
@@ -17,15 +38,16 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-
-object Async20DeclarationParser
-  extends AsyncDeclarationParser
+case class Async20DeclarationParser()
+    extends AsyncDeclarationParser
     with DeclarationKeyCollector
     with OasLikeDeclarationsHelper {
 
   protected val definitionsKey = "schemas"
 
-  override def parseDeclarations(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit = {
+  override def parseDeclarations(map: YMap, parent: String, document: Document)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseCorrelationIdDeclarations(map, parent + "/correlationIds")
     super.parseTypeDeclarations(map, Some(this))
@@ -39,6 +61,7 @@ object Async20DeclarationParser
     parseMessageTraits(map, parent + "/messageTraits")
 
     parseMessageDeclarations(map, parent + "/messages")
+    addDeclarationsToModel(document)
   }
 
   private def parseMessageDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
@@ -60,7 +83,7 @@ object Async20DeclarationParser
       entry => {
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val adopt = (o: Operation) => o
+          val adopt     = (o: Operation) => o
           val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
@@ -108,7 +131,7 @@ object Async20DeclarationParser
   }
 
   private def parseParameterDeclarations(componentsMap: YMap, parent: String)(implicit
-                                                                              ctx: AsyncWebApiContext
+      ctx: AsyncWebApiContext
   ): Unit = {
     componentsMap.key(
       "parameters",
@@ -124,7 +147,7 @@ object Async20DeclarationParser
   }
 
   private def parseCorrelationIdDeclarations(componentsMap: YMap, parent: String)(implicit
-                                                                                  ctx: AsyncWebApiContext
+      ctx: AsyncWebApiContext
   ): Unit = {
     componentsMap.key(
       "correlationIds",
@@ -139,7 +162,7 @@ object Async20DeclarationParser
   }
 
   private def parseMessageBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
-                                                                                    ctx: AsyncWebApiContext
+      ctx: AsyncWebApiContext
   ): Unit = {
     parseBindingsDeclarations[MessageBindings](
       "messageBindings",
@@ -152,7 +175,7 @@ object Async20DeclarationParser
   }
 
   private def parseServerBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
-                                                                                   ctx: AsyncWebApiContext
+      ctx: AsyncWebApiContext
   ): Unit = {
     parseBindingsDeclarations[ServerBindings](
       "serverBindings",
@@ -165,7 +188,7 @@ object Async20DeclarationParser
   }
 
   private def parseOperationBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
-                                                                                      ctx: AsyncWebApiContext
+      ctx: AsyncWebApiContext
   ): Unit = {
     parseBindingsDeclarations[OperationBindings](
       "operationBindings",
@@ -178,7 +201,7 @@ object Async20DeclarationParser
   }
 
   private def parseChannelBindingsDeclarations(componentsMap: YMap, parent: String)(implicit
-                                                                                    ctx: AsyncWebApiContext
+      ctx: AsyncWebApiContext
   ): Unit = {
     parseBindingsDeclarations[ChannelBindings](
       "channelBindings",
@@ -191,11 +214,11 @@ object Async20DeclarationParser
   }
 
   private def parseBindingsDeclarations[T <: DomainElement](
-                                                             keyword: String,
-                                                             componentsMap: YMap,
-                                                             parse: YMapEntry => T,
-                                                             model: DomainElementModel
-                                                           )(implicit ctx: AsyncWebApiContext): Unit = {
+      keyword: String,
+      componentsMap: YMap,
+      parse: YMapEntry => T,
+      model: DomainElementModel
+  )(implicit ctx: AsyncWebApiContext): Unit = {
     componentsMap.key(
       keyword,
       e => {

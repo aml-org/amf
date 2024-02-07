@@ -44,19 +44,19 @@ abstract class AsyncApiDocumentParser(root: Root, spec: Spec, declarationParser:
     document
       .setWithoutId(DocumentModel.Encodes, api, Annotations.inferred())
 
-    addDeclarationsToModel(document)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
     document
   }
 
-  private def parseDeclarations(map: YMap, parentObj: AmfObject) = {
+  private def parseDeclarations(map: YMap, document: Document) = {
     map.key("components").foreach { components =>
       val parent        = root.location + "#/declarations"
       val componentsMap = components.value.as[YMap]
-      declarationParser.parseDeclarations(componentsMap, parent)
-      ctx.closedShape(parentObj, componentsMap, "components")
+      declarationParser.parseDeclarations(componentsMap, parent, document)
+      ctx.closedShape(document, componentsMap, "components")
+//      addDeclarationsToModel(document) // TODO: had to move this to each declaration parser as HF for release RCs
       validateNames()
     }
   }
