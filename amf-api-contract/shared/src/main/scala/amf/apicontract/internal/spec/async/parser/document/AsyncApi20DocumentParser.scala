@@ -5,6 +5,6 @@ import amf.apicontract.internal.spec.async.parser.domain.declarations.{Async20De
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec.ASYNC20
 
-case class AsyncApi20DocumentParser(root: Root, declarationParser: AsyncDeclarationParser = Async20DeclarationParser)(
+case class AsyncApi20DocumentParser(root: Root, declarationParser: AsyncDeclarationParser = Async20DeclarationParser())(
     override implicit val ctx: AsyncWebApiContext
 ) extends AsyncApiDocumentParser(root, ASYNC20, declarationParser)(ctx)
