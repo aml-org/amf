@@ -8,7 +8,12 @@ servers:
     protocol: mercure
     bindings:
       ibmmq:
-        key: value
+        groupId: test
+        ccdtQueueManagerName: test
+        cipherSpec: test
+        multiEndpointServer: true
+        heartBeatInterval: 123
+        thisKeyIsNotAllowed: should throw validation error
 channels:
   some-channel:
     bindings:

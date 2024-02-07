@@ -7,7 +7,12 @@ servers:
     url: some.com
     protocol: ibmmq
     bindings:
-      ibmmq: {}
+      ibmmq:
+        groupId: test
+        ccdtQueueManagerName: test
+        cipherSpec: test
+        multiEndpointServer: true
+        heartBeatInterval: 123
 channels:
   some-channel:
     bindings:

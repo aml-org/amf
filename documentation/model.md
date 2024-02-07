@@ -77,6 +77,7 @@ AMF Model Documentation
 * [HttpOperationBinding](#httpoperationbinding)
 * [HttpSettings](#httpsettings)
 * [IBMMQMessageBinding](#ibmmqmessagebinding)
+* [IBMMQServerBinding](#ibmmqserverbinding)
 * [IriTemplateMapping](#iritemplatemapping)
 * [JsonLDElement](#jsonldelement)
 * [JsonLDInstanceDocument](#jsonldinstancedocument)
@@ -1514,6 +1515,24 @@ Types:
  | headers | string | - | Defines the IBM MQ message headers to include with this message. More than one header can be specified as a comma separated list. | `http://a.ml/vocabularies/apiBinding#headers` |
  | description | string | - | Provides additional information for application developers: describes the message type or format. | `http://a.ml/vocabularies/apiBinding#description` |
  | expiry | int | - | This is a period of time expressed in milliseconds and set by the application that puts the message. | `http://a.ml/vocabularies/apiBinding#expiry` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## IBMMQServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#IBMMQServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | groupId | string | - | Defines a logical group of IBM MQ server objects. This is necessary to specify multi-endpoint configurations used in high availability deployments. If omitted, the server object is not part of a group. | `http://a.ml/vocabularies/apiBinding#groupId` |
+ | ccdtQueueManagerName | string | - | The name of the IBM MQ queue manager to bind to in the CCDT file. | `http://a.ml/vocabularies/apiBinding#ccdtQueueManagerName` |
+ | cipherSpec | string | - | The recommended cipher specification used to establish a TLS connection between the client and the IBM MQ queue manager. | `http://a.ml/vocabularies/apiBinding#cipherSpec` |
+ | multiEndpointServer | boolean | - | If multiEndpointServer is true then multiple connections can be workload balanced and applications should not make assumptions as to where messages are processed. Where message ordering, or affinity to specific message resources is necessary, a single endpoint (multiEndpointServer = false) may be required. | `http://a.ml/vocabularies/apiBinding#multiEndpointServer` |
+ | heartBeatInterval | int | - | The recommended value (in seconds) for the heartbeat sent to the queue manager during periods of inactivity. A value of zero means that no heart beats are sent. A value of 1 means that the client will use the value defined by the queue manager. | `http://a.ml/vocabularies/apiBinding#heartBeatInterval` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |

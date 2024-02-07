@@ -14,6 +14,14 @@ object Async21Syntax extends SpecSyntax {
         "description",
         "expiry",
         "bindingVersion"
+      ),
+      "IBMMQServerBinding" -> Set(
+        "groupId",
+        "ccdtQueueManagerName",
+        "cipherSpec",
+        "multiEndpointServer",
+        "heartBeatInterval",
+        "bindingVersion"
       )
     )
 }

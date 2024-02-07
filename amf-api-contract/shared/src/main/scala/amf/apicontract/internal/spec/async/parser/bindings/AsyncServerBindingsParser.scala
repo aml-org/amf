@@ -2,8 +2,8 @@ package amf.apicontract.internal.spec.async.parser.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.{ServerBinding, ServerBindings}
 import amf.apicontract.internal.metamodel.domain.bindings.ServerBindingsModel
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Mqtt
-import amf.apicontract.internal.spec.async.parser.bindings.server.MqttServerBindingParser
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{IBMMQ, Mqtt}
+import amf.apicontract.internal.spec.async.parser.bindings.server._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServerBindings
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -14,7 +14,8 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 
 object AsyncServerBindingsParser {
   private val parserMap: Map[String, BindingParser[ServerBinding]] = Map(
-    Mqtt -> MqttServerBindingParser
+    Mqtt  -> MqttServerBindingParser,
+    IBMMQ -> IBMMQServerBindingParser
   )
 }
 case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
