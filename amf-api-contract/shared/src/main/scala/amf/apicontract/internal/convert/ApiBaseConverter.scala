@@ -30,6 +30,7 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091Queue
 }
 import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttMessageBinding,
@@ -112,6 +113,7 @@ trait ApiBaseConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
     with Amqp091QueueConverter
+    with IBBMQMessageBindingConverter
     with ChannelBindingConverter
     with OperationBindingConverter
     with MessageBindingConverter
@@ -308,6 +310,15 @@ trait Amqp091QueueConverter extends PlatformSecrets {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait IBBMQMessageBindingConverter extends PlatformSecrets {
+  implicit object IBBMQMessageBindingMatcher
+      extends BidirectionalMatcher[IBMMQMessageBinding, domain.bindings.ibmmq.IBMMQMessageBinding] {
+    override def asClient(from: IBMMQMessageBinding): domain.bindings.ibmmq.IBMMQMessageBinding =
+      platform.wrap[domain.bindings.ibmmq.IBMMQMessageBinding](from)
+    override def asInternal(from: domain.bindings.ibmmq.IBMMQMessageBinding): IBMMQMessageBinding = from._internal
   }
 }
 

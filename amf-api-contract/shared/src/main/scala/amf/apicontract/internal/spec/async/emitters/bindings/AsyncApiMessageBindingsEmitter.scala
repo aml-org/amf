@@ -3,11 +3,13 @@ package amf.apicontract.internal.spec.async.emitters.bindings
 import amf.apicontract.client.scala.model.domain.bindings.MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding
 import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091MessageBindingModel,
   HttpMessageBindingModel,
+  IBMMQMessageBindingModel,
   KafkaMessageBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
@@ -35,6 +37,7 @@ class AsyncApiMessageBindingsEmitter(binding: MessageBinding, ordering: SpecOrde
     case binding: HttpMessageBinding    => Some(new HttpMessageEmitter(binding, ordering))
     case binding: KafkaMessageBinding   => Some(new KafkaMessageEmitter(binding, ordering))
     case binding: MqttMessageBinding    => Some(new MqttMessageEmitter(binding, ordering))
+    case binding: IBMMQMessageBinding   => Some(new IBMMQMessageEmitter(binding, ordering))
     case _                              => None
   }
 
@@ -113,6 +116,29 @@ class Amqp091MessageEmitter(binding: Amqp091MessageBinding, ordering: SpecOrderi
         val fs     = binding.fields
         fs.entry(Amqp091MessageBindingModel.ContentEncoding).foreach(f => result += ValueEmitter("contentEncoding", f))
         fs.entry(Amqp091MessageBindingModel.MessageType).foreach(f => result += ValueEmitter("messageType", f))
+        emitBindingVersion(fs, result)
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class IBMMQMessageEmitter(binding: IBMMQMessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("ibmmq"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(IBMMQMessageBindingModel.MessageType).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(IBMMQMessageBindingModel.Headers).foreach(f => result += ValueEmitter("headers", f))
+        fs.entry(IBMMQMessageBindingModel.Description).foreach(f => result += ValueEmitter("description", f))
+        fs.entry(IBMMQMessageBindingModel.Expiry).foreach(f => result += ValueEmitter("expiry", f))
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
       }

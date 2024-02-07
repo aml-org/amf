@@ -2,13 +2,8 @@ package amf.apicontract.internal.spec.async.parser.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.{MessageBinding, MessageBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, Kafka, Mqtt}
-import amf.apicontract.internal.spec.async.parser.bindings.message.{
-  Amqp091MessageBindingParser,
-  HttpMessageBindingParser,
-  KafkaMessageBindingParser,
-  MqttMessageBindingParser
-}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
+import amf.apicontract.internal.spec.async.parser.bindings.message._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessageBindings
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -22,7 +17,8 @@ object AsyncMessageBindingsParser {
     Amqp  -> Amqp091MessageBindingParser,
     Http  -> HttpMessageBindingParser,
     Kafka -> KafkaMessageBindingParser,
-    Mqtt  -> MqttMessageBindingParser
+    Mqtt  -> MqttMessageBindingParser,
+    IBMMQ -> IBMMQMessageBindingParser
   )
 }
 

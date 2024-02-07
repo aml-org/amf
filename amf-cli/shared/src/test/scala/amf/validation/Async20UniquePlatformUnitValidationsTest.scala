@@ -332,4 +332,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Mercure binding should be empty") {
     validate("mercure-binding-nonempty.yaml", Some("mercure-binding-nonempty.report"))
   }
+
+  test("IBMMQ Closed Shape validation") {
+    validate("ibmmq-binding-extra-key.yaml", Some("ibmmq-binding-extra-key.report"))
+  }
 }

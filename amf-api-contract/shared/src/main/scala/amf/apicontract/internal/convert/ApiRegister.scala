@@ -6,6 +6,7 @@ import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings.ibmmq.IBMMQMessageBinding
 import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
   MqttMessageBinding,
@@ -273,6 +274,9 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(EmptyBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.EmptyBinding => EmptyBinding(s)
+    }
+    platform.registerWrapper(IBMMQMessageBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQMessageBinding => IBMMQMessageBinding(s)
     }
     platform.registerWrapper(APIContractProcessingDataModel) {
       case s: amf.apicontract.client.scala.model.document.APIContractProcessingData => APIContractProcessingData(s)

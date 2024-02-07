@@ -1,0 +1,28 @@
+asyncapi: 2.1.0
+info:
+  title: test mercure binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: ibmmq
+    bindings:
+      ibmmq: {}
+channels:
+  some-channel:
+    bindings:
+      ibmmq: {}
+    description: some channel
+    publish:
+      bindings:
+        ibmmq: {}
+      message:
+        bindings:
+          ibmmq:
+            type: test
+            headers: test
+            description: test
+            expiry: 123
+            bindingVersion: test
+        payload:
+          type: string

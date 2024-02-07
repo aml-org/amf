@@ -137,9 +137,14 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "mercure binding",
       "bindings/mercure-binding.yaml",
       "bindings/mercure-binding.yaml"
+    ),
+    FixtureData(
+      "ibmmq binding",
+      "bindings/ibmmq-binding.yaml",
+      "bindings/ibmmq-binding.yaml"
     )
 
-// TODO: figure out why this test is commented out
+    // TODO: figure out why this test is commented out
 //    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
   )
 }
