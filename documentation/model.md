@@ -76,6 +76,9 @@ AMF Model Documentation
 * [HttpMessageBinding](#httpmessagebinding)
 * [HttpOperationBinding](#httpoperationbinding)
 * [HttpSettings](#httpsettings)
+* [IBMMQChannelBinding](#ibmmqchannelbinding)
+* [IBMMQChannelQueue](#ibmmqchannelqueue)
+* [IBMMQChannelTopic](#ibmmqchanneltopic)
 * [IBMMQMessageBinding](#ibmmqmessagebinding)
 * [IBMMQServerBinding](#ibmmqserverbinding)
 * [IriTemplateMapping](#iritemplatemapping)
@@ -1500,6 +1503,46 @@ Types:
  | scheme | string | - |  | `http://a.ml/vocabularies/security#scheme` |
  | bearerFormat | string | - |  | `http://a.ml/vocabularies/security#bearerFormat` |
  | additionalProperties | [DataNode](#datanode) | - |  | `http://a.ml/vocabularies/security#additionalProperties` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## IBMMQChannelBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#IBMMQChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## IBMMQChannelQueue
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#IBMMQChannelQueue`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | objectName | string | - | Defines the name of the IBM MQ queue associated with the channel. | `http://a.ml/vocabularies/apiBinding#objectName` |
+ | isPartitioned | boolean | - | Defines if the queue is a cluster queue and therefore partitioned. If true, a binding option MAY be specified when accessing the queue. | `http://a.ml/vocabularies/apiBinding#isPartitioned` |
+ | exclusive | boolean | - | Specifies if it is recommended to open the queue exclusively. | `http://a.ml/vocabularies/apiBinding#exclusive` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## IBMMQChannelTopic
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#IBMMQChannelTopic`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | string | string | - | The value of the IBM MQ topic string to be used. | `http://a.ml/vocabularies/apiBinding#string` |
+ | objectName | string | - | The name of the IBM MQ topic object. | `http://a.ml/vocabularies/apiBinding#objectName` |
+ | durablePermitted | boolean | - | Defines if the subscription may be durable. | `http://a.ml/vocabularies/apiBinding#durablePermitted` |
+ | lastMsgRetained | boolean | - | Defines if the last message published will be made available to new subscriptions. | `http://a.ml/vocabularies/apiBinding#lastMsgRetained` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## IBMMQMessageBinding

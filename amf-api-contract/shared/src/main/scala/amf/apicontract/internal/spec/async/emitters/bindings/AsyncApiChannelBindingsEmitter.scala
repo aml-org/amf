@@ -6,14 +6,23 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091ChannelExchange,
   Amqp091Queue
 }
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
+  IBMMQChannelBinding,
+  IBMMQChannelQueue,
+  IBMMQChannelTopic
+}
 import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091ChannelBindingModel,
   Amqp091ChannelExchangeModel,
   Amqp091QueueModel,
+  IBMMQChannelBindingModel,
+  IBMMQChannelQueueModel,
+  IBMMQChannelTopicModel,
   WebSocketsChannelBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.IBMMQ
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
@@ -38,6 +47,7 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
   private def emitterFor(binding: ChannelBinding): Option[EntryEmitter] = binding match {
     case binding: Amqp091ChannelBinding    => Some(new Amqp091ChannelBindingEmitter(binding, ordering))
     case binding: WebSocketsChannelBinding => Some(new WebSocketChannelBindingEmitter(binding, ordering))
+    case binding: IBMMQChannelBinding      => Some(new IBMMQChannelBindingEmitter(binding, ordering))
     case _                                 => None
   }
 
@@ -141,6 +151,82 @@ class Amqp091ChannelQueueEmitter(binding: Amqp091Queue, ordering: SpecOrdering) 
   }
 
   private def isSynthesized(f: FieldEntry): Boolean = f.value.annotations.contains(classOf[SynthesizedField])
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class IBMMQChannelBindingEmitter(binding: IBMMQChannelBinding, ordering: SpecOrdering)
+    extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(IBMMQ),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(IBMMQChannelBindingModel.DestinationType).foreach(f => result += ValueEmitter("destinationType", f))
+        fs.entry(IBMMQChannelBindingModel.MaxMsgLength)
+          .foreach(f => result += ValueEmitter("maxMsgLength", f))
+
+        result ++= emitQueueAndTopicProperties
+
+        emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  private def emitQueueAndTopicProperties: Seq[EntryEmitter] = {
+    val result = ListBuffer[EntryEmitter]()
+    Option(binding.queue).foreach(queue => result += new IBMMQChannelQueueEmitter(queue, ordering))
+    Option(binding.topic).foreach(topic => result += new IBMMQChannelTopicEmitter(topic, ordering))
+    result.toList
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class IBMMQChannelQueueEmitter(binding: IBMMQChannelQueue, ordering: SpecOrdering) extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("queue"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(IBMMQChannelQueueModel.ObjectName).foreach(f => result += ValueEmitter("objectName", f))
+        fs.entry(IBMMQChannelQueueModel.IsPartitioned).foreach(f => result += ValueEmitter("isPartitioned", f))
+        fs.entry(IBMMQChannelQueueModel.Exclusive).foreach(f => result += ValueEmitter("exclusive", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class IBMMQChannelTopicEmitter(binding: IBMMQChannelTopic, ordering: SpecOrdering) extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("topic"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(IBMMQChannelTopicModel.String).foreach(f => result += ValueEmitter("string", f))
+        fs.entry(IBMMQChannelTopicModel.ObjectName).foreach(f => result += ValueEmitter("objectName", f))
+        fs.entry(IBMMQChannelTopicModel.DurablePermitted).foreach(f => result += ValueEmitter("durablePermitted", f))
+        fs.entry(IBMMQChannelTopicModel.LastMsgRetained).foreach(f => result += ValueEmitter("lastMsgRetained", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
 
   override def position(): Position = pos(binding.annotations)
 }

@@ -22,6 +22,24 @@ object Async21Syntax extends SpecSyntax {
         "multiEndpointServer",
         "heartBeatInterval",
         "bindingVersion"
+      ),
+      "IBMMQChannelBinding" -> Set(
+        "destinationType",
+        "queue",
+        "topic",
+        "maxMsgLength",
+        "bindingVersion"
+      ),
+      "IBMMQChannelQueue" -> Set(
+        "objectName",
+        "isPartitioned",
+        "exclusive"
+      ),
+      "IBMMQChannelTopic" -> Set(
+        "string",
+        "objectName",
+        "durablePermitted",
+        "lastMsgRetained"
       )
     )
 }

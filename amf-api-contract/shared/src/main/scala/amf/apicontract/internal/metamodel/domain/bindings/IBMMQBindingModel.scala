@@ -1,12 +1,19 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQMessageBinding, IBMMQServerBinding}
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
+  IBMMQChannelBinding,
+  IBMMQChannelQueue,
+  IBMMQChannelTopic,
+  IBMMQMessageBinding,
+  IBMMQServerBinding
+}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Int, Str}
-import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
 object IBMMQMessageBindingModel extends MessageBindingModel with BindingVersion {
   val MessageType: Field =
@@ -134,4 +141,148 @@ object IBMMQServerBindingModel extends ServerBindingModel with BindingVersion {
   override val key: Field = Type
 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "IBMMQServerBinding")
+}
+
+object IBMMQChannelBindingModel extends ChannelBindingModel with BindingVersion {
+  val DestinationType: Field =
+    Field(
+      Str,
+      ApiBinding + "destinationType",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "destinationType",
+        "Defines the type of AsyncAPI channel."
+      )
+    )
+
+  val Queue: Field =
+    Field(
+      IBMMQChannelQueueModel,
+      ApiBinding + "queue",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "queue",
+        "Defines the properties of a queue."
+      )
+    )
+
+  val Topic: Field =
+    Field(
+      IBMMQChannelTopicModel,
+      ApiBinding + "topic",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "topic",
+        "Defines the properties of a topic."
+      )
+    )
+
+  val MaxMsgLength: Field =
+    Field(
+      Int,
+      ApiBinding + "maxMsgLength",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "maxMsgLength",
+        "The maximum length of the physical message (in bytes) accepted by the Topic or Queue. Messages produced that are greater in size than this value may fail to be delivered."
+      )
+    )
+
+  override def modelInstance: AmfObject = IBMMQChannelBinding()
+
+  override def fields: List[Field] =
+    List(
+      BindingVersion
+    ) ++ ChannelBindingModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "IBMMQChannelBinding" :: ChannelBindingModel.`type`
+
+  override val key: Field = Type
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "IBMMQChannelBinding")
+}
+
+object IBMMQChannelQueueModel extends DomainElementModel with NameFieldSchema {
+
+  val ObjectName: Field = Field(
+    Str,
+    ApiBinding + "objectName",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "objectName",
+      "Defines the name of the IBM MQ queue associated with the channel."
+    )
+  )
+
+  val IsPartitioned: Field = Field(
+    Bool,
+    ApiBinding + "isPartitioned",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "isPartitioned",
+      "Defines if the queue is a cluster queue and therefore partitioned. If true, a binding option MAY be specified when accessing the queue."
+    )
+  )
+
+  val Exclusive: Field = Field(
+    Bool,
+    ApiBinding + "exclusive",
+    ModelDoc(ModelVocabularies.ApiBinding, "exclusive", "Specifies if it is recommended to open the queue exclusively.")
+  )
+
+  override def fields: List[Field] = List(ObjectName, IsPartitioned, Exclusive) ++ DomainElementModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "IBMMQChannelQueue" :: DomainElementModel.`type`
+
+  override def modelInstance: AmfObject = IBMMQChannelQueue()
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "IBMMQChannelQueue")
+}
+
+object IBMMQChannelTopicModel extends DomainElementModel with NameFieldSchema {
+
+  val String: Field = Field(
+    Str,
+    ApiBinding + "string",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "string",
+      "The value of the IBM MQ topic string to be used."
+    )
+  )
+
+  val ObjectName: Field = Field(
+    Str,
+    ApiBinding + "objectName",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "objectName",
+      "The name of the IBM MQ topic object."
+    )
+  )
+
+  val DurablePermitted: Field = Field(
+    Bool,
+    ApiBinding + "durablePermitted",
+    ModelDoc(ModelVocabularies.ApiBinding, "durablePermitted", "Defines if the subscription may be durable.")
+  )
+
+  val LastMsgRetained: Field = Field(
+    Bool,
+    ApiBinding + "lastMsgRetained",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "lastMsgRetained",
+      "Defines if the last message published will be made available to new subscriptions."
+    )
+  )
+
+  override def fields: List[Field] =
+    List(String, ObjectName, DurablePermitted, LastMsgRetained) ++ DomainElementModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "IBMMQChannelTopic" :: DomainElementModel.`type`
+
+  override def modelInstance: AmfObject = IBMMQChannelTopic()
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "IBMMQChannelTopic")
 }

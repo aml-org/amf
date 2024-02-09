@@ -18,7 +18,21 @@ channels:
   some-channel:
     bindings:
       ibmmq:
-        key: value
+        destinationType: test
+        queue:
+          objectName: test
+          isPartitioned: true
+          exclusive: false
+          thisKeyIsNotAllowed: should throw validation error
+        topic:
+          string: test
+          objectName: test
+          durablePermitted: true
+          lastMsgRetained: false
+          thisKeyIsNotAllowed: should throw validation error
+        maxMsgLength: 123
+        bindingVersion: test
+        thisKeyIsNotAllowed: should throw validation error
     description: some channel
     publish:
       bindings:

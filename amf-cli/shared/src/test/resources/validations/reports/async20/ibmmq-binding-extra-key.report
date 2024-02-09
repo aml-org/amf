@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml
 Profile: 
 Conforms: false
-Number of results: 4
+Number of results: 6
 
 Level: Violation
 
@@ -13,12 +13,28 @@ Level: Violation
   Range: [(16,8)-(17,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml
 
-- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
-  Message: Reserved name binding 'ibmmq' must have an empty map
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.1 IBMMQChannelQueue node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel/ibmmq-queue
   Property: 
-  Range: [(20,12)-(22,0)]
+  Range: [(26,10)-(27,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.1 IBMMQChannelTopic node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel/ibmmq-topic
+  Property: 
+  Range: [(32,10)-(33,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.1 IBMMQChannelBinding node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
+  Property: 
+  Range: [(35,8)-(36,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
@@ -26,7 +42,7 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/ibmmq
   Property: 
-  Range: [(25,14)-(27,0)]
+  Range: [(39,14)-(41,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
@@ -34,5 +50,5 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/ibmmq-message
   Property: 
-  Range: [(35,12)-(36,0)]
+  Range: [(49,12)-(50,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-extra-key.yaml

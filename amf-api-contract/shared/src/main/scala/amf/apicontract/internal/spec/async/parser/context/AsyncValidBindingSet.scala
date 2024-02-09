@@ -3,8 +3,8 @@ package amf.apicontract.internal.spec.async.parser.context
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
 
 case class AsyncValidBindingSet(bindings: Set[String]) {
-  def add(bindings: String*)             = copy(this.bindings ++ bindings)
-  def canParse(binding: String): Boolean = bindings.contains(binding)
+  def add(bindings: String*): AsyncValidBindingSet = copy(this.bindings ++ bindings)
+  def canParse(binding: String): Boolean           = bindings.contains(binding)
 }
 
 object AsyncValidBindingSet {

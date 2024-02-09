@@ -16,7 +16,19 @@ servers:
 channels:
   some-channel:
     bindings:
-      ibmmq: {}
+      ibmmq:
+        destinationType: test
+        queue:
+          objectName: test
+          isPartitioned: true
+          exclusive: false
+        topic:
+          string: test
+          objectName: test
+          durablePermitted: true
+          lastMsgRetained: false
+        maxMsgLength: 123
+        bindingVersion: test
     description: some channel
     publish:
       bindings:
