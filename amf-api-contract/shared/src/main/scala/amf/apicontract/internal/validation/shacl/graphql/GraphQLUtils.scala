@@ -1,6 +1,6 @@
 package amf.apicontract.internal.validation.shacl.graphql
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.shapes.client.scala.model.domain._
 
 import scala.annotation.tailrec
@@ -16,6 +16,7 @@ object GraphQLUtils {
     }
   }
 
+  @tailrec
   def isValidInputType(schema: Shape): Boolean = {
     schema match {
       case a: ArrayShape => isValidInputType(a.items)

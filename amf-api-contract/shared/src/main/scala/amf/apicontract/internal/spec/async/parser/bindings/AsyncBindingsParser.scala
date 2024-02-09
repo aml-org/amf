@@ -1,19 +1,14 @@
 package amf.apicontract.internal.spec.async.parser.bindings
 
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
 import amf.core.client.scala.model.domain._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.validation.CoreValidations
 import amf.apicontract.internal.metamodel.domain.bindings.BindingType
-import amf.apicontract.client.scala.model.domain.bindings._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
-import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext) extends SpecParserOps {
@@ -21,6 +16,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
   protected type Binding <: DomainElement
   protected val bindingsField: Field
   protected type Bindings <: NamedDomainElement with Linkable
+  protected val parsers: Map[String, BindingParser[Binding]]
 
   def parse(): Bindings = {
     val map: YMap = entryLike.asMap
@@ -79,105 +75,25 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: Async
     }
   }
 
+  private def canParse(binding: String) = ctx.validBindingSet().canParse(binding)
+
   protected def parseElements(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Seq[Binding] = {
     map.regex("^(?!x-).*").flatMap(parseElement(_, parent)).toSeq
   }
 
   private def parseElement(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Option[Binding] = {
-    val bindingOption = entry.key.as[String] match {
-      case Http       => Some(parseHttp(entry, parent))
-      case WebSockets => Some(parseWs(entry, parent))
-      case Kafka      => Some(parseKafka(entry, parent))
-      case Amqp       => Some(parseAmqp(entry, parent))
-      case Amqp1      => Some(parseAmqp1(entry, parent))
-      case Mqtt       => Some(parseMqtt(entry, parent))
-      case Mqtt5      => Some(parseMqtt5(entry, parent))
-      case Nats       => Some(parseNats(entry, parent))
-      case Jms        => Some(parseJms(entry, parent))
-      case Sns        => Some(parseSns(entry, parent))
-      case Sqs        => Some(parseSqs(entry, parent))
-      case Stomp      => Some(parseStomp(entry, parent))
-      case Redis      => Some(parseRedis(entry, parent))
-      case _          => None
-    }
-    bindingOption.map(setBindingType(entry, _))
+    val bindingType = entry.key.as[String]
+    if (canParse(bindingType)) {
+      val binding: Binding = parsers
+        .get(bindingType)
+        .map(_.parse(entry, parent))
+        .getOrElse(parseEmptyBinding(entry, parent))
+      Some(setBindingType(entry, binding))
+    } else None // TODO: maybe we should throw an error here? I'm not changing behaviour
   }
-
-  protected def parseHttp(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseWs(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseKafka(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseAmqp(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseAmqp1(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseMqtt5(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseNats(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseJms(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseSns(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseSqs(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseStomp(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
-  protected def parseRedis(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding =
-    parseEmptyBinding(entry, parent)
 
   protected def parseEmptyBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
-    val binding = EmptyBinding(Annotations(entry))
-
-    validateEmptyMap(entry.value, binding, entry.key.as[String])
-
-    binding.asInstanceOf[Binding]
-  }
-
-  private def validateEmptyMap(value: YNode, node: AmfObject, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
-    if (value.as[YMap].entries.nonEmpty) {
-      ctx.eh.violation(
-        ParserSideValidations.NonEmptyBindingMap,
-        node,
-        s"Reserved name binding '${`type`}' must have an empty map",
-        value.location
-      )
-    }
-
-  protected def parseBindingVersion(binding: BindingVersion, field: Field, map: YMap)(implicit
-      ctx: AsyncWebApiContext
-  ): Unit = {
-    map.key("bindingVersion", field in binding)
-
-    if (bindingVersionIsEmpty(binding)) setDefaultBindingVersionValue(binding, field)
-  }
-
-  private def setDefaultBindingVersionValue(binding: BindingVersion, field: Field) = {
-    binding.setWithoutId(field, AmfScalar("latest"), Annotations.synthesized())
-  }
-
-  private def bindingVersionIsEmpty(binding: BindingVersion) = {
-    binding.bindingVersion.isNullOrEmpty
-  }
-
-  protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(implicit
-      ctx: AsyncWebApiContext
-  ): Unit = {
-    OasTypeParser(
-      YMapEntryLike(entry.value),
-      "schema",
-      shape => shape.withName("schema"),
-      JSONSchemaDraft7SchemaVersion
-    )
-      .parse()
-      .foreach { shape =>
-        binding.setWithoutId(field, shape, Annotations(entry))
-        shape
-      }
+    EmptyBindingParser.parse(entry, parent).asInstanceOf[Binding]
   }
 
   private def setBindingType(entry: YMapEntry, binding: Binding): Binding = {
@@ -200,4 +116,5 @@ object Bindings {
   val Sqs        = "sqs"
   val Stomp      = "stomp"
   val Redis      = "redis"
+  val Mercure    = "mercure"
 }

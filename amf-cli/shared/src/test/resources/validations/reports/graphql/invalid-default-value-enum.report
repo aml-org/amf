@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-default-value-type-parameter
   Message: Value 'C' is not a member of enum 'Alternative'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/web-api/endpoint/%2Fquery%2Fname/supportedOperation/query/Query.name/expects/request/parameter/parameter/query/myQueryParam
+  Target: file://amf-cli/shared/src/test/resources/validations/graphql/invalid-default-value-enum.graphql#/declares/shape/Query/supportedOperation/name/expects/request/parameter/parameter/myQueryParam
   Property: http://a.ml/vocabularies/core#defaultValue
   Range: [(6,37)-(6,38)]
   Location: 

@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorSecurityScheme
-import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser}
+import amf.apicontract.internal.spec.common.parser.SecuritySchemeParser
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.raml.parser.domain.RamlDescribedByParser
 import amf.apicontract.internal.spec.spec.toRaml
@@ -18,20 +18,20 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.annotations.ExternalReferenceUrl
-import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model.{YMap, YNode, YPart, YType}
 
-abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+abstract class OasLikeSecuritySchemeParser(entry: YMapEntryLike, adopt: SecurityScheme => SecurityScheme)(implicit
     ctx: OasLikeWebApiContext
-) extends SecuritySchemeParser(part, adopt) {
+) extends SecuritySchemeParser(entry) {
 
   override def parse(): SecurityScheme = {
-    val node = getNode
+    val node = entry.value
 
     ctx.link(node) match {
       case Left(link) => parseReferenced(link, node, adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme(part))
+        val scheme = adopt(SecurityScheme(entry.ast))
         val map    = value.as[YMap]
 
         parseType(map, scheme)
@@ -114,7 +114,10 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
       .getOrElse {
         ctx.obtainRemoteYNode(parsedUrl) match {
           case Some(schemeNode) =>
-            ctx.factory.securitySchemeParser(schemeNode, adopt).parse().add(ExternalReferenceUrl(parsedUrl))
+            ctx.factory
+              .securitySchemeParser(YMapEntryLike(schemeNode), adopt)
+              .parse()
+              .add(ExternalReferenceUrl(parsedUrl))
           case None =>
             ctx.eh.violation(
               CoreValidations.UnresolvedReference,

@@ -4,12 +4,12 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.{Message, Operation}
 import amf.apicontract.internal.spec.async.Subscribe
-import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
+import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.domain.{AsyncMessageParser, AsyncOperationParser}
 import amf.apicontract.internal.spec.async.transformation.AsyncJsonMergePatch
 import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
 import amf.core.client.scala.adoption.IdAdopter
-import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DataNode, ScalarNode}
@@ -17,7 +17,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.convert.BaseUnitConverter
 import amf.core.internal.datanode.{DataNodeEmitter, DataNodeParser}
 import amf.core.internal.parser._
-import amf.core.internal.remote.AmfJsonHint
+import amf.core.internal.remote.{AmfJsonHint, AsyncApi20}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
@@ -142,10 +142,13 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     }
 
     def getBogusParserCtx: AsyncWebApiContext =
-      new Async20WebApiContext(
+      Async2WebApiContext(
         "loc",
         Seq(),
-        ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty))
+        ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty)),
+        None,
+        ParsingOptions(),
+        spec = AsyncApi20
       )
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =

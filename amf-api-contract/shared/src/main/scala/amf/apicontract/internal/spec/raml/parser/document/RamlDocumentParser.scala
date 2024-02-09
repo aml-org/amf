@@ -290,7 +290,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
             e.value.as[YMap].entries.foreach { entry =>
               ctx.declarations += ctx.factory
                 .securitySchemeParser(
-                  entry,
+                  YMapEntryLike(entry),
                   scheme => {
                     val name = entry.key.as[YScalar].text
                     scheme.setWithoutId(

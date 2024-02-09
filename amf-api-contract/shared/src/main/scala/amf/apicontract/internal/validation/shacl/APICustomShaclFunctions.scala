@@ -1,7 +1,7 @@
 package amf.apicontract.internal.validation.shacl
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
-import amf.apicontract.client.scala.model.domain.api.Api
+import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
@@ -88,28 +88,31 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       new CustomShaclFunction {
         override val name: String = "reservedEndpoints"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val reserved = Set("_service", "_entities")
-          val endpoint = element.asInstanceOf[EndPoint]
-          endpoint.path
-            .option()
-            .map(_.stripPrefix("/query/").stripPrefix("/mutation/").stripPrefix("/subscription/"))
-            .flatMap {
-              case path if reserved.contains(path) =>
-                val rootKind = {
-                  val name = endpoint.name.value()
-                  val end  = name.indexOf(".")
-                  name.substring(0, end)
-                }
-                Some(
-                  ValidationInfo(
-                    EndPointModel.Path,
-                    Some(s"Cannot declare field '$path' in type $rootKind since it is reserved by Federation"),
-                    Some(element.annotations)
+          val reserved  = Set("_service", "_entities")
+          val api       = element.asInstanceOf[WebApi]
+          val endpoints = api.endPoints
+          endpoints.foreach { endpoint =>
+            endpoint.path
+              .option()
+              .map(_.stripPrefix("/query/").stripPrefix("/mutation/").stripPrefix("/subscription/"))
+              .flatMap {
+                case path if reserved.contains(path) =>
+                  val rootKind = {
+                    val name = endpoint.name.value()
+                    val end  = name.indexOf(".")
+                    name.substring(0, end)
+                  }
+                  Some(
+                    ValidationInfo(
+                      EndPointModel.Path,
+                      Some(s"Cannot declare field '$path' in type $rootKind since it is reserved by Federation"),
+                      Some(element.annotations)
+                    )
                   )
-                )
-              case _ => None
-            }
-            .foreach(res => validate(Some(res)))
+                case _ => None
+              }
+              .foreach(res => validate(Some(res)))
+          }
         }
       },
       new CustomShaclFunction {
@@ -468,9 +471,12 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case d: CustomDomainProperty =>
               if (hasIntrospectionName(d)) validate(Some(ValidationInfo(CustomDomainPropertyModel.Name)))
-            case t: Shape => if (hasIntrospectionName(t)) validate(Some(ValidationInfo(AnyShapeModel.Name)))
+            case t: Shape =>
+              if (hasIntrospectionName(t)) validate(Some(ValidationInfo(AnyShapeModel.Name)))
             case n: NamedDomainElement =>
-              if (hasIntrospectionName(n)) validate(Some(ValidationInfo(NameFieldSchema.Name)))
+              if (hasIntrospectionName(n)) {
+                validate(Some(ValidationInfo(NameFieldSchema.Name)))
+              }
             case _ => // ignore
           }
         }
@@ -764,7 +770,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   // Obtained from the BNF in: https://tools.ietf.org/html/rfc7230#section-3.2
   private def isInvalidHttpHeaderName(name: String): Boolean =
-    !name.matches("^[!#$%&'*\\+\\-\\.^\\_\\`\\|\\~0-9a-zA-Z]+$")
+    !name.matches("^[!#$%&'*+\\-.^_`|~0-9a-zA-Z]+$")
 
   private def hasIntrospectionName(element: NamedDomainElement): Boolean =
     element.name.nonNull && element.name.value().startsWith("__")

@@ -16,7 +16,9 @@ object ScalarValueValidator extends ValueValidator[ScalarShape] {
     }
   }
 
-  private def validateDataType(shape: ScalarShape, value: ScalarNode)(implicit targetField: Field): Seq[ValidationInfo] = {
+  private def validateDataType(shape: ScalarShape, value: ScalarNode)(implicit
+      targetField: Field
+  ): Seq[ValidationInfo] = {
     val shapeDT = shape.dataType.value()
     val valueDT = value.dataType.value()
     shapeDT match {

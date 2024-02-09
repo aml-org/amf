@@ -2,6 +2,16 @@ type Query {
   a: String
 }
 
+enum Enum {
+  A
+  B
+}
+
+scalar Pepe
+input InputType {
+  name: String
+}
+
 type Object {
   queryInputType(input_: InputType): String
   queryEnum(input_: Enum): String
@@ -9,13 +19,3 @@ type Object {
   queryCustomScalar(input_: Pepe): String
 }
 
-input InputType {
-  name: String
-}
-
-enum Enum {
-  A
-  B
-}
-
-scalar Pepe

@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonldschema.parser
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.SemanticContext.baseIri
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDObjectElementBuilder
@@ -62,8 +63,10 @@ case class JsonLDObjectElementParser(
     val propertyParser   = JsonLDPropertyParser(properties, semanticContext, path)
     val propertyBuilders = propertyParser.parse(map.entries)
 
-    val objectBuilder =
-      new JsonLDObjectElementBuilder(map.location, key, semanticContext.map(_.computeBase).getOrElse(baseIri), path)
+    val objectBuilder = {
+      val annotation = Annotations(map)
+      new JsonLDObjectElementBuilder(annotation, key, semanticContext.map(_.computeBase).getOrElse(baseIri), path)
+    }
     setClassTerm(objectBuilder, semanticContext)
 
     objectBuilder ++ propertyBuilders

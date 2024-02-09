@@ -23,12 +23,16 @@ trait BaseShaclModelValidationPlugin
       executionContext: ExecutionContext
   ): AMFValidationReport = {
 
-    val validator = new CustomShaclValidator(functions, profile.messageStyle)
+    val validator = getValidator
     val validations =
       withSemanticExtensionsConstraints(effectiveOrException(options.config, profile), options.config.constraints)
 
     val report = validator.validate(unit, validations.effective.values.toSeq)
     adaptToAmfReport(unit, profile, report, validations)
+  }
+
+  protected def getValidator: CustomShaclValidator = {
+    new CustomShaclValidator(functions, profile.messageStyle)
   }
 
   protected val functions: CustomShaclFunctions
