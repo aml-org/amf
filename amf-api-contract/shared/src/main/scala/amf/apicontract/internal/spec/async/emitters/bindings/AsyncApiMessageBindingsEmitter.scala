@@ -13,6 +13,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   KafkaMessageBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, IBMMQ, Kafka, Mqtt}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
@@ -49,7 +50,7 @@ class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(im
 ) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("http"),
+      YNode(Http),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
@@ -71,7 +72,7 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
 ) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("kafka"),
+      YNode(Kafka),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
@@ -92,7 +93,7 @@ class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(im
 ) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("mqtt"),
+      YNode(Mqtt),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
@@ -110,7 +111,7 @@ class Amqp091MessageEmitter(binding: Amqp091MessageBinding, ordering: SpecOrderi
 ) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("amqp"),
+      YNode(Amqp),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
@@ -130,7 +131,7 @@ class IBMMQMessageEmitter(binding: IBMMQMessageBinding, ordering: SpecOrdering)(
 ) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("ibmmq"),
+      YNode(IBMMQ),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields

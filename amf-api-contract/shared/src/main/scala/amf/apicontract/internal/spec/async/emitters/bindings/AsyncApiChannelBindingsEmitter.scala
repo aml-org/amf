@@ -22,7 +22,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   WebSocketsChannelBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.IBMMQ
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, IBMMQ, WebSockets}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
@@ -59,7 +59,7 @@ class WebSocketChannelBindingEmitter(binding: WebSocketsChannelBinding, ordering
 ) extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("ws"),
+      YNode(WebSockets),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
@@ -83,7 +83,7 @@ class Amqp091ChannelBindingEmitter(binding: Amqp091ChannelBinding, ordering: Spe
     extends AsyncApiCommonBindingEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      YNode("amqp"),
+      YNode(Amqp),
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
