@@ -8,7 +8,7 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQServerBinding
 }
 import amf.core.client.scala.model.domain.AmfObject
-import amf.core.client.scala.vocabulary.Namespace.ApiBinding
+import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, Core}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Int, Str}
@@ -34,16 +34,14 @@ object IBMMQMessageBindingModel extends MessageBindingModel with BindingVersion 
       )
     )
 
-  val Description: Field =
-    Field(
-      Str,
-      ApiBinding + "description",
-      ModelDoc(
-        ModelVocabularies.ApiBinding,
-        "description",
-        "Provides additional information for application developers: describes the message type or format."
-      )
+  val Description: Field = Field(
+    Str,
+    Core + "description",
+    ModelDoc(
+      ModelVocabularies.Core,
+      "Provides additional information for application developers: describes the message type or format."
     )
+  )
 
   val Expiry: Field =
     Field(

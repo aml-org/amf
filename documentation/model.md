@@ -1556,7 +1556,7 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | messageType | string | - | The type of the message | `http://a.ml/vocabularies/apiBinding#messageType` |
  | headers | string | - | Defines the IBM MQ message headers to include with this message. More than one header can be specified as a comma separated list. | `http://a.ml/vocabularies/apiBinding#headers` |
- | description | string | - | Provides additional information for application developers: describes the message type or format. | `http://a.ml/vocabularies/apiBinding#description` |
+ | description | string | - |  | `http://a.ml/vocabularies/core#description` |
  | expiry | int | - | This is a period of time expressed in milliseconds and set by the application that puts the message. | `http://a.ml/vocabularies/apiBinding#expiry` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
