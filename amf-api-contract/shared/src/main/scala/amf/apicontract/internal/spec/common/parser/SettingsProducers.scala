@@ -42,13 +42,17 @@ object Async2SettingsProducers extends SettingsProducers {
   override def `for`(scheme: WithSettings): Map[SettingsType, Option[SettingsProducer]] = {
     val common = OasLikeCommonSettingsProducers.`for`(scheme)
     val specific: Map[SettingsType, Option[SettingsProducer]] = Map(
-      "openIdConnect"        -> Some(scheme.withOpenIdConnectSettings),
-      "http"                 -> Some(scheme.withHttpSettings),
       "userPassword"         -> None,
       "X509"                 -> None,
       "symmetricEncryption"  -> None,
       "asymmetricEncryption" -> None,
-      "httpApiKey"           -> Some(scheme.withHttpApiKeySettings)
+      "httpApiKey"           -> Some(scheme.withHttpApiKeySettings),
+      "http"                 -> Some(scheme.withHttpSettings),
+      "openIdConnect"        -> Some(scheme.withOpenIdConnectSettings),
+      "plain"                -> None,
+      "scramSha256"          -> None,
+      "scramSha512"          -> None,
+      "gssapi"               -> None
     )
     common ++ specific
   }

@@ -1087,7 +1087,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = security("type"),
         constraint = sh("pattern"),
         value =
-          "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+)$"
+          "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|plain|scramSha256|scramSha512|gssapi|x-.+)$"
       )
     ) ++ baseApiValidations("AsyncAPI")
 
