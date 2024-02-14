@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQMessageBind
 import amf.apicontract.internal.metamodel.domain.bindings.IBMMQMessageBindingModel
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YMap, YMapEntry}
@@ -13,10 +14,19 @@ object IBMMQMessageBindingParser extends BindingParser[IBMMQMessageBinding] {
     val binding = IBMMQMessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
-    map.key("type", IBMMQMessageBindingModel.MessageType in binding)
+    map.key("type") match {
+      case Some(value) => Some(value).foreach(IBMMQMessageBindingModel.MessageType in binding)
+      case None        => setDefaultValue(binding, IBMMQMessageBindingModel.MessageType, AmfScalar("string"))
+    }
+
     map.key("headers", IBMMQMessageBindingModel.Headers in binding)
+
     map.key("description", IBMMQMessageBindingModel.Description in binding)
-    map.key("expiry", IBMMQMessageBindingModel.Expiry in binding)
+
+    map.key("expiry") match {
+      case Some(value) => Some(value).foreach(IBMMQMessageBindingModel.Expiry in binding)
+      case None        => setDefaultValue(binding, IBMMQMessageBindingModel.Expiry, AmfScalar(0))
+    }
 
     parseBindingVersion(binding, IBMMQMessageBindingModel.BindingVersion, map)
 
