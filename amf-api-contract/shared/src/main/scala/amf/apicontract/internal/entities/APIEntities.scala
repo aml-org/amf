@@ -94,6 +94,11 @@ private[amf] object APIEntities extends Entities {
     ParameterKeyMappingModel,
     ComponentModuleModel,
     ParameterFederationMetadataModel,
-    EndpointFederationMetadataModel
+    EndpointFederationMetadataModel,
+    IBMMQMessageBindingModel,
+    IBMMQServerBindingModel,
+    IBMMQChannelBindingModel,
+    IBMMQChannelQueueModel,
+    IBMMQChannelTopicModel
   )
 }

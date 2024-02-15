@@ -30,6 +30,13 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091Queue
 }
 import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
+  IBMMQChannelBinding,
+  IBMMQChannelQueue,
+  IBMMQChannelTopic,
+  IBMMQMessageBinding,
+  IBMMQServerBinding
+}
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttMessageBinding,
@@ -112,6 +119,11 @@ trait ApiBaseConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
     with Amqp091QueueConverter
+    with IBBMQMessageBindingConverter
+    with IBBMQServerBindingConverter
+    with IBBMQChannelBindingConverter
+    with IBBMQChannelQueueConverter
+    with IBBMQChannelTopicConverter
     with ChannelBindingConverter
     with OperationBindingConverter
     with MessageBindingConverter
@@ -308,6 +320,51 @@ trait Amqp091QueueConverter extends PlatformSecrets {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait IBBMQMessageBindingConverter extends PlatformSecrets {
+  implicit object IBBMQMessageBindingMatcher
+      extends BidirectionalMatcher[IBMMQMessageBinding, domain.bindings.ibmmq.IBMMQMessageBinding] {
+    override def asClient(from: IBMMQMessageBinding): domain.bindings.ibmmq.IBMMQMessageBinding =
+      platform.wrap[domain.bindings.ibmmq.IBMMQMessageBinding](from)
+    override def asInternal(from: domain.bindings.ibmmq.IBMMQMessageBinding): IBMMQMessageBinding = from._internal
+  }
+}
+
+trait IBBMQServerBindingConverter extends PlatformSecrets {
+  implicit object IBBMQServerBindingMatcher
+      extends BidirectionalMatcher[IBMMQServerBinding, domain.bindings.ibmmq.IBMMQServerBinding] {
+    override def asClient(from: IBMMQServerBinding): domain.bindings.ibmmq.IBMMQServerBinding =
+      platform.wrap[domain.bindings.ibmmq.IBMMQServerBinding](from)
+    override def asInternal(from: domain.bindings.ibmmq.IBMMQServerBinding): IBMMQServerBinding = from._internal
+  }
+}
+
+trait IBBMQChannelBindingConverter extends PlatformSecrets {
+  implicit object IBBMQChannelBindingMatcher
+      extends BidirectionalMatcher[IBMMQChannelBinding, domain.bindings.ibmmq.IBMMQChannelBinding] {
+    override def asClient(from: IBMMQChannelBinding): domain.bindings.ibmmq.IBMMQChannelBinding =
+      platform.wrap[domain.bindings.ibmmq.IBMMQChannelBinding](from)
+    override def asInternal(from: domain.bindings.ibmmq.IBMMQChannelBinding): IBMMQChannelBinding = from._internal
+  }
+}
+
+trait IBBMQChannelQueueConverter extends PlatformSecrets {
+  implicit object IBBMQChannelQueueMatcher
+      extends BidirectionalMatcher[IBMMQChannelQueue, domain.bindings.ibmmq.IBMMQChannelQueue] {
+    override def asClient(from: IBMMQChannelQueue): domain.bindings.ibmmq.IBMMQChannelQueue =
+      platform.wrap[domain.bindings.ibmmq.IBMMQChannelQueue](from)
+    override def asInternal(from: domain.bindings.ibmmq.IBMMQChannelQueue): IBMMQChannelQueue = from._internal
+  }
+}
+
+trait IBBMQChannelTopicConverter extends PlatformSecrets {
+  implicit object IBBMQChannelTopicMatcher
+      extends BidirectionalMatcher[IBMMQChannelTopic, domain.bindings.ibmmq.IBMMQChannelTopic] {
+    override def asClient(from: IBMMQChannelTopic): domain.bindings.ibmmq.IBMMQChannelTopic =
+      platform.wrap[domain.bindings.ibmmq.IBMMQChannelTopic](from)
+    override def asInternal(from: domain.bindings.ibmmq.IBMMQChannelTopic): IBMMQChannelTopic = from._internal
   }
 }
 

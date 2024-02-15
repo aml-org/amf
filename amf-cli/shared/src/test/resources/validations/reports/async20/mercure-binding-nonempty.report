@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml
+Profile: 
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
+  Message: Reserved name binding 'mercure' must have an empty map
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml#/async-api/server/some.com/server-bindings/bindings/mercure
+  Property: 
+  Range: [(10,14)-(12,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
+  Message: Reserved name binding 'mercure' must have an empty map
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/mercure
+  Property: 
+  Range: [(15,14)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
+  Message: Reserved name binding 'mercure' must have an empty map
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/mercure
+  Property: 
+  Range: [(20,16)-(22,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
+  Message: Reserved name binding 'mercure' must have an empty map
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/mercure
+  Property: 
+  Range: [(24,18)-(26,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mercure-binding-nonempty.yaml

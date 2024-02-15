@@ -1,12 +1,12 @@
 package amf.validation
 
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, WebAPIConfiguration}
+import amf.apicontract.internal.spec.async.NotFinishedAsync20ParsePlugin
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
 import amf.io.FileAssertionTest
 import amf.testing.ConfigProvider.configFor
@@ -46,7 +46,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
       configOverride: Option[AMFConfiguration] = None,
       hideValidationResultsIfParseNotConforms: Boolean = true
   ): Future[Assertion] = {
-    val initialConfig = configOverride.getOrElse(APIConfiguration.API())
+    val initialConfig = configOverride.getOrElse(APIConfiguration.API().withPlugin(NotFinishedAsync20ParsePlugin))
     for {
       parseResult <- parse(directory + api, initialConfig)
       report <- configOverride

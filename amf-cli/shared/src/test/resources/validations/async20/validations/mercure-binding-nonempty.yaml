@@ -1,0 +1,27 @@
+asyncapi: 2.1.0
+info:
+  title: test mercure binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: mercure
+    bindings:
+      mercure:
+        key: value
+channels:
+  some-channel:
+    bindings:
+      mercure:
+        key: value
+    description: some channel
+    publish:
+      bindings:
+        mercure:
+          key: value
+      message:
+        bindings:
+          mercure:
+            key: value
+        payload:
+          type: string
