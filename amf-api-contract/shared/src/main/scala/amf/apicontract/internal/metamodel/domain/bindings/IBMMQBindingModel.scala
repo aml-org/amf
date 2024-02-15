@@ -11,7 +11,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, Core}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Bool, Int, Str}
+import amf.core.internal.metamodel.Type.{Bool, Int, Str, Array}
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
@@ -25,7 +25,7 @@ object IBMMQMessageBindingModel extends MessageBindingModel with BindingVersion 
 
   val Headers: Field =
     Field(
-      Str,
+      Array(Str),
       ApiBinding + "headers",
       ModelDoc(
         ModelVocabularies.ApiBinding,

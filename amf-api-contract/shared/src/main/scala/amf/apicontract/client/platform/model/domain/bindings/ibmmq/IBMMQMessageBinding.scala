@@ -15,10 +15,10 @@ case class IBMMQMessageBinding(override private[amf] val _internal: InternalIBMM
   @JSExportTopLevel("IBMMQMessageBinding")
   def this() = this(InternalIBMMQMessageBinding())
 
-  def messageType: StrField = _internal.messageType
-  def headers: StrField     = _internal.headers
-  def description: StrField = _internal.description
-  def expiry: IntField      = _internal.expiry
+  def messageType: StrField         = _internal.messageType
+  def headers: ClientList[StrField] = _internal.headers.asClient
+  def description: StrField         = _internal.description
+  def expiry: IntField              = _internal.expiry
 
   def withType(messageType: String): this.type = {
     _internal.withMessageType(messageType)

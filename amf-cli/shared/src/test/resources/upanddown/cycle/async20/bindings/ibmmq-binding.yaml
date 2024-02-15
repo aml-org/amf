@@ -37,9 +37,9 @@ channels:
         bindings:
           ibmmq:
             type: test
-            headers: test
             description: test
             expiry: 123
             bindingVersion: test
+            headers: test1, test2, test3
         payload:
           type: string

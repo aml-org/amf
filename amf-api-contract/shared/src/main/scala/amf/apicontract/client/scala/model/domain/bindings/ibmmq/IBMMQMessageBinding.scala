@@ -18,10 +18,10 @@ class IBMMQMessageBinding(override val fields: Fields, override val annotations:
   override protected def bindingVersionField: Field = BindingVersion
   override def meta: IBMMQMessageBindingModel.type  = IBMMQMessageBindingModel
 
-  def messageType: StrField = fields.field(MessageType)
-  def headers: StrField     = fields.field(Headers)
-  def description: StrField = fields.field(Description)
-  def expiry: IntField      = fields.field(Expiry)
+  def messageType: StrField  = fields.field(MessageType)
+  def headers: Seq[StrField] = fields.field(Headers)
+  def description: StrField  = fields.field(Description)
+  def expiry: IntField       = fields.field(Expiry)
 
   def withMessageType(messageType: String): this.type = set(MessageType, messageType)
   def withHeaders(headers: String): this.type         = set(Headers, headers)

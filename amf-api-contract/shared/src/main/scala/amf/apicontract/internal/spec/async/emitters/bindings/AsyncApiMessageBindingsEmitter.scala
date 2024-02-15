@@ -16,7 +16,8 @@ import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, IBMMQ, Kafka, Mqtt}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -137,7 +138,12 @@ class IBMMQMessageEmitter(binding: IBMMQMessageBinding, ordering: SpecOrdering)(
         val fs     = binding.fields
 
         fs.entry(IBMMQMessageBindingModel.MessageType).foreach(f => result += ValueEmitter("type", f))
-        fs.entry(IBMMQMessageBindingModel.Headers).foreach(f => result += ValueEmitter("headers", f))
+        fs.entry(IBMMQMessageBindingModel.Headers).foreach { f =>
+          val valuesString = f.value.value.asInstanceOf[AmfArray].values.mkString(",")
+          val field =
+            FieldEntry(IBMMQMessageBindingModel.Headers, Value(AmfScalar(valuesString), Annotations.synthesized()))
+          result += ValueEmitter("headers", field)
+        }
         fs.entry(IBMMQMessageBindingModel.Description).foreach(f => result += ValueEmitter("description", f))
         fs.entry(IBMMQMessageBindingModel.Expiry).foreach(f => result += ValueEmitter("expiry", f))
         emitBindingVersion(fs, result)

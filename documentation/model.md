@@ -1555,7 +1555,7 @@ Types:
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
  | messageType | string | - | The type of the message | `http://a.ml/vocabularies/apiBinding#messageType` |
- | headers | string | - | Defines the IBM MQ message headers to include with this message. More than one header can be specified as a comma separated list. | `http://a.ml/vocabularies/apiBinding#headers` |
+ | headers | [string] | false | Defines the IBM MQ message headers to include with this message. More than one header can be specified as a comma separated list. | `http://a.ml/vocabularies/apiBinding#headers` |
  | description | string | - |  | `http://a.ml/vocabularies/core#description` |
  | expiry | int | - | This is a period of time expressed in milliseconds and set by the application that puts the message. | `http://a.ml/vocabularies/apiBinding#expiry` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
