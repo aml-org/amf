@@ -64,6 +64,18 @@ components:
       type: openIdConnect
       description: openIdConnect security scheme
       openIdConnectUrl: https://a.ml/
+    plain:
+      type: plain
+      description: plain security scheme
+    scramSha256:
+      type: scramSha256
+      description: scramSha256 security scheme
+    scramSha512:
+      type: scramSha512
+      description: scramSha512 security scheme
+    gssapi:
+      type: gssapi
+      description: gssapi security scheme
 servers:
   some-server:
     url: https://google.com
