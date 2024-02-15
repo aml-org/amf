@@ -1,14 +1,6 @@
 package amf.apicontract.internal.spec.async.emitters.document
 
-import amf.apicontract.internal.spec.async.emitters._
-import amf.apicontract.internal.spec.async.emitters.domain.{
-  AsyncApiBindingsDeclarationEmitter,
-  AsyncApiParametersEmitter,
-  AsyncCorrelationIdDeclarationsEmitter,
-  AsyncMessageDeclarationsEmitter,
-  AsyncOperationTraitsDeclarationEmitter,
-  AsyncSecuritySchemesEmitter
-}
+import amf.apicontract.internal.spec.async.emitters.domain._
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -74,6 +66,20 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
       result += AsyncApiBindingsDeclarationEmitter(
         "operationBindings",
         declarations.operationBindings.values.toSeq,
+        ordering
+      )
+
+    if (declarations.servers.nonEmpty)
+      result += AsyncApiServersDeclarationEmitter(
+        "servers",
+        declarations.servers.values.toSeq,
+        ordering
+      )
+
+    if (declarations.channels.nonEmpty)
+      result += AsyncApiChannelsDeclarationEmitter(
+        "channels",
+        declarations.channels.values.toSeq,
         ordering
       )
 

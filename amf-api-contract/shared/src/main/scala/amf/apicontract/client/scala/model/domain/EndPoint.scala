@@ -7,8 +7,8 @@ import amf.apicontract.internal.annotations.ParentEndPoint
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.apicontract.internal.metamodel.domain.EndPointModel._
 import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.NamedDomainElement
-import amf.core.client.scala.model.domain.federation.{FederationMetadata, HasFederationMetadata}
+import amf.core.client.scala.model.domain.federation.HasFederationMetadata
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
@@ -20,7 +20,8 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     with SecuredElement
     with ExtensibleWebApiDomainElement
     with ServerContainer
-    with HasFederationMetadata[EndPointFederationMetadata] {
+    with HasFederationMetadata[EndPointFederationMetadata]
+    with Linkable {
 
   def description: StrField      = fields.field(Description)
   def summary: StrField          = fields.field(Summary)
@@ -85,6 +86,11 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     }
   }
   override def nameField: Field = Name
+
+  override def linkCopy(): EndPoint = EndPoint()
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = EndPoint.apply
 }
 
 object EndPoint {

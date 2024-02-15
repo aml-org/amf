@@ -1,11 +1,10 @@
 package amf.apicontract.internal.spec.async.parser.document
 
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
-import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.async.parser.domain.declarations.AsyncDeclarationParser
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
@@ -86,7 +85,7 @@ abstract class AsyncApiDocumentParser(root: Root, spec: Spec, declarationParser:
     map.key(
       "servers",
       entry => {
-        val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
+        val servers = ctx.factory.serversParser(entry.value.as[YMap], api).parse()
         api.setWithoutId(WebApiModel.Servers, AmfArray(servers, Annotations(entry.value)), Annotations(entry))
       }
     )

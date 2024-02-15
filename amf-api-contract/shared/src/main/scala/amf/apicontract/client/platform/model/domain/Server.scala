@@ -4,7 +4,7 @@ import amf.apicontract.client.platform.model.domain.bindings.ServerBindings
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.convert.ApiClientConverters.ClientList
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.DomainElement
+import amf.core.client.platform.model.domain.{DomainElement, Linkable}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala.model.domain.{Server => InternalServer}
@@ -13,7 +13,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 /** Server model class.
   */
 @JSExportAll
-case class Server(override private[amf] val _internal: InternalServer) extends DomainElement {
+case class Server(override private[amf] val _internal: InternalServer) extends DomainElement with Linkable {
 
   @JSExportTopLevel("Server")
   def this() = this(InternalServer())
@@ -69,4 +69,6 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
     * Parameter is required.
     */
   def withVariable(name: String): Parameter = _internal.withVariable(name)
+
+  override def linkCopy(): Server = _internal.linkCopy()
 }

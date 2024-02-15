@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.domain.declarations
 
-import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
+import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.bindings.{
   ChannelBindings,
   MessageBindings,
@@ -38,10 +38,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-case class Async20DeclarationParser()
-    extends AsyncDeclarationParser
-    with DeclarationKeyCollector
-    with OasLikeDeclarationsHelper {
+case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLikeDeclarationsHelper {
 
   protected val definitionsKey = "schemas"
 
@@ -61,7 +58,8 @@ case class Async20DeclarationParser()
     parseMessageTraits(map, parent + "/messageTraits")
 
     parseMessageDeclarations(map, parent + "/messages")
-    addDeclarationsToModel(document)
+
+    super.parseDeclarations(map, parent, document)
   }
 
   private def parseMessageDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =

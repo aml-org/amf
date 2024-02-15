@@ -1,20 +1,10 @@
 package amf.apicontract.internal.spec.async.parser.context
 
-import amf.apicontract.internal.spec.async._
 import amf.apicontract.internal.spec.async.parser.context.syntax._
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{
-  AsyncApi20,
-  AsyncApi21,
-  AsyncApi22,
-  AsyncApi23,
-  AsyncApi24,
-  AsyncApi25,
-  AsyncApi26,
-  Spec
-}
+import amf.core.internal.remote._
 import amf.shapes.internal.spec.async.parser.Async2Settings
 
 import scala.collection.mutable
@@ -142,10 +132,10 @@ object Async2WebApiContext {
     case AsyncApi20 => ctx => Async20VersionFactory()(ctx)
     case AsyncApi21 => ctx => Async20VersionFactory()(ctx)
     case AsyncApi22 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi23 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi24 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi25 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi26 => ctx => Async20VersionFactory()(ctx)
+    case AsyncApi23 => ctx => Async23VersionFactory()(ctx)
+    case AsyncApi24 => ctx => Async23VersionFactory()(ctx)
+    case AsyncApi25 => ctx => Async23VersionFactory()(ctx)
+    case AsyncApi26 => ctx => Async23VersionFactory()(ctx)
   }
 
   private def bindingSet(spec: Spec): AsyncValidBindingSet = spec match {

@@ -41,6 +41,8 @@ case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContex
     case _: OperationBindings                => appendOas3ComponentsPrefix(referenceLabel, "operationBindings")
     case _: ChannelBindings                  => appendOas3ComponentsPrefix(referenceLabel, "channelBindings")
     case _: MessageBindings                  => appendOas3ComponentsPrefix(referenceLabel, "messageBindings")
+    case _: Server                           => appendOas3ComponentsPrefix(referenceLabel, "servers")
+    case _: EndPoint                         => appendOas3ComponentsPrefix(referenceLabel, "channels")
     case _                                   => super.getRefUrlFor(element, default)
   }
 

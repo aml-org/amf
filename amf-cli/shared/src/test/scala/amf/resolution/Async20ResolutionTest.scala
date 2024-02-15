@@ -200,6 +200,16 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Referencing declared servers and channels in 2.3", "async-2.3-components.%s") { config =>
+    cycle(
+      "async-2.3-components.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     super.transform(unit, config, AsyncAPIConfiguration.Async20())
   }

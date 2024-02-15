@@ -1,44 +1,52 @@
 package amf.apicontract.internal.spec.async.parser.context
 
+import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
-import amf.apicontract.internal.spec.async.parser.domain.{
-  Async2SecuritySchemeParser,
-  Async2SecuritySettingsParser,
-  AsyncOperationParser,
-  AsyncServerVariableParser
-}
+import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.parser.SecuritySchemeParser
-import amf.apicontract.internal.spec.oas.parser._
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeSpecVersionFactory
 import amf.apicontract.internal.spec.oas.parser.domain.{
-  AsyncEndpointParser,
   OasLikeEndpointParser,
   OasLikeOperationParser,
   OasLikeSecuritySettingsParser,
   OasLikeServerVariableParser
 }
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import org.yaml.model.{YMap, YMapEntry, YPart}
+import org.yaml.model.{YMap, YMapEntry}
 
 // TODO ASYNC complete all this
 trait AsyncSpecAwareContext extends SpecAwareContext {}
 
-trait AsyncSpecVersionFactory extends OasLikeSpecVersionFactory {}
+trait AsyncSpecVersionFactory extends OasLikeSpecVersionFactory {
+  def serversParser(map: YMap, api: AsyncApi): AsyncServersParser
+}
 
-case class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpecVersionFactory {
+class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpecVersionFactory {
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
     AsyncServerVariableParser(entry, parent)(ctx)
-
   override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
     AsyncOperationParser(entry, adopt)(ctx)
   override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
-    AsyncEndpointParser(entry, parentId, collector)(ctx)
-
+    new Async20EndpointParser(entry, parentId, collector)(ctx)
   override def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     Async2SecuritySchemeParser.apply
-
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Async2SecuritySettingsParser(map, scheme)
+  override def serversParser(map: YMap, api: AsyncApi): AsyncServersParser = new Async20ServersParser(map, api)
+}
+
+object Async20VersionFactory {
+  def apply()(implicit ctx: AsyncWebApiContext): Async20VersionFactory = new Async20VersionFactory()(ctx)
+}
+
+class Async23VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async20VersionFactory {
+  override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
+    new Async23EndpointParser(entry, parentId, collector)(ctx)
+  override def serversParser(map: YMap, api: AsyncApi): AsyncServersParser = new Async23ServersParser(map, api)
+}
+
+object Async23VersionFactory {
+  def apply()(implicit ctx: AsyncWebApiContext): Async23VersionFactory = new Async23VersionFactory()(ctx)
 }
