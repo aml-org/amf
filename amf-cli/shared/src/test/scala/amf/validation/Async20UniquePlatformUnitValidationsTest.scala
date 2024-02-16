@@ -336,4 +336,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("IBMMQ Closed Shape validation") {
     validate("ibmmq-binding-extra-key.yaml", Some("ibmmq-binding-extra-key.report"))
   }
+
+  test("Async 2.2+ channel servers property") {
+    validate("channel-servers.yaml", Some("channel-servers.report"))
+  }
 }

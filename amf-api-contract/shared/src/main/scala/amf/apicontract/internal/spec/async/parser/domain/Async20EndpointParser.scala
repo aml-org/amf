@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.async.parser.domain
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
-import amf.apicontract.internal.metamodel.domain.EndPointModel
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Server}
+import amf.apicontract.internal.metamodel.domain.{EndPointModel, ServerModel}
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncChannelBindingsParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorChannel
@@ -12,7 +12,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
 import scala.collection.mutable
 
@@ -63,7 +63,7 @@ class Async20EndpointParser(entry: YMapEntry, parentId: String, collector: List[
   }
 }
 
-class Async23EndpointParser(
+class Async22EndpointParser(
     entry: YMapEntry,
     parentId: String,
     collector: List[EndPoint]
@@ -71,8 +71,45 @@ class Async23EndpointParser(
     override implicit val ctx: AsyncWebApiContext
 ) extends Async20EndpointParser(entry, parentId, collector) {
 
+  override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
+    super.parseEndpointMap(endpoint, map)
+
+    map.key(
+      "servers",
+      entry => {
+        val nodes = entry.value.value.asInstanceOf[YSequence].nodes
+        val servers = nodes.map { n =>
+          val server = Server()
+          server.setWithoutId(
+            ServerModel.Name,
+            AmfScalar(n.toString, Annotations(n.value)),
+            Annotations(n)
+          )
+        }
+        endpoint.setWithoutId(
+          EndPointModel.Servers,
+          AmfArray(servers, Annotations(entry.value)),
+          Annotations(entry)
+        )
+      }
+    )
+
+    endpoint
+  }
+}
+
+class Async23EndpointParser(
+    entry: YMapEntry,
+    parentId: String,
+    collector: List[EndPoint]
+)(
+    override implicit val ctx: AsyncWebApiContext
+) extends Async22EndpointParser(entry, parentId, collector) {
+
   override protected def parseEndpoint(endpoint: EndPoint): Option[EndPoint] = {
-    Some(parseEndpointMap(endpoint, entry.value.as[YMap]))  // this is to avoid general ref detection of OasLikeParser. I want to use custom link detection for declarations for Async 2.3
+    Some(
+      parseEndpointMap(endpoint, entry.value.as[YMap])
+    ) // this is to avoid general ref detection of OasLikeParser. I want to use custom link detection for declarations for Async 2.3
   }
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
@@ -84,7 +121,7 @@ class Async23EndpointParser(
 
   private def handleRef(fullRef: String, map: YMap, endpoint: EndPoint): EndPoint = {
     val entryLike = YMapEntryLike(map)
-    val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "channels")
+    val label     = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "channels")
     ctx.declarations
       .findChannel(label, SearchScope.Named)
       .map(channel => {
@@ -93,7 +130,9 @@ class Async23EndpointParser(
       .getOrElse(remote(fullRef, entryLike, endpoint))
   }
 
-  private def remote(fullRef: String, entryLike: YMapEntryLike, endpoint: EndPoint)(implicit ctx: AsyncWebApiContext): EndPoint = {
+  private def remote(fullRef: String, entryLike: YMapEntryLike, endpoint: EndPoint)(implicit
+      ctx: AsyncWebApiContext
+  ): EndPoint = {
     ctx.navigateToRemoteYNode(fullRef) match {
       case Some(result) =>
         val serverNode = result.remoteNode
