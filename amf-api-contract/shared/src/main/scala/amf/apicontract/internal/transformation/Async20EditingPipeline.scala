@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.async.transformation.{
 }
 import amf.apicontract.internal.spec.common.transformation.stage.{
   AnnotationRemovalStage,
+  ChannelServersResolutionStage,
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage,
   PathDescriptionNormalizationStage
@@ -40,7 +41,8 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
       new ServerVariableExampleResolutionStage(),
       new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
       new AnnotationRemovalStage(),
-      new SemanticExtensionFlatteningStage
+      new SemanticExtensionFlatteningStage,
+      new ChannelServersResolutionStage(Async20Profile)
     ) ++ url :+ SourceInformationStage
 }
 

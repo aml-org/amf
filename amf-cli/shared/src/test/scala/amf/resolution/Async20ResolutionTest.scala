@@ -210,6 +210,29 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
+  // W-12689955
+  multiGoldenTest("Should add specified servers to channels", "channel-servers.%s") { config =>
+    cycle(
+      "channel-servers.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // W-12689955
+  multiGoldenTest("Should add all servers to channels when servers isn't specified", "channel-servers-implicit.%s") {
+    config =>
+      cycle(
+        "channel-servers-implicit.yaml",
+        config.golden,
+        Async20YamlHint,
+        target = AmfJsonHint,
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     super.transform(unit, config, AsyncAPIConfiguration.Async20())
   }

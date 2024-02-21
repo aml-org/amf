@@ -23,7 +23,7 @@ case class ChannelBindings(fields: Fields, annotations: Annotations) extends Nam
 
   override def linkCopy(): ChannelBindings = {
     val bindings = ChannelBindings().withId(id)
-    name.option().foreach(bindings.withName(_))
+    name.option().foreach(bindings.withName)
     bindings
   }
 

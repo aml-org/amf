@@ -74,19 +74,27 @@
       "apiContract:path": "some/events",
       "core:name": "null",
       "core:description": "mychannel",
+      "apiContract:server": [
+        {
+          "@id": "#6"
+        }
+      ],
       "smaps": {
-        "resolved-link-target": {
-          "#5": "amf://id#2"
+        "synthesized-field": {
+          "apiContract:server": "true"
         },
-        "declared-element": {
-          "#5": ""
+        "resolved-link": {
+          "#5": "amf://id#5"
         },
         "lexical": {
           "core:description": "[(12,6)-(13,0)]",
           "#5": "[(11,4)-(13,0)]"
         },
-        "resolved-link": {
-          "#5": "amf://id#5"
+        "declared-element": {
+          "#5": ""
+        },
+        "resolved-link-target": {
+          "#5": "amf://id#2"
         }
       }
     },
