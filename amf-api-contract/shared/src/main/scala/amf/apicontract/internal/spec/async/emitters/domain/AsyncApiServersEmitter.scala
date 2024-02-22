@@ -10,7 +10,7 @@ import amf.apicontract.internal.spec.common.emitter.{
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.BaseEmitters.{RawEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.annotations.OrphanOasExtension
@@ -29,12 +29,37 @@ class AsyncApiServersEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit val
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val serverEmitters =
-      f.array.values.map(x => x.asInstanceOf[Server]).map(new AsyncApiSingleServerEmitter(_, ordering))
+      f.array.values.map(_.asInstanceOf[Server]).map(new AsyncApiSingleServerEmitter(_, ordering))
     b.entry(
       key,
       _.obj(b => serverEmitters.map(e => e.emit(b)))
     )
   }
+
+  override def position(): Position = pos(f.element.annotations)
+}
+
+case class AsyncApiServersListEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends EntryEmitter {
+
+  val key = "servers"
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    val ann     = f.value.annotations
+    val servers = f.array.values.map(_.asInstanceOf[Server])
+
+    if (!ann.isSynthesized) {
+      val serverList = if (ann.isVirtual) Seq() else serverNames(servers)
+      b.entry(
+        key,
+        _.list(traverse(serverList, _))
+      )
+    }
+  }
+
+  private def serverNames(servers: Seq[Server]): Seq[PartEmitter] =
+    servers.map(sv => RawEmitter(sv.name.value(), annotations = sv.annotations))
 
   override def position(): Position = pos(f.element.annotations)
 }

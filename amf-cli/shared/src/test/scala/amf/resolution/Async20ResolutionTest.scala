@@ -233,6 +233,26 @@ class Async20ResolutionTest extends ResolutionTest {
       )
   }
 
+  // W-12689955
+  test("async2.0 should not emit server channels if not specified") {
+    cycle(
+      "channel-servers-implicit.yaml",
+      "channel-servers-implicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+  // W-12689955
+  test("async2.0 should emit empty server channels keyword") {
+    cycle(
+      "channel-servers-empty.yaml",
+      "channel-servers-empty.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     super.transform(unit, config, AsyncAPIConfiguration.Async20())
   }

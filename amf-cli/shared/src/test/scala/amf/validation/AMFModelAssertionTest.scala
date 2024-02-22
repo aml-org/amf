@@ -610,4 +610,22 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       transformResult.results.size shouldBe 1
     }
   }
+
+  // W-12689955
+  test("async2.0 should not emit server channels if not specified") {
+    val api = s"$basePath/async20/validations/channel-servers-async20.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing)
+      val transformBU     = transformResult.baseUnit
+      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+      val endpointServers = endpoint.servers
+      // channel should have all servers linked
+      endpointServers.size shouldBe 3
+
+      val render          = asyncClient.render(transformBU)
+      val serversInRender = render.lines().filter(_.contains("servers:")).toArray
+      // but only the declared root servers should be present in the rendered API
+      serversInRender.length shouldBe 1
+    }
+  }
 }
