@@ -24,7 +24,6 @@ import amf.apicontract.internal.spec.async.parser.bindings.{
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain.{
   AsyncCorrelationIdParser,
-  AsyncMessageParser,
   AsyncOperationParser,
   AsyncParametersParser
 }
@@ -68,7 +67,7 @@ case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLik
       e => {
         addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
-          val message = AsyncMessageParser(YMapEntryLike(entry), parent, None).parse()
+          val message = ctx.factory.messageParser(YMapEntryLike(entry), parent, None).parse()
           message.add(DeclaredElement())
           ctx.declarations += message
         }
@@ -95,7 +94,7 @@ case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLik
       entry => {
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val message = AsyncMessageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
+          val message = ctx.factory.messageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
           message.add(DeclaredElement())
           ctx.declarations += message
         }

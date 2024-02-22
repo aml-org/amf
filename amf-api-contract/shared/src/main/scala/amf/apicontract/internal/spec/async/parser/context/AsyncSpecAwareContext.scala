@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.async.parser.context
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
+import amf.apicontract.internal.spec.async.MessageType
 import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.parser.SecuritySchemeParser
@@ -21,6 +22,12 @@ trait AsyncSpecAwareContext extends SpecAwareContext {}
 
 trait AsyncSpecVersionFactory extends OasLikeSpecVersionFactory {
   def serversParser(map: YMap, api: AsyncApi): AsyncServersParser
+  def messageParser(
+      entryLike: YMapEntryLike,
+      parent: String,
+      messageType: Option[MessageType],
+      isTrait: Boolean = false
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser
 }
 
 class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpecVersionFactory {
@@ -35,13 +42,32 @@ class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpe
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Async2SecuritySettingsParser(map, scheme)
   override def serversParser(map: YMap, api: AsyncApi): AsyncServersParser = new Async20ServersParser(map, api)
+
+  override def messageParser(
+      entryLike: YMapEntryLike,
+      parent: String,
+      messageType: Option[MessageType],
+      isTrait: Boolean = false
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async20MessageParser(entryLike, parent, messageType, isTrait)
 }
 
 object Async20VersionFactory {
   def apply()(implicit ctx: AsyncWebApiContext): Async20VersionFactory = new Async20VersionFactory()(ctx)
 }
 
-class Async23VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async20VersionFactory {
+class Async21VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async20VersionFactory {
+  override def messageParser(
+      entryLike: YMapEntryLike,
+      parent: String,
+      messageType: Option[MessageType],
+      isTrait: Boolean
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async21MessageParser(entryLike, parent, messageType, isTrait)
+}
+
+object Async21VersionFactory {
+  def apply()(implicit ctx: AsyncWebApiContext): Async21VersionFactory = new Async21VersionFactory()(ctx)
+}
+class Async23VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async21VersionFactory {
   override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
     new Async23EndpointParser(entry, parentId, collector)(ctx)
   override def serversParser(map: YMap, api: AsyncApi): AsyncServersParser = new Async23ServersParser(map, api)
