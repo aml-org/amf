@@ -86,3 +86,16 @@ class Async23VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async21V
 object Async23VersionFactory {
   def apply()(implicit ctx: AsyncWebApiContext): Async23VersionFactory = new Async23VersionFactory()(ctx)
 }
+
+class Async24VersionFactory()(implicit  ctx: AsyncWebApiContext) extends Async23VersionFactory{
+  override def messageParser(
+      entryLike: YMapEntryLike,
+      parent: String,
+      messageType: Option[MessageType],
+      isTrait: Boolean
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async24MessageParser(entryLike, parent, messageType, isTrait)
+}
+
+object Async24VersionFactory {
+  def apply()(implicit ctx: AsyncWebApiContext): Async24VersionFactory = new Async24VersionFactory()(ctx)
+}
