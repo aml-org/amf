@@ -130,8 +130,8 @@ object Async2WebApiContext {
 
   private def factory(spec: Spec): Async2WebApiContext => AsyncSpecVersionFactory = spec match {
     case AsyncApi20 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi21 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi22 => ctx => Async20VersionFactory()(ctx)
+    case AsyncApi21 => ctx => Async21VersionFactory()(ctx)
+    case AsyncApi22 => ctx => Async21VersionFactory()(ctx)
     case AsyncApi23 => ctx => Async23VersionFactory()(ctx)
     case AsyncApi24 => ctx => Async23VersionFactory()(ctx)
     case AsyncApi25 => ctx => Async23VersionFactory()(ctx)
