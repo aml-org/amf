@@ -3,6 +3,7 @@ package amf.validation
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
+import amf.apicontract.internal.spec.async.NotFinishedAsync20ParsePlugin
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -39,6 +40,9 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val raml08Client: AMFBaseUnitClient = raml08Config.baseUnitClient()
   val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
+  val asyncConfig: AMFConfiguration =
+    AsyncAPIConfiguration.Async20().withPlugin(NotFinishedAsync20ParsePlugin).withRenderOptions(ro)
+  val asyncClient: AMFBaseUnitClient = asyncConfig.baseUnitClient()
 
   def modelAssertion(
       path: String,
@@ -591,6 +595,37 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val complexArrayUnion    = complexArrayRange.asInstanceOf[ArrayShape].items.asInstanceOf[UnionShape]
 
       complexArrayUnion.anyOf.map(_.id).distinct.length shouldBe 3
+    }
+  }
+
+  // W-12689955
+  test("async add channel servers transformation") {
+    val api = s"$basePath/async20/validations/channel-servers.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+      val endpointServers = endpoint.servers
+      getApi(transformBU, isWebApi = false).servers.intersect(endpointServers).size shouldBe 3
+      transformResult.results.size shouldBe 1
+    }
+  }
+
+  // W-12689955
+  test("async2.0 should not emit server channels if not specified") {
+    val api = s"$basePath/async20/validations/channel-servers-async20.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+      val endpointServers = endpoint.servers
+      // channel should have all servers linked
+      endpointServers.size shouldBe 3
+
+      val render          = asyncClient.render(transformBU)
+      val serversInRender = render.linesIterator.filter(_.contains("servers:")).toArray
+      // but only the declared root servers should be present in the rendered API
+      serversInRender.length shouldBe 1
     }
   }
 }

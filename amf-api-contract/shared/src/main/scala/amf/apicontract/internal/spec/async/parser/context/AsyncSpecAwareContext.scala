@@ -67,6 +67,16 @@ class Async21VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async20V
 object Async21VersionFactory {
   def apply()(implicit ctx: AsyncWebApiContext): Async21VersionFactory = new Async21VersionFactory()(ctx)
 }
+
+class Async22VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async20VersionFactory {
+  override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
+    new Async22EndpointParser(entry, parentId, collector)(ctx)
+}
+
+object Async22VersionFactory {
+  def apply()(implicit ctx: AsyncWebApiContext): Async22VersionFactory = new Async22VersionFactory()(ctx)
+}
+
 class Async23VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async21VersionFactory {
   override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
     new Async23EndpointParser(entry, parentId, collector)(ctx)

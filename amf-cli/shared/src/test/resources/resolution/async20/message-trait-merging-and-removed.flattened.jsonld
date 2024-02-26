@@ -45,7 +45,11 @@
           "@id": "#/async-api/endpoint/aChannel/supportedOperation/publish"
         }
       ],
+      "apiContract:server": [],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:server": "true"
+        },
         "lexical": {
           "apiContract:supportedOperation": "[(7,0)-(15,0)]",
           "#/async-api/endpoint/aChannel": "[(6,2)-(15,0)]"

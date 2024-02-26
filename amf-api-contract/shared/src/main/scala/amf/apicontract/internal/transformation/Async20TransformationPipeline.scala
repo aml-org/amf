@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.async.transformation.{
 }
 import amf.apicontract.internal.spec.common.transformation.stage.{
   AnnotationRemovalStage,
+  ChannelServersResolutionStage,
   PathDescriptionNormalizationStage
 }
 import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
@@ -21,7 +22,6 @@ import amf.core.internal.transform.stages.{
   ExternalSourceRemovalStage,
   SourceInformationStage
 }
-import amf.core.internal.remote.AsyncApi20
 import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
 class Async20TransformationPipeline private (override val name: String) extends TransformationPipeline() {
@@ -41,7 +41,8 @@ class Async20TransformationPipeline private (override val name: String) extends 
       new DeclarationsRemovalStage(),
       new AnnotationRemovalStage(),
       new SemanticExtensionFlatteningStage,
-      SourceInformationStage
+      SourceInformationStage,
+      new ChannelServersResolutionStage(Async20Profile)
     )
 }
 

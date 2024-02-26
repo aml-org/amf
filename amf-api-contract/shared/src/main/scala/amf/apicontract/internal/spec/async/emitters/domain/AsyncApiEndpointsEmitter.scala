@@ -60,6 +60,8 @@ class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrdering)(i
         .foreach(f => result += new AsyncApiParametersEmitter(f.arrayValues[Parameter], ordering))
       fs.entry(EndPointModel.Bindings)
         .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
+      fs.entry(EndPointModel.Servers)
+        .foreach(f => result += AsyncApiServersListEmitter(f, ordering))
       b.obj(traverse(ordering.sorted(result), _))
     }
   }

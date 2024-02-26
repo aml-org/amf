@@ -4,6 +4,7 @@ import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.common.transformation.stage.{
   AmfParametersNormalizationStage,
   AnnotationRemovalStage,
+  ChannelServersResolutionStage,
   MediaTypeResolutionStage,
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage,
@@ -46,7 +47,8 @@ class ValidationTransformationPipeline private[amf] (
       new PayloadAndParameterResolutionStage(profile),
       new SemanticExtensionFlatteningStage,
       SourceInformationStage,
-      new AnnotationRemovalStage()
+      new AnnotationRemovalStage(),
+      new ChannelServersResolutionStage(profile)
     )
 
   private def parameterNormalizationStageFor(profile: ProfileName): ParametersNormalizationStage = {

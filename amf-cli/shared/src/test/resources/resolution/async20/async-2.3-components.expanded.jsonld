@@ -88,19 +88,62 @@
                 "@value": "mychannel"
               }
             ],
+            "apiContract:server": [
+              {
+                "@id": "#6",
+                "@type": [
+                  "apiContract:Server",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "production"
+                  }
+                ],
+                "core:urlTemplate": [
+                  {
+                    "@value": "http://localhost:5000/ws"
+                  }
+                ],
+                "apiContract:protocol": [
+                  {
+                    "@value": "ws"
+                  }
+                ],
+                "smaps": {
+                  "resolved-link-target": {
+                    "#6": "amf://id#1"
+                  },
+                  "declared-element": {
+                    "#6": ""
+                  },
+                  "lexical": {
+                    "apiContract:protocol": "[(9,6)-(10,0)]",
+                    "#6": "[(7,4)-(10,0)]",
+                    "core:urlTemplate": "[(8,6)-(9,0)]"
+                  },
+                  "resolved-link": {
+                    "#6": "amf://id#6"
+                  }
+                }
+              }
+            ],
             "smaps": {
-              "resolved-link-target": {
-                "#5": "amf://id#2"
+              "synthesized-field": {
+                "apiContract:server": "true"
               },
-              "declared-element": {
-                "#5": ""
+              "resolved-link": {
+                "#5": "amf://id#5"
               },
               "lexical": {
                 "core:description": "[(12,6)-(13,0)]",
                 "#5": "[(11,4)-(13,0)]"
               },
-              "resolved-link": {
-                "#5": "amf://id#5"
+              "declared-element": {
+                "#5": ""
+              },
+              "resolved-link-target": {
+                "#5": "amf://id#2"
               }
             }
           }
