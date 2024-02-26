@@ -22,54 +22,15 @@ import amf.apicontract.client.scala.model.domain.{
   TemplatedLink
 }
 import amf.apicontract.client.scala.model.domain.federation._
-import amf.apicontract.client.scala.model.domain.bindings.amqp.{
-  Amqp091ChannelBinding,
-  Amqp091ChannelExchange,
-  Amqp091MessageBinding,
-  Amqp091OperationBinding,
-  Amqp091Queue
-}
-import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
-import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
-  IBMMQChannelBinding,
-  IBMMQChannelQueue,
-  IBMMQChannelTopic,
-  IBMMQMessageBinding,
-  IBMMQServerBinding
-}
-import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill
-}
-import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.client.scala.model.domain.bindings.{
-  ChannelBinding,
-  ChannelBindings,
-  EmptyBinding,
-  MessageBinding,
-  MessageBindings,
-  OperationBinding,
-  OperationBindings,
-  ServerBinding,
-  ServerBindings
-}
-import amf.apicontract.client.scala.model.domain.security.{
-  ApiKeySettings,
-  HttpApiKeySettings,
-  HttpSettings,
-  OAuth1Settings,
-  OAuth2Flow,
-  OAuth2Settings,
-  OpenIdConnectSettings,
-  ParametrizedSecurityScheme,
-  Scope,
-  SecurityRequirement,
-  SecurityScheme,
-  Settings
-}
+import amf.apicontract.client.scala.model.domain.bindings.amqp._
+import amf.apicontract.client.scala.model.domain.bindings.anypointmq._
+import amf.apicontract.client.scala.model.domain.bindings.http._
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq._
+import amf.apicontract.client.scala.model.domain.bindings.kafka._
+import amf.apicontract.client.scala.model.domain.bindings.mqtt._
+import amf.apicontract.client.scala.model.domain.bindings.websockets._
+import amf.apicontract.client.scala.model.domain.bindings._
+import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
@@ -119,6 +80,8 @@ trait ApiBaseConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
     with Amqp091QueueConverter
+    with AnypointMQMessageBindingConverter
+    with AnypointMQChannelBindingConverter
     with IBMMQMessageBindingConverter
     with IBMMQServerBindingConverter
     with IBMMQChannelBindingConverter
@@ -320,6 +283,26 @@ trait Amqp091QueueConverter extends PlatformSecrets {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait AnypointMQMessageBindingConverter extends PlatformSecrets {
+  implicit object AnypointMQMessageBindingMatcher
+      extends BidirectionalMatcher[AnypointMQMessageBinding, domain.bindings.anypointmq.AnypointMQMessageBinding] {
+    override def asClient(from: AnypointMQMessageBinding): domain.bindings.anypointmq.AnypointMQMessageBinding =
+      platform.wrap[domain.bindings.anypointmq.AnypointMQMessageBinding](from)
+    override def asInternal(from: domain.bindings.anypointmq.AnypointMQMessageBinding): AnypointMQMessageBinding =
+      from._internal
+  }
+}
+
+trait AnypointMQChannelBindingConverter extends PlatformSecrets {
+  implicit object AnypointMQChannelBindingMatcher
+      extends BidirectionalMatcher[AnypointMQChannelBinding, domain.bindings.anypointmq.AnypointMQChannelBinding] {
+    override def asClient(from: AnypointMQChannelBinding): domain.bindings.anypointmq.AnypointMQChannelBinding =
+      platform.wrap[domain.bindings.anypointmq.AnypointMQChannelBinding](from)
+    override def asInternal(from: domain.bindings.anypointmq.AnypointMQChannelBinding): AnypointMQChannelBinding =
+      from._internal
   }
 }
 

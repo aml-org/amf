@@ -118,4 +118,5 @@ object Bindings {
   val Redis      = "redis"
   val Mercure    = "mercure"
   val IBMMQ      = "ibmmq"
+  val AnypointMQ = "anypointmq"
 }
