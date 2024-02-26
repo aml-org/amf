@@ -36,7 +36,7 @@ class IBMMQChannelBinding(override val fields: Fields, override val annotations:
 
   override def componentId: String = s"/$IBMMQ-channel"
 
-  override def linkCopy(): IBMMQChannelBinding = IBMMQChannelBinding()
+  override def linkCopy(): IBMMQChannelBinding = IBMMQChannelBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     IBMMQChannelBinding.apply
