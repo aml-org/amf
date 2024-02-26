@@ -1,6 +1,6 @@
 package amf.apicontract.client.platform.model.domain.bindings.http
 
-import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, MessageBinding}
+import amf.apicontract.client.platform.model.domain.bindings.{BindingHeaders, BindingVersion, MessageBinding}
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.Shape
 import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding => InternalHttpMessageBinding}
@@ -11,7 +11,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class HttpMessageBinding(override private[amf] val _internal: InternalHttpMessageBinding)
     extends MessageBinding
-    with BindingVersion {
+    with BindingVersion
+    with BindingHeaders {
 
   @JSExportTopLevel("HttpMessageBinding")
   def this() = this(InternalHttpMessageBinding())
@@ -21,9 +22,9 @@ case class HttpMessageBinding(override private[amf] val _internal: InternalHttpM
     this
   }
 
-  def headers: Shape = _internal.headers
+  override def headers: Shape = _internal.headers
 
-  def withHeaders(headers: Shape): this.type = {
+  override def withHeaders(headers: Shape): this.type = {
     _internal.withHeaders(headers)
     this
   }
