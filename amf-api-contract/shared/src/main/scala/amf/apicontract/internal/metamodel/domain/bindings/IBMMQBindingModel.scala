@@ -190,6 +190,10 @@ object IBMMQChannelBindingModel extends ChannelBindingModel with BindingVersion 
 
   override def fields: List[Field] =
     List(
+      DestinationType,
+      Queue,
+      Topic,
+      MaxMsgLength,
       BindingVersion
     ) ++ ChannelBindingModel.fields
 
