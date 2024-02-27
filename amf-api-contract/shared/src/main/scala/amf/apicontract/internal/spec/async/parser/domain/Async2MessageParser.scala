@@ -7,7 +7,7 @@ import amf.apicontract.internal.metamodel.domain.MessageModel.IsAbstract
 import amf.apicontract.internal.metamodel.domain.{MessageModel, OperationModel, PayloadModel}
 import amf.apicontract.internal.spec.async.emitters.domain.MessageExamplePair
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncMessageBindingsParser
-import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
@@ -26,6 +26,7 @@ import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser._
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedMessageId
 
 trait AsyncMessageParser {
   def parse(): Message
@@ -47,6 +48,16 @@ object Async21MessageParser {
       implicit ctx: AsyncWebApiContext
   ): AsyncMessageParser = {
     val populator = if (isTrait) Async21MessageTraitPopulator() else Async21ConcreteMessagePopulator(parent)
+    val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
+    new Async20MessageParser(entryLike, parent, messageType, populator, finder, isTrait)(ctx)
+  }
+}
+
+object Async24MessageParser {
+  def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
+    implicit ctx: AsyncWebApiContext
+  ): AsyncMessageParser = {
+    val populator = if (isTrait) Async24MessageTraitPopulator() else Async24ConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
     new Async20MessageParser(entryLike, parent, messageType, populator, finder, isTrait)(ctx)
   }
@@ -146,6 +157,7 @@ case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: Me
 }
 
 abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extends SpecParserOps {
+  protected val closeShapeName: String
 
   def populate(map: YMap, message: Message): Message = {
     map.key("name", MessageModel.DisplayName in message)
@@ -220,7 +232,7 @@ abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extend
     if (shouldParsePayloadModel(map))
       parsePayload(map, message)
 
-    ctx.closedShape(message, map, "message")
+    ctx.closedShape(message, map, closeShapeName)
     AnnotationParser(message, map).parse()
     message
   }
@@ -287,8 +299,13 @@ abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extend
   }
 
   protected def addExampleNaming(node: YMap, example: Example): Example = example
+
 }
-abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async2MessagePopulator {
+
+abstract class Async20MessagePopulator()(implicit  ctx: AsyncWebApiContext) extends Async2MessagePopulator{
+  override protected val closeShapeName: String = "message20"
+}
+abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async20MessagePopulator {
 
   override protected def addExampleNaming(node: YMap, example: Example): Example = {
     node.key("name", (ExampleModel.DisplayName in example).allowingAnnotations)
@@ -296,6 +313,29 @@ abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) exten
 
     example
   }
+}
+
+abstract class Async24MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async21MessagePopulator {
+  override protected val closeShapeName: String = "message24"
+
+  override def populate(map: YMap, message: Message): Message = {
+    super.populate(map, message)
+    map.key("messageId").foreach { entry =>
+      val messageId = entry.value.toString()
+          if (!ctx.registerMessageId(messageId))
+            ctx.eh.violation(
+              ParserSideValidations.DuplicatedMessageId, message, s"Duplicated message id '$messageId'", entry.value.location
+            )
+      parseMessageId(map, message)
+    }
+    message
+  }
+
+  private def parseMessageId(map: YMap, message: Message): Unit = {
+    map.key("messageId", MessageModel.MessageId in message)
+  }
+
+
 }
 
 trait AsyncMessageTraitPopulator {
@@ -316,7 +356,18 @@ case class Async21MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
   override def populate(map: YMap, message: Message): Message = innerPopulate(map,super.populate(map, message))
 }
 case class Async20MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
-  extends Async2MessagePopulator()
+  extends Async20MessagePopulator()
+    with AsyncMessageTraitPopulator {
+
+  override protected def parseTraits(map: YMap, message: Message): Unit = Unit
+
+  override protected def parseSchema(map: YMap, payload: Payload): Unit = Unit
+
+  override def populate(map: YMap, message: Message): Message = innerPopulate(map, super.populate(map, message))
+}
+
+case class Async24MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
+  extends Async24MessagePopulator()
     with AsyncMessageTraitPopulator {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = Unit
@@ -355,7 +406,15 @@ case class Async21ConcreteMessagePopulator(parentId: String)(implicit ctx: Async
 }
 
 case class Async20ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
-    extends Async2MessagePopulator() with AsyncConcreteMessagePopulator() {
+    extends Async20MessagePopulator() with AsyncConcreteMessagePopulator() {
+
+  override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
+
+  def parseSchema(map: YMap, payload: Payload): Unit = innerParseSchema(map, payload)
+}
+
+case class Async24ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
+  extends Async24MessagePopulator() with AsyncConcreteMessagePopulator() {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
 

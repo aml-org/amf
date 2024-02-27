@@ -1814,6 +1814,7 @@ Types:
  | isAbstract | boolean | - | Defines a model as abstract | `http://a.ml/vocabularies/apiContract#isAbstract` |
  | headerExamples | [[Example](#example)] | false | Examples for a header definition | `http://a.ml/vocabularies/apiContract#headerExamples` |
  | headerSchema | [NodeShape](#nodeshape) | - | Object Schema who's properties are headers for the message. | `http://a.ml/vocabularies/apiContract#headerSchema` |
+ | messageId | string | - | Unique Id for request and response message | `http://a.ml/vocabularies/apiContract#messageId` |
  | link-target | url | - | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | - | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
  | recursive | boolean | - | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |
@@ -2633,6 +2634,7 @@ Types:
  | isAbstract | boolean | - | Defines a model as abstract | `http://a.ml/vocabularies/apiContract#isAbstract` |
  | headerExamples | [[Example](#example)] | false | Examples for a header definition | `http://a.ml/vocabularies/apiContract#headerExamples` |
  | headerSchema | [NodeShape](#nodeshape) | - | Object Schema who's properties are headers for the message. | `http://a.ml/vocabularies/apiContract#headerSchema` |
+ | messageId | string | - | Unique Id for request and response message | `http://a.ml/vocabularies/apiContract#messageId` |
  | link-target | url | - | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | - | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
  | recursive | boolean | - | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |
@@ -2702,6 +2704,7 @@ Types:
  | isAbstract | boolean | - | Defines a model as abstract | `http://a.ml/vocabularies/apiContract#isAbstract` |
  | headerExamples | [[Example](#example)] | false | Examples for a header definition | `http://a.ml/vocabularies/apiContract#headerExamples` |
  | headerSchema | [NodeShape](#nodeshape) | - | Object Schema who's properties are headers for the message. | `http://a.ml/vocabularies/apiContract#headerSchema` |
+ | messageId | string | - | Unique Id for request and response message | `http://a.ml/vocabularies/apiContract#messageId` |
  | link-target | url | - | URI of the linked element | `http://a.ml/vocabularies/document#link-target` |
  | link-label | string | - | Label for the type of link | `http://a.ml/vocabularies/document#link-label` |
  | recursive | boolean | - | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |

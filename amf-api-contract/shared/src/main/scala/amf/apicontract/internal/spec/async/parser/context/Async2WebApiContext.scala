@@ -111,6 +111,7 @@ object Async2WebApiContext {
       wrapped,
       declarations,
       mutable.HashSet.empty,
+      mutable.HashSet.empty,
       options,
       settings(spec),
       bindingSet(spec),
@@ -133,9 +134,9 @@ object Async2WebApiContext {
     case AsyncApi21 => ctx => Async21VersionFactory()(ctx)
     case AsyncApi22 => ctx => Async22VersionFactory()(ctx)
     case AsyncApi23 => ctx => Async23VersionFactory()(ctx)
-    case AsyncApi24 => ctx => Async23VersionFactory()(ctx)
-    case AsyncApi25 => ctx => Async23VersionFactory()(ctx)
-    case AsyncApi26 => ctx => Async23VersionFactory()(ctx)
+    case AsyncApi24 => ctx => Async24VersionFactory()(ctx)
+    case AsyncApi25 => ctx => Async24VersionFactory()(ctx)
+    case AsyncApi26 => ctx => Async24VersionFactory()(ctx)
   }
 
   private def bindingSet(spec: Spec): AsyncValidBindingSet = spec match {
@@ -155,6 +156,7 @@ class Async2WebApiContext private (
     private val wrapped: ParserContext,
     private val ds: Option[AsyncWebApiDeclarations] = None,
     private val operationIds: mutable.Set[String] = mutable.HashSet(),
+    private val messageIds: mutable.Set[String] = mutable.HashSet(),
     options: ParsingOptions = ParsingOptions(),
     settings: Async2Settings,
     bindings: AsyncValidBindingSet,
@@ -166,6 +168,7 @@ class Async2WebApiContext private (
       wrapped,
       ds,
       operationIds,
+      messageIds,
       settings,
       bindings
     ) {
@@ -178,6 +181,7 @@ class Async2WebApiContext private (
       this,
       Some(declarations),
       operationIds,
+      messageIds,
       options,
       settings,
       bindings,

@@ -74,6 +74,14 @@ trait MessageModel
     )
   )
 
+  val MessageId: Field = Field(
+    Str,
+    ApiContract + "messageId",
+    ModelDoc(
+      ModelVocabularies.ApiContract, "messageId", "Unique Id for request and response message"
+    )
+  )
+
 }
 
 object MessageModel extends MessageModel {
@@ -93,7 +101,8 @@ object MessageModel extends MessageModel {
       Documentation,
       IsAbstract,
       HeaderExamples,
-      HeaderSchema
+      HeaderSchema,
+      MessageId
     ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiContract + "Message" :: DomainElementModel.`type`
