@@ -132,6 +132,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
             fs.entry(MessageModel.Title).map(f => result += ValueEmitter("title", f))
             fs.entry(MessageModel.Summary).map(f => result += ValueEmitter("summary", f))
             fs.entry(MessageModel.Description).map(f => result += ValueEmitter("description", f))
+            fs.entry(MessageModel.MessageId).map(f=>result += ValueEmitter("messageId", f) )
             fs.entry(MessageModel.Tags)
               .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
             fs.entry(MessageModel.Documentation)

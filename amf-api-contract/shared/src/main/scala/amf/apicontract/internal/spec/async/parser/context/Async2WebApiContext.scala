@@ -111,6 +111,7 @@ object Async2WebApiContext {
       wrapped,
       declarations,
       mutable.HashSet.empty,
+      mutable.HashSet.empty,
       options,
       settings(spec),
       bindingSet(spec),
@@ -155,6 +156,7 @@ class Async2WebApiContext private (
     private val wrapped: ParserContext,
     private val ds: Option[AsyncWebApiDeclarations] = None,
     private val operationIds: mutable.Set[String] = mutable.HashSet(),
+    private val messageIds: mutable.Set[String] = mutable.HashSet(),
     options: ParsingOptions = ParsingOptions(),
     settings: Async2Settings,
     bindings: AsyncValidBindingSet,
@@ -166,6 +168,7 @@ class Async2WebApiContext private (
       wrapped,
       ds,
       operationIds,
+      messageIds,
       settings,
       bindings
     ) {
@@ -178,6 +181,7 @@ class Async2WebApiContext private (
       this,
       Some(declarations),
       operationIds,
+      messageIds,
       options,
       settings,
       bindings,

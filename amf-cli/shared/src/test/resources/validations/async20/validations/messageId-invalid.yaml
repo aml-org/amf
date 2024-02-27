@@ -1,0 +1,12 @@
+asyncapi: 2.2.0
+info:
+  title: Best API in the world
+  version: 0.1.0
+channels:
+  OperationCreationQueue:
+    subscribe:
+      description: testuli
+components:
+  messages:
+    SomeMessage:
+      messageId: SomeMessage

@@ -337,6 +337,23 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("ibmmq-binding-extra-key.yaml", Some("ibmmq-binding-extra-key.report"))
   }
 
+
+  test("MessageIds NOT duplicated") {
+    validate("messageIds-not-duplicated.yaml", Some("messageIds-not-duplicated.report"))
+  }
+
+  test("MessageIds cant be duplicate") {
+    validate("messageIds-duplicated.yaml", Some("messageIds-duplicated.report"))
+  }
+
+  test("MessageIds inline duplicate") {
+    validate("duplicate-messageId-inline.yaml", Some("duplicate-messageId-inline.report"))
+  }
+
+  test("invalid key in async 2.0") {
+    validate("messageId-invalid.yaml", Some("messageId-invalid.report"))
+  }
+
   test("Async 2.2+ channel servers property") {
     validate("channel-servers.yaml", Some("channel-servers.report"))
   }

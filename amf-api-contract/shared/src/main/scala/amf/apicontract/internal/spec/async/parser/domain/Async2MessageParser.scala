@@ -7,7 +7,7 @@ import amf.apicontract.internal.metamodel.domain.MessageModel.IsAbstract
 import amf.apicontract.internal.metamodel.domain.{MessageModel, OperationModel, PayloadModel}
 import amf.apicontract.internal.spec.async.emitters.domain.MessageExamplePair
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncMessageBindingsParser
-import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
@@ -26,6 +26,7 @@ import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser._
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedMessageId
 
 trait AsyncMessageParser {
   def parse(): Message
@@ -319,9 +320,22 @@ abstract class Async24MessagePopulator()(implicit ctx: AsyncWebApiContext) exten
 
   override def populate(map: YMap, message: Message): Message = {
     super.populate(map, message)
-    map.key("messageId", MessageModel.MessageId in message)
+    map.key("messageId").foreach { entry =>
+      val messageId = entry.value.toString()
+          if (!ctx.registerMessageId(messageId))
+            ctx.eh.violation(
+              ParserSideValidations.DuplicatedMessageId, message, s"Duplicated message id '$messageId'", entry.value.location
+            )
+      parseMessageId(map, message)
+    }
     message
   }
+
+  private def parseMessageId(map: YMap, message: Message): Unit = {
+    map.key("messageId", MessageModel.MessageId in message)
+  }
+
+
 }
 
 trait AsyncMessageTraitPopulator {
