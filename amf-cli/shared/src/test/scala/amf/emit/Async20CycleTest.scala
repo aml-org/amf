@@ -147,7 +147,12 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/ibmmq-binding.yaml"
     ),
     FixtureData("Async specific channel servers", "channel-servers.yaml", "channel-servers.yaml"),
-    FixtureData("Async 2.3 components", "components/components-2.3.yaml", "components/components-2.3.yaml")
+    FixtureData("Async 2.3 components", "components/components-2.3.yaml", "components/components-2.3.yaml"),
+    FixtureData(
+      "anypointMQ binding",
+      "bindings/anypoint-binding.yaml",
+      "bindings/anypoint-binding.yaml"
+    )
 
 // TODO: figure out why this test is commented out
 //    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
