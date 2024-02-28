@@ -8,8 +8,7 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
 import amf.apicontract.internal.metamodel.domain.bindings.{
   IBMMQChannelBindingModel,
   IBMMQChannelQueueModel,
-  IBMMQChannelTopicModel,
-  WebSocketsChannelBindingModel
+  IBMMQChannelTopicModel
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
@@ -33,7 +32,7 @@ object IBMMQChannelBindingParser extends BindingParser[IBMMQChannelBinding] {
     parseQueue(binding, map)
     parseTopic(binding, map)
 
-    parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
+    parseBindingVersion(binding, IBMMQChannelBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding, map, "IBMMQChannelBinding")
 

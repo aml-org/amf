@@ -99,6 +99,8 @@ private[amf] object APIEntities extends Entities {
     IBMMQServerBindingModel,
     IBMMQChannelBindingModel,
     IBMMQChannelQueueModel,
-    IBMMQChannelTopicModel
+    IBMMQChannelTopicModel,
+    AnypointMQMessageBindingModel,
+    AnypointMQChannelBindingModel
   )
 }

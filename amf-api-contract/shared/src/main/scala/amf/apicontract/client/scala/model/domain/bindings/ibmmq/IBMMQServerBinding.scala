@@ -35,7 +35,7 @@ class IBMMQServerBinding(override val fields: Fields, override val annotations: 
 
   override def componentId: String = s"/$IBMMQ-server"
 
-  override def linkCopy(): IBMMQServerBinding = IBMMQServerBinding()
+  override def linkCopy(): IBMMQServerBinding = IBMMQServerBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     IBMMQServerBinding.apply

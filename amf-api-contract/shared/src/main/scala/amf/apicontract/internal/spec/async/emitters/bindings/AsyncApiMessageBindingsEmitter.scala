@@ -2,18 +2,20 @@ package amf.apicontract.internal.spec.async.emitters.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBinding
+import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding
 import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091MessageBindingModel,
+  AnypointMQMessageBindingModel,
   HttpMessageBindingModel,
   IBMMQMessageBindingModel,
   KafkaMessageBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, IBMMQ, Kafka, Mqtt}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, Http, IBMMQ, Kafka, Mqtt}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
@@ -35,12 +37,13 @@ class AsyncApiMessageBindingsEmitter(binding: MessageBinding, ordering: SpecOrde
   }
 
   private def emitterFor(binding: MessageBinding): Option[EntryEmitter] = binding match {
-    case binding: Amqp091MessageBinding => Some(new Amqp091MessageEmitter(binding, ordering))
-    case binding: HttpMessageBinding    => Some(new HttpMessageEmitter(binding, ordering))
-    case binding: KafkaMessageBinding   => Some(new KafkaMessageEmitter(binding, ordering))
-    case binding: MqttMessageBinding    => Some(new MqttMessageEmitter(binding, ordering))
-    case binding: IBMMQMessageBinding   => Some(new IBMMQMessageEmitter(binding, ordering))
-    case _                              => None
+    case binding: Amqp091MessageBinding    => Some(new Amqp091MessageEmitter(binding, ordering))
+    case binding: HttpMessageBinding       => Some(new HttpMessageEmitter(binding, ordering))
+    case binding: KafkaMessageBinding      => Some(new KafkaMessageEmitter(binding, ordering))
+    case binding: MqttMessageBinding       => Some(new MqttMessageEmitter(binding, ordering))
+    case binding: IBMMQMessageBinding      => Some(new IBMMQMessageEmitter(binding, ordering))
+    case binding: AnypointMQMessageBinding => Some(new AnypointMQMessageEmitter(binding, ordering))
+    case _                                 => None
   }
 
   override def position(): Position = pos(binding.annotations)
@@ -147,6 +150,28 @@ class IBMMQMessageEmitter(binding: IBMMQMessageBinding, ordering: SpecOrdering)(
         fs.entry(IBMMQMessageBindingModel.Description).foreach(f => result += ValueEmitter("description", f))
         fs.entry(IBMMQMessageBindingModel.Expiry).foreach(f => result += ValueEmitter("expiry", f))
         emitBindingVersion(fs, result)
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class AnypointMQMessageEmitter(binding: AnypointMQMessageBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode(AnypointMQ),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(AnypointMQMessageBindingModel.Headers)
+          .foreach(f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
+        emitBindingVersion(fs, result)
+
         traverse(ordering.sorted(result), emitter)
       }
     )

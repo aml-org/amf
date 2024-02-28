@@ -18,6 +18,8 @@ AMF Model Documentation
 * [AnnotationTypeDeclarationFragment](#annotationtypedeclarationfragment)
 * [AnyMapping](#anymapping)
 * [AnyShape](#anyshape)
+* [AnypointMQChannelBinding](#anypointmqchannelbinding)
+* [AnypointMQMessageBinding](#anypointmqmessagebinding)
 * [ApiKeySettings](#apikeysettings)
 * [ArrayNode](#arraynode)
 * [ArrayShape](#arrayshape)
@@ -467,6 +469,35 @@ Types:
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
+
+## AnypointMQChannelBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#AnypointMQChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | destination | string | - | The destination (queue or exchange) name for this channel. | `http://a.ml/vocabularies/apiBinding#destination` |
+ | destinationType | string | - | The type of destination (either exchange or queue or fifo-queue). | `http://a.ml/vocabularies/apiBinding#destinationType` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## AnypointMQMessageBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#AnypointMQMessageBinding`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | headers | [Shape](#shape) | - | A Schema object containing the definitions for HTTP-specific headers | `http://a.ml/vocabularies/apiBinding#headers` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## ApiKeySettings
 Settings for an API Key security scheme
@@ -1514,6 +1545,10 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | destinationType | string | - | Defines the type of AsyncAPI channel. | `http://a.ml/vocabularies/apiBinding#destinationType` |
+ | queue | [IBMMQChannelQueue](#ibmmqchannelqueue) | - | Defines the properties of a queue. | `http://a.ml/vocabularies/apiBinding#queue` |
+ | topic | [IBMMQChannelTopic](#ibmmqchanneltopic) | - | Defines the properties of a topic. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | maxMsgLength | int | - | The maximum length of the physical message (in bytes) accepted by the Topic or Queue. Messages produced that are greater in size than this value may fail to be delivered. | `http://a.ml/vocabularies/apiBinding#maxMsgLength` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |

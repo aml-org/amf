@@ -14,11 +14,12 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 
 object AsyncMessageBindingsParser {
   private val parserMap: Map[String, BindingParser[MessageBinding]] = Map(
-    Amqp  -> Amqp091MessageBindingParser,
-    Http  -> HttpMessageBindingParser,
-    Kafka -> KafkaMessageBindingParser,
-    Mqtt  -> MqttMessageBindingParser,
-    IBMMQ -> IBMMQMessageBindingParser
+    Amqp       -> Amqp091MessageBindingParser,
+    Http       -> HttpMessageBindingParser,
+    Kafka      -> KafkaMessageBindingParser,
+    Mqtt       -> MqttMessageBindingParser,
+    IBMMQ      -> IBMMQMessageBindingParser,
+    AnypointMQ -> AnypointMQMessageBindingParser
   )
 }
 

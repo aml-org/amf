@@ -32,7 +32,7 @@ class IBMMQMessageBinding(override val fields: Fields, override val annotations:
 
   override def componentId: String = s"/$IBMMQ-message"
 
-  override def linkCopy(): IBMMQMessageBinding = IBMMQMessageBinding()
+  override def linkCopy(): IBMMQMessageBinding = IBMMQMessageBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     IBMMQMessageBinding.apply

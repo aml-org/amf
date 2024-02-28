@@ -2,9 +2,10 @@ package amf.apicontract.internal.spec.async.parser.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.{ChannelBinding, ChannelBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, IBMMQ, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, WebSockets}
 import amf.apicontract.internal.spec.async.parser.bindings.channel.{
   Amqp091ChannelBindingParser,
+  AnypointMQChannelBindingParser,
   IBMMQChannelBindingParser,
   WebSocketsChannelBindingParser
 }
@@ -20,7 +21,8 @@ object AsyncChannelBindingsParser {
   private val parserMap: Map[String, BindingParser[ChannelBinding]] = Map(
     Amqp       -> Amqp091ChannelBindingParser,
     WebSockets -> WebSocketsChannelBindingParser,
-    IBMMQ      -> IBMMQChannelBindingParser
+    IBMMQ      -> IBMMQChannelBindingParser,
+    AnypointMQ -> AnypointMQChannelBindingParser
   )
 }
 

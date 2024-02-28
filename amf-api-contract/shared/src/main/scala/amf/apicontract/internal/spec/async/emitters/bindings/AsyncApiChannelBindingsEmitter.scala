@@ -6,6 +6,7 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091ChannelExchange,
   Amqp091Queue
 }
+import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQChannelBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQChannelBinding,
   IBMMQChannelQueue,
@@ -16,13 +17,14 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091ChannelBindingModel,
   Amqp091ChannelExchangeModel,
   Amqp091QueueModel,
+  AnypointMQChannelBindingModel,
   IBMMQChannelBindingModel,
   IBMMQChannelQueueModel,
   IBMMQChannelTopicModel,
   WebSocketsChannelBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, IBMMQ, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, WebSockets}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
@@ -48,6 +50,7 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
     case binding: Amqp091ChannelBinding    => Some(new Amqp091ChannelBindingEmitter(binding, ordering))
     case binding: WebSocketsChannelBinding => Some(new WebSocketChannelBindingEmitter(binding, ordering))
     case binding: IBMMQChannelBinding      => Some(new IBMMQChannelBindingEmitter(binding, ordering))
+    case binding: AnypointMQChannelBinding => Some(new AnypointMQChannelBindingEmitter(binding, ordering))
     case _                                 => None
   }
 
@@ -222,6 +225,30 @@ class IBMMQChannelTopicEmitter(binding: IBMMQChannelTopic, ordering: SpecOrderin
         fs.entry(IBMMQChannelTopicModel.ObjectName).foreach(f => result += ValueEmitter("objectName", f))
         fs.entry(IBMMQChannelTopicModel.DurablePermitted).foreach(f => result += ValueEmitter("durablePermitted", f))
         fs.entry(IBMMQChannelTopicModel.LastMsgRetained).foreach(f => result += ValueEmitter("lastMsgRetained", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class AnypointMQChannelBindingEmitter(binding: AnypointMQChannelBinding, ordering: SpecOrdering)
+    extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(AnypointMQ),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(AnypointMQChannelBindingModel.Destination).foreach(f => result += ValueEmitter("destination", f))
+        fs.entry(AnypointMQChannelBindingModel.DestinationType)
+          .foreach(f => result += ValueEmitter("destinationType", f))
+
+        emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
       }

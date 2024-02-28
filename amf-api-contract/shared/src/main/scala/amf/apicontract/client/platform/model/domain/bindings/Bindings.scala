@@ -7,7 +7,7 @@ import amf.apicontract.client.scala.model.domain.bindings.{
   ServerBinding => InternalServerBinding
 }
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, Linkable}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, Shape}
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -35,4 +35,9 @@ trait BindingVersion {
   protected def bindingVersion: StrField
   def withBindingVersion(bindingVersion: String): this.type
 
+}
+
+trait BindingHeaders {
+  protected def headers: Shape
+  def withHeaders(headers: Shape): this.type
 }
