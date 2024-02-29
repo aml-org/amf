@@ -25,6 +25,12 @@ object ServerModel extends DomainElementModel with NameFieldSchema with Describe
     ModelDoc(ModelVocabularies.ApiContract, "variable", "Variables in the URL for the server")
   )
 
+  val Tags = Field(
+    Array(ParameterModel),
+    ApiContract + "tags",
+    ModelDoc(ModelVocabularies.ApiContract, "tags", "Tags for the different Servers")
+  )
+
   val Protocol = Field(
     Str,
     ApiContract + "protocol",
@@ -56,6 +62,7 @@ object ServerModel extends DomainElementModel with NameFieldSchema with Describe
       Name,
       Url,
       Description,
+      Tags,
       Variables,
       Protocol,
       ProtocolVersion,

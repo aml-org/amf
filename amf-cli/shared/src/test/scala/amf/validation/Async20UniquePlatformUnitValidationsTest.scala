@@ -361,4 +361,9 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.2+ AnypointMQ Closed Shape validation") {
     validate("anypoint-binding-extra-key.yaml", Some("anypoint-binding-extra-key.report"))
   }
+
+  test("Async 2.5 tags in servers") {
+    validate("server-tags.yaml", Some("server-tags.report"))
+  }
+
 }

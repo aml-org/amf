@@ -147,8 +147,9 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/ibmmq-binding.yaml"
     ),
     FixtureData("Async specific channel servers", "channel-servers.yaml", "channel-servers.yaml"),
+    FixtureData("Async servers tags", "server-tags.yaml", "server-tags.yaml"),
     FixtureData("Async 2.3 components", "components/components-2.3.yaml", "components/components-2.3.yaml"),
-    FixtureData(
+      FixtureData(
       "anypointMQ binding",
       "bindings/anypoint-binding.yaml",
       "bindings/anypoint-binding.yaml"

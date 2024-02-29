@@ -1,0 +1,37 @@
+asyncapi: 2.5.0
+info:
+  title: Example API
+  version: "1.0"
+servers:
+  production:
+    url: https://api.example.com
+    protocol: https
+    description: Production server
+    tags:
+      -
+        name: production
+        description: Production environment
+      -
+        name: https
+        description: Supports HTTPS protocol
+channels:
+  /example:
+    subscribe:
+      operationId: exampleSubscribe
+      summary: An example subscription
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            exampleField:
+              type: string
+components:
+  messages:
+    exampleMessage:
+      summary: An example message
+      payload:
+        type: object
+        properties:
+          exampleField:
+            type: string

@@ -99,3 +99,11 @@ class Async24VersionFactory()(implicit  ctx: AsyncWebApiContext) extends Async23
 object Async24VersionFactory {
   def apply()(implicit ctx: AsyncWebApiContext): Async24VersionFactory = new Async24VersionFactory()(ctx)
 }
+
+class Async25VersionFactory(implicit  ctx: AsyncWebApiContext) extends Async24VersionFactory {
+  override def serversParser(map: YMap, api: AsyncApi): AsyncServersParser = new Async25ServersParser(map, api)
+}
+
+object Async25VersionFactory {
+  def apply()(implicit ctx: AsyncWebApiContext): Async25VersionFactory = new Async25VersionFactory()(ctx)
+}
