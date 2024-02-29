@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.domain
 
-import amf.apicontract.client.scala.model.domain.Server
+import amf.apicontract.client.scala.model.domain.{Server, Tag}
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.metamodel.domain.ServerModel
@@ -8,7 +8,7 @@ import amf.apicontract.internal.spec.async.parser.bindings.AsyncServerBindingsPa
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServer
 import amf.apicontract.internal.spec.common.parser.OasLikeSecurityRequirementParser
-import amf.apicontract.internal.spec.oas.parser.domain.OasLikeServerParser
+import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeServerParser, TagsParser}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
@@ -47,6 +47,11 @@ class Async23ServersParser(map: YMap, api: AsyncApi)(
 ) extends AsyncServersParser(map, api) {
   override protected def serverParser(entryLike: YMapEntryLike): OasLikeServerParser =
     new Async23ServerParser(api.id, entryLike)
+}
+
+class Async25ServersParser(map: YMap, api: AsyncApi)(override implicit val ctx: AsyncWebApiContext) extends AsyncServersParser(map, api){
+  override protected def serverParser(entryLike: YMapEntryLike): OasLikeServerParser =
+    new Async25SeverParser(api.id, entryLike)
 }
 
 class Async20ServerParser(parent: String, entryLike: YMapEntryLike)(implicit
@@ -134,5 +139,17 @@ class Async23ServerParser(parent: String, entryLike: YMapEntryLike)(implicit ove
       s.setWithoutId(ServerModel.Name, ScalarNode(k).string(), Annotations(k))
     }
     s
+  }
+}
+
+class Async25SeverParser(parent: String, entryLike: YMapEntryLike)(implicit override val ctx: AsyncWebApiContext)
+  extends Async23ServerParser(parent, entryLike){
+  override def parse(): Server = {
+    val server = super.parse()
+    map.key("tags").foreach{ entry =>
+      val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag).parse())
+      server.setWithoutId(ServerModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+    }
+    server
   }
 }

@@ -135,8 +135,8 @@ object Async2WebApiContext {
     case AsyncApi22 => ctx => Async22VersionFactory()(ctx)
     case AsyncApi23 => ctx => Async23VersionFactory()(ctx)
     case AsyncApi24 => ctx => Async24VersionFactory()(ctx)
-    case AsyncApi25 => ctx => Async24VersionFactory()(ctx)
-    case AsyncApi26 => ctx => Async24VersionFactory()(ctx)
+    case AsyncApi25 => ctx => Async25VersionFactory()(ctx)
+    case AsyncApi26 => ctx => Async25VersionFactory()(ctx)
   }
 
   private def bindingSet(spec: Spec): AsyncValidBindingSet = spec match {

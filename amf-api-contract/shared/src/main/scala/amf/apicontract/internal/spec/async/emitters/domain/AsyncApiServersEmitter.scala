@@ -1,14 +1,10 @@
 package amf.apicontract.internal.spec.async.emitters.domain
 
-import amf.apicontract.client.scala.model.domain.Server
+import amf.apicontract.client.scala.model.domain.{Server, Tag}
 import amf.apicontract.internal.metamodel.domain.ServerModel
-import amf.apicontract.internal.spec.common.emitter.{
-  AgnosticShapeEmitterContextAdapter,
-  OasServerVariablesEmitter,
-  SecurityRequirementsEmitter
-}
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, OasServerVariablesEmitter, SecurityRequirementsEmitter}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
+import amf.apicontract.internal.spec.oas.emitter.domain.{OasTagToReferenceEmitter, TagsEmitter}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{RawEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
@@ -91,6 +87,7 @@ class AsyncApiServerPartEmitter(server: Server, ordering: SpecOrdering)(implicit
       fs.entry(ServerModel.Protocol).foreach(f => result += ValueEmitter("protocol", f))
       fs.entry(ServerModel.ProtocolVersion).foreach(f => result += ValueEmitter("protocolVersion", f))
       fs.entry(ServerModel.Description).foreach(f => result += ValueEmitter("description", f))
+      fs.entry(ServerModel.Tags).foreach(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
       fs.entry(ServerModel.Variables).foreach(f => result += OasServerVariablesEmitter(f, ordering))
       fs.entry(ServerModel.Security).foreach(f => result += SecurityRequirementsEmitter("security", f, ordering))
       fs.entry(ServerModel.Bindings)

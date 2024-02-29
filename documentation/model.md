@@ -2978,6 +2978,7 @@ Types:
  | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | urlTemplate | string | - | URL (potentially a template) for the server | `http://a.ml/vocabularies/core#urlTemplate` |
  | description | string | - | Human readable description of an element | `http://a.ml/vocabularies/core#description` |
+ | tags | [[Parameter](#parameter)] | false | Tags for the different Servers | `http://a.ml/vocabularies/apiContract#tags` |
  | variable | [[Parameter](#parameter)] | false | Variables in the URL for the server | `http://a.ml/vocabularies/apiContract#variable` |
  | protocol | string | - | The protocol this URL supports for connection | `http://a.ml/vocabularies/apiContract#protocol` |
  | protocolVersion | string | - | The version of the protocol used for connection | `http://a.ml/vocabularies/apiContract#protocolVersion` |

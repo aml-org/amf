@@ -21,6 +21,7 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
   def name: StrField                            = _internal.name
   def url: StrField                             = _internal.url
   def description: StrField                     = _internal.description
+  def tags: ClientList[Tag]                     = _internal.tags.asClient
   def variables: ClientList[Parameter]          = _internal.variables.asClient
   def protocol: StrField                        = _internal.protocol
   def protocolVersion: StrField                 = _internal.protocolVersion
@@ -36,6 +37,12 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
   /** Set description property of this Server. */
   def withDescription(description: String): this.type = {
     _internal.withDescription(description)
+    this
+  }
+
+  /** Set tags property of this Server. */
+  def withTags(tags:ClientList[Tag]): this.type = {
+    _internal.withTags(tags.asInternal)
     this
   }
 
