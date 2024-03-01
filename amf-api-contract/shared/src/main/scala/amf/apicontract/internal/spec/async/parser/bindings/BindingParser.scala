@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.async.parser.bindings
 import amf.apicontract.client.scala.model.domain.bindings.BindingVersion
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
-import amf.core.client.scala.model.domain.{AmfElement, AmfScalar, DomainElement, Linkable}
+import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement, Linkable}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
@@ -24,8 +24,8 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
     if (bindingVersionIsEmpty(binding)) setDefaultBindingVersionValue(binding, field)
   }
 
-  protected def setDefaultValue(binding: BindingVersion, field: Field, element: AmfElement): binding.type = {
-    binding.setWithoutId(field, element, Annotations.synthesized())
+  protected def setDefaultValue(obj: AmfObject, field: Field, element: AmfElement): obj.type = {
+    obj.setWithoutId(field, element, Annotations.synthesized())
   }
 
   private def setDefaultBindingVersionValue(binding: BindingVersion, field: Field) = {

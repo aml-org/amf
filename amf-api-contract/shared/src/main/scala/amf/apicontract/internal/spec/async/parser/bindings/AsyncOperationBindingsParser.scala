@@ -3,12 +3,13 @@ package amf.apicontract.internal.spec.async.parser.bindings
 import amf.apicontract.client.scala.model.domain.bindings.{OperationBinding, OperationBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncOperationBindingsParser.parserMap
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, Kafka, Mqtt}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, Kafka, Mqtt, Solace}
 import amf.apicontract.internal.spec.async.parser.bindings.operation.{
   Amqp091OperationBindingParser,
   HttpOperationBindingParser,
   KafkaOperationBindingParser,
-  MqttOperationBindingParser
+  MqttOperationBindingParser,
+  SolaceOperationBindingParser
 }
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationBindings
@@ -20,10 +21,11 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 
 object AsyncOperationBindingsParser {
   private val parserMap: Map[String, BindingParser[OperationBinding]] = Map(
-    Amqp  -> Amqp091OperationBindingParser,
-    Http  -> HttpOperationBindingParser,
-    Kafka -> KafkaOperationBindingParser,
-    Mqtt  -> MqttOperationBindingParser
+    Amqp   -> Amqp091OperationBindingParser,
+    Http   -> HttpOperationBindingParser,
+    Kafka  -> KafkaOperationBindingParser,
+    Mqtt   -> MqttOperationBindingParser,
+    Solace -> SolaceOperationBindingParser
   )
 }
 
