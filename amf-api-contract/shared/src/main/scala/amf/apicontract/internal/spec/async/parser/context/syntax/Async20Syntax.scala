@@ -128,7 +128,7 @@ object Async20Syntax extends SpecSyntax {
       "clientId",
       "bindingVersion"
     ),
-    "message20" -> Set(
+    "message" -> Set(
       "headers",
       "payload",
       "correlationId",
@@ -144,23 +144,23 @@ object Async20Syntax extends SpecSyntax {
       "examples",
       "traits"
     ),
-    "message24" -> Set(
-      "headers",
-      "payload",
-      "correlationId",
-      "schemaFormat",
-      "contentType",
-      "name",
-      "title",
-      "summary",
-      "description",
-      "tags",
-      "externalDocs",
-      "bindings",
-      "examples",
-      "traits",
-      "messageId"
-    ),
+//    "message24" -> Set(
+//      "headers",
+//      "payload",
+//      "correlationId",
+//      "schemaFormat",
+//      "contentType",
+//      "name",
+//      "title",
+//      "summary",
+//      "description",
+//      "tags",
+//      "externalDocs",
+//      "bindings",
+//      "examples",
+//      "traits",
+//      "messageId"
+//    ),
     "message examples" -> Set(
       "headers",
       "payload"
