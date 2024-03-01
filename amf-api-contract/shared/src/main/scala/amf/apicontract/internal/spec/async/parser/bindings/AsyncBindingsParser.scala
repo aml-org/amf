@@ -119,4 +119,5 @@ object Bindings {
   val Mercure    = "mercure"
   val IBMMQ      = "ibmmq"
   val AnypointMQ = "anypointmq"
+  val Solace     = "solace"
 }

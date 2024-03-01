@@ -6,21 +6,11 @@ import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.anypointmq._
-import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.ibmmq.{
-  IBMMQChannelBinding,
-  IBMMQChannelQueue,
-  IBMMQChannelTopic,
-  IBMMQMessageBinding,
-  IBMMQServerBinding
-}
-import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill
-}
+import amf.apicontract.client.platform.model.domain.bindings.http._
+import amf.apicontract.client.platform.model.domain.bindings.ibmmq._
+import amf.apicontract.client.platform.model.domain.bindings.kafka._
+import amf.apicontract.client.platform.model.domain.bindings.mqtt._
+import amf.apicontract.client.platform.model.domain.bindings.solace._
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.client.platform.model.domain.federation._
 import amf.apicontract.client.platform.model.domain.security._
@@ -281,6 +271,26 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(EmptyBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.EmptyBinding => EmptyBinding(s)
+    }
+    platform.registerWrapper(SolaceServerBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding =>
+        SolaceServerBinding(s)
+    }
+    platform.registerWrapper(SolaceOperationBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding =>
+        SolaceOperationBinding(s)
+    }
+    platform.registerWrapper(SolaceOperationDestinationModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination =>
+        SolaceOperationDestination(s)
+    }
+    platform.registerWrapper(SolaceOperationQueueModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationQueue =>
+        SolaceOperationQueue(s)
+    }
+    platform.registerWrapper(SolaceOperationTopicModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationTopic =>
+        SolaceOperationTopic(s)
     }
     platform.registerWrapper(AnypointMQMessageBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding =>
