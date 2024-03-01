@@ -157,7 +157,6 @@ case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: Me
 }
 
 abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extends SpecParserOps {
-  protected val closeShapeName: String
 
   def populate(map: YMap, message: Message): Message = {
     map.key("name", MessageModel.DisplayName in message)
@@ -232,7 +231,7 @@ abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extend
     if (shouldParsePayloadModel(map))
       parsePayload(map, message)
 
-    ctx.closedShape(message, map, closeShapeName)
+    ctx.closedShape(message, map, "message")
     AnnotationParser(message, map).parse()
     message
   }
@@ -303,7 +302,7 @@ abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extend
 }
 
 abstract class Async20MessagePopulator()(implicit  ctx: AsyncWebApiContext) extends Async2MessagePopulator{
-  override protected val closeShapeName: String = "message20"
+
 }
 abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async20MessagePopulator {
 
@@ -316,7 +315,7 @@ abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) exten
 }
 
 abstract class Async24MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async21MessagePopulator {
-  override protected val closeShapeName: String = "message24"
+
 
   override def populate(map: YMap, message: Message): Message = {
     super.populate(map, message)
