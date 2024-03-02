@@ -1,0 +1,33 @@
+asyncapi: 2.3.0
+info:
+  title: test solace binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: solace
+    bindings:
+      solace:
+        msgVpn: test
+        bindingVersion: 1.2.3
+channels:
+  some-channel:
+    publish:
+      bindings:
+        solace:
+          bindingVersion: 0.3.0
+          destinations:
+            -
+              destinationType: queue
+              queue:
+                name: CreatedHREvents
+                accessType: test
+                maxMsgSpoolSize: test
+                maxTtl: test
+                topicSubscriptions:
+                  - person/*/created
+            -
+              destinationType: topic
+              topic:
+                topicSubscriptions:
+                  - person/*/updated

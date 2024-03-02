@@ -25,6 +25,7 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
   }
 
   protected def setDefaultValue(obj: AmfObject, field: Field, element: AmfElement): obj.type = {
+    // TODO: if field not explicit in spec we should check for synthesized and not emit it
     obj.setWithoutId(field, element, Annotations.synthesized())
   }
 
