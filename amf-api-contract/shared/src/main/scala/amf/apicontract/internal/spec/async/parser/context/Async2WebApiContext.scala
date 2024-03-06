@@ -1,20 +1,10 @@
 package amf.apicontract.internal.spec.async.parser.context
 
-import amf.apicontract.internal.spec.async._
 import amf.apicontract.internal.spec.async.parser.context.syntax._
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{
-  AsyncApi20,
-  AsyncApi21,
-  AsyncApi22,
-  AsyncApi23,
-  AsyncApi24,
-  AsyncApi25,
-  AsyncApi26,
-  Spec
-}
+import amf.core.internal.remote._
 import amf.shapes.internal.spec.async.parser.Async2Settings
 
 import scala.collection.mutable
@@ -121,6 +111,7 @@ object Async2WebApiContext {
       wrapped,
       declarations,
       mutable.HashSet.empty,
+      mutable.HashSet.empty,
       options,
       settings(spec),
       bindingSet(spec),
@@ -140,12 +131,12 @@ object Async2WebApiContext {
 
   private def factory(spec: Spec): Async2WebApiContext => AsyncSpecVersionFactory = spec match {
     case AsyncApi20 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi21 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi22 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi23 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi24 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi25 => ctx => Async20VersionFactory()(ctx)
-    case AsyncApi26 => ctx => Async20VersionFactory()(ctx)
+    case AsyncApi21 => ctx => Async21VersionFactory()(ctx)
+    case AsyncApi22 => ctx => Async22VersionFactory()(ctx)
+    case AsyncApi23 => ctx => Async23VersionFactory()(ctx)
+    case AsyncApi24 => ctx => Async24VersionFactory()(ctx)
+    case AsyncApi25 => ctx => Async25VersionFactory()(ctx)
+    case AsyncApi26 => ctx => Async25VersionFactory()(ctx)
   }
 
   private def bindingSet(spec: Spec): AsyncValidBindingSet = spec match {
@@ -165,6 +156,7 @@ class Async2WebApiContext private (
     private val wrapped: ParserContext,
     private val ds: Option[AsyncWebApiDeclarations] = None,
     private val operationIds: mutable.Set[String] = mutable.HashSet(),
+    private val messageIds: mutable.Set[String] = mutable.HashSet(),
     options: ParsingOptions = ParsingOptions(),
     settings: Async2Settings,
     bindings: AsyncValidBindingSet,
@@ -176,6 +168,7 @@ class Async2WebApiContext private (
       wrapped,
       ds,
       operationIds,
+      messageIds,
       settings,
       bindings
     ) {
@@ -188,6 +181,7 @@ class Async2WebApiContext private (
       this,
       Some(declarations),
       operationIds,
+      messageIds,
       options,
       settings,
       bindings,

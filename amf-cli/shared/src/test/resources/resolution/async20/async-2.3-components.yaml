@@ -1,0 +1,18 @@
+asyncapi: 2.3.0
+info:
+  title: components-2.3
+  version: 1.0.0
+components:
+  servers:
+    myserver:
+      url: http://localhost:5000/ws
+      protocol: ws
+  channels:
+    myChannel:
+      description: mychannel
+servers:
+  production:
+    $ref: "#/components/servers/myserver"
+channels:
+  some/events:
+    $ref: "#/components/channels/myChannel"

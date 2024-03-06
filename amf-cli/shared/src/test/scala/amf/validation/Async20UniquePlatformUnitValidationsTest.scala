@@ -328,4 +328,42 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
       hideValidationResultsIfParseNotConforms = false
     )
   }
+
+  test("Mercure binding should be empty") {
+    validate("mercure-binding-nonempty.yaml", Some("mercure-binding-nonempty.report"))
+  }
+
+  test("IBMMQ Closed Shape validation") {
+    validate("ibmmq-binding-extra-key.yaml", Some("ibmmq-binding-extra-key.report"))
+  }
+
+
+  test("MessageIds NOT duplicated") {
+    validate("messageIds-not-duplicated.yaml", Some("messageIds-not-duplicated.report"))
+  }
+
+  test("MessageIds cant be duplicate") {
+    validate("messageIds-duplicated.yaml", Some("messageIds-duplicated.report"))
+  }
+
+  test("MessageIds inline duplicate") {
+    validate("duplicate-messageId-inline.yaml", Some("duplicate-messageId-inline.report"))
+  }
+
+  test("invalid key in async 2.0") {
+    validate("messageId-invalid.yaml", Some("messageId-invalid.report"))
+  }
+
+  test("Async 2.2+ channel servers property") {
+    validate("channel-servers.yaml", Some("channel-servers.report"))
+  }
+
+  test("Async 2.2+ AnypointMQ Closed Shape validation") {
+    validate("anypoint-binding-extra-key.yaml", Some("anypoint-binding-extra-key.report"))
+  }
+
+  test("Async 2.5 tags in servers") {
+    validate("server-tags.yaml", Some("server-tags.report"))
+  }
+
 }

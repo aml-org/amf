@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.client.common.validation.{Oas20Profile, Raml10Profile}
+import amf.core.client.common.validation.{Async20Profile, Oas20Profile, Raml10Profile}
 import amf.core.internal.remote.{Hint, Raml10YamlHint}
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
@@ -199,4 +199,7 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     )
   }
 
+  test("Async invalid channel server") {
+    checkReport("/async20/invalid-channel-server.yaml", Some("async/invalid-channel-server.report"), Async20Profile)
+  }
 }

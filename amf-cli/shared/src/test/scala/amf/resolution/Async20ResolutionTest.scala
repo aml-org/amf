@@ -200,6 +200,59 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Referencing declared servers and channels in 2.3", "async-2.3-components.%s") { config =>
+    cycle(
+      "async-2.3-components.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // W-12689955
+  multiGoldenTest("Should add specified servers to channels", "channel-servers.%s") { config =>
+    cycle(
+      "channel-servers.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // W-12689955
+  multiGoldenTest("Should add all servers to channels when servers isn't specified", "channel-servers-implicit.%s") {
+    config =>
+      cycle(
+        "channel-servers-implicit.yaml",
+        config.golden,
+        Async20YamlHint,
+        target = AmfJsonHint,
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  // W-12689955
+  test("async2.0 should not emit server channels if not specified") {
+    cycle(
+      "channel-servers-implicit.yaml",
+      "channel-servers-implicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+  // W-12689955
+  test("async2.0 should emit empty server channels keyword") {
+    cycle(
+      "channel-servers-empty.yaml",
+      "channel-servers-empty.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     super.transform(unit, config, AsyncAPIConfiguration.Async20())
   }

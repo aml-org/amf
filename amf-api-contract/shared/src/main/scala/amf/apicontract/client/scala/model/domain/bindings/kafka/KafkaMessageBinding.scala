@@ -23,7 +23,7 @@ class KafkaMessageBinding(override val fields: Fields, override val annotations:
 
   override def componentId: String = "/kafka-message"
 
-  override def linkCopy(): KafkaMessageBinding = KafkaMessageBinding()
+  override def linkCopy(): KafkaMessageBinding = KafkaMessageBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     KafkaMessageBinding.apply

@@ -1,0 +1,26 @@
+asyncapi: 2.2.0
+info:
+  title: test anypointmq binding
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      anypointmq:
+        destination: test
+        destinationType: test
+        bindingVersion: 0.1.0
+    description: some channel
+    publish:
+      bindings:
+        anypointmq: {}
+      message:
+        bindings:
+          anypointmq:
+            headers:
+              type: object
+              properties:
+                messageId:
+                  type: string
+            bindingVersion: 0.1.0
+        payload:
+          type: string

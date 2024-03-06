@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/messageId-invalid.yaml
+Profile:
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'messageId' not supported in a ASYNC 2.2 message node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/messageId-invalid.yaml#/declares/msg/SomeMessage
+  Property:
+  Range: [(12,6)-(13,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/messageId-invalid.yaml

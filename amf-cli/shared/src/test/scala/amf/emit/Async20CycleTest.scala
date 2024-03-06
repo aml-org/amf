@@ -125,7 +125,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Draft 7 schemas cycle", "draft-7-schemas-cycle.yaml", "draft-7-schemas-output.yaml"),
     FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.yaml"),
     FixtureData("Operation and message traits", "operation-message-traits.yaml", "operation-message-traits.yaml"),
-    FixtureData("components emission", "components-cycle.yaml", "components-cycle.yaml"),
+    FixtureData("components emission", "components/components-cycle.yaml", "components/components-cycle.yaml"),
     // TODO: fill async 2.x with each spec new features
     FixtureData("Async 2.1 doc - empty", "empty-async21.yaml", "empty-async21.yaml"),
     FixtureData("Async 2.2 doc - empty", "empty-async22.yaml", "empty-async22.yaml"),
@@ -137,6 +137,22 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "mercure binding",
       "bindings/mercure-binding.yaml",
       "bindings/mercure-binding.yaml"
+    ),
+    FixtureData("message example","sumary-name-example-message.yaml","sumary-name-example-message.yaml"),
+    FixtureData("message example in 2.0.0","sumary-name-example-message-2-0.yaml","sumary-name-example-message-2-0-compare.yaml"),
+    FixtureData("messageId in 2.4","messageId.yaml","messageId.yaml"),
+    FixtureData(
+      "ibmmq binding",
+      "bindings/ibmmq-binding.yaml",
+      "bindings/ibmmq-binding.yaml"
+    ),
+    FixtureData("Async specific channel servers", "channel-servers.yaml", "channel-servers.yaml"),
+    FixtureData("Async servers tags", "server-tags.yaml", "server-tags.yaml"),
+    FixtureData("Async 2.3 components", "components/components-2.3.yaml", "components/components-2.3.yaml"),
+      FixtureData(
+      "anypointMQ binding",
+      "bindings/anypoint-binding.yaml",
+      "bindings/anypoint-binding.yaml"
     )
 
 // TODO: figure out why this test is commented out

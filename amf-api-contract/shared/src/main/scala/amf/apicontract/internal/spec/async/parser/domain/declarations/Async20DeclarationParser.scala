@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.domain.declarations
 
-import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
+import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.bindings.{
   ChannelBindings,
   MessageBindings,
@@ -24,7 +24,6 @@ import amf.apicontract.internal.spec.async.parser.bindings.{
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain.{
   AsyncCorrelationIdParser,
-  AsyncMessageParser,
   AsyncOperationParser,
   AsyncParametersParser
 }
@@ -38,10 +37,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-case class Async20DeclarationParser()
-    extends AsyncDeclarationParser
-    with DeclarationKeyCollector
-    with OasLikeDeclarationsHelper {
+case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLikeDeclarationsHelper {
 
   protected val definitionsKey = "schemas"
 
@@ -61,7 +57,8 @@ case class Async20DeclarationParser()
     parseMessageTraits(map, parent + "/messageTraits")
 
     parseMessageDeclarations(map, parent + "/messages")
-    addDeclarationsToModel(document)
+
+    super.parseDeclarations(map, parent, document)
   }
 
   private def parseMessageDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =
@@ -70,7 +67,7 @@ case class Async20DeclarationParser()
       e => {
         addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
-          val message = AsyncMessageParser(YMapEntryLike(entry), parent, None).parse()
+          val message = ctx.factory.messageParser(YMapEntryLike(entry), parent, None).parse()
           message.add(DeclaredElement())
           ctx.declarations += message
         }
@@ -97,7 +94,7 @@ case class Async20DeclarationParser()
       entry => {
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val message = AsyncMessageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
+          val message = ctx.factory.messageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
           message.add(DeclaredElement())
           ctx.declarations += message
         }

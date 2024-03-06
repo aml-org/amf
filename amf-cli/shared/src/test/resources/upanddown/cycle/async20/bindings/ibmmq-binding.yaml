@@ -1,0 +1,45 @@
+asyncapi: 2.1.0
+info:
+  title: test mercure binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: ibmmq
+    bindings:
+      ibmmq:
+        groupId: test
+        ccdtQueueManagerName: test
+        cipherSpec: test
+        multiEndpointServer: true
+        heartBeatInterval: 123
+channels:
+  some-channel:
+    bindings:
+      ibmmq:
+        destinationType: test
+        queue:
+          objectName: test
+          isPartitioned: true
+          exclusive: false
+        topic:
+          string: test
+          objectName: test
+          durablePermitted: true
+          lastMsgRetained: false
+        maxMsgLength: 123
+        bindingVersion: test
+    description: some channel
+    publish:
+      bindings:
+        ibmmq: {}
+      message:
+        bindings:
+          ibmmq:
+            type: test
+            description: test
+            expiry: 123
+            bindingVersion: test
+            headers: test1, test2, test3
+        payload:
+          type: string

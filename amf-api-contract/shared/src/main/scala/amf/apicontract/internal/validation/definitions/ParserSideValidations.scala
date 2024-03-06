@@ -151,6 +151,11 @@ object ParserSideValidations extends Validations {
     "Duplicated operation id"
   )
 
+  val DuplicatedMessageId = validation(
+    "duplicated-message-id",
+    "duplicated messageId"
+  )
+
   val SchemasDeprecated = validation(
     "schemas-deprecated",
     "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"

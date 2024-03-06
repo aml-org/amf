@@ -1,27 +1,21 @@
 package amf.apicontract.internal.spec.async.parser.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
 import amf.apicontract.client.scala.model.domain.bindings.{ServerBinding, ServerBindings}
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  MqttServerBindingModel,
-  MqttServerLastWillModel,
-  ServerBindingsModel
-}
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, Http, Kafka, Mqtt}
-import amf.apicontract.internal.spec.async.parser.bindings.server.MqttServerBindingParser
+import amf.apicontract.internal.metamodel.domain.bindings.ServerBindingsModel
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{IBMMQ, Mqtt}
+import amf.apicontract.internal.spec.async.parser.bindings.server._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServerBindings
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.metamodel.Field
-import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import org.yaml.model.{YMap, YMapEntry}
 
 object AsyncServerBindingsParser {
   private val parserMap: Map[String, BindingParser[ServerBinding]] = Map(
-    Mqtt -> MqttServerBindingParser
+    Mqtt  -> MqttServerBindingParser,
+    IBMMQ -> IBMMQServerBindingParser
   )
 }
 case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)

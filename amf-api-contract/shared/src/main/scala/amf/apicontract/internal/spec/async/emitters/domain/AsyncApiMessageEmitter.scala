@@ -11,6 +11,7 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{OasTagToReferenceEmitte
 import org.mulesoft.common.client.lexical.Position
 import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
@@ -18,6 +19,7 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{CreativeWork, Example}
+import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.spec.common.emitter.ExampleDataNodePartEmitter
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -130,6 +132,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
             fs.entry(MessageModel.Title).map(f => result += ValueEmitter("title", f))
             fs.entry(MessageModel.Summary).map(f => result += ValueEmitter("summary", f))
             fs.entry(MessageModel.Description).map(f => result += ValueEmitter("description", f))
+            fs.entry(MessageModel.MessageId).map(f=>result += ValueEmitter("messageId", f) )
             fs.entry(MessageModel.Tags)
               .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
             fs.entry(MessageModel.Documentation)
@@ -243,7 +246,7 @@ case class MessageExamplePairEmitter(pair: MessageExamplePair, ordering: SpecOrd
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     b.obj { entryBuilder =>
-      val emitters: List[EntryEmitter] =
+      val exampleEmitters: List[EntryEmitter] =
         List("headers" -> pair.headerExample, "payload" -> pair.payloadExample).flatMap { case (key, example) =>
           example.map { ex =>
             EntryPartEmitter(
@@ -253,8 +256,25 @@ case class MessageExamplePairEmitter(pair: MessageExamplePair, ordering: SpecOrd
             )
           }
         }
+
+      val namingEmitters = List(
+        createValueEmitter(ExampleModel.DisplayName, "name"),
+        createValueEmitter(ExampleModel.Description, "summary")
+      ).collect { case Some(value) => value }
+
+      val emitters = exampleEmitters ++ namingEmitters
+
       traverse(ordering.sorted(emitters), entryBuilder)
     }
+  }
+
+  private def createValueEmitter(field: Field, name: String): Option[ValueEmitter] = {
+    val maybeHeaderName  = pair.headerExample.flatMap(_.fields.entry(field))
+    val maybePayloadName = pair.payloadExample.flatMap(_.fields.entry(field))
+
+    maybeHeaderName
+      .orElse(maybePayloadName)
+      .map(ValueEmitter(name, _))
   }
 
   override def position(): Position =

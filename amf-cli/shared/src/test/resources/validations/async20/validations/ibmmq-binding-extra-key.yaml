@@ -1,0 +1,51 @@
+asyncapi: 2.1.0
+info:
+  title: test mercure binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: mercure
+    bindings:
+      ibmmq:
+        groupId: test
+        ccdtQueueManagerName: test
+        cipherSpec: test
+        multiEndpointServer: true
+        heartBeatInterval: 123
+        thisKeyIsNotAllowed: should throw validation error
+channels:
+  some-channel:
+    bindings:
+      ibmmq:
+        destinationType: test
+        queue:
+          objectName: test
+          isPartitioned: true
+          exclusive: false
+          thisKeyIsNotAllowed: should throw validation error
+        topic:
+          string: test
+          objectName: test
+          durablePermitted: true
+          lastMsgRetained: false
+          thisKeyIsNotAllowed: should throw validation error
+        maxMsgLength: 123
+        bindingVersion: test
+        thisKeyIsNotAllowed: should throw validation error
+    description: some channel
+    publish:
+      bindings:
+        ibmmq:
+          key: value
+      message:
+        bindings:
+          ibmmq:
+            type: test
+            headers: test1, test2, test3
+            description: test
+            expiry: 123
+            bindingVersion: test
+            thisKeyIsNotAllowed: should throw validation error
+        payload:
+          type: string

@@ -1,6 +1,6 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.{Message, Parameter, Request, Response}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Message, Parameter, Request, Response, Server}
 import amf.apicontract.internal.metamodel.domain.MessageModel
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.transform.stages.ReferenceResolutionStage
@@ -36,6 +36,20 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
                 copy.withId(sourceParam.id).withName(sourceParam.name.value())
               } else
                 domain
+            case _ => domain
+          }
+        case sourceServer: Server =>
+          domain match {
+            case server: Server =>
+              val copy = server.copyElement().asInstanceOf[Server]
+              copy.withId(sourceServer.id).withName(sourceServer.name.value())
+            case _ => domain
+          }
+        case sourceEndpoint: EndPoint => // asyncApi channel
+          domain match {
+            case channel: EndPoint =>
+              val copy = channel.copyElement().asInstanceOf[EndPoint]
+              copy.withId(sourceEndpoint.id).withName(sourceEndpoint.name.value()).withPath(sourceEndpoint.path.value())
             case _ => domain
           }
         case _ => domain
