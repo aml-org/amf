@@ -4,10 +4,11 @@ import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.ServerVariableMissingDefault
 import amf.core.internal.parser.YMapOps
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
 case class OasServerVariableParser(entry: YMapEntry, parent: String)(implicit override val ctx: OasWebApiContext)
-    extends OasLikeServerVariableParser(entry, parent)(ctx) {
+    extends OasLikeServerVariableParser(YMapEntryLike(entry), parent)(ctx) {
 
   override protected def parseMap(variable: Parameter, map: YMap): Unit = {
     requiredDefaultField(variable, map)

@@ -32,7 +32,7 @@ trait AsyncSpecVersionFactory extends OasLikeSpecVersionFactory {
 
 class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpecVersionFactory {
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
-    AsyncServerVariableParser(entry, parent)(ctx)
+    Async20ServerVariableParser(YMapEntryLike(entry), parent)(ctx)
   override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
     AsyncOperationParser(entry, adopt)(ctx)
   override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
@@ -94,6 +94,9 @@ class Async24VersionFactory()(implicit  ctx: AsyncWebApiContext) extends Async23
       messageType: Option[MessageType],
       isTrait: Boolean
   )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async24MessageParser(entryLike, parent, messageType, isTrait)
+
+  override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
+   new Async24ServerVariableParser(YMapEntryLike(entry), parent)(ctx)
 }
 
 object Async24VersionFactory {

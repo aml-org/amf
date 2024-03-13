@@ -76,6 +76,13 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
         ordering
       )
 
+    if (declarations.serverVariables.nonEmpty)
+      result += AsyncApiServerVariablesDeclarationEmitter(
+        "serverVariables",
+        declarations.serverVariables.values.toSeq,
+        ordering
+      )
+
     if (declarations.channels.nonEmpty)
       result += AsyncApiChannelsDeclarationEmitter(
         "channels",

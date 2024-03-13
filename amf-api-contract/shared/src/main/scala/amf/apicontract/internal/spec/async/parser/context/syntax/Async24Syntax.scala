@@ -6,6 +6,9 @@ object Async24Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] =
     add(
       Async23Syntax.nodes,
-      "message" -> Set("messageId")
+      "message" -> Set("messageId"),
+      "components" -> Set(
+        "serverVariables",
     )
+  )
 }
