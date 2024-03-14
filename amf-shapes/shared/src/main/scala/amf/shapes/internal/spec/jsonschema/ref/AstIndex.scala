@@ -14,11 +14,14 @@ case class AstIndex(private val map: mutable.Map[String, YMapEntryLike], resolve
     }
   }
 
-  private def callResolvers(reference: String): Option[YMapEntryLike] =
-    resolvers.iterator.map(_.resolve(reference, map.toMap)).collectFirst { case Some(entry) =>
-      map.put(reference, entry)
-      entry
-    }
+  private def callResolvers(reference: String): Option[YMapEntryLike] = {
+    resolvers.iterator
+      .map { resolver => resolver.resolve(reference, map) }
+      .collectFirst { case Some(entry) =>
+        map.put(reference, entry)
+        entry
+      }
+  }
 
   private def clean(reference: String): String = {
     if (reference.startsWith("#/")) reference.drop(1)
