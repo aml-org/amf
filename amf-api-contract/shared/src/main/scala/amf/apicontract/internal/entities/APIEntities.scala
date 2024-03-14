@@ -106,6 +106,9 @@ private[amf] object APIEntities extends Entities {
     SolaceOperationBindingModel,
     SolaceOperationDestinationModel,
     SolaceOperationQueueModel,
-    SolaceOperationTopicModel
+    SolaceOperationTopicModel,
+    PulsarServerBindingModel,
+    PulsarChannelBindingModel,
+    PulsarChannelRetentionModel
   )
 }

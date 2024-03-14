@@ -135,6 +135,9 @@ AMF Model Documentation
 * [PropertyShape](#propertyshape)
 * [PropertyShapePath](#propertyshapepath)
 * [PublicNodeMapping](#publicnodemapping)
+* [PulsarChannelBinding](#pulsarchannelbinding)
+* [PulsarChannelRetention](#pulsarchannelretention)
+* [PulsarServerBinding](#pulsarserverbinding)
 * [RecursiveShape](#recursiveshape)
 * [Request](#request)
 * [ResourceType](#resourcetype)
@@ -2604,6 +2607,52 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | name | string | - | Name of the mapping | `http://a.ml/vocabularies/core#name` |
  | mappedNode | url | - | Node in the dialect definition associated to this mapping | `http://a.ml/vocabularies/meta#mappedNode` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## PulsarChannelBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#PulsarChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | namespace | string | - | The namespace the channel is associated with. | `http://a.ml/vocabularies/apiBinding#namespace` |
+ | persistence | string | - | Persistence of the topic in Pulsar. It MUST be either persistent or non-persistent. | `http://a.ml/vocabularies/apiBinding#persistence` |
+ | compaction | int | - | Topic compaction threshold given in Megabytes. | `http://a.ml/vocabularies/apiBinding#compaction` |
+ | geo-replication | [string] | false | A list of clusters the topic is replicated to. | `http://a.ml/vocabularies/apiBinding#geo-replication` |
+ | retention | [PulsarChannelRetention](#pulsarchannelretention) | - | Topic retention policy. | `http://a.ml/vocabularies/apiBinding#retention` |
+ | ttl | int | - | Message time-to-live in seconds. | `http://a.ml/vocabularies/apiBinding#ttl` |
+ | deduplication | boolean | - | Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. | `http://a.ml/vocabularies/apiBinding#deduplication` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## PulsarChannelRetention
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#PulsarChannelRetention`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | time | int | - | Time given in Minutes. Defaults to 0 | `http://a.ml/vocabularies/apiBinding#time` |
+ | size | int | - | Size given in MegaBytes. Defaults to 0 | `http://a.ml/vocabularies/apiBinding#size` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## PulsarServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#PulsarServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | tenant | string | - | The pulsar tenant. If omitted, "public" MUST be assumed. | `http://a.ml/vocabularies/apiBinding#tenant` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## RecursiveShape

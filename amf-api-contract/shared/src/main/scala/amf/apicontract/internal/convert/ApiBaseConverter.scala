@@ -30,13 +30,8 @@ import amf.apicontract.client.scala.model.domain.bindings.kafka._
 import amf.apicontract.client.scala.model.domain.bindings.mqtt._
 import amf.apicontract.client.scala.model.domain.bindings.websockets._
 import amf.apicontract.client.scala.model.domain.bindings._
-import amf.apicontract.client.scala.model.domain.bindings.solace.{
-  SolaceOperationBinding,
-  SolaceOperationDestination,
-  SolaceOperationQueue,
-  SolaceOperationTopic,
-  SolaceServerBinding
-}
+import amf.apicontract.client.scala.model.domain.bindings.pulsar._
+import amf.apicontract.client.scala.model.domain.bindings.solace._
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
@@ -112,6 +107,9 @@ trait ApiBaseConverter
     with ComponentModuleConverter
     with ParameterFederationMetadataConverter
     with EndpointFederationMetadataConverter
+    with PulsarServerBindingConverter
+    with PulsarChannelBindingConverter
+    with PulsarChannelRetentionConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, domain.bindings.ChannelBinding] {
@@ -295,6 +293,36 @@ trait Amqp091QueueConverter extends PlatformSecrets {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait PulsarServerBindingConverter extends PlatformSecrets {
+  implicit object PulsarServerBindingMatcher
+      extends BidirectionalMatcher[PulsarServerBinding, domain.bindings.pulsar.PulsarServerBinding] {
+    override def asClient(from: PulsarServerBinding): domain.bindings.pulsar.PulsarServerBinding =
+      platform.wrap[domain.bindings.pulsar.PulsarServerBinding](from)
+    override def asInternal(from: domain.bindings.pulsar.PulsarServerBinding): PulsarServerBinding =
+      from._internal
+  }
+}
+
+trait PulsarChannelBindingConverter extends PlatformSecrets {
+  implicit object PulsarChannelBindingMatcher
+      extends BidirectionalMatcher[PulsarChannelBinding, domain.bindings.pulsar.PulsarChannelBinding] {
+    override def asClient(from: PulsarChannelBinding): domain.bindings.pulsar.PulsarChannelBinding =
+      platform.wrap[domain.bindings.pulsar.PulsarChannelBinding](from)
+    override def asInternal(from: domain.bindings.pulsar.PulsarChannelBinding): PulsarChannelBinding =
+      from._internal
+  }
+}
+
+trait PulsarChannelRetentionConverter extends PlatformSecrets {
+  implicit object PulsarChannelRetentionMatcher
+      extends BidirectionalMatcher[PulsarChannelRetention, domain.bindings.pulsar.PulsarChannelRetention] {
+    override def asClient(from: PulsarChannelRetention): domain.bindings.pulsar.PulsarChannelRetention =
+      platform.wrap[domain.bindings.pulsar.PulsarChannelRetention](from)
+    override def asInternal(from: domain.bindings.pulsar.PulsarChannelRetention): PulsarChannelRetention =
+      from._internal
   }
 }
 
