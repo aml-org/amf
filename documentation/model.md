@@ -162,6 +162,11 @@ AMF Model Documentation
 * [ShapePayload](#shapepayload)
 * [ShapeRequest](#shaperequest)
 * [ShapeResponse](#shaperesponse)
+* [SolaceOperationBinding](#solaceoperationbinding)
+* [SolaceOperationDestination](#solaceoperationdestination)
+* [SolaceOperationQueue](#solaceoperationqueue)
+* [SolaceOperationTopic](#solaceoperationtopic)
+* [SolaceServerBinding](#solaceserverbinding)
 * [SourceMap](#sourcemap)
 * [Tag](#tag)
 * [TemplatedLink](#templatedlink)
@@ -3166,6 +3171,73 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | payload | [ShapePayload](#shapepayload) | - | Payload for a Request/Response | `http://a.ml/vocabularies/shapes#payload` |
+
+## SolaceOperationBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationBinding`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | destinations | [[SolaceOperationDestination](#solaceoperationdestination)] | false |  | `http://a.ml/vocabularies/apiBinding#destinations` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceOperationDestination
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationDestination`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | destinationType | string | - | 'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions. | `http://a.ml/vocabularies/apiBinding#destinationType` |
+ | deliveryMode | string | - | 'direct' or 'persistent'. This determines the quality of service for publishing messages. Default is 'persistent'. | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | queue | [SolaceOperationQueue](#solaceoperationqueue) | - | Defines the properties of a queue. | `http://a.ml/vocabularies/apiBinding#queue` |
+ | topic | [SolaceOperationTopic](#solaceoperationtopic) | - | Defines the properties of a topic. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceOperationQueue
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationQueue`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topicSubscriptions | [string] | false | A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name. | `http://a.ml/vocabularies/apiBinding#topicSubscriptions` |
+ | accessType | string | - | 'exclusive' or 'nonexclusive'. Only applicable when destinationType is 'queue'. | `http://a.ml/vocabularies/apiBinding#accessType` |
+ | maxMsgSpoolSize | string | - | The maximum amount of message spool that the given queue may use. Only applicable when destinationType is 'queue'. | `http://a.ml/vocabularies/apiBinding#maxMsgSpoolSize` |
+ | maxTtl | string | - | The maximum TTL to apply to messages to be spooled. Only applicable when destinationType is 'queue'. | `http://a.ml/vocabularies/apiBinding#maxTtl` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceOperationTopic
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationTopic`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topicSubscriptions | [string] | false | A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name. | `http://a.ml/vocabularies/apiBinding#topicSubscriptions` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | msgVpn | string | - | The Virtual Private Network name on the Solace broker. | `http://a.ml/vocabularies/apiBinding#msgVpn` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## SourceMap
 SourceMaps include tags with syntax specific information obtained when parsing a particular specification syntax like RAML or OpenAPI.

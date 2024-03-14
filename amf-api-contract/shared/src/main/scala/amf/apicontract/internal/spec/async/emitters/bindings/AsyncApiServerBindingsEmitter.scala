@@ -7,11 +7,13 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.apicontract.internal.metamodel.domain.bindings.{
   IBMMQServerBindingModel,
   MqttServerBindingModel,
-  MqttServerLastWillModel
+  MqttServerLastWillModel,
+  SolaceServerBindingModel
 }
 import amf.apicontract.client.scala.model.domain.bindings.ServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
+import amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.yaml.model.{YDocument, YNode}
@@ -27,9 +29,10 @@ class AsyncApiServerBindingsEmitter(binding: ServerBinding, ordering: SpecOrderi
   }
 
   private def emitterFor(binding: ServerBinding): Option[EntryEmitter] = binding match {
-    case binding: MqttServerBinding  => Some(new MqttServerBindingEmitter(binding, ordering))
-    case binding: IBMMQServerBinding => Some(new IBMMQServerBindingEmitter(binding, ordering))
-    case _                           => None
+    case binding: MqttServerBinding   => Some(new MqttServerBindingEmitter(binding, ordering))
+    case binding: IBMMQServerBinding  => Some(new IBMMQServerBindingEmitter(binding, ordering))
+    case binding: SolaceServerBinding => Some(new SolaceServerBindingEmitter(binding, ordering))
+    case _                            => None
   }
 
   override def position(): Position = pos(binding.annotations)
@@ -99,6 +102,27 @@ class IBMMQServerBindingEmitter(binding: IBMMQServerBinding, ordering: SpecOrder
           .foreach(f => result += ValueEmitter("multiEndpointServer", f))
         fs.entry(IBMMQServerBindingModel.HeartBeatInterval).foreach(f => result += ValueEmitter("heartBeatInterval", f))
 
+        emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class SolaceServerBindingEmitter(binding: SolaceServerBinding, ordering: SpecOrdering)
+    extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(Solace),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(SolaceServerBindingModel.MsgVpn).foreach(f => result += ValueEmitter("msgVpn", f))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

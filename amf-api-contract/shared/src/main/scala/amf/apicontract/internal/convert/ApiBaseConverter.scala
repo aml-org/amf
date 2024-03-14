@@ -30,6 +30,13 @@ import amf.apicontract.client.scala.model.domain.bindings.kafka._
 import amf.apicontract.client.scala.model.domain.bindings.mqtt._
 import amf.apicontract.client.scala.model.domain.bindings.websockets._
 import amf.apicontract.client.scala.model.domain.bindings._
+import amf.apicontract.client.scala.model.domain.bindings.solace.{
+  SolaceOperationBinding,
+  SolaceOperationDestination,
+  SolaceOperationQueue,
+  SolaceOperationTopic,
+  SolaceServerBinding
+}
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
@@ -80,6 +87,11 @@ trait ApiBaseConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
     with Amqp091QueueConverter
+    with SolaceServerBindingConverter
+    with SolaceOperationBindingConverter
+    with SolaceOperationDestinationConverter
+    with SolaceOperationQueueConverter
+    with SolaceOperationTopicConverter
     with AnypointMQMessageBindingConverter
     with AnypointMQChannelBindingConverter
     with IBMMQMessageBindingConverter
@@ -283,6 +295,56 @@ trait Amqp091QueueConverter extends PlatformSecrets {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait SolaceServerBindingConverter extends PlatformSecrets {
+  implicit object SolaceServerBindingMatcher
+      extends BidirectionalMatcher[SolaceServerBinding, domain.bindings.solace.SolaceServerBinding] {
+    override def asClient(from: SolaceServerBinding): domain.bindings.solace.SolaceServerBinding =
+      platform.wrap[domain.bindings.solace.SolaceServerBinding](from)
+    override def asInternal(from: domain.bindings.solace.SolaceServerBinding): SolaceServerBinding =
+      from._internal
+  }
+}
+
+trait SolaceOperationBindingConverter extends PlatformSecrets {
+  implicit object SolaceOperationBindingMatcher
+      extends BidirectionalMatcher[SolaceOperationBinding, domain.bindings.solace.SolaceOperationBinding] {
+    override def asClient(from: SolaceOperationBinding): domain.bindings.solace.SolaceOperationBinding =
+      platform.wrap[domain.bindings.solace.SolaceOperationBinding](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationBinding): SolaceOperationBinding =
+      from._internal
+  }
+}
+
+trait SolaceOperationDestinationConverter extends PlatformSecrets {
+  implicit object SolaceOperationDestinationMatcher
+      extends BidirectionalMatcher[SolaceOperationDestination, domain.bindings.solace.SolaceOperationDestination] {
+    override def asClient(from: SolaceOperationDestination): domain.bindings.solace.SolaceOperationDestination =
+      platform.wrap[domain.bindings.solace.SolaceOperationDestination](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationDestination): SolaceOperationDestination =
+      from._internal
+  }
+}
+
+trait SolaceOperationQueueConverter extends PlatformSecrets {
+  implicit object SolaceOperationQueueMatcher
+      extends BidirectionalMatcher[SolaceOperationQueue, domain.bindings.solace.SolaceOperationQueue] {
+    override def asClient(from: SolaceOperationQueue): domain.bindings.solace.SolaceOperationQueue =
+      platform.wrap[domain.bindings.solace.SolaceOperationQueue](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationQueue): SolaceOperationQueue =
+      from._internal
+  }
+}
+
+trait SolaceOperationTopicConverter extends PlatformSecrets {
+  implicit object SolaceOperationTopicMatcher
+      extends BidirectionalMatcher[SolaceOperationTopic, domain.bindings.solace.SolaceOperationTopic] {
+    override def asClient(from: SolaceOperationTopic): domain.bindings.solace.SolaceOperationTopic =
+      platform.wrap[domain.bindings.solace.SolaceOperationTopic](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationTopic): SolaceOperationTopic =
+      from._internal
   }
 }
 
