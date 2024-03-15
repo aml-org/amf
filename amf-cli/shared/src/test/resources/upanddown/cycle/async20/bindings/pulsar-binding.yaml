@@ -10,7 +10,6 @@ servers:
       pulsar:
         tenant: test
         bindingVersion: 0.1.0
-        thisKeyIsNotAllowed: should throw validation error
 channels:
   some-channel:
     bindings:
@@ -25,9 +24,7 @@ channels:
         retention:
           time: 123
           size: 321
-          thisKeyIsNotAllowed: should throw validation error
         ttl: 12
         deduplication: false
         bindingVersion: test
-        thisKeyIsNotAllowed: should throw validation error
     description: some channel

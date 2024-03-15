@@ -12,6 +12,7 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQChannelQueue,
   IBMMQChannelTopic
 }
+import amf.apicontract.client.scala.model.domain.bindings.pulsar.{PulsarChannelBinding, PulsarChannelRetention}
 import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091ChannelBindingModel,
@@ -21,16 +22,18 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   IBMMQChannelBindingModel,
   IBMMQChannelQueueModel,
   IBMMQChannelTopicModel,
+  PulsarChannelBindingModel,
+  PulsarChannelRetentionModel,
   WebSocketsChannelBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, Pulsar, WebSockets}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.BaseEmitters.{ArrayEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument.EntryBuilder
@@ -51,6 +54,7 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
     case binding: WebSocketsChannelBinding => Some(new WebSocketChannelBindingEmitter(binding, ordering))
     case binding: IBMMQChannelBinding      => Some(new IBMMQChannelBindingEmitter(binding, ordering))
     case binding: AnypointMQChannelBinding => Some(new AnypointMQChannelBindingEmitter(binding, ordering))
+    case binding: PulsarChannelBinding     => Some(new PulsarChannelBindingEmitter(binding, ordering))
     case _                                 => None
   }
 
@@ -249,6 +253,55 @@ class AnypointMQChannelBindingEmitter(binding: AnypointMQChannelBinding, orderin
           .foreach(f => result += ValueEmitter("destinationType", f))
 
         emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class PulsarChannelBindingEmitter(binding: PulsarChannelBinding, ordering: SpecOrdering)
+    extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(Pulsar),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(PulsarChannelBindingModel.Namespace).foreach(f => result += ValueEmitter("namespace", f))
+        fs.entry(PulsarChannelBindingModel.Persistence).foreach(f => result += ValueEmitter("persistence", f))
+        fs.entry(PulsarChannelBindingModel.Compaction).foreach(f => result += ValueEmitter("compaction", f))
+        fs.entry(PulsarChannelBindingModel.GeoReplication)
+          .foreach(f => result += ArrayEmitter("geo-replication", f, ordering))
+        Option(binding.retention).foreach(retention => result += new PulsarChannelRetentionEmitter(retention, ordering))
+        fs.entry(PulsarChannelBindingModel.Ttl).foreach(f => result += ValueEmitter("ttl", f))
+        fs.entry(PulsarChannelBindingModel.Deduplication).foreach(f => result += ValueEmitter("deduplication", f))
+
+        emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class PulsarChannelRetentionEmitter(binding: PulsarChannelRetention, ordering: SpecOrdering) extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("retention"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(PulsarChannelRetentionModel.Time).foreach(f => result += ValueEmitter("time", f))
+        fs.entry(PulsarChannelRetentionModel.Size).foreach(f => result += ValueEmitter("size", f))
 
         traverse(ordering.sorted(result), emitter)
       }

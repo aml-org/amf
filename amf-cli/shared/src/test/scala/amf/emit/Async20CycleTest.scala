@@ -163,6 +163,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "solace binding",
       "bindings/solace-binding.yaml",
       "bindings/solace-binding.yaml"
+    ),
+    FixtureData(
+      "pulsar binding",
+      "bindings/pulsar-binding.yaml",
+      "bindings/pulsar-binding.yaml"
+    ),
+    FixtureData(
+      "pulsar binding only required keys",
+      "bindings/pulsar-binding-only-required.yaml",
+      "bindings/pulsar-binding-only-required.yaml"
     )
 
 // TODO: figure out why this test is commented out
