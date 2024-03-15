@@ -1,0 +1,33 @@
+asyncapi: 2.6.0
+info:
+  title: test mercure binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: mercure
+    bindings:
+      pulsar:
+        tenant: test
+        bindingVersion: 0.1.0
+        thisKeyIsNotAllowed: should throw validation error
+channels:
+  some-channel:
+    bindings:
+      pulsar:
+        namespace: test
+        persistence: test
+        compaction: 123
+        geo-replication:
+          - test
+          - strings
+          - list
+        retention:
+          time: 123
+          size: 321
+          thisKeyIsNotAllowed: should throw validation error
+        ttl: 12
+        deduplication: false
+        bindingVersion: test
+        thisKeyIsNotAllowed: should throw validation error
+    description: some channel

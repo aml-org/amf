@@ -9,6 +9,12 @@ trait CustomSyntax {
   def contains(shape: String): Boolean = nodes.contains(shape)
 }
 
+object CustomSyntax {
+  val empty: CustomSyntax = new CustomSyntax {
+    override val nodes: Map[String, SpecNode] = Map.empty
+  }
+}
+
 case class SpecNode(
     requiredFields: Set[SpecField] = Set(),
     possibleFields: Set[String] = Set()
