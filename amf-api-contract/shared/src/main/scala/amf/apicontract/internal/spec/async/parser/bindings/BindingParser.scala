@@ -3,13 +3,14 @@ package amf.apicontract.internal.spec.async.parser.bindings
 import amf.apicontract.client.scala.model.domain.bindings.BindingVersion
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
-import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement, Linkable}
+import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.RequiredField
 import org.yaml.model.{YMap, YMapEntry}
 
 trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
@@ -51,5 +52,14 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
         binding.setWithoutId(field, shape, Annotations(entry))
         shape
       }
+  }
+
+  protected def missingRequiredFieldViolation(
+      ctx: AsyncWebApiContext,
+      node: AmfObject,
+      missingField: String,
+      schema: String
+  ): Unit = {
+    ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
   }
 }

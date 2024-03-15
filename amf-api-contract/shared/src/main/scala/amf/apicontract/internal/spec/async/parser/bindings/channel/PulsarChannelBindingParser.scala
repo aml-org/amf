@@ -16,12 +16,12 @@ object PulsarChannelBindingParser extends BindingParser[PulsarChannelBinding] {
 
     map.key("namespace") match {
       case Some(value) => Some(value).foreach(PulsarChannelBindingModel.Namespace in binding)
-      case None        => // todo: throw required validation (maybe refactor to use CustomSyntax)
+      case None        => missingRequiredFieldViolation(ctx, binding, "namespace", "Pulsar Channel Binding")
     }
 
     map.key("persistence") match {
       case Some(value) => Some(value).foreach(PulsarChannelBindingModel.Persistence in binding)
-      case None        => // todo: throw required validation (maybe refactor to use CustomSyntax)
+      case None        => missingRequiredFieldViolation(ctx, binding, "persistence", "Pulsar Channel Binding")
     }
 
     map.key("compaction", PulsarChannelBindingModel.Compaction in binding)
