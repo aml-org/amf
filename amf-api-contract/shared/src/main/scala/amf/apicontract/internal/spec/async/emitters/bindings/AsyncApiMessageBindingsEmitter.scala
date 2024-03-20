@@ -3,19 +3,14 @@ package amf.apicontract.internal.spec.async.emitters.bindings
 import amf.apicontract.client.scala.model.domain.bindings.MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{GooglePubSubMessageBinding, GooglePubSubSchemaDefinition}
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  Amqp091MessageBindingModel,
-  AnypointMQMessageBindingModel,
-  HttpMessageBindingModel,
-  IBMMQMessageBindingModel,
-  KafkaMessageBindingModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings.{Amqp091MessageBindingModel, AnypointMQMessageBindingModel, GooglePubSubMessageBindingModel, GooglePubSubSchemaDefinitionModel, HttpMessageBindingModel, IBMMQMessageBindingModel, KafkaMessageBindingModel}
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, Http, IBMMQ, Kafka, Mqtt}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, GooglePubSub, Http, IBMMQ, Kafka, Mqtt}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
@@ -43,6 +38,7 @@ class AsyncApiMessageBindingsEmitter(binding: MessageBinding, ordering: SpecOrde
     case binding: MqttMessageBinding       => Some(new MqttMessageEmitter(binding, ordering))
     case binding: IBMMQMessageBinding      => Some(new IBMMQMessageEmitter(binding, ordering))
     case binding: AnypointMQMessageBinding => Some(new AnypointMQMessageEmitter(binding, ordering))
+    case binding: GooglePubSubMessageBinding => Some(new GooglePubSubMessageBindingEmitter(binding, ordering))
     case _                                 => None
   }
 
@@ -177,5 +173,45 @@ class AnypointMQMessageEmitter(binding: AnypointMQMessageBinding, ordering: Spec
     )
   }
 
+  override def position(): Position = pos(binding.annotations)
+}
+
+class GooglePubSubMessageBindingEmitter(binding: GooglePubSubMessageBinding, ordering: SpecOrdering) extends AsyncApiCommonBindingEmitter {
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(GooglePubSub),
+      _.obj{ emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs = binding.fields
+
+        fs.entry(GooglePubSubMessageBindingModel.Attributes).foreach(f => result += ValueEmitter("attributes",f))
+        fs.entry(GooglePubSubMessageBindingModel.OrderingKey).foreach(f => result += ValueEmitter("orderingKey",f))
+        Option(binding.schema).foreach(schema => result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering))
+
+
+
+        emitBindingVersion(fs, result)
+        traverse(ordering.sorted(result), emitter)
+
+      }
+    )
+  }
+  override def position(): Position = pos(binding.annotations)
+}
+class GooglePubSubSchemaDefinitionEmitter(binding: GooglePubSubSchemaDefinition, ordering: SpecOrdering) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("googlePubSubSchemaDefinition"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(GooglePubSubSchemaDefinitionModel.Name).foreach(f => result += ValueEmitter("name", f))
+        fs.entry(GooglePubSubSchemaDefinitionModel.FieldType).foreach(f => result += ValueEmitter("type", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
   override def position(): Position = pos(binding.annotations)
 }

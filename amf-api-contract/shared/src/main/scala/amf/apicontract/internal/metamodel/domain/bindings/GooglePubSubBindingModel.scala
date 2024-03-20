@@ -31,8 +31,8 @@ object GooglePubSubMessageBindingModel extends MessageBindingModel with BindingV
 
   val Schema: Field =
     Field(
-      ShapeModel,
-      ApiBinding + "schema",
+      GooglePubSubSchemaDefinitionModel,
+      ApiBinding + "schemaDefinition",
       ModelDoc(
         ModelVocabularies.ApiBinding,
         "schema",
