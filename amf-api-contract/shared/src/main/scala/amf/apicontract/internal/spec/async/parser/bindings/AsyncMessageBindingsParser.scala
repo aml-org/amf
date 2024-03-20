@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.async.parser.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.{MessageBinding, MessageBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{GooglePubSub, _}
 import amf.apicontract.internal.spec.async.parser.bindings.message._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessageBindings
@@ -19,7 +19,8 @@ object AsyncMessageBindingsParser {
     Kafka      -> KafkaMessageBindingParser,
     Mqtt       -> MqttMessageBindingParser,
     IBMMQ      -> IBMMQMessageBindingParser,
-    AnypointMQ -> AnypointMQMessageBindingParser
+    AnypointMQ -> AnypointMQMessageBindingParser,
+    GooglePubSub -> GooglePubSubMessageBindingParser
   )
 }
 
