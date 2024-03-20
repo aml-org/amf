@@ -106,11 +106,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
     map.regex(
       operationsRegex,
       entries => {
-        val operations = mutable.ListBuffer[Operation]()
-        entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
-          operations += operationParser.parse()
-        }
+        val operations = parseOperations(entries)
         endpoint.setWithoutId(
           EndPointModel.Operations,
           AmfArray(operations, Annotations.inferred()),
