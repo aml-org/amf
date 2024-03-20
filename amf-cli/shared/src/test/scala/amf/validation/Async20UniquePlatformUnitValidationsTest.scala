@@ -372,4 +372,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.3+ Solace Closed Shape validation") {
     validate("solace-binding-extra-key.yaml", Some("solace-binding-extra-key.report"))
   }
+
+  test("Async 2.6+ Pulsar Closed Shape validation") {
+    validate("pulsar-binding-extra-key.yaml", Some("pulsar-binding-extra-key.report"))
+  }
+
+  test("Async 2.6+ Pulsar missing fields validation") {
+    validate("pulsar-binding-missing-key.yaml", Some("pulsar-binding-missing-key.report"))
+  }
 }

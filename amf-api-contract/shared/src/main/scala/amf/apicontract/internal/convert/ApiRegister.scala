@@ -10,6 +10,7 @@ import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.ibmmq._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
 import amf.apicontract.client.platform.model.domain.bindings.mqtt._
+import amf.apicontract.client.platform.model.domain.bindings.pulsar._
 import amf.apicontract.client.platform.model.domain.bindings.solace._
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.client.platform.model.domain.federation._
@@ -335,6 +336,18 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(ParameterFederationMetadataModel) {
       case s: amf.apicontract.client.scala.model.domain.federation.ParameterFederationMetadata =>
         ParameterFederationMetadata(s)
+    }
+    platform.registerWrapper(PulsarServerBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.pulsar.PulsarServerBinding =>
+        PulsarServerBinding(s)
+    }
+    platform.registerWrapper(PulsarChannelBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.pulsar.PulsarChannelBinding =>
+        PulsarChannelBinding(s)
+    }
+    platform.registerWrapper(PulsarChannelRetentionModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.pulsar.PulsarChannelRetention =>
+        PulsarChannelRetention(s)
     }
   }
 

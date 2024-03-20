@@ -2,11 +2,12 @@ package amf.apicontract.internal.spec.async.parser.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.{ChannelBinding, ChannelBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, Pulsar, WebSockets}
 import amf.apicontract.internal.spec.async.parser.bindings.channel.{
   Amqp091ChannelBindingParser,
   AnypointMQChannelBindingParser,
   IBMMQChannelBindingParser,
+  PulsarChannelBindingParser,
   WebSocketsChannelBindingParser
 }
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
@@ -22,7 +23,8 @@ object AsyncChannelBindingsParser {
     Amqp       -> Amqp091ChannelBindingParser,
     WebSockets -> WebSocketsChannelBindingParser,
     IBMMQ      -> IBMMQChannelBindingParser,
-    AnypointMQ -> AnypointMQChannelBindingParser
+    AnypointMQ -> AnypointMQChannelBindingParser,
+    Pulsar     -> PulsarChannelBindingParser
   )
 }
 
