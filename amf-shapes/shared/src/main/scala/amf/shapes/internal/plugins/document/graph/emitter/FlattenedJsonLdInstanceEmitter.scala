@@ -4,10 +4,10 @@ import amf.core.client.scala.config
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.vocabulary.{Namespace, NamespaceAliases}
 import amf.core.internal.metamodel.Type
-import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.parser.domain.Value
 import amf.core.internal.plugins.document.graph.emitter.{
   ApplicableMetaFieldRenderProvider,
   FlattenedGraphEmitterContext,
@@ -62,21 +62,6 @@ class FlattenedJsonLdInstanceEmitter[T](
     }
 
     b.obj(_.entry("@list", _.list(emitList)))
-  }
-
-  private def createArrayLikeValues(seq: AmfArray, b: Part[T]): Unit = seq.values.foreach { v =>
-    emitArrayMember(v, b)
-  }
-
-  def emitArrayMember(element: AmfElement, b: Part[T]): Unit = {
-    element match {
-      case obj: AmfObject    => emitObjMember(obj, b, inArray = true)
-      case scalar: AmfScalar => emitScalarMember(scalar, b)
-      case arr: AmfArray =>
-        b.list { b =>
-          createArrayValues(Type.Array(Type.Any), arr, b, Value(arr, Annotations()))
-        }
-    }
   }
 
   override protected def emitScalarMember(scalarElement: AmfScalar, b: Part[T]): Unit = {
