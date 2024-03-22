@@ -34,7 +34,7 @@ class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpe
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
     Async20ServerVariableParser(YMapEntryLike(entry), parent)(ctx)
   override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
-    AsyncOperationParser(entry, adopt)(ctx)
+    Async20OperationParser(entry, adopt)(ctx)
   override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
     new Async20EndpointParser(entry, parentId, collector)(ctx)
   override def securitySchemeParser: (YMapEntryLike, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
@@ -48,7 +48,8 @@ class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpe
       parent: String,
       messageType: Option[MessageType],
       isTrait: Boolean = false
-  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async20MessageParser(entryLike, parent, messageType, isTrait)
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser =
+    Async20MessageParser(entryLike, parent, messageType, isTrait)
 }
 
 object Async20VersionFactory {
@@ -61,7 +62,8 @@ class Async21VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async20V
       parent: String,
       messageType: Option[MessageType],
       isTrait: Boolean
-  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async21MessageParser(entryLike, parent, messageType, isTrait)
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser =
+    Async21MessageParser(entryLike, parent, messageType, isTrait)
 }
 
 object Async21VersionFactory {
@@ -87,23 +89,27 @@ object Async23VersionFactory {
   def apply()(implicit ctx: AsyncWebApiContext): Async23VersionFactory = new Async23VersionFactory()(ctx)
 }
 
-class Async24VersionFactory()(implicit  ctx: AsyncWebApiContext) extends Async23VersionFactory{
+class Async24VersionFactory()(implicit ctx: AsyncWebApiContext) extends Async23VersionFactory {
   override def messageParser(
       entryLike: YMapEntryLike,
       parent: String,
       messageType: Option[MessageType],
       isTrait: Boolean
-  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser = Async24MessageParser(entryLike, parent, messageType, isTrait)
+  )(implicit ctx: AsyncWebApiContext): AsyncMessageParser =
+    Async24MessageParser(entryLike, parent, messageType, isTrait)
 
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
-   new Async24ServerVariableParser(YMapEntryLike(entry), parent)(ctx)
+    new Async24ServerVariableParser(YMapEntryLike(entry), parent)(ctx)
+
+  override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
+    Async24OperationParser(entry, adopt)(ctx)
 }
 
 object Async24VersionFactory {
   def apply()(implicit ctx: AsyncWebApiContext): Async24VersionFactory = new Async24VersionFactory()(ctx)
 }
 
-class Async25VersionFactory(implicit  ctx: AsyncWebApiContext) extends Async24VersionFactory {
+class Async25VersionFactory(implicit ctx: AsyncWebApiContext) extends Async24VersionFactory {
   override def serversParser(map: YMap, api: AsyncApi): AsyncServersParser = new Async25ServersParser(map, api)
 }
 
