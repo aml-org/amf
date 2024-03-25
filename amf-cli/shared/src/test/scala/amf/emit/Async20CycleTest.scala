@@ -173,6 +173,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "pulsar binding only required keys",
       "bindings/pulsar-binding-only-required.yaml",
       "bindings/pulsar-binding-only-required.yaml"
+    ),
+    FixtureData(
+      "async 2.4+ explicit security field in operation bindings",
+      "operation-security-explicit.yaml",
+      "operation-security-explicit.yaml"
+    ),
+    FixtureData(
+      "async 2.4+ implicit security field in operation bindings",
+      "operation-security-implicit.yaml",
+      "operation-security-implicit.yaml"
     )
 
 // TODO: figure out why this test is commented out
