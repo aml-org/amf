@@ -2,6 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.apicontract.internal.spec.async.NotFinishedAsync20ParsePlugin
 import amf.core.client.common.transform.PipelineId
@@ -599,7 +600,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   }
 
   // W-12689955
-  test("async add channel servers transformation") {
+  test("async 2.2+ add channel servers transformation") {
     val api = s"$basePath/async20/validations/channel-servers.yaml"
     asyncClient.parse(api) flatMap { parseResult =>
       val transformResult = asyncClient.transform(parseResult.baseUnit)
@@ -626,6 +627,44 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val serversInRender = render.linesIterator.filter(_.contains("servers:")).toArray
       // but only the declared root servers should be present in the rendered API
       serversInRender.length shouldBe 1
+    }
+  }
+
+  // W-12689962
+  test("async2.4+ explicit operation security facet") {
+    val api = s"$basePath/async20/validations/operation-security-explicit.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+
+      val serverSecurity    = endpoint.servers.head.security.head.schemes.head
+      val operationSecurity = endpoint.operations.head.security.head.schemes.head
+
+      val serverSecurityScopes    = serverSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+      val operationSecurityScopes = operationSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+
+      serverSecurityScopes.size shouldBe 2
+      operationSecurityScopes.size shouldBe 1
+    }
+  }
+
+  // W-12689962
+  test("async2.4+ resolve implicit operation security facet") {
+    val api = s"$basePath/async20/validations/operation-security-implicit.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+
+      val serverSecurity    = endpoint.servers.head.security.head.schemes.head
+      val operationSecurity = endpoint.operations.head.security.head.schemes.head
+
+      val serverSecurityScopes    = serverSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+      val operationSecurityScopes = operationSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+
+      serverSecurityScopes.size shouldBe 2
+      operationSecurityScopes.size shouldBe 2
     }
   }
 }
