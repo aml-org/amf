@@ -1503,7 +1503,7 @@ Types:
  | labels | [ObjectNode](#objectnode) | - | An object of key-value pairs  | `http://a.ml/vocabularies/apiBinding#labels` |
  | messageRetentionDuration | string | - | Indicates the minimum duration to retain a message after it is published to the topic | `http://a.ml/vocabularies/apiBinding#messageRetentionDuration` |
  | messageStoragePolicy | [GooglePubSubMessageStoragePolicy](#googlepubsubmessagestoragepolicy) | - | Policy constraining the set of Google Cloud Platform regions where messages published to the topic may be stored | `http://a.ml/vocabularies/apiBinding#messageStoragePolicy` |
- | schemaSettings | [GooglePubSubSchemaSettings](#googlepubsubschemasettings) | - | Policy constraining the set of Google Cloud Platform regions where messages published to the topic may be stored | `http://a.ml/vocabularies/apiBinding#schemaSettings` |
+ | schemaSettings | [GooglePubSubSchemaSettings](#googlepubsubschemasettings) | - | Settings for validating messages published against a schema | `http://a.ml/vocabularies/apiBinding#schemaSettings` |
  | topic | string | - | The Google Cloud Pub/Sub Topic name | `http://a.ml/vocabularies/apiBinding#topic` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
@@ -1519,8 +1519,8 @@ Types:
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
  | attribute | [ObjectNode](#objectnode) | - | Attributes for this message | `http://a.ml/vocabularies/apiBinding#attribute` |
- | orderingKey | string | - | identifies related messages for which publish order should be respected | `http://a.ml/vocabularies/apiBinding#orderingKey` |
- | schema | [Shape](#shape) | - | Define Schema | `http://a.ml/vocabularies/apiBinding#schema` |
+ | orderingKey | string | - | If non-empty, identifies related messages for which publish order should be respected | `http://a.ml/vocabularies/apiBinding#orderingKey` |
+ | schemaDefinition | [GooglePubSubSchemaDefinition](#googlepubsubschemadefinition) | - | Define Schema | `http://a.ml/vocabularies/apiBinding#schemaDefinition` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
@@ -1528,7 +1528,7 @@ Types:
 ## GooglePubSubMessageStoragePolicy
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#GooglePubSubChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubMessageStoragePolicy`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |
@@ -1539,7 +1539,7 @@ Types:
 ## GooglePubSubSchemaDefinition
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#GooglePubSubChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |
@@ -1551,15 +1551,15 @@ Types:
 ## GooglePubSubSchemaSettings
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#GooglePubSubChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaSettings`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
  | encoding | string | - | The encoding of the message  | `http://a.ml/vocabularies/apiBinding#encoding` |
  | firstRevisionId | string | - | The minimum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#firstRevisionId` |
- | lastRevisionId | string | - | 	The maximum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#lastRevisionId` |
- | name | string | - | TThe name of the schema that messages published should be validated against | `http://a.ml/vocabularies/apiBinding#name` |
+ | lastRevisionId | string | - | The maximum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#lastRevisionId` |
+ | name | string | - | Name of the schema that messages published should be validated against | `http://a.ml/vocabularies/apiBinding#name` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## HttpApiKeySettings

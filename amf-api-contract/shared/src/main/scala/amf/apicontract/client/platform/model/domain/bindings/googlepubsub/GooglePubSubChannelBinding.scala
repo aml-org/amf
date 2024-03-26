@@ -4,7 +4,7 @@ import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, Ch
 import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{GooglePubSubChannelBinding => InternalGooglePubSubChannelBinding, GooglePubSubMessageStoragePolicy => InternalGooglePubSubMessageStoragePolicy, GooglePubSubSchemaSettings => InternalGooglePubSubSchemaSettings}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, Linkable}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, ObjectNode}
 import amf.shapes.client.scala.model.domain.NodeShape
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -17,14 +17,15 @@ case class GooglePubSubChannelBinding(override private[amf] val _internal: Inter
   def this() = this(InternalGooglePubSubChannelBinding())
 
   override def bindingVersion: StrField = _internal.bindingVersion
-  def labels: NodeShape = _internal.labels
+
+  def labels: ObjectNode = _internal.labels
   def messageRetentionDuration: StrField = _internal.messageRetentionDuration
   def messageStoragePolicy: GooglePubSubMessageStoragePolicy = _internal.messageStoragePolicy
   def schemaSettings: GooglePubSubSchemaSettings = _internal.schemaSettings
   def topic: StrField = _internal.topic
 
 
-  def withLabels(labels: NodeShape): this.type = {
+  def withLabels(labels: ObjectNode): this.type = {
     _internal.withLabels(labels)
     this
   }

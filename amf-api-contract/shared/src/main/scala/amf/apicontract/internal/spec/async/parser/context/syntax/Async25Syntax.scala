@@ -31,6 +31,10 @@ object Async25Syntax extends SpecSyntax {
       "orderingKey",
       "schema",
       "bindingVersion"
+    ),
+    "GooglePubSubMessageSchema" -> Set(
+      "name",
+      "type"
     )
   )
 }

@@ -25,7 +25,7 @@ object GooglePubSubMessageBindingModel extends MessageBindingModel with BindingV
       ModelDoc(
         ModelVocabularies.ApiBinding,
         "orderingKey",
-        "identifies related messages for which publish order should be respected"
+        "If non-empty, identifies related messages for which publish order should be respected"
       )
     )
 
@@ -86,8 +86,8 @@ object GooglePubSubChannelBindingModel extends ChannelBindingModel with BindingV
       ApiBinding + "schemaSettings",
       ModelDoc(
         ModelVocabularies.ApiBinding,
-        "messageStoragePolicy",
-        "Policy constraining the set of Google Cloud Platform regions where messages published to the topic may be stored"
+        "schemaSettings",
+        "Settings for validating messages published against a schema"
       )
     )
 
@@ -176,7 +176,7 @@ object GooglePubSubSchemaSettingsModel extends DomainElementModel {
       ModelDoc(
         ModelVocabularies.ApiBinding,
         "name",
-        "TThe name of the schema that messages published should be validated against"
+        "Name of the schema that messages published should be validated against"
       )
     )
 

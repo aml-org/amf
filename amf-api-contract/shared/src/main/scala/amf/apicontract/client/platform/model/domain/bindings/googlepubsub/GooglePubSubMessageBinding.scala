@@ -19,7 +19,7 @@ case class GooglePubSubMessageBinding(override private[amf] val _internal: Inter
   override protected def bindingVersion: StrField = _internal.bindingVersion
   def attributes: ObjectNode = _internal.attributes
   def orderingKey: StrField = _internal.orderingKey
-  def schema: InternalGooglePubSubSchemaDefinition = new GooglePubSubSchemaDefinition(_internal.schema)
+  def schema: GooglePubSubSchemaDefinition = new GooglePubSubSchemaDefinition(_internal.schema)
 
   def withAttributes(attributes: ObjectNode): this.type = {
     _internal.withAttributes(attributes)
@@ -29,7 +29,7 @@ case class GooglePubSubMessageBinding(override private[amf] val _internal: Inter
     _internal.withOrderingKey(orderingKey)
     this
   }
-  def withSchema(schema: InternalGooglePubSubSchemaDefinition): this.type = {
+  def withSchema(schema: GooglePubSubSchemaDefinition): this.type = {
     _internal.withSchema(schema)
     this
   }

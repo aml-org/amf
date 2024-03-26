@@ -1,0 +1,42 @@
+asyncapi: 2.5.0
+info:
+  title: Simple API with GooglePubSub Message Binding
+  version: 1.0.0
+servers: {}
+channels:
+  topic-proto-schema:
+    bindings:
+      googlepubsub:
+        labels:
+          label1: label1
+          label2: label2
+        topic: projects/your-project/topics/topic-proto-schema
+        messageRetentionDuration: 86400s
+        messageStoragePolicy:
+          allowedPersistenceRegions:
+            - us-central1
+            - us-west
+          wrongKey1: wrongKey1
+        schemaSettings:
+          encoding: binary
+          name: projects/your-project/schemas/messageAvro
+          firstRevisionId: 1.0.0
+          lastRevisionId: 2.0.0
+          WrongKey2: WrongKey2
+        WrongKey3: WrongKey3
+components:
+  messages:
+    messageAvro:
+      bindings:
+        googlepubsub:
+          attributes:
+            exampleAttribute: exampleValue
+          orderingKey: userEventOrder
+          bindingVersion: 0.1.0
+          WrongKey4: WrongKey4
+          schema:
+            name: projects/your-project/schemas/message-avro
+            type: avro
+            WrongKey5: WrongKey5
+
+
