@@ -37,7 +37,7 @@ case class PulsarChannelBinding(override private[amf] val _internal: InternalPul
     this
   }
 
-  def withCompaction(compaction: Integer): this.type = {
+  def withCompaction(compaction: Int): this.type = {
     _internal.withCompaction(compaction)
     this
   }
@@ -52,7 +52,7 @@ case class PulsarChannelBinding(override private[amf] val _internal: InternalPul
     this
   }
 
-  def withTtl(ttl: Integer): this.type = {
+  def withTtl(ttl: Int): this.type = {
     _internal.withTtl(ttl)
     this
   }
@@ -82,11 +82,11 @@ case class PulsarChannelRetention(override private[amf] val _internal: InternalP
   def time: IntField = _internal.time
   def size: IntField = _internal.size
 
-  def withTime(time: Integer): this.type = {
+  def withTime(time: Int): this.type = {
     _internal.withTime(time)
     this
   }
-  def withSize(size: Integer): this.type = {
+  def withSize(size: Int): this.type = {
     _internal.withSize(size)
     this
   }

@@ -27,10 +27,10 @@ class PulsarChannelBinding(override val fields: Fields, override val annotations
 
   def withNamespace(namespace: String): this.type                 = set(Namespace, namespace)
   def withPersistence(persistence: String): this.type             = set(Persistence, persistence)
-  def withCompaction(compaction: Integer): this.type              = set(Compaction, compaction)
+  def withCompaction(compaction: Int): this.type              = set(Compaction, compaction)
   def withGeoReplication(geoReplication: Seq[String]): this.type  = set(GeoReplication, geoReplication)
   def withRetention(retention: PulsarChannelRetention): this.type = set(Retention, retention)
-  def withTtl(ttl: Integer): this.type                            = set(Ttl, ttl)
+  def withTtl(ttl: Int): this.type                            = set(Ttl, ttl)
   def withDeduplication(deduplication: Boolean): this.type        = set(Deduplication, deduplication)
 
   override def key: StrField = fields.field(PulsarChannelBindingModel.key)
@@ -58,8 +58,8 @@ class PulsarChannelRetention(override val fields: Fields, override val annotatio
   def time: IntField = fields.field(PulsarChannelRetentionModel.Time)
   def size: IntField = fields.field(PulsarChannelRetentionModel.Size)
 
-  def withTime(time: Integer): this.type = set(PulsarChannelRetentionModel.Time, time)
-  def withSize(size: Integer): this.type = set(PulsarChannelRetentionModel.Size, size)
+  def withTime(time: Int): this.type = set(PulsarChannelRetentionModel.Time, time)
+  def withSize(size: Int): this.type = set(PulsarChannelRetentionModel.Size, size)
 
   override def componentId: String = s"/$Pulsar-retention"
 }
