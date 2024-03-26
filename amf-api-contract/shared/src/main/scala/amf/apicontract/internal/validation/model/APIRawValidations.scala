@@ -1088,6 +1088,27 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value =
           "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|plain|scramSha256|scramSha512|gssapi|x-.+)$"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      AMFValidation(
+        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
+        owlClass = apiBinding("SolaceOperationQueue"),
+        owlProperty = apiBinding("accessType"),
+        constraint = sh("in"),
+        value = "exclusive,nonexclusive"
       )
     ) ++ baseApiValidations("AsyncAPI")
 

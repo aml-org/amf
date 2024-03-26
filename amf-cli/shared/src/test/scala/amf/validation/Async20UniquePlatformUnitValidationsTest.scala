@@ -387,4 +387,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.6+ Pulsar missing fields validation") {
     validate("pulsar-binding-missing-key.yaml", Some("pulsar-binding-missing-key.report"))
   }
+
+  test("Async 2.3+ Solace validations") {
+    validate("solace-binding-validations.yaml", Some("solace-binding-validations.report"))
+  }
 }
