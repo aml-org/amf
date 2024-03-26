@@ -67,7 +67,7 @@ case class IBMMQChannelQueue(override private[amf] val _internal: InternalIBMMQC
   def isPartitioned: BoolField = _internal.isPartitioned
   def exclusive: BoolField     = _internal.exclusive
 
-  def withObjectName(objectName: Boolean): this.type = {
+  def withObjectName(objectName: String): this.type = {
     _internal.withObjectName(objectName)
     this
   }
@@ -98,17 +98,17 @@ case class IBMMQChannelTopic(override private[amf] val _internal: InternalIBMMQC
   @JSExportTopLevel("IBMMQChannelTopic")
   def this() = this(InternalIBMMQChannelTopic())
 
-  def string: BoolField           = _internal.string
+  def string: StrField = _internal.string
   def objectName: StrField        = _internal.objectName
   def durablePermitted: BoolField = _internal.durablePermitted
   def lastMsgRetained: BoolField  = _internal.lastMsgRetained
 
-  def withString(string: Boolean): this.type = {
+  def withString(string: String): this.type = {
     _internal.withString(string)
     this
   }
 
-  def withObjectName(objectName: Boolean): this.type = {
+  def withObjectName(objectName: String): this.type = {
     _internal.withObjectName(objectName)
     this
   }
