@@ -2,18 +2,15 @@ package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.{Server, Tag}
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
-import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncServerBindingsParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServer
-import amf.apicontract.internal.spec.common.parser.OasLikeSecurityRequirementParser
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeServerParser, TagsParser}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
-import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model.{YMap, YNode}
@@ -49,14 +46,16 @@ class Async23ServersParser(map: YMap, api: AsyncApi)(
     new Async23ServerParser(api.id, entryLike)
 }
 
-class Async25ServersParser(map: YMap, api: AsyncApi)(override implicit val ctx: AsyncWebApiContext) extends AsyncServersParser(map, api){
+class Async25ServersParser(map: YMap, api: AsyncApi)(override implicit val ctx: AsyncWebApiContext)
+    extends AsyncServersParser(map, api) {
   override protected def serverParser(entryLike: YMapEntryLike): OasLikeServerParser =
     new Async25SeverParser(api.id, entryLike)
 }
 
 class Async20ServerParser(parent: String, entryLike: YMapEntryLike)(implicit
     override val ctx: AsyncWebApiContext
-) extends OasLikeServerParser(parent, entryLike) {
+) extends OasLikeServerParser(parent, entryLike)
+    with SecuritySchemeParser {
 
   override def parse(): Server = {
     val server = super.parse()
@@ -71,14 +70,7 @@ class Async20ServerParser(parent: String, entryLike: YMapEntryLike)(implicit
 
     map.key(
       "security",
-      entry => {
-        val idCounter = new IdCounter()
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .flatMap(s => OasLikeSecurityRequirementParser(s, (_: SecurityRequirement) => Unit, idCounter).parse())
-
-        server.setWithoutId(ServerModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
+      entry => parseSecurityScheme(entry, ServerModel.Security, server)
     )
 
     server
@@ -143,10 +135,10 @@ class Async23ServerParser(parent: String, entryLike: YMapEntryLike)(implicit ove
 }
 
 class Async25SeverParser(parent: String, entryLike: YMapEntryLike)(implicit override val ctx: AsyncWebApiContext)
-  extends Async23ServerParser(parent, entryLike){
+    extends Async23ServerParser(parent, entryLike) {
   override def parse(): Server = {
     val server = super.parse()
-    map.key("tags").foreach{ entry =>
+    map.key("tags").foreach { entry =>
       val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag).parse())
       server.setWithoutId(ServerModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     }

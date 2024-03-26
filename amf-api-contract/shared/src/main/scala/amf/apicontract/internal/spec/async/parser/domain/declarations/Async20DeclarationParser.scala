@@ -24,7 +24,7 @@ import amf.apicontract.internal.spec.async.parser.bindings.{
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain.{
   AsyncCorrelationIdParser,
-  AsyncOperationParser,
+  Async20OperationParser,
   AsyncParametersParser
 }
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
@@ -81,7 +81,7 @@ case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLik
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
           val adopt     = (o: Operation) => o
-          val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
+          val operation = Async20OperationParser(entry, adopt, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
         }

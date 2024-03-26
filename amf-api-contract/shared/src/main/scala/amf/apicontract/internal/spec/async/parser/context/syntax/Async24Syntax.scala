@@ -8,7 +8,10 @@ object Async24Syntax extends SpecSyntax {
       Async23Syntax.nodes,
       "message" -> Set("messageId"),
       "components" -> Set(
-        "serverVariables",
+        "serverVariables"
+      ),
+      "operation" -> Set(
+        "security"
+      )
     )
-  )
 }

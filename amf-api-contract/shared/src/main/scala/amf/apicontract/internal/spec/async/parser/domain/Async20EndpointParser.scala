@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.domain
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Server}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Server}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, ServerModel}
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncChannelBindingsParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
@@ -13,8 +13,6 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
-
-import scala.collection.mutable
 
 class Async20EndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: AsyncWebApiContext
@@ -50,11 +48,7 @@ class Async20EndpointParser(entry: YMapEntry, parentId: String, collector: List[
     map.regex(
       "subscribe|publish",
       entries => {
-        val operations = mutable.ListBuffer[Operation]()
-        entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
-          operations += operationParser.parse()
-        }
+        val operations = parseOperations(entries)
         endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))
       }
     )

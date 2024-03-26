@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/operation-security.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unknown-scope
+  Message: Scope 'this should throw not found error' not found in settings of declared secured by oauth2.
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/operation-security.yaml#/async-api/endpoint/some%2Fevents/supportedOperation/subscribe/security/requirement_1/schemes/oauth2/settings/oauth2/flows/default-flow/scope/this%20should%20throw%20not%20found%20error
+  Property: ValueType(Namespace(http://a.ml/vocabularies/security#),scope)
+  Range: [(34,14)-(34,47)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/operation-security.yaml

@@ -10,6 +10,7 @@ import amf.apicontract.internal.spec.async.transformation.{
 import amf.apicontract.internal.spec.common.transformation.stage.{
   AnnotationRemovalStage,
   ChannelServersResolutionStage,
+  OperationsSecurityResolutionStage,
   PathDescriptionNormalizationStage
 }
 import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
@@ -42,7 +43,8 @@ class Async20TransformationPipeline private (override val name: String) extends 
       new AnnotationRemovalStage(),
       new SemanticExtensionFlatteningStage,
       SourceInformationStage,
-      new ChannelServersResolutionStage(Async20Profile)
+      new ChannelServersResolutionStage(Async20Profile),
+      new OperationsSecurityResolutionStage(Async20Profile)
     )
 }
 

@@ -357,6 +357,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("channel-servers.yaml", Some("channel-servers.report"))
   }
 
+  test("Async 2.4+ operation security property with undefined security scheme") {
+    validate("operation-security.yaml", Some("operation-security.report"))
+  }
+
   test("Async 2.2+ AnypointMQ Closed Shape validation") {
     validate("anypoint-binding-extra-key.yaml", Some("anypoint-binding-extra-key.report"))
   }
