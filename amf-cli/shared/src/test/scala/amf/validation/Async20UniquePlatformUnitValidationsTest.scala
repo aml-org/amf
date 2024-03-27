@@ -391,4 +391,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.3+ Solace validations") {
     validate("solace-binding-validations.yaml", Some("solace-binding-validations.report"))
   }
+
+  test("Async 2.2+ AnypointMQ validations") {
+    validate("anypoint-binding-validations.yaml", Some("anypoint-binding-validations.report"))
+  }
 }

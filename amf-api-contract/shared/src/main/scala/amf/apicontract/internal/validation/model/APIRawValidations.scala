@@ -1109,6 +1109,18 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiBinding("accessType"),
         constraint = sh("in"),
         value = "exclusive,nonexclusive"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'exchange', 'queue' or 'fifo-queue'.",
+        owlClass = apiBinding("AnypointMQChannelBinding"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "exchange,queue,fifo-queue"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("AnypointMQMessageBinding"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("anypointMQHeadersValidation")
       )
     ) ++ baseApiValidations("AsyncAPI")
 
