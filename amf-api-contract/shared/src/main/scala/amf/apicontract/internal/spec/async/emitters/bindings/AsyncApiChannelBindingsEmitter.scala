@@ -7,6 +7,11 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.{
   Amqp091Queue
 }
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQChannelBinding
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
+  GooglePubSubChannelBinding,
+  GooglePubSubMessageStoragePolicy,
+  GooglePubSubSchemaSettings
+}
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQChannelBinding,
   IBMMQChannelQueue,
@@ -19,24 +24,37 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091ChannelExchangeModel,
   Amqp091QueueModel,
   AnypointMQChannelBindingModel,
+  GooglePubSubChannelBindingModel,
+  GooglePubSubMessageStoragePolicyModel,
+  GooglePubSubSchemaDefinitionModel,
+  GooglePubSubSchemaSettingsModel,
   IBMMQChannelBindingModel,
   IBMMQChannelQueueModel,
   IBMMQChannelTopicModel,
-  PulsarChannelBindingModel,
-  PulsarChannelRetentionModel,
-  WebSocketsChannelBindingModel
+ PulsarChannelBindingModel,
+  PulsarChannelRetentionModel, WebSocketsChannelBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, Pulsar, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, GooglePubSub, IBMMQ, Pulsar, WebSockets}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfScalar, ObjectNode, Shape}
 import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{
+  ArrayEmitter,
+  EntryPartEmitter,
+  ScalarEmitter,
+  ValueEmitter,
+  pos,
+  traverse
+}
 import amf.core.internal.render.BaseEmitters.{ArrayEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
-import amf.core.internal.render.emitters.EntryEmitter
-import org.yaml.model.YDocument.EntryBuilder
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.oas.emitter.{OasNodeShapeEmitter, OasScalarShapeEmitter}
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
@@ -50,12 +68,13 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
   }
 
   private def emitterFor(binding: ChannelBinding): Option[EntryEmitter] = binding match {
-    case binding: Amqp091ChannelBinding    => Some(new Amqp091ChannelBindingEmitter(binding, ordering))
-    case binding: WebSocketsChannelBinding => Some(new WebSocketChannelBindingEmitter(binding, ordering))
-    case binding: IBMMQChannelBinding      => Some(new IBMMQChannelBindingEmitter(binding, ordering))
-    case binding: AnypointMQChannelBinding => Some(new AnypointMQChannelBindingEmitter(binding, ordering))
+    case binding: Amqp091ChannelBinding      => Some(new Amqp091ChannelBindingEmitter(binding, ordering))
+    case binding: WebSocketsChannelBinding   => Some(new WebSocketChannelBindingEmitter(binding, ordering))
+    case binding: IBMMQChannelBinding        => Some(new IBMMQChannelBindingEmitter(binding, ordering))
+    case binding: AnypointMQChannelBinding   => Some(new AnypointMQChannelBindingEmitter(binding, ordering))
     case binding: PulsarChannelBinding     => Some(new PulsarChannelBindingEmitter(binding, ordering))
-    case _                                 => None
+    case binding: GooglePubSubChannelBinding => Some(new GooglePubSubChannelBindingEmitter(binding, ordering))
+    case _                                   => None
   }
 
   override def position(): Position = pos(binding.annotations)
@@ -259,6 +278,84 @@ class AnypointMQChannelBindingEmitter(binding: AnypointMQChannelBinding, orderin
     )
   }
 
+  override def position(): Position = pos(binding.annotations)
+}
+
+class GooglePubSubChannelBindingEmitter(binding: GooglePubSubChannelBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(GooglePubSub),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(GooglePubSubChannelBindingModel.Labels)
+          .foreach(f =>
+            result += EntryPartEmitter(
+              "labels",
+              DataNodeEmitter(binding.labels, ordering)(spec.eh),
+              position = pos(f.value.annotations)
+            )
+          )
+        fs.entry(GooglePubSubChannelBindingModel.MessageRetentionDuration)
+          .foreach(f => result += ValueEmitter("messageRetentionDuration", f))
+        fs.entry(GooglePubSubChannelBindingModel.Topic).foreach(f => result += ValueEmitter("topic", f))
+        Option(binding.messageStoragePolicy).foreach(policy =>
+          result += new GooglePubSubStoragePolicyEmitter(policy, ordering)
+        )
+        Option(binding.schemaSettings).foreach(settings =>
+          result += new GooglePubSubSchemaSettingsEmitter(settings, ordering)
+        )
+
+        emitBindingVersion(fs, result)
+        traverse(ordering.sorted(result), emitter)
+
+      }
+    )
+  }
+  override def position(): Position = pos(binding.annotations)
+}
+
+class GooglePubSubStoragePolicyEmitter(binding: GooglePubSubMessageStoragePolicy, ordering: SpecOrdering)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("messageStoragePolicy"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(GooglePubSubMessageStoragePolicyModel.AllowedPersistenceRegions)
+          .foreach(f => result += ArrayEmitter("allowedPersistenceRegions", f, ordering))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+  override def position(): Position = pos(binding.annotations)
+}
+class GooglePubSubSchemaSettingsEmitter(binding: GooglePubSubSchemaSettings, ordering: SpecOrdering)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("schemaSettings"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(GooglePubSubSchemaSettingsModel.Encoding).foreach(f => result += ValueEmitter("encoding", f))
+        fs.entry(GooglePubSubSchemaSettingsModel.FirstRevisionId)
+          .foreach(f => result += ValueEmitter("firstRevisionId", f))
+        fs.entry(GooglePubSubSchemaSettingsModel.LastRevisionId)
+          .foreach(f => result += ValueEmitter("lastRevisionId", f))
+        fs.entry(GooglePubSubSchemaSettingsModel.Name).foreach(f => result += ValueEmitter("name", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
   override def position(): Position = pos(binding.annotations)
 }
 

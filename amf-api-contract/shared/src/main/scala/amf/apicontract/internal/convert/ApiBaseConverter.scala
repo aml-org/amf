@@ -4,36 +4,27 @@ import amf.apicontract.client.platform
 import amf.apicontract.client.platform.model.domain.federation
 import amf.apicontract.client.platform.model.{document, domain}
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, ComponentModule}
-import amf.apicontract.client.scala.model.domain.{
-  Callback,
-  CorrelationId,
-  Encoding,
-  EndPoint,
-  License,
-  Message,
-  Operation,
-  Organization,
-  Parameter,
-  Payload,
-  Request,
-  Response,
-  Server,
-  Tag,
-  TemplatedLink
-}
-import amf.apicontract.client.scala.model.domain.federation._
+import amf.apicontract.client.scala.model.domain.bindings._
 import amf.apicontract.client.scala.model.domain.bindings.amqp._
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq._
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
+  GooglePubSubChannelBinding,
+  GooglePubSubMessageBinding,
+  GooglePubSubMessageStoragePolicy,
+  GooglePubSubSchemaDefinition,
+  GooglePubSubSchemaSettings
+}
 import amf.apicontract.client.scala.model.domain.bindings.http._
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq._
 import amf.apicontract.client.scala.model.domain.bindings.kafka._
 import amf.apicontract.client.scala.model.domain.bindings.mqtt._
 import amf.apicontract.client.scala.model.domain.bindings.websockets._
-import amf.apicontract.client.scala.model.domain.bindings._
+import amf.apicontract.client.scala.model.domain.federation._
 import amf.apicontract.client.scala.model.domain.bindings.pulsar._
 import amf.apicontract.client.scala.model.domain.bindings.solace._
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -110,6 +101,11 @@ trait ApiBaseConverter
     with PulsarServerBindingConverter
     with PulsarChannelBindingConverter
     with PulsarChannelRetentionConverter
+    with GooglePubSubMessageBindingConverter
+    with GooglePubSubSchemaDefinitionConverter
+    with GooglePubSubChannelBindingConverter
+    with GooglePubSubMessageStoragePolicyConverter
+    with GooglePubSubSchemaSettingsConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, domain.bindings.ChannelBinding] {
@@ -438,6 +434,73 @@ trait IBMMQChannelTopicConverter extends PlatformSecrets {
     override def asClient(from: IBMMQChannelTopic): domain.bindings.ibmmq.IBMMQChannelTopic =
       platform.wrap[domain.bindings.ibmmq.IBMMQChannelTopic](from)
     override def asInternal(from: domain.bindings.ibmmq.IBMMQChannelTopic): IBMMQChannelTopic = from._internal
+  }
+}
+
+trait GooglePubSubMessageBindingConverter extends PlatformSecrets {
+  implicit object GooglePubSubMessageBindingMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubMessageBinding,
+        domain.bindings.googlepubsub.GooglePubSubMessageBinding
+      ] {
+    override def asClient(from: GooglePubSubMessageBinding): domain.bindings.googlepubsub.GooglePubSubMessageBinding =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubMessageBinding](from)
+    override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubMessageBinding): GooglePubSubMessageBinding =
+      from._internal
+  }
+}
+trait GooglePubSubSchemaDefinitionConverter extends PlatformSecrets {
+  implicit object GooglePubSubSchemaDefinitionMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubSchemaDefinition,
+        domain.bindings.googlepubsub.GooglePubSubSchemaDefinition
+      ] {
+    override def asClient(
+        from: GooglePubSubSchemaDefinition
+    ): domain.bindings.googlepubsub.GooglePubSubSchemaDefinition =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubSchemaDefinition](from)
+    override def asInternal(
+        from: domain.bindings.googlepubsub.GooglePubSubSchemaDefinition
+    ): GooglePubSubSchemaDefinition = from._internal
+  }
+}
+trait GooglePubSubChannelBindingConverter extends PlatformSecrets {
+  implicit object GooglePubSubChannelBindingMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubChannelBinding,
+        domain.bindings.googlepubsub.GooglePubSubChannelBinding
+      ] {
+    override def asClient(from: GooglePubSubChannelBinding): domain.bindings.googlepubsub.GooglePubSubChannelBinding =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubChannelBinding](from)
+    override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubChannelBinding): GooglePubSubChannelBinding =
+      from._internal
+  }
+}
+trait GooglePubSubMessageStoragePolicyConverter extends PlatformSecrets {
+  implicit object GooglePubSubMessageStoragePolicyMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubMessageStoragePolicy,
+        domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy
+      ] {
+    override def asClient(
+        from: GooglePubSubMessageStoragePolicy
+    ): domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy](from)
+    override def asInternal(
+        from: domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy
+    ): GooglePubSubMessageStoragePolicy = from._internal
+  }
+}
+trait GooglePubSubSchemaSettingsConverter extends PlatformSecrets {
+  implicit object GooglePubSubSchemaSettingsMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubSchemaSettings,
+        domain.bindings.googlepubsub.GooglePubSubSchemaSettings
+      ] {
+    override def asClient(from: GooglePubSubSchemaSettings): domain.bindings.googlepubsub.GooglePubSubSchemaSettings =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubSchemaSettings](from)
+    override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubSchemaSettings): GooglePubSubSchemaSettings =
+      from._internal
   }
 }
 

@@ -6,6 +6,13 @@ import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.anypointmq._
+import amf.apicontract.client.platform.model.domain.bindings.googlepubsub.{
+  GooglePubSubChannelBinding,
+  GooglePubSubMessageBinding,
+  GooglePubSubMessageStoragePolicy,
+  GooglePubSubSchemaDefinition,
+  GooglePubSubSchemaSettings
+}
 import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.ibmmq._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
@@ -315,6 +322,26 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     }
     platform.registerWrapper(IBMMQChannelTopicModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQChannelTopic => IBMMQChannelTopic(s)
+    }
+    platform.registerWrapper(GooglePubSubChannelBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubChannelBinding =>
+        GooglePubSubChannelBinding(s)
+    }
+    platform.registerWrapper(GooglePubSubMessageStoragePolicyModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy =>
+        GooglePubSubMessageStoragePolicy(s)
+    }
+    platform.registerWrapper(GooglePubSubSchemaSettingsModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubSchemaSettings =>
+        GooglePubSubSchemaSettings(s)
+    }
+    platform.registerWrapper(GooglePubSubMessageBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubMessageBinding =>
+        GooglePubSubMessageBinding(s)
+    }
+    platform.registerWrapper(GooglePubSubSchemaDefinitionModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubSchemaDefinition =>
+        GooglePubSubSchemaDefinition(s)
     }
     platform.registerWrapper(APIContractProcessingDataModel) {
       case s: amf.apicontract.client.scala.model.document.APIContractProcessingData => APIContractProcessingData(s)
