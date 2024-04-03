@@ -46,7 +46,10 @@ object IBMMQChannelBindingParser extends BindingParser[IBMMQChannelBinding] {
         val queue    = IBMMQChannelQueue(Annotations(entry.value))
         val queueMap = entry.value.as[YMap]
 
-        queueMap.key("objectName", IBMMQChannelQueueModel.ObjectName in queue)
+        queueMap.key("objectName") match {
+          case Some(value) => Some(value).foreach(IBMMQChannelQueueModel.ObjectName in queue)
+          case None        => missingRequiredFieldViolation(ctx, binding, "objectName", "IBMMQ Channel Queue")
+        }
 
         queueMap.key("isPartitioned") match {
           case Some(value) => Some(value).foreach(IBMMQChannelQueueModel.IsPartitioned in queue)

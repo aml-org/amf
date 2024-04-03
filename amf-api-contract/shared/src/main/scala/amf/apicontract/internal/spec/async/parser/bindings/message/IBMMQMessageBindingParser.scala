@@ -21,11 +21,13 @@ object IBMMQMessageBindingParser extends BindingParser[IBMMQMessageBinding] {
 
     map.key("headers").foreach { entry =>
       val values = entry.value.toString.split(",").map(AmfScalar(_)).toSeq
-      binding.setWithoutId(
-        IBMMQMessageBindingModel.Headers,
-        AmfArray(values, Annotations.virtual()),
-        Annotations(entry)
-      )
+      if (values.nonEmpty) {
+        binding.setWithoutId(
+          IBMMQMessageBindingModel.Headers,
+          AmfArray(values, Annotations.virtual()),
+          Annotations(entry)
+        )
+      }
     }
 
     map.key("description", IBMMQMessageBindingModel.Description in binding)

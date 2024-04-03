@@ -395,4 +395,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.2+ AnypointMQ validations") {
     validate("anypoint-binding-validations.yaml", Some("anypoint-binding-validations.report"))
   }
+
+  test("Async 2.1+ IBMMQ parsing validations") {
+    validate("ibmmq-binding-parsing-validations.yaml", Some("ibmmq-binding-parsing-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ validations") {
+    validate("ibmmq-binding-validations.yaml", Some("ibmmq-binding-validations.report"))
+  }
 }
