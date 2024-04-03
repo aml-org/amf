@@ -4,7 +4,6 @@ import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
-import amf.apicontract.internal.spec.async.NotFinishedAsync20ParsePlugin
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -41,9 +40,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val raml08Client: AMFBaseUnitClient = raml08Config.baseUnitClient()
   val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
-  val asyncConfig: AMFConfiguration =
-    AsyncAPIConfiguration.Async20().withPlugin(NotFinishedAsync20ParsePlugin).withRenderOptions(ro)
-  val asyncClient: AMFBaseUnitClient = asyncConfig.baseUnitClient()
+  val asyncConfig: AMFConfiguration   = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
+  val asyncClient: AMFBaseUnitClient  = asyncConfig.baseUnitClient()
 
   def modelAssertion(
       path: String,
