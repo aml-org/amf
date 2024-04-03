@@ -25,7 +25,7 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
     val map     = entry.value.as[YMap]
 
     map.key("destinations").foreach { entry =>
-      val destinations = entry.value.as[Seq[YMap]].map(destinationMap => parseDestination(binding, destinationMap))
+      val destinations = entry.value.as[Seq[YMap]].map(parseDestination)
       binding.setArrayWithoutId(SolaceOperationBindingModel.Destinations, destinations)
     }
 
@@ -36,13 +36,14 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
     binding
   }
 
-  private def parseDestination(binding: SolaceOperationBinding, map: YMap)(implicit
+  private def parseDestination(map: YMap)(implicit
       ctx: AsyncWebApiContext
   ): SolaceOperationDestination = {
     val destination = SolaceOperationDestination(Annotations())
+
     map.key("destinationType", SolaceOperationDestinationModel.DestinationType in destination)
 
-    map.key("deliveryMode") match { // todo validate that it can only be 'direct' or 'persistent'
+    map.key("deliveryMode") match {
       case Some(value) => Some(value).foreach(SolaceOperationDestinationModel.DeliveryMode in destination)
       case None => setDefaultValue(destination, SolaceOperationDestinationModel.DeliveryMode, AmfScalar("persistent"))
     }
@@ -65,7 +66,9 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
         queueMap.key("topicSubscriptions", SolaceOperationQueueModel.TopicSubscriptions in queue)
 
         queueMap.key("accessType", SolaceOperationQueueModel.AccessType in queue)
+
         queueMap.key("maxMsgSpoolSize", SolaceOperationQueueModel.MaxMsgSpoolSize in queue)
+
         queueMap.key("maxTtl", SolaceOperationQueueModel.MaxTtl in queue)
 
         ctx.closedShape(queue, queueMap, "SolaceOperationQueue")

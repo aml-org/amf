@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml
+Profile: ASYNC 2.0
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#AnypointMQChannelBinding-destinationType-in
+  Message: Invalid 'destinationType' value. The options are: 'exchange', 'queue' or 'fifo-queue'.
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/anypointmq-channel
+  Property: http://a.ml/vocabularies/apiBinding#destinationType
+  Range: [(10,25)-(10,46)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#AnypointMQMessageBinding-headers-anypointMQHeadersValidation
+  Message: AnypointMQ Message Binding 'headers' field must be an object
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/anypointmq-message
+  Property: http://a.ml/vocabularies/apiBinding#headers
+  Range: [(16,20)-(18,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#AnypointMQMessageBinding-headers-anypointMQHeadersValidation
+  Message: AnypointMQ Message Binding 'headers' field must have a 'properties' field
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml#/async-api/endpoint/other-channel/supportedOperation/publish/expects/request/message-bindings/bindings/anypointmq-message
+  Property: http://a.ml/vocabularies/apiBinding#headers
+  Range: [(26,10)-(30,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-binding-validations.yaml

@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-parsing-validations.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#required-field
+  Message: field 'objectName' is required in a IBMMQ Channel Queue
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-parsing-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
+  Property: 
+  Range: 
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-parsing-validations.yaml

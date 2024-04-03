@@ -1,0 +1,31 @@
+asyncapi: 2.2.0
+info:
+  title: test anypoint binding
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      anypointmq:
+        destination: user-signup-exchg
+        destinationType: wrong destinationType # MUST be either exchange or queue or fifo-queue
+        bindingVersion: '0.1.0'
+    publish:
+      message:
+        bindings:
+          anypointmq:
+            headers:
+              type: string # MUST be an object
+            bindingVersion: '0.1.0'
+        payload:
+          type: string
+
+  other-channel:
+    publish:
+      message:
+        bindings:
+          anypointmq:
+            headers:
+              type: object # MUST have a 'properties' field
+            bindingVersion: '0.1.0'
+        payload:
+          type: string

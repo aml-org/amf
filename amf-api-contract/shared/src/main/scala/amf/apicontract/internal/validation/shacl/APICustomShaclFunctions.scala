@@ -2,10 +2,19 @@ package amf.apicontract.internal.validation.shacl
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
+import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQChannelBinding, IBMMQMessageBinding}
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
-import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  AnypointMQMessageBindingModel,
+  BindingHeaders,
+  BindingQuery,
+  HttpMessageBindingModel,
+  IBMMQChannelBindingModel,
+  IBMMQMessageBindingModel
+}
 import amf.apicontract.internal.metamodel.domain.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel,
@@ -739,6 +748,68 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 )
 
             case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "anypointMQHeadersValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+
+          element.asInstanceOf[AnypointMQMessageBinding].headers match {
+            case node: NodeShape =>
+              node.fields.?[AmfArray](NodeShapeModel.Properties) match {
+                case Some(_) => // ignore
+                case None =>
+                  validate(
+                    validationInfo(
+                      AnypointMQMessageBindingModel.Headers,
+                      "AnypointMQ Message Binding 'headers' field must have a 'properties' field",
+                      element.annotations
+                    )
+                  )
+              }
+
+            case elem =>
+              validate(
+                validationInfo(
+                  AnypointMQMessageBindingModel.Headers,
+                  "AnypointMQ Message Binding 'headers' field must be an object",
+                  elem.annotations
+                )
+              )
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "IBMMQDestinationValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val binding = element.asInstanceOf[IBMMQChannelBinding]
+          if (binding.topic != null && binding.queue != null) {
+            validate(
+              validationInfo(
+                IBMMQChannelBindingModel.Queue,
+                "'queue' and 'topic' fields MUST NOT coexist within an IBMMQ channel binding",
+                element.annotations
+              )
+            )
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "IBMMQHeadersValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val binding = element.asInstanceOf[IBMMQMessageBinding]
+          if (Seq("string", "jms").contains(binding.messageType.value()) && binding.headers.nonEmpty) {
+            validate(
+              validationInfo(
+                IBMMQMessageBindingModel.Headers,
+                "headers MUST NOT be specified if type = string or jms in an IBMMQ Message Binding",
+                element.annotations
+              )
+            )
           }
         }
       }

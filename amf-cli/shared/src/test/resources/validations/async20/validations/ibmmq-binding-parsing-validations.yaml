@@ -1,0 +1,11 @@
+asyncapi: 2.1.0
+info:
+  title: test binding
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      ibmmq:
+        destinationType: queue
+        # 10. objectName is REQUIRED inside queue
+        queue: { }
