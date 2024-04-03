@@ -1,7 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, WebAPIConfiguration}
-import amf.apicontract.internal.spec.async.NotFinishedAsync20ParsePlugin
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -46,7 +45,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
       configOverride: Option[AMFConfiguration] = None,
       hideValidationResultsIfParseNotConforms: Boolean = true
   ): Future[Assertion] = {
-    val initialConfig = configOverride.getOrElse(APIConfiguration.API().withPlugin(NotFinishedAsync20ParsePlugin))
+    val initialConfig = configOverride.getOrElse(APIConfiguration.API())
     for {
       parseResult <- parse(directory + api, initialConfig)
       report <- configOverride
@@ -93,7 +92,6 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     val errorHandler = DefaultErrorHandler()
     val config = APIConfiguration
       .API()
-      .withPlugin(NotFinishedAsync20ParsePlugin)
       .withErrorHandlerProvider(() => errorHandler)
     for {
       model <- config.baseUnitClient().parse(basePath + api).map(_.baseUnit)
