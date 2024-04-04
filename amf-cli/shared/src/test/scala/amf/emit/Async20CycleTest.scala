@@ -188,6 +188,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "async 2.4+ implicit security field in operation bindings",
       "operation-security-implicit.yaml",
       "operation-security-implicit.yaml"
+    ),
+    FixtureData(
+      "Async 2.1 all",
+      "asyncApi-2.1-all.yaml",
+      "asyncApi-2.1-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.2 all",
+      "asyncApi-2.2-all.yaml",
+      "asyncApi-2.2-all.yaml"
     )
 
 // TODO: figure out why this test is commented out
