@@ -40,6 +40,10 @@ object Async21Syntax extends SpecSyntax {
         "objectName",
         "durablePermitted",
         "lastMsgRetained"
+      ),
+      "message examples" -> Set(
+        "name",
+        "summary"
       )
     )
 }
