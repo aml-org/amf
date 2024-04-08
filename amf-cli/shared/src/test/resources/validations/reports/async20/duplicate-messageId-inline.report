@@ -1,5 +1,5 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/duplicate-messageId-inline.yaml
-Profile:
+Profile: 
 Conforms: false
 Number of results: 1
 
@@ -9,6 +9,6 @@ Level: Violation
   Message: Duplicated message id 'duplicateMessageId'
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/duplicate-messageId-inline.yaml#/async-api/endpoint/channel1/supportedOperation/subscribe/returns/resp/default-response
-  Property:
+  Property: 
   Range: [(14,19)-(14,37)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/duplicate-messageId-inline.yaml
