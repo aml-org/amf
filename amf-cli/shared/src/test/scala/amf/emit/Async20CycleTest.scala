@@ -198,6 +198,26 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "Async 2.2 all",
       "asyncApi-2.2-all.yaml",
       "asyncApi-2.2-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.3 all",
+      "asyncApi-2.3-all.yaml",
+      "asyncApi-2.3-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.4 all",
+      "asyncApi-2.4-all.yaml",
+      "asyncApi-2.4-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.5 all",
+      "asyncApi-2.5-all.yaml",
+      "asyncApi-2.5-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.6 all",
+      "asyncApi-2.6-all.yaml",
+      "asyncApi-2.6-all.yaml"
     )
 
 // TODO: figure out why this test is commented out
