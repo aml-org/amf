@@ -19,8 +19,8 @@ servers:
     url: mykafkacluster.org:8092
     protocol: kafka-secure
     security:
-       -
-         oauth2:
+      -
+        oauth2:
           - write:pets
           - read:pets
 channels:
