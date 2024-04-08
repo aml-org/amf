@@ -325,11 +325,12 @@ object APIConfiguration extends APIConfigurationBuilder {
       .withTransformationPipelines(unsupportedTransformationsSet(name))
 
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
-    case Spec.RAML08     => RAMLConfiguration.RAML08()
-    case Spec.RAML10     => RAMLConfiguration.RAML10()
-    case Spec.OAS20      => OASConfiguration.OAS20()
-    case Spec.OAS30      => OASConfiguration.OAS30()
-    case Spec.ASYNC20    => AsyncAPIConfiguration.Async20()
+    case Spec.RAML08 => RAMLConfiguration.RAML08()
+    case Spec.RAML10 => RAMLConfiguration.RAML10()
+    case Spec.OAS20  => OASConfiguration.OAS20()
+    case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
+      AsyncAPIConfiguration.Async20()
     case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
     case _ =>
       throw UnrecognizedSpecException(
