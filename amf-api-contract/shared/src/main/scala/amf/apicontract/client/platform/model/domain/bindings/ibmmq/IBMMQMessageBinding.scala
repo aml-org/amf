@@ -40,7 +40,7 @@ case class IBMMQMessageBinding(override private[amf] val _internal: InternalIBMM
     this
   }
 
-  override protected def bindingVersion: model.StrField = _internal.bindingVersion
+  override protected def bindingVersion: StrField = _internal.bindingVersion
 
   override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
