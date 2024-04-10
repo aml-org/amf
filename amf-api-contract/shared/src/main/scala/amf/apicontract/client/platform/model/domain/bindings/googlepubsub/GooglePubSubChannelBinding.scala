@@ -46,13 +46,14 @@ case class GooglePubSubChannelBinding(override private[amf] val _internal: Inter
     this
   }
 
-  override def withBindingVersion(bindingVersion: String): GooglePubSubChannelBinding.this.type = {
+  override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
     this
   }
 
   override def linkCopy(): GooglePubSubChannelBinding = _internal.linkCopy()
 }
+
 @JSExportAll
 case class GooglePubSubMessageStoragePolicy(override private[amf] val _internal: InternalGooglePubSubMessageStoragePolicy) extends DomainElement {
   @JSExportTopLevel("GooglePubSubMessageStoragePolicy")

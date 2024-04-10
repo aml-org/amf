@@ -1,4 +1,5 @@
 package amf.apicontract.client.scala.model.domain.bindings
+
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.Field

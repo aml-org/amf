@@ -8,9 +8,8 @@ import amf.apicontract.client.scala.model.domain.bindings.solace.{
   SolaceOperationTopic => InternalSolaceOperationTopic
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.model
-import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -28,7 +27,7 @@ case class SolaceOperationBinding(override private[amf] val _internal: InternalS
     this
   }
 
-  override protected def bindingVersion: model.StrField = _internal.bindingVersion
+  override protected def bindingVersion: StrField = _internal.bindingVersion
 
   override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
