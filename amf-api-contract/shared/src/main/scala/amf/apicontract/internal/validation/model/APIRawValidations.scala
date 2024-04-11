@@ -1127,7 +1127,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiBinding("IBMMQServerBinding"),
         owlProperty = apiBinding("heartBeatInterval"),
         constraint = sh("pattern"),
-        value = "^[0-999999]$"
+        value = "^\\d{1,6}$"
       ),
       AMFValidation(
         message = "IBMMQ Channel Binding 'destinationType' field must be either 'topic' or 'queue'",
@@ -1167,8 +1167,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         message = "IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)",
         owlClass = apiBinding("IBMMQChannelBinding"),
         owlProperty = apiBinding("maxMsgLength"),
-        constraint = sh("pattern"),
-        value = "^[0-104857600]$"
+        constraint = shape("IBMMQMaxMsgLengthValidation")
       ),
       AMFValidation(
         message = "IBMMQ message Binding 'type' field must be either 'string', 'jms' or 'binary'",
