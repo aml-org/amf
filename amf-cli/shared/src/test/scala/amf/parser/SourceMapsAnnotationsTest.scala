@@ -49,6 +49,30 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     runTest("async2.yaml")
   }
 
+  test("Test Async 2.1 annotations") {
+    runTest("/../../upanddown/cycle/async20/asyncApi-2.1-all.yaml")
+  }
+
+  test("Test Async 2.2 annotations") {
+    runTest("/../../upanddown/cycle/async20/asyncApi-2.2-all.yaml")
+  }
+
+  test("Test Async 2.3 annotations") {
+    runTest("/../../upanddown/cycle/async20/asyncApi-2.3-all.yaml")
+  }
+
+  test("Test Async 2.4 annotations") {
+    runTest("/../../upanddown/cycle/async20/asyncApi-2.4-all.yaml")
+  }
+
+  test("Test Async 2.5 annotations") {
+    runTest("/../../upanddown/cycle/async20/asyncApi-2.5-all.yaml")
+  }
+
+  test("Test Async 2.6 annotations") {
+    runTest("/../../upanddown/cycle/async20/asyncApi-2.6-all.yaml")
+  }
+
   test("Test GraphQL annotations") {
     runTest("graphql.graphql", Some(GraphQLConfiguration.GraphQL()))
   }

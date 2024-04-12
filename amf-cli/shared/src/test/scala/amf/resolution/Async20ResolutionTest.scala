@@ -220,6 +220,42 @@ class Async20ResolutionTest extends ResolutionTest {
       renderOptions = Some(config.renderOptions)
     )
   }
+  multiGoldenTest("Should add specified servers to channels in 2.3", "channel-servers-23.%s") { config =>
+    cycle(
+      "channel-servers-23.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.4", "channel-servers-2.4.%s") { config =>
+    cycle(
+      "channel-server-2.4.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.5", "channel-servers-2.5.%s") { config =>
+    cycle(
+      "channel-server-2.5.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.6", "channel-servers-2.6.%s") { config =>
+    cycle(
+      "channel-server-2.6.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
 
   // W-12689955
   multiGoldenTest("Should add all servers to channels when servers isn't specified", "channel-servers-implicit.%s") {
@@ -263,7 +299,7 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
-  // W-12689962
+//   W-12689962
   test("async should emit operation security keyword") {
     cycle(
       "operation-security-explicit.yaml",

@@ -14,7 +14,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YMap, YMapEntry}
 import amf.core.internal.parser.YMapOps
@@ -26,7 +26,11 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
 
     map.key("destinations").foreach { entry =>
       val destinations = entry.value.as[Seq[YMap]].map(parseDestination)
-      binding.setArrayWithoutId(SolaceOperationBindingModel.Destinations, destinations)
+      binding.setWithoutId(
+        SolaceOperationBindingModel.Destinations,
+        AmfArray(destinations, Annotations(entry.value)),
+        Annotations(entry)
+      )
     }
 
     parseBindingVersion(binding, SolaceOperationBindingModel.BindingVersion, map)
@@ -39,7 +43,7 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
   private def parseDestination(map: YMap)(implicit
       ctx: AsyncWebApiContext
   ): SolaceOperationDestination = {
-    val destination = SolaceOperationDestination(Annotations())
+    val destination = SolaceOperationDestination(Annotations(map))
 
     map.key("destinationType", SolaceOperationDestinationModel.DestinationType in destination)
 
