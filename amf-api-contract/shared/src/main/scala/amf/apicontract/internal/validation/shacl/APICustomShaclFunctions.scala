@@ -812,6 +812,24 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             )
           }
         }
+      },
+      new CustomShaclFunction {
+        override val name: String = "IBMMQMaxMsgLengthValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val binding             = element.asInstanceOf[IBMMQChannelBinding]
+          val length              = binding.maxMsgLength.value()
+          val isMaxMsgLengthValid = 0 <= length && length <= 104857600
+          if (!isMaxMsgLengthValid) {
+            validate(
+              validationInfo(
+                IBMMQChannelBindingModel.MaxMsgLength,
+                "IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)",
+                element.annotations
+              )
+            )
+          }
+        }
       }
     )
 

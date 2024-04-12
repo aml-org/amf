@@ -13,6 +13,14 @@ Level: Violation
   Range: [(11,27)-(11,36)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
 
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelBinding-maxMsgLength-IBMMQMaxMsgLengthValidation
+  Message: IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
+  Property: http://a.ml/vocabularies/apiBinding#maxMsgLength
+  Range: [(16,6)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
 - Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelBinding-queue-IBMMQDestinationValidation
   Message: 'queue' and 'topic' fields MUST NOT coexist within an IBMMQ channel binding
   Severity: Violation
@@ -51,14 +59,6 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel/ibmmq-topic
   Property: http://a.ml/vocabularies/apiBinding#objectName
   Range: [(23,22)-(23,75)]
-  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
-
-- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelBinding-maxMsgLength-pattern
-  Message: IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
-  Property: http://a.ml/vocabularies/apiBinding#maxMsgLength
-  Range: [(24,22)-(24,31)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#IBMMQMessageBinding-messageType-in
