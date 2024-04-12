@@ -1088,6 +1088,105 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         value =
           "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|plain|scramSha256|scramSha512|gssapi|x-.+)$"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      AMFValidation(
+        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
+        owlClass = apiBinding("SolaceOperationQueue"),
+        owlProperty = apiBinding("accessType"),
+        constraint = sh("in"),
+        value = "exclusive,nonexclusive"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'exchange', 'queue' or 'fifo-queue'.",
+        owlClass = apiBinding("AnypointMQChannelBinding"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "exchange,queue,fifo-queue"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("AnypointMQMessageBinding"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("anypointMQHeadersValidation")
+      ),
+      AMFValidation(
+        message = "IBMMQ Server Binding 'heartBeatInterval' field must be a number between 0-999999",
+        owlClass = apiBinding("IBMMQServerBinding"),
+        owlProperty = apiBinding("heartBeatInterval"),
+        constraint = sh("pattern"),
+        value = "^\\d{1,6}$"
+      ),
+      AMFValidation(
+        message = "IBMMQ Channel Binding 'destinationType' field must be either 'topic' or 'queue'",
+        owlClass = apiBinding("IBMMQChannelBinding"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "topic,queue"
+      ),
+      AMFValidation(
+        message = "IBMMQ queue 'objectName' field MUST NOT exceed 48 characters in length",
+        owlClass = apiBinding("IBMMQChannelQueue"),
+        owlProperty = apiBinding("objectName"),
+        constraint = sh("maxLength"),
+        value = "48"
+      ),
+      AMFValidation(
+        message = "'queue' and 'topic' fields MUST NOT coexist within an IBMMQ channel binding",
+        owlClass = apiBinding("IBMMQChannelBinding"),
+        owlProperty = apiBinding("queue"),
+        constraint = shape("IBMMQDestinationValidation")
+      ),
+      AMFValidation(
+        message = "IBMMQ topic 'string' field MUST NOT exceed 10240 characters in length",
+        owlClass = apiBinding("IBMMQChannelTopic"),
+        owlProperty = apiBinding("string"),
+        constraint = sh("maxLength"),
+        value = "10240"
+      ),
+      AMFValidation(
+        message = "IBMMQ topic 'objectName' field MUST NOT exceed 48 characters in length",
+        owlClass = apiBinding("IBMMQChannelTopic"),
+        owlProperty = apiBinding("objectName"),
+        constraint = sh("maxLength"),
+        value = "48"
+      ),
+      AMFValidation(
+        message = "IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)",
+        owlClass = apiBinding("IBMMQChannelBinding"),
+        owlProperty = apiBinding("maxMsgLength"),
+        constraint = shape("IBMMQMaxMsgLengthValidation")
+      ),
+      AMFValidation(
+        message = "IBMMQ message Binding 'type' field must be either 'string', 'jms' or 'binary'",
+        owlClass = apiBinding("IBMMQMessageBinding"),
+        owlProperty = apiBinding("messageType"),
+        constraint = sh("in"),
+        value = "string,jms,binary"
+      ),
+      AMFValidation(
+        message = "IBMMQ message Binding 'expiry' field must be 0 or greater",
+        owlClass = apiBinding("IBMMQMessageBinding"),
+        owlProperty = apiBinding("expiry"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "IBMMQ message Binding 'headers' MUST NOT be specified if 'type' field is 'string' or 'jms'",
+        owlClass = apiBinding("IBMMQMessageBinding"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("IBMMQHeadersValidation")
       )
     ) ++ baseApiValidations("AsyncAPI")
 

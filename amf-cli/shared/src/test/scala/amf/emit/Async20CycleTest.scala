@@ -138,9 +138,13 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/mercure-binding.yaml",
       "bindings/mercure-binding.yaml"
     ),
-    FixtureData("message example","sumary-name-example-message.yaml","sumary-name-example-message.yaml"),
-    FixtureData("message example in 2.0.0","sumary-name-example-message-2-0.yaml","sumary-name-example-message-2-0-compare.yaml"),
-    FixtureData("messageId in 2.4","messageId.yaml","messageId.yaml"),
+    FixtureData("message example", "sumary-name-example-message.yaml", "sumary-name-example-message.yaml"),
+    FixtureData(
+      "message example in 2.0.0",
+      "sumary-name-example-message-2-0.yaml",
+      "sumary-name-example-message-2-0-compare.yaml"
+    ),
+    FixtureData("messageId in 2.4", "messageId.yaml", "messageId.yaml"),
     FixtureData(
       "ibmmq binding",
       "bindings/ibmmq-binding.yaml",
@@ -149,10 +153,51 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Async specific channel servers", "channel-servers.yaml", "channel-servers.yaml"),
     FixtureData("Async servers tags", "server-tags.yaml", "server-tags.yaml"),
     FixtureData("Async 2.3 components", "components/components-2.3.yaml", "components/components-2.3.yaml"),
-      FixtureData(
+    FixtureData(
       "anypointMQ binding",
       "bindings/anypoint-binding.yaml",
       "bindings/anypoint-binding.yaml"
+    ),
+    FixtureData("Async serverVariable", "server-variable.yaml", "server-variable.yaml"),
+    FixtureData(
+      "solace binding",
+      "bindings/solace-binding.yaml",
+      "bindings/solace-binding.yaml"
+    ),
+    FixtureData(
+      "pulsar binding",
+      "bindings/pulsar-binding.yaml",
+      "bindings/pulsar-binding.yaml"
+    ),
+    FixtureData(
+      "pulsar binding only required keys",
+      "bindings/pulsar-binding-only-required.yaml",
+      "bindings/pulsar-binding-only-required.yaml"
+    ),
+    FixtureData(
+      "GooglePubSub message-binding and channel-binding",
+      "bindings/gps-message-binding.yaml",
+      "bindings/gps-message-binding.yaml"
+    ),
+    FixtureData(
+      "async 2.4+ explicit security field in operation bindings",
+      "operation-security-explicit.yaml",
+      "operation-security-explicit.yaml"
+    ),
+    FixtureData(
+      "async 2.4+ implicit security field in operation bindings",
+      "operation-security-implicit.yaml",
+      "operation-security-implicit.yaml"
+    ),
+    FixtureData(
+      "Async 2.1 all",
+      "asyncApi-2.1-all.yaml",
+      "asyncApi-2.1-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.2 all",
+      "asyncApi-2.2-all.yaml",
+      "asyncApi-2.2-all.yaml"
     )
 
 // TODO: figure out why this test is commented out

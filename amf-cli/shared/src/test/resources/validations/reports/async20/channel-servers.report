@@ -1,4 +1,14 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-servers.yaml
-Profile: 
-Conforms: true
-Number of results: 0
+Profile: ASYNC 2.0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/resolution#undeclared-channel-server
+  Message: Server 'notDefinedServer' in channel 'users/signup' is not defined in the servers root object
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-servers.yaml#/async-api/endpoint/users%2Fsignup/servers/null_3
+  Property: 
+  Range: 
+  Location: 

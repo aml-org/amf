@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.client.scala.model.domain.{Operation, Tag}
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.spec.async.AsyncHelper
+import amf.apicontract.internal.spec.common.emitter.SecurityRequirementsEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain.{
   OasLikeOperationEmitter,
@@ -52,6 +53,11 @@ case class AsyncOperationPartEmitter(operation: Operation, isTrait: Boolean, ord
           emitMessage(fs).map(reqOrRes => tempResult += reqOrRes)
           fs.entry(OperationModel.Extends).foreach(f => emitTraits(f, tempResult))
         }
+        fs.entry(OperationModel.Security)
+          .foreach(f =>
+            if (!f.value.annotations.isSynthesized)
+              tempResult += SecurityRequirementsEmitter("security", f, ordering)
+          )
         traverse(ordering.sorted(super.commonEmitters ++ tempResult), eb)
       }
     }

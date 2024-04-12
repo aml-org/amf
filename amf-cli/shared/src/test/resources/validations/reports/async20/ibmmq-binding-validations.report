@@ -1,0 +1,86 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+Profile: ASYNC 2.0
+Conforms: false
+Number of results: 10
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQServerBinding-heartBeatInterval-pattern
+  Message: IBMMQ Server Binding 'heartBeatInterval' field must be a number between 0-999999
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/server/some.com/server-bindings/bindings/ibmmq-server
+  Property: http://a.ml/vocabularies/apiBinding#heartBeatInterval
+  Range: [(11,27)-(11,36)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelBinding-maxMsgLength-IBMMQMaxMsgLengthValidation
+  Message: IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
+  Property: http://a.ml/vocabularies/apiBinding#maxMsgLength
+  Range: [(16,6)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelBinding-queue-IBMMQDestinationValidation
+  Message: 'queue' and 'topic' fields MUST NOT coexist within an IBMMQ channel binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
+  Property: http://a.ml/vocabularies/apiBinding#queue
+  Range: [(16,6)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelBinding-destinationType-in
+  Message: IBMMQ Channel Binding 'destinationType' field must be either 'topic' or 'queue'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel
+  Property: http://a.ml/vocabularies/apiBinding#destinationType
+  Range: [(17,25)-(17,42)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelQueue-objectName-maxLength
+  Message: IBMMQ queue 'objectName' field MUST NOT exceed 48 characters in length
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel/ibmmq-queue
+  Property: http://a.ml/vocabularies/apiBinding#objectName
+  Range: [(19,22)-(19,75)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelTopic-string-maxLength
+  Message: IBMMQ topic 'string' field MUST NOT exceed 10240 characters in length
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel/ibmmq-topic
+  Property: http://a.ml/vocabularies/apiBinding#string
+  Range: [(22,12)-(22,10279)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQChannelTopic-objectName-maxLength
+  Message: IBMMQ topic 'objectName' field MUST NOT exceed 48 characters in length
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/ibmmq-channel/ibmmq-topic
+  Property: http://a.ml/vocabularies/apiBinding#objectName
+  Range: [(23,22)-(23,75)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQMessageBinding-messageType-in
+  Message: IBMMQ message Binding 'type' field must be either 'string', 'jms' or 'binary'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/ibmmq-message
+  Property: http://a.ml/vocabularies/apiBinding#messageType
+  Range: [(29,18)-(29,22)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQMessageBinding-expiry-minInclusive
+  Message: IBMMQ message Binding 'expiry' field must be 0 or greater
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/ibmmq-message
+  Property: http://a.ml/vocabularies/apiBinding#expiry
+  Range: [(30,20)-(30,22)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#IBMMQMessageBinding-headers-IBMMQHeadersValidation
+  Message: IBMMQ message Binding 'headers' MUST NOT be specified if 'type' field is 'string' or 'jms'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml#/async-api/endpoint/other-channel/supportedOperation/publish/expects/request/message-bindings/bindings/ibmmq-message
+  Property: http://a.ml/vocabularies/apiBinding#headers
+  Range: [(36,10)-(39,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ibmmq-binding-validations.yaml

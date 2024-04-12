@@ -337,7 +337,6 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("ibmmq-binding-extra-key.yaml", Some("ibmmq-binding-extra-key.report"))
   }
 
-
   test("MessageIds NOT duplicated") {
     validate("messageIds-not-duplicated.yaml", Some("messageIds-not-duplicated.report"))
   }
@@ -358,6 +357,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("channel-servers.yaml", Some("channel-servers.report"))
   }
 
+  test("Async 2.4+ operation security property with undefined security scheme") {
+    validate("operation-security.yaml", Some("operation-security.report"))
+  }
+
   test("Async 2.2+ AnypointMQ Closed Shape validation") {
     validate("anypoint-binding-extra-key.yaml", Some("anypoint-binding-extra-key.report"))
   }
@@ -365,5 +368,43 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.5 tags in servers") {
     validate("server-tags.yaml", Some("server-tags.report"))
   }
+  test("Async 2.5 bindings in channel and message") {
+    validate("binding-wrong-key.yaml", Some("binding-wrong-key.report"))
+  }
 
+  test("Async 2.4 Server Variables") {
+    validate("server-variable.yaml", Some("server-variable.report"))
+  }
+
+  test("Async 2.3+ Solace Closed Shape validation") {
+    validate("solace-binding-extra-key.yaml", Some("solace-binding-extra-key.report"))
+  }
+
+  test("Async 2.6+ Pulsar Closed Shape validation") {
+    validate("pulsar-binding-extra-key.yaml", Some("pulsar-binding-extra-key.report"))
+  }
+
+  test("Async 2.6+ Pulsar missing fields validation") {
+    validate("pulsar-binding-missing-key.yaml", Some("pulsar-binding-missing-key.report"))
+  }
+
+  test("Async 2.3+ Solace validations") {
+    validate("solace-binding-validations.yaml", Some("solace-binding-validations.report"))
+  }
+
+  test("Async 2.2+ AnypointMQ validations") {
+    validate("anypoint-binding-validations.yaml", Some("anypoint-binding-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ parsing validations") {
+    validate("ibmmq-binding-parsing-validations.yaml", Some("ibmmq-binding-parsing-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ validations") {
+    validate("ibmmq-binding-validations.yaml", Some("ibmmq-binding-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ validations all valid") {
+    validate("ibmmq-binding-validations-valid.yaml", Some("ibmmq-binding-validations-valid.report"))
+  }
 }

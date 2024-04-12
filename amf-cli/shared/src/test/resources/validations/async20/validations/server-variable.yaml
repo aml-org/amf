@@ -1,0 +1,34 @@
+asyncapi: 2.4.0
+info:
+  title: Sample API with Server Variables
+  version: 1.0.0
+channels: {}
+servers:
+  production:
+    url: https://{environment}.example.com/{version}
+    description: Production server with inline server variables.
+    protocol: https
+    variables:
+      environment:
+        default: api
+        description: API environment
+      version:
+        default: v1
+        description: API version
+  development:
+    url: https://{environment}.example.com/{version}
+    description: Development server using referenced server variables.
+    protocol: https
+    variables:
+      environment:
+        $ref: "#/components/serverVariables/environment"
+      version:
+        $ref: "#/components/serverVariables/version"
+components:
+  serverVariables:
+    environment:
+      default: dev-api
+      description: Development API environment
+    version:
+      default: v2
+      description: Development API version

@@ -7,6 +7,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.ShapeModel.DefaultValueString
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.IdCounter
@@ -50,13 +51,13 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
   }
 }
 
-class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val ctx: OasLikeWebApiContext)
+class OasLikeServerVariableParser(entry: YMapEntryLike, parent: String)(implicit val ctx: OasLikeWebApiContext)
     extends QuickFieldParserOps {
-
+  private val key = entry.key.get
   def parse(): Parameter = {
 
-    val node     = ScalarNode(entry.key)
-    val variable = Parameter(entry).setWithoutId(ParameterModel.Name, node.string(), Annotations(entry.key))
+    val node     = ScalarNode(key)
+    val variable = Parameter(entry.ast).setWithoutId(ParameterModel.Name, node.string(), Annotations(key))
     variable.setWithoutId(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
     variable.setWithoutId(ParameterModel.ParameterName, AmfScalar(node.string()), Annotations.synthesized())
     variable.setWithoutId(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
@@ -70,7 +71,7 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
   protected def parseMap(variable: Parameter, map: YMap): Unit = {
     ctx.closedShape(variable, map, "serverVariable")
     val schema = variable
-      .withScalarSchema(entry.key)
+      .withScalarSchema(key)
       .add(Annotations(map))
       .withDataType(DataType.String, Annotations.synthesized())
     val counter: IdCounter = new IdCounter();
@@ -78,8 +79,8 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
     map.key(
       "default",
       entry => {
-        schema.withDefaultStr(entry.value)
-        schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry.value))
+        schema.set(DefaultValueString, AmfScalar(entry.value.as[String], Annotations(entry.value)), Annotations(entry))
+        schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry))
       }
     )
     map.key("description", ShapeModel.Description in schema)

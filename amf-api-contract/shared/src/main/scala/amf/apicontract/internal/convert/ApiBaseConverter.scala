@@ -4,34 +4,27 @@ import amf.apicontract.client.platform
 import amf.apicontract.client.platform.model.domain.federation
 import amf.apicontract.client.platform.model.{document, domain}
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, ComponentModule}
-import amf.apicontract.client.scala.model.domain.{
-  Callback,
-  CorrelationId,
-  Encoding,
-  EndPoint,
-  License,
-  Message,
-  Operation,
-  Organization,
-  Parameter,
-  Payload,
-  Request,
-  Response,
-  Server,
-  Tag,
-  TemplatedLink
-}
-import amf.apicontract.client.scala.model.domain.federation._
+import amf.apicontract.client.scala.model.domain.bindings._
 import amf.apicontract.client.scala.model.domain.bindings.amqp._
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq._
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
+  GooglePubSubChannelBinding,
+  GooglePubSubMessageBinding,
+  GooglePubSubMessageStoragePolicy,
+  GooglePubSubSchemaDefinition,
+  GooglePubSubSchemaSettings
+}
 import amf.apicontract.client.scala.model.domain.bindings.http._
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq._
 import amf.apicontract.client.scala.model.domain.bindings.kafka._
 import amf.apicontract.client.scala.model.domain.bindings.mqtt._
 import amf.apicontract.client.scala.model.domain.bindings.websockets._
-import amf.apicontract.client.scala.model.domain.bindings._
+import amf.apicontract.client.scala.model.domain.federation._
+import amf.apicontract.client.scala.model.domain.bindings.pulsar._
+import amf.apicontract.client.scala.model.domain.bindings.solace._
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -80,6 +73,11 @@ trait ApiBaseConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
     with Amqp091QueueConverter
+    with SolaceServerBindingConverter
+    with SolaceOperationBindingConverter
+    with SolaceOperationDestinationConverter
+    with SolaceOperationQueueConverter
+    with SolaceOperationTopicConverter
     with AnypointMQMessageBindingConverter
     with AnypointMQChannelBindingConverter
     with IBMMQMessageBindingConverter
@@ -100,6 +98,14 @@ trait ApiBaseConverter
     with ComponentModuleConverter
     with ParameterFederationMetadataConverter
     with EndpointFederationMetadataConverter
+    with PulsarServerBindingConverter
+    with PulsarChannelBindingConverter
+    with PulsarChannelRetentionConverter
+    with GooglePubSubMessageBindingConverter
+    with GooglePubSubSchemaDefinitionConverter
+    with GooglePubSubChannelBindingConverter
+    with GooglePubSubMessageStoragePolicyConverter
+    with GooglePubSubSchemaSettingsConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, domain.bindings.ChannelBinding] {
@@ -286,6 +292,86 @@ trait Amqp091QueueConverter extends PlatformSecrets {
   }
 }
 
+trait PulsarServerBindingConverter extends PlatformSecrets {
+  implicit object PulsarServerBindingMatcher
+      extends BidirectionalMatcher[PulsarServerBinding, domain.bindings.pulsar.PulsarServerBinding] {
+    override def asClient(from: PulsarServerBinding): domain.bindings.pulsar.PulsarServerBinding =
+      platform.wrap[domain.bindings.pulsar.PulsarServerBinding](from)
+    override def asInternal(from: domain.bindings.pulsar.PulsarServerBinding): PulsarServerBinding =
+      from._internal
+  }
+}
+
+trait PulsarChannelBindingConverter extends PlatformSecrets {
+  implicit object PulsarChannelBindingMatcher
+      extends BidirectionalMatcher[PulsarChannelBinding, domain.bindings.pulsar.PulsarChannelBinding] {
+    override def asClient(from: PulsarChannelBinding): domain.bindings.pulsar.PulsarChannelBinding =
+      platform.wrap[domain.bindings.pulsar.PulsarChannelBinding](from)
+    override def asInternal(from: domain.bindings.pulsar.PulsarChannelBinding): PulsarChannelBinding =
+      from._internal
+  }
+}
+
+trait PulsarChannelRetentionConverter extends PlatformSecrets {
+  implicit object PulsarChannelRetentionMatcher
+      extends BidirectionalMatcher[PulsarChannelRetention, domain.bindings.pulsar.PulsarChannelRetention] {
+    override def asClient(from: PulsarChannelRetention): domain.bindings.pulsar.PulsarChannelRetention =
+      platform.wrap[domain.bindings.pulsar.PulsarChannelRetention](from)
+    override def asInternal(from: domain.bindings.pulsar.PulsarChannelRetention): PulsarChannelRetention =
+      from._internal
+  }
+}
+
+trait SolaceServerBindingConverter extends PlatformSecrets {
+  implicit object SolaceServerBindingMatcher
+      extends BidirectionalMatcher[SolaceServerBinding, domain.bindings.solace.SolaceServerBinding] {
+    override def asClient(from: SolaceServerBinding): domain.bindings.solace.SolaceServerBinding =
+      platform.wrap[domain.bindings.solace.SolaceServerBinding](from)
+    override def asInternal(from: domain.bindings.solace.SolaceServerBinding): SolaceServerBinding =
+      from._internal
+  }
+}
+
+trait SolaceOperationBindingConverter extends PlatformSecrets {
+  implicit object SolaceOperationBindingMatcher
+      extends BidirectionalMatcher[SolaceOperationBinding, domain.bindings.solace.SolaceOperationBinding] {
+    override def asClient(from: SolaceOperationBinding): domain.bindings.solace.SolaceOperationBinding =
+      platform.wrap[domain.bindings.solace.SolaceOperationBinding](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationBinding): SolaceOperationBinding =
+      from._internal
+  }
+}
+
+trait SolaceOperationDestinationConverter extends PlatformSecrets {
+  implicit object SolaceOperationDestinationMatcher
+      extends BidirectionalMatcher[SolaceOperationDestination, domain.bindings.solace.SolaceOperationDestination] {
+    override def asClient(from: SolaceOperationDestination): domain.bindings.solace.SolaceOperationDestination =
+      platform.wrap[domain.bindings.solace.SolaceOperationDestination](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationDestination): SolaceOperationDestination =
+      from._internal
+  }
+}
+
+trait SolaceOperationQueueConverter extends PlatformSecrets {
+  implicit object SolaceOperationQueueMatcher
+      extends BidirectionalMatcher[SolaceOperationQueue, domain.bindings.solace.SolaceOperationQueue] {
+    override def asClient(from: SolaceOperationQueue): domain.bindings.solace.SolaceOperationQueue =
+      platform.wrap[domain.bindings.solace.SolaceOperationQueue](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationQueue): SolaceOperationQueue =
+      from._internal
+  }
+}
+
+trait SolaceOperationTopicConverter extends PlatformSecrets {
+  implicit object SolaceOperationTopicMatcher
+      extends BidirectionalMatcher[SolaceOperationTopic, domain.bindings.solace.SolaceOperationTopic] {
+    override def asClient(from: SolaceOperationTopic): domain.bindings.solace.SolaceOperationTopic =
+      platform.wrap[domain.bindings.solace.SolaceOperationTopic](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationTopic): SolaceOperationTopic =
+      from._internal
+  }
+}
+
 trait AnypointMQMessageBindingConverter extends PlatformSecrets {
   implicit object AnypointMQMessageBindingMatcher
       extends BidirectionalMatcher[AnypointMQMessageBinding, domain.bindings.anypointmq.AnypointMQMessageBinding] {
@@ -348,6 +434,73 @@ trait IBMMQChannelTopicConverter extends PlatformSecrets {
     override def asClient(from: IBMMQChannelTopic): domain.bindings.ibmmq.IBMMQChannelTopic =
       platform.wrap[domain.bindings.ibmmq.IBMMQChannelTopic](from)
     override def asInternal(from: domain.bindings.ibmmq.IBMMQChannelTopic): IBMMQChannelTopic = from._internal
+  }
+}
+
+trait GooglePubSubMessageBindingConverter extends PlatformSecrets {
+  implicit object GooglePubSubMessageBindingMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubMessageBinding,
+        domain.bindings.googlepubsub.GooglePubSubMessageBinding
+      ] {
+    override def asClient(from: GooglePubSubMessageBinding): domain.bindings.googlepubsub.GooglePubSubMessageBinding =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubMessageBinding](from)
+    override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubMessageBinding): GooglePubSubMessageBinding =
+      from._internal
+  }
+}
+trait GooglePubSubSchemaDefinitionConverter extends PlatformSecrets {
+  implicit object GooglePubSubSchemaDefinitionMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubSchemaDefinition,
+        domain.bindings.googlepubsub.GooglePubSubSchemaDefinition
+      ] {
+    override def asClient(
+        from: GooglePubSubSchemaDefinition
+    ): domain.bindings.googlepubsub.GooglePubSubSchemaDefinition =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubSchemaDefinition](from)
+    override def asInternal(
+        from: domain.bindings.googlepubsub.GooglePubSubSchemaDefinition
+    ): GooglePubSubSchemaDefinition = from._internal
+  }
+}
+trait GooglePubSubChannelBindingConverter extends PlatformSecrets {
+  implicit object GooglePubSubChannelBindingMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubChannelBinding,
+        domain.bindings.googlepubsub.GooglePubSubChannelBinding
+      ] {
+    override def asClient(from: GooglePubSubChannelBinding): domain.bindings.googlepubsub.GooglePubSubChannelBinding =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubChannelBinding](from)
+    override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubChannelBinding): GooglePubSubChannelBinding =
+      from._internal
+  }
+}
+trait GooglePubSubMessageStoragePolicyConverter extends PlatformSecrets {
+  implicit object GooglePubSubMessageStoragePolicyMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubMessageStoragePolicy,
+        domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy
+      ] {
+    override def asClient(
+        from: GooglePubSubMessageStoragePolicy
+    ): domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy](from)
+    override def asInternal(
+        from: domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy
+    ): GooglePubSubMessageStoragePolicy = from._internal
+  }
+}
+trait GooglePubSubSchemaSettingsConverter extends PlatformSecrets {
+  implicit object GooglePubSubSchemaSettingsMatcher
+      extends BidirectionalMatcher[
+        GooglePubSubSchemaSettings,
+        domain.bindings.googlepubsub.GooglePubSubSchemaSettings
+      ] {
+    override def asClient(from: GooglePubSubSchemaSettings): domain.bindings.googlepubsub.GooglePubSubSchemaSettings =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubSchemaSettings](from)
+    override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubSchemaSettings): GooglePubSubSchemaSettings =
+      from._internal
   }
 }
 

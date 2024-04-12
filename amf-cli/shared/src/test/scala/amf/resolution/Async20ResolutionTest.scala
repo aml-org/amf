@@ -253,6 +253,26 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
+  // W-12689962
+  test("async should not emit operation security if not specified") {
+    cycle(
+      "operation-security-implicit.yaml",
+      "operation-security-implicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+  // W-12689962
+  test("async should emit operation security keyword") {
+    cycle(
+      "operation-security-explicit.yaml",
+      "operation-security-explicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     super.transform(unit, config, AsyncAPIConfiguration.Async20())
   }

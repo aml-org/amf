@@ -1,14 +1,10 @@
 package amf.apicontract.internal.spec.async.parser.bindings
 
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubChannelBinding
 import amf.apicontract.client.scala.model.domain.bindings.{ChannelBinding, ChannelBindings}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, IBMMQ, WebSockets}
-import amf.apicontract.internal.spec.async.parser.bindings.channel.{
-  Amqp091ChannelBindingParser,
-  AnypointMQChannelBindingParser,
-  IBMMQChannelBindingParser,
-  WebSocketsChannelBindingParser
-}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, GooglePubSub, IBMMQ, Pulsar, WebSockets}
+//import amf.apicontract.internal.spec.async.parser.bindings.channel.{Amqp091ChannelBindingParser, AnypointMQChannelBindingParser, GooglePubSubChannelBindingParser, IBMMQChannelBindingParser,PulsarChannelBindingParser, WebSocketsChannelBindingParser}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorChannelBindings
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -16,13 +12,16 @@ import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.apicontract.internal.spec.async.parser.bindings.channel._
 
 object AsyncChannelBindingsParser {
   private val parserMap: Map[String, BindingParser[ChannelBinding]] = Map(
     Amqp       -> Amqp091ChannelBindingParser,
     WebSockets -> WebSocketsChannelBindingParser,
     IBMMQ      -> IBMMQChannelBindingParser,
-    AnypointMQ -> AnypointMQChannelBindingParser
+    AnypointMQ -> AnypointMQChannelBindingParser,
+    Pulsar     -> PulsarChannelBindingParser,
+    GooglePubSub -> GooglePubSubChannelBindingParser
   )
 }
 

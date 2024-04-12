@@ -63,7 +63,7 @@ class IBMMQChannelQueue(override val fields: Fields, override val annotations: A
   def isPartitioned: BoolField = fields.field(IBMMQChannelQueueModel.IsPartitioned)
   def exclusive: BoolField     = fields.field(IBMMQChannelQueueModel.Exclusive)
 
-  def withObjectName(objectName: Boolean): this.type       = set(IBMMQChannelQueueModel.ObjectName, objectName)
+  def withObjectName(objectName: String): this.type        = set(IBMMQChannelQueueModel.ObjectName, objectName)
   def withIsPartitioned(isPartitioned: Boolean): this.type = set(IBMMQChannelQueueModel.IsPartitioned, isPartitioned)
   def withExclusive(exclusive: Boolean): this.type         = set(IBMMQChannelQueueModel.Exclusive, exclusive)
 
@@ -86,13 +86,13 @@ class IBMMQChannelTopic(override val fields: Fields, override val annotations: A
 
   override def nameField: Field = IBMMQChannelTopicModel.Name
 
-  def string: BoolField           = fields.field(IBMMQChannelTopicModel.String)
+  def string: StrField            = fields.field(IBMMQChannelTopicModel.String)
   def objectName: StrField        = fields.field(IBMMQChannelTopicModel.ObjectName)
   def durablePermitted: BoolField = fields.field(IBMMQChannelTopicModel.DurablePermitted)
   def lastMsgRetained: BoolField  = fields.field(IBMMQChannelTopicModel.LastMsgRetained)
 
-  def withString(string: Boolean): this.type         = set(IBMMQChannelTopicModel.String, string)
-  def withObjectName(objectName: Boolean): this.type = set(IBMMQChannelTopicModel.ObjectName, objectName)
+  def withString(string: String): this.type         = set(IBMMQChannelTopicModel.String, string)
+  def withObjectName(objectName: String): this.type = set(IBMMQChannelTopicModel.ObjectName, objectName)
   def withDurablePermitted(durablePermitted: Boolean): this.type =
     set(IBMMQChannelTopicModel.DurablePermitted, durablePermitted)
   def withLastMsgRetained(lastMsgRetained: Boolean): this.type =

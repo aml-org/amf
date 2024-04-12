@@ -7,6 +7,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
   ChannelServersResolutionStage,
   MediaTypeResolutionStage,
   OpenApiParametersNormalizationStage,
+  OperationsSecurityResolutionStage,
   ParametersNormalizationStage,
   PayloadAndParameterResolutionStage,
   Raml10ParametersNormalizationStage,
@@ -48,7 +49,8 @@ class ValidationTransformationPipeline private[amf] (
       new SemanticExtensionFlatteningStage,
       SourceInformationStage,
       new AnnotationRemovalStage(),
-      new ChannelServersResolutionStage(profile)
+      new ChannelServersResolutionStage(profile),
+      new OperationsSecurityResolutionStage(profile)
     )
 
   private def parameterNormalizationStageFor(profile: ProfileName): ParametersNormalizationStage = {

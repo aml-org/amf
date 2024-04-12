@@ -2,21 +2,11 @@ package amf.apicontract.internal.spec.common
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.bindings.{
-  ChannelBindings,
-  MessageBindings,
-  OperationBindings,
-  ServerBindings
-}
+import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.metamodel.domain._
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  ChannelBindingsModel,
-  MessageBindingsModel,
-  OperationBindingsModel,
-  ServerBindingsModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings.{ChannelBindingsModel, MessageBindingsModel, OperationBindingsModel, ServerBindingsModel}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations._
@@ -24,7 +14,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
+import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, DeclaredServerVariable, ErrorDeclaration}
 import amf.core.internal.parser.domain.SearchScope.Named
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.QName
@@ -62,6 +52,7 @@ class WebApiDeclarations(
   var messageTraits: Map[String, Message]               = Map()
   var servers: Map[String, Server]                      = Map()
   var channels: Map[String, EndPoint]                   = Map()
+  var serverVariables: Map[String, Parameter]           = Map()
   var others: Map[String, BaseUnit]                     = Map()
 
   override def addLibrary(alias: String, declarations: Declarations): Unit = {
@@ -95,6 +86,7 @@ class WebApiDeclarations(
     other.responses.foreach { case (k, s) => merged.responses += (k -> s) }
     extensions.foreach { case (k, s) => merged.extensions = merged.extensions + (k -> s) }
     servers.foreach { case (k, s) => merged.servers = merged.servers + (k -> s) }
+    serverVariables.foreach {case (k,s) => merged.serverVariables = merged.serverVariables + (k -> s) }
     channels.foreach { case (k, s) => merged.channels = merged.channels + (k -> s) }
   }
 
@@ -128,6 +120,7 @@ class WebApiDeclarations(
     next.operationTraits = operationTraits
     next.messageTraits = next.messageTraits
     next.servers = next.servers
+    next.serverVariables = next.serverVariables
     next.channels = next.channels
     next.others = others
     next
@@ -142,6 +135,8 @@ class WebApiDeclarations(
         traits = traits + (indexKey -> t)
       case h: Parameter if h.annotations.contains(classOf[DeclaredHeader]) =>
         headers = headers + (indexKey -> h)
+      case sv: Parameter if sv.annotations.contains(classOf[DeclaredServerVariable]) =>
+        serverVariables = serverVariables + (indexKey -> sv)
       case p: Parameter =>
         parameters = parameters + (indexKey -> p)
       case p: Payload =>
@@ -224,7 +219,7 @@ class WebApiDeclarations(
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values ++ correlationIds.values ++ messageBindings.values ++ operationBindings.values ++ channelBindings.values ++ serverBindings.values ++ messages.values ++ operationTraits.values ++ messageTraits.values ++ servers.values ++ channels.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values ++ correlationIds.values ++ messageBindings.values ++ operationBindings.values ++ channelBindings.values ++ serverBindings.values ++ messages.values ++ operationTraits.values ++ messageTraits.values ++ servers.values ++ serverVariables.values ++ channels.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -322,6 +317,9 @@ class WebApiDeclarations(
 
   def findServer(key: String, scope: SearchScope.Scope): Option[Server] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].servers, scope) collect { case s: Server => s }
+
+  def findServerVariable(key: String, scope: SearchScope.Scope): Option[Parameter] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].serverVariables, scope) collect { case s: Parameter => s }
 
   def findChannel(key: String, scope: SearchScope.Scope): Option[EndPoint] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].channels, scope) collect { case c: EndPoint => c }
@@ -607,6 +605,16 @@ object WebApiDeclarations {
 
     override protected def newErrorInstance: ErrorDeclaration[ServerModel.type] = ErrorServer(idPart, ast)
     override val model: ServerModel.type                                        = ServerModel
+  }
+
+  case class ErrorServerVariable(idPart: String, ast: YPart)
+    extends Parameter(Fields(), Annotations(ast))
+      with ErrorDeclaration[ParameterModel.type] {
+    override val namespace: String = "http://amferror.com/#errorServerVariable/"
+    withId(idPart)
+
+    override protected def newErrorInstance: ErrorDeclaration[ParameterModel.type] = ErrorServerVariable(idPart, ast)
+    override val model: ParameterModel.type                                        = ParameterModel
   }
 
   case class ErrorChannel(idPart: String, ast: YPart)

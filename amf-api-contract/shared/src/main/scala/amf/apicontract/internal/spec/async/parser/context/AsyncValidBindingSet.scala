@@ -13,8 +13,8 @@ object AsyncValidBindingSet {
   val async20: AsyncValidBindingSet = AsyncValidBindingSet(basic)
   val async21: AsyncValidBindingSet = async20.add(Mercure, IBMMQ)
   val async22: AsyncValidBindingSet = async21.add(AnypointMQ)
-  val async23: AsyncValidBindingSet = async22
+  val async23: AsyncValidBindingSet = async22.add(Solace)
   val async24: AsyncValidBindingSet = async23
-  val async25: AsyncValidBindingSet = async24
-  val async26: AsyncValidBindingSet = async25
+  val async25: AsyncValidBindingSet = async24.add(GooglePubSub)
+  val async26: AsyncValidBindingSet = async25.add(Pulsar)
 }

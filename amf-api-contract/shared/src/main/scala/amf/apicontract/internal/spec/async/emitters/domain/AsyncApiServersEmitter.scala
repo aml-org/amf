@@ -88,7 +88,7 @@ class AsyncApiServerPartEmitter(server: Server, ordering: SpecOrdering)(implicit
       fs.entry(ServerModel.ProtocolVersion).foreach(f => result += ValueEmitter("protocolVersion", f))
       fs.entry(ServerModel.Description).foreach(f => result += ValueEmitter("description", f))
       fs.entry(ServerModel.Tags).foreach(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
-      fs.entry(ServerModel.Variables).foreach(f => result += OasServerVariablesEmitter(f, ordering))
+      fs.entry(ServerModel.Variables).foreach(f => result += OasServerVariablesEmitter("variables", f, ordering))
       fs.entry(ServerModel.Security).foreach(f => result += SecurityRequirementsEmitter("security", f, ordering))
       fs.entry(ServerModel.Bindings)
         .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))

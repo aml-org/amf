@@ -41,7 +41,7 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
     )
   }
 
-  def allSchemesAreValidInOas(schemes: Seq[ParametrizedSecurityScheme], spec: Spec): Boolean = {
+  private def allSchemesAreValidInOas(schemes: Seq[ParametrizedSecurityScheme], spec: Spec): Boolean = {
     schemes.forall(s => {
       s.scheme match {
         case linkable: Linkable if linkable.isLink => return true

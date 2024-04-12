@@ -11,6 +11,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
   AnnotationRemovalStage,
   ChannelServersResolutionStage,
   OpenApiParametersNormalizationStage,
+  OperationsSecurityResolutionStage,
   ParametersNormalizationStage,
   PathDescriptionNormalizationStage
 }
@@ -18,7 +19,6 @@ import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionS
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Async20Profile, ProfileName}
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.internal.remote.AsyncApi20
 import amf.core.internal.transform.stages.SourceInformationStage
 import amf.shapes.internal.domain.resolution.ShapeNormalizationForUnitStage
 
@@ -42,7 +42,8 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
       new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
       new AnnotationRemovalStage(),
       new SemanticExtensionFlatteningStage,
-      new ChannelServersResolutionStage(Async20Profile)
+      new ChannelServersResolutionStage(Async20Profile),
+      new OperationsSecurityResolutionStage(Async20Profile)
     ) ++ url :+ SourceInformationStage
 }
 

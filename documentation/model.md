@@ -74,6 +74,11 @@ AMF Model Documentation
 * [FederationMetadata](#federationmetadata)
 * [FileShape](#fileshape)
 * [Fragment](#fragment)
+* [GooglePubSubChannelBinding](#googlepubsubchannelbinding)
+* [GooglePubSubMessageBinding](#googlepubsubmessagebinding)
+* [GooglePubSubMessageStoragePolicy](#googlepubsubmessagestoragepolicy)
+* [GooglePubSubSchemaDefinition](#googlepubsubschemadefinition)
+* [GooglePubSubSchemaSettings](#googlepubsubschemasettings)
 * [HttpApiKeySettings](#httpapikeysettings)
 * [HttpMessageBinding](#httpmessagebinding)
 * [HttpOperationBinding](#httpoperationbinding)
@@ -135,6 +140,9 @@ AMF Model Documentation
 * [PropertyShape](#propertyshape)
 * [PropertyShapePath](#propertyshapepath)
 * [PublicNodeMapping](#publicnodemapping)
+* [PulsarChannelBinding](#pulsarchannelbinding)
+* [PulsarChannelRetention](#pulsarchannelretention)
+* [PulsarServerBinding](#pulsarserverbinding)
 * [RecursiveShape](#recursiveshape)
 * [Request](#request)
 * [ResourceType](#resourcetype)
@@ -162,6 +170,11 @@ AMF Model Documentation
 * [ShapePayload](#shapepayload)
 * [ShapeRequest](#shaperequest)
 * [ShapeResponse](#shaperesponse)
+* [SolaceOperationBinding](#solaceoperationbinding)
+* [SolaceOperationDestination](#solaceoperationdestination)
+* [SolaceOperationQueue](#solaceoperationqueue)
+* [SolaceOperationTopic](#solaceoperationtopic)
+* [SolaceServerBinding](#solaceserverbinding)
 * [SourceMap](#sourcemap)
 * [Tag](#tag)
 * [TemplatedLink](#templatedlink)
@@ -1478,6 +1491,77 @@ Types:
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | - | Field with utility data to be used in Base Unit processing | `http://a.ml/vocabularies/document#processingData` |
  | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | - | Contains information of the source from which the base unit was generated | `http://a.ml/vocabularies/document#sourceInformation` |
 
+## GooglePubSubChannelBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | labels | [ObjectNode](#objectnode) | - | An object of key-value pairs  | `http://a.ml/vocabularies/apiBinding#labels` |
+ | messageRetentionDuration | string | - | Indicates the minimum duration to retain a message after it is published to the topic | `http://a.ml/vocabularies/apiBinding#messageRetentionDuration` |
+ | messageStoragePolicy | [GooglePubSubMessageStoragePolicy](#googlepubsubmessagestoragepolicy) | - | Policy constraining the set of Google Cloud Platform regions where messages published to the topic may be stored | `http://a.ml/vocabularies/apiBinding#messageStoragePolicy` |
+ | schemaSettings | [GooglePubSubSchemaSettings](#googlepubsubschemasettings) | - | Settings for validating messages published against a schema | `http://a.ml/vocabularies/apiBinding#schemaSettings` |
+ | topic | string | - | The Google Cloud Pub/Sub Topic name | `http://a.ml/vocabularies/apiBinding#topic` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubMessageBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubMessageBinding`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | attribute | [ObjectNode](#objectnode) | - | Attributes for this message | `http://a.ml/vocabularies/apiBinding#attribute` |
+ | orderingKey | string | - | If non-empty, identifies related messages for which publish order should be respected | `http://a.ml/vocabularies/apiBinding#orderingKey` |
+ | schemaDefinition | [GooglePubSubSchemaDefinition](#googlepubsubschemadefinition) | - | Define Schema | `http://a.ml/vocabularies/apiBinding#schemaDefinition` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubMessageStoragePolicy
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubMessageStoragePolicy`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | allowedPersistenceRegions | [string] | false | A list of IDs of GCP regions where messages that are published to the topic may be persisted in storage | `http://a.ml/vocabularies/apiBinding#allowedPersistenceRegions` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubSchemaDefinition
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | The name of the schema | `http://a.ml/vocabularies/apiBinding#name` |
+ | type | string | - | The type of the schema | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubSchemaSettings
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaSettings`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | encoding | string | - | The encoding of the message  | `http://a.ml/vocabularies/apiBinding#encoding` |
+ | firstRevisionId | string | - | The minimum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#firstRevisionId` |
+ | lastRevisionId | string | - | The maximum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#lastRevisionId` |
+ | name | string | - | Name of the schema that messages published should be validated against | `http://a.ml/vocabularies/apiBinding#name` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## HttpApiKeySettings
 Settings for an Http API Key security scheme
 Types:
@@ -2601,6 +2685,52 @@ Types:
  | mappedNode | url | - | Node in the dialect definition associated to this mapping | `http://a.ml/vocabularies/meta#mappedNode` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## PulsarChannelBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#PulsarChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | namespace | string | - | The namespace the channel is associated with. | `http://a.ml/vocabularies/apiBinding#namespace` |
+ | persistence | string | - | Persistence of the topic in Pulsar. It MUST be either persistent or non-persistent. | `http://a.ml/vocabularies/apiBinding#persistence` |
+ | compaction | int | - | Topic compaction threshold given in Megabytes. | `http://a.ml/vocabularies/apiBinding#compaction` |
+ | geo-replication | [string] | false | A list of clusters the topic is replicated to. | `http://a.ml/vocabularies/apiBinding#geo-replication` |
+ | retention | [PulsarChannelRetention](#pulsarchannelretention) | - | Topic retention policy. | `http://a.ml/vocabularies/apiBinding#retention` |
+ | ttl | int | - | Message time-to-live in seconds. | `http://a.ml/vocabularies/apiBinding#ttl` |
+ | deduplication | boolean | - | Message deduplication. When true, it ensures that each message produced on Pulsar topics is persisted to disk only once. | `http://a.ml/vocabularies/apiBinding#deduplication` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## PulsarChannelRetention
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#PulsarChannelRetention`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | time | int | - | Time given in Minutes. Defaults to 0 | `http://a.ml/vocabularies/apiBinding#time` |
+ | size | int | - | Size given in MegaBytes. Defaults to 0 | `http://a.ml/vocabularies/apiBinding#size` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## PulsarServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#PulsarServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | tenant | string | - | The pulsar tenant. If omitted, "public" MUST be assumed. | `http://a.ml/vocabularies/apiBinding#tenant` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## RecursiveShape
 Recursion on a Shape structure, used when expanding a shape and finding the canonical representation of that shape.
 Types:
@@ -3166,6 +3296,73 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | payload | [ShapePayload](#shapepayload) | - | Payload for a Request/Response | `http://a.ml/vocabularies/shapes#payload` |
+
+## SolaceOperationBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationBinding`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | destinations | [[SolaceOperationDestination](#solaceoperationdestination)] | false |  | `http://a.ml/vocabularies/apiBinding#destinations` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceOperationDestination
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationDestination`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | destinationType | string | - | 'queue' or 'topic'. If the type is queue, then the subscriber can bind to the queue, which in turn will subscribe to the topic as represented by the channel name or to the provided topicSubscriptions. | `http://a.ml/vocabularies/apiBinding#destinationType` |
+ | deliveryMode | string | - | 'direct' or 'persistent'. This determines the quality of service for publishing messages. Default is 'persistent'. | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | queue | [SolaceOperationQueue](#solaceoperationqueue) | - | Defines the properties of a queue. | `http://a.ml/vocabularies/apiBinding#queue` |
+ | topic | [SolaceOperationTopic](#solaceoperationtopic) | - | Defines the properties of a topic. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceOperationQueue
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationQueue`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topicSubscriptions | [string] | false | A list of topics that the queue subscribes to, only applicable when destinationType is 'queue'. If none is given, the queue subscribes to the topic as represented by the channel name. | `http://a.ml/vocabularies/apiBinding#topicSubscriptions` |
+ | accessType | string | - | 'exclusive' or 'nonexclusive'. Only applicable when destinationType is 'queue'. | `http://a.ml/vocabularies/apiBinding#accessType` |
+ | maxMsgSpoolSize | string | - | The maximum amount of message spool that the given queue may use. Only applicable when destinationType is 'queue'. | `http://a.ml/vocabularies/apiBinding#maxMsgSpoolSize` |
+ | maxTtl | string | - | The maximum TTL to apply to messages to be spooled. Only applicable when destinationType is 'queue'. | `http://a.ml/vocabularies/apiBinding#maxTtl` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceOperationTopic
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationTopic`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topicSubscriptions | [string] | false | A list of topics that the client subscribes to, only applicable when destinationType is 'topic'. If none is given, the client subscribes to the topic as represented by the channel name. | `http://a.ml/vocabularies/apiBinding#topicSubscriptions` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## SolaceServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#SolaceServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | msgVpn | string | - | The Virtual Private Network name on the Solace broker. | `http://a.ml/vocabularies/apiBinding#msgVpn` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## SourceMap
 SourceMaps include tags with syntax specific information obtained when parsing a particular specification syntax like RAML or OpenAPI.

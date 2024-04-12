@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.9.0",
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 3.0"
     },
     {
@@ -154,12 +154,12 @@
       ],
       "smaps": {
         "synthesized-field": {
-          "http://www.w3.org/ns/shacl#defaultValueStr": "true",
           "http://www.w3.org/ns/shacl#datatype": "true"
         },
         "lexical": {
-          "http://www.w3.org/ns/shacl#defaultValue": "[(22,17)-(22,21)]",
-          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable": "[(22,0)-(25,0)]"
+          "http://www.w3.org/ns/shacl#defaultValueStr": "[(22,8)-(23,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/extension-in-server.yaml#/web-api/server/https%3A%2F%2Fdevelopment.gigantic-server.com%2Fv1/variable/parameter/path/variable/scalar/variable": "[(22,0)-(25,0)]",
+          "http://www.w3.org/ns/shacl#defaultValue": "[(22,8)-(23,0)]"
         }
       }
     },
