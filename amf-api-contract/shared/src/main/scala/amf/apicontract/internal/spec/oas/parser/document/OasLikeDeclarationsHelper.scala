@@ -1,9 +1,10 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKeyCollector
+import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.parser.TypeDeclarationParser
 import org.yaml.model.YMap
@@ -27,20 +28,20 @@ trait OasLikeDeclarationsHelper {
   def validateNames()(implicit ctx: OasLikeWebApiContext): Unit = {
     val declarations = ctx.declarations.declarables()
     val keyRegex     = """^[a-zA-Z0-9\.\-_]+$""".r
-    declarations.foreach {
-      case elem: NamedDomainElement =>
-        elem.name.option() match {
-          case Some(name) =>
-            if (!keyRegex.pattern.matcher(name).matches())
-              violation(
-                elem,
-                s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations"
-              )
-          case None =>
-            violation(elem, "No name is defined for given component declaration")
-        }
-      case _ =>
+    declarations.foreach { case elem: NamedDomainElement =>
+      elem.name.option() match {
+        case Some(name) =>
+          if (!keyRegex.pattern.matcher(name).matches())
+            violation(
+              elem,
+              s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations"
+            )
+        case None if !allowedNoNameDeclarations(elem) =>
+          violation(elem, "No name is defined for given component declaration")
+        case _ => // Nothing to do
+      }
     }
+
     def violation(elem: NamedDomainElement, msg: String): Unit = {
       ctx.eh.violation(
         ParserSideValidations.InvalidFieldNameInComponents,
@@ -49,5 +50,10 @@ trait OasLikeDeclarationsHelper {
         elem.annotations
       )
     }
+  }
+
+  private def allowedNoNameDeclarations(declaration: DomainElement): Boolean = declaration match {
+    case _: EndPoint => true
+    case _           => false
   }
 }
