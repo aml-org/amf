@@ -415,4 +415,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.4+ Components") {
     validate("async-2.4-components.yaml")
   }
+
+  test("Async inter components references") {
+    validate("message-references.yaml")
+  }
 }
