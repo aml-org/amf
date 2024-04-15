@@ -57,7 +57,9 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
           domain match {
             case channel: EndPoint =>
               val copy = channel.copyElement().asInstanceOf[EndPoint]
-              copy.withId(sourceEndpoint.id).withName(sourceEndpoint.name.value()).withPath(sourceEndpoint.path.value())
+              sourceEndpoint.name.option().foreach(copy.withName)
+              copy.withId(sourceEndpoint.id).withPath(sourceEndpoint.path.value())
+
             case _ => domain
           }
         case _ => domain
