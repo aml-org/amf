@@ -8,6 +8,10 @@ object Async23Syntax extends SpecSyntax {
     add(
       Async22Syntax.nodes,
       "bindings" -> Set(Solace),
+      "components" -> Set(
+        "servers",
+        "channels"
+      ),
       "SolaceServerBinding" -> Set(
         "msgVpn",
         "bindingVersion"

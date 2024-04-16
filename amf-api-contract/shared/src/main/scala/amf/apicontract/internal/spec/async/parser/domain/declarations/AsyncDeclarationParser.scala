@@ -9,4 +9,9 @@ trait AsyncDeclarationParser extends DeclarationKeyCollector {
   def parseDeclarations(map: YMap, parent: String, document: Document)(implicit ctx: AsyncWebApiContext): Unit = {
     addDeclarationsToModel(document)
   }
+
+  // Parse the declarations but not add them to the model
+  def parseOnlyDeclarations(map: YMap, parent: String, document: Document)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit
 }

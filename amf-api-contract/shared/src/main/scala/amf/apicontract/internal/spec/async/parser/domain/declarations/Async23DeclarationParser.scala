@@ -10,14 +10,20 @@ import amf.core.client.scala.model.document.Document
 import org.yaml.model.YMap
 
 object Async23DeclarationParser extends AsyncDeclarationParser {
+
   override def parseDeclarations(map: YMap, parent: String, document: Document)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
+    this.parseOnlyDeclarations(map, parent, document)
+    addDeclarationsToModel(document)
+  }
 
+  override def parseOnlyDeclarations(map: YMap, parent: String, document: Document)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     parseServerDeclarations(map, parent)
+    Async20DeclarationParser().parseOnlyDeclarations(map, parent, document)
     parseChannelDeclarations(map, parent)
-
-    Async20DeclarationParser().parseDeclarations(map, parent, document)
   }
 
   private def parseServerDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =

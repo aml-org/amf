@@ -44,6 +44,13 @@ case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLik
   override def parseDeclarations(map: YMap, parent: String, document: Document)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
+    this.parseOnlyDeclarations(map, parent, document)
+    addDeclarationsToModel(document)
+  }
+
+  override def parseOnlyDeclarations(map: YMap, parent: String, document: Document)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseCorrelationIdDeclarations(map, parent + "/correlationIds")
     super.parseTypeDeclarations(map, Some(this))
@@ -57,8 +64,6 @@ case class Async20DeclarationParser() extends AsyncDeclarationParser with OasLik
     parseMessageTraits(map, parent + "/messageTraits")
 
     parseMessageDeclarations(map, parent + "/messages")
-
-    super.parseDeclarations(map, parent, document)
   }
 
   private def parseMessageDeclarations(componentsMap: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Unit =

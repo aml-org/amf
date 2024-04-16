@@ -1,0 +1,28 @@
+asyncapi: "2.6.0"
+
+info:
+  title: Hello world application
+  version: "0.1.0"
+defaultContentType: application/html
+
+channels:
+  refed:
+    $ref: "#/components/channels/hello-channel"
+
+components:
+  messages:
+    hello-msg:
+      summary: This is the summary of the hello message
+      description: This is the description
+      payload:
+        type: string
+        pattern: "^hello .+$"
+      examples:
+        - name: Hello example
+          summary: This is the only hello example
+          payload: "hello Kenobi"
+  channels:
+    hello-channel:
+      publish:
+        message:
+          $ref: "#/components/messages/hello-msg"

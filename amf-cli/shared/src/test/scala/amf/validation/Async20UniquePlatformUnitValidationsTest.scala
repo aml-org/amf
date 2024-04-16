@@ -407,4 +407,16 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.1+ IBMMQ validations all valid") {
     validate("ibmmq-binding-validations-valid.yaml", Some("ibmmq-binding-validations-valid.report"))
   }
+
+  test("Async 2.3+ Components") {
+    validate("async-2.3-components.yaml")
+  }
+
+  test("Async 2.4+ Components") {
+    validate("async-2.4-components.yaml")
+  }
+
+  test("Async inter components references") {
+    validate("message-references.yaml")
+  }
 }
