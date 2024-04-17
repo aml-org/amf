@@ -59,6 +59,8 @@ trait ApiBaseConverter
     with ServerBindingsConverter
     with MessageBindingsConverter
     with Amqp091ChannelBindingConverter
+    with Amqp091ChannelBinding010Converter
+    with Amqp091ChannelBinding020Converter
     with Amqp091MessageBindingConverter
     with Amqp091OperationBindingConverter
     with EmptyBindingConverter
@@ -72,7 +74,11 @@ trait ApiBaseConverter
     with WebSocketsChannelBindingConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
+    with Amqp091ChannelExchange010Converter
+    with Amqp091ChannelExchange020Converter
     with Amqp091QueueConverter
+    with Amqp091Queue010Converter
+    with Amqp091Queue020Converter
     with SolaceServerBindingConverter
     with SolaceOperationBindingConverter
     with SolaceOperationDestinationConverter
@@ -167,13 +173,30 @@ trait ServerBindingConverter extends PlatformSecrets {
     override def asInternal(from: domain.bindings.ServerBinding): ServerBinding = from._internal
   }
 }
-
 trait Amqp091ChannelBindingConverter extends PlatformSecrets {
   implicit object Amqp091ChannelBindingMatcher
       extends BidirectionalMatcher[Amqp091ChannelBinding, domain.bindings.amqp.Amqp091ChannelBinding] {
     override def asClient(from: Amqp091ChannelBinding): domain.bindings.amqp.Amqp091ChannelBinding =
       platform.wrap[domain.bindings.amqp.Amqp091ChannelBinding](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091ChannelBinding): Amqp091ChannelBinding = from._internal
+  }
+}
+trait Amqp091ChannelBinding010Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelBinding010Matcher
+      extends BidirectionalMatcher[Amqp091ChannelBinding010, domain.bindings.amqp.Amqp091ChannelBinding010] {
+    override def asClient(from: Amqp091ChannelBinding010): domain.bindings.amqp.Amqp091ChannelBinding010 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelBinding010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelBinding010): Amqp091ChannelBinding010 =
+      from._internal
+  }
+}
+trait Amqp091ChannelBinding020Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelBinding020Matcher
+      extends BidirectionalMatcher[Amqp091ChannelBinding020, domain.bindings.amqp.Amqp091ChannelBinding020] {
+    override def asClient(from: Amqp091ChannelBinding020): domain.bindings.amqp.Amqp091ChannelBinding020 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelBinding020](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelBinding020): Amqp091ChannelBinding020 =
+      from._internal
   }
 }
 trait Amqp091MessageBindingConverter extends PlatformSecrets {
@@ -284,11 +307,49 @@ trait Amqp091ChannelExchangeConverter extends PlatformSecrets {
   }
 }
 
+trait Amqp091ChannelExchange010Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelExchange010Matcher
+      extends BidirectionalMatcher[Amqp091ChannelExchange010, domain.bindings.amqp.Amqp091ChannelExchange010] {
+    override def asClient(from: Amqp091ChannelExchange010): domain.bindings.amqp.Amqp091ChannelExchange010 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelExchange010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelExchange010): Amqp091ChannelExchange010 =
+      from._internal
+  }
+}
+
+trait Amqp091ChannelExchange020Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelExchange020Matcher
+      extends BidirectionalMatcher[Amqp091ChannelExchange020, domain.bindings.amqp.Amqp091ChannelExchange020] {
+    override def asClient(from: Amqp091ChannelExchange020): domain.bindings.amqp.Amqp091ChannelExchange020 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelExchange020](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelExchange020): Amqp091ChannelExchange020 =
+      from._internal
+  }
+}
+
 trait Amqp091QueueConverter extends PlatformSecrets {
   implicit object Amqp091QueueMatcher extends BidirectionalMatcher[Amqp091Queue, domain.bindings.amqp.Amqp091Queue] {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait Amqp091Queue010Converter extends PlatformSecrets {
+  implicit object Amqp091Queue010Matcher
+      extends BidirectionalMatcher[Amqp091Queue010, domain.bindings.amqp.Amqp091Queue010] {
+    override def asClient(from: Amqp091Queue010): domain.bindings.amqp.Amqp091Queue010 =
+      platform.wrap[domain.bindings.amqp.Amqp091Queue010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091Queue010): Amqp091Queue010 = from._internal
+  }
+}
+
+trait Amqp091Queue020Converter extends PlatformSecrets {
+  implicit object Amqp091Queue020Matcher
+      extends BidirectionalMatcher[Amqp091Queue020, domain.bindings.amqp.Amqp091Queue020] {
+    override def asClient(from: Amqp091Queue020): domain.bindings.amqp.Amqp091Queue020 =
+      platform.wrap[domain.bindings.amqp.Amqp091Queue020](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091Queue020): Amqp091Queue020 = from._internal
   }
 }
 

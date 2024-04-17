@@ -9,48 +9,87 @@ import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersion {
+trait Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersion {
 
-  val Is =
+  val Is: Field =
     Field(Str, ApiBinding + "is", ModelDoc(ModelVocabularies.ApiBinding, "is", "Defines what type of channel is it"))
 
-  val Exchange = Field(
+  val Exchange: Field = Field(
     Amqp091ChannelExchangeModel,
     ApiBinding + "exchange",
     ModelDoc(ModelVocabularies.ApiBinding, "exchange", "Defines the exchange properties")
   )
 
-  val Queue = Field(
+  val Queue: Field = Field(
     Amqp091QueueModel,
     ApiBinding + "queue",
     ModelDoc(ModelVocabularies.ApiBinding, "queue", "Defines the queue properties")
   )
 
-  override def modelInstance: AmfObject = Amqp091ChannelBinding()
-
   override def fields: List[Field] = List(Is, Exchange, Queue, BindingVersion) ++ ChannelBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelBinding" :: ChannelBindingModel.`type`
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "Amqp091ChannelBinding",
-    ""
-  )
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091ChannelBinding")
+
   override val key: Field = Type
 }
 
-object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSchema {
-  val Type =
+object Amqp091ChannelBindingModel extends Amqp091ChannelBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("Amqp091ChannelBindingModel is an abstract class")
+}
+
+object Amqp091ChannelBinding010Model extends Amqp091ChannelBindingModel {
+  override val Exchange: Field = Field(
+    Amqp091ChannelExchange010Model,
+    ApiBinding + "exchange",
+    ModelDoc(ModelVocabularies.ApiBinding, "exchange", "Defines the exchange properties")
+  )
+
+  override val Queue: Field = Field(
+    Amqp091Queue010Model,
+    ApiBinding + "queue",
+    ModelDoc(ModelVocabularies.ApiBinding, "queue", "Defines the queue properties")
+  )
+
+  override def modelInstance: AmfObject = Amqp091ChannelBinding010()
+
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelBinding010" :: ChannelBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091ChannelBinding010")
+}
+
+object Amqp091ChannelBinding020Model extends Amqp091ChannelBindingModel {
+  override val Exchange: Field = Field(
+    Amqp091ChannelExchange020Model,
+    ApiBinding + "exchange",
+    ModelDoc(ModelVocabularies.ApiBinding, "exchange", "Defines the exchange properties")
+  )
+
+  override val Queue: Field = Field(
+    Amqp091Queue020Model,
+    ApiBinding + "queue",
+    ModelDoc(ModelVocabularies.ApiBinding, "queue", "Defines the queue properties")
+  )
+
+  override def modelInstance: AmfObject = Amqp091ChannelBinding020()
+
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelBinding020" :: ChannelBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091ChannelBinding020")
+}
+
+trait Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSchema {
+  val Type: Field =
     Field(Str, ApiBinding + "type", ModelDoc(ModelVocabularies.ApiBinding, "type", "The type of the exchange"))
 
-  val Durable = Field(
+  val Durable: Field = Field(
     Bool,
     ApiBinding + "durable",
     ModelDoc(ModelVocabularies.ApiBinding, "durable", "Whether the exchange should survive broker restarts or not")
   )
 
-  val AutoDelete = Field(
+  val AutoDelete: Field = Field(
     Bool,
     ApiBinding + "autoDelete",
     ModelDoc(
@@ -60,7 +99,27 @@ object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSche
     )
   )
 
-  val VHost = Field(
+  override def fields: List[Field] = List(Name, Type, Durable, AutoDelete) ++ DomainElementModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelExchange" :: DomainElementModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091ChannelExchange")
+}
+
+object Amqp091ChannelExchangeModel extends Amqp091ChannelExchangeModel {
+  override def modelInstance: AmfObject = throw new Exception("Amqp091ChannelExchangeModel is an abstract class")
+}
+
+object Amqp091ChannelExchange010Model extends Amqp091ChannelExchangeModel {
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelExchange010" :: DomainElementModel.`type`
+
+  override def modelInstance: AmfObject = Amqp091ChannelExchange010()
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091ChannelExchange010")
+}
+
+object Amqp091ChannelExchange020Model extends Amqp091ChannelExchangeModel {
+  val VHost: Field = Field(
     Str,
     ApiBinding + "vhost",
     ModelDoc(ModelVocabularies.ApiBinding, "vhost", "The virtual host of the exchange")
@@ -68,25 +127,21 @@ object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSche
 
   override def fields: List[Field] = List(Name, Type, Durable, AutoDelete, VHost) ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelExchange" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelExchange020" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = Amqp091ChannelExchange()
+  override def modelInstance: AmfObject = Amqp091ChannelExchange020()
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "Amqp091ChannelExchange",
-    ""
-  )
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091ChannelExchange020")
 }
 
-object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
-  val Durable = Field(
+trait Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
+  val Durable: Field = Field(
     Bool,
     ApiBinding + "durable",
     ModelDoc(ModelVocabularies.ApiBinding, "durable", "Whether the exchange should survive broker restarts or not")
   )
 
-  val Exclusive = Field(
+  val Exclusive: Field = Field(
     Bool,
     ApiBinding + "exclusive",
     ModelDoc(
@@ -96,7 +151,7 @@ object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
     )
   )
 
-  val AutoDelete = Field(
+  val AutoDelete: Field = Field(
     Bool,
     ApiBinding + "autoDelete",
     ModelDoc(
@@ -106,7 +161,27 @@ object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
     )
   )
 
-  val VHost = Field(
+  override def fields: List[Field] = List(Name, Durable, Exclusive, AutoDelete) ++ DomainElementModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue" :: DomainElementModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091Queue")
+}
+
+object Amqp091QueueModel extends Amqp091QueueModel {
+  override def modelInstance: AmfObject = throw new Exception("Amqp091ChannelExchangeModel is an abstract class")
+}
+
+object Amqp091Queue010Model extends Amqp091QueueModel {
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue010" :: DomainElementModel.`type`
+
+  override def modelInstance: AmfObject = Amqp091Queue010()
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091Queue010")
+}
+
+object Amqp091Queue020Model extends Amqp091QueueModel {
+  val VHost: Field = Field(
     Str,
     ApiBinding + "vhost",
     ModelDoc(ModelVocabularies.ApiBinding, "vhost", "The virtual host of the exchange")
@@ -114,15 +189,11 @@ object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
 
   override def fields: List[Field] = List(Name, Durable, Exclusive, AutoDelete, VHost) ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue020" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = Amqp091Queue()
+  override def modelInstance: AmfObject = Amqp091Queue020()
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "Amqp091Queue",
-    ""
-  )
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091Queue020")
 }
 
 object Amqp091OperationBindingModel extends OperationBindingModel with BindingVersion {

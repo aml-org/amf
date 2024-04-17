@@ -56,14 +56,26 @@ object Async20Syntax extends SpecSyntax {
       "bindingVersion",
       "exchange"
     ),
-    "amqpQueueChannelBinding" -> Set(
+    "amqpQueueChannelBinding010" -> Set(
+      "name",
+      "durable",
+      "exclusive",
+      "autoDelete"
+    ),
+    "amqpQueueChannelBinding020" -> Set(
       "name",
       "durable",
       "exclusive",
       "autoDelete",
       "vhost"
     ),
-    "amqpExchangeChannelBinding" -> Set(
+    "amqpExchangeChannelBinding010" -> Set(
+      "name",
+      "type",
+      "durable",
+      "autoDelete"
+    ),
+    "amqpExchangeChannelBinding020" -> Set(
       "name",
       "type",
       "durable",

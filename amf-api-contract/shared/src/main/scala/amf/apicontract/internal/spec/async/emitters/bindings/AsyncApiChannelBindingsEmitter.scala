@@ -21,7 +21,9 @@ import amf.apicontract.client.scala.model.domain.bindings.pulsar.{PulsarChannelB
 import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091ChannelBindingModel,
+  Amqp091ChannelExchange020Model,
   Amqp091ChannelExchangeModel,
+  Amqp091Queue020Model,
   Amqp091QueueModel,
   AnypointMQChannelBindingModel,
   GooglePubSubChannelBindingModel,
@@ -31,11 +33,19 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   IBMMQChannelBindingModel,
   IBMMQChannelQueueModel,
   IBMMQChannelTopicModel,
- PulsarChannelBindingModel,
-  PulsarChannelRetentionModel, WebSocketsChannelBindingModel
+  PulsarChannelBindingModel,
+  PulsarChannelRetentionModel,
+  WebSocketsChannelBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, GooglePubSub, IBMMQ, Pulsar, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{
+  Amqp,
+  AnypointMQ,
+  GooglePubSub,
+  IBMMQ,
+  Pulsar,
+  WebSockets
+}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.{AmfScalar, ObjectNode, Shape}
@@ -72,7 +82,7 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
     case binding: WebSocketsChannelBinding   => Some(new WebSocketChannelBindingEmitter(binding, ordering))
     case binding: IBMMQChannelBinding        => Some(new IBMMQChannelBindingEmitter(binding, ordering))
     case binding: AnypointMQChannelBinding   => Some(new AnypointMQChannelBindingEmitter(binding, ordering))
-    case binding: PulsarChannelBinding     => Some(new PulsarChannelBindingEmitter(binding, ordering))
+    case binding: PulsarChannelBinding       => Some(new PulsarChannelBindingEmitter(binding, ordering))
     case binding: GooglePubSubChannelBinding => Some(new GooglePubSubChannelBindingEmitter(binding, ordering))
     case _                                   => None
   }
@@ -145,12 +155,16 @@ class Amqp091ChannelExchangeEmitter(binding: Amqp091ChannelExchange, ordering: S
         fs.entry(Amqp091ChannelExchangeModel.Type).foreach(f => result += ValueEmitter("type", f))
         fs.entry(Amqp091ChannelExchangeModel.Durable).foreach(f => result += ValueEmitter("durable", f))
         fs.entry(Amqp091ChannelExchangeModel.AutoDelete).foreach(f => result += ValueEmitter("autoDelete", f))
-        fs.entry(Amqp091ChannelExchangeModel.VHost).foreach(f => result += ValueEmitter("vhost", f))
+        fs.entry(Amqp091ChannelExchange020Model.VHost).foreach { f =>
+          if (!isSynthesized(f)) result += ValueEmitter("vhost", f)
+        }
 
         traverse(ordering.sorted(result), emitter)
       }
     )
   }
+
+  private def isSynthesized(f: FieldEntry): Boolean = f.value.annotations.contains(classOf[SynthesizedField])
 
   override def position(): Position = pos(binding.annotations)
 }
@@ -168,7 +182,7 @@ class Amqp091ChannelQueueEmitter(binding: Amqp091Queue, ordering: SpecOrdering) 
         fs.entry(Amqp091QueueModel.Exclusive).foreach(f => result += ValueEmitter("exclusive", f))
         fs.entry(Amqp091QueueModel.Durable).foreach(f => result += ValueEmitter("durable", f))
         fs.entry(Amqp091QueueModel.AutoDelete).foreach(f => result += ValueEmitter("autoDelete", f))
-        fs.entry(Amqp091QueueModel.VHost).foreach { f =>
+        fs.entry(Amqp091Queue020Model.VHost).foreach { f =>
           if (!isSynthesized(f)) result += ValueEmitter("vhost", f)
         }
         traverse(ordering.sorted(result), emitter)
