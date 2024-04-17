@@ -40,11 +40,17 @@ channels:
   some-channel:
     bindings:
       ibmmq:
-        destinationType: test
+        destinationType: queue
         queue:
           objectName: test
           isPartitioned: true
           exclusive: false
+        maxMsgLength: 123
+        bindingVersion: test
+  some-other-channel:
+    bindings:
+      ibmmq:
+        destinationType: topic
         topic:
           string: test
           objectName: test
@@ -59,7 +65,7 @@ channels:
       message:
         bindings:
           ibmmq:
-            type: test
+            type: binary
             description: test
             expiry: 123
             bindingVersion: test

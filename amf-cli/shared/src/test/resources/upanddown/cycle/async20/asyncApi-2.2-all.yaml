@@ -40,11 +40,17 @@ channels:
   some-channel:
     bindings:
       ibmmq:
-        destinationType: test
+        destinationType: queue
         queue:
           objectName: test
           isPartitioned: true
           exclusive: false
+        maxMsgLength: 123
+        bindingVersion: test
+  some-other-channel:
+    bindings:
+      ibmmq:
+        destinationType: topic
         topic:
           string: test
           objectName: test
@@ -52,14 +58,13 @@ channels:
           lastMsgRetained: false
         maxMsgLength: 123
         bindingVersion: test
-    description: some channel
     publish:
       bindings:
         ibmmq: {}
       message:
         bindings:
           ibmmq:
-            type: test
+            type: binary
             description: test
             expiry: 123
             bindingVersion: test
@@ -70,7 +75,7 @@ channels:
     bindings:
       anypointmq:
         destination: test
-        destinationType: test
+        destinationType: exchange
         bindingVersion: 0.1.0
     description: some channel
     publish:

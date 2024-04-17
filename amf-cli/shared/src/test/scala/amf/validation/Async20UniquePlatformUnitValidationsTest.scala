@@ -7,6 +7,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   val asyncPath: String            = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
+  private val cyclePath: String = "file://amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
 
   test("Required channel object") {
     validate("required-channels.yaml", Some("required-channels.report"))
@@ -435,4 +436,29 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Amqp operation binding version 0.3.0") {
     validate("amqp-operation-binding-030.yaml", Some("amqp-operation-binding-030.report"))
   }
+
+  test("Async asyncApi-2.1-all should be valid") {
+    validate(api = "asyncApi-2.1-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.2-all should be valid") {
+    validate(api = "asyncApi-2.2-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.3-all should be valid") {
+    validate(api = "asyncApi-2.3-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.4-all should be valid") {
+    validate(api = "asyncApi-2.4-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.5-all should be valid") {
+    validate(api = "asyncApi-2.5-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.6-all should be valid") {
+    validate(api = "asyncApi-2.6-all.yaml", directory = cyclePath)
+  }
+
 }
