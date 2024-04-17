@@ -432,6 +432,16 @@ object ParserSideValidations extends Validations {
     "Syntax error"
   )
 
+  val UnsupportedBindingVersionWarning: ValidationSpecification = validation(
+    id = "unsupported-binding-version-warning",
+    message = "The provided binding version is not supported"
+  )
+
+  val UnsupportedBindingVersion: ValidationSpecification = validation(
+    id = "unsupported-binding-version",
+    message = "The provided binding version is not supported"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -455,7 +465,8 @@ object ParserSideValidations extends Validations {
     InvalidPayload.id                            -> all(VIOLATION),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
-    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION)
+    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
+    UnsupportedBindingVersionWarning.id          -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -512,6 +523,8 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,
-    DuplicatedDeclaration
+    DuplicatedDeclaration,
+    UnsupportedBindingVersionWarning,
+    UnsupportedBindingVersion
   )
 }
