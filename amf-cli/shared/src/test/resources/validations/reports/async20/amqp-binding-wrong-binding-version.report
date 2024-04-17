@@ -1,0 +1,32 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml
+Profile: 
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'vhost' not supported in a ASYNC 2.0 amqpExchangeChannelBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-010/amqp091-exchange-010
+  Property: 
+  Range: [(16,10)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'vhost' not supported in a ASYNC 2.0 amqpQueueChannelBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-010/amqp091-queue-010
+  Property: 
+  Range: [(22,10)-(23,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
+  Message: Version 9.9.9 is not supported in an Amqp091ChannelBinding
+  Severity: Warning
+  Target: null
+  Property: bindingVersion
+  Range: [(9,11)-(23,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml

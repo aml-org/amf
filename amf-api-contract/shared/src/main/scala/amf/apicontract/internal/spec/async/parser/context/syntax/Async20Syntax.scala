@@ -88,7 +88,7 @@ object Async20Syntax extends SpecSyntax {
       "query",
       "bindingVersion"
     ),
-    "amqpOperationBinding" -> Set(
+    "amqpOperationBinding010" -> Set(
       "expiration",
       "userId",
       "cc",
@@ -97,6 +97,18 @@ object Async20Syntax extends SpecSyntax {
       "mandatory",
       "bcc",
       "replyTo",
+      "timestamp",
+      "ack",
+      "bindingVersion"
+    ),
+    "amqpOperationBinding030" -> Set(
+      "expiration",
+      "userId",
+      "cc",
+      "priority",
+      "deliveryMode",
+      "mandatory",
+      "bcc",
       "timestamp",
       "ack",
       "bindingVersion"

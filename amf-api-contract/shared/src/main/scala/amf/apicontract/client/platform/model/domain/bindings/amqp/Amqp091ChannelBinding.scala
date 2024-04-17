@@ -115,12 +115,6 @@ case class Amqp091ChannelBinding010(override private[amf] val _internal: Interna
   @JSExportTopLevel("Amqp091ChannelBinding010")
   def this() = this(InternalAmqp091ChannelBinding010())
 
-  override protected def bindingVersion: StrField = _internal.bindingVersion
-  override def withBindingVersion(bindingVersion: String): this.type = {
-    _internal.withBindingVersion(bindingVersion)
-    this
-  }
-
   override def exchange: Amqp091ChannelExchange010 = _internal.exchange
   override def queue: Amqp091Queue010              = _internal.queue
 

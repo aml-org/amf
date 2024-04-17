@@ -17,6 +17,8 @@ AMF Model Documentation
 * [Amqp091ChannelExchange020](#amqp091channelexchange020)
 * [Amqp091MessageBinding](#amqp091messagebinding)
 * [Amqp091OperationBinding](#amqp091operationbinding)
+* [Amqp091OperationBinding010](#amqp091operationbinding010)
+* [Amqp091OperationBinding030](#amqp091operationbinding030)
 * [Amqp091Queue](#amqp091queue)
 * [Amqp091Queue010](#amqp091queue010)
 * [Amqp091Queue020](#amqp091queue020)
@@ -419,7 +421,51 @@ Types:
  | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
  | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
  | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
+ | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
+ | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091OperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding010`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | expiration | int | - | TTL (Time-To-Live) for the message | `http://a.ml/vocabularies/apiBinding#expiration` |
+ | userId | string | - | Identifies the user who has sent the message | `http://a.ml/vocabularies/apiBinding#userId` |
+ | cc | [string] | false | The routing keys the message should be routed to at the time of publishing | `http://a.ml/vocabularies/apiBinding#cc` |
+ | priority | int | - | A priority for the message | `http://a.ml/vocabularies/apiBinding#priority` |
+ | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
+ | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
  | replyTo | string | - | Name of the queue where the consumer should send the response | `http://a.ml/vocabularies/apiBinding#replyTo` |
+ | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
+ | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091OperationBinding030
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding030`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | expiration | int | - | TTL (Time-To-Live) for the message | `http://a.ml/vocabularies/apiBinding#expiration` |
+ | userId | string | - | Identifies the user who has sent the message | `http://a.ml/vocabularies/apiBinding#userId` |
+ | cc | [string] | false | The routing keys the message should be routed to at the time of publishing | `http://a.ml/vocabularies/apiBinding#cc` |
+ | priority | int | - | A priority for the message | `http://a.ml/vocabularies/apiBinding#priority` |
+ | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
+ | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
  | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
  | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |

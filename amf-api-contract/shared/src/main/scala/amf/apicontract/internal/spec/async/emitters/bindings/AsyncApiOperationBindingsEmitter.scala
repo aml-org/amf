@@ -12,6 +12,8 @@ import amf.apicontract.client.scala.model.domain.bindings.solace.{
   SolaceOperationTopic
 }
 import amf.apicontract.internal.metamodel.domain.bindings.{
+  Amqp091OperationBinding010Model,
+  Amqp091OperationBinding030Model,
   Amqp091OperationBindingModel,
   HttpOperationBindingModel,
   KafkaOperationBindingModel,
@@ -141,7 +143,7 @@ class Amqp091OperationBindingEmitter(binding: Amqp091OperationBinding, ordering:
         fs.entry(Amqp091OperationBindingModel.DeliveryMode).foreach(f => result += ValueEmitter("deliveryMode", f))
         fs.entry(Amqp091OperationBindingModel.Mandatory).foreach(f => result += ValueEmitter("mandatory", f))
         fs.entry(Amqp091OperationBindingModel.BCC).foreach(f => result += spec.arrayEmitter("bcc", f, ordering))
-        fs.entry(Amqp091OperationBindingModel.ReplyTo).foreach(f => result += ValueEmitter("replyTo", f))
+        fs.entry(Amqp091OperationBinding010Model.ReplyTo).foreach(f => result += ValueEmitter("replyTo", f))
         fs.entry(Amqp091OperationBindingModel.Timestamp).foreach(f => result += ValueEmitter("timestamp", f))
         fs.entry(Amqp091OperationBindingModel.Ack).foreach(f => result += ValueEmitter("ack", f))
         emitBindingVersion(fs, result)

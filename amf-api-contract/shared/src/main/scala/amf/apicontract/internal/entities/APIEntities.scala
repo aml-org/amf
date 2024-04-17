@@ -70,6 +70,8 @@ private[amf] object APIEntities extends Entities {
     Amqp091ChannelExchange020Model,
     Amqp091MessageBindingModel,
     Amqp091OperationBindingModel,
+    Amqp091OperationBinding010Model,
+    Amqp091OperationBinding030Model,
     OperationBindingModel,
     ChannelBindingModel,
     EmptyBindingModel,
