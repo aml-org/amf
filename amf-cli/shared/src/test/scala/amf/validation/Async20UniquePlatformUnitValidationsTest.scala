@@ -427,4 +427,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Amqp 0.2.0 Closed Shape validation") {
     validate("amqp-channel-binding-020-invalid.yaml", Some("amqp-binding-020-invalid.report"))
   }
+
+  test("Async Amqp wrong binding version") {
+    validate("amqp-binding-wrong-binding-version.yaml", Some("amqp-binding-wrong-binding-version.report"))
+  }
 }

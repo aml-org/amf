@@ -21,6 +21,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnsupportedBindingVersionWarning
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
@@ -34,7 +35,16 @@ object AmqpChannelBindingParser extends BindingParser[Amqp091ChannelBinding] {
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: Amqp091ChannelBinding = bindingVersion match {
       case "0.2.0" | "latest" => Amqp091ChannelBinding020(Annotations(entry))
-      case _                  => Amqp091ChannelBinding010(Annotations(entry))
+      case "0.1.0"            => Amqp091ChannelBinding010(Annotations(entry))
+      case invalidVersion =>
+        ctx.eh.warning(
+          UnsupportedBindingVersionWarning,
+          Amqp091ChannelBinding010(Annotations(entry)),
+          Some("bindingVersion"),
+          s"Version $invalidVersion is not supported in an Amqp091ChannelBinding",
+          entry.value.location
+        )
+        Amqp091ChannelBinding010(Annotations(entry))
     }
 
     val map = entry.value.as[YMap]
