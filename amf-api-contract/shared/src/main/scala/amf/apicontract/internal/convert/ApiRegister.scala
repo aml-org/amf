@@ -6,13 +6,7 @@ import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.anypointmq._
-import amf.apicontract.client.platform.model.domain.bindings.googlepubsub.{
-  GooglePubSubChannelBinding,
-  GooglePubSubMessageBinding,
-  GooglePubSubMessageStoragePolicy,
-  GooglePubSubSchemaDefinition,
-  GooglePubSubSchemaSettings
-}
+import amf.apicontract.client.platform.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.ibmmq._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
@@ -256,9 +250,13 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(Amqp091MessageBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBinding => Amqp091MessageBinding(s)
     }
-    platform.registerWrapper(Amqp091OperationBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationBinding =>
-        Amqp091OperationBinding(s)
+    platform.registerWrapper(Amqp091OperationBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationBinding010 =>
+        Amqp091OperationBinding010(s)
+    }
+    platform.registerWrapper(Amqp091OperationBinding030Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationBinding030 =>
+        Amqp091OperationBinding030(s)
     }
     platform.registerWrapper(HttpMessageBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding => HttpMessageBinding(s)

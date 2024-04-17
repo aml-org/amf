@@ -998,11 +998,32 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt server binding last will object must be one of 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091OperationBinding"),
+        owlClass = apiBinding("Amqp091OperationBinding010"),
         owlProperty = apiBinding("deliveryMode"),
         constraint = sh("pattern"),
         value = "^[1-2]$",
         openApiErrorMessage = "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding030"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("pattern"),
+        value = "^[1-2]$",
+        openApiErrorMessage = "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding010"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("pattern"),
+        value = "^[0-9]+(.[0-9]+)?$",
+        openApiErrorMessage = "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding030"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("pattern"),
+        value = "^[0-9]+(.[0-9]+)?$",
+        openApiErrorMessage = "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0"
       ),
       AMFValidation(
         owlClass = apiBinding("Amqp091OperationBinding"),

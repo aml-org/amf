@@ -431,4 +431,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Amqp wrong binding version") {
     validate("amqp-binding-wrong-binding-version.yaml", Some("amqp-binding-wrong-binding-version.report"))
   }
+
+  test("Async Amqp operation binding version 0.3.0") {
+    validate("amqp-operation-binding-030.yaml", Some("amqp-operation-binding-030.report"))
+  }
 }

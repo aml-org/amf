@@ -63,6 +63,8 @@ trait ApiBaseConverter
     with Amqp091ChannelBinding020Converter
     with Amqp091MessageBindingConverter
     with Amqp091OperationBindingConverter
+    with Amqp091OperationBinding010Converter
+    with Amqp091OperationBinding030Converter
     with EmptyBindingConverter
     with HttpMessageBindingConverter
     with HttpOperationBindingConverter
@@ -213,6 +215,24 @@ trait Amqp091OperationBindingConverter extends PlatformSecrets {
     override def asClient(from: Amqp091OperationBinding): domain.bindings.amqp.Amqp091OperationBinding =
       platform.wrap[domain.bindings.amqp.Amqp091OperationBinding](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091OperationBinding): Amqp091OperationBinding =
+      from._internal
+  }
+}
+trait Amqp091OperationBinding010Converter extends PlatformSecrets {
+  implicit object Amqp091OperationBinding010Matcher
+      extends BidirectionalMatcher[Amqp091OperationBinding010, domain.bindings.amqp.Amqp091OperationBinding010] {
+    override def asClient(from: Amqp091OperationBinding010): domain.bindings.amqp.Amqp091OperationBinding010 =
+      platform.wrap[domain.bindings.amqp.Amqp091OperationBinding010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091OperationBinding010): Amqp091OperationBinding010 =
+      from._internal
+  }
+}
+trait Amqp091OperationBinding030Converter extends PlatformSecrets {
+  implicit object Amqp091OperationBinding030Matcher
+      extends BidirectionalMatcher[Amqp091OperationBinding030, domain.bindings.amqp.Amqp091OperationBinding030] {
+    override def asClient(from: Amqp091OperationBinding030): domain.bindings.amqp.Amqp091OperationBinding030 =
+      platform.wrap[domain.bindings.amqp.Amqp091OperationBinding030](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091OperationBinding030): Amqp091OperationBinding030 =
       from._internal
   }
 }

@@ -196,22 +196,22 @@ object Amqp091Queue020Model extends Amqp091QueueModel {
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091Queue020")
 }
 
-object Amqp091OperationBindingModel extends OperationBindingModel with BindingVersion {
-  val Expiration =
+trait Amqp091OperationBindingModel extends OperationBindingModel with BindingVersion {
+  val Expiration: Field =
     Field(
       Int,
       ApiBinding + "expiration",
       ModelDoc(ModelVocabularies.ApiBinding, "expiration", "TTL (Time-To-Live) for the message")
     )
 
-  val UserId =
+  val UserId: Field =
     Field(
       Str,
       ApiBinding + "userId",
       ModelDoc(ModelVocabularies.ApiBinding, "userId", "Identifies the user who has sent the message")
     )
 
-  val CC =
+  val CC: Field =
     Field(
       Array(Str),
       ApiBinding + "cc",
@@ -222,56 +222,83 @@ object Amqp091OperationBindingModel extends OperationBindingModel with BindingVe
       )
     )
 
-  val Priority =
+  val Priority: Field =
     Field(
       Int,
       ApiBinding + "priority",
       ModelDoc(ModelVocabularies.ApiBinding, "priority", "A priority for the message")
     )
 
-  val DeliveryMode =
+  val DeliveryMode: Field =
     Field(
       Int,
       ApiBinding + "deliveryMode",
       ModelDoc(ModelVocabularies.ApiBinding, "deliveryMode", "Delivery mode of the message")
     )
 
-  val Mandatory =
+  val Mandatory: Field =
     Field(
       Bool,
       ApiBinding + "mandatory",
       ModelDoc(ModelVocabularies.ApiBinding, "mandatory", "Whether the message is mandatory or not")
     )
 
-  val BCC =
+  val BCC: Field =
     Field(
       Array(Str),
       ApiBinding + "bcc",
       ModelDoc(ModelVocabularies.ApiBinding, "bcc", "Like cc but consumers will not receive this information")
     )
 
-  val ReplyTo =
-    Field(
-      Str,
-      ApiBinding + "replyTo",
-      ModelDoc(ModelVocabularies.ApiBinding, "replyTo", "Name of the queue where the consumer should send the response")
-    )
-
-  val Timestamp =
+  val Timestamp: Field =
     Field(
       Bool,
       ApiBinding + "timestamp",
       ModelDoc(ModelVocabularies.ApiBinding, "timestamp", "Whether the message should include a timestamp or not")
     )
 
-  val Ack =
+  val Ack: Field =
     Field(
       Bool,
       ApiBinding + "ack",
       ModelDoc(ModelVocabularies.ApiBinding, "ack", "Whether the consumer should ack the message or not")
     )
 
-  override def modelInstance: AmfObject = Amqp091OperationBinding()
+  override def fields: List[Field] =
+    List(
+      Expiration,
+      UserId,
+      CC,
+      Priority,
+      DeliveryMode,
+      Mandatory,
+      BCC,
+      Timestamp,
+      Ack,
+      BindingVersion
+    ) ++ OperationBindingModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091OperationBinding" :: OperationBindingModel.`type`
+
+  override val key: Field = Type
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091OperationBinding")
+}
+
+object Amqp091OperationBindingModel extends Amqp091OperationBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("Amqp091OperationBindingModel is an abstract class")
+}
+
+// version 0.1.0 and 0.2.0 are the same
+object Amqp091OperationBinding010Model extends Amqp091OperationBindingModel {
+  override def modelInstance: AmfObject = Amqp091OperationBinding010()
+
+  val ReplyTo: Field =
+    Field(
+      Str,
+      ApiBinding + "replyTo",
+      ModelDoc(ModelVocabularies.ApiBinding, "replyTo", "Name of the queue where the consumer should send the response")
+    )
 
   override def fields: List[Field] =
     List(
@@ -288,15 +315,32 @@ object Amqp091OperationBindingModel extends OperationBindingModel with BindingVe
       BindingVersion
     ) ++ OperationBindingModel.fields
 
-  override val `type`: List[ValueType] = ApiBinding + "Amqp091OperationBinding" :: OperationBindingModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091OperationBinding010" :: OperationBindingModel.`type`
 
-  override val key: Field = Type
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091OperationBinding010")
+}
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "Amqp091OperationBinding",
-    ""
-  )
+// version 0.3.0 removes the `replyTo` field, so it's the same as the base type
+object Amqp091OperationBinding030Model extends Amqp091OperationBindingModel {
+  override def fields: List[Field] =
+    List(
+      Expiration,
+      UserId,
+      CC,
+      Priority,
+      DeliveryMode,
+      Mandatory,
+      BCC,
+      Timestamp,
+      Ack,
+      BindingVersion
+    ) ++ OperationBindingModel.fields
+
+  override def modelInstance: AmfObject = Amqp091OperationBinding030()
+
+  override val `type`: List[ValueType] = ApiBinding + "Amqp091OperationBinding030" :: OperationBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "Amqp091OperationBinding030")
 }
 
 object Amqp091MessageBindingModel extends MessageBindingModel with BindingVersion {
