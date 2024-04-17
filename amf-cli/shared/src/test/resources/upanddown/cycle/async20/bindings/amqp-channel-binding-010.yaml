@@ -6,17 +6,15 @@ channels:
   some-channel:
     bindings:
       amqp:
-        bindingVersion: 31.07.92
+        bindingVersion: 0.1.0
         is: queue
         exchange:
           name: some name
           type: topic
           durable: false
           autoDelete: true
-          vhost: /some-some
         queue:
           name: somename
           durable: true
           exclusive: false
           autoDelete: true
-          vhost: /some-some

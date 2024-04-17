@@ -219,8 +219,13 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(CorrelationIdModel) { case s: domain.CorrelationId =>
       CorrelationId(s)
     }
-    platform.registerWrapper(Amqp091ChannelBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelBinding => Amqp091ChannelBinding(s)
+    platform.registerWrapper(Amqp091ChannelBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelBinding010 =>
+        Amqp091ChannelBinding010(s)
+    }
+    platform.registerWrapper(Amqp091ChannelBinding020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelBinding020 =>
+        Amqp091ChannelBinding020(s)
     }
     platform.registerWrapper(OperationBindingsModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.OperationBindings => OperationBindings(s)
@@ -234,12 +239,19 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(MessageBindingsModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.MessageBindings => MessageBindings(s)
     }
-    platform.registerWrapper(Amqp091ChannelExchangeModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelExchange =>
-        Amqp091ChannelExchange(s)
+    platform.registerWrapper(Amqp091ChannelExchange010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelExchange010 =>
+        Amqp091ChannelExchange010(s)
     }
-    platform.registerWrapper(Amqp091QueueModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091Queue => Amqp091Queue(s)
+    platform.registerWrapper(Amqp091ChannelExchange020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091ChannelExchange020 =>
+        Amqp091ChannelExchange020(s)
+    }
+    platform.registerWrapper(Amqp091Queue010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091Queue010 => Amqp091Queue010(s)
+    }
+    platform.registerWrapper(Amqp091Queue020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091Queue020 => Amqp091Queue020(s)
     }
     platform.registerWrapper(Amqp091MessageBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBinding => Amqp091MessageBinding(s)

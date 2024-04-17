@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-020-invalid.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 amqpExchangeChannelBinding020 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-020-invalid.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-020/amqp091-exchange-020
+  Property: 
+  Range: [(17,10)-(18,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-020-invalid.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 amqpQueueChannelBinding020 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-020-invalid.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-020/amqp091-queue-020
+  Property: 
+  Range: [(24,10)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-020-invalid.yaml
