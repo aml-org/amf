@@ -111,8 +111,8 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     messageBinding.messageType.value() shouldBe s
   }
 
-  test("test Amqp091OperationBinding") {
-    val operationBinding = new Amqp091OperationBinding()
+  test("test Amqp091OperationBinding010") {
+    val operationBinding = new Amqp091OperationBinding010()
       .withExpiration(1)
       .withUserId(s)
       .withCc(stringSeq.asClient)
@@ -135,9 +135,31 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     operationBinding.ack.value() shouldBe true
   }
 
+  test("test Amqp091OperationBinding030") {
+    val operationBinding = new Amqp091OperationBinding030()
+      .withExpiration(1)
+      .withUserId(s)
+      .withCc(stringSeq.asClient)
+      .withPriority(1)
+      .withDeliveryMode(1)
+      .withMandatory(true)
+      .withBcc(stringSeq.asClient)
+      .withTimestamp(true)
+      .withAck(true)
+    operationBinding.expiration.value() shouldBe 1
+    operationBinding.userId.value() shouldBe s
+    operationBinding.cc.toString shouldBe clientStringList.toString
+    operationBinding.bcc.toString shouldBe clientStringList.toString
+    operationBinding.priority.value() shouldBe 1
+    operationBinding.deliveryMode.value() shouldBe 1
+    operationBinding.mandatory.value() shouldBe true
+    operationBinding.timestamp.value() shouldBe true
+    operationBinding.ack.value() shouldBe true
+  }
+
   test("test ChannelBindings") {
     val internalChannelBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.ChannelBinding] =
-      Seq(new Amqp091ChannelBinding010()._internal)
+      Seq(new Amqp091ChannelBinding010()._internal, new Amqp091ChannelBinding020()._internal)
     val clientChannelBindings = internalChannelBindings.asClient
 
     val channelBindings = new ChannelBindings()
