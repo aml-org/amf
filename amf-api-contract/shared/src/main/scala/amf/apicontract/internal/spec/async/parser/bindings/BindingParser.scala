@@ -54,7 +54,9 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
   protected def getDefaultBindingVersion(binding: String, spec: Spec): String = {
     (binding, spec) match {
-      case ("Amqp091ChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
+      case ("Amqp091ChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
+      case ("Amqp091OperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
+      case ("Amqp091MessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
     }
   }
 

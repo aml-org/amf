@@ -19,7 +19,7 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object Amqp091OperationBindingParser extends BindingParser[Amqp091OperationBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Amqp091OperationBinding = {
-    val bindingVersion = getBindingVersion(entry.value.as[YMap], "Amqp091ChannelBinding", ctx.specSettings.spec)
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "Amqp091OperationBinding", ctx.specSettings.spec)
 
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: Amqp091OperationBinding = bindingVersion match {

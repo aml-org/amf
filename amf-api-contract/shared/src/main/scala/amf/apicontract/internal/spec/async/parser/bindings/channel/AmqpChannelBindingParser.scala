@@ -34,8 +34,10 @@ object AmqpChannelBindingParser extends BindingParser[Amqp091ChannelBinding] {
 
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: Amqp091ChannelBinding = bindingVersion match {
-      case "0.2.0" | "latest" => Amqp091ChannelBinding020(Annotations(entry))
-      case "0.1.0"            => Amqp091ChannelBinding010(Annotations(entry))
+      case "0.3.0" | "latest" => // 0.3.0 only changes operation binding, channel binding is the same as 0.2.0
+        Amqp091ChannelBinding020(Annotations(entry))
+      case "0.2.0" => Amqp091ChannelBinding020(Annotations(entry))
+      case "0.1.0" => Amqp091ChannelBinding010(Annotations(entry))
       case invalidVersion =>
         ctx.eh.warning(
           UnsupportedBindingVersionWarning,
