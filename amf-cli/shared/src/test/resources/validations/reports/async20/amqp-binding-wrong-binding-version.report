@@ -24,9 +24,9 @@ Level: Violation
 Level: Warning
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
-  Message: Version 9.9.9 is not supported in an Amqp091ChannelBinding
+  Message: Version 9.9.9 is not supported in a Amqp091ChannelBinding
   Severity: Warning
-  Target: null
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-010
   Property: bindingVersion
-  Range: [(9,11)-(23,0)]
+  Range: [(9,6)-(23,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-wrong-binding-version.yaml

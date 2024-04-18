@@ -12,7 +12,6 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnsupportedBindingVersionWarning
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YMap, YMapEntry}
@@ -26,14 +25,9 @@ object Amqp091OperationBindingParser extends BindingParser[Amqp091OperationBindi
       case "0.3.0" | "latest" => Amqp091OperationBinding030(Annotations(entry))
       case "0.1.0" | "0.2.0"  => Amqp091OperationBinding010(Annotations(entry))
       case invalidVersion =>
-        ctx.eh.warning(
-          UnsupportedBindingVersionWarning,
-          Amqp091OperationBinding010(Annotations(entry)),
-          Some("bindingVersion"),
-          s"Version $invalidVersion is not supported in an Amqp091ChannelBinding",
-          entry.value.location
-        )
-        Amqp091OperationBinding010(Annotations(entry))
+        val defaultBinding = Amqp091OperationBinding010(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Amqp091OperationBinding", warning = true)
+        defaultBinding
     }
     val map = entry.value.as[YMap]
 

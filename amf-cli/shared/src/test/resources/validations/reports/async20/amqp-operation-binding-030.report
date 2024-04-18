@@ -16,9 +16,9 @@ Level: Violation
 Level: Warning
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
-  Message: Version 1.2.3 is not supported in an Amqp091ChannelBinding
+  Message: Version 1.2.3 is not supported in a Amqp091OperationBinding
   Severity: Warning
-  Target: null
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-030.yaml#/async-api/endpoint/wrong-version-channel/supportedOperation/subscribe/wrong-version-operation/operation-bindings/bindings/amqp091-operation-010
   Property: bindingVersion
-  Range: [(18,13)-(22,0)]
+  Range: [(18,8)-(22,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-030.yaml

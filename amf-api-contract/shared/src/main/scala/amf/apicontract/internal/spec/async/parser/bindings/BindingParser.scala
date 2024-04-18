@@ -3,6 +3,10 @@ package amf.apicontract.internal.spec.async.parser.bindings
 import amf.apicontract.client.scala.model.domain.bindings.BindingVersion
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  UnsupportedBindingVersion,
+  UnsupportedBindingVersionWarning
+}
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
@@ -59,6 +63,26 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       case ("Amqp091MessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
       case("AnypointMQMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
       case("AnypointMQChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
+    }
+  }
+
+  protected def invalidBindingVersion(obj: AmfObject, version: String, binding: String, warning: Boolean = false)(
+      implicit ctx: AsyncWebApiContext
+  ): Unit = {
+    if (warning) {
+      ctx.eh.warning(
+        UnsupportedBindingVersionWarning,
+        obj,
+        Some("bindingVersion"),
+        s"Version $version is not supported in a $binding",
+        obj.annotations.sourceLocation
+      )
+    } else {
+      ctx.violation(
+        UnsupportedBindingVersion,
+        obj,
+        s"Version $version is not supported in a $binding"
+      )
     }
   }
 
