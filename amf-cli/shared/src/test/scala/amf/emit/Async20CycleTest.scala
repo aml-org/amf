@@ -68,7 +68,14 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "components/external-operation-traits.%s"
     ),
     FixtureData("Message traits", "components/message-traits.yaml", "components/message-traits.%s"),
-    FixtureData("Draft-7 external reference", "draft-7/references.yaml", "draft-7/references.%s")
+    FixtureData("Draft-7 external reference", "draft-7/references.yaml", "draft-7/references.%s"),
+    FixtureData("Async 2.1 all", "asyncApi-2.1-all.yaml", "asyncApi-2.1-all.%s"),
+    FixtureData("Async 2.2 all", "asyncApi-2.2-all.yaml", "asyncApi-2.2-all.%s"),
+    FixtureData("Async 2.3 all", "asyncApi-2.3-all.yaml", "asyncApi-2.3-all.%s"),
+    FixtureData("Async 2.4 all", "asyncApi-2.4-all.yaml", "asyncApi-2.4-all.%s"
+    ),
+    FixtureData("Async 2.5 all", "asyncApi-2.5-all.yaml", "asyncApi-2.5-all.%s"),
+    FixtureData("Async 2.6 all", "asyncApi-2.6-all.yaml", "asyncApi-2.6-all.%s")
   )
 
   def cyclesAsyncAsync: Seq[FixtureData] = Seq(
