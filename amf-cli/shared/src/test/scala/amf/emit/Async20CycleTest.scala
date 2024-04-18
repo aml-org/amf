@@ -35,7 +35,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "empty-binding-and-annotations.yaml",
       "empty-binding-and-annotations.%s"
     ),
-    FixtureData("Amqp 0.9.1 channel binding", "amqp-channel-binding.yaml", "amqp-channel-binding.%s"),
+    FixtureData(
+      "Amqp 0.9.1 channel binding version 0.1.0",
+      "amqp-channel-binding-010.yaml",
+      "amqp-channel-binding-010.%s"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 channel binding version 0.2.0",
+      "amqp-channel-binding-020.yaml",
+      "amqp-channel-binding-020.%s"
+    ),
     FixtureData("Amqp 0.9.1 message binding", "amqp-message-binding.yaml", "amqp-message-binding.%s"),
     FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.%s"),
     FixtureData("Http message binding", "http-message-binding.yaml", "http-message-binding.%s"),
@@ -84,9 +93,14 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/empty-binding-and-annotations.yaml"
     ),
     FixtureData(
-      "Amqp 0.9.1 channel binding",
-      "bindings/amqp-channel-binding.yaml",
-      "bindings/amqp-channel-binding.yaml"
+      "Amqp 0.9.1 channel binding version 0.1.0",
+      "bindings/amqp-channel-binding-010.yaml",
+      "bindings/amqp-channel-binding-010.yaml"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 channel binding version 0.2.0",
+      "bindings/amqp-channel-binding-020.yaml",
+      "bindings/amqp-channel-binding-020.yaml"
     ),
     FixtureData(
       "Amqp 0.9.1 message binding",

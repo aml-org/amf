@@ -29,8 +29,18 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
   }
 
-  test("test Amqp091ChannelExchange") {
-    val exchange = new Amqp091ChannelExchange()
+  test("test Amqp091ChannelExchange010") {
+    val exchange = new Amqp091ChannelExchange010()
+      .withType(s)
+      .withDurable(true)
+      .withAutoDelete(false)
+    exchange.`type`.value() shouldBe s
+    exchange.durable.value() shouldBe true
+    exchange.autoDelete.value() shouldBe false
+  }
+
+  test("test Amqp091ChannelExchange020") {
+    val exchange = new Amqp091ChannelExchange020()
       .withType(s)
       .withDurable(true)
       .withAutoDelete(false)
@@ -39,11 +49,20 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     exchange.durable.value() shouldBe true
     exchange.autoDelete.value() shouldBe false
     exchange.vHost.value() shouldBe s
-
   }
 
-  test("test Amqp091Queue") {
-    val queue = new Amqp091Queue()
+  test("test Amqp091Queue010") {
+    val queue = new Amqp091Queue010()
+      .withExclusive(false)
+      .withDurable(true)
+      .withAutoDelete(false)
+    queue.exclusive.value() shouldBe false
+    queue.durable.value() shouldBe true
+    queue.autoDelete.value() shouldBe false
+  }
+
+  test("test Amqp091Queue020") {
+    val queue = new Amqp091Queue020()
       .withExclusive(false)
       .withDurable(true)
       .withAutoDelete(false)
@@ -54,10 +73,25 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     queue.vHost.value() shouldBe s
   }
 
-  test("test Amqp091ChannelBinding") {
-    val exchange = new Amqp091ChannelExchange()
-    val queue    = new Amqp091Queue()
-    val amqpChannelBinding = new Amqp091ChannelBinding()
+  test("test Amqp091ChannelBinding010") {
+    val exchange = new Amqp091ChannelExchange010()
+    val queue    = new Amqp091Queue010()
+    val amqpChannelBinding = new Amqp091ChannelBinding010()
+      .withIs(s)
+      .withExchange(exchange)
+      .withQueue(queue)
+      .withBindingVersion(s)
+      .withId(s)
+    amqpChannelBinding.is.value() shouldBe s
+    amqpChannelBinding.id shouldBe s
+    amqpChannelBinding.exchange shouldBe exchange
+    amqpChannelBinding.queue shouldBe queue
+  }
+
+  test("test Amqp091ChannelBinding020") {
+    val exchange = new Amqp091ChannelExchange020()
+    val queue    = new Amqp091Queue020()
+    val amqpChannelBinding = new Amqp091ChannelBinding020()
       .withIs(s)
       .withExchange(exchange)
       .withQueue(queue)
@@ -77,8 +111,8 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     messageBinding.messageType.value() shouldBe s
   }
 
-  test("test Amqp091OperationBinding") {
-    val operationBinding = new Amqp091OperationBinding()
+  test("test Amqp091OperationBinding010") {
+    val operationBinding = new Amqp091OperationBinding010()
       .withExpiration(1)
       .withUserId(s)
       .withCc(stringSeq.asClient)
@@ -101,9 +135,31 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     operationBinding.ack.value() shouldBe true
   }
 
+  test("test Amqp091OperationBinding030") {
+    val operationBinding = new Amqp091OperationBinding030()
+      .withExpiration(1)
+      .withUserId(s)
+      .withCc(stringSeq.asClient)
+      .withPriority(1)
+      .withDeliveryMode(1)
+      .withMandatory(true)
+      .withBcc(stringSeq.asClient)
+      .withTimestamp(true)
+      .withAck(true)
+    operationBinding.expiration.value() shouldBe 1
+    operationBinding.userId.value() shouldBe s
+    operationBinding.cc.toString shouldBe clientStringList.toString
+    operationBinding.bcc.toString shouldBe clientStringList.toString
+    operationBinding.priority.value() shouldBe 1
+    operationBinding.deliveryMode.value() shouldBe 1
+    operationBinding.mandatory.value() shouldBe true
+    operationBinding.timestamp.value() shouldBe true
+    operationBinding.ack.value() shouldBe true
+  }
+
   test("test ChannelBindings") {
     val internalChannelBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.ChannelBinding] =
-      Seq(new Amqp091ChannelBinding()._internal)
+      Seq(new Amqp091ChannelBinding010()._internal, new Amqp091ChannelBinding020()._internal)
     val clientChannelBindings = internalChannelBindings.asClient
 
     val channelBindings = new ChannelBindings()

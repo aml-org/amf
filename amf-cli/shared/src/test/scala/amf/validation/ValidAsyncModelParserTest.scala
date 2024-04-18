@@ -27,7 +27,7 @@ class ValidAsyncModelParserTest extends ValidModelTest {
   }
 
   test("Amqp 0.9.1 channel binding") {
-    checkValid("amqp-channel-binding.yaml")
+    checkValid("amqp-channel-binding-020.yaml")
   }
 
   test("Amqp 0.9.1 message binding") {
@@ -74,8 +74,12 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("rpc-server.yaml")
   }
 
-  test("Amqp channel binding") {
-    checkValid("amqp-channel-binding.yaml")
+  test("Amqp channel binding version 0.1.0") {
+    checkValid("amqp-channel-binding-010.yaml")
+  }
+
+  test("Amqp channel binding version 0.2.0") {
+    checkValid("amqp-channel-binding-020.yaml")
   }
 
   test("References to message defined in components") {

@@ -899,7 +899,14 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt operation binding object must be one of 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091ChannelBinding"),
+        owlClass = apiBinding("Amqp091ChannelBinding010"),
+        owlProperty = apiBinding("is"),
+        constraint = sh("in"),
+        value = "routingKey,queue",
+        openApiErrorMessage = "'is' for amqp 0.9.1 channel binding object must be one of 'queue' or 'routingKey'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091ChannelBinding020"),
         owlProperty = apiBinding("is"),
         constraint = sh("in"),
         value = "routingKey,queue",
@@ -936,14 +943,28 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'type' for http operation binding is required"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091ChannelExchange"),
+        owlClass = apiBinding("Amqp091ChannelExchange010"),
         owlProperty = core("name"),
         constraint = sh("maxLength"),
         value = "255",
         openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091ChannelQueue"),
+        owlClass = apiBinding("Amqp091ChannelExchange020"),
+        owlProperty = core("name"),
+        constraint = sh("maxLength"),
+        value = "255",
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091ChannelQueue010"),
+        owlProperty = core("name"),
+        constraint = sh("maxLength"),
+        value = "255",
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091ChannelQueue020"),
         owlProperty = core("name"),
         constraint = sh("maxLength"),
         value = "255",
@@ -977,11 +998,32 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt server binding last will object must be one of 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091OperationBinding"),
+        owlClass = apiBinding("Amqp091OperationBinding010"),
         owlProperty = apiBinding("deliveryMode"),
         constraint = sh("pattern"),
         value = "^[1-2]$",
         openApiErrorMessage = "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding030"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("pattern"),
+        value = "^[1-2]$",
+        openApiErrorMessage = "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding010"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("pattern"),
+        value = "^[0-9]+(.[0-9]+)?$",
+        openApiErrorMessage = "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding030"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("pattern"),
+        value = "^[0-9]+(.[0-9]+)?$",
+        openApiErrorMessage = "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0"
       ),
       AMFValidation(
         owlClass = apiBinding("Amqp091OperationBinding"),

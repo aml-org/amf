@@ -10,10 +10,18 @@ AMF Model Documentation
 * [AbstractRequest](#abstractrequest)
 * [AbstractResponse](#abstractresponse)
 * [Amqp091ChannelBinding](#amqp091channelbinding)
+* [Amqp091ChannelBinding010](#amqp091channelbinding010)
+* [Amqp091ChannelBinding020](#amqp091channelbinding020)
 * [Amqp091ChannelExchange](#amqp091channelexchange)
+* [Amqp091ChannelExchange010](#amqp091channelexchange010)
+* [Amqp091ChannelExchange020](#amqp091channelexchange020)
 * [Amqp091MessageBinding](#amqp091messagebinding)
 * [Amqp091OperationBinding](#amqp091operationbinding)
+* [Amqp091OperationBinding010](#amqp091operationbinding010)
+* [Amqp091OperationBinding030](#amqp091operationbinding030)
 * [Amqp091Queue](#amqp091queue)
+* [Amqp091Queue010](#amqp091queue010)
+* [Amqp091Queue020](#amqp091queue020)
 * [AnnotationMapping](#annotationmapping)
 * [AnnotationTypeDeclarationFragment](#annotationtypedeclarationfragment)
 * [AnyMapping](#anymapping)
@@ -307,10 +315,70 @@ Types:
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## Amqp091ChannelBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding010`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | is | string | - | Defines what type of channel is it | `http://a.ml/vocabularies/apiBinding#is` |
+ | exchange | [Amqp091ChannelExchange010](#amqp091channelexchange010) | - | Defines the exchange properties | `http://a.ml/vocabularies/apiBinding#exchange` |
+ | queue | [Amqp091Queue010](#amqp091queue010) | - | Defines the queue properties | `http://a.ml/vocabularies/apiBinding#queue` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091ChannelBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding020`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | is | string | - | Defines what type of channel is it | `http://a.ml/vocabularies/apiBinding#is` |
+ | exchange | [Amqp091ChannelExchange020](#amqp091channelexchange020) | - | Defines the exchange properties | `http://a.ml/vocabularies/apiBinding#exchange` |
+ | queue | [Amqp091Queue020](#amqp091queue020) | - | Defines the queue properties | `http://a.ml/vocabularies/apiBinding#queue` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## Amqp091ChannelExchange
 
 Types:
 * `http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | type | string | - | The type of the exchange | `http://a.ml/vocabularies/apiBinding#type` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091ChannelExchange010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange010`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | type | string | - | The type of the exchange | `http://a.ml/vocabularies/apiBinding#type` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091ChannelExchange020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange020`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |
@@ -353,7 +421,51 @@ Types:
  | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
  | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
  | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
+ | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
+ | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091OperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding010`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | expiration | int | - | TTL (Time-To-Live) for the message | `http://a.ml/vocabularies/apiBinding#expiration` |
+ | userId | string | - | Identifies the user who has sent the message | `http://a.ml/vocabularies/apiBinding#userId` |
+ | cc | [string] | false | The routing keys the message should be routed to at the time of publishing | `http://a.ml/vocabularies/apiBinding#cc` |
+ | priority | int | - | A priority for the message | `http://a.ml/vocabularies/apiBinding#priority` |
+ | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
+ | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
  | replyTo | string | - | Name of the queue where the consumer should send the response | `http://a.ml/vocabularies/apiBinding#replyTo` |
+ | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
+ | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091OperationBinding030
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding030`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | expiration | int | - | TTL (Time-To-Live) for the message | `http://a.ml/vocabularies/apiBinding#expiration` |
+ | userId | string | - | Identifies the user who has sent the message | `http://a.ml/vocabularies/apiBinding#userId` |
+ | cc | [string] | false | The routing keys the message should be routed to at the time of publishing | `http://a.ml/vocabularies/apiBinding#cc` |
+ | priority | int | - | A priority for the message | `http://a.ml/vocabularies/apiBinding#priority` |
+ | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
+ | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
  | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
  | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
@@ -364,6 +476,34 @@ Types:
 
 Types:
 * `http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | exclusive | boolean | - | Whether the queue should be used only by one connection or not | `http://a.ml/vocabularies/apiBinding#exclusive` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091Queue010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue010`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | exclusive | boolean | - | Whether the queue should be used only by one connection or not | `http://a.ml/vocabularies/apiBinding#exclusive` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091Queue020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue020`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |

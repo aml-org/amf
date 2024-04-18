@@ -419,4 +419,20 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async inter components references") {
     validate("message-references.yaml")
   }
+
+  test("Async Amqp 0.1.0 Closed Shape validation") {
+    validate("amqp-binding-010.yaml", Some("amqp-binding-010.report"))
+  }
+
+  test("Async Amqp 0.2.0 Closed Shape validation") {
+    validate("amqp-channel-binding-020-invalid.yaml", Some("amqp-binding-020-invalid.report"))
+  }
+
+  test("Async Amqp wrong binding version") {
+    validate("amqp-binding-wrong-binding-version.yaml", Some("amqp-binding-wrong-binding-version.report"))
+  }
+
+  test("Async Amqp operation binding version 0.3.0") {
+    validate("amqp-operation-binding-030.yaml", Some("amqp-operation-binding-030.report"))
+  }
 }
