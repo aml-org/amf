@@ -8,14 +8,14 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
-  val GroupId =
+  val GroupId: Field =
     Field(
       ShapeModel,
       ApiBinding + "groupId",
       ModelDoc(ModelVocabularies.ApiBinding, "groupId", "Schema that defines the id of the consumer group")
     )
 
-  val ClientId =
+  val ClientId: Field =
     Field(
       ShapeModel,
       ApiBinding + "clientId",
@@ -34,15 +34,11 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
 
   override val `type`: List[ValueType] = ApiBinding + "KafkaOperationBinding" :: OperationBindingModel.`type`
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "KafkaOperationBinding",
-    ""
-  )
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaOperationBinding")
 }
 
 object KafkaMessageBindingModel extends OperationBindingModel with BindingVersion {
-  val MessageKey =
+  val MessageKey: Field =
     Field(
       ShapeModel,
       ApiBinding + "messageKey",
@@ -57,9 +53,5 @@ object KafkaMessageBindingModel extends OperationBindingModel with BindingVersio
 
   override val key: Field = Type
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "KafkaMessageBinding",
-    ""
-  )
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaMessageBinding")
 }

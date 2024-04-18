@@ -1,0 +1,27 @@
+asyncapi: '2.0.0'
+info:
+  title: test API
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 9.9.9 # invalid bindingVersion, defaults to 0.1.0 and throws error
+            key:
+              type: string
+              enum:
+                - someKey
+      bindings:
+        kafka:
+          bindingVersion: 9.9.9 # invalid bindingVersion, defaults to 0.1.0 and throws error
+          groupId:
+            type: string
+            enum:
+              - myGroupId
+          clientId:
+            type: string
+            enum:
+              - myClientId

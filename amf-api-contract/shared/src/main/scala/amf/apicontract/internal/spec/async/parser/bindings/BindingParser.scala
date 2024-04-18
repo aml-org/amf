@@ -63,6 +63,8 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       case ("Amqp091MessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
       case("AnypointMQMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
       case("AnypointMQChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
+      case ("KafkaOperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
+      case ("KafkaMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)     => "0.1.0"
     }
   }
 
@@ -127,5 +129,4 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
   ): Unit = {
     ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
   }
-
 }

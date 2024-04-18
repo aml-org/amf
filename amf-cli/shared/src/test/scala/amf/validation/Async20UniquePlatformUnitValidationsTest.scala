@@ -469,4 +469,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("anypointmq-invalid-version.yaml", Some("anypointmq-invalid-version.report"))
   }
 
+  test("Async Kafka wrong binding version") {
+    validate("kafka-binding-wrong-binding-version.yaml", Some("kafka-binding-wrong-binding-version.report"))
+  }
 }
