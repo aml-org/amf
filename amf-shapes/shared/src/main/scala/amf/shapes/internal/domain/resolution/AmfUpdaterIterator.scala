@@ -1,9 +1,10 @@
 package amf.shapes.internal.domain.resolution
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, DataNode, Shape}
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.traversal.iterator.{AmfIterator, InstanceCollector, VisitedCollector}
 import amf.shapes.client.scala.model.domain.Example
 
+import scala.annotation.tailrec
 import scala.collection.immutable.Queue
 
 case class AmfUpdaterIterator private (var buffer: Queue[AmfElement], updater: AmfElement => AmfElement)
@@ -22,31 +23,37 @@ case class AmfUpdaterIterator private (var buffer: Queue[AmfElement], updater: A
     }
   }
 
-  override def hasNext: Boolean = {
-    if (buffer.nonEmpty) {
-      val current = buffer.head
-      if (visited.visited(current)) {
-        buffer = buffer.tail
-        hasNext
-      } else true
-
-    } else false
-  }
-
-  override def next: AmfElement = {
-    val current = buffer.head
-    buffer = buffer.tail
-    if (!visited.visited(current)) {
-      val next = nextElements(current)
-        .map(updater)
-        .filter(e => !visited.visited(e) && !shouldSkip(e))
-      buffer = buffer ++ next
-      visited += current
-      current
-    } else {
-      next
+  override final def hasNext: Boolean = {
+    @tailrec
+    def innerHasNext(): Boolean = buffer match {
+      case current +: tail if visited.visited(current) =>
+        buffer = tail
+        innerHasNext()
+      case _ +: _ => true  // nonEmpty
+      case _      => false // empty
     }
 
+    innerHasNext()
+  }
+
+  override final def next: AmfElement = {
+    @tailrec
+    def innerNext(): AmfElement = {
+      val current = buffer.head
+      buffer = buffer.tail
+      if (!visited.visited(current)) {
+        val next = nextElements(current)
+          .map(updater)
+          .filter(e => !visited.visited(e) && !shouldSkip(e))
+        buffer = buffer ++ next
+        visited += current
+        current
+      } else {
+        innerNext()
+      }
+    }
+
+    innerNext()
   }
 
   private def nextElements(e: AmfElement): Iterable[AmfElement] = {
