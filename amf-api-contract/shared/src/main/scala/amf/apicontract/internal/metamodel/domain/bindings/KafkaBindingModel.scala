@@ -37,7 +37,7 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaOperationBinding")
 }
 
-object KafkaMessageBindingModel extends OperationBindingModel with BindingVersion {
+object KafkaMessageBindingModel extends MessageBindingModel with BindingVersion {
   val MessageKey: Field =
     Field(
       ShapeModel,
