@@ -102,6 +102,7 @@ AMF Model Documentation
 * [JsonSchemaDocument](#jsonschemadocument)
 * [KafkaMessageBinding](#kafkamessagebinding)
 * [KafkaOperationBinding](#kafkaoperationbinding)
+* [KafkaServerBinding](#kafkaserverbinding)
 * [Key](#key)
 * [License](#license)
 * [LinkNode](#linknode)
@@ -1929,6 +1930,21 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | groupId | [Shape](#shape) | - | Schema that defines the id of the consumer group | `http://a.ml/vocabularies/apiBinding#groupId` |
  | clientId | [Shape](#shape) | - | Schema that defines the id of the consumer inside a consumer group | `http://a.ml/vocabularies/apiBinding#clientId` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | schemaRegistryUrl | string | - | API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used) | `http://a.ml/vocabularies/apiBinding#schemaRegistryUrl` |
+ | schemaRegistryVendor | string | - | The vendor of Schema Registry and Kafka serdes library that should be used | `http://a.ml/vocabularies/apiBinding#schemaRegistryVendor` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |

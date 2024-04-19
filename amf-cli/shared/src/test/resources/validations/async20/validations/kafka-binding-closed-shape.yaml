@@ -1,0 +1,40 @@
+asyncapi: 2.0.0
+info:
+  title: Test API
+  version: 1.0.0
+
+servers:
+  production:
+    url: kafka-server-binding
+    protocol: kafka
+    bindings:
+      kafka:
+        schemaRegistryUrl: https://my-schema-registry.com
+        schemaRegistryVendor: confluent
+        bindingVersion: 0.3.0
+        invalidKey: should throw error
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.3.0
+            invalidKey: should throw error
+            key:
+              type: string
+              enum:
+                - someKey
+      bindings:
+        kafka:
+          bindingVersion: 0.3.0
+          invalidKey: should throw error
+          groupId:
+            type: string
+            enum:
+              - myGroupId
+          clientId:
+            type: string
+            enum:
+              - myClientId

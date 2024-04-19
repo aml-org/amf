@@ -72,8 +72,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Async 2.1 all", "asyncApi-2.1-all.yaml", "asyncApi-2.1-all.%s"),
     FixtureData("Async 2.2 all", "asyncApi-2.2-all.yaml", "asyncApi-2.2-all.%s"),
     FixtureData("Async 2.3 all", "asyncApi-2.3-all.yaml", "asyncApi-2.3-all.%s"),
-    FixtureData("Async 2.4 all", "asyncApi-2.4-all.yaml", "asyncApi-2.4-all.%s"
-    ),
+    FixtureData("Async 2.4 all", "asyncApi-2.4-all.yaml", "asyncApi-2.4-all.%s"),
     FixtureData("Async 2.5 all", "asyncApi-2.5-all.yaml", "asyncApi-2.5-all.%s"),
     FixtureData("Async 2.6 all", "asyncApi-2.6-all.yaml", "asyncApi-2.6-all.%s")
   )
@@ -239,6 +238,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "Async 2.6 all",
       "asyncApi-2.6-all.yaml",
       "asyncApi-2.6-all.yaml"
+    ),
+    FixtureData(
+      "Kafka server binding",
+      "bindings/kafka-server-binding.yaml",
+      "bindings/kafka-server-binding.yaml"
     )
 
 // TODO: figure out why this test is commented out

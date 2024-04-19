@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
+Profile: 
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaServerBinding node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/server/kafka-server-binding/server-bindings/bindings/kafka-server
+  Property: 
+  Range: [(15,8)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaMessageBinding node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/kafka-message
+  Property: 
+  Range: [(24,12)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaOperationBinding node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/kafka-operation
+  Property: 
+  Range: [(32,10)-(33,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml

@@ -3,7 +3,11 @@ package amf.client.model.domain
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings.kafka.{
+  KafkaMessageBinding,
+  KafkaOperationBinding,
+  KafkaServerBinding
+}
 import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
   MqttMessageBinding,
   MqttOperationBinding,
@@ -207,6 +211,15 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
       .withGroupId(shape)
     binding.clientId._internal shouldBe shape._internal
     binding.groupId._internal shouldBe shape._internal
+  }
+
+  test("test KafkaServerBinding") {
+    val binding = new KafkaServerBinding()
+      .withBindingVersion(s)
+      .withSchemaRegistryUrl(s)
+      .withSchemaRegistryVendor(s)
+    binding.schemaRegistryUrl.value() shouldBe s
+    binding.schemaRegistryVendor.value() shouldBe s
   }
 
   test("test MessageBindings") {

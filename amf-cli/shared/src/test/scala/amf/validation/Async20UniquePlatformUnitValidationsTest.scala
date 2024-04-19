@@ -476,4 +476,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Kafka message key ref") {
     validate("kafka-binding-message-key-ref.yaml", Some("kafka-binding-message-key-ref.report"))
   }
+
+  test("Async Kafka binding closed shape validations") {
+    validate("kafka-binding-closed-shape.yaml", Some("kafka-binding-closed-shape.report"))
+  }
 }

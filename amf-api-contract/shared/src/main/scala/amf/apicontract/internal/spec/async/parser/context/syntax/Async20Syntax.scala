@@ -152,6 +152,11 @@ object Async20Syntax extends SpecSyntax {
       "clientId",
       "bindingVersion"
     ),
+    "kafkaServerBinding" -> Set(
+      "schemaRegistryUrl",
+      "schemaRegistryVendor",
+      "bindingVersion"
+    ),
     "message" -> Set(
       "headers",
       "payload",

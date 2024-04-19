@@ -6,6 +6,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.apicontract.internal.metamodel.domain.bindings.{
   IBMMQServerBindingModel,
+  KafkaServerBindingModel,
   MqttServerBindingModel,
   MqttServerLastWillModel,
   PulsarServerBindingModel,
@@ -13,6 +14,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.client.scala.model.domain.bindings.ServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQServerBinding
+import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
 import amf.apicontract.client.scala.model.domain.bindings.pulsar.PulsarServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding
@@ -36,6 +38,7 @@ class AsyncApiServerBindingsEmitter(binding: ServerBinding, ordering: SpecOrderi
     case binding: IBMMQServerBinding  => Some(new IBMMQServerBindingEmitter(binding, ordering))
     case binding: SolaceServerBinding => Some(new SolaceServerBindingEmitter(binding, ordering))
     case binding: PulsarServerBinding => Some(new PulsarServerBindingEmitter(binding, ordering))
+    case binding: KafkaServerBinding  => Some(new KafkaServerBindingEmitter(binding, ordering))
     case _                            => None
   }
 
@@ -150,6 +153,30 @@ class PulsarServerBindingEmitter(binding: PulsarServerBinding, ordering: SpecOrd
         fs.entry(PulsarServerBindingModel.Tenant).foreach { f =>
           if (!f.value.annotations.contains(classOf[SynthesizedField])) result += ValueEmitter("tenant", f)
         }
+
+        emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class KafkaServerBindingEmitter(binding: KafkaServerBinding, ordering: SpecOrdering)
+    extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(Kafka),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(KafkaServerBindingModel.SchemaRegistryUrl).foreach(f => result += ValueEmitter("schemaRegistryUrl", f))
+        fs.entry(KafkaServerBindingModel.SchemaRegistryVendor)
+          .foreach(f => result += ValueEmitter("schemaRegistryVendor", f))
 
         emitBindingVersion(fs, result)
 
