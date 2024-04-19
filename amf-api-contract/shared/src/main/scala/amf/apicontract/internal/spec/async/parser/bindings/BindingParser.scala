@@ -13,7 +13,7 @@ import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.RequiredField
-import org.yaml.model.{YMap, YMapEntry, YNode, YNodePlain, YScalar, YSequence}
+import org.yaml.model.{YMap, YMapEntry, YNode, YNodePlain, YPart, YScalar, YSequence}
 
 trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
@@ -57,6 +57,7 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       case ("Amqp091ChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
       case ("Amqp091OperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
       case ("Amqp091MessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
+      case("AnypointMQMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
     }
   }
 
@@ -73,11 +74,15 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
     binding.bindingVersion.isNullOrEmpty
   }
 
-  protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry)(implicit
+  protected def parseSchema(field: Field, binding: DomainElement, entry: YPart)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
+    val entryLike = entry match {
+      case map: YMapEntry => YMapEntryLike(map.value)
+      case node: YNode => YMapEntryLike(node)
+    }
     OasTypeParser(
-      YMapEntryLike(entry.value),
+      entryLike,
       "schema",
       shape => shape.withName("schema"),
       JSONSchemaDraft7SchemaVersion
@@ -97,4 +102,5 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
   ): Unit = {
     ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
   }
+
 }

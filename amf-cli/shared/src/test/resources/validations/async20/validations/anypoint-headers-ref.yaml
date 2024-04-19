@@ -1,0 +1,65 @@
+asyncapi: 2.2.0
+info:
+  title: Test AnypointMQ Bindings
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      anypointmq:
+        destination: user-signup-exchg
+        destinationType: exchange
+        bindingVersion: '0.1.0'
+    subscribe:
+      message:
+        name: name1
+        bindings:
+          anypointmq:
+            headers:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+            bindingVersion: '0.1.0'
+        payload:
+          type: string
+  another-channel:
+    bindings:
+      anypointmq:
+        destination: user-logout-exchg
+        destinationType: exchange
+        bindingVersion: '0.1.0'
+    subscribe:
+      message:
+        name: name2
+        bindings:
+          anypointmq:
+            headers:
+              $ref: '#/components/schemas/UserHeaders'
+            bindingVersion: '0.1.0'
+        payload:
+          type: string
+  the-third-channel:
+    bindings:
+      anypointmq:
+        destination: user-logout-exchg
+        destinationType: exchange
+        bindingVersion: '0.1.0'
+    subscribe:
+      message:
+        name: name3
+        bindings:
+          anypointmq:
+            headers:
+              $ref: '#/components/schemas/UserHeadersOne'
+            bindingVersion: '0.1.0'
+        payload:
+          type: string
+components:
+  schemas:
+    UserHeaders:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.
