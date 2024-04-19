@@ -770,7 +770,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                   )
               }
 
-            case elem =>
+            case elem if elem != null =>
               validate(
                 validationInfo(
                   AnypointMQMessageBindingModel.Headers,
@@ -778,6 +778,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                   elem.annotations
                 )
               )
+            case _ => // ignore
+
           }
         }
       },
