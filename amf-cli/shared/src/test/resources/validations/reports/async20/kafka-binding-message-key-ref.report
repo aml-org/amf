@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-message-key-ref.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference #/components/schemas/invalidRef
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-message-key-ref.yaml#/async-api/endpoint/the-third-channel/supportedOperation/publish/expects/request/message-bindings/bindings/kafka-message
+  Property: 
+  Range: [(33,12)-(36,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-message-key-ref.yaml

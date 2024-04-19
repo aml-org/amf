@@ -14,10 +14,10 @@ object KafkaOperationBindingParser extends BindingParser[KafkaOperationBinding] 
 
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: KafkaOperationBinding = bindingVersion match {
-      case "0.1.0" | "latest" => KafkaOperationBinding(Annotations(entry))
+      case "0.1.0" | "0.2.0" | "latest" => KafkaOperationBinding(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = KafkaOperationBinding(Annotations(entry))
-        invalidBindingVersion(defaultBinding, invalidVersion, "KafkaOperationBinding", warning = true)
+        invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Binding", warning = true)
         defaultBinding
     }
 

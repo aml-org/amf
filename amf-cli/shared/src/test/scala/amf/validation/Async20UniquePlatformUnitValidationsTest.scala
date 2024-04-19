@@ -7,7 +7,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   val asyncPath: String            = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
-  private val cyclePath: String = "file://amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
+  private val cyclePath: String    = "file://amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
 
   test("Required channel object") {
     validate("required-channels.yaml", Some("required-channels.report"))
@@ -471,5 +471,9 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Async Kafka wrong binding version") {
     validate("kafka-binding-wrong-binding-version.yaml", Some("kafka-binding-wrong-binding-version.report"))
+  }
+
+  test("Async Kafka message key ref") {
+    validate("kafka-binding-message-key-ref.yaml", Some("kafka-binding-message-key-ref.report"))
   }
 }
