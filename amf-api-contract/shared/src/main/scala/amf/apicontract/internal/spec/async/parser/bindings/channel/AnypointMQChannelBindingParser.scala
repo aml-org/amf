@@ -20,12 +20,7 @@ object AnypointMQChannelBindingParser extends BindingParser[AnypointMQChannelBin
       case "0.0.1"            => AnypointMQChannelBinding(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = AnypointMQChannelBinding(Annotations(entry))
-        ctx.violation(
-          UnsupportedBindingVersion,
-          "AnypointMQ",
-          s"Version $invalidVersion is not supported in an AnypointMQ",
-          entry.value.location
-        )
+        invalidBindingVersion(defaultBinding, invalidVersion, "AnypointMQ Binding")
         defaultBinding
     }
 
