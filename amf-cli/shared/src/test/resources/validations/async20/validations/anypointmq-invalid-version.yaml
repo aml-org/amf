@@ -1,0 +1,26 @@
+asyncapi: 2.2.0
+info:
+  title: Test AnypointMQ Bindings
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      anypointmq:
+        destination: user-signup-exchg
+        destinationType: exchange
+        bindingVersion: '0.2.0'
+    subscribe:
+      message:
+        name: name1
+        bindings:
+          anypointmq:
+            headers:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+            bindingVersion: '1.3.0'
+        payload:
+          type: string
+

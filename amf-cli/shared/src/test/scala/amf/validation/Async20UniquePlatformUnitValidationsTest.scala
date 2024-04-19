@@ -461,4 +461,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate(api = "asyncApi-2.6-all.yaml", directory = cyclePath)
   }
 
+  test("AnypointMQ headers ref") {
+    validate("anypoint-headers-ref.yaml", Some("anypoint-headers-ref.report"))
+  }
+
+  test("AnypointMQ invalid version") {
+    validate("anypointmq-invalid-version.yaml", Some("anypointmq-invalid-version.report"))
+  }
+
 }
