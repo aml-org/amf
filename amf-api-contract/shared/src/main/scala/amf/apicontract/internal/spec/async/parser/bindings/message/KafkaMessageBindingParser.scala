@@ -14,7 +14,7 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
 
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: KafkaMessageBinding = bindingVersion match {
-      case "0.1.0" | "0.2.0" | "latest" => KafkaMessageBinding(Annotations(entry))
+      case "0.1.0" | "0.2.0" | "0.3.0" | "latest" => KafkaMessageBinding(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = KafkaMessageBinding(Annotations(entry))
         invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Binding", warning = true)
