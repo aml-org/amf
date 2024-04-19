@@ -5,7 +5,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.AnypointMQMessageBindi
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.spec.OasDefinitions
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnsupportedBindingVersionWarning
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnsupportedBindingVersion
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
@@ -22,14 +22,14 @@ object AnypointMQMessageBindingParser extends BindingParser[AnypointMQMessageBin
       case "0.1.0" | "latest" => AnypointMQMessageBinding(Annotations(entry))
       case "0.0.1"            => AnypointMQMessageBinding(Annotations(entry))
       case invalidVersion =>
-        ctx.eh.warning(
-          UnsupportedBindingVersionWarning,
-          AnypointMQMessageBinding(Annotations(entry)),
-          Some("bindingVersion"),
+        val defaultBinding = AnypointMQMessageBinding(Annotations(entry))
+        ctx.violation(
+          UnsupportedBindingVersion,
+          "AnypointMQ",
           s"Version $invalidVersion is not supported in an AnypointMQ",
           entry.value.location
         )
-        AnypointMQMessageBinding(Annotations(entry))
+        defaultBinding
     }
 
     map.key("headers").foreach { entry =>
@@ -56,7 +56,9 @@ object AnypointMQMessageBindingParser extends BindingParser[AnypointMQMessageBin
       }
   }
 
-  private def remote(fullRef: String, entry: YMapEntry, field: Field, binding: DomainElement)(implicit ctx: AsyncWebApiContext): Unit = {
+  private def remote(fullRef: String, entry: YMapEntry, field: Field, binding: DomainElement)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     ctx.navigateToRemoteYNode(fullRef) match {
       case Some(remoteResult) =>
         parseSchema(field, binding, remoteResult.remoteNode)
