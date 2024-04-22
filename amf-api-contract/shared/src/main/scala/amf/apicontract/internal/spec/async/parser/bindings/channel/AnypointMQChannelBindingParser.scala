@@ -4,7 +4,6 @@ import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQC
 import amf.apicontract.internal.metamodel.domain.bindings.AnypointMQChannelBindingModel
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnsupportedBindingVersion
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations

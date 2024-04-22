@@ -86,10 +86,11 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
         obj.annotations.sourceLocation
       )
     } else {
-      ctx.violation(
+      ctx.eh.violation(
         UnsupportedBindingVersion,
         obj,
-        s"Version $version is not supported in a $binding"
+        s"Version $version is not supported in a $binding",
+        obj.annotations.sourceLocation
       )
     }
   }
