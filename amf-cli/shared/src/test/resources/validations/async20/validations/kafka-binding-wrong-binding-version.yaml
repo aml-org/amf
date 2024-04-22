@@ -3,6 +3,16 @@ info:
   title: test API
   version: '1.0.0'
 
+servers:
+  production:
+    url: kafka-server-binding
+    protocol: kafka
+    bindings:
+      kafka:
+        schemaRegistryUrl: https://my-schema-registry.com
+        schemaRegistryVendor: confluent
+        bindingVersion: 0.1.0 # invalid version, kafka server binding added on 0.3.0 onwards
+
 channels:
   some-channel:
     publish:

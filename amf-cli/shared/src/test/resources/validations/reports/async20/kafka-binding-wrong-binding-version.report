@@ -1,16 +1,24 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml
 Profile: ASYNC 2.0
 Conforms: true
-Number of results: 2
+Number of results: 3
 
 Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
+  Message: Version 0.1.0 is not supported in a Kafka Server Binding
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml#/async-api/server/kafka-server-binding/server-bindings/bindings/kafka-server
+  Property: bindingVersion
+  Range: [(11,6)-(16,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
   Message: Version 9.9.9 is not supported in a Kafka Binding
   Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/kafka-message
   Property: bindingVersion
-  Range: [(11,10)-(17,0)]
+  Range: [(21,10)-(27,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
@@ -18,5 +26,5 @@ Level: Warning
   Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/kafka-operation
   Property: bindingVersion
-  Range: [(18,8)-(28,0)]
+  Range: [(28,8)-(38,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-wrong-binding-version.yaml

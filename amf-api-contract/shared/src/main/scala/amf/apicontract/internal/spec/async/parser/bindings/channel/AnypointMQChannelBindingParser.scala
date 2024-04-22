@@ -12,7 +12,7 @@ import org.yaml.model.{YMap, YMapEntry}
 object AnypointMQChannelBindingParser extends BindingParser[AnypointMQChannelBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): AnypointMQChannelBinding = {
     val map            = entry.value.as[YMap]
-    val bindingVersion = getBindingVersion(entry.value.as[YMap], "AnypointMQMessageBinding", ctx.specSettings.spec)
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "AnypointMQChannelBinding", ctx.specSettings.spec)
 
     val binding: AnypointMQChannelBinding = bindingVersion match {
       case "0.1.0" | "latest" => AnypointMQChannelBinding(Annotations(entry))

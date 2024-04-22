@@ -12,12 +12,12 @@ object KafkaServerBindingParser extends BindingParser[KafkaServerBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): KafkaServerBinding = {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "KafkaServerBinding", ctx.specSettings.spec)
 
-    // bindingVersion is either well defined or defaults to 0.1.0
+    // bindingVersion is either well defined or defaults to 0.3.0
     val binding: KafkaServerBinding = bindingVersion match {
-      case "0.1.0" | "0.2.0" | "0.3.0" | "latest" => KafkaServerBinding(Annotations(entry))
-      case invalidVersion =>
+      case "0.3.0" | "latest" => KafkaServerBinding(Annotations(entry))
+      case invalidVersion => // "0.1.0" | "0.2.0" don't parse because kafka server binding wasn't defined until 0.3.0
         val defaultBinding = KafkaServerBinding(Annotations(entry))
-        invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Binding", warning = true)
+        invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Server Binding", warning = true)
         defaultBinding
     }
 

@@ -69,8 +69,8 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       case ("KafkaOperationBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)              => "0.3.0"
       case ("KafkaMessageBinding", ASYNC20)                                                                  => "0.1.0"
       case ("KafkaMessageBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)                => "0.3.0"
-      case ("KafkaServerBinding", ASYNC20)                                                                   => "0.1.0"
-      case ("KafkaServerBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)                 => "0.3.0"
+      // defined in 0.3.0 onwards
+      case ("KafkaServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
     }
   }
 
