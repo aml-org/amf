@@ -273,6 +273,9 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(KafkaServerBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaServerBinding => KafkaServerBinding(s)
     }
+    platform.registerWrapper(KafkaChannelBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaChannelBinding => KafkaChannelBinding(s)
+    }
     platform.registerWrapper(MqttMessageBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding => MqttMessageBinding(s)
     }

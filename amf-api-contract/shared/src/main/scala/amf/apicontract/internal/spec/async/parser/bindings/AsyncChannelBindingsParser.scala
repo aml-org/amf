@@ -7,6 +7,7 @@ import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{
   AnypointMQ,
   GooglePubSub,
   IBMMQ,
+  Kafka,
   Pulsar,
   WebSockets
 }
@@ -26,7 +27,8 @@ object AsyncChannelBindingsParser {
     IBMMQ        -> IBMMQChannelBindingParser,
     AnypointMQ   -> AnypointMQChannelBindingParser,
     Pulsar       -> PulsarChannelBindingParser,
-    GooglePubSub -> GooglePubSubChannelBindingParser
+    GooglePubSub -> GooglePubSubChannelBindingParser,
+    Kafka        -> KafkaChannelBindingParser
   )
 }
 

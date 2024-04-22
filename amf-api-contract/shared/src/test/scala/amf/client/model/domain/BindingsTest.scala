@@ -2,19 +2,10 @@ package amf.client.model.domain
 
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
-import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.kafka.{
-  KafkaMessageBinding,
-  KafkaOperationBinding,
-  KafkaServerBinding
-}
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill
-}
-import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
+import amf.apicontract.client.platform.model.domain.bindings.http._
+import amf.apicontract.client.platform.model.domain.bindings.kafka._
+import amf.apicontract.client.platform.model.domain.bindings.mqtt._
+import amf.apicontract.client.platform.model.domain.bindings.websockets._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.AnyShape
@@ -220,6 +211,17 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
       .withSchemaRegistryVendor(s)
     binding.schemaRegistryUrl.value() shouldBe s
     binding.schemaRegistryVendor.value() shouldBe s
+  }
+
+  test("test KafkaChannelBinding") {
+    val binding = new KafkaChannelBinding()
+      .withBindingVersion(s)
+      .withTopic(s)
+      .withPartitions(123)
+      .withReplicas(123)
+    binding.topic.value() shouldBe s
+    binding.partitions.value() shouldBe 123
+    binding.replicas.value() shouldBe 123
   }
 
   test("test MessageBindings") {

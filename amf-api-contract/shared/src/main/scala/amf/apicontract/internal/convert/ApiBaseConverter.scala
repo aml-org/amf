@@ -71,6 +71,7 @@ trait ApiBaseConverter
     with KafkaMessageBindingConverter
     with KafkaOperationBindingConverter
     with KafkaServerBindingConverter
+    with KafkaChannelBindingConverter
     with MqttMessageBindingConverter
     with MqttOperationBindingConverter
     with MqttServerBindingConverter
@@ -282,6 +283,14 @@ trait KafkaServerBindingConverter extends PlatformSecrets {
     override def asClient(from: KafkaServerBinding): domain.bindings.kafka.KafkaServerBinding =
       platform.wrap[domain.bindings.kafka.KafkaServerBinding](from)
     override def asInternal(from: domain.bindings.kafka.KafkaServerBinding): KafkaServerBinding = from._internal
+  }
+}
+trait KafkaChannelBindingConverter extends PlatformSecrets {
+  implicit object KafkaChannelBindingMatcher
+      extends BidirectionalMatcher[KafkaChannelBinding, domain.bindings.kafka.KafkaChannelBinding] {
+    override def asClient(from: KafkaChannelBinding): domain.bindings.kafka.KafkaChannelBinding =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding): KafkaChannelBinding = from._internal
   }
 }
 trait MqttMessageBindingConverter extends PlatformSecrets {

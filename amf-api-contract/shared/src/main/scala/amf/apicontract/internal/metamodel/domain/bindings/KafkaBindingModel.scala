@@ -1,15 +1,11 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.kafka.{
-  KafkaMessageBinding,
-  KafkaOperationBinding,
-  KafkaServerBinding
-}
+import amf.apicontract.client.scala.model.domain.bindings.kafka._
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.Type.{Int, Str}
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
@@ -61,6 +57,7 @@ object KafkaMessageBindingModel extends MessageBindingModel with BindingVersion 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaMessageBinding")
 }
 
+// added in binding version 0.3.0
 object KafkaServerBindingModel extends ServerBindingModel with BindingVersion {
   val SchemaRegistryUrl: Field =
     Field(
@@ -95,4 +92,53 @@ object KafkaServerBindingModel extends ServerBindingModel with BindingVersion {
   override val key: Field = Type
 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaServerBinding")
+}
+
+// added in binding version 0.3.0
+object KafkaChannelBindingModel extends ChannelBindingModel with BindingVersion {
+  val Topic: Field =
+    Field(
+      Str,
+      ApiBinding + "topic",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "topic",
+        "Kafka topic name if different from channel name."
+      )
+    )
+
+  // TODO: must be a positive number
+  val Partitions: Field =
+    Field(
+      Int,
+      ApiBinding + "partitions",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "partitions",
+        "Number of partitions configured on this topic."
+      )
+    )
+
+  // TODO: must be a positive number
+  val Replicas: Field =
+    Field(
+      Int,
+      ApiBinding + "replicas",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "replicas",
+        "Number of replicas configured on this topic."
+      )
+    )
+
+  override def modelInstance: AmfObject = KafkaChannelBinding()
+
+  override def fields: List[Field] =
+    List(Topic, Partitions, Replicas, BindingVersion) ++ ChannelBindingModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "KafkaChannelBinding" :: ChannelBindingModel.`type`
+
+  override val key: Field = Type
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaChannelBinding")
 }

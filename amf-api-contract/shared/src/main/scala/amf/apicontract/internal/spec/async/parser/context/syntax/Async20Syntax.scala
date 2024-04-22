@@ -157,6 +157,12 @@ object Async20Syntax extends SpecSyntax {
       "schemaRegistryVendor",
       "bindingVersion"
     ),
+    "kafkaChannelBinding" -> Set(
+      "topic",
+      "partitions",
+      "replicas",
+      "bindingVersion"
+    ),
     "message" -> Set(
       "headers",
       "payload",
