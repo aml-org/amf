@@ -15,7 +15,7 @@ object KafkaChannelBindingParser extends BindingParser[KafkaChannelBinding] {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "KafkaChannelBinding", ctx.specSettings.spec)
 
     val binding: KafkaChannelBinding = bindingVersion match {
-      case "0.3.0" | "latest" => KafkaChannelBinding(Annotations(entry))
+      case "0.3.0" | "0.4.0" | "latest" => KafkaChannelBinding(Annotations(entry))
       case invalidVersion => // "0.1.0" | "0.2.0" don't parse because kafka channel binding wasn't defined until 0.3.0
         val defaultBinding = KafkaChannelBinding(Annotations(entry))
         invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Channel Binding")

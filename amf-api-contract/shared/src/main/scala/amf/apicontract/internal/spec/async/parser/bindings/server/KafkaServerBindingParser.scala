@@ -14,10 +14,10 @@ object KafkaServerBindingParser extends BindingParser[KafkaServerBinding] {
 
     // bindingVersion is either well defined or defaults to 0.3.0
     val binding: KafkaServerBinding = bindingVersion match {
-      case "0.3.0" | "latest" => KafkaServerBinding(Annotations(entry))
+      case "0.3.0" | "0.4.0" | "latest" => KafkaServerBinding(Annotations(entry))
       case invalidVersion => // "0.1.0" | "0.2.0" don't parse because kafka server binding wasn't defined until 0.3.0
         val defaultBinding = KafkaServerBinding(Annotations(entry))
-        invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Server Binding", warning = true)
+        invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Server Binding")
         defaultBinding
     }
 

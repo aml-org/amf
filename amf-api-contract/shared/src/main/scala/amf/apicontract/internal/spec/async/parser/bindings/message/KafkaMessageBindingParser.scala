@@ -17,10 +17,10 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): KafkaMessageBinding = {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "KafkaMessageBinding", ctx.specSettings.spec)
 
-    // bindingVersion is either well defined or defaults to 0.1.0
+    // bindingVersion is either well defined or defaults to 0.1.0 in 2.0 or 0.3.0 in async 2.1+
     val binding: KafkaMessageBinding = bindingVersion match {
-      case "0.3.0" | "latest" => KafkaMessageBinding010(Annotations(entry))
-      case "0.1.0" | "0.2.0"  => KafkaMessageBinding010(Annotations(entry))
+      case "0.3.0" | "0.4.0" | "latest" => KafkaMessageBinding030(Annotations(entry))
+      case "0.1.0" | "0.2.0"            => KafkaMessageBinding010(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = ctx.specSettings.spec match {
           case ASYNC20 => KafkaMessageBinding010(Annotations(entry))
@@ -33,7 +33,7 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
     val map = entry.value.as[YMap]
 
     bindingVersion match {
-      case "0.2.0" | "0.3.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
+      case "0.2.0" | "0.3.0" | "0.4.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
         map.key("key").foreach { entry =>
           ctx.link(entry.value) match {
             case Left(fullRef) => handleRef(fullRef, "schemas", entry, KafkaMessageBindingModel.MessageKey, binding)
@@ -45,7 +45,7 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
     }
 
     bindingVersion match {
-      case "0.3.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
+      case "0.3.0" | "0.4.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
         map.key("schemaIdLocation", KafkaMessageBinding030Model.SchemaIdLocation in binding)
         map.key("schemaIdPayloadEncoding", KafkaMessageBinding030Model.SchemaIdPayloadEncoding in binding)
         map.key("schemaLookupStrategy", KafkaMessageBinding030Model.SchemaLookupStrategy in binding)
