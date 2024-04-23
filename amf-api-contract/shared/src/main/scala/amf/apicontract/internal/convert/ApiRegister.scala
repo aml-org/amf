@@ -264,8 +264,13 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(HttpOperationBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding => HttpOperationBinding(s)
     }
-    platform.registerWrapper(KafkaMessageBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding => KafkaMessageBinding(s)
+    platform.registerWrapper(KafkaMessageBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding010 =>
+        KafkaMessageBinding010(s)
+    }
+    platform.registerWrapper(KafkaMessageBinding030Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding030 =>
+        KafkaMessageBinding030(s)
     }
     platform.registerWrapper(KafkaOperationBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding => KafkaOperationBinding(s)

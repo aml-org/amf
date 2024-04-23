@@ -1226,7 +1226,7 @@
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1757,20 +1757,20 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding",
+        "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding010",
         "http://a.ml/vocabularies/apiBinding#MessageBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiBinding#messageKey": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
       "http://a.ml/vocabularies/apiBinding#type": "kafka",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map"
         }
       ]
     },
@@ -2494,7 +2494,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2510,29 +2510,29 @@
       "http://www.w3.org/ns/shacl#name": "schema",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/lexical/element_1"
         }
       ]
     },
@@ -3135,42 +3135,42 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(72,6)-(74,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageKey",
       "http://a.ml/vocabularies/document-source-maps#value": "[(75,8)-(77,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(74,6)-(74,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(74,6)-(77,0)]"
     },
     {
@@ -3534,17 +3534,17 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,8)-(6,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(76,10)-(76,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(75,12)-(77,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message/scalar/schema/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010/scalar/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(76,10)-(77,0)]"
     },

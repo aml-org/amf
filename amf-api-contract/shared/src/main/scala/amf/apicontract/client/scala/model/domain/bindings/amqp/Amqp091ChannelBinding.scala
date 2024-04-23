@@ -70,8 +70,6 @@ class Amqp091ChannelBinding010(override val fields: Fields, override val annotat
 
   override def componentId: String = "/amqp091-channel-010"
 
-  override def key: StrField = fields.field(Amqp010Model.key)
-
   override def exchange: Amqp091ChannelExchange010                 = fields.field(Amqp010Model.Exchange)
   override def queue: Amqp091Queue010                              = fields.field(Amqp010Model.Queue)
   def withExchange(exchange: Amqp091ChannelExchange010): this.type = set(Amqp010Model.Exchange, exchange)
@@ -129,8 +127,6 @@ class Amqp091ChannelBinding020(override val fields: Fields, override val annotat
   override def meta: Amqp020Model.type = Amqp020Model
 
   override def componentId: String = "/amqp091-channel-020"
-
-  override def key: StrField = fields.field(Amqp020Model.key)
 
   override def exchange: Amqp091ChannelExchange020                 = fields.field(Amqp020Model.Exchange)
   override def queue: Amqp091Queue020                              = fields.field(Amqp020Model.Queue)

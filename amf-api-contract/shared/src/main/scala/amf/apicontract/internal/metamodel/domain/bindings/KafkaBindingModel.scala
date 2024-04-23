@@ -38,15 +38,13 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaOperationBinding")
 }
 
-object KafkaMessageBindingModel extends MessageBindingModel with BindingVersion {
+trait KafkaMessageBindingModel extends MessageBindingModel with BindingVersion {
   val MessageKey: Field =
     Field(
       ShapeModel,
       ApiBinding + "messageKey",
       ModelDoc(ModelVocabularies.ApiBinding, "key", "Schema that defines the message key")
     )
-
-  override def modelInstance: AmfObject = KafkaMessageBinding()
 
   override def fields: List[Field] = List(MessageKey, BindingVersion) ++ MessageBindingModel.fields
 
@@ -55,6 +53,65 @@ object KafkaMessageBindingModel extends MessageBindingModel with BindingVersion 
   override val key: Field = Type
 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaMessageBinding")
+}
+
+object KafkaMessageBindingModel extends KafkaMessageBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("KafkaMessageBindingModel is an abstract class")
+}
+
+object KafkaMessageBinding010Model extends KafkaMessageBindingModel {
+  override def modelInstance: AmfObject = KafkaMessageBinding010()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaMessageBinding010" :: MessageBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaMessageBinding010")
+}
+
+object KafkaMessageBinding030Model extends KafkaMessageBindingModel {
+  val SchemaIdLocation: Field =
+    Field(
+      Str,
+      ApiBinding + "schemaIdLocation",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "schemaIdLocation",
+        "If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. header or payload)."
+      )
+    )
+
+  val SchemaIdPayloadEncoding: Field =
+    Field(
+      Str,
+      ApiBinding + "schemaIdPayloadEncoding",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "schemaIdPayloadEncoding",
+        "Number of bytes or vendor specific values when schema id is encoded in payload (e.g confluent/ apicurio-legacy / apicurio-new)."
+      )
+    )
+
+  val SchemaLookupStrategy: Field =
+    Field(
+      Str,
+      ApiBinding + "schemaLookupStrategy",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "schemaLookupStrategy",
+        "Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied."
+      )
+    )
+
+  override def modelInstance: AmfObject = KafkaMessageBinding030()
+
+  override def fields: List[Field] = List(
+    MessageKey,
+    SchemaIdLocation,
+    SchemaIdPayloadEncoding,
+    SchemaLookupStrategy,
+    BindingVersion
+  ) ++ MessageBindingModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "KafkaMessageBinding030" :: MessageBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaMessageBinding030")
 }
 
 // added in binding version 0.3.0

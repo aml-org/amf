@@ -69,6 +69,8 @@ trait ApiBaseConverter
     with HttpMessageBindingConverter
     with HttpOperationBindingConverter
     with KafkaMessageBindingConverter
+    with KafkaMessageBinding010Converter
+    with KafkaMessageBinding030Converter
     with KafkaOperationBindingConverter
     with KafkaServerBindingConverter
     with KafkaChannelBindingConverter
@@ -267,6 +269,22 @@ trait KafkaMessageBindingConverter extends PlatformSecrets {
     override def asClient(from: KafkaMessageBinding): domain.bindings.kafka.KafkaMessageBinding =
       platform.wrap[domain.bindings.kafka.KafkaMessageBinding](from)
     override def asInternal(from: domain.bindings.kafka.KafkaMessageBinding): KafkaMessageBinding = from._internal
+  }
+}
+trait KafkaMessageBinding010Converter extends PlatformSecrets {
+  implicit object KafkaMessageBinding010Matcher
+      extends BidirectionalMatcher[KafkaMessageBinding010, domain.bindings.kafka.KafkaMessageBinding010] {
+    override def asClient(from: KafkaMessageBinding010): domain.bindings.kafka.KafkaMessageBinding010 =
+      platform.wrap[domain.bindings.kafka.KafkaMessageBinding010](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaMessageBinding010): KafkaMessageBinding010 = from._internal
+  }
+}
+trait KafkaMessageBinding030Converter extends PlatformSecrets {
+  implicit object KafkaMessageBinding030Matcher
+      extends BidirectionalMatcher[KafkaMessageBinding030, domain.bindings.kafka.KafkaMessageBinding030] {
+    override def asClient(from: KafkaMessageBinding030): domain.bindings.kafka.KafkaMessageBinding030 =
+      platform.wrap[domain.bindings.kafka.KafkaMessageBinding030](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaMessageBinding030): KafkaMessageBinding030 = from._internal
   }
 }
 trait KafkaOperationBindingConverter extends PlatformSecrets {

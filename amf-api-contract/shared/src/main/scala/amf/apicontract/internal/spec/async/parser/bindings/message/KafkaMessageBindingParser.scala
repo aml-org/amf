@@ -1,11 +1,16 @@
 package amf.apicontract.internal.spec.async.parser.bindings.message
 
-import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding
-import amf.apicontract.internal.metamodel.domain.bindings.KafkaMessageBindingModel
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{
+  KafkaMessageBinding,
+  KafkaMessageBinding010,
+  KafkaMessageBinding030
+}
+import amf.apicontract.internal.metamodel.domain.bindings.{KafkaMessageBinding030Model, KafkaMessageBindingModel}
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Spec.ASYNC20
 import org.yaml.model.{YMap, YMapEntry}
 
 object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
@@ -14,9 +19,13 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
 
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: KafkaMessageBinding = bindingVersion match {
-      case "0.1.0" | "0.2.0" | "0.3.0" | "latest" => KafkaMessageBinding(Annotations(entry))
+      case "0.3.0" | "latest" => KafkaMessageBinding010(Annotations(entry))
+      case "0.1.0" | "0.2.0"  => KafkaMessageBinding010(Annotations(entry))
       case invalidVersion =>
-        val defaultBinding = KafkaMessageBinding(Annotations(entry))
+        val defaultBinding = ctx.specSettings.spec match {
+          case ASYNC20 => KafkaMessageBinding010(Annotations(entry))
+          case _       => KafkaMessageBinding030(Annotations(entry))
+        }
         invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Binding", warning = true)
         defaultBinding
     }
@@ -24,7 +33,7 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
     val map = entry.value.as[YMap]
 
     bindingVersion match {
-      case "0.2.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
+      case "0.2.0" | "0.3.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
         map.key("key").foreach { entry =>
           ctx.link(entry.value) match {
             case Left(fullRef) => handleRef(fullRef, "schemas", entry, KafkaMessageBindingModel.MessageKey, binding)
@@ -35,9 +44,17 @@ object KafkaMessageBindingParser extends BindingParser[KafkaMessageBinding] {
         map.key("key", entry => parseSchema(KafkaMessageBindingModel.MessageKey, binding, entry))
     }
 
-    parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
+    bindingVersion match {
+      case "0.3.0" | "latest" => // 0.2.0 onwards support references to schemas in the key field
+        map.key("schemaIdLocation", KafkaMessageBinding030Model.SchemaIdLocation in binding)
+        map.key("schemaIdPayloadEncoding", KafkaMessageBinding030Model.SchemaIdPayloadEncoding in binding)
+        map.key("schemaLookupStrategy", KafkaMessageBinding030Model.SchemaLookupStrategy in binding)
+        ctx.closedShape(binding, map, "kafkaMessageBinding030")
+      case _ =>
+        ctx.closedShape(binding, map, "kafkaMessageBinding010")
+    }
 
-    ctx.closedShape(binding, map, "kafkaMessageBinding")
+    parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
 
     binding
   }

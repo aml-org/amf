@@ -189,10 +189,22 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test KafkaMessageBinding") {
-    val binding = new KafkaMessageBinding()
+    val binding010 = new KafkaMessageBinding010()
       .withBindingVersion(s)
       .withKey(shape)
-    binding.messageKey._internal shouldBe shape._internal
+
+    val binding030 = new KafkaMessageBinding030()
+      .withBindingVersion(s)
+      .withKey(shape)
+      .withSchemaIdLocation(s)
+      .withSchemaIdPayloadEncoding(s)
+      .withSchemaLookupStrategy(s)
+
+    binding010.messageKey._internal shouldBe shape._internal
+    binding030.messageKey._internal shouldBe shape._internal
+    binding030.schemaIdLocation.value() shouldBe s
+    binding030.schemaIdPayloadEncoding.value() shouldBe s
+    binding030.schemaLookupStrategy.value() shouldBe s
   }
 
   test("test KafkaOperationBinding") {

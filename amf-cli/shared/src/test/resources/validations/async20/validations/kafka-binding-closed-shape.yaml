@@ -27,7 +27,7 @@ channels:
       message:
         bindings:
           kafka:
-            bindingVersion: 0.3.0
+            bindingVersion: 0.1.0
             invalidKey: should throw error
             key:
               type: string
@@ -45,3 +45,18 @@ channels:
             type: string
             enum:
               - myClientId
+
+  other-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.3.0
+            key:
+              type: string
+              enum:
+                - someKey
+            schemaIdLocation: test string
+            schemaIdPayloadEncoding: test string
+            schemaLookupStrategy: test string
+            invalidKey: should throw error

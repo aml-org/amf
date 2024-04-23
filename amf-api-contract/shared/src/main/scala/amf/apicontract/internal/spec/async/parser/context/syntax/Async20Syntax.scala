@@ -143,8 +143,15 @@ object Async20Syntax extends SpecSyntax {
       "headers",
       "bindingVersion"
     ),
-    "kafkaMessageBinding" -> Set(
+    "kafkaMessageBinding010" -> Set(
       "key",
+      "bindingVersion"
+    ),
+    "kafkaMessageBinding030" -> Set(
+      "key",
+      "schemaIdLocation",
+      "schemaIdPayloadEncoding",
+      "schemaLookupStrategy",
       "bindingVersion"
     ),
     "kafkaOperationBinding" -> Set(
