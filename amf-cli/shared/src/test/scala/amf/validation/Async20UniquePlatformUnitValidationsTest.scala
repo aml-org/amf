@@ -480,4 +480,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Kafka binding closed shape validations") {
     validate("kafka-binding-closed-shape.yaml", Some("kafka-binding-closed-shape.report"))
   }
+
+  test("Async Kafka channel binding validations") {
+    validate("kafka-channel-binding-validations.yaml", Some("kafka-channel-binding-validations.report"))
+  }
 }

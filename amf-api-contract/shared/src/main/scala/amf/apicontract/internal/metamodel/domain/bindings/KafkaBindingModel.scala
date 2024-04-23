@@ -107,7 +107,6 @@ object KafkaChannelBindingModel extends ChannelBindingModel with BindingVersion 
       )
     )
 
-  // TODO: must be a positive number
   val Partitions: Field =
     Field(
       Int,
@@ -119,7 +118,6 @@ object KafkaChannelBindingModel extends ChannelBindingModel with BindingVersion 
       )
     )
 
-  // TODO: must be a positive number
   val Replicas: Field =
     Field(
       Int,
