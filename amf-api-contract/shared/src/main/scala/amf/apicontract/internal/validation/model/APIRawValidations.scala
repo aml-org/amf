@@ -1186,7 +1186,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "48"
       ),
       AMFValidation(
-        message = "'queue' and 'topic' fields MUST NOT coexist within an IBMMQ channel binding",
         owlClass = apiBinding("IBMMQChannelBinding"),
         owlProperty = apiBinding("queue"),
         constraint = shape("IBMMQDestinationValidation")
@@ -1206,7 +1205,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "48"
       ),
       AMFValidation(
-        message = "IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)",
         owlClass = apiBinding("IBMMQChannelBinding"),
         owlProperty = apiBinding("maxMsgLength"),
         constraint = shape("IBMMQMaxMsgLengthValidation")
@@ -1225,7 +1223,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("minInclusive")
       ),
       AMFValidation(
-        message = "IBMMQ message Binding 'headers' MUST NOT be specified if 'type' field is 'string' or 'jms'",
         owlClass = apiBinding("IBMMQMessageBinding"),
         owlProperty = apiBinding("headers"),
         constraint = shape("IBMMQHeadersValidation")
@@ -1253,6 +1250,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiBinding("KafkaChannelBinding040"),
         owlProperty = apiBinding("replicas"),
         constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        owlClass = apiBinding("KafkaChannelBinding040"),
+        owlProperty = apiBinding("replicas"),
+        constraint = shape("KafkaTopicConfigurationValidations")
       )
     ) ++ baseApiValidations("AsyncAPI")
 

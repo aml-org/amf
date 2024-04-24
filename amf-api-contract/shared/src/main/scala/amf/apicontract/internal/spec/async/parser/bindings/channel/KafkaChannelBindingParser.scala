@@ -13,6 +13,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YMap, YMapEntry}
@@ -57,12 +58,33 @@ object KafkaChannelBindingParser extends BindingParser[KafkaChannelBinding] {
         val topicConf    = KafkaTopicConfiguration(Annotations(entry.value))
         val topicConfMap = entry.value.as[YMap]
 
-        // TODO: apply default values and constraints
-        topicConfMap.key("cleanup.policy", KafkaTopicConfigurationModel.CleanupPolicy in topicConf)
-        topicConfMap.key("retention.ms", KafkaTopicConfigurationModel.RetentionMs in topicConf)
-        topicConfMap.key("retention.bytes", KafkaTopicConfigurationModel.RetentionBytes in topicConf)
-        topicConfMap.key("delete.retention.ms", KafkaTopicConfigurationModel.DeleteRetentionMs in topicConf)
-        topicConfMap.key("max.message.bytes", KafkaTopicConfigurationModel.MaxMessageBytes in topicConf)
+        topicConfMap.key("cleanup.policy") match {
+          case Some(value) => Some(value).foreach(KafkaTopicConfigurationModel.CleanupPolicy in topicConf)
+          case None =>
+            setDefaultValue(
+              topicConf,
+              KafkaTopicConfigurationModel.CleanupPolicy,
+              AmfArray(Seq(AmfScalar("delete")))
+            )
+        }
+        topicConfMap.key("retention.ms") match {
+          case Some(value) => Some(value).foreach(KafkaTopicConfigurationModel.RetentionMs in topicConf)
+          case None =>
+            setDefaultValue(topicConf, KafkaTopicConfigurationModel.RetentionMs, AmfScalar(604800000)) // 7 days
+        }
+        topicConfMap.key("retention.bytes") match {
+          case Some(value) => Some(value).foreach(KafkaTopicConfigurationModel.RetentionBytes in topicConf)
+          case None        => setDefaultValue(topicConf, KafkaTopicConfigurationModel.RetentionBytes, AmfScalar(-1))
+        }
+        topicConfMap.key("delete.retention.ms") match {
+          case Some(value) => Some(value).foreach(KafkaTopicConfigurationModel.DeleteRetentionMs in topicConf)
+          case None =>
+            setDefaultValue(topicConf, KafkaTopicConfigurationModel.DeleteRetentionMs, AmfScalar(86400000)) // 1  day
+        }
+        topicConfMap.key("max.message.bytes") match {
+          case Some(value) => Some(value).foreach(KafkaTopicConfigurationModel.MaxMessageBytes in topicConf)
+          case None => setDefaultValue(topicConf, KafkaTopicConfigurationModel.MaxMessageBytes, AmfScalar(1048588))
+        }
 
         ctx.closedShape(topicConf, topicConfMap, "kafkaTopicConfiguration")
 

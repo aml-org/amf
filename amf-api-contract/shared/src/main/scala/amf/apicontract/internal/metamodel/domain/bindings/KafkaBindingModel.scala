@@ -224,13 +224,11 @@ object KafkaChannelBinding040Model extends KafkaChannelBindingModel {
     List(Topic, Partitions, Replicas, TopicConfiguration, BindingVersion) ++ ChannelBindingModel.fields
 }
 
-// TODO: apply default values and constraints to each field (https://github.com/asyncapi/bindings/tree/master/kafka#topicconfiguration-object)
 object KafkaTopicConfigurationModel extends DomainElementModel {
   override def modelInstance: AmfObject = KafkaTopicConfiguration()
   override val `type`: List[ValueType]  = ApiBinding + "KafkaTopicConfiguration" :: DomainElementModel.`type`
   override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaTopicConfiguration")
 
-  // TODO: array may only contain `delete` and/or `compact`
   val CleanupPolicy: Field = Field(
     Array(Str),
     ApiBinding + "cleanup.policy",
