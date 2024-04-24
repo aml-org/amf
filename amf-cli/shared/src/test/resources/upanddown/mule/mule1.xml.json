@@ -1,0 +1,2976 @@
+{
+"@graph": [
+{
+"@id": "http://a.ml/amf/default_document#/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#BaseUnitProcessingData"
+],
+"http://a.ml/vocabularies/document#transformed": false
+},
+{
+"@id": "http://a.ml/amf/default_document#/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#Mule",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/2001/XMLSchema-instance#schemaLocation": [
+"http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd"
+],
+"http://www.mulesoft.org/schema/mule/http#listener-config": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#config": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_1/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/api-gateway#autodiscovery": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_4/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/core#flow": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#ListenerConfig",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#name": [
+"testmk-httpListenerConfig"
+],
+"http://www.mulesoft.org/schema/mule/http#listener-connection": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/_10/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_1/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/mule-apikit#Config",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#httpStatusVarName": [
+"httpStatus"
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#name": [
+"testmk-config"
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#outboundHeadersMapName": [
+"outboundHeaders"
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#api": [
+"resource::bbc3db14-0d68-4655-a589-e22dca780777:testmk:1.0.0:oas:zip:testmk.yaml"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_1/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_4/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/api-gateway#Autodiscovery",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/api-gateway#flowRef": [
+"testmk-main"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"API Autodiscovery"
+],
+"http://www.mulesoft.org/schema/mule/api-gateway#ignoreBasePath": [
+"true"
+],
+"http://www.mulesoft.org/schema/mule/api-gateway#apiId": [
+"19171624"
+],
+"http://www.mulesoft.org/schema/mule/documentation#id": [
+"2a8af3c7-6f00-4ad8-92e2-2f26d467019b"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_4/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#Flow",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#name": [
+"testmk-main"
+],
+"http://www.mulesoft.org/schema/mule/http#listener": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#router": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_12/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/core#error-handler": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#Flow",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#name": [
+"testmk-console"
+],
+"http://www.mulesoft.org/schema/mule/http#listener": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/core#error-handler": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#console": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#Flow",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#name": [
+"get:\\echo:testmk-config"
+],
+"http://www.mulesoft.org/schema/mule/core#logger": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_4"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_3"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/_10/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#ListenerConnection",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#host": [
+"0.0.0.0"
+],
+"http://www.mulesoft.org/schema/mule/http#port": [
+"8081"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/_10/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_1/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_1/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_4/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_4/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Listener",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#config-ref": [
+"testmk-httpListenerConfig"
+],
+"http://www.mulesoft.org/schema/mule/http#path": [
+"/api/*"
+],
+"http://www.mulesoft.org/schema/mule/http#response": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/http#error-response": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_12/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/mule-apikit#Router",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#config-ref": [
+"testmk-config"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_12/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#ErrorHandler",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#on-error-propagate": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_3"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_2"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Listener",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#config-ref": [
+"testmk-httpListenerConfig"
+],
+"http://www.mulesoft.org/schema/mule/http#path": [
+"/console/*"
+],
+"http://www.mulesoft.org/schema/mule/http#response": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/http#error-response": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#ErrorHandler",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#on-error-propagate": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/mule-apikit#Console",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/mule-apikit#config-ref": [
+"testmk-config"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_3"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_2"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#Logger",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#level": [
+"INFO"
+],
+"http://www.mulesoft.org/schema/mule/core#message": [
+"get:\\echo:testmk-config"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Set Payload"
+],
+"http://www.mulesoft.org/schema/mule/core#value": [
+"#[\"ECHO \" ++ attributes.queryParams.arg]"
+],
+"http://www.mulesoft.org/schema/mule/documentation#id": [
+"957e0ec8-7b46-47e0-9a70-5a6eca49ed7b"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_4",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/api-gateway#autodiscovery",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(132,8)-(132,9)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#flow",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/mule-apikit#config",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/source-map/lexical/element_3",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#listener-config",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/_10/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/_10/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_2/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(6,28)-(6,29)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#listener-connection",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_1/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_1/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(7,201)-(7,202)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_4/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_4/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(8,169)-(8,170)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Response",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#statusCode": [
+"#[vars.httpStatus default 200]"
+],
+"http://www.mulesoft.org/schema/mule/http#headers": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#ErrorResponse",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#statusCode": [
+"#[vars.httpStatus default 500]"
+],
+"http://www.mulesoft.org/schema/mule/http#body": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/http#headers": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_12/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_12/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:BAD_REQUEST"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:NOT_FOUND"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:METHOD_NOT_ALLOWED"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:NOT_ACCEPTABLE"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:UNSUPPORTED_MEDIA_TYPE"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:NOT_IMPLEMENTED"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_3",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/mule-apikit#router",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#listener",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#error-handler",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(100,12)-(100,13)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Response",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#statusCode": [
+"#[vars.httpStatus default 200]"
+],
+"http://www.mulesoft.org/schema/mule/http#headers": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#ErrorResponse",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/http#statusCode": [
+"#[vars.httpStatus default 500]"
+],
+"http://www.mulesoft.org/schema/mule/http#body": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/http#headers": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/core#OnErrorPropagate",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/core#type": [
+"APIKIT:NOT_FOUND"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#transform": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_3",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#error-handler",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#listener",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/mule-apikit#console",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5",
+"http://a.ml/vocabularies/document-source-maps#value": "[(127,12)-(127,13)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#logger",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_6",
+"http://a.ml/vocabularies/document-source-maps#value": "[(131,12)-(131,13)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_2/element/_10/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_2/element/_10/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(5,64)-(5,65)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Headers",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "#[vars.outboundHeaders default {}]",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Body",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "#[payload]",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Headers",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "#[vars.outboundHeaders default {}]",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#response",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#error-response",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_13/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(18,25)-(18,26)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_12/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_12/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(19,53)-(19,54)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(99,25)-(99,26)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#on-error-propagate",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Headers",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "#[vars.outboundHeaders default {}]",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Body",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "#[payload]",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/http#Headers",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "#[vars.outboundHeaders default {}]",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#response",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#error-response",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(110,25)-(110,26)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Transform",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/documentation#name": [
+"Transform Message"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#message": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element"
+}
+],
+"http://www.mulesoft.org/schema/mule/ee/core#variables": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(126,25)-(126,26)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/core#on-error-propagate",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_15/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(111,54)-(111,55)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_6/_18/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(129,66)-(129,67)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_6/_17/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(130,142)-(130,143)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(13,29)-(13,30)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#headers",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#body",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#headers",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(17,35)-(17,36)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(33,34)-(33,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33",
+"http://a.ml/vocabularies/document-source-maps#value": "[(46,34)-(46,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34",
+"http://a.ml/vocabularies/document-source-maps#value": "[(59,34)-(59,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35",
+"http://a.ml/vocabularies/document-source-maps#value": "[(72,34)-(72,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36",
+"http://a.ml/vocabularies/document-source-maps#value": "[(85,34)-(85,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37",
+"http://a.ml/vocabularies/document-source-maps#value": "[(98,34)-(98,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(105,29)-(105,30)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#headers",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#body",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/http#headers",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(109,35)-(109,36)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Message",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-payload": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#Variables",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.mulesoft.org/schema/mule/ee/core#set-variable": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map/lexical/element_2"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map/lexical/element_0"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map/lexical/element_1"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(125,34)-(125,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#transform",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_26/element/_46/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(12,80)-(12,81)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_44/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(15,50)-(15,51)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_13/element/_25/element/_45/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(16,80)-(16,81)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Bad request\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "400",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(32,32)-(32,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Resource not found\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "404",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(45,32)-(45,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Method not allowed\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "405",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(58,32)-(58,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Not acceptable\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "406",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(71,32)-(71,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Unsupported media type\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "415",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(84,32)-(84,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Not Implemented\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "501",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(97,32)-(97,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_29/element/_50/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(104,80)-(104,81)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_48/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(107,50)-(107,51)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_16/element/_28/element/_49/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(108,80)-(108,81)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetPayload",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "%dw 2.0\noutput application/json\n---\n{message: \"Resource not found\"}",
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element",
+"@type": [
+"http://www.mulesoft.org/schema/mule/ee/core#SetVariable",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/data#text": "404",
+"http://www.mulesoft.org/schema/mule/ee/core#variableName": [
+"httpStatus"
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element/source-map"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/source-map/lexical/element_1"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map/lexical/element_2",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#message",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#variables",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(124,32)-(124,33)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(28,34)-(28,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(31,36)-(31,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(41,34)-(41,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(44,36)-(44,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(54,34)-(54,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(57,36)-(57,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(67,34)-(67,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(70,36)-(70,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(80,34)-(80,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(83,36)-(83,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(93,34)-(93,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(96,36)-(96,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(120,34)-(120,35)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-payload",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element/source-map/lexical/element_0"
+}
+]
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/source-map/lexical/element_1",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(123,36)-(123,37)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://www.mulesoft.org/schema/mule/ee/core#set-variable",
+"http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_52/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(27,45)-(27,46)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element/_38/element/_51/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(30,89)-(30,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_54/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(40,52)-(40,53)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_33/_39/element/_53/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(43,89)-(43,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_56/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(53,52)-(53,53)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_34/_40/element/_55/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(56,89)-(56,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_58/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(66,48)-(66,49)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_35/_41/element/_57/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(69,89)-(69,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_60/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(79,56)-(79,57)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_36/_42/element/_59/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(82,89)-(82,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_62/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(92,49)-(92,50)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element/_11/element/element_37/_43/element/_61/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(95,89)-(95,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_64/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(119,52)-(119,53)]"
+},
+{
+"@id": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element/source-map/lexical/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/amf/default_document#/element/_3/element_5/_14/element/element/_47/element/_63/element/element",
+"http://a.ml/vocabularies/document-source-maps#value": "[(122,89)-(122,90)]"
+},
+{
+"@id": "http://a.ml/amf/default_document",
+"@type": [
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/document#encodes": {
+"@id": "http://a.ml/amf/default_document#/element"
+},
+"http://a.ml/vocabularies/document#root": true,
+"http://a.ml/vocabularies/document#processingData": {
+"@id": "http://a.ml/amf/default_document#/BaseUnitProcessingData"
+}
+}
+]
+}

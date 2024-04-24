@@ -184,6 +184,43 @@ lazy val antlrJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
+/** ********************************************** AMF-XML *********************************************
+ */
+
+lazy val xml = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-xml"
+    ),
+    libraryDependencies += "org.scala-lang.modules" %%% "scala-xml" % "2.2.0",
+  )
+  .in(file("./amf-xml"))
+  .settings(commonSettings)
+  .dependsOn(apiContract)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    libraryDependencies += "org.mule.weave" % "parser" % "2.6.1",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-xml-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-xml.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.xml"))
+
+lazy val xmlJVM =
+  xml.jvm
+    .in(file("./amf-xml/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val xmlJS =
+  xml.js
+    .in(file("./amf-xml/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+//    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
+
 /** ********************************************** AMF-GRPC *********************************************
   */
 
@@ -259,7 +296,7 @@ lazy val graphqlJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql)
+  .dependsOn(grpc, graphql, xml)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
