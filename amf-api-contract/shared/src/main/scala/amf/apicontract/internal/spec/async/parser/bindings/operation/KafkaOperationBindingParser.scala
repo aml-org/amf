@@ -23,8 +23,24 @@ object KafkaOperationBindingParser extends BindingParser[KafkaOperationBinding] 
 
     val map = entry.value.as[YMap]
 
-    map.key("groupId", entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry))
-    map.key("clientId", entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry))
+    bindingVersion match {
+      case "0.4.0" | "latest" => // 0.4.0 onwards support references to schemas in the groupId and clientId fields
+        map.key("groupId").foreach { entry =>
+          ctx.link(entry.value) match {
+            case Left(fullRef) => handleRef(fullRef, "schemas", entry, KafkaOperationBindingModel.GroupId, binding)
+            case Right(_)      => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry)
+          }
+        }
+        map.key("clientId").foreach { entry =>
+          ctx.link(entry.value) match {
+            case Left(fullRef) => handleRef(fullRef, "schemas", entry, KafkaOperationBindingModel.GroupId, binding)
+            case Right(_)      => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry)
+          }
+        }
+      case _ => // any other binding version defaults to 0.1.0
+        map.key("groupId", entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry))
+        map.key("clientId", entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry))
+    }
 
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
 

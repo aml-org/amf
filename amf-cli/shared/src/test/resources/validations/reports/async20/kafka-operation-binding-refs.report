@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-operation-binding-refs.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference #/components/schemas/invalidRef
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-operation-binding-refs.yaml#/async-api/endpoint/the-third-channel/supportedOperation/subscribe/operation-bindings/bindings/kafka-operation
+  Property: 
+  Range: [(34,10)-(36,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-operation-binding-refs.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference #/components/schemas/invalidRef
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-operation-binding-refs.yaml#/async-api/endpoint/the-third-channel/supportedOperation/subscribe/operation-bindings/bindings/kafka-operation
+  Property: 
+  Range: [(36,10)-(39,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-operation-binding-refs.yaml

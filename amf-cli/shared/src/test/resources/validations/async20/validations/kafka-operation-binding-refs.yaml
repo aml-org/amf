@@ -1,0 +1,46 @@
+asyncapi: 2.2.0
+info:
+  title: Test API
+  version: 1.0.0
+
+channels:
+  some-channel:
+    subscribe:
+      bindings:
+        kafka: # inlined
+          groupId:
+            type: string
+            enum: ['myGroupId']
+          clientId:
+            type: string
+            enum: ['myClientId']
+          bindingVersion: 0.4.0
+
+  another-channel:
+    subscribe:
+      bindings:
+        kafka: # valid ref
+          bindingVersion: 0.4.0
+          groupId:
+            $ref: '#/components/schemas/testSchema'
+          clientId:
+            $ref: '#/components/schemas/testSchema'
+
+  the-third-channel:
+    subscribe:
+      bindings:
+        kafka: # invalid ref
+          bindingVersion: 0.4.0
+          groupId:
+            $ref: '#/components/schemas/invalidRef' # should throw not found error
+          clientId:
+            $ref: '#/components/schemas/invalidRef' # should throw not found error
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.
