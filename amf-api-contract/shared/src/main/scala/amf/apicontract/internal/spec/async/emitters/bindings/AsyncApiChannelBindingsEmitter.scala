@@ -17,7 +17,12 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQChannelQueue,
   IBMMQChannelTopic
 }
-import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaChannelBinding
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{
+  KafkaChannelBinding,
+  KafkaChannelBinding030,
+  KafkaChannelBinding040,
+  KafkaTopicConfiguration
+}
 import amf.apicontract.client.scala.model.domain.bindings.pulsar.{PulsarChannelBinding, PulsarChannelRetention}
 import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.internal.metamodel.domain.bindings._
@@ -404,6 +409,14 @@ class KafkaChannelBindingEmitter(binding: KafkaChannelBinding, ordering: SpecOrd
         fs.entry(KafkaChannelBindingModel.Partitions).foreach(f => result += ValueEmitter("partitions", f))
         fs.entry(KafkaChannelBindingModel.Replicas).foreach(f => result += ValueEmitter("replicas", f))
 
+        binding match {
+          case binding04: KafkaChannelBinding040 =>
+            Option(binding04.topicConfiguration).foreach(topicConfiguration =>
+              result += new KafkaTopicConfigurationEmitter(topicConfiguration, ordering)
+            )
+          case _ => // ignore
+        }
+
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -412,4 +425,31 @@ class KafkaChannelBindingEmitter(binding: KafkaChannelBinding, ordering: SpecOrd
   }
 
   override def position(): Position = pos(binding.annotations)
+}
+
+class KafkaTopicConfigurationEmitter(topicConfiguration: KafkaTopicConfiguration, ordering: SpecOrdering)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("topicConfiguration"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = topicConfiguration.fields
+
+        fs.entry(KafkaTopicConfigurationModel.CleanupPolicy)
+          .foreach(f => result += ArrayEmitter("cleanup.policy", f, ordering))
+        fs.entry(KafkaTopicConfigurationModel.RetentionMs).foreach(f => result += ValueEmitter("retention.ms", f))
+        fs.entry(KafkaTopicConfigurationModel.RetentionBytes).foreach(f => result += ValueEmitter("retention.bytes", f))
+        fs.entry(KafkaTopicConfigurationModel.DeleteRetentionMs)
+          .foreach(f => result += ValueEmitter("delete.retention.ms", f))
+        fs.entry(KafkaTopicConfigurationModel.MaxMessageBytes)
+          .foreach(f => result += ValueEmitter("max.message.bytes", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(topicConfiguration.annotations)
 }

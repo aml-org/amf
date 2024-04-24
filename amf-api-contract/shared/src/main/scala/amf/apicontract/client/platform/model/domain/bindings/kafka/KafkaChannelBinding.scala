@@ -1,18 +1,21 @@
 package amf.apicontract.client.platform.model.domain.bindings.kafka
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ChannelBinding}
-import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaChannelBinding => InternalKafkaChannelBinding}
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{
+  KafkaTopicConfiguration => InternalKafkaTopicConfiguration,
+  KafkaChannelBinding => InternalKafkaChannelBinding,
+  KafkaChannelBinding030 => InternalKafkaChannelBinding030,
+  KafkaChannelBinding040 => InternalKafkaChannelBinding040
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.{IntField, StrField}
-
+import amf.core.client.platform.model.domain.DomainElement
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class KafkaChannelBinding(override private[amf] val _internal: InternalKafkaChannelBinding)
+abstract class KafkaChannelBinding(override private[amf] val _internal: InternalKafkaChannelBinding)
     extends ChannelBinding
     with BindingVersion {
-  @JSExportTopLevel("KafkaChannelBinding")
-  def this() = this(InternalKafkaChannelBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
@@ -37,7 +40,59 @@ case class KafkaChannelBinding(override private[amf] val _internal: InternalKafk
     _internal.withReplicas(replicas)
     this
   }
+}
 
-  override def linkCopy(): KafkaChannelBinding = _internal.linkCopy()
+@JSExportAll
+case class KafkaChannelBinding030(override private[amf] val _internal: InternalKafkaChannelBinding030)
+    extends KafkaChannelBinding(_internal) {
+  @JSExportTopLevel("KafkaChannelBinding030")
+  def this() = this(InternalKafkaChannelBinding030())
+  override def linkCopy(): KafkaChannelBinding030 = _internal.linkCopy()
+}
 
+@JSExportAll
+case class KafkaChannelBinding040(override private[amf] val _internal: InternalKafkaChannelBinding040)
+    extends KafkaChannelBinding(_internal) {
+  @JSExportTopLevel("KafkaChannelBinding040")
+  def this() = this(InternalKafkaChannelBinding040())
+  override def linkCopy(): KafkaChannelBinding040 = _internal.linkCopy()
+
+  def topicConfiguration: KafkaTopicConfiguration = _internal.topicConfiguration
+  def withTopicConfiguration(topicConfiguration: KafkaTopicConfiguration): this.type = {
+    _internal.withTopicConfiguration(topicConfiguration)
+    this
+  }
+}
+
+@JSExportAll
+case class KafkaTopicConfiguration(override private[amf] val _internal: InternalKafkaTopicConfiguration)
+    extends DomainElement {
+  @JSExportTopLevel("KafkaTopicConfiguration")
+  def this() = this(InternalKafkaTopicConfiguration())
+  def cleanupPolicy: ClientList[StrField] = _internal.cleanupPolicy.asClient
+  def retentionMs: IntField               = _internal.retentionMs
+  def retentionBytes: IntField            = _internal.retentionBytes
+  def deleteRetentionMs: IntField         = _internal.deleteRetentionMs
+  def maxMessageBytes: IntField           = _internal.maxMessageBytes
+
+  def withCleanupPolicy(cleanupPolicy: ClientList[String]): this.type = {
+    _internal.withCleanupPolicy(cleanupPolicy.asInternal)
+    this
+  }
+  def withRetentionMs(retentionMs: Int): this.type = {
+    _internal.withRetentionMs(retentionMs)
+    this
+  }
+  def withRetentionBytes(retentionBytes: Int): this.type = {
+    _internal.withRetentionBytes(retentionBytes)
+    this
+  }
+  def withDeleteRetentionMs(deleteRetentionMs: Int): this.type = {
+    _internal.withDeleteRetentionMS(deleteRetentionMs)
+    this
+  }
+  def withMaxMessageBytes(maxMessageBytes: Int): this.type = {
+    _internal.withMaxMessageBytes(maxMessageBytes)
+    this
+  }
 }

@@ -21,8 +21,15 @@ channels:
         topic: my-specific-topic-name
         partitions: 20
         replicas: 3
-        bindingVersion: 0.3.0
+        bindingVersion: 0.4.0
         invalidKey: should throw error
+        topicConfiguration:
+          cleanup.policy: ["delete", "compact"]
+          retention.ms: 604800000
+          retention.bytes: 1000000000
+          delete.retention.ms: 86400000
+          max.message.bytes: 1048588
+          invalidKey: should throw error
     publish:
       message:
         bindings:

@@ -5,8 +5,8 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Int, Str}
-import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.internal.metamodel.Type.{Int, Str, Array}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
   val GroupId: Field =
@@ -152,7 +152,7 @@ object KafkaServerBindingModel extends ServerBindingModel with BindingVersion {
 }
 
 // added in binding version 0.3.0
-object KafkaChannelBindingModel extends ChannelBindingModel with BindingVersion {
+trait KafkaChannelBindingModel extends ChannelBindingModel with BindingVersion {
   val Topic: Field =
     Field(
       Str,
@@ -186,14 +186,86 @@ object KafkaChannelBindingModel extends ChannelBindingModel with BindingVersion 
       )
     )
 
-  override def modelInstance: AmfObject = KafkaChannelBinding()
-
-  override def fields: List[Field] =
-    List(Topic, Partitions, Replicas, BindingVersion) ++ ChannelBindingModel.fields
+  override def fields: List[Field] = List(Topic, Partitions, Replicas, BindingVersion) ++ ChannelBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "KafkaChannelBinding" :: ChannelBindingModel.`type`
 
   override val key: Field = Type
 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "KafkaChannelBinding")
+}
+
+object KafkaChannelBindingModel extends KafkaChannelBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("KafkaChannelBindingModel is an abstract class")
+}
+
+object KafkaChannelBinding030Model extends KafkaChannelBindingModel {
+  override def modelInstance: AmfObject = KafkaChannelBinding030()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaChannelBinding030" :: ChannelBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaChannelBinding030")
+}
+
+object KafkaChannelBinding040Model extends KafkaChannelBindingModel {
+  override def modelInstance: AmfObject = KafkaChannelBinding040()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaChannelBinding040" :: ChannelBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaChannelBinding040")
+
+  val TopicConfiguration: Field = Field(
+    KafkaTopicConfigurationModel,
+    ApiBinding + "topicConfiguration",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "topicConfiguration",
+      "Topic configuration properties that are relevant for the API."
+    )
+  )
+
+  override def fields: List[Field] =
+    List(Topic, Partitions, Replicas, TopicConfiguration, BindingVersion) ++ ChannelBindingModel.fields
+}
+
+// TODO: apply default values and constraints to each field (https://github.com/asyncapi/bindings/tree/master/kafka#topicconfiguration-object)
+object KafkaTopicConfigurationModel extends DomainElementModel {
+  override def modelInstance: AmfObject = KafkaTopicConfiguration()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaTopicConfiguration" :: DomainElementModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaTopicConfiguration")
+
+  // TODO: array may only contain `delete` and/or `compact`
+  val CleanupPolicy: Field = Field(
+    Array(Str),
+    ApiBinding + "cleanup.policy",
+    ModelDoc(ModelVocabularies.ApiBinding, "cleanup.policy", "The cleanup.policy configuration option.")
+  )
+
+  val RetentionMs: Field = Field(
+    Int,
+    ApiBinding + "retention.ms",
+    ModelDoc(ModelVocabularies.ApiBinding, "retention.ms", "The retention.ms configuration option.")
+  )
+
+  val RetentionBytes: Field = Field(
+    Int,
+    ApiBinding + "retention.bytes",
+    ModelDoc(ModelVocabularies.ApiBinding, "retention.bytes", "The retention.bytes configuration option.")
+  )
+
+  val DeleteRetentionMs: Field = Field(
+    Int,
+    ApiBinding + "delete.retention.ms",
+    ModelDoc(ModelVocabularies.ApiBinding, "delete.retention.ms", "The delete.retention.ms configuration option.")
+  )
+
+  val MaxMessageBytes: Field = Field(
+    Int,
+    ApiBinding + "max.message.bytes",
+    ModelDoc(ModelVocabularies.ApiBinding, "max.message.bytes", "The max.message.bytes configuration option.")
+  )
+
+  override def fields: List[Field] = List(
+    CleanupPolicy,
+    RetentionMs,
+    RetentionBytes,
+    DeleteRetentionMs,
+    MaxMessageBytes
+  )
 }

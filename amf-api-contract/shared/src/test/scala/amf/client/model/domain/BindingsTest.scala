@@ -226,14 +226,38 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test KafkaChannelBinding") {
-    val binding = new KafkaChannelBinding()
+    val binding030 = new KafkaChannelBinding030()
       .withBindingVersion(s)
       .withTopic(s)
       .withPartitions(123)
       .withReplicas(123)
-    binding.topic.value() shouldBe s
-    binding.partitions.value() shouldBe 123
-    binding.replicas.value() shouldBe 123
+    binding030.topic.value() shouldBe s
+    binding030.partitions.value() shouldBe 123
+    binding030.replicas.value() shouldBe 123
+
+    val topicConfiguration = new KafkaTopicConfiguration()
+      .withCleanupPolicy(stringSeq.asClient)
+      .withRetentionMs(123)
+      .withRetentionBytes(123)
+      .withDeleteRetentionMs(123)
+      .withMaxMessageBytes(123)
+
+    topicConfiguration.cleanupPolicy.toString.contains(s) shouldBe true
+    topicConfiguration.retentionMs.value() shouldBe 123
+    topicConfiguration.retentionBytes.value() shouldBe 123
+    topicConfiguration.deleteRetentionMs.value() shouldBe 123
+    topicConfiguration.maxMessageBytes.value() shouldBe 123
+
+    val binding040 = new KafkaChannelBinding040()
+      .withBindingVersion(s)
+      .withTopic(s)
+      .withPartitions(123)
+      .withReplicas(123)
+      .withTopicConfiguration(topicConfiguration)
+    binding040.topic.value() shouldBe s
+    binding040.partitions.value() shouldBe 123
+    binding040.replicas.value() shouldBe 123
+    binding040.topicConfiguration._internal shouldBe topicConfiguration._internal
   }
 
   test("test MessageBindings") {

@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 Profile: 
 Conforms: false
-Number of results: 5
+Number of results: 6
 
 Level: Violation
 
@@ -14,11 +14,19 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaChannelBinding node
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaChannelBinding040 node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040
   Property: 
   Range: [(25,8)-(26,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaTopicConfiguration node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration
+  Property: 
+  Range: [(32,10)-(33,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
@@ -26,7 +34,7 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/kafka-message-010
   Property: 
-  Range: [(31,12)-(32,0)]
+  Range: [(38,12)-(39,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
@@ -34,7 +42,7 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/kafka-operation
   Property: 
-  Range: [(39,10)-(40,0)]
+  Range: [(46,10)-(47,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
@@ -42,5 +50,5 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/other-channel/supportedOperation/publish/expects/request/message-bindings/bindings/kafka-message-030
   Property: 
-  Range: [(62,12)-(63,0)]
+  Range: [(69,12)-(70,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml

@@ -74,6 +74,9 @@ trait ApiBaseConverter
     with KafkaOperationBindingConverter
     with KafkaServerBindingConverter
     with KafkaChannelBindingConverter
+    with KafkaChannelBinding030Converter
+    with KafkaChannelBinding040Converter
+    with KafkaTopicConfigurationConverter
     with MqttMessageBindingConverter
     with MqttOperationBindingConverter
     with MqttServerBindingConverter
@@ -309,6 +312,31 @@ trait KafkaChannelBindingConverter extends PlatformSecrets {
     override def asClient(from: KafkaChannelBinding): domain.bindings.kafka.KafkaChannelBinding =
       platform.wrap[domain.bindings.kafka.KafkaChannelBinding](from)
     override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding): KafkaChannelBinding = from._internal
+  }
+}
+trait KafkaChannelBinding030Converter extends PlatformSecrets {
+  implicit object KafkaChannelBinding030Matcher
+      extends BidirectionalMatcher[KafkaChannelBinding030, domain.bindings.kafka.KafkaChannelBinding030] {
+    override def asClient(from: KafkaChannelBinding030): domain.bindings.kafka.KafkaChannelBinding030 =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding030](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding030): KafkaChannelBinding030 = from._internal
+  }
+}
+trait KafkaChannelBinding040Converter extends PlatformSecrets {
+  implicit object KafkaChannelBinding040Matcher
+      extends BidirectionalMatcher[KafkaChannelBinding040, domain.bindings.kafka.KafkaChannelBinding040] {
+    override def asClient(from: KafkaChannelBinding040): domain.bindings.kafka.KafkaChannelBinding040 =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding040](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding040): KafkaChannelBinding040 = from._internal
+  }
+}
+trait KafkaTopicConfigurationConverter extends PlatformSecrets {
+  implicit object KafkaTopicConfigurationMatcher
+      extends BidirectionalMatcher[KafkaTopicConfiguration, domain.bindings.kafka.KafkaTopicConfiguration] {
+    override def asClient(from: KafkaTopicConfiguration): domain.bindings.kafka.KafkaTopicConfiguration =
+      platform.wrap[domain.bindings.kafka.KafkaTopicConfiguration](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaTopicConfiguration): KafkaTopicConfiguration =
+      from._internal
   }
 }
 trait MqttMessageBindingConverter extends PlatformSecrets {
