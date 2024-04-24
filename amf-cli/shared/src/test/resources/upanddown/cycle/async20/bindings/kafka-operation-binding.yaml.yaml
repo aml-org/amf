@@ -18,13 +18,14 @@ channels:
   another-channel:
     subscribe:
       bindings:
-        kafka: # valid ref
+        kafka:
           bindingVersion: 0.4.0
           groupId:
-            $ref: '#/components/schemas/testSchema'
-          clientId:
-            $ref: '#/components/schemas/testSchema'
-
+            type: object
+            properties:
+              eventID:
+                type: string
+                description: Unique identifier for the event.
 components:
   schemas:
     testSchema:
