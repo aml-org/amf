@@ -71,7 +71,7 @@ class Async22EndpointParser(
     map.key(
       "servers",
       entry => {
-        val nodes = entry.value.value.asInstanceOf[YSequence].nodes
+        val nodes = entry.value.as[YSequence].nodes
         val servers = nodes.map { n =>
           val server = Server()
           server.setWithoutId(

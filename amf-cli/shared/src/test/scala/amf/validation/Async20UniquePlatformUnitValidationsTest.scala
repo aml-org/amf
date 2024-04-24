@@ -484,4 +484,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Kafka channel binding validations") {
     validate("kafka-channel-binding-validations.yaml", Some("kafka-channel-binding-validations.report"))
   }
+
+  test("Async server invalid map") {
+    validate("async-server-map.yaml", Some("async-server-map.report"))
+  }
 }
