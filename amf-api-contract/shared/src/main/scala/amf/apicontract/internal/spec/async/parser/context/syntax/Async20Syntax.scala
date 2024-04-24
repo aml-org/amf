@@ -143,14 +143,46 @@ object Async20Syntax extends SpecSyntax {
       "headers",
       "bindingVersion"
     ),
-    "kafkaMessageBinding" -> Set(
+    "kafkaMessageBinding010" -> Set(
       "key",
+      "bindingVersion"
+    ),
+    "kafkaMessageBinding030" -> Set(
+      "key",
+      "schemaIdLocation",
+      "schemaIdPayloadEncoding",
+      "schemaLookupStrategy",
       "bindingVersion"
     ),
     "kafkaOperationBinding" -> Set(
       "groupId",
       "clientId",
       "bindingVersion"
+    ),
+    "kafkaServerBinding" -> Set(
+      "schemaRegistryUrl",
+      "schemaRegistryVendor",
+      "bindingVersion"
+    ),
+    "kafkaChannelBinding030" -> Set(
+      "topic",
+      "partitions",
+      "replicas",
+      "bindingVersion"
+    ),
+    "kafkaChannelBinding040" -> Set(
+      "topic",
+      "partitions",
+      "replicas",
+      "topicConfiguration",
+      "bindingVersion"
+    ),
+    "kafkaTopicConfiguration" -> Set(
+      "cleanup.policy",
+      "retention.ms",
+      "retention.bytes",
+      "delete.retention.ms",
+      "max.message.bytes"
     ),
     "message" -> Set(
       "headers",

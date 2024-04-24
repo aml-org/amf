@@ -49,7 +49,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.%s"),
     FixtureData("Http message binding", "http-message-binding.yaml", "http-message-binding.%s"),
     FixtureData("Http operation binding", "http-operation-binding.yaml", "http-operation-binding.%s"),
-    FixtureData("Kafka message binding", "kafka-message-binding.yaml", "kafka-message-binding.%s"),
+    FixtureData("Kafka message binding", "kafka-message-binding-010.yaml", "kafka-message-binding.%s"),
     FixtureData("Kafka operation binding", "kafka-operation-binding.yaml", "kafka-operation-binding.%s"),
     FixtureData("Mqtt message binding", "mqtt-message-binding.yaml", "mqtt-message-binding.%s"),
     FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.%s"),
@@ -72,8 +72,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Async 2.1 all", "asyncApi-2.1-all.yaml", "asyncApi-2.1-all.%s"),
     FixtureData("Async 2.2 all", "asyncApi-2.2-all.yaml", "asyncApi-2.2-all.%s"),
     FixtureData("Async 2.3 all", "asyncApi-2.3-all.yaml", "asyncApi-2.3-all.%s"),
-    FixtureData("Async 2.4 all", "asyncApi-2.4-all.yaml", "asyncApi-2.4-all.%s"
-    ),
+    FixtureData("Async 2.4 all", "asyncApi-2.4-all.yaml", "asyncApi-2.4-all.%s"),
     FixtureData("Async 2.5 all", "asyncApi-2.5-all.yaml", "asyncApi-2.5-all.%s"),
     FixtureData("Async 2.6 all", "asyncApi-2.6-all.yaml", "asyncApi-2.6-all.%s")
   )
@@ -239,6 +238,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "Async 2.6 all",
       "asyncApi-2.6-all.yaml",
       "asyncApi-2.6-all.yaml"
+    ),
+    FixtureData(
+      "Kafka server binding",
+      "bindings/kafka-server-binding.yaml",
+      "bindings/kafka-server-binding.yaml"
+    ),
+    FixtureData(
+      "Kafka channel binding",
+      "bindings/kafka-channel-binding.yaml",
+      "bindings/kafka-channel-binding.yaml"
     )
 
 // TODO: figure out why this test is commented out

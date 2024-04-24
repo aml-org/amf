@@ -1229,6 +1229,30 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiBinding("IBMMQMessageBinding"),
         owlProperty = apiBinding("headers"),
         constraint = shape("IBMMQHeadersValidation")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'partitions' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding030"),
+        owlProperty = apiBinding("partitions"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'partitions' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding040"),
+        owlProperty = apiBinding("partitions"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'replicas' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding030"),
+        owlProperty = apiBinding("replicas"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'replicas' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding040"),
+        owlProperty = apiBinding("replicas"),
+        constraint = sh("minInclusive")
       )
     ) ++ baseApiValidations("AsyncAPI")
 

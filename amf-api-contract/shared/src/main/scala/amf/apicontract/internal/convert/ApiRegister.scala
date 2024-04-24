@@ -264,12 +264,31 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(HttpOperationBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding => HttpOperationBinding(s)
     }
-    platform.registerWrapper(KafkaMessageBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding => KafkaMessageBinding(s)
+    platform.registerWrapper(KafkaMessageBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding010 =>
+        KafkaMessageBinding010(s)
+    }
+    platform.registerWrapper(KafkaMessageBinding030Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding030 =>
+        KafkaMessageBinding030(s)
     }
     platform.registerWrapper(KafkaOperationBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding =>
-        KafkaOperationBinding(s)
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding => KafkaOperationBinding(s)
+    }
+    platform.registerWrapper(KafkaServerBindingModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaServerBinding => KafkaServerBinding(s)
+    }
+    platform.registerWrapper(KafkaChannelBinding030Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaChannelBinding030 =>
+        KafkaChannelBinding030(s)
+    }
+    platform.registerWrapper(KafkaChannelBinding040Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaChannelBinding040 =>
+        KafkaChannelBinding040(s)
+    }
+    platform.registerWrapper(KafkaTopicConfigurationModel) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaTopicConfiguration =>
+        KafkaTopicConfiguration(s)
     }
     platform.registerWrapper(MqttMessageBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding => MqttMessageBinding(s)

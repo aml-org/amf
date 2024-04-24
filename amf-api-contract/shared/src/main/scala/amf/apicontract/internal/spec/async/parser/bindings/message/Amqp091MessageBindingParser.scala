@@ -4,7 +4,6 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBin
 import amf.apicontract.internal.metamodel.domain.bindings.Amqp091MessageBindingModel
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnsupportedBindingVersionWarning
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YMap, YMapEntry}
@@ -17,14 +16,9 @@ object Amqp091MessageBindingParser extends BindingParser[Amqp091MessageBinding] 
     val binding: Amqp091MessageBinding = bindingVersion match {
       case "0.1.0" | "0.2.0" | "0.3.0" | "latest" => Amqp091MessageBinding(Annotations(entry))
       case invalidVersion =>
-        ctx.eh.warning(
-          UnsupportedBindingVersionWarning,
-          Amqp091MessageBinding(Annotations(entry)),
-          Some("bindingVersion"),
-          s"Version $invalidVersion is not supported in an Amqp091ChannelBinding",
-          entry.value.location
-        )
-        Amqp091MessageBinding(Annotations(entry))
+        val defaultBinding = Amqp091MessageBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Amqp091MessageBinding", warning = true)
+        defaultBinding
     }
 
     val map = entry.value.as[YMap]

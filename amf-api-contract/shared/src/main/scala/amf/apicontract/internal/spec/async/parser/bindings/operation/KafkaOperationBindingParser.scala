@@ -1,8 +1,7 @@
 package amf.apicontract.internal.spec.async.parser.bindings.operation
 
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
-import amf.apicontract.internal.metamodel.domain.bindings.{KafkaOperationBindingModel, MqttOperationBindingModel}
+import amf.apicontract.internal.metamodel.domain.bindings.KafkaOperationBindingModel
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.core.internal.parser.YMapOps
@@ -11,17 +10,22 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object KafkaOperationBindingParser extends BindingParser[KafkaOperationBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): KafkaOperationBinding = {
-    val binding = KafkaOperationBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "KafkaOperationBinding", ctx.specSettings.spec)
 
-    map.key(
-      "groupId",
-      entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry)
-    )
-    map.key(
-      "clientId",
-      entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry)
-    )
+    // bindingVersion is either well defined or defaults to 0.1.0
+    val binding: KafkaOperationBinding = bindingVersion match {
+      case "0.1.0" | "0.2.0" | "0.3.0" | "0.4.0" | "latest" => KafkaOperationBinding(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = KafkaOperationBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Binding", warning = true)
+        defaultBinding
+    }
+
+    val map = entry.value.as[YMap]
+
+    map.key("groupId", entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry))
+    map.key("clientId", entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry))
+
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding, map, "kafkaOperationBinding")

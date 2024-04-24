@@ -1,22 +1,22 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypointmq-invalid-version.yaml
-Profile:
+Profile: 
 Conforms: false
 Number of results: 2
 
 Level: Violation
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
-  Message: Version 0.2.0 is not supported in an AnypointMQ
+  Message: Version 0.2.0 is not supported in a AnypointMQ Binding
   Severity: Violation
-  Target: AnypointMQ
-  Property:
-  Range: [(8,17)-(12,0)]
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypointmq-invalid-version.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/anypointmq-channel
+  Property: 
+  Range: [(8,6)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypointmq-invalid-version.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
-  Message: Version 1.3.0 is not supported in an AnypointMQ
+  Message: Version 1.3.0 is not supported in a AnypointMQ Binding
   Severity: Violation
-  Target: AnypointMQ
-  Property:
-  Range: [(16,21)-(24,0)]
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypointmq-invalid-version.yaml#/async-api/endpoint/some-channel/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/anypointmq-message
+  Property: 
+  Range: [(16,10)-(24,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypointmq-invalid-version.yaml

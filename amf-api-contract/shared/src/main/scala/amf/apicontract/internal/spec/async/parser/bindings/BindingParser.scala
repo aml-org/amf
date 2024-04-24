@@ -3,17 +3,23 @@ package amf.apicontract.internal.spec.async.parser.bindings
 import amf.apicontract.client.scala.model.domain.bindings.BindingVersion
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
+import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  UnsupportedBindingVersion,
+  UnsupportedBindingVersionWarning
+}
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
-import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec._
+import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.RequiredField
-import org.yaml.model.{YMap, YMapEntry, YNode, YNodePlain, YPart, YScalar, YSequence}
+import org.yaml.model._
 
 trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
@@ -54,11 +60,40 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
   protected def getDefaultBindingVersion(binding: String, spec: Spec): String = {
     (binding, spec) match {
-      case ("Amqp091ChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
-      case ("Amqp091OperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
-      case ("Amqp091MessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
-      case("AnypointMQMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
-      case("AnypointMQChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
+      case ("Amqp091ChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)    => "0.1.0"
+      case ("Amqp091OperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)  => "0.1.0"
+      case ("Amqp091MessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)    => "0.1.0"
+      case ("AnypointMQMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
+      case ("AnypointMQChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.0.1"
+      case ("KafkaOperationBinding", ASYNC20)                                                                => "0.1.0"
+      case ("KafkaOperationBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)              => "0.3.0"
+      case ("KafkaMessageBinding", ASYNC20)                                                                  => "0.1.0"
+      case ("KafkaMessageBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)                => "0.3.0"
+      // defined in 0.3.0 onwards
+      case ("KafkaServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
+      // defined in 0.3.0 onwards
+      case ("KafkaChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
+    }
+  }
+
+  protected def invalidBindingVersion(obj: AmfObject, version: String, binding: String, warning: Boolean = false)(
+      implicit ctx: AsyncWebApiContext
+  ): Unit = {
+    if (warning) {
+      ctx.eh.warning(
+        UnsupportedBindingVersionWarning,
+        obj,
+        Some("bindingVersion"),
+        s"Version $version is not supported in a $binding",
+        obj.annotations.sourceLocation
+      )
+    } else {
+      ctx.eh.violation(
+        UnsupportedBindingVersion,
+        obj,
+        s"Version $version is not supported in a $binding",
+        obj.annotations.sourceLocation
+      )
     }
   }
 
@@ -80,7 +115,7 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
   ): Unit = {
     val entryLike = entry match {
       case map: YMapEntry => YMapEntryLike(map.value)
-      case node: YNode => YMapEntryLike(node)
+      case node: YNode    => YMapEntryLike(node)
     }
     OasTypeParser(
       entryLike,
@@ -95,6 +130,34 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       }
   }
 
+  protected def handleRef(fullRef: String, searchLabel: String, entry: YMapEntry, field: Field, binding: DomainElement)(
+      implicit ctx: AsyncWebApiContext
+  ): Unit = {
+    val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, searchLabel)
+    ctx.declarations
+      .findType(label, SearchScope.Named)
+      .map(shape => binding.setWithoutId(field, shape, Annotations(entry)))
+      .getOrElse {
+        remote(fullRef, entry, field, binding)
+      }
+  }
+
+  private def remote(fullRef: String, entry: YMapEntry, field: Field, binding: DomainElement)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
+    ctx.navigateToRemoteYNode(fullRef) match {
+      case Some(remoteResult) =>
+        parseSchema(field, binding, remoteResult.remoteNode)
+      case None =>
+        ctx.eh.violation(
+          CoreValidations.UnresolvedReference,
+          binding,
+          s"Cannot find link reference $fullRef",
+          entry.location
+        )
+    }
+  }
+
   protected def missingRequiredFieldViolation(
       ctx: AsyncWebApiContext,
       node: AmfObject,
@@ -103,5 +166,4 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
   ): Unit = {
     ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
   }
-
 }

@@ -1,4 +1,5 @@
 package amf.apicontract.internal.metamodel.domain.bindings
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
@@ -9,15 +10,11 @@ trait ServerBindingModel extends DomainElementModel with BindingType with KeyFie
 
 object ServerBindingModel extends ServerBindingModel {
 
-  override def modelInstance           = throw new Exception("ServerBinding is an abstract class")
-  override def fields: List[Field]     = List(Type) ++ DomainElementModel.fields
-  override val `type`: List[ValueType] = ApiBinding + "ServerBinding" :: DomainElementModel.`type`
+  override def modelInstance: AmfObject = throw new Exception("ServerBinding is an abstract class")
+  override def fields: List[Field]      = List(Type) ++ DomainElementModel.fields
+  override val `type`: List[ValueType]  = ApiBinding + "ServerBinding" :: DomainElementModel.`type`
 
   override val key: Field = Type
 
-  override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiBinding,
-    "ServerBinding",
-    ""
-  )
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "ServerBinding")
 }

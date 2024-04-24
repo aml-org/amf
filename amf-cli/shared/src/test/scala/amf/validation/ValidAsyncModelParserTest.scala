@@ -46,8 +46,12 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("http-operation-binding.yaml")
   }
 
-  test("Kafka message binding") {
-    checkValid("kafka-message-binding.yaml")
+  test("Kafka message binding in async 2.0 defaults to 0.1.0") {
+    checkValid("kafka-message-binding-010.yaml")
+  }
+
+  test("Kafka message binding in async 2.1+ defaults to 0.3.0") {
+    checkValid("kafka-message-binding-030.yaml")
   }
 
   test("Kafka operation binding") {

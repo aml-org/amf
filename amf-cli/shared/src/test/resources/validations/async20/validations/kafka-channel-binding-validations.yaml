@@ -1,0 +1,12 @@
+asyncapi: 2.0.0
+info:
+  title: Test API
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      kafka:
+        topic: my-specific-topic-name
+        partitions: -1 # must be a positive number
+        replicas: -1 # must be a positive number
+        bindingVersion: 0.3.0

@@ -3866,7 +3866,6 @@ declare module "amf-client-js" {
     withScheme(scheme: string): this;
   }
   export class IBMMQChannelBinding implements ChannelBinding {
-
     destinationType: StrField;
     queue: IBMMQChannelQueue;
     topic: IBMMQChannelTopic;
@@ -3893,7 +3892,6 @@ declare module "amf-client-js" {
     link<T>(): T;
     link<T>(label: string): T;
     linkCopy(): Linkable;
-    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
     withId(id: string): this;
@@ -3922,13 +3920,11 @@ declare module "amf-client-js" {
     annotations(): Annotations;
     graph(): Graph;
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
-    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
     withId(id: string): this;
     withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class IBMMQChannelTopic implements DomainElement {
-
     string: StrField;
     objectName: StrField;
     durablePermitted: BoolField;
@@ -3949,7 +3945,6 @@ declare module "amf-client-js" {
 
     annotations(): Annotations;
     graph(): Graph;
-    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
     withId(id: string): this;
@@ -4389,6 +4384,93 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
+  export class KafkaMessageBinding010 implements KafkaMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    messageKey: Shape;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): KafkaMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKey(key: Shape): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class KafkaMessageBinding030 implements KafkaMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    messageKey: Shape;
+    schemaIdLocation: string;
+    schemaIdPayloadEncoding: string;
+    schemaLookupStrategy: string;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): KafkaMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKey(key: Shape): this;
+
+    withSchemaIdLocation(schemaIdLocation: string): this
+
+    withSchemaIdPayloadEncoding(schemaIdPayloadEncoding: string): this
+
+    withSchemaLookupStrategy(schemaLookupStrategy: string): this
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
   export class KafkaOperationBinding implements OperationBinding {
     clientId: Shape;
     customDomainProperties: Array<DomainExtension>;
@@ -4430,6 +4512,220 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
 
     withLinkTarget(target: undefined): this;
+  }
+  export class KafkaServerBinding implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    schemaRegistryUrl: string;
+    schemaRegistryVendor: string;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): KafkaOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withSchemaRegistryUrl(schemaRegistryUrl: string): this;
+
+    withSchemaRegistryVendor(schemaRegistryVendor: string): this;
+  }
+  export class KafkaChannelBinding implements ChannelBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    topic: string;
+    partitions: number;
+    replicas: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): KafkaOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withTopic(topic: string): this;
+
+    withPartitions(partitions: number): this;
+
+    withReplicas(replicas: number): this;
+  }
+  export class KafkaChannelBinding030 implements KafkaChannelBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    topic: string;
+    partitions: number;
+    replicas: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): KafkaOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withTopic(topic: string): this;
+
+    withPartitions(partitions: number): this;
+
+    withReplicas(replicas: number): this;
+  }
+  export class KafkaChannelBinding040 implements KafkaChannelBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    topic: string;
+    partitions: number;
+    replicas: number;
+    topicConfiguration: KafkaTopicConfiguration;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): KafkaOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withTopic(topic: string): this;
+
+    withPartitions(partitions: number): this;
+
+    withReplicas(replicas: number): this;
+
+    withTopicConfiguration(topicConfiguration: KafkaTopicConfiguration): this
+  }
+  export class KafkaTopicConfiguration implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    cleanupPolicy: Array<string>;
+    retentionMs: number;
+    retentionBytes: number;
+    deleteRetentionMs: number;
+    maxMessageBytes: number;
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withCleanupPolicy(cleanupPolicy: Array<string>): this;
+
+    withRetentionMs(retentionMs: number): this;
+
+    withRetentionBytes(retentionBytes: number): this;
+
+    withDeleteRetentionMS(deleteRetentionMS: number): this;
+
+    withMaxMessageBytes(maxMessageBytes: number): this;
   }
   export class Key implements DomainElement {
     components: Array<PropertyShapePath>;

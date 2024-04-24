@@ -2,15 +2,10 @@ package amf.client.model.domain
 
 import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
-import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill
-}
-import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
+import amf.apicontract.client.platform.model.domain.bindings.http._
+import amf.apicontract.client.platform.model.domain.bindings.kafka._
+import amf.apicontract.client.platform.model.domain.bindings.mqtt._
+import amf.apicontract.client.platform.model.domain.bindings.websockets._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.AnyShape
@@ -194,10 +189,22 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test KafkaMessageBinding") {
-    val binding = new KafkaMessageBinding()
+    val binding010 = new KafkaMessageBinding010()
       .withBindingVersion(s)
       .withKey(shape)
-    binding.messageKey._internal shouldBe shape._internal
+
+    val binding030 = new KafkaMessageBinding030()
+      .withBindingVersion(s)
+      .withKey(shape)
+      .withSchemaIdLocation(s)
+      .withSchemaIdPayloadEncoding(s)
+      .withSchemaLookupStrategy(s)
+
+    binding010.messageKey._internal shouldBe shape._internal
+    binding030.messageKey._internal shouldBe shape._internal
+    binding030.schemaIdLocation.value() shouldBe s
+    binding030.schemaIdPayloadEncoding.value() shouldBe s
+    binding030.schemaLookupStrategy.value() shouldBe s
   }
 
   test("test KafkaOperationBinding") {
@@ -207,6 +214,50 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
       .withGroupId(shape)
     binding.clientId._internal shouldBe shape._internal
     binding.groupId._internal shouldBe shape._internal
+  }
+
+  test("test KafkaServerBinding") {
+    val binding = new KafkaServerBinding()
+      .withBindingVersion(s)
+      .withSchemaRegistryUrl(s)
+      .withSchemaRegistryVendor(s)
+    binding.schemaRegistryUrl.value() shouldBe s
+    binding.schemaRegistryVendor.value() shouldBe s
+  }
+
+  test("test KafkaChannelBinding") {
+    val binding030 = new KafkaChannelBinding030()
+      .withBindingVersion(s)
+      .withTopic(s)
+      .withPartitions(123)
+      .withReplicas(123)
+    binding030.topic.value() shouldBe s
+    binding030.partitions.value() shouldBe 123
+    binding030.replicas.value() shouldBe 123
+
+    val topicConfiguration = new KafkaTopicConfiguration()
+      .withCleanupPolicy(stringSeq.asClient)
+      .withRetentionMs(123)
+      .withRetentionBytes(123)
+      .withDeleteRetentionMs(123)
+      .withMaxMessageBytes(123)
+
+    topicConfiguration.cleanupPolicy.toString.contains(s) shouldBe true
+    topicConfiguration.retentionMs.value() shouldBe 123
+    topicConfiguration.retentionBytes.value() shouldBe 123
+    topicConfiguration.deleteRetentionMs.value() shouldBe 123
+    topicConfiguration.maxMessageBytes.value() shouldBe 123
+
+    val binding040 = new KafkaChannelBinding040()
+      .withBindingVersion(s)
+      .withTopic(s)
+      .withPartitions(123)
+      .withReplicas(123)
+      .withTopicConfiguration(topicConfiguration)
+    binding040.topic.value() shouldBe s
+    binding040.partitions.value() shouldBe 123
+    binding040.replicas.value() shouldBe 123
+    binding040.topicConfiguration._internal shouldBe topicConfiguration._internal
   }
 
   test("test MessageBindings") {

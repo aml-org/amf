@@ -1,0 +1,29 @@
+asyncapi: 2.0.0
+info:
+  title: Test API
+  version: 1.0.0
+
+channels:
+  some-channel:
+    bindings:
+      kafka:
+        topic: my-specific-topic-name
+        partitions: 20
+        replicas: 3
+        bindingVersion: 0.3.0
+
+  other-channel:
+    bindings:
+      kafka:
+        bindingVersion: 0.4.0
+        topic: my-specific-topic-name
+        partitions: 20
+        replicas: 3
+        topicConfiguration:
+          cleanup.policy:
+            - delete
+            - compact
+          retention.ms: 604800000
+          retention.bytes: 1000000000
+          delete.retention.ms: 86400000
+          max.message.bytes: 1048588
