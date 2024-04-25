@@ -4,11 +4,15 @@ import amf.apicontract.client.scala.model.domain.bindings.kafka.{
   KafkaChannelBinding,
   KafkaChannelBinding030,
   KafkaChannelBinding040,
-  KafkaTopicConfiguration
+  KafkaChannelBinding050,
+  KafkaTopicConfiguration040,
+  KafkaTopicConfiguration050
 }
 import amf.apicontract.internal.metamodel.domain.bindings.{
   KafkaChannelBinding040Model,
+  KafkaChannelBinding050Model,
   KafkaChannelBindingModel,
+  KafkaTopicConfiguration050Model,
   KafkaTopicConfigurationModel
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
@@ -24,7 +28,8 @@ object KafkaChannelBindingParser extends BindingParser[KafkaChannelBinding] {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "KafkaChannelBinding", ctx.specSettings.spec)
 
     val binding: KafkaChannelBinding = bindingVersion match {
-      case "0.4.0" | "latest" => KafkaChannelBinding040(Annotations(entry))
+      case "0.5.0" | "latest" => KafkaChannelBinding050(Annotations(entry))
+      case "0.4.0"            => KafkaChannelBinding040(Annotations(entry))
       case "0.3.0"            => KafkaChannelBinding030(Annotations(entry))
       case invalidVersion => // "0.1.0" | "0.2.0" don't parse because kafka channel binding wasn't defined until 0.3.0
         val defaultBinding = KafkaChannelBinding030(Annotations(entry))
@@ -39,8 +44,8 @@ object KafkaChannelBindingParser extends BindingParser[KafkaChannelBinding] {
     parseBindingVersion(binding, KafkaChannelBindingModel.BindingVersion, map)
 
     bindingVersion match {
-      case "0.4.0" | "latest" =>
-        parseTopicConfiguration(binding, map)
+      case "0.4.0" | "0.5.0" | "latest" =>
+        parseTopicConfiguration(binding, map, bindingVersion)
         ctx.closedShape(binding, map, "kafkaChannelBinding040")
       case _ =>
         ctx.closedShape(binding, map, "kafkaChannelBinding030")
@@ -49,13 +54,16 @@ object KafkaChannelBindingParser extends BindingParser[KafkaChannelBinding] {
     binding
   }
 
-  private def parseTopicConfiguration(binding: KafkaChannelBinding, map: YMap)(implicit
+  private def parseTopicConfiguration(binding: KafkaChannelBinding, map: YMap, bindingVersion: String)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
     map.key(
       "topicConfiguration",
       { entry =>
-        val topicConf    = KafkaTopicConfiguration(Annotations(entry.value))
+        val topicConf = bindingVersion match {
+          case "0.5.0" | "latest" => KafkaTopicConfiguration050(Annotations(entry.value))
+          case _                  => KafkaTopicConfiguration040(Annotations(entry.value))
+        }
         val topicConfMap = entry.value.as[YMap]
 
         topicConfMap.key("cleanup.policy") match {
@@ -86,9 +94,30 @@ object KafkaChannelBindingParser extends BindingParser[KafkaChannelBinding] {
           case None => setDefaultValue(topicConf, KafkaTopicConfigurationModel.MaxMessageBytes, AmfScalar(1048588))
         }
 
-        ctx.closedShape(topicConf, topicConfMap, "kafkaTopicConfiguration")
-
-        binding.setWithoutId(KafkaChannelBinding040Model.TopicConfiguration, topicConf, Annotations(entry))
+        bindingVersion match {
+          case "0.5.0" | "latest" =>
+            topicConfMap.key(
+              "confluent.key.schema.validation",
+              KafkaTopicConfiguration050Model.ConfluentKeySchemaValidation in topicConf
+            )
+            topicConfMap.key(
+              "confluent.key.subject.name.strategy",
+              KafkaTopicConfiguration050Model.ConfluentKeySubjectNameStrategy in topicConf
+            )
+            topicConfMap.key(
+              "confluent.value.schema.validation",
+              KafkaTopicConfiguration050Model.ConfluentValueSchemaValidation in topicConf
+            )
+            topicConfMap.key(
+              "confluent.value.subject.name.strategy",
+              KafkaTopicConfiguration050Model.ConfluentValueSubjectNameStrategy in topicConf
+            )
+            ctx.closedShape(topicConf, topicConfMap, "kafkaTopicConfiguration050")
+            binding.setWithoutId(KafkaChannelBinding050Model.TopicConfiguration, topicConf, Annotations(entry))
+          case _ =>
+            ctx.closedShape(topicConf, topicConfMap, "kafkaTopicConfiguration040")
+            binding.setWithoutId(KafkaChannelBinding040Model.TopicConfiguration, topicConf, Annotations(entry))
+        }
       }
     )
   }

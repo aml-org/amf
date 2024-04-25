@@ -492,4 +492,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Kafka operation binding reference objects") {
     validate("kafka-operation-binding-refs.yaml", Some("kafka-operation-binding-refs.report"))
   }
+
+  test("Async Kafka topic configuration validations") {
+    validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
+  }
 }

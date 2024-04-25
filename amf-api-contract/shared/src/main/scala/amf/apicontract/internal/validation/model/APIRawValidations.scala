@@ -1255,6 +1255,11 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiBinding("KafkaChannelBinding040"),
         owlProperty = apiBinding("replicas"),
         constraint = shape("KafkaTopicConfigurationValidations")
+      ),
+      AMFValidation(
+        owlClass = apiBinding("KafkaChannelBinding050"),
+        owlProperty = apiBinding("replicas"),
+        constraint = shape("KafkaTopicConfigurationValidations")
       )
     ) ++ baseApiValidations("AsyncAPI")
 

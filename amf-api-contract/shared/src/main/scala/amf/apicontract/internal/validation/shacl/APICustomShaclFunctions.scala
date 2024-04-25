@@ -3,7 +3,7 @@ package amf.apicontract.internal.validation.shacl
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQChannelBinding, IBMMQMessageBinding}
-import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaChannelBinding040
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{HasTopicConfiguration, KafkaChannelBinding040}
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
@@ -830,9 +830,9 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "KafkaTopicConfigurationValidations"
 
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val topicConfiguration = element.asInstanceOf[KafkaChannelBinding040].topicConfiguration
+          val topicConfiguration = element.asInstanceOf[HasTopicConfiguration].topicConfiguration
           val cleanupPolicy      = topicConfiguration.cleanupPolicy.map(_.value())
-          if (cleanupPolicy.intersect(Seq("delete", "compact")).isEmpty)
+          if (cleanupPolicy.nonEmpty && cleanupPolicy.intersect(Seq("delete", "compact")).isEmpty)
             validate(
               validationInfo(
                 KafkaTopicConfigurationModel.CleanupPolicy,

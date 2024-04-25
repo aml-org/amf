@@ -24,3 +24,17 @@ channels:
           retention.bytes: 1000000000 # doesn't have constraints
           delete.retention.ms: -1 # valid values are [0,...]
           max.message.bytes: -1 # valid values are [0,...]
+
+  the-other-channel:
+    bindings:
+      kafka:
+        bindingVersion: 0.5.0 # applies also to 0.5.0
+        topic: my-specific-topic-name
+        partitions: 1
+        replicas: 1
+        topicConfiguration:
+          cleanup.policy: ["wrong", "values"] # can only be "delete" and/or "compact"
+          retention.ms: -2 # valid values are [-1,...]
+          retention.bytes: 1000000000 # doesn't have constraints
+          delete.retention.ms: -1 # valid values are [0,...]
+          max.message.bytes: -1 # valid values are [0,...]

@@ -4727,6 +4727,86 @@ declare module "amf-client-js" {
 
     withMaxMessageBytes(maxMessageBytes: number): this;
   }
+  export class KafkaTopicConfiguration040 implements KafkaTopicConfiguration {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    cleanupPolicy: Array<string>;
+    retentionMs: number;
+    retentionBytes: number;
+    deleteRetentionMs: number;
+    maxMessageBytes: number;
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withCleanupPolicy(cleanupPolicy: Array<string>): this;
+
+    withRetentionMs(retentionMs: number): this;
+
+    withRetentionBytes(retentionBytes: number): this;
+
+    withDeleteRetentionMS(deleteRetentionMS: number): this;
+
+    withMaxMessageBytes(maxMessageBytes: number): this;
+  }
+  export class KafkaTopicConfiguration050 implements KafkaTopicConfiguration {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    cleanupPolicy: Array<string>;
+    retentionMs: number;
+    retentionBytes: number;
+    deleteRetentionMs: number;
+    maxMessageBytes: number;
+    confluentKeySchemaValidation: boolean;
+    confluentKeySubjectNameStrategy: string;
+    confluentValueSchemaValidation: boolean;
+    confluentValueSubjectNameStrategy: string;
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withCleanupPolicy(cleanupPolicy: Array<string>): this;
+
+    withRetentionMs(retentionMs: number): this;
+
+    withRetentionBytes(retentionBytes: number): this;
+
+    withDeleteRetentionMS(deleteRetentionMS: number): this;
+
+    withMaxMessageBytes(maxMessageBytes: number): this;
+
+    withConfluentKeySchemaValidation(confluentKeySchemaValidation: string): this;
+
+    withConfluentKeySubjectNameStrategy(confluentKeySubjectNameStrategy: string): this;
+
+    withConfluentValueSchemaValidation(confluentValueSchemaValidation: string): this;
+
+    withConfluentValueSubjectNameStrategy(confluentValueSubjectNameStrategy: string): this;
+  }
   export class Key implements DomainElement {
     components: Array<PropertyShapePath>;
     customDomainProperties: Array<DomainExtension>;

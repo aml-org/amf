@@ -14,7 +14,7 @@ object KafkaOperationBindingParser extends BindingParser[KafkaOperationBinding] 
 
     // bindingVersion is either well defined or defaults to 0.1.0
     val binding: KafkaOperationBinding = bindingVersion match {
-      case "0.1.0" | "0.2.0" | "0.3.0" | "0.4.0" | "latest" => KafkaOperationBinding(Annotations(entry))
+      case "0.1.0" | "0.2.0" | "0.3.0" | "0.4.0" | "0.5.0" | "latest" => KafkaOperationBinding(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = KafkaOperationBinding(Annotations(entry))
         invalidBindingVersion(defaultBinding, invalidVersion, "Kafka Binding", warning = true)
@@ -24,7 +24,7 @@ object KafkaOperationBindingParser extends BindingParser[KafkaOperationBinding] 
     val map = entry.value.as[YMap]
 
     bindingVersion match {
-      case "0.4.0" | "latest" => // 0.4.0 onwards support references to schemas in the groupId and clientId fields
+      case "0.4.0" | "0.5.0" | "latest" => // 0.4.0+ support references to schemas in the groupId and clientId fields
         map.key("groupId").foreach { entry =>
           ctx.link(entry.value) match {
             case Left(fullRef) => handleRef(fullRef, "schemas", entry, KafkaOperationBindingModel.GroupId, binding)

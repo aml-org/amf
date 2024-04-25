@@ -2,13 +2,16 @@ package amf.apicontract.client.platform.model.domain.bindings.kafka
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ChannelBinding}
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{
-  KafkaTopicConfiguration => InternalKafkaTopicConfiguration,
   KafkaChannelBinding => InternalKafkaChannelBinding,
   KafkaChannelBinding030 => InternalKafkaChannelBinding030,
-  KafkaChannelBinding040 => InternalKafkaChannelBinding040
+  KafkaChannelBinding040 => InternalKafkaChannelBinding040,
+  KafkaChannelBinding050 => InternalKafkaChannelBinding050,
+  KafkaTopicConfiguration => InternalKafkaTopicConfiguration,
+  KafkaTopicConfiguration040 => InternalKafkaTopicConfiguration040,
+  KafkaTopicConfiguration050 => InternalKafkaTopicConfiguration050
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.model.{IntField, StrField}
+import amf.core.client.platform.model.{IntField, StrField, BoolField}
 import amf.core.client.platform.model.domain.DomainElement
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -57,18 +60,30 @@ case class KafkaChannelBinding040(override private[amf] val _internal: InternalK
   def this() = this(InternalKafkaChannelBinding040())
   override def linkCopy(): KafkaChannelBinding040 = _internal.linkCopy()
 
-  def topicConfiguration: KafkaTopicConfiguration = _internal.topicConfiguration
-  def withTopicConfiguration(topicConfiguration: KafkaTopicConfiguration): this.type = {
+  def topicConfiguration: KafkaTopicConfiguration040 = _internal.topicConfiguration
+  def withTopicConfiguration(topicConfiguration: KafkaTopicConfiguration040): this.type = {
     _internal.withTopicConfiguration(topicConfiguration)
     this
   }
 }
 
 @JSExportAll
-case class KafkaTopicConfiguration(override private[amf] val _internal: InternalKafkaTopicConfiguration)
+case class KafkaChannelBinding050(override private[amf] val _internal: InternalKafkaChannelBinding050)
+    extends KafkaChannelBinding(_internal) {
+  @JSExportTopLevel("KafkaChannelBinding050")
+  def this() = this(InternalKafkaChannelBinding050())
+  override def linkCopy(): KafkaChannelBinding050 = _internal.linkCopy()
+
+  def topicConfiguration: KafkaTopicConfiguration050 = _internal.topicConfiguration
+  def withTopicConfiguration(topicConfiguration: KafkaTopicConfiguration050): this.type = {
+    _internal.withTopicConfiguration(topicConfiguration)
+    this
+  }
+}
+
+@JSExportAll
+abstract class KafkaTopicConfiguration(override private[amf] val _internal: InternalKafkaTopicConfiguration)
     extends DomainElement {
-  @JSExportTopLevel("KafkaTopicConfiguration")
-  def this() = this(InternalKafkaTopicConfiguration())
   def cleanupPolicy: ClientList[StrField] = _internal.cleanupPolicy.asClient
   def retentionMs: IntField               = _internal.retentionMs
   def retentionBytes: IntField            = _internal.retentionBytes
@@ -93,6 +108,42 @@ case class KafkaTopicConfiguration(override private[amf] val _internal: Internal
   }
   def withMaxMessageBytes(maxMessageBytes: Int): this.type = {
     _internal.withMaxMessageBytes(maxMessageBytes)
+    this
+  }
+}
+
+@JSExportAll
+case class KafkaTopicConfiguration040(override private[amf] val _internal: InternalKafkaTopicConfiguration040)
+    extends KafkaTopicConfiguration(_internal) {
+  @JSExportTopLevel("KafkaTopicConfiguration040")
+  def this() = this(InternalKafkaTopicConfiguration040())
+}
+
+@JSExportAll
+case class KafkaTopicConfiguration050(override private[amf] val _internal: InternalKafkaTopicConfiguration050)
+    extends KafkaTopicConfiguration(_internal) {
+  @JSExportTopLevel("KafkaTopicConfiguration050")
+  def this() = this(InternalKafkaTopicConfiguration050())
+
+  def confluentKeySchemaValidation: BoolField     = _internal.confluentKeySchemaValidation
+  def confluentKeySubjectNameStrategy: StrField   = _internal.confluentKeySubjectNameStrategy
+  def confluentValueSchemaValidation: BoolField   = _internal.confluentValueSchemaValidation
+  def confluentValueSubjectNameStrategy: StrField = _internal.confluentValueSubjectNameStrategy
+
+  def withConfluentKeySchemaValidation(confluentKeySchemaValidation: Boolean): this.type = {
+    _internal.withConfluentKeySchemaValidation(confluentKeySchemaValidation)
+    this
+  }
+  def withConfluentKeySubjectNameStrategy(confluentKeySubjectNameStrategy: String): this.type = {
+    _internal.withConfluentKeySubjectNameStrategy(confluentKeySubjectNameStrategy)
+    this
+  }
+  def withConfluentValueSchemaValidation(confluentValueSchemaValidation: Boolean): this.type = {
+    _internal.withConfluentValueSchemaValidation(confluentValueSchemaValidation)
+    this
+  }
+  def withConfluentValueSubjectNameStrategy(confluentValueSubjectNameStrategy: String): this.type = {
+    _internal.withConfluentValueSubjectNameStrategy(confluentValueSubjectNameStrategy)
     this
   }
 }

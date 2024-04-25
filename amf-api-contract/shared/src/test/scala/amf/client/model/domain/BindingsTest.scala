@@ -235,29 +235,59 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     binding030.partitions.value() shouldBe 123
     binding030.replicas.value() shouldBe 123
 
-    val topicConfiguration = new KafkaTopicConfiguration()
+    val topicConfiguration040 = new KafkaTopicConfiguration040()
       .withCleanupPolicy(stringSeq.asClient)
       .withRetentionMs(123)
       .withRetentionBytes(123)
       .withDeleteRetentionMs(123)
       .withMaxMessageBytes(123)
-
-    topicConfiguration.cleanupPolicy.toString.contains(s) shouldBe true
-    topicConfiguration.retentionMs.value() shouldBe 123
-    topicConfiguration.retentionBytes.value() shouldBe 123
-    topicConfiguration.deleteRetentionMs.value() shouldBe 123
-    topicConfiguration.maxMessageBytes.value() shouldBe 123
+    topicConfiguration040.cleanupPolicy.toString.contains(s) shouldBe true
+    topicConfiguration040.retentionMs.value() shouldBe 123
+    topicConfiguration040.retentionBytes.value() shouldBe 123
+    topicConfiguration040.deleteRetentionMs.value() shouldBe 123
+    topicConfiguration040.maxMessageBytes.value() shouldBe 123
 
     val binding040 = new KafkaChannelBinding040()
       .withBindingVersion(s)
       .withTopic(s)
       .withPartitions(123)
       .withReplicas(123)
-      .withTopicConfiguration(topicConfiguration)
+      .withTopicConfiguration(topicConfiguration040)
     binding040.topic.value() shouldBe s
     binding040.partitions.value() shouldBe 123
     binding040.replicas.value() shouldBe 123
-    binding040.topicConfiguration._internal shouldBe topicConfiguration._internal
+    binding040.topicConfiguration._internal shouldBe topicConfiguration040._internal
+
+    val topicConfiguration050 = new KafkaTopicConfiguration050()
+      .withCleanupPolicy(stringSeq.asClient)
+      .withRetentionMs(123)
+      .withRetentionBytes(123)
+      .withDeleteRetentionMs(123)
+      .withMaxMessageBytes(123)
+      .withConfluentKeySchemaValidation(true)
+      .withConfluentKeySubjectNameStrategy(s)
+      .withConfluentValueSchemaValidation(false)
+      .withConfluentValueSubjectNameStrategy(s)
+    topicConfiguration050.cleanupPolicy.toString.contains(s) shouldBe true
+    topicConfiguration050.retentionMs.value() shouldBe 123
+    topicConfiguration050.retentionBytes.value() shouldBe 123
+    topicConfiguration050.deleteRetentionMs.value() shouldBe 123
+    topicConfiguration050.maxMessageBytes.value() shouldBe 123
+    topicConfiguration050.confluentKeySchemaValidation.value() shouldBe true
+    topicConfiguration050.confluentKeySubjectNameStrategy.value() shouldBe s
+    topicConfiguration050.confluentValueSchemaValidation.value() shouldBe false
+    topicConfiguration050.confluentValueSubjectNameStrategy.value() shouldBe s
+
+    val binding050 = new KafkaChannelBinding050()
+      .withBindingVersion(s)
+      .withTopic(s)
+      .withPartitions(123)
+      .withReplicas(123)
+      .withTopicConfiguration(topicConfiguration050)
+    binding050.topic.value() shouldBe s
+    binding050.partitions.value() shouldBe 123
+    binding050.replicas.value() shouldBe 123
+    binding050.topicConfiguration._internal shouldBe topicConfiguration050._internal
   }
 
   test("test MessageBindings") {

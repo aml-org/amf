@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Int, Str, Array}
+import amf.core.internal.metamodel.Type.{Int, Str, Array, Bool}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
@@ -211,11 +211,11 @@ object KafkaChannelBinding040Model extends KafkaChannelBindingModel {
   override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaChannelBinding040")
 
   val TopicConfiguration: Field = Field(
-    KafkaTopicConfigurationModel,
-    ApiBinding + "topicConfiguration",
+    KafkaTopicConfiguration040Model,
+    ApiBinding + "topicConfiguration040",
     ModelDoc(
       ModelVocabularies.ApiBinding,
-      "topicConfiguration",
+      "topicConfiguration040",
       "Topic configuration properties that are relevant for the API."
     )
   )
@@ -224,10 +224,28 @@ object KafkaChannelBinding040Model extends KafkaChannelBindingModel {
     List(Topic, Partitions, Replicas, TopicConfiguration, BindingVersion) ++ ChannelBindingModel.fields
 }
 
-object KafkaTopicConfigurationModel extends DomainElementModel {
-  override def modelInstance: AmfObject = KafkaTopicConfiguration()
-  override val `type`: List[ValueType]  = ApiBinding + "KafkaTopicConfiguration" :: DomainElementModel.`type`
-  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaTopicConfiguration")
+object KafkaChannelBinding050Model extends KafkaChannelBindingModel {
+  override def modelInstance: AmfObject = KafkaChannelBinding050()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaChannelBinding050" :: ChannelBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaChannelBinding050")
+
+  val TopicConfiguration: Field = Field(
+    KafkaTopicConfiguration050Model,
+    ApiBinding + "topicConfiguration050",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "topicConfiguration050",
+      "Topic configuration properties that are relevant for the API."
+    )
+  )
+
+  override def fields: List[Field] =
+    List(Topic, Partitions, Replicas, TopicConfiguration, BindingVersion) ++ ChannelBindingModel.fields
+}
+
+trait KafkaTopicConfigurationModel extends DomainElementModel {
+  override val `type`: List[ValueType] = ApiBinding + "KafkaTopicConfiguration" :: DomainElementModel.`type`
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "KafkaTopicConfiguration")
 
   val CleanupPolicy: Field = Field(
     Array(Str),
@@ -265,5 +283,73 @@ object KafkaTopicConfigurationModel extends DomainElementModel {
     RetentionBytes,
     DeleteRetentionMs,
     MaxMessageBytes
+  )
+}
+
+object KafkaTopicConfigurationModel extends KafkaTopicConfigurationModel {
+  override def modelInstance: AmfObject = throw new Exception("KafkaTopicConfigurationModel is an abstract class")
+}
+
+object KafkaTopicConfiguration040Model extends KafkaTopicConfigurationModel {
+  override def modelInstance: AmfObject = KafkaTopicConfiguration040()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaTopicConfiguration040" :: DomainElementModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaTopicConfiguration040")
+}
+
+object KafkaTopicConfiguration050Model extends KafkaTopicConfigurationModel {
+  override def modelInstance: AmfObject = KafkaTopicConfiguration050()
+  override val `type`: List[ValueType]  = ApiBinding + "KafkaTopicConfiguration050" :: DomainElementModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "KafkaTopicConfiguration050")
+
+  val ConfluentKeySchemaValidation: Field = Field(
+    Bool,
+    ApiBinding + "confluent.key.schema.validation",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "confluent.key.schema.validation",
+      "It shows whether the schema validation for the message key is enabled. Vendor specific config."
+    )
+  )
+
+  val ConfluentKeySubjectNameStrategy: Field = Field(
+    Str,
+    ApiBinding + "confluent.key.subject.name.strategy",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "confluent.key.subject.name.strategy",
+      "The name of the schema lookup strategy for the message key. Vendor specific config."
+    )
+  )
+
+  val ConfluentValueSchemaValidation: Field = Field(
+    Bool,
+    ApiBinding + "confluent.value.schema.validation",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "confluent.value.schema.validation",
+      "It shows whether the schema validation for the message value is enabled. Vendor specific config."
+    )
+  )
+
+  val ConfluentValueSubjectNameStrategy: Field = Field(
+    Str,
+    ApiBinding + "confluent.value.subject.name.strategy",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "confluent.value.subject.name.strategy",
+      "The name of the schema lookup strategy for the message value. Vendor specific config."
+    )
+  )
+
+  override def fields: List[Field] = List(
+    CleanupPolicy,
+    RetentionMs,
+    RetentionBytes,
+    DeleteRetentionMs,
+    MaxMessageBytes,
+    ConfluentKeySchemaValidation,
+    ConfluentKeySubjectNameStrategy,
+    ConfluentValueSchemaValidation,
+    ConfluentValueSubjectNameStrategy
   )
 }
