@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-references.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-references.yaml#/components/schemas/invalidSchema'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-references.yaml#/async-api/endpoint/%2Ftest3/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/http-message/unresolved
+  Property: 
+  Range: [(49,14)-(50,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-references.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'invalidSchema'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-references.yaml#/async-api/endpoint/%2Ftest3/supportedOperation/subscribe/operation-bindings/bindings/http-operation-010/unresolved
+  Property: 
+  Range: [(55,12)-(58,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-references.yaml
