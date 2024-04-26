@@ -496,4 +496,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Kafka topic configuration validations") {
     validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
   }
+
+  test("Async http wrong binding version") {
+    validate("http-binding-wrong-binding-version.yaml", Some("http-binding-wrong-binding-version.report"))
+  }
 }
