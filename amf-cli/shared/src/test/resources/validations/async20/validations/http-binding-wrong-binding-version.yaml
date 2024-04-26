@@ -5,19 +5,25 @@ info:
   version: 1.0.0
 
 channels:
-  /employees:
+  /test1: # defaults to 0.1.0
     subscribe:
-      bindings:
-        http: # default binding version 0.1.0
-          type: request
-          method: GET
-  /managers:
-    subscribe:
+      message:
+        bindings:
+          http: {}
       bindings:
         http:
-          bindingVersion: 0.1.0
           type: response
-          method: GET
+
+  /test2: # specific to 0.2.0
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.2.0
+      bindings:
+        http:
+          bindingVersion: 0.2.0
+
   /invalid:
     subscribe:
       message:

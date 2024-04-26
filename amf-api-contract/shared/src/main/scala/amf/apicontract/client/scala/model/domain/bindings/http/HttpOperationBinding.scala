@@ -3,7 +3,11 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.apicontract.internal.metamodel.domain.bindings.{HttpOperationBinding010Model, HttpOperationBindingModel}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  HttpOperationBinding010Model,
+  HttpOperationBinding020Model,
+  HttpOperationBindingModel
+}
 import amf.apicontract.internal.metamodel.domain.bindings.HttpOperationBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
 import amf.shapes.client.scala.model.domain.Key
@@ -45,4 +49,25 @@ object HttpOperationBinding010 {
 
   def apply(fields: Fields, annotations: Annotations): HttpOperationBinding010 =
     new HttpOperationBinding010(fields, annotations)
+}
+
+class HttpOperationBinding020(override val fields: Fields, override val annotations: Annotations)
+    extends HttpOperationBinding(fields, annotations) {
+  override def componentId: String = "/http-operation-020"
+
+  override def meta: HttpOperationBinding020Model.type = HttpOperationBinding020Model
+
+  override def linkCopy(): HttpOperationBinding020 = HttpOperationBinding020().withId(id)
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    HttpOperationBinding020.apply
+}
+
+object HttpOperationBinding020 {
+  def apply(): HttpOperationBinding020 = apply(Annotations())
+
+  def apply(annotations: Annotations): HttpOperationBinding020 = apply(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): HttpOperationBinding020 =
+    new HttpOperationBinding020(fields, annotations)
 }

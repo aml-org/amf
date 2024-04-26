@@ -1,0 +1,13 @@
+asyncapi: 2.0.0
+info:
+  title: test API
+  version: 1.0.0
+channels:
+
+  /test3:
+    subscribe:
+      bindings:
+        http:
+          bindingVersion: 0.2.0 # doesn't have a `type` field
+          method: GET
+          type: request # should throw error

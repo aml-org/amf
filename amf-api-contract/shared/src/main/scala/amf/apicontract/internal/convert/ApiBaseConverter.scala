@@ -69,6 +69,7 @@ trait ApiBaseConverter
     with HttpMessageBindingConverter
     with HttpOperationBindingConverter
     with HttpOperationBinding010Converter
+    with HttpOperationBinding020Converter
     with KafkaMessageBindingConverter
     with KafkaMessageBinding010Converter
     with KafkaMessageBinding030Converter
@@ -276,6 +277,15 @@ trait HttpOperationBinding010Converter extends PlatformSecrets {
     override def asClient(from: HttpOperationBinding010): domain.bindings.http.HttpOperationBinding010 =
       platform.wrap[domain.bindings.http.HttpOperationBinding010](from)
     override def asInternal(from: domain.bindings.http.HttpOperationBinding010): HttpOperationBinding010 =
+      from._internal
+  }
+}
+trait HttpOperationBinding020Converter extends PlatformSecrets {
+  implicit object HttpOperationBinding020Matcher
+      extends BidirectionalMatcher[HttpOperationBinding020, domain.bindings.http.HttpOperationBinding020] {
+    override def asClient(from: HttpOperationBinding020): domain.bindings.http.HttpOperationBinding020 =
+      platform.wrap[domain.bindings.http.HttpOperationBinding020](from)
+    override def asInternal(from: domain.bindings.http.HttpOperationBinding020): HttpOperationBinding020 =
       from._internal
   }
 }

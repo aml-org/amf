@@ -1,10 +1,24 @@
 asyncapi: 2.0.0
 info:
-  title: asasd
-  version: asd
+  title: test API
+  version: 1.0.0
 channels:
-  /employees:
+  /test1:
     subscribe:
       bindings:
         http:
+          method: GET
+
+  /test2:
+    subscribe:
+      bindings:
+        http:
+          bindingVersion: 0.2.0 # doesn't have a `type` field
+          method: GET
+
+  /test3:
+    subscribe:
+      bindings:
+        http:
+          bindingVersion: 0.2.0 # doesn't have a `type` field
           method: GET

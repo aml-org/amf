@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-httpOperationBinding-type.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'type' not supported in a ASYNC 2.0 httpOperationBinding020 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-httpOperationBinding-type.yaml#/async-api/endpoint/%2Ftest3/supportedOperation/subscribe/operation-bindings/bindings/http-operation-020
+  Property: 
+  Range: [(13,10)-(14,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-httpOperationBinding-type.yaml

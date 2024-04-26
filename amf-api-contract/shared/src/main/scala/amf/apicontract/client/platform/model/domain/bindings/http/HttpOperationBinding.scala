@@ -5,7 +5,8 @@ import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.Shape
 import amf.apicontract.client.scala.model.domain.bindings.http.{
   HttpOperationBinding => InternalHttpOperationBinding,
-  HttpOperationBinding010 => InternalHttpOperationBinding010
+  HttpOperationBinding010 => InternalHttpOperationBinding010,
+  HttpOperationBinding020 => InternalHttpOperationBinding020
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 
@@ -48,4 +49,13 @@ case class HttpOperationBinding010(override private[amf] val _internal: Internal
   }
 
   override def linkCopy(): HttpOperationBinding010 = _internal.linkCopy()
+}
+
+@JSExportAll
+case class HttpOperationBinding020(override private[amf] val _internal: InternalHttpOperationBinding020)
+    extends HttpOperationBinding(_internal) {
+  @JSExportTopLevel("HttpOperationBinding020")
+  def this() = this(InternalHttpOperationBinding020())
+
+  override def linkCopy(): HttpOperationBinding020 = _internal.linkCopy()
 }

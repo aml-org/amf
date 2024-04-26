@@ -77,6 +77,7 @@ private[amf] object APIEntities extends Entities {
     EmptyBindingModel,
     HttpOperationBindingModel,
     HttpOperationBinding010Model,
+    HttpOperationBinding020Model,
     HttpMessageBindingModel,
     KafkaOperationBindingModel,
     KafkaMessageBindingModel,
