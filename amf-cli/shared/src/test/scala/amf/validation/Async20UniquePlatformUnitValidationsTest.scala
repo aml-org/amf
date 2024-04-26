@@ -500,4 +500,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async http wrong binding version") {
     validate("http-binding-wrong-binding-version.yaml", Some("http-binding-wrong-binding-version.report"))
   }
+
+  test("Async http query and headers refs") {
+    validate("http-binding-references.yaml", Some("http-binding-references.report"))
+  }
 }
