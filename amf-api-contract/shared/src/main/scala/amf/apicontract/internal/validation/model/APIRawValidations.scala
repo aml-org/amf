@@ -929,6 +929,14 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
       ),
       AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding020"),
+        owlProperty = apiBinding("method"),
+        constraint = sh("in"),
+        value = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
+        openApiErrorMessage =
+          "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
+      ),
+      AMFValidation(
         owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("operationType"),
         constraint = minCount,
@@ -940,7 +948,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiBinding("name"),
         constraint = sh("maxLength"),
         value = "255",
-        openApiErrorMessage = "'type' for http operation binding is required"
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
         owlClass = apiBinding("Amqp091ChannelExchange010"),
@@ -972,6 +980,13 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         owlClass = apiBinding("HttpOperationBinding010"),
+        owlProperty = apiBinding("operationType"),
+        constraint = sh("pattern"),
+        value = """^(request|response)$""".stripMargin,
+        openApiErrorMessage = "Http operation binding must be either 'request' or 'response'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding020"),
         owlProperty = apiBinding("operationType"),
         constraint = sh("pattern"),
         value = """^(request|response)$""".stripMargin,
@@ -1078,6 +1093,12 @@ object APIRawValidations extends CommonValidationDefinitions {
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
         owlClass = apiBinding("HttpOperationBinding010"),
+        owlProperty = apiBinding("query"),
+        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
+      ),
+      AMFValidation(
+        message = "'headers' property of ws channel binding must be of type object and have properties",
+        owlClass = apiBinding("HttpOperationBinding020"),
         owlProperty = apiBinding("query"),
         constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
       ),

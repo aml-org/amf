@@ -7,8 +7,19 @@ channels:
     publish:
       bindings:
         http:
-          bindingVersion: 31.07.92
           type: request
+          method: TRACE
+          query:
+            type: object
+            properties:
+              some:
+                type: string
+
+  other-channel:
+    publish:
+      bindings:
+        http:
+          bindingVersion: 0.2.0
           method: TRACE
           query:
             type: object

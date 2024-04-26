@@ -105,6 +105,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("required-httpOperationBinding-type.yaml", Some("required-httpOperationBinding-type.report"))
   }
 
+  test("Invalid httpOperationBinding type") {
+    validate("invalid-httpOperationBinding-type.yaml", Some("invalid-httpOperationBinding-type.report"))
+  }
+
   test("HttpOperationBinding type must be request or response") {
     validate("required-httpOperationBinding-type-values.yaml", Some("required-httpOperationBinding-type-values.report"))
   }

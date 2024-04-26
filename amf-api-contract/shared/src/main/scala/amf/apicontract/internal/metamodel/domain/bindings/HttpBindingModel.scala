@@ -1,6 +1,10 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding010}
+import amf.apicontract.client.scala.model.domain.bindings.http.{
+  HttpMessageBinding,
+  HttpOperationBinding010,
+  HttpOperationBinding020
+}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
@@ -33,6 +37,12 @@ object HttpOperationBinding010Model extends HttpOperationBindingModel {
   override def fields: List[Field] = List(OperationType, Method, Query, BindingVersion) ++ OperationBindingModel.fields
 
   override def modelInstance: AmfObject = HttpOperationBinding010()
+}
+
+object HttpOperationBinding020Model extends HttpOperationBindingModel {
+  override val `type`: List[ValueType]  = ApiBinding + "HttpOperationBinding020" :: OperationBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "HttpOperationBinding020")
+  override def modelInstance: AmfObject = HttpOperationBinding020()
 }
 
 object HttpMessageBindingModel extends MessageBindingModel with BindingVersion with BindingHeaders {

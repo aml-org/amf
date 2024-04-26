@@ -88,6 +88,11 @@ object Async20Syntax extends SpecSyntax {
       "query",
       "bindingVersion"
     ),
+    "httpOperationBinding020" -> Set(
+      "method",
+      "query",
+      "bindingVersion"
+    ),
     "amqpOperationBinding010" -> Set(
       "expiration",
       "userId",

@@ -14,7 +14,7 @@ object HttpMessageBindingParser extends BindingParser[HttpMessageBinding] {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "HttpMessageBinding", ctx.specSettings.spec)
     val map            = entry.value.as[YMap]
     val binding = bindingVersion match {
-      case "0.1.0" | "latest" => HttpMessageBinding(Annotations(entry))
+      case "0.1.0" | "0.2.0" | "latest" => HttpMessageBinding(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = HttpMessageBinding(Annotations(entry))
         invalidBindingVersion(defaultBinding, invalidVersion, "HTTP Message Binding", warning = true)
