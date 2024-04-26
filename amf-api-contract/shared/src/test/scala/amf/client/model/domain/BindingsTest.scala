@@ -178,7 +178,7 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test HttpOperationBinding") {
-    val binding = new HttpOperationBinding()
+    val binding = new HttpOperationBinding010()
       .withBindingVersion(s)
       .withMethod(s)
       .withQuery(shape)

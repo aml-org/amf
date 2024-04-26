@@ -921,7 +921,7 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'type' for amqp 0.9.1 channel exchange object must be one of 'topic', 'direct', 'fanout', 'default' or 'headers'"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("method"),
         constraint = sh("in"),
         value = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
@@ -929,7 +929,7 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("operationType"),
         constraint = minCount,
         value = "1",
@@ -971,7 +971,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("operationType"),
         constraint = sh("pattern"),
         value = """^(request|response)$""".stripMargin,
@@ -1077,7 +1077,7 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("query"),
         constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
       ),

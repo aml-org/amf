@@ -3,43 +3,46 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.apicontract.internal.metamodel.domain.bindings.HttpOperationBindingModel
+import amf.apicontract.internal.metamodel.domain.bindings.{HttpOperationBinding010Model, HttpOperationBindingModel}
 import amf.apicontract.internal.metamodel.domain.bindings.HttpOperationBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
 import amf.shapes.client.scala.model.domain.Key
 
-class HttpOperationBinding(override val fields: Fields, override val annotations: Annotations)
+abstract class HttpOperationBinding(override val fields: Fields, override val annotations: Annotations)
     extends OperationBinding
     with BindingVersion
     with Key {
-
-  override def key: StrField = fields.field(HttpOperationBindingModel.key)
-
-  def method: StrField        = fields.field(Method)
-  def query: Shape            = fields.field(Query)
-  def operationType: StrField = fields.field(OperationType)
-
+  override def key: StrField                        = fields.field(HttpOperationBindingModel.key)
   override protected def bindingVersionField: Field = BindingVersion
-  override def meta: HttpOperationBindingModel.type = HttpOperationBindingModel
+  override def componentId: String                  = "/http-operation"
 
-  def withOperationType(`type`: String): this.type = set(OperationType, `type`)
-  def withMethod(method: String): this.type        = set(Method, method)
-  def withQuery(query: Shape): this.type           = set(Query, query)
+  def method: StrField = fields.field(Method)
+  def query: Shape     = fields.field(Query)
 
-  override def componentId: String = "/http-operation"
-
-  override def linkCopy(): HttpOperationBinding = HttpOperationBinding().withId(id)
-
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
-    HttpOperationBinding.apply
+  def withMethod(method: String): this.type = set(Method, method)
+  def withQuery(query: Shape): this.type    = set(Query, query)
 }
 
-object HttpOperationBinding {
+class HttpOperationBinding010(override val fields: Fields, override val annotations: Annotations)
+    extends HttpOperationBinding(fields, annotations) {
+  override def componentId: String = "/http-operation-010"
 
-  def apply(): HttpOperationBinding = apply(Annotations())
+  def operationType: StrField                      = fields.field(HttpOperationBinding010Model.OperationType)
+  def withOperationType(`type`: String): this.type = set(HttpOperationBinding010Model.OperationType, `type`)
 
-  def apply(annotations: Annotations): HttpOperationBinding = apply(Fields(), annotations)
+  override def meta: HttpOperationBinding010Model.type = HttpOperationBinding010Model
 
-  def apply(fields: Fields, annotations: Annotations): HttpOperationBinding =
-    new HttpOperationBinding(fields, annotations)
+  override def linkCopy(): HttpOperationBinding010 = HttpOperationBinding010().withId(id)
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    HttpOperationBinding010.apply
+}
+
+object HttpOperationBinding010 {
+  def apply(): HttpOperationBinding010 = apply(Annotations())
+
+  def apply(annotations: Annotations): HttpOperationBinding010 = apply(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): HttpOperationBinding010 =
+    new HttpOperationBinding010(fields, annotations)
 }

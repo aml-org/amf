@@ -82,7 +82,7 @@ object Async20Syntax extends SpecSyntax {
       "autoDelete",
       "vhost"
     ),
-    "httpOperationBinding" -> Set(
+    "httpOperationBinding010" -> Set(
       "type",
       "method",
       "query",

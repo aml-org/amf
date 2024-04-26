@@ -90,6 +90,7 @@ AMF Model Documentation
 * [HttpApiKeySettings](#httpapikeysettings)
 * [HttpMessageBinding](#httpmessagebinding)
 * [HttpOperationBinding](#httpoperationbinding)
+* [HttpOperationBinding010](#httpoperationbinding010)
 * [HttpSettings](#httpsettings)
 * [IBMMQChannelBinding](#ibmmqchannelbinding)
 * [IBMMQChannelQueue](#ibmmqchannelqueue)
@@ -1744,6 +1745,21 @@ Types:
 
 Types:
 * `http://a.ml/vocabularies/apiBinding#HttpOperationBinding`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | method | string | - | Operation binding method | `http://a.ml/vocabularies/apiBinding#method` |
+ | query | [Shape](#shape) | - | A Schema object containing the definitions for each query parameter | `http://a.ml/vocabularies/apiBinding#query` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## HttpOperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#HttpOperationBinding010`
 * `http://a.ml/vocabularies/apiBinding#OperationBinding`
 * `http://a.ml/vocabularies/document#DomainElement`
 
