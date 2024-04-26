@@ -1,0 +1,26 @@
+{
+  "namespace": "com.acme",
+  "protocol": "HelloWorld",
+  "doc": "Protocol Greetings",
+  "types": [
+    {
+      "type": "record",
+      "name": "LongList",
+      "aliases": ["LinkedLongs"],
+      "fields" : [
+        {"name": "value", "type": "long"},
+        {"name": "next", "type": ["null", "LongList"]}
+      ]
+    },
+    {
+      "type": "array",
+      "items" : "LongList",
+      "default": []
+    },
+    {
+      "type": "map",
+      "values" : "LongList",
+      "default": {}
+    }
+  ]
+}

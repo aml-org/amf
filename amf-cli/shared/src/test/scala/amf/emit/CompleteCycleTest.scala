@@ -361,6 +361,16 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Test test") {
+    cycle(
+      "test_test.json",
+      "file-type.json",
+      Oas20JsonHint,
+      target = Oas20JsonHint,
+      renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
+    )
+  }
+
   multiTest("Types amf(raml) to amf test", "types.raml.%s", "types.raml.%s") { config =>
     cycle(config.source, config.golden, AmfJsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }

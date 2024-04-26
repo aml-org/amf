@@ -8,6 +8,7 @@ import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
 import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
 import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
+import amf.apicontract.internal.spec.avro.AvroParsePlugin
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
@@ -154,6 +155,11 @@ object RAMLConfiguration extends APIConfigurationBuilder {
         s"Spec ${spec.id} not supported by RAMLConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}"
       )
   }
+}
+
+object AvroConfiguration extends APIConfigurationBuilder {
+  def Avro(): AMFConfiguration =
+    common().withPlugins(List(AvroParsePlugin)) // TODO: add validation profiles and serialization
 }
 
 /** [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for OAS like:

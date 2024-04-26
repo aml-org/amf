@@ -1,0 +1,31 @@
+{
+  "namespace": "com.acme",
+  "protocol": "HelloWorld",
+  "doc": "Protocol Greetings",
+  "types": [
+    {
+      "type": "record",
+      "name": "LongList",
+      "aliases": ["LinkedLongs"],
+      "fields" : [
+        {"name": "value", "type": "long"},
+        {"name": "next", "type": ["null", "LongList"]}
+      ]
+    },
+    {
+      "type": "enum",
+      "name": "Suit",
+      "symbols" : ["SPADES", "HEARTS", "DIAMONDS", "CLUBS"]
+    },
+    {
+      "type": "array",
+      "items" : "string",
+      "default": []
+    },
+    {
+      "type": "map",
+      "values" : "long",
+      "default": {}
+    }
+  ]
+}
