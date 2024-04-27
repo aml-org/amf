@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.avro.parser.document
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.avro.parser.context.AvroWebAPIContext
-import amf.apicontract.internal.spec.avro.parser.domain.AvroShapeParser
+import amf.apicontract.internal.spec.avro.parser.domain.{AvroMessageParser, AvroMessagesParser, AvroShapeParser}
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.metamodel.document.DocumentModel
@@ -56,7 +56,14 @@ class AvroDocumentParser(root: Root)(implicit ctx: AvroWebAPIContext) extends Qu
     map.key("doc", (WebApiModel.Description in api).allowingAnnotations)
 
     // parse messages
-    // map.key("messages", )
+    map.key(
+      "messages",
+      e => {
+        api.withEndPoints(parseMessages(e))
+      }
+    )
     api
   }
+
+  def parseMessages(e: YMapEntry) = new AvroMessagesParser(e.value.as[YMap]).parse()
 }

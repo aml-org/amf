@@ -44,4 +44,8 @@ class AvroCycleTest extends FunSuiteCycleTests {
     cycle("inner-type-field.json", "inner-type-field.jsonld")
   }
 
+  test("Can parse message") {
+    cycle("message.json", "message.jsonld")
+  }
+
 }

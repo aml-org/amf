@@ -6,8 +6,8 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
 
 class AvroShapeParser(map: YMap)(implicit ctx: AvroWebAPIContext) extends AvroKeyExtractor {
-
-  def parse(): Option[AnyShape] = map.typeValue.flatMap(parseTypeEntry)
+  val typeValue                 = map.typeValue
+  def parse(): Option[AnyShape] = typeValue.flatMap(parseTypeEntry)
 
   def parseTypeEntry(value: YNode): Option[AnyShape] = {
     value.tagType match {
@@ -29,11 +29,18 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroWebAPIContext) extends AvroKe
       case "enum"                => parseEnum()
       case "fixed"               => throw new UnsupportedOperationException() // TODO: discuss what to map fixed
       case _ if name.isPrimitive => parsePrimitiveType(name)
+      case _                     => parseInherits(name)
 
     }
   }
 
   private def parseRecord() = new AvroRecordParser(map).parse()
+
+  private def parseInherits(name: String) = {
+    val parent = AvroReferenceParser(name, typeValue.getOrElse(YNode.Empty)).parse()
+    val shape  = parent.meta.modelInstance
+    shape.withInherits(Seq(parent))
+  }
 
   private def parseEnum() = new AvroEnumParser(map).parse()
 
