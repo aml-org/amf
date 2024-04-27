@@ -1,0 +1,22 @@
+{
+  "namespace": "com.acme",
+  "protocol": "HelloWorld",
+  "doc": "Protocol Greetings",
+  "types": [
+    {
+      "type": "record",
+      "name": "LongList",
+      "aliases": ["LinkedLongs"],
+      "fields" : [
+        {
+          "name": "inheritNull",
+          "type": {
+            "type": "string",
+            "name": "Simple",
+            "doc": "A simple name (attribute) and no namespace attribute: inherit the null namespace of the enclosing type 'Example'. The fullname is 'Simple'."
+          }
+        }
+      ]
+    }
+  ]
+}

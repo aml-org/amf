@@ -8,7 +8,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, Fields, SearchScope}
 
 case class AvroArrayShapeParser(map: YMap)(implicit ctx: AvroWebAPIContext)
-    extends AvroSyntacticShapeParser[ArrayShape](map, "array", "items") {
+    extends AvroSyntacticShapeParser[ArrayShape](map, "items") {
 
   // TODO: parse defaults
   override val shape: ArrayShape = ArrayShape(map)
@@ -18,10 +18,10 @@ case class AvroArrayShapeParser(map: YMap)(implicit ctx: AvroWebAPIContext)
   override def parseMembers(e: YMapEntry): AnyShape = AvroTextParser(e.value).parse()
 }
 
-case class AvroTextParser(node: YNode)(implicit ctx: AvroWebAPIContext) {
+case class AvroTextParser(node: YNode)(implicit ctx: AvroWebAPIContext) extends AvroKeyExtractor {
   def parse(): AnyShape = {
     val name = node.as[YScalar].text
-    if (AvroShapeParser.isPrimitive(name)) AvroScalarShapeParser(name, None).parse()
+    if (name.isPrimitive) AvroScalarShapeParser(name, None).parse()
     else AvroReferenceParser(name, node).parse()
   }
 }
@@ -46,7 +46,8 @@ case class AvroReferenceParser(ref: String, value: YNode)(implicit ctx: AvroWebA
   }
 }
 
-case class AvroMapShapeParser(map: YMap) extends AvroSyntacticShapeParser[NodeShape](map, "map", "values") {
+case class AvroMapShapeParser(map: YMap)(implicit ctx: AvroWebAPIContext)
+    extends AvroSyntacticShapeParser[NodeShape](map, "values") {
 
   // TODO: parse defauls
   override val shape: NodeShape = NodeShape(map)
@@ -54,14 +55,14 @@ case class AvroMapShapeParser(map: YMap) extends AvroSyntacticShapeParser[NodeSh
   override def setMembers(anyShape: AnyShape): Unit = shape.withAdditionalPropertiesSchema(anyShape)
 }
 
-abstract class AvroSyntacticShapeParser[T <: AnyShape](map: YMap, name: String, membersKey: String) {
+abstract class AvroSyntacticShapeParser[T <: AnyShape](map: YMap, membersKey: String)(implicit ctx: AvroWebAPIContext)
+    extends AvroShapeBaseParser(map) {
 
   val shape: T
 
   protected def setMembers(anyShape: AnyShape): Unit
 
-  def parse(): T = {
-    shape.withName(name)
+  override protected def parseShape(): AnyShape = {
     map.key(membersKey).map(parseMembers).foreach(setMembers)
     shape
   }

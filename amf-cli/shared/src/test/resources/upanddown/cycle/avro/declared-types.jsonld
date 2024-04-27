@@ -72,7 +72,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field/scalar/long",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field/scalar/value",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -87,7 +87,73 @@
                 ],
                 "http://www.w3.org/ns/shacl#name": [
                   {
-                    "@value": "long"
+                    "@value": "value"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field_1",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field_1/union/union",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#UnionShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#anyOf": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field_1/union/union/anyOf/nil/null",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#NilShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field_1/union/union/anyOf/any/default-any",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/LongList/property/property/field_1/union/union/anyOf/any/default-any/unresolved"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "LongList"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "union"
                   }
                 ]
               }
@@ -106,7 +172,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/string",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/Suit",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -121,16 +187,16 @@
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
-            "@value": "string"
+            "@value": "Suit"
           }
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/string/list",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/Suit/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/string/in/data-node",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/Suit/in/data-node",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -150,7 +216,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/string/in/data-node_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/Suit/in/data-node_2",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -170,7 +236,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_3": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/string/in/data-node_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/Suit/in/data-node_3",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -190,7 +256,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_4": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/string/in/data-node_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/scalar/Suit/in/data-node_4",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar",
                   "http://a.ml/vocabularies/data#Node",
@@ -212,7 +278,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/array/array",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/array/AnArray",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -222,7 +288,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/array/array/scalar/string",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/array/AnArray/scalar/string",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -244,12 +310,12 @@
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
-            "@value": "array"
+            "@value": "AnArray"
           }
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/map",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/AMap",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -259,7 +325,7 @@
         ],
         "http://www.w3.org/ns/shacl#additionalPropertiesSchema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/map/scalar/long",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/declared-types.json#/declares/shape/AMap/scalar/long",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -281,7 +347,7 @@
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
-            "@value": "map"
+            "@value": "AMap"
           }
         ]
       }

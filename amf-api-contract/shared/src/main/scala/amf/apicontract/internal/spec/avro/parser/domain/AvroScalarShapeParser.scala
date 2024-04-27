@@ -1,13 +1,17 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
+import amf.apicontract.internal.spec.avro.parser.context.AvroWebAPIContext
 import amf.apicontract.internal.spec.avro.parser.domain.AvroScalarShapeParser.defaultAnnotations
 import amf.core.client.scala.vocabulary.Namespace.{Xsd, XsdTypes}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, ScalarShape}
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import org.yaml.model.{YMap, YMapEntry}
+import amf.core.internal.parser.YMapOps
+import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 
-case class AvroScalarShapeParser(`type`: String, yMap: Option[YMap]) {
+case class AvroScalarShapeParser(`type`: String, yMap: Option[YMap])(implicit ctx: AvroWebAPIContext)
+    extends AvroShapeBaseParser(yMap.getOrElse(YMap.empty)) {
 
   private val (annotations, typeAnnotations): (Annotations, Annotations) =
     yMap.map(annotationsFromMap).getOrElse(defaultAnnotations)
@@ -22,7 +26,9 @@ case class AvroScalarShapeParser(`type`: String, yMap: Option[YMap]) {
     XsdTypeDefMapping.xsdFromString(`type`)._1.getOrElse(Xsd.base + `type`)
   }
 
-  def parse(): AnyShape = if (`type` == "null") nilShape else scalarShape
+  override protected def parseShape(): AnyShape = getShape()
+
+  private def getShape() = if (`type` == "null") nilShape else scalarShape
 }
 
 object AvroScalarShapeParser {
