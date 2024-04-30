@@ -1193,14 +1193,28 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
-        owlClass = apiBinding("SolaceOperationDestination"),
+        owlClass = apiBinding("SolaceOperationDestination010"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination020"),
         owlProperty = apiBinding("destinationType"),
         constraint = sh("in"),
         value = "queue,topic"
       ),
       AMFValidation(
         message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
-        owlClass = apiBinding("SolaceOperationDestination"),
+        owlClass = apiBinding("SolaceOperationDestination010"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination020"),
         owlProperty = apiBinding("deliveryMode"),
         constraint = sh("in"),
         value = "direct,persistent"

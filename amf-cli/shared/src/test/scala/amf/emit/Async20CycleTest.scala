@@ -272,6 +272,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "Kafka channel binding",
       "bindings/kafka-channel-binding.yaml",
       "bindings/kafka-channel-binding.yaml"
+    ),
+    FixtureData(
+      "solace operation destination binding",
+      "bindings/solace-binding-operation.yaml",
+      "bindings/solace-binding-operation.yaml"
     )
 
 // TODO: figure out why this test is commented out

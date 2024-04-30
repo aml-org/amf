@@ -1,17 +1,12 @@
 package amf.apicontract.client.scala.model.domain.bindings.solace
 
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  SolaceOperationBindingModel,
-  SolaceOperationDestinationModel,
-  SolaceOperationQueueModel,
-  SolaceOperationTopicModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings.{SolaceOperationBindingModel, SolaceOperationDestination010Model, SolaceOperationDestination020Model, SolaceOperationDestinationModel, SolaceOperationQueueModel, SolaceOperationTopicModel}
 import amf.apicontract.internal.metamodel.domain.bindings.SolaceOperationBindingModel._
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Solace
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
-import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.{Field, Obj}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.Key
 
@@ -45,33 +40,46 @@ object SolaceOperationBinding {
     new SolaceOperationBinding(fields, annotations)
 }
 
-class SolaceOperationDestination(override val fields: Fields, override val annotations: Annotations)
+abstract class SolaceOperationDestination(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement {
-  override def meta: SolaceOperationDestinationModel.type = SolaceOperationDestinationModel
 
   def destinationType: StrField   = fields.field(SolaceOperationDestinationModel.DestinationType)
   def deliveryMode: StrField      = fields.field(SolaceOperationDestinationModel.DeliveryMode)
   def queue: SolaceOperationQueue = fields.field(SolaceOperationDestinationModel.Queue)
-  def topic: SolaceOperationTopic = fields.field(SolaceOperationDestinationModel.Topic)
 
   def withDestinationType(destinationType: String): this.type =
     set(SolaceOperationDestinationModel.DestinationType, destinationType)
   def withDeliveryMode(deliveryMode: String): this.type =
     set(SolaceOperationDestinationModel.DeliveryMode, deliveryMode)
   def withQueue(queue: SolaceOperationQueue): this.type = set(SolaceOperationDestinationModel.Queue, queue)
-  def withTopic(topic: SolaceOperationTopic): this.type = set(SolaceOperationDestinationModel.Topic, topic)
 
   override def componentId: String = s"/$Solace-destination"
 }
+class SolaceOperationDestination010(override val fields: Fields, override val annotations: Annotations)
+    extends SolaceOperationDestination(fields, annotations) {
+  override def componentId: String             = "/solace-operation-destination-010"
+  override def meta: SolaceOperationDestination010Model.type = SolaceOperationDestination010Model
 
-object SolaceOperationDestination {
+}
+object SolaceOperationDestination010 {
+  def apply(): SolaceOperationDestination010                         = apply(Annotations())
+  def apply(annotations: Annotations): SolaceOperationDestination010 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): SolaceOperationDestination010 =
+    new SolaceOperationDestination010(fields, annotations)
+}
+class SolaceOperationDestination020(override val fields: Fields, override val annotations: Annotations)
+    extends SolaceOperationDestination(fields, annotations) {
+  override def meta: SolaceOperationDestination020Model.type = SolaceOperationDestination020Model
+  override def componentId: String                           = s"/$Solace-operation-destination-020"
+  def topic: SolaceOperationTopic                            = fields.field(SolaceOperationDestination020Model.Topic)
+  def withTopic(topic: SolaceOperationTopic): this.type      = set(SolaceOperationDestination020Model.Topic, topic)
+}
 
-  def apply(): SolaceOperationDestination = apply(Annotations())
-
-  def apply(annotations: Annotations): SolaceOperationDestination = apply(Fields(), annotations)
-
-  def apply(fields: Fields, annotations: Annotations): SolaceOperationDestination =
-    new SolaceOperationDestination(fields, annotations)
+object SolaceOperationDestination020 {
+  def apply(): SolaceOperationDestination020                         = apply(Annotations())
+  def apply(annotations: Annotations): SolaceOperationDestination020 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): SolaceOperationDestination020 =
+    new SolaceOperationDestination020(fields, annotations)
 }
 
 class SolaceOperationQueue(override val fields: Fields, override val annotations: Annotations)
@@ -83,15 +91,10 @@ class SolaceOperationQueue(override val fields: Fields, override val annotations
 
   def topicSubscriptions: Seq[StrField] = fields.field(SolaceOperationQueueModel.TopicSubscriptions)
   def accessType: StrField              = fields.field(SolaceOperationQueueModel.AccessType)
-  def maxMsgSpoolSize: StrField         = fields.field(SolaceOperationQueueModel.MaxMsgSpoolSize)
-  def maxTtl: StrField                  = fields.field(SolaceOperationQueueModel.MaxTtl)
 
   def withTopicSubscriptions(topicSubscriptions: Seq[String]): this.type =
     set(SolaceOperationQueueModel.TopicSubscriptions, topicSubscriptions)
   def withAccessType(accessType: String): this.type = set(SolaceOperationQueueModel.AccessType, accessType)
-  def withMaxMsgSpoolSize(maxMsgSpoolSize: String): this.type =
-    set(SolaceOperationQueueModel.MaxMsgSpoolSize, maxMsgSpoolSize)
-  def withMaxTtl(maxTtl: String): this.type = set(SolaceOperationQueueModel.MaxTtl, maxTtl)
 
   override def componentId: String = s"/$Solace-queue"
 }

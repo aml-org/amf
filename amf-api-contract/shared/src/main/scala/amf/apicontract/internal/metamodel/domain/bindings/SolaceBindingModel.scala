@@ -1,12 +1,6 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.solace.{
-  SolaceOperationBinding,
-  SolaceOperationDestination,
-  SolaceOperationQueue,
-  SolaceOperationTopic,
-  SolaceServerBinding
-}
+import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationBinding, SolaceOperationDestination, SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationQueue, SolaceOperationTopic, SolaceServerBinding}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
@@ -24,8 +18,7 @@ object SolaceServerBindingModel extends ServerBindingModel with BindingVersion {
     )
 
   override def modelInstance: AmfObject = SolaceServerBinding()
-
-  override def fields: List[Field] = List(MsgVpn, BindingVersion) ++ ServerBindingModel.fields
+  override def fields: List[Field]      = List(MsgVpn, BindingVersion) ++ ServerBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "SolaceServerBinding" :: ServerBindingModel.`type`
 
@@ -33,7 +26,6 @@ object SolaceServerBindingModel extends ServerBindingModel with BindingVersion {
 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceServerBinding")
 }
-
 object SolaceOperationBindingModel extends OperationBindingModel with BindingVersion {
   val Destinations: Field =
     Field(
@@ -56,7 +48,7 @@ object SolaceOperationBindingModel extends OperationBindingModel with BindingVer
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationBinding")
 }
 
-object SolaceOperationDestinationModel extends DomainElementModel {
+trait SolaceOperationDestinationModel extends DomainElementModel {
 
   val DestinationType: Field = Field(
     Str,
@@ -89,6 +81,24 @@ object SolaceOperationDestinationModel extends DomainElementModel {
       )
     )
 
+  override def fields: List[Field] = List(DestinationType, DeliveryMode, Queue) ++ DomainElementModel.fields
+
+  override val `type`: List[ValueType] = ApiBinding + "SolaceOperationDestination" :: DomainElementModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationDestination")
+}
+object SolaceOperationDestinationModel extends SolaceOperationDestinationModel {
+  override def modelInstance: AmfObject = throw new Exception("SolaceOperationDestinationModel is an abstract class")
+}
+object SolaceOperationDestination010Model extends SolaceOperationDestinationModel {
+  override def modelInstance: AmfObject = SolaceOperationDestination010()
+
+  override val `type`: List[ValueType] =
+    ApiBinding + "SolaceOperationDestination010" :: SolaceOperationDestinationModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationDestination010")
+}
+object SolaceOperationDestination020Model extends SolaceOperationDestinationModel {
   val Topic: Field =
     Field(
       SolaceOperationTopicModel,
@@ -99,17 +109,17 @@ object SolaceOperationDestinationModel extends DomainElementModel {
         "Defines the properties of a topic."
       )
     )
+  override def fields: List[Field]      = List(DestinationType, DeliveryMode, Queue, Topic) ++ DomainElementModel.fields
+  override def modelInstance: AmfObject = SolaceOperationDestination020()
 
-  override def fields: List[Field] = List(DestinationType, DeliveryMode, Queue, Topic) ++ DomainElementModel.fields
+  override val `type`: List[ValueType] =
+    ApiBinding + "SolaceOperationDestination020" :: SolaceOperationDestinationModel.`type`
 
-  override val `type`: List[ValueType] = ApiBinding + "SolaceOperationDestination" :: DomainElementModel.`type`
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationDestination020")
 
-  override def modelInstance: AmfObject = SolaceOperationDestination()
-
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationDestination")
 }
 
-object SolaceOperationQueueModel extends DomainElementModel with NameFieldSchema {
+trait SolaceOperationQueueModel extends DomainElementModel with NameFieldSchema {
 
   val TopicSubscriptions: Field = Field(
     Array(Str),
@@ -131,37 +141,18 @@ object SolaceOperationQueueModel extends DomainElementModel with NameFieldSchema
     )
   )
 
-  val MaxMsgSpoolSize: Field = Field(
-    Str,
-    ApiBinding + "maxMsgSpoolSize",
-    ModelDoc(
-      ModelVocabularies.ApiBinding,
-      "maxMsgSpoolSize",
-      "The maximum amount of message spool that the given queue may use. Only applicable when destinationType is 'queue'."
-    )
-  )
-
-  val MaxTtl: Field = Field(
-    Str,
-    ApiBinding + "maxTtl",
-    ModelDoc(
-      ModelVocabularies.ApiBinding,
-      "maxTtl",
-      "The maximum TTL to apply to messages to be spooled. Only applicable when destinationType is 'queue'."
-    )
-  )
-
   override def fields: List[Field] =
-    List(TopicSubscriptions, AccessType, MaxMsgSpoolSize, MaxTtl) ++ DomainElementModel.fields
+    List(TopicSubscriptions, AccessType) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "SolaceOperationQueue" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = SolaceOperationQueue()
-
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationQueue")
 }
+object SolaceOperationQueueModel extends SolaceOperationQueueModel {
+  override def modelInstance: AmfObject = throw new Exception("SolaceOperationQueueModel is an abstract class")
+}
 
-object SolaceOperationTopicModel extends DomainElementModel {
+trait SolaceOperationTopicModel extends DomainElementModel {
 
   val TopicSubscriptions: Field = Field(
     Array(Str),
@@ -177,7 +168,8 @@ object SolaceOperationTopicModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = ApiBinding + "SolaceOperationTopic" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = SolaceOperationTopic()
-
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationTopic")
+}
+object SolaceOperationTopicModel extends SolaceOperationTopicModel {
+  override def modelInstance: AmfObject = throw new Exception("SolaceOperationTopicModel is an abstract class")
 }

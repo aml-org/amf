@@ -344,9 +344,13 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding =>
         SolaceOperationBinding(s)
     }
-    platform.registerWrapper(SolaceOperationDestinationModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination =>
-        SolaceOperationDestination(s)
+    platform.registerWrapper(SolaceOperationDestination010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination010 =>
+        SolaceOperationDestination010(s)
+    }
+    platform.registerWrapper(SolaceOperationDestination020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination020 =>
+        SolaceOperationDestination020(s)
     }
     platform.registerWrapper(SolaceOperationQueueModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationQueue =>

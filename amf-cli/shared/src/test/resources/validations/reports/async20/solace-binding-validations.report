@@ -5,18 +5,18 @@ Number of results: 3
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationDestination-destinationType-in
+- Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationDestination020-destinationType-in
   Message: Invalid 'destinationType' value. The options are: 'queue' or 'topic'.
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-destination
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020
   Property: http://a.ml/vocabularies/apiBinding#destinationType
   Range: [(20,31)-(20,52)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml
 
-- Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationDestination-deliveryMode-in
+- Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationDestination020-deliveryMode-in
   Message: Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-destination
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020
   Property: http://a.ml/vocabularies/apiBinding#deliveryMode
   Range: [(21,28)-(21,46)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationQueue-accessType-in
   Message: Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-destination/solace-queue
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue
   Property: http://a.ml/vocabularies/apiBinding#accessType
   Range: [(24,28)-(24,44)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml

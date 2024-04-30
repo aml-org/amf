@@ -9,13 +9,13 @@ servers:
     bindings:
       solace:
         msgVpn: test
-        bindingVersion: 1.2.3
+        bindingVersion: 0.1.0
 channels:
   some-channel:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.3.0
+          bindingVersion: 0.2.0
           destinations:
             - destinationType: wrong destinationType # 'queue' or 'topic'
               deliveryMode: wrong deliveryMode # 'direct' or 'persistent'

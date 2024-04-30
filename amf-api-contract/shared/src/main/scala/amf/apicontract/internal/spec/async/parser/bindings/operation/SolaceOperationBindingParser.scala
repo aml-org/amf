@@ -1,17 +1,7 @@
 package amf.apicontract.internal.spec.async.parser.bindings.operation
 
-import amf.apicontract.client.scala.model.domain.bindings.solace.{
-  SolaceOperationBinding,
-  SolaceOperationDestination,
-  SolaceOperationQueue,
-  SolaceOperationTopic
-}
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  SolaceOperationBindingModel,
-  SolaceOperationDestinationModel,
-  SolaceOperationQueueModel,
-  SolaceOperationTopicModel
-}
+import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationBinding, SolaceOperationDestination, SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationQueue, SolaceOperationTopic}
+import amf.apicontract.internal.metamodel.domain.bindings.{SolaceOperationBindingModel, SolaceOperationDestination020Model, SolaceOperationDestinationModel, SolaceOperationQueueModel, SolaceOperationTopicModel}
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -21,11 +11,18 @@ import amf.core.internal.parser.YMapOps
 
 object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): SolaceOperationBinding = {
-    val binding = SolaceOperationBinding(Annotations(entry))
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "SolaceOperationBinding", ctx.specSettings.spec)
     val map     = entry.value.as[YMap]
+    val binding: SolaceOperationBinding = bindingVersion match {
+      case "0.1.0" | "0.2.0" | "latest" => SolaceOperationBinding(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = SolaceOperationBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Solace Operation Binding")
+        defaultBinding
+    }
 
     map.key("destinations").foreach { entry =>
-      val destinations = entry.value.as[Seq[YMap]].map(parseDestination)
+      val destinations = entry.value.as[Seq[YMap]].map(yMap=>parseDestination(yMap, bindingVersion))
       binding.setWithoutId(
         SolaceOperationBindingModel.Destinations,
         AmfArray(destinations, Annotations(entry.value)),
@@ -40,10 +37,13 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
     binding
   }
 
-  private def parseDestination(map: YMap)(implicit
+  private def parseDestination(map: YMap, bindingVersion: String)(implicit
       ctx: AsyncWebApiContext
   ): SolaceOperationDestination = {
-    val destination = SolaceOperationDestination(Annotations(map))
+    val destination = bindingVersion match {
+      case "0.2.0" => SolaceOperationDestination020(Annotations(map))
+      case _ => SolaceOperationDestination010(Annotations(map))
+    }
 
     map.key("destinationType", SolaceOperationDestinationModel.DestinationType in destination)
 
@@ -53,7 +53,14 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
     }
 
     parseQueue(destination, map)
-    parseTopic(destination, map)
+    bindingVersion match {
+      case "0.2.0" | "latest" =>
+        parseTopic(destination, map)
+        ctx.closedShape(destination, map, "SolaceOperationDestination020")
+      case _ =>
+        ctx.closedShape(destination, map, "SolaceOperationDestination010")
+    }
+
 
     destination
   }
@@ -71,9 +78,9 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
 
         queueMap.key("accessType", SolaceOperationQueueModel.AccessType in queue)
 
-        queueMap.key("maxMsgSpoolSize", SolaceOperationQueueModel.MaxMsgSpoolSize in queue)
-
-        queueMap.key("maxTtl", SolaceOperationQueueModel.MaxTtl in queue)
+//        queueMap.key("maxMsgSpoolSize", SolaceOperationQueueModel.MaxMsgSpoolSize in queue)
+//
+//        queueMap.key("maxTtl", SolaceOperationQueueModel.MaxTtl in queue)
 
         ctx.closedShape(queue, queueMap, "SolaceOperationQueue")
 
@@ -93,7 +100,7 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
 
         ctx.closedShape(topic, topicMap, "SolaceOperationTopic")
 
-        destination.setWithoutId(SolaceOperationDestinationModel.Topic, topic, Annotations(entry))
+        destination.setWithoutId(SolaceOperationDestination020Model.Topic, topic, Annotations(entry))
       }
     )
   }

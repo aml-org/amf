@@ -10,8 +10,15 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object SolaceServerBindingParser extends BindingParser[SolaceServerBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): SolaceServerBinding = {
-    val binding = SolaceServerBinding(Annotations(entry))
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "SolaceServerBinding", ctx.specSettings.spec)
     val map     = entry.value.as[YMap]
+    val binding: SolaceServerBinding = bindingVersion match {
+      case "0.1.0" | "0.2.0" | "latest" => SolaceServerBinding(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = SolaceServerBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Solace Server Binding")
+        defaultBinding
+    }
 
     map.key("msgVpn", SolaceServerBindingModel.MsgVpn in binding)
 

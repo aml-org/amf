@@ -20,7 +20,12 @@ object Async23Syntax extends SpecSyntax {
         "destinations",
         "bindingVersion"
       ),
-      "SolaceOperationDestination" -> Set(
+      "SolaceOperationDestination010" -> Set(
+        "destinationType",
+        "deliveryMode",
+        "queue"
+      ),
+      "SolaceOperationDestination020" -> Set(
         "destinationType",
         "deliveryMode",
         "queue",

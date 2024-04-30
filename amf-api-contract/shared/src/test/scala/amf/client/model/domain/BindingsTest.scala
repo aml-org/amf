@@ -5,6 +5,7 @@ import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
 import amf.apicontract.client.platform.model.domain.bindings.mqtt._
+import amf.apicontract.client.platform.model.domain.bindings.solace.{SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationQueue, SolaceOperationTopic}
 import amf.apicontract.client.platform.model.domain.bindings.websockets._
 import amf.apicontract.client.platform.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.scala.APIConfiguration
@@ -493,4 +494,29 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     binding.query._internal shouldBe shape._internal
     binding.`type`.value() shouldBe s
   }
+
+  test("test SolaceOperationDestination010") {
+    val destination010 = new SolaceOperationDestination010()
+      .withDestinationType("queue")
+      .withDeliveryMode("persistent")
+      .withQueue(new SolaceOperationQueue().withAccessType("exclusive"))
+
+    destination010.destinationType.value() shouldBe "queue"
+    destination010.deliveryMode.value() shouldBe "persistent"
+    destination010.queue.accessType.value() shouldBe "exclusive"
+  }
+
+  test("test SolaceOperationDestination020") {
+    val destination020 = new SolaceOperationDestination020()
+      .withDestinationType("topic")
+      .withDeliveryMode("persistent")
+      .withQueue(new SolaceOperationQueue().withAccessType("nonexclusive"))
+      .withTopic(new SolaceOperationTopic().withTopicSubscriptions(Seq("topic1", "topic2").asClient))
+
+    destination020.destinationType.value() shouldBe "topic"
+    destination020.deliveryMode.value() shouldBe "persistent"
+    destination020.queue.accessType.value() shouldBe "nonexclusive"
+    destination020._internal.topic.topicSubscriptions.map(_.value()) should contain allOf ("topic1", "topic2")
+  }
+
 }

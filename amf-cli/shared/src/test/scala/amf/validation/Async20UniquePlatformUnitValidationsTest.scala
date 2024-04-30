@@ -529,4 +529,9 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async mqtt server binding should warn invalid references") {
     validate("mqtt-server-binding-schemas.yaml", Some("mqtt-server-binding-schemas.report"))
   }
+
+  test("Async Solace wrong binding Version") {
+    validate("solace-wrong-binding-version.yaml", Some("solace-wrong-binding-version.report"))
+  }
+
 }

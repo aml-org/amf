@@ -15,15 +15,13 @@ channels:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.3.0
+          bindingVersion: 0.2.0
           destinations:
             -
               destinationType: queue
               queue:
                 name: CreatedHREvents
                 accessType: test
-                maxMsgSpoolSize: test
-                maxTtl: test
                 topicSubscriptions:
                   - person/*/created
             -

@@ -5,7 +5,9 @@ import amf.apicontract.client.scala.model.domain.bindings.solace.{
   SolaceOperationBinding => InternalSolaceOperationBinding,
   SolaceOperationDestination => InternalSolaceOperationDestination,
   SolaceOperationQueue => InternalSolaceOperationQueue,
-  SolaceOperationTopic => InternalSolaceOperationTopic
+  SolaceOperationTopic => InternalSolaceOperationTopic,
+  SolaceOperationDestination010 => InternalSolaceOperationDestination010,
+  SolaceOperationDestination020 => InternalSolaceOperationDestination020
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
@@ -38,11 +40,8 @@ case class SolaceOperationBinding(override private[amf] val _internal: InternalS
 }
 
 @JSExportAll
-case class SolaceOperationDestination(override private[amf] val _internal: InternalSolaceOperationDestination)
+abstract class SolaceOperationDestination(override private[amf] val _internal: InternalSolaceOperationDestination)
     extends DomainElement {
-
-  @JSExportTopLevel("SolaceOperationDestination")
-  def this() = this(InternalSolaceOperationDestination())
 
   def destinationType: StrField = _internal.destinationType
   def deliveryMode: StrField    = _internal.deliveryMode
@@ -57,19 +56,33 @@ case class SolaceOperationDestination(override private[amf] val _internal: Inter
   }
 
   def queue: SolaceOperationQueue = _internal.queue
-  def topic: SolaceOperationTopic = _internal.topic
 
   def withQueue(queue: SolaceOperationQueue): this.type = {
     _internal.withQueue(queue)
     this
   }
 
+}
+
+@JSExportAll
+case class SolaceOperationDestination010(override private[amf] val _internal: InternalSolaceOperationDestination010)
+    extends SolaceOperationDestination(_internal) {
+  @JSExportTopLevel("SolaceOperationDestination010")
+  def this() = this(InternalSolaceOperationDestination010())
+
+}
+
+@JSExportAll
+case class SolaceOperationDestination020(override private[amf] val _internal: InternalSolaceOperationDestination020)
+    extends SolaceOperationDestination(_internal) {
+  @JSExportTopLevel("SolaceOperationDestination020")
+  def this() = this(InternalSolaceOperationDestination020())
+  def topic: SolaceOperationTopic = _internal.topic
   def withTopic(topic: SolaceOperationTopic): this.type = {
     _internal.withTopic(topic)
     this
   }
 }
-
 @JSExportAll
 case class SolaceOperationQueue(override private[amf] val _internal: InternalSolaceOperationQueue)
     extends DomainElement
@@ -80,8 +93,6 @@ case class SolaceOperationQueue(override private[amf] val _internal: InternalSol
 
   def topicSubscriptions: ClientList[StrField] = _internal.topicSubscriptions.asClient
   def accessType: StrField                     = _internal.accessType
-  def maxMsgSpoolSize: StrField                = _internal.maxMsgSpoolSize
-  def maxTtl: StrField                         = _internal.maxTtl
 
   def withTopicSubscriptions(topicSubscriptions: ClientList[String]): this.type = {
     _internal.withTopicSubscriptions(topicSubscriptions.asInternal)
@@ -90,16 +101,6 @@ case class SolaceOperationQueue(override private[amf] val _internal: InternalSol
 
   def withAccessType(accessType: String): this.type = {
     _internal.withAccessType(accessType)
-    this
-  }
-
-  def withMaxMsgSpoolSize(maxMsgSpoolSize: String): this.type = {
-    _internal.withMaxMsgSpoolSize(maxMsgSpoolSize)
-    this
-  }
-
-  def withMaxTtl(maxTtl: String): this.type = {
-    _internal.withMaxTtl(maxTtl)
     this
   }
 
