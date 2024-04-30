@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 Profile: 
 Conforms: false
-Number of results: 6
+Number of results: 7
 
 Level: Violation
 
@@ -22,9 +22,9 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaTopicConfiguration node
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaTopicConfiguration040 node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration-040
   Property: 
   Range: [(32,10)-(33,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
@@ -46,9 +46,17 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaTopicConfiguration050 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/other-channel/channel-bindings/bindings/kafka-channel-050/kafka-topic-configuration-050
+  Property: 
+  Range: [(73,10)-(74,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'invalidKey' not supported in a ASYNC 2.0 kafkaMessageBinding030 node
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml#/async-api/endpoint/other-channel/supportedOperation/publish/expects/request/message-bindings/bindings/kafka-message-030
   Property: 
-  Range: [(69,12)-(70,0)]
+  Range: [(86,12)-(87,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-binding-closed-shape.yaml

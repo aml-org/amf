@@ -177,12 +177,23 @@ object Async20Syntax extends SpecSyntax {
       "topicConfiguration",
       "bindingVersion"
     ),
-    "kafkaTopicConfiguration" -> Set(
+    "kafkaTopicConfiguration040" -> Set(
       "cleanup.policy",
       "retention.ms",
       "retention.bytes",
       "delete.retention.ms",
       "max.message.bytes"
+    ),
+    "kafkaTopicConfiguration050" -> Set(
+      "cleanup.policy",
+      "retention.ms",
+      "retention.bytes",
+      "delete.retention.ms",
+      "max.message.bytes",
+      "confluent.key.schema.validation",
+      "confluent.key.subject.name.strategy",
+      "confluent.value.schema.validation",
+      "confluent.value.subject.name.strategy"
     ),
     "message" -> Set(
       "headers",

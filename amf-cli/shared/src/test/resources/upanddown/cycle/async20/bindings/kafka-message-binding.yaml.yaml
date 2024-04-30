@@ -22,9 +22,12 @@ channels:
         bindings:
           kafka:
             bindingVersion: 0.2.0
-            key: # key with a valid ref
-              $ref: '#/components/schemas/testSchema'
-
+            key:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
 components:
   schemas:
     testSchema:

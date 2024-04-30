@@ -18,9 +18,10 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQChannelTopic
 }
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{
+  HasTopicConfiguration,
   KafkaChannelBinding,
-  KafkaChannelBinding030,
   KafkaChannelBinding040,
+  KafkaChannelBinding050,
   KafkaTopicConfiguration
 }
 import amf.apicontract.client.scala.model.domain.bindings.pulsar.{PulsarChannelBinding, PulsarChannelRetention}
@@ -410,8 +411,8 @@ class KafkaChannelBindingEmitter(binding: KafkaChannelBinding, ordering: SpecOrd
         fs.entry(KafkaChannelBindingModel.Replicas).foreach(f => result += ValueEmitter("replicas", f))
 
         binding match {
-          case binding04: KafkaChannelBinding040 =>
-            Option(binding04.topicConfiguration).foreach(topicConfiguration =>
+          case bindingWithTopic: HasTopicConfiguration =>
+            Option(bindingWithTopic.topicConfiguration).foreach(topicConfiguration =>
               result += new KafkaTopicConfigurationEmitter(topicConfiguration, ordering)
             )
           case _ => // ignore
@@ -445,6 +446,14 @@ class KafkaTopicConfigurationEmitter(topicConfiguration: KafkaTopicConfiguration
           .foreach(f => result += ValueEmitter("delete.retention.ms", f))
         fs.entry(KafkaTopicConfigurationModel.MaxMessageBytes)
           .foreach(f => result += ValueEmitter("max.message.bytes", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentKeySchemaValidation)
+          .foreach(f => result += ValueEmitter("confluent.key.schema.validation", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentKeySubjectNameStrategy)
+          .foreach(f => result += ValueEmitter("confluent.key.subject.name.strategy", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentValueSchemaValidation)
+          .foreach(f => result += ValueEmitter("confluent.value.schema.validation", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentValueSubjectNameStrategy)
+          .foreach(f => result += ValueEmitter("confluent.value.subject.name.strategy", f))
 
         traverse(ordering.sorted(result), emitter)
       }

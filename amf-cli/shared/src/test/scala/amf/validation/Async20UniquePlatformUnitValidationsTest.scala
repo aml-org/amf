@@ -488,4 +488,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async server invalid map") {
     validate("async-server-map.yaml", Some("async-server-map.report"))
   }
+
+  test("Async Kafka operation binding reference objects") {
+    validate("kafka-operation-binding-refs.yaml", Some("kafka-operation-binding-refs.report"))
+  }
+
+  test("Async Kafka topic configuration validations") {
+    validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
+  }
 }

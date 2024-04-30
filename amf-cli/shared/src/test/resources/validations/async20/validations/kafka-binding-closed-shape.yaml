@@ -24,7 +24,7 @@ channels:
         bindingVersion: 0.4.0
         invalidKey: should throw error
         topicConfiguration:
-          cleanup.policy: ["delete", "compact"]
+          cleanup.policy: [ "delete", "compact" ]
           retention.ms: 604800000
           retention.bytes: 1000000000
           delete.retention.ms: 86400000
@@ -54,6 +54,23 @@ channels:
               - myClientId
 
   other-channel:
+    bindings:
+      kafka:
+        topic: my-specific-topic-name
+        partitions: 20
+        replicas: 3
+        bindingVersion: 0.5.0
+        topicConfiguration:
+          cleanup.policy: [ "delete", "compact" ]
+          retention.ms: 604800000
+          retention.bytes: 1000000000
+          delete.retention.ms: 86400000
+          max.message.bytes: 1048588
+          confluent.key.schema.validation: true
+          confluent.key.subject.name.strategy: test string
+          confluent.value.schema.validation: false
+          confluent.value.subject.name.strategy: test string
+          invalidKey: should throw error
     publish:
       message:
         bindings:
