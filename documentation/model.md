@@ -1955,10 +1955,10 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | topicConfiguration040 | [KafkaTopicConfiguration040](#kafkatopicconfiguration040) | - | Topic configuration properties that are relevant for the API. | `http://a.ml/vocabularies/apiBinding#topicConfiguration040` |
  | topic | string | - | Kafka topic name if different from channel name. | `http://a.ml/vocabularies/apiBinding#topic` |
  | partitions | int | - | Number of partitions configured on this topic. | `http://a.ml/vocabularies/apiBinding#partitions` |
  | replicas | int | - | Number of replicas configured on this topic. | `http://a.ml/vocabularies/apiBinding#replicas` |
- | topicConfiguration040 | [KafkaTopicConfiguration040](#kafkatopicconfiguration040) | - | Topic configuration properties that are relevant for the API. | `http://a.ml/vocabularies/apiBinding#topicConfiguration040` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
@@ -1972,10 +1972,10 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | topicConfiguration050 | [KafkaTopicConfiguration050](#kafkatopicconfiguration050) | - | Topic configuration properties that are relevant for the API. | `http://a.ml/vocabularies/apiBinding#topicConfiguration050` |
  | topic | string | - | Kafka topic name if different from channel name. | `http://a.ml/vocabularies/apiBinding#topic` |
  | partitions | int | - | Number of partitions configured on this topic. | `http://a.ml/vocabularies/apiBinding#partitions` |
  | replicas | int | - | Number of replicas configured on this topic. | `http://a.ml/vocabularies/apiBinding#replicas` |
- | topicConfiguration050 | [KafkaTopicConfiguration050](#kafkatopicconfiguration050) | - | Topic configuration properties that are relevant for the API. | `http://a.ml/vocabularies/apiBinding#topicConfiguration050` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
@@ -2017,10 +2017,10 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
- | messageKey | [Shape](#shape) | - | Schema that defines the message key | `http://a.ml/vocabularies/apiBinding#messageKey` |
  | schemaIdLocation | string | - | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. header or payload). | `http://a.ml/vocabularies/apiBinding#schemaIdLocation` |
  | schemaIdPayloadEncoding | string | - | Number of bytes or vendor specific values when schema id is encoded in payload (e.g confluent/ apicurio-legacy / apicurio-new). | `http://a.ml/vocabularies/apiBinding#schemaIdPayloadEncoding` |
  | schemaLookupStrategy | string | - | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | `http://a.ml/vocabularies/apiBinding#schemaLookupStrategy` |
+ | messageKey | [Shape](#shape) | - | Schema that defines the message key | `http://a.ml/vocabularies/apiBinding#messageKey` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
@@ -2063,11 +2063,11 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
- | cleanup.policy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#cleanup.policy` |
- | retention.ms | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#retention.ms` |
- | retention.bytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#retention.bytes` |
- | delete.retention.ms | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#delete.retention.ms` |
- | max.message.bytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#max.message.bytes` |
+ | CleanupPolicy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#CleanupPolicy` |
+ | RetentionMs | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionMs` |
+ | RetentionBytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionBytes` |
+ | DeleteRetentionMs | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#DeleteRetentionMs` |
+ | MaxMessageBytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#MaxMessageBytes` |
 
 ## KafkaTopicConfiguration040
 
@@ -2077,11 +2077,11 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
- | cleanup.policy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#cleanup.policy` |
- | retention.ms | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#retention.ms` |
- | retention.bytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#retention.bytes` |
- | delete.retention.ms | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#delete.retention.ms` |
- | max.message.bytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#max.message.bytes` |
+ | CleanupPolicy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#CleanupPolicy` |
+ | RetentionMs | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionMs` |
+ | RetentionBytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionBytes` |
+ | DeleteRetentionMs | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#DeleteRetentionMs` |
+ | MaxMessageBytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#MaxMessageBytes` |
 
 ## KafkaTopicConfiguration050
 
@@ -2091,15 +2091,15 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
- | cleanup.policy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#cleanup.policy` |
- | retention.ms | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#retention.ms` |
- | retention.bytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#retention.bytes` |
- | delete.retention.ms | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#delete.retention.ms` |
- | max.message.bytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#max.message.bytes` |
- | confluent.key.schema.validation | boolean | - | It shows whether the schema validation for the message key is enabled. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#confluent.key.schema.validation` |
- | confluent.key.subject.name.strategy | string | - | The name of the schema lookup strategy for the message key. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#confluent.key.subject.name.strategy` |
- | confluent.value.schema.validation | boolean | - | It shows whether the schema validation for the message value is enabled. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#confluent.value.schema.validation` |
- | confluent.value.subject.name.strategy | string | - | The name of the schema lookup strategy for the message value. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#confluent.value.subject.name.strategy` |
+ | ConfluentKeySchemaValidation | boolean | - | It shows whether the schema validation for the message key is enabled. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentKeySchemaValidation` |
+ | ConfluentKeySubjectNameStrategy | string | - | The name of the schema lookup strategy for the message key. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentKeySubjectNameStrategy` |
+ | ConfluentValueSchemaValidation | boolean | - | It shows whether the schema validation for the message value is enabled. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentValueSchemaValidation` |
+ | ConfluentValueSubjectNameStrategy | string | - | The name of the schema lookup strategy for the message value. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentValueSubjectNameStrategy` |
+ | CleanupPolicy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#CleanupPolicy` |
+ | RetentionMs | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionMs` |
+ | RetentionBytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionBytes` |
+ | DeleteRetentionMs | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#DeleteRetentionMs` |
+ | MaxMessageBytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#MaxMessageBytes` |
 
 ## Key
 Model that represents the Key of an element to be retrieved by the federated graph

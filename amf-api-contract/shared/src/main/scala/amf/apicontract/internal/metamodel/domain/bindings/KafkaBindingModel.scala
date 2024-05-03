@@ -102,12 +102,10 @@ object KafkaMessageBinding030Model extends KafkaMessageBindingModel {
   override def modelInstance: AmfObject = KafkaMessageBinding030()
 
   override def fields: List[Field] = List(
-    MessageKey,
     SchemaIdLocation,
     SchemaIdPayloadEncoding,
-    SchemaLookupStrategy,
-    BindingVersion
-  ) ++ MessageBindingModel.fields
+    SchemaLookupStrategy
+  ) ++ KafkaMessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "KafkaMessageBinding030" :: MessageBindingModel.`type`
 
@@ -220,8 +218,7 @@ object KafkaChannelBinding040Model extends KafkaChannelBindingModel {
     )
   )
 
-  override def fields: List[Field] =
-    List(Topic, Partitions, Replicas, TopicConfiguration, BindingVersion) ++ ChannelBindingModel.fields
+  override def fields: List[Field] = TopicConfiguration +: KafkaChannelBindingModel.fields
 }
 
 object KafkaChannelBinding050Model extends KafkaChannelBindingModel {
@@ -239,8 +236,7 @@ object KafkaChannelBinding050Model extends KafkaChannelBindingModel {
     )
   )
 
-  override def fields: List[Field] =
-    List(Topic, Partitions, Replicas, TopicConfiguration, BindingVersion) ++ ChannelBindingModel.fields
+  override def fields: List[Field] = TopicConfiguration +: KafkaChannelBindingModel.fields
 }
 
 trait KafkaTopicConfigurationModel extends DomainElementModel {
@@ -249,32 +245,32 @@ trait KafkaTopicConfigurationModel extends DomainElementModel {
 
   val CleanupPolicy: Field = Field(
     Array(Str),
-    ApiBinding + "cleanup.policy",
-    ModelDoc(ModelVocabularies.ApiBinding, "cleanup.policy", "The cleanup.policy configuration option.")
+    ApiBinding + "CleanupPolicy",
+    ModelDoc(ModelVocabularies.ApiBinding, "CleanupPolicy", "The cleanup.policy configuration option.")
   )
 
   val RetentionMs: Field = Field(
     Int,
-    ApiBinding + "retention.ms",
-    ModelDoc(ModelVocabularies.ApiBinding, "retention.ms", "The retention.ms configuration option.")
+    ApiBinding + "RetentionMs",
+    ModelDoc(ModelVocabularies.ApiBinding, "RetentionMs", "The retention.ms configuration option.")
   )
 
   val RetentionBytes: Field = Field(
     Int,
-    ApiBinding + "retention.bytes",
-    ModelDoc(ModelVocabularies.ApiBinding, "retention.bytes", "The retention.bytes configuration option.")
+    ApiBinding + "RetentionBytes",
+    ModelDoc(ModelVocabularies.ApiBinding, "RetentionBytes", "The retention.bytes configuration option.")
   )
 
   val DeleteRetentionMs: Field = Field(
     Int,
-    ApiBinding + "delete.retention.ms",
-    ModelDoc(ModelVocabularies.ApiBinding, "delete.retention.ms", "The delete.retention.ms configuration option.")
+    ApiBinding + "DeleteRetentionMs",
+    ModelDoc(ModelVocabularies.ApiBinding, "DeleteRetentionMs", "The delete.retention.ms configuration option.")
   )
 
   val MaxMessageBytes: Field = Field(
     Int,
-    ApiBinding + "max.message.bytes",
-    ModelDoc(ModelVocabularies.ApiBinding, "max.message.bytes", "The max.message.bytes configuration option.")
+    ApiBinding + "MaxMessageBytes",
+    ModelDoc(ModelVocabularies.ApiBinding, "MaxMessageBytes", "The max.message.bytes configuration option.")
   )
 
   override def fields: List[Field] = List(
@@ -303,53 +299,48 @@ object KafkaTopicConfiguration050Model extends KafkaTopicConfigurationModel {
 
   val ConfluentKeySchemaValidation: Field = Field(
     Bool,
-    ApiBinding + "confluent.key.schema.validation",
+    ApiBinding + "ConfluentKeySchemaValidation",
     ModelDoc(
       ModelVocabularies.ApiBinding,
-      "confluent.key.schema.validation",
+      "ConfluentKeySchemaValidation",
       "It shows whether the schema validation for the message key is enabled. Vendor specific config."
     )
   )
 
   val ConfluentKeySubjectNameStrategy: Field = Field(
     Str,
-    ApiBinding + "confluent.key.subject.name.strategy",
+    ApiBinding + "ConfluentKeySubjectNameStrategy",
     ModelDoc(
       ModelVocabularies.ApiBinding,
-      "confluent.key.subject.name.strategy",
+      "ConfluentKeySubjectNameStrategy",
       "The name of the schema lookup strategy for the message key. Vendor specific config."
     )
   )
 
   val ConfluentValueSchemaValidation: Field = Field(
     Bool,
-    ApiBinding + "confluent.value.schema.validation",
+    ApiBinding + "ConfluentValueSchemaValidation",
     ModelDoc(
       ModelVocabularies.ApiBinding,
-      "confluent.value.schema.validation",
+      "ConfluentValueSchemaValidation",
       "It shows whether the schema validation for the message value is enabled. Vendor specific config."
     )
   )
 
   val ConfluentValueSubjectNameStrategy: Field = Field(
     Str,
-    ApiBinding + "confluent.value.subject.name.strategy",
+    ApiBinding + "ConfluentValueSubjectNameStrategy",
     ModelDoc(
       ModelVocabularies.ApiBinding,
-      "confluent.value.subject.name.strategy",
+      "ConfluentValueSubjectNameStrategy",
       "The name of the schema lookup strategy for the message value. Vendor specific config."
     )
   )
 
   override def fields: List[Field] = List(
-    CleanupPolicy,
-    RetentionMs,
-    RetentionBytes,
-    DeleteRetentionMs,
-    MaxMessageBytes,
     ConfluentKeySchemaValidation,
     ConfluentKeySubjectNameStrategy,
     ConfluentValueSchemaValidation,
     ConfluentValueSubjectNameStrategy
-  )
+  ) ++ KafkaTopicConfigurationModel.fields
 }
