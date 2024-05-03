@@ -25,7 +25,7 @@ Level: Violation
   Message: Kafka Topic Configuration 'cleanup.policy' field can only contain 'delete' and/or 'compact'.
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/other-channel/channel-bindings/bindings/kafka-channel-040
-  Property: http://a.ml/vocabularies/apiBinding#cleanup.policy
+  Property: http://a.ml/vocabularies/apiBinding#CleanupPolicy
   Range: [(21,27)-(28,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -33,7 +33,7 @@ Level: Violation
   Message: Kafka topic configuration 'delete.retention.ms' field must be a positive number
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/other-channel/channel-bindings/bindings/kafka-channel-040
-  Property: http://a.ml/vocabularies/apiBinding#delete.retention.ms
+  Property: http://a.ml/vocabularies/apiBinding#DeleteRetentionMs
   Range: [(21,27)-(28,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -41,7 +41,7 @@ Level: Violation
   Message: Kafka topic configuration 'max.message.bytes' field must be a positive number
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/other-channel/channel-bindings/bindings/kafka-channel-040
-  Property: http://a.ml/vocabularies/apiBinding#max.message.bytes
+  Property: http://a.ml/vocabularies/apiBinding#MaxMessageBytes
   Range: [(21,27)-(28,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -49,7 +49,7 @@ Level: Violation
   Message: Kafka Topic Configuration 'retention.ms' field valid values are [-1,...]
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/other-channel/channel-bindings/bindings/kafka-channel-040
-  Property: http://a.ml/vocabularies/apiBinding#retention.ms
+  Property: http://a.ml/vocabularies/apiBinding#RetentionMs
   Range: [(21,27)-(28,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -57,7 +57,7 @@ Level: Violation
   Message: Kafka Topic Configuration 'cleanup.policy' field can only contain 'delete' and/or 'compact'.
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/the-other-channel/channel-bindings/bindings/kafka-channel-050
-  Property: http://a.ml/vocabularies/apiBinding#cleanup.policy
+  Property: http://a.ml/vocabularies/apiBinding#CleanupPolicy
   Range: [(35,27)-(40,58)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -65,7 +65,7 @@ Level: Violation
   Message: Kafka topic configuration 'delete.retention.ms' field must be a positive number
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/the-other-channel/channel-bindings/bindings/kafka-channel-050
-  Property: http://a.ml/vocabularies/apiBinding#delete.retention.ms
+  Property: http://a.ml/vocabularies/apiBinding#DeleteRetentionMs
   Range: [(35,27)-(40,58)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -73,7 +73,7 @@ Level: Violation
   Message: Kafka topic configuration 'max.message.bytes' field must be a positive number
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/the-other-channel/channel-bindings/bindings/kafka-channel-050
-  Property: http://a.ml/vocabularies/apiBinding#max.message.bytes
+  Property: http://a.ml/vocabularies/apiBinding#MaxMessageBytes
   Range: [(35,27)-(40,58)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
 
@@ -81,6 +81,6 @@ Level: Violation
   Message: Kafka Topic Configuration 'retention.ms' field valid values are [-1,...]
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml#/async-api/endpoint/the-other-channel/channel-bindings/bindings/kafka-channel-050
-  Property: http://a.ml/vocabularies/apiBinding#retention.ms
+  Property: http://a.ml/vocabularies/apiBinding#RetentionMs
   Range: [(35,27)-(40,58)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-channel-binding-validations.yaml
