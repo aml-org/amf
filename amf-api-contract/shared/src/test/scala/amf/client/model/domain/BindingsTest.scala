@@ -171,10 +171,17 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test HttpMessageBinding") {
-    val binding = new HttpMessageBinding()
+    val binding020 = new HttpMessageBinding020()
       .withBindingVersion(s)
       .withHeaders(shape)
-    binding.headers._internal shouldBe shape._internal
+    binding020.headers._internal shouldBe shape._internal
+
+    val binding030 = new HttpMessageBinding030()
+      .withBindingVersion(s)
+      .withHeaders(shape)
+      .withStatusCode(123)
+    binding030.headers._internal shouldBe shape._internal
+    binding030.statusCode.value() shouldBe 123
   }
 
   test("test HttpOperationBinding") {

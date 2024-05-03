@@ -8,9 +8,9 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
   Message: Version 9.9.9 is not supported in a HTTP Message Binding
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-wrong-binding-version.yaml#/async-api/endpoint/%2Finvalid/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/http-message
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-wrong-binding-version.yaml#/async-api/endpoint/%2Finvalid/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/http-message-020
   Property: bindingVersion
-  Range: [(31,10)-(33,0)]
+  Range: [(42,10)-(44,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-wrong-binding-version.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version-warning
@@ -18,5 +18,5 @@ Level: Warning
   Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-wrong-binding-version.yaml#/async-api/endpoint/%2Finvalid/supportedOperation/subscribe/operation-bindings/bindings/http-operation-010
   Property: bindingVersion
-  Range: [(34,8)-(37,21)]
+  Range: [(45,8)-(48,21)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-binding-wrong-binding-version.yaml

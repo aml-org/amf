@@ -792,12 +792,19 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Info object 'version' is mandatory"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpMessageBinding"),
+        owlClass = apiBinding("HttpMessageBinding020"),
         owlProperty = apiBinding("headers"),
         uri = amfParser("mandatory-header-name-pattern"),
         constraint = shape("mandatoryHeaderBindingNamePattern"),
-        ramlErrorMessage = "Header name must comply RFC-7230",
-        openApiErrorMessage = "Header name must comply RFC-7230",
+        message = "Header name must comply RFC-7230",
+        severity = SeverityLevels.WARNING
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("headers"),
+        uri = amfParser("mandatory-header-name-pattern"),
+        constraint = shape("mandatoryHeaderBindingNamePattern"),
+        message = "Header name must comply RFC-7230",
         severity = SeverityLevels.WARNING
       ),
       AMFValidation(
@@ -1086,7 +1093,13 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
-        owlClass = apiBinding("HttpMessageBinding"),
+        owlClass = apiBinding("HttpMessageBinding020"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
+      ),
+      AMFValidation(
+        message = "'headers' property of ws channel binding must be of type object and have properties",
+        owlClass = apiBinding("HttpMessageBinding030"),
         owlProperty = apiBinding("headers"),
         constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
       ),
@@ -1281,6 +1294,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiBinding("KafkaChannelBinding050"),
         owlProperty = apiBinding("replicas"),
         constraint = shape("KafkaTopicConfigurationValidations")
+      ),
+      AMFValidation(
+        message = "Status code for a Response must be a value between 100 and 599",
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("statusCode"),
+        constraint = sh("pattern"),
+        value = "^([1-5]{1}[0-9]{2})$"
       )
     ) ++ baseApiValidations("AsyncAPI")
 

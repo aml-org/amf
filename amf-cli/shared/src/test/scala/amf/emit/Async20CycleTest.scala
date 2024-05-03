@@ -118,7 +118,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/amqp-operation-binding.yaml",
       "bindings/amqp-operation-binding.yaml"
     ),
-    FixtureData("Http message binding", "bindings/http-message-binding.yaml", "bindings/http-message-binding.yaml"),
+    FixtureData(
+      "Http message binding",
+      "bindings/http-message-binding.yaml",
+      "bindings/http-message-binding.yaml"
+    ),
     FixtureData(
       "Http operation binding",
       "bindings/http-operation-binding.yaml",

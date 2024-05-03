@@ -24,6 +24,17 @@ channels:
         http:
           bindingVersion: 0.2.0
 
+  /test3: # specific to 0.3.0
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.3.0
+            statusCode: 123 # new key added in 0.3.0
+      bindings:
+        http:
+          bindingVersion: 0.3.0
+
   /invalid:
     subscribe:
       message:
