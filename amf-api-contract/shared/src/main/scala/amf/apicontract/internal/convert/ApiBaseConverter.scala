@@ -67,6 +67,8 @@ trait ApiBaseConverter
     with Amqp091OperationBinding030Converter
     with EmptyBindingConverter
     with HttpMessageBindingConverter
+    with HttpMessageBinding020Converter
+    with HttpMessageBinding030Converter
     with HttpOperationBindingConverter
     with HttpOperationBinding010Converter
     with HttpOperationBinding020Converter
@@ -261,6 +263,22 @@ trait HttpMessageBindingConverter extends PlatformSecrets {
     override def asClient(from: HttpMessageBinding): domain.bindings.http.HttpMessageBinding =
       platform.wrap[domain.bindings.http.HttpMessageBinding](from)
     override def asInternal(from: domain.bindings.http.HttpMessageBinding): HttpMessageBinding = from._internal
+  }
+}
+trait HttpMessageBinding020Converter extends PlatformSecrets {
+  implicit object HttpMessageBinding020Matcher
+      extends BidirectionalMatcher[HttpMessageBinding020, domain.bindings.http.HttpMessageBinding020] {
+    override def asClient(from: HttpMessageBinding020): domain.bindings.http.HttpMessageBinding020 =
+      platform.wrap[domain.bindings.http.HttpMessageBinding020](from)
+    override def asInternal(from: domain.bindings.http.HttpMessageBinding020): HttpMessageBinding020 = from._internal
+  }
+}
+trait HttpMessageBinding030Converter extends PlatformSecrets {
+  implicit object HttpMessageBinding030Matcher
+      extends BidirectionalMatcher[HttpMessageBinding030, domain.bindings.http.HttpMessageBinding030] {
+    override def asClient(from: HttpMessageBinding030): domain.bindings.http.HttpMessageBinding030 =
+      platform.wrap[domain.bindings.http.HttpMessageBinding030](from)
+    override def asInternal(from: domain.bindings.http.HttpMessageBinding030): HttpMessageBinding030 = from._internal
   }
 }
 trait HttpOperationBindingConverter extends PlatformSecrets {

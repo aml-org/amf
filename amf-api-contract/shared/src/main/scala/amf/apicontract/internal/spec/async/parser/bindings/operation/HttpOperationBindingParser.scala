@@ -18,8 +18,8 @@ object HttpOperationBindingParser extends BindingParser[HttpOperationBinding] {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "HttpOperationBinding", ctx.specSettings.spec)
 
     val binding = bindingVersion match {
-      case "0.2.0" | "latest" => HttpOperationBinding020(Annotations(entry))
-      case "0.1.0"            => HttpOperationBinding010(Annotations(entry))
+      case "0.2.0" | "0.3.0" | "latest" => HttpOperationBinding020(Annotations(entry))
+      case "0.1.0"                      => HttpOperationBinding010(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = HttpOperationBinding010(Annotations(entry))
         invalidBindingVersion(defaultBinding, invalidVersion, "HTTP Operation Binding", warning = true)
