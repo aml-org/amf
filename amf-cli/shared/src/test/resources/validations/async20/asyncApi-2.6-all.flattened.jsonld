@@ -2289,10 +2289,10 @@
         "http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaSettings",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
+      "http://a.ml/vocabularies/core#name": "projects/your-project/schemas/messageAvro",
       "http://a.ml/vocabularies/apiBinding#encoding": "binary",
       "http://a.ml/vocabularies/apiBinding#firstRevisionId": "1.0.0",
       "http://a.ml/vocabularies/apiBinding#lastRevisionId": "2.0.0",
-      "http://a.ml/vocabularies/apiBinding#name": "projects/your-project/schemas/messageAvro",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map"
@@ -4149,8 +4149,8 @@
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#lastRevisionId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(154,10)-(155,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#firstRevisionId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(153,10)-(154,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_2",
@@ -4159,18 +4159,18 @@
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(152,10)-(153,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#lastRevisionId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(154,10)-(155,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#firstRevisionId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(153,10)-(154,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#encoding",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(151,10)-(152,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#encoding",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(151,10)-(152,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(152,10)-(153,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/sixth-channel/channel-bindings/bindings/pulsar-operation/pulsar-retention/source-map/lexical/element_2",
@@ -6000,7 +6000,7 @@
         "http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/apiBinding#name": "projects/your-project/schemas/message-avro",
+      "http://a.ml/vocabularies/core#name": "projects/your-project/schemas/message-avro",
       "http://a.ml/vocabularies/apiBinding#type": "avro",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -6596,7 +6596,7 @@
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#name",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(182,12)-(183,0)]"
     },
     {

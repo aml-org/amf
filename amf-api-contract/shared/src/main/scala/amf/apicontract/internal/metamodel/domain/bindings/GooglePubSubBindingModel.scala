@@ -1,6 +1,6 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{GooglePubSubChannelBinding, GooglePubSubMessageBinding, GooglePubSubMessageStoragePolicy, GooglePubSubSchemaDefinition, GooglePubSubSchemaSettings}
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub._
 import amf.apicontract.internal.metamodel.domain.bindings.GooglePubSubChannelBindingModel.Type
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
@@ -8,6 +8,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain._
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
 
 object GooglePubSubMessageBindingModel extends MessageBindingModel with BindingVersion {
 
@@ -138,8 +139,7 @@ object GooglePubSubMessageStoragePolicyModel extends DomainElementModel {
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageStoragePolicy")
 
 }
-object GooglePubSubSchemaSettingsModel extends DomainElementModel {
-
+object GooglePubSubSchemaSettingsModel extends DomainElementModel with NameFieldSchema {
   val Encoding: Field =
     Field(
       Str,
@@ -169,20 +169,9 @@ object GooglePubSubSchemaSettingsModel extends DomainElementModel {
       )
     )
 
-  val Name: Field =
-    Field(
-      Str,
-      ApiBinding + "name",
-      ModelDoc(
-        ModelVocabularies.ApiBinding,
-        "name",
-        "Name of the schema that messages published should be validated against"
-      )
-    )
-
   def modelInstance: AmfObject = GooglePubSubSchemaSettings()
 
-  def fields: List[Field] = List(Encoding, FirstRevisionId, LastRevisionId, Name) ++ DomainElementModel.fields
+  def fields: List[Field] = List(Name, Encoding, FirstRevisionId, LastRevisionId) ++ DomainElementModel.fields
 
   val `type`: List[ValueType] = ApiBinding + "GooglePubSubSchemaSettings" :: DomainElementModel.`type`
 
@@ -191,14 +180,7 @@ object GooglePubSubSchemaSettingsModel extends DomainElementModel {
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaSettings")
 
 }
-object GooglePubSubSchemaDefinitionModel extends DomainElementModel {
-  val Name: Field =
-    Field(
-      Str,
-      ApiBinding + "name",
-      ModelDoc(ModelVocabularies.ApiBinding, "name", "The name of the schema")
-    )
-
+object GooglePubSubSchemaDefinitionModel extends DomainElementModel with NameFieldSchema {
   val FieldType: Field =
     Field(
       Str,

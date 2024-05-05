@@ -1698,7 +1698,7 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
- | name | string | - | The name of the schema | `http://a.ml/vocabularies/apiBinding#name` |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | type | string | - | The type of the schema | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
@@ -1710,10 +1710,10 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | encoding | string | - | The encoding of the message  | `http://a.ml/vocabularies/apiBinding#encoding` |
  | firstRevisionId | string | - | The minimum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#firstRevisionId` |
  | lastRevisionId | string | - | The maximum (inclusive) revision allowed for validating messages | `http://a.ml/vocabularies/apiBinding#lastRevisionId` |
- | name | string | - | Name of the schema that messages published should be validated against | `http://a.ml/vocabularies/apiBinding#name` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## HttpApiKeySettings
@@ -1858,6 +1858,7 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | objectName | string | - | Defines the name of the IBM MQ queue associated with the channel. | `http://a.ml/vocabularies/apiBinding#objectName` |
  | isPartitioned | boolean | - | Defines if the queue is a cluster queue and therefore partitioned. If true, a binding option MAY be specified when accessing the queue. | `http://a.ml/vocabularies/apiBinding#isPartitioned` |
  | exclusive | boolean | - | Specifies if it is recommended to open the queue exclusively. | `http://a.ml/vocabularies/apiBinding#exclusive` |
@@ -1871,6 +1872,7 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | string | string | - | The value of the IBM MQ topic string to be used. | `http://a.ml/vocabularies/apiBinding#string` |
  | objectName | string | - | The name of the IBM MQ topic object. | `http://a.ml/vocabularies/apiBinding#objectName` |
  | durablePermitted | boolean | - | Defines if the subscription may be durable. | `http://a.ml/vocabularies/apiBinding#durablePermitted` |
