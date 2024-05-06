@@ -6,6 +6,7 @@ import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
 import amf.apicontract.client.platform.model.domain.bindings.mqtt._
 import amf.apicontract.client.platform.model.domain.bindings.websockets._
+import amf.apicontract.client.platform.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.AnyShape
@@ -302,6 +303,39 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     binding050.partitions.value() shouldBe 123
     binding050.replicas.value() shouldBe 123
     binding050.topicConfiguration._internal shouldBe topicConfiguration050._internal
+  }
+
+  test("GooglePubSubChannelBinding") {
+    val messageStoragePolicy = new GooglePubSubMessageStoragePolicy()
+      .withAllowedPersistenceRegions(stringSeq.asClient)
+
+    val schemaSettings = new GooglePubSubSchemaSettings()
+      .withName(s)
+      .withEncoding(s)
+      .withFirstRevisionId(s)
+      .withLastRevisionId(s)
+
+    val binding010 = new GooglePubSubChannelBinding010()
+      .withBindingVersion(s)
+      .withMessageRetentionDuration(s)
+      .withMessageStoragePolicy(messageStoragePolicy)
+      .withSchemaSettings(schemaSettings)
+      .withTopic(s)
+
+    binding010.messageRetentionDuration.value() shouldBe s
+    binding010.messageStoragePolicy._internal shouldBe messageStoragePolicy._internal
+    binding010.schemaSettings._internal shouldBe schemaSettings._internal
+    binding010.topic.value() shouldBe s
+
+    val binding020 = new GooglePubSubChannelBinding020()
+      .withBindingVersion(s)
+      .withMessageRetentionDuration(s)
+      .withMessageStoragePolicy(messageStoragePolicy)
+      .withSchemaSettings(schemaSettings)
+
+    binding020.messageRetentionDuration.value() shouldBe s
+    binding020.messageStoragePolicy._internal shouldBe messageStoragePolicy._internal
+    binding020.schemaSettings._internal shouldBe schemaSettings._internal
   }
 
   test("test MessageBindings") {

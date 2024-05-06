@@ -3,6 +3,8 @@ package amf.apicontract.client.platform.model.domain.bindings.googlepubsub
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ChannelBinding}
 import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
   GooglePubSubChannelBinding => InternalGooglePubSubChannelBinding,
+  GooglePubSubChannelBinding010 => InternalGooglePubSubChannelBinding010,
+  GooglePubSubChannelBinding020 => InternalGooglePubSubChannelBinding020,
   GooglePubSubMessageStoragePolicy => InternalGooglePubSubMessageStoragePolicy,
   GooglePubSubSchemaSettings => InternalGooglePubSubSchemaSettings
 }
@@ -13,19 +15,15 @@ import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement,
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class GooglePubSubChannelBinding(override private[amf] val _internal: InternalGooglePubSubChannelBinding)
+abstract class GooglePubSubChannelBinding(override private[amf] val _internal: InternalGooglePubSubChannelBinding)
     extends ChannelBinding
     with BindingVersion {
-  @JSExportTopLevel("GooglePubSubChannelBinding")
-  def this() = this(InternalGooglePubSubChannelBinding())
-
   override def bindingVersion: StrField = _internal.bindingVersion
 
   def labels: ObjectNode                                     = _internal.labels
   def messageRetentionDuration: StrField                     = _internal.messageRetentionDuration
   def messageStoragePolicy: GooglePubSubMessageStoragePolicy = _internal.messageStoragePolicy
   def schemaSettings: GooglePubSubSchemaSettings             = _internal.schemaSettings
-  def topic: StrField                                        = _internal.topic
 
   def withLabels(labels: ObjectNode): this.type = {
     _internal.withLabels(labels)
@@ -43,17 +41,35 @@ case class GooglePubSubChannelBinding(override private[amf] val _internal: Inter
     _internal.withSchemaSettings(schemaSettings._internal)
     this
   }
-  def withTopic(topic: String): this.type = {
-    _internal.withTopic(topic)
-    this
-  }
 
   override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
     this
   }
+}
 
-  override def linkCopy(): GooglePubSubChannelBinding = _internal.linkCopy()
+@JSExportAll
+case class GooglePubSubChannelBinding010(override private[amf] val _internal: InternalGooglePubSubChannelBinding010)
+    extends GooglePubSubChannelBinding(_internal) {
+  @JSExportTopLevel("GooglePubSubChannelBinding010")
+  def this() = this(InternalGooglePubSubChannelBinding010())
+
+  def topic: StrField = _internal.topic
+
+  def withTopic(topic: String): this.type = {
+    _internal.withTopic(topic)
+    this
+  }
+
+  override def linkCopy(): GooglePubSubChannelBinding010 = _internal.linkCopy()
+}
+
+@JSExportAll
+case class GooglePubSubChannelBinding020(override private[amf] val _internal: InternalGooglePubSubChannelBinding020)
+    extends GooglePubSubChannelBinding(_internal) {
+  @JSExportTopLevel("GooglePubSubChannelBinding020")
+  def this() = this(InternalGooglePubSubChannelBinding020())
+  override def linkCopy(): GooglePubSubChannelBinding020 = _internal.linkCopy()
 }
 
 @JSExportAll

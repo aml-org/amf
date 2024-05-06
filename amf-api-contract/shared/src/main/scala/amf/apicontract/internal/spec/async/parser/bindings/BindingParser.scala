@@ -76,6 +76,8 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
       case ("HttpOperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
       case ("HttpMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
+      case ("GooglePubSubChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) =>
+        "0.1.0"
     }
   }
 

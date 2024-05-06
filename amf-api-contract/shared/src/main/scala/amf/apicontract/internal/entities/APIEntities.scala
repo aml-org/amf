@@ -134,6 +134,8 @@ private[amf] object APIEntities extends Entities {
     PulsarChannelRetentionModel,
     GooglePubSubMessageBindingModel,
     GooglePubSubChannelBindingModel,
+    GooglePubSubChannelBinding010Model,
+    GooglePubSubChannelBinding020Model,
     GooglePubSubMessageStoragePolicyModel,
     GooglePubSubSchemaSettingsModel,
     GooglePubSubSchemaDefinitionModel

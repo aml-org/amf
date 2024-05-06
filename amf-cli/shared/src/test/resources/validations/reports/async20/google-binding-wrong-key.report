@@ -1,0 +1,54 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+Profile: 
+Conforms: false
+Number of results: 6
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'wrongKey1' not supported in a ASYNC 2.5 GooglePubSubMessageStoragePolicy node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy
+  Property: 
+  Range: [(19,10)-(20,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'WrongKey2' not supported in a ASYNC 2.5 GooglePubSubSchemaSettings node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings
+  Property: 
+  Range: [(25,10)-(26,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'WrongKey3' not supported in a ASYNC 2.5 GooglePubSubChannelBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/googlepubsub-channel-010
+  Property: 
+  Range: [(26,8)-(27,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'topic' not supported in a ASYNC 2.5 GooglePubSubChannelBinding020 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/async-api/endpoint/other-channel/channel-bindings/bindings/googlepubsub-channel-020
+  Property: 
+  Range: [(31,8)-(33,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'WrongKey4' not supported in a ASYNC 2.5 GooglePubSubMessageBinding node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message
+  Property: 
+  Range: [(41,10)-(42,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'WrongKey5' not supported in a ASYNC 2.5 GooglePubSubMessageSchema node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition
+  Property: 
+  Range: [(45,12)-(46,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
