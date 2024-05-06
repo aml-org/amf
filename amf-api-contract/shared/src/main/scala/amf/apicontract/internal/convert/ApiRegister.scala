@@ -368,9 +368,13 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(IBMMQChannelTopicModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQChannelTopic => IBMMQChannelTopic(s)
     }
-    platform.registerWrapper(GooglePubSubChannelBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubChannelBinding =>
-        GooglePubSubChannelBinding(s)
+    platform.registerWrapper(GooglePubSubChannelBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubChannelBinding010 =>
+        GooglePubSubChannelBinding010(s)
+    }
+    platform.registerWrapper(GooglePubSubChannelBinding020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubChannelBinding020 =>
+        GooglePubSubChannelBinding020(s)
     }
     platform.registerWrapper(GooglePubSubMessageStoragePolicyModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubMessageStoragePolicy =>

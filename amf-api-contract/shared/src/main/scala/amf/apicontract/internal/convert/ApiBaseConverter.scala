@@ -7,13 +7,7 @@ import amf.apicontract.client.scala.model.document.{APIContractProcessingData, C
 import amf.apicontract.client.scala.model.domain.bindings._
 import amf.apicontract.client.scala.model.domain.bindings.amqp._
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq._
-import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
-  GooglePubSubChannelBinding,
-  GooglePubSubMessageBinding,
-  GooglePubSubMessageStoragePolicy,
-  GooglePubSubSchemaDefinition,
-  GooglePubSubSchemaSettings
-}
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.scala.model.domain.bindings.http._
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq._
 import amf.apicontract.client.scala.model.domain.bindings.kafka._
@@ -126,6 +120,8 @@ trait ApiBaseConverter
     with GooglePubSubMessageBindingConverter
     with GooglePubSubSchemaDefinitionConverter
     with GooglePubSubChannelBindingConverter
+    with GooglePubSubChannelBinding010Converter
+    with GooglePubSubChannelBinding020Converter
     with GooglePubSubMessageStoragePolicyConverter
     with GooglePubSubSchemaSettingsConverter
 
@@ -685,6 +681,38 @@ trait GooglePubSubChannelBindingConverter extends PlatformSecrets {
     override def asClient(from: GooglePubSubChannelBinding): domain.bindings.googlepubsub.GooglePubSubChannelBinding =
       platform.wrap[domain.bindings.googlepubsub.GooglePubSubChannelBinding](from)
     override def asInternal(from: domain.bindings.googlepubsub.GooglePubSubChannelBinding): GooglePubSubChannelBinding =
+      from._internal
+  }
+}
+trait GooglePubSubChannelBinding010Converter extends PlatformSecrets {
+  implicit object GooglePubSubChannelBinding010Matcher
+      extends BidirectionalMatcher[
+        GooglePubSubChannelBinding010,
+        domain.bindings.googlepubsub.GooglePubSubChannelBinding010
+      ] {
+    override def asClient(
+        from: GooglePubSubChannelBinding010
+    ): domain.bindings.googlepubsub.GooglePubSubChannelBinding010 =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubChannelBinding010](from)
+    override def asInternal(
+        from: domain.bindings.googlepubsub.GooglePubSubChannelBinding010
+    ): GooglePubSubChannelBinding010 =
+      from._internal
+  }
+}
+trait GooglePubSubChannelBinding020Converter extends PlatformSecrets {
+  implicit object GooglePubSubChannelBinding020Matcher
+      extends BidirectionalMatcher[
+        GooglePubSubChannelBinding020,
+        domain.bindings.googlepubsub.GooglePubSubChannelBinding020
+      ] {
+    override def asClient(
+        from: GooglePubSubChannelBinding020
+    ): domain.bindings.googlepubsub.GooglePubSubChannelBinding020 =
+      platform.wrap[domain.bindings.googlepubsub.GooglePubSubChannelBinding020](from)
+    override def asInternal(
+        from: domain.bindings.googlepubsub.GooglePubSubChannelBinding020
+    ): GooglePubSubChannelBinding020 =
       from._internal
   }
 }
