@@ -18,6 +18,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   GooglePubSubSchemaDefinitionModel,
   HttpMessageBindingModel,
   IBMMQMessageBindingModel,
+  KafkaMessageBinding030Model,
   KafkaMessageBindingModel
 }
 import amf.apicontract.internal.spec.async.emitters.domain
@@ -100,6 +101,13 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
 
         fs.entry(KafkaMessageBindingModel.MessageKey)
           .foreach(f => result += domain.AsyncSchemaEmitter("key", f.element.asInstanceOf[Shape], ordering, Seq()))
+        fs.entry(KafkaMessageBinding030Model.SchemaIdLocation)
+          .foreach(f => result += ValueEmitter("schemaIdLocation", f))
+        fs.entry(KafkaMessageBinding030Model.SchemaIdPayloadEncoding)
+          .foreach(f => result += ValueEmitter("schemaIdPayloadEncoding", f))
+        fs.entry(KafkaMessageBinding030Model.SchemaLookupStrategy)
+          .foreach(f => result += ValueEmitter("schemaLookupStrategy", f))
+
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
       }

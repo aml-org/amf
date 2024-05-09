@@ -1,0 +1,17 @@
+asyncapi: 2.1.0
+info:
+  title: Kafka message binding
+  version: 1.0.0
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          kafka: # in asyncapi 2.1+ it's binding version should default to 0.3.0
+            key:
+              type: string
+              maxLength: 20
+            schemaIdLocation: test string
+            schemaIdPayloadEncoding: test string
+            schemaLookupStrategy: test string

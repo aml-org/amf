@@ -10,8 +10,18 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object Amqp091MessageBindingParser extends BindingParser[Amqp091MessageBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Amqp091MessageBinding = {
-    val binding = Amqp091MessageBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "Amqp091MessageBinding", ctx.specSettings.spec)
+
+    // bindingVersion is either well defined or defaults to 0.1.0
+    val binding: Amqp091MessageBinding = bindingVersion match {
+      case "0.1.0" | "0.2.0" | "0.3.0" | "latest" => Amqp091MessageBinding(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = Amqp091MessageBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Amqp091MessageBinding", warning = true)
+        defaultBinding
+    }
+
+    val map = entry.value.as[YMap]
 
     map.key("contentEncoding", Amqp091MessageBindingModel.ContentEncoding in binding)
     map.key("messageType", Amqp091MessageBindingModel.MessageType in binding)

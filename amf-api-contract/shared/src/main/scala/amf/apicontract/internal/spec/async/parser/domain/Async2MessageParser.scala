@@ -5,11 +5,10 @@ import amf.apicontract.client.scala.model.domain.{Message, Payload, Request, Res
 import amf.apicontract.internal.annotations.ExampleIndex
 import amf.apicontract.internal.metamodel.domain.MessageModel.IsAbstract
 import amf.apicontract.internal.metamodel.domain.{MessageModel, OperationModel, PayloadModel}
-import amf.apicontract.internal.spec.async.emitters.domain.MessageExamplePair
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncMessageBindingsParser
-import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
+import amf.apicontract.internal.spec.common.WebApiDeclarations.{ErrorMessage, ErrorRequest, ErrorResponse}
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -26,7 +25,6 @@ import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser._
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.DuplicatedMessageId
 
 trait AsyncMessageParser {
   def parse(): Message
@@ -35,7 +33,7 @@ trait AsyncMessageParser {
 object Async20MessageParser {
 
   def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
-      implicit ctx: AsyncWebApiContext
+    implicit ctx: AsyncWebApiContext
   ): AsyncMessageParser = {
     val populator = if (isTrait) Async20MessageTraitPopulator() else Async20ConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
@@ -45,7 +43,7 @@ object Async20MessageParser {
 
 object Async21MessageParser {
   def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
-      implicit ctx: AsyncWebApiContext
+    implicit ctx: AsyncWebApiContext
   ): AsyncMessageParser = {
     val populator = if (isTrait) Async21MessageTraitPopulator() else Async21ConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
@@ -64,15 +62,15 @@ object Async24MessageParser {
 }
 
 class Async20MessageParser(
-    entryLike: YMapEntryLike,
-    parent: String,
-    messageType: Option[MessageType],
-    populator: Async2MessagePopulator,
-    finder: Finder[Message],
-    isTrait: Boolean
-)(implicit val ctx: AsyncWebApiContext)
-    extends AsyncMessageParser
-      with SpecParserOps {
+                            entryLike: YMapEntryLike,
+                            parent: String,
+                            messageType: Option[MessageType],
+                            populator: Async2MessagePopulator,
+                            finder: Finder[Message],
+                            isTrait: Boolean
+                          )(implicit val ctx: AsyncWebApiContext)
+  extends AsyncMessageParser
+    with SpecParserOps {
 
   def parse(): Message = {
     val map: YMap = entryLike.asMap
@@ -90,6 +88,12 @@ class Async20MessageParser(
     case Some(Publish)   => Request(annotations)
     case Some(Subscribe) => Response(annotations)
     case None            => Message(annotations)
+  }
+
+  private def buildErrorMessage(fullRef: String): Message = messageType match {
+    case Some(Publish)   => ErrorRequest(fullRef, entryLike.asMap)
+    case Some(Subscribe) => ErrorResponse(fullRef, entryLike.asMap)
+    case None            => new ErrorMessage(fullRef, entryLike.asMap, isTrait)
   }
 
   def nameAndAdopt(m: Message, key: Option[YNode]): Message = {
@@ -121,7 +125,7 @@ class Async20MessageParser(
           s"Cannot find link reference $fullRef",
           Annotations(entryLike.asMap)
         )
-        val errorMessage = new ErrorMessage(fullRef, entryLike.asMap, isTrait)
+        val errorMessage = buildErrorMessage(fullRef)
         nameAndAdopt(errorMessage.link(fullRef, errorMessage.annotations), entryLike.key)
     }
   }
@@ -138,7 +142,7 @@ class Async20MessageParser(
 }
 
 case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: MessageType)(implicit
-    val ctx: AsyncWebApiContext
+                                                                                           val ctx: AsyncWebApiContext
 ) {
   def parse(): List[Message] = {
     map.key("oneOf") match {
@@ -321,10 +325,10 @@ abstract class Async24MessagePopulator()(implicit ctx: AsyncWebApiContext) exten
     super.populate(map, message)
     map.key("messageId").foreach { entry =>
       val messageId = entry.value.toString()
-          if (!ctx.registerMessageId(messageId))
-            ctx.eh.violation(
-              ParserSideValidations.DuplicatedMessageId, message, s"Duplicated message id '$messageId'", entry.value.location
-            )
+      if (!ctx.registerMessageId(messageId))
+        ctx.eh.violation(
+          ParserSideValidations.DuplicatedMessageId, message, s"Duplicated message id '$messageId'", entry.value.location
+        )
       parseMessageId(map, message)
     }
     message
@@ -399,13 +403,13 @@ trait AsyncConcreteMessagePopulator {
 }
 
 case class Async21ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
-    extends Async21MessagePopulator() with AsyncConcreteMessagePopulator {
+  extends Async21MessagePopulator() with AsyncConcreteMessagePopulator {
   override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
   override protected def parseSchema(map: YMap, payload: Payload): Unit = innerParseSchema(map, payload)
 }
 
 case class Async20ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
-    extends Async20MessagePopulator() with AsyncConcreteMessagePopulator() {
+  extends Async20MessagePopulator() with AsyncConcreteMessagePopulator() {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
 

@@ -56,14 +56,26 @@ object Async20Syntax extends SpecSyntax {
       "bindingVersion",
       "exchange"
     ),
-    "amqpQueueChannelBinding" -> Set(
+    "amqpQueueChannelBinding010" -> Set(
+      "name",
+      "durable",
+      "exclusive",
+      "autoDelete"
+    ),
+    "amqpQueueChannelBinding020" -> Set(
       "name",
       "durable",
       "exclusive",
       "autoDelete",
       "vhost"
     ),
-    "amqpExchangeChannelBinding" -> Set(
+    "amqpExchangeChannelBinding010" -> Set(
+      "name",
+      "type",
+      "durable",
+      "autoDelete"
+    ),
+    "amqpExchangeChannelBinding020" -> Set(
       "name",
       "type",
       "durable",
@@ -76,7 +88,7 @@ object Async20Syntax extends SpecSyntax {
       "query",
       "bindingVersion"
     ),
-    "amqpOperationBinding" -> Set(
+    "amqpOperationBinding010" -> Set(
       "expiration",
       "userId",
       "cc",
@@ -85,6 +97,18 @@ object Async20Syntax extends SpecSyntax {
       "mandatory",
       "bcc",
       "replyTo",
+      "timestamp",
+      "ack",
+      "bindingVersion"
+    ),
+    "amqpOperationBinding030" -> Set(
+      "expiration",
+      "userId",
+      "cc",
+      "priority",
+      "deliveryMode",
+      "mandatory",
+      "bcc",
       "timestamp",
       "ack",
       "bindingVersion"
@@ -119,14 +143,57 @@ object Async20Syntax extends SpecSyntax {
       "headers",
       "bindingVersion"
     ),
-    "kafkaMessageBinding" -> Set(
+    "kafkaMessageBinding010" -> Set(
       "key",
+      "bindingVersion"
+    ),
+    "kafkaMessageBinding030" -> Set(
+      "key",
+      "schemaIdLocation",
+      "schemaIdPayloadEncoding",
+      "schemaLookupStrategy",
       "bindingVersion"
     ),
     "kafkaOperationBinding" -> Set(
       "groupId",
       "clientId",
       "bindingVersion"
+    ),
+    "kafkaServerBinding" -> Set(
+      "schemaRegistryUrl",
+      "schemaRegistryVendor",
+      "bindingVersion"
+    ),
+    "kafkaChannelBinding030" -> Set(
+      "topic",
+      "partitions",
+      "replicas",
+      "bindingVersion"
+    ),
+    "kafkaChannelBinding040" -> Set(
+      "topic",
+      "partitions",
+      "replicas",
+      "topicConfiguration",
+      "bindingVersion"
+    ),
+    "kafkaTopicConfiguration040" -> Set(
+      "cleanup.policy",
+      "retention.ms",
+      "retention.bytes",
+      "delete.retention.ms",
+      "max.message.bytes"
+    ),
+    "kafkaTopicConfiguration050" -> Set(
+      "cleanup.policy",
+      "retention.ms",
+      "retention.bytes",
+      "delete.retention.ms",
+      "max.message.bytes",
+      "confluent.key.schema.validation",
+      "confluent.key.subject.name.strategy",
+      "confluent.value.schema.validation",
+      "confluent.value.subject.name.strategy"
     ),
     "message" -> Set(
       "headers",

@@ -59,20 +59,38 @@ trait ApiBaseConverter
     with ServerBindingsConverter
     with MessageBindingsConverter
     with Amqp091ChannelBindingConverter
+    with Amqp091ChannelBinding010Converter
+    with Amqp091ChannelBinding020Converter
     with Amqp091MessageBindingConverter
     with Amqp091OperationBindingConverter
+    with Amqp091OperationBinding010Converter
+    with Amqp091OperationBinding030Converter
     with EmptyBindingConverter
     with HttpMessageBindingConverter
     with HttpOperationBindingConverter
     with KafkaMessageBindingConverter
+    with KafkaMessageBinding010Converter
+    with KafkaMessageBinding030Converter
     with KafkaOperationBindingConverter
+    with KafkaServerBindingConverter
+    with KafkaChannelBindingConverter
+    with KafkaChannelBinding030Converter
+    with KafkaChannelBinding040Converter
+    with KafkaChannelBinding050Converter
+    with KafkaTopicConfigurationConverter
+    with KafkaTopicConfiguration040Converter
+    with KafkaTopicConfiguration050Converter
     with MqttMessageBindingConverter
     with MqttOperationBindingConverter
     with MqttServerBindingConverter
     with WebSocketsChannelBindingConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
+    with Amqp091ChannelExchange010Converter
+    with Amqp091ChannelExchange020Converter
     with Amqp091QueueConverter
+    with Amqp091Queue010Converter
+    with Amqp091Queue020Converter
     with SolaceServerBindingConverter
     with SolaceOperationBindingConverter
     with SolaceOperationDestinationConverter
@@ -167,13 +185,30 @@ trait ServerBindingConverter extends PlatformSecrets {
     override def asInternal(from: domain.bindings.ServerBinding): ServerBinding = from._internal
   }
 }
-
 trait Amqp091ChannelBindingConverter extends PlatformSecrets {
   implicit object Amqp091ChannelBindingMatcher
       extends BidirectionalMatcher[Amqp091ChannelBinding, domain.bindings.amqp.Amqp091ChannelBinding] {
     override def asClient(from: Amqp091ChannelBinding): domain.bindings.amqp.Amqp091ChannelBinding =
       platform.wrap[domain.bindings.amqp.Amqp091ChannelBinding](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091ChannelBinding): Amqp091ChannelBinding = from._internal
+  }
+}
+trait Amqp091ChannelBinding010Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelBinding010Matcher
+      extends BidirectionalMatcher[Amqp091ChannelBinding010, domain.bindings.amqp.Amqp091ChannelBinding010] {
+    override def asClient(from: Amqp091ChannelBinding010): domain.bindings.amqp.Amqp091ChannelBinding010 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelBinding010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelBinding010): Amqp091ChannelBinding010 =
+      from._internal
+  }
+}
+trait Amqp091ChannelBinding020Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelBinding020Matcher
+      extends BidirectionalMatcher[Amqp091ChannelBinding020, domain.bindings.amqp.Amqp091ChannelBinding020] {
+    override def asClient(from: Amqp091ChannelBinding020): domain.bindings.amqp.Amqp091ChannelBinding020 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelBinding020](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelBinding020): Amqp091ChannelBinding020 =
+      from._internal
   }
 }
 trait Amqp091MessageBindingConverter extends PlatformSecrets {
@@ -190,6 +225,24 @@ trait Amqp091OperationBindingConverter extends PlatformSecrets {
     override def asClient(from: Amqp091OperationBinding): domain.bindings.amqp.Amqp091OperationBinding =
       platform.wrap[domain.bindings.amqp.Amqp091OperationBinding](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091OperationBinding): Amqp091OperationBinding =
+      from._internal
+  }
+}
+trait Amqp091OperationBinding010Converter extends PlatformSecrets {
+  implicit object Amqp091OperationBinding010Matcher
+      extends BidirectionalMatcher[Amqp091OperationBinding010, domain.bindings.amqp.Amqp091OperationBinding010] {
+    override def asClient(from: Amqp091OperationBinding010): domain.bindings.amqp.Amqp091OperationBinding010 =
+      platform.wrap[domain.bindings.amqp.Amqp091OperationBinding010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091OperationBinding010): Amqp091OperationBinding010 =
+      from._internal
+  }
+}
+trait Amqp091OperationBinding030Converter extends PlatformSecrets {
+  implicit object Amqp091OperationBinding030Matcher
+      extends BidirectionalMatcher[Amqp091OperationBinding030, domain.bindings.amqp.Amqp091OperationBinding030] {
+    override def asClient(from: Amqp091OperationBinding030): domain.bindings.amqp.Amqp091OperationBinding030 =
+      platform.wrap[domain.bindings.amqp.Amqp091OperationBinding030](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091OperationBinding030): Amqp091OperationBinding030 =
       from._internal
   }
 }
@@ -224,12 +277,95 @@ trait KafkaMessageBindingConverter extends PlatformSecrets {
     override def asInternal(from: domain.bindings.kafka.KafkaMessageBinding): KafkaMessageBinding = from._internal
   }
 }
+trait KafkaMessageBinding010Converter extends PlatformSecrets {
+  implicit object KafkaMessageBinding010Matcher
+      extends BidirectionalMatcher[KafkaMessageBinding010, domain.bindings.kafka.KafkaMessageBinding010] {
+    override def asClient(from: KafkaMessageBinding010): domain.bindings.kafka.KafkaMessageBinding010 =
+      platform.wrap[domain.bindings.kafka.KafkaMessageBinding010](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaMessageBinding010): KafkaMessageBinding010 = from._internal
+  }
+}
+trait KafkaMessageBinding030Converter extends PlatformSecrets {
+  implicit object KafkaMessageBinding030Matcher
+      extends BidirectionalMatcher[KafkaMessageBinding030, domain.bindings.kafka.KafkaMessageBinding030] {
+    override def asClient(from: KafkaMessageBinding030): domain.bindings.kafka.KafkaMessageBinding030 =
+      platform.wrap[domain.bindings.kafka.KafkaMessageBinding030](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaMessageBinding030): KafkaMessageBinding030 = from._internal
+  }
+}
 trait KafkaOperationBindingConverter extends PlatformSecrets {
   implicit object KafkaOperationBindingMatcher
       extends BidirectionalMatcher[KafkaOperationBinding, domain.bindings.kafka.KafkaOperationBinding] {
     override def asClient(from: KafkaOperationBinding): domain.bindings.kafka.KafkaOperationBinding =
       platform.wrap[domain.bindings.kafka.KafkaOperationBinding](from)
     override def asInternal(from: domain.bindings.kafka.KafkaOperationBinding): KafkaOperationBinding = from._internal
+  }
+}
+trait KafkaServerBindingConverter extends PlatformSecrets {
+  implicit object KafkaServerBindingMatcher
+      extends BidirectionalMatcher[KafkaServerBinding, domain.bindings.kafka.KafkaServerBinding] {
+    override def asClient(from: KafkaServerBinding): domain.bindings.kafka.KafkaServerBinding =
+      platform.wrap[domain.bindings.kafka.KafkaServerBinding](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaServerBinding): KafkaServerBinding = from._internal
+  }
+}
+trait KafkaChannelBindingConverter extends PlatformSecrets {
+  implicit object KafkaChannelBindingMatcher
+      extends BidirectionalMatcher[KafkaChannelBinding, domain.bindings.kafka.KafkaChannelBinding] {
+    override def asClient(from: KafkaChannelBinding): domain.bindings.kafka.KafkaChannelBinding =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding): KafkaChannelBinding = from._internal
+  }
+}
+trait KafkaChannelBinding030Converter extends PlatformSecrets {
+  implicit object KafkaChannelBinding030Matcher
+      extends BidirectionalMatcher[KafkaChannelBinding030, domain.bindings.kafka.KafkaChannelBinding030] {
+    override def asClient(from: KafkaChannelBinding030): domain.bindings.kafka.KafkaChannelBinding030 =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding030](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding030): KafkaChannelBinding030 = from._internal
+  }
+}
+trait KafkaChannelBinding040Converter extends PlatformSecrets {
+  implicit object KafkaChannelBinding040Matcher
+      extends BidirectionalMatcher[KafkaChannelBinding040, domain.bindings.kafka.KafkaChannelBinding040] {
+    override def asClient(from: KafkaChannelBinding040): domain.bindings.kafka.KafkaChannelBinding040 =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding040](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding040): KafkaChannelBinding040 = from._internal
+  }
+}
+trait KafkaChannelBinding050Converter extends PlatformSecrets {
+  implicit object KafkaChannelBinding050Matcher
+      extends BidirectionalMatcher[KafkaChannelBinding050, domain.bindings.kafka.KafkaChannelBinding050] {
+    override def asClient(from: KafkaChannelBinding050): domain.bindings.kafka.KafkaChannelBinding050 =
+      platform.wrap[domain.bindings.kafka.KafkaChannelBinding050](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaChannelBinding050): KafkaChannelBinding050 = from._internal
+  }
+}
+trait KafkaTopicConfigurationConverter extends PlatformSecrets {
+  implicit object KafkaTopicConfigurationMatcher
+      extends BidirectionalMatcher[KafkaTopicConfiguration, domain.bindings.kafka.KafkaTopicConfiguration] {
+    override def asClient(from: KafkaTopicConfiguration): domain.bindings.kafka.KafkaTopicConfiguration =
+      platform.wrap[domain.bindings.kafka.KafkaTopicConfiguration](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaTopicConfiguration): KafkaTopicConfiguration =
+      from._internal
+  }
+}
+trait KafkaTopicConfiguration040Converter extends PlatformSecrets {
+  implicit object KafkaTopicConfiguration040Matcher
+      extends BidirectionalMatcher[KafkaTopicConfiguration040, domain.bindings.kafka.KafkaTopicConfiguration040] {
+    override def asClient(from: KafkaTopicConfiguration040): domain.bindings.kafka.KafkaTopicConfiguration040 =
+      platform.wrap[domain.bindings.kafka.KafkaTopicConfiguration040](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaTopicConfiguration040): KafkaTopicConfiguration040 =
+      from._internal
+  }
+}
+trait KafkaTopicConfiguration050Converter extends PlatformSecrets {
+  implicit object KafkaTopicConfiguration050Matcher
+      extends BidirectionalMatcher[KafkaTopicConfiguration050, domain.bindings.kafka.KafkaTopicConfiguration050] {
+    override def asClient(from: KafkaTopicConfiguration050): domain.bindings.kafka.KafkaTopicConfiguration050 =
+      platform.wrap[domain.bindings.kafka.KafkaTopicConfiguration050](from)
+    override def asInternal(from: domain.bindings.kafka.KafkaTopicConfiguration050): KafkaTopicConfiguration050 =
+      from._internal
   }
 }
 trait MqttMessageBindingConverter extends PlatformSecrets {
@@ -284,11 +420,49 @@ trait Amqp091ChannelExchangeConverter extends PlatformSecrets {
   }
 }
 
+trait Amqp091ChannelExchange010Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelExchange010Matcher
+      extends BidirectionalMatcher[Amqp091ChannelExchange010, domain.bindings.amqp.Amqp091ChannelExchange010] {
+    override def asClient(from: Amqp091ChannelExchange010): domain.bindings.amqp.Amqp091ChannelExchange010 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelExchange010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelExchange010): Amqp091ChannelExchange010 =
+      from._internal
+  }
+}
+
+trait Amqp091ChannelExchange020Converter extends PlatformSecrets {
+  implicit object Amqp091ChannelExchange020Matcher
+      extends BidirectionalMatcher[Amqp091ChannelExchange020, domain.bindings.amqp.Amqp091ChannelExchange020] {
+    override def asClient(from: Amqp091ChannelExchange020): domain.bindings.amqp.Amqp091ChannelExchange020 =
+      platform.wrap[domain.bindings.amqp.Amqp091ChannelExchange020](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091ChannelExchange020): Amqp091ChannelExchange020 =
+      from._internal
+  }
+}
+
 trait Amqp091QueueConverter extends PlatformSecrets {
   implicit object Amqp091QueueMatcher extends BidirectionalMatcher[Amqp091Queue, domain.bindings.amqp.Amqp091Queue] {
     override def asClient(from: Amqp091Queue): domain.bindings.amqp.Amqp091Queue =
       platform.wrap[domain.bindings.amqp.Amqp091Queue](from)
     override def asInternal(from: domain.bindings.amqp.Amqp091Queue): Amqp091Queue = from._internal
+  }
+}
+
+trait Amqp091Queue010Converter extends PlatformSecrets {
+  implicit object Amqp091Queue010Matcher
+      extends BidirectionalMatcher[Amqp091Queue010, domain.bindings.amqp.Amqp091Queue010] {
+    override def asClient(from: Amqp091Queue010): domain.bindings.amqp.Amqp091Queue010 =
+      platform.wrap[domain.bindings.amqp.Amqp091Queue010](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091Queue010): Amqp091Queue010 = from._internal
+  }
+}
+
+trait Amqp091Queue020Converter extends PlatformSecrets {
+  implicit object Amqp091Queue020Matcher
+      extends BidirectionalMatcher[Amqp091Queue020, domain.bindings.amqp.Amqp091Queue020] {
+    override def asClient(from: Amqp091Queue020): domain.bindings.amqp.Amqp091Queue020 =
+      platform.wrap[domain.bindings.amqp.Amqp091Queue020](from)
+    override def asInternal(from: domain.bindings.amqp.Amqp091Queue020): Amqp091Queue020 = from._internal
   }
 }
 

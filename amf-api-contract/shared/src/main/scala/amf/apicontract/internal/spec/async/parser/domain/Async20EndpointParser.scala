@@ -71,7 +71,7 @@ class Async22EndpointParser(
     map.key(
       "servers",
       entry => {
-        val nodes = entry.value.value.asInstanceOf[YSequence].nodes
+        val nodes = entry.value.as[YSequence].nodes
         val servers = nodes.map { n =>
           val server = Server()
           server.setWithoutId(
@@ -157,8 +157,10 @@ class Async23EndpointParser(
   }
 
   def nameAndAdopt(s: EndPoint, key: Option[YNode]): EndPoint = {
-    key foreach { k =>
-      s.setWithoutId(EndPointModel.Name, ScalarNode(k).string(), Annotations(k))
+    key match {
+      case Some(name) =>
+        s.setWithoutId(EndPointModel.Name, ScalarNode(name).string(), Annotations(name))
+      case None => // Nothing to do
     }
     s
   }

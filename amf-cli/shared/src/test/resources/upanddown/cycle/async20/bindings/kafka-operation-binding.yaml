@@ -15,3 +15,21 @@ channels:
             type: string
             enum:
               - myClientId
+  another-channel:
+    subscribe:
+      bindings:
+        kafka: # valid ref
+          bindingVersion: 0.4.0
+          groupId:
+            $ref: '#/components/schemas/testSchema'
+          clientId:
+            $ref: '#/components/schemas/testSchema'
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

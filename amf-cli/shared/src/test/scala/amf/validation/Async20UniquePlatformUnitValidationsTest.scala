@@ -7,6 +7,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   val asyncPath: String            = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
+  private val cyclePath: String    = "file://amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
 
   test("Required channel object") {
     validate("required-channels.yaml", Some("required-channels.report"))
@@ -406,5 +407,93 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Async 2.1+ IBMMQ validations all valid") {
     validate("ibmmq-binding-validations-valid.yaml", Some("ibmmq-binding-validations-valid.report"))
+  }
+
+  test("Async 2.3+ Components") {
+    validate("async-2.3-components.yaml")
+  }
+
+  test("Async 2.4+ Components") {
+    validate("async-2.4-components.yaml")
+  }
+
+  test("Async inter components references") {
+    validate("message-references.yaml")
+  }
+
+  test("Async Amqp 0.1.0 Closed Shape validation") {
+    validate("amqp-binding-010.yaml", Some("amqp-binding-010.report"))
+  }
+
+  test("Async Amqp 0.2.0 Closed Shape validation") {
+    validate("amqp-channel-binding-020-invalid.yaml", Some("amqp-binding-020-invalid.report"))
+  }
+
+  test("Async Amqp wrong binding version") {
+    validate("amqp-binding-wrong-binding-version.yaml", Some("amqp-binding-wrong-binding-version.report"))
+  }
+
+  test("Async Amqp operation binding version 0.3.0") {
+    validate("amqp-operation-binding-030.yaml", Some("amqp-operation-binding-030.report"))
+  }
+
+  test("Async asyncApi-2.1-all should be valid") {
+    validate(api = "asyncApi-2.1-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.2-all should be valid") {
+    validate(api = "asyncApi-2.2-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.3-all should be valid") {
+    validate(api = "asyncApi-2.3-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.4-all should be valid") {
+    validate(api = "asyncApi-2.4-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.5-all should be valid") {
+    validate(api = "asyncApi-2.5-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.6-all should be valid") {
+    validate(api = "asyncApi-2.6-all.yaml", directory = cyclePath)
+  }
+
+  test("AnypointMQ headers ref") {
+    validate("anypoint-headers-ref.yaml", Some("anypoint-headers-ref.report"))
+  }
+
+  test("AnypointMQ invalid version") {
+    validate("anypointmq-invalid-version.yaml", Some("anypointmq-invalid-version.report"))
+  }
+
+  test("Async Kafka wrong binding version") {
+    validate("kafka-binding-wrong-binding-version.yaml", Some("kafka-binding-wrong-binding-version.report"))
+  }
+
+  test("Async Kafka message key ref") {
+    validate("kafka-binding-message-key-ref.yaml", Some("kafka-binding-message-key-ref.report"))
+  }
+
+  test("Async Kafka binding closed shape validations") {
+    validate("kafka-binding-closed-shape.yaml", Some("kafka-binding-closed-shape.report"))
+  }
+
+  test("Async Kafka channel binding validations") {
+    validate("kafka-channel-binding-validations.yaml", Some("kafka-channel-binding-validations.report"))
+  }
+
+  test("Async server invalid map") {
+    validate("async-server-map.yaml", Some("async-server-map.report"))
+  }
+
+  test("Async Kafka operation binding reference objects") {
+    validate("kafka-operation-binding-refs.yaml", Some("kafka-operation-binding-refs.report"))
+  }
+
+  test("Async Kafka topic configuration validations") {
+    validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
   }
 }

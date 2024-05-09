@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml
+Profile: 
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'confluent.key.schema.validation' not supported in a ASYNC 2.0 kafkaTopicConfiguration040 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration-040
+  Property: 
+  Range: [(22,10)-(23,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'confluent.key.subject.name.strategy' not supported in a ASYNC 2.0 kafkaTopicConfiguration040 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration-040
+  Property: 
+  Range: [(23,10)-(24,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'confluent.value.schema.validation' not supported in a ASYNC 2.0 kafkaTopicConfiguration040 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration-040
+  Property: 
+  Range: [(24,10)-(25,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'confluent.value.subject.name.strategy' not supported in a ASYNC 2.0 kafkaTopicConfiguration040 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/kafka-channel-040/kafka-topic-configuration-040
+  Property: 
+  Range: [(25,10)-(26,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/kafka-topic-configuration-validations.yaml

@@ -10,10 +10,18 @@ AMF Model Documentation
 * [AbstractRequest](#abstractrequest)
 * [AbstractResponse](#abstractresponse)
 * [Amqp091ChannelBinding](#amqp091channelbinding)
+* [Amqp091ChannelBinding010](#amqp091channelbinding010)
+* [Amqp091ChannelBinding020](#amqp091channelbinding020)
 * [Amqp091ChannelExchange](#amqp091channelexchange)
+* [Amqp091ChannelExchange010](#amqp091channelexchange010)
+* [Amqp091ChannelExchange020](#amqp091channelexchange020)
 * [Amqp091MessageBinding](#amqp091messagebinding)
 * [Amqp091OperationBinding](#amqp091operationbinding)
+* [Amqp091OperationBinding010](#amqp091operationbinding010)
+* [Amqp091OperationBinding030](#amqp091operationbinding030)
 * [Amqp091Queue](#amqp091queue)
+* [Amqp091Queue010](#amqp091queue010)
+* [Amqp091Queue020](#amqp091queue020)
 * [AnnotationMapping](#annotationmapping)
 * [AnnotationTypeDeclarationFragment](#annotationtypedeclarationfragment)
 * [AnyMapping](#anymapping)
@@ -92,8 +100,18 @@ AMF Model Documentation
 * [JsonLDElement](#jsonldelement)
 * [JsonLDInstanceDocument](#jsonldinstancedocument)
 * [JsonSchemaDocument](#jsonschemadocument)
+* [KafkaChannelBinding](#kafkachannelbinding)
+* [KafkaChannelBinding030](#kafkachannelbinding030)
+* [KafkaChannelBinding040](#kafkachannelbinding040)
+* [KafkaChannelBinding050](#kafkachannelbinding050)
 * [KafkaMessageBinding](#kafkamessagebinding)
+* [KafkaMessageBinding010](#kafkamessagebinding010)
+* [KafkaMessageBinding030](#kafkamessagebinding030)
 * [KafkaOperationBinding](#kafkaoperationbinding)
+* [KafkaServerBinding](#kafkaserverbinding)
+* [KafkaTopicConfiguration](#kafkatopicconfiguration)
+* [KafkaTopicConfiguration040](#kafkatopicconfiguration040)
+* [KafkaTopicConfiguration050](#kafkatopicconfiguration050)
 * [Key](#key)
 * [License](#license)
 * [LinkNode](#linknode)
@@ -307,10 +325,70 @@ Types:
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## Amqp091ChannelBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding010`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | is | string | - | Defines what type of channel is it | `http://a.ml/vocabularies/apiBinding#is` |
+ | exchange | [Amqp091ChannelExchange010](#amqp091channelexchange010) | - | Defines the exchange properties | `http://a.ml/vocabularies/apiBinding#exchange` |
+ | queue | [Amqp091Queue010](#amqp091queue010) | - | Defines the queue properties | `http://a.ml/vocabularies/apiBinding#queue` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091ChannelBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding020`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | is | string | - | Defines what type of channel is it | `http://a.ml/vocabularies/apiBinding#is` |
+ | exchange | [Amqp091ChannelExchange020](#amqp091channelexchange020) | - | Defines the exchange properties | `http://a.ml/vocabularies/apiBinding#exchange` |
+ | queue | [Amqp091Queue020](#amqp091queue020) | - | Defines the queue properties | `http://a.ml/vocabularies/apiBinding#queue` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## Amqp091ChannelExchange
 
 Types:
 * `http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | type | string | - | The type of the exchange | `http://a.ml/vocabularies/apiBinding#type` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091ChannelExchange010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange010`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | type | string | - | The type of the exchange | `http://a.ml/vocabularies/apiBinding#type` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091ChannelExchange020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange020`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |
@@ -353,7 +431,51 @@ Types:
  | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
  | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
  | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
+ | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
+ | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091OperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding010`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | expiration | int | - | TTL (Time-To-Live) for the message | `http://a.ml/vocabularies/apiBinding#expiration` |
+ | userId | string | - | Identifies the user who has sent the message | `http://a.ml/vocabularies/apiBinding#userId` |
+ | cc | [string] | false | The routing keys the message should be routed to at the time of publishing | `http://a.ml/vocabularies/apiBinding#cc` |
+ | priority | int | - | A priority for the message | `http://a.ml/vocabularies/apiBinding#priority` |
+ | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
+ | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
  | replyTo | string | - | Name of the queue where the consumer should send the response | `http://a.ml/vocabularies/apiBinding#replyTo` |
+ | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
+ | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091OperationBinding030
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding030`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | expiration | int | - | TTL (Time-To-Live) for the message | `http://a.ml/vocabularies/apiBinding#expiration` |
+ | userId | string | - | Identifies the user who has sent the message | `http://a.ml/vocabularies/apiBinding#userId` |
+ | cc | [string] | false | The routing keys the message should be routed to at the time of publishing | `http://a.ml/vocabularies/apiBinding#cc` |
+ | priority | int | - | A priority for the message | `http://a.ml/vocabularies/apiBinding#priority` |
+ | deliveryMode | int | - | Delivery mode of the message | `http://a.ml/vocabularies/apiBinding#deliveryMode` |
+ | mandatory | boolean | - | Whether the message is mandatory or not | `http://a.ml/vocabularies/apiBinding#mandatory` |
+ | bcc | [string] | false | Like cc but consumers will not receive this information | `http://a.ml/vocabularies/apiBinding#bcc` |
  | timestamp | boolean | - | Whether the message should include a timestamp or not | `http://a.ml/vocabularies/apiBinding#timestamp` |
  | ack | boolean | - | Whether the consumer should ack the message or not | `http://a.ml/vocabularies/apiBinding#ack` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
@@ -364,6 +486,34 @@ Types:
 
 Types:
 * `http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | exclusive | boolean | - | Whether the queue should be used only by one connection or not | `http://a.ml/vocabularies/apiBinding#exclusive` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091Queue010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue010`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | durable | boolean | - | Whether the exchange should survive broker restarts or not | `http://a.ml/vocabularies/apiBinding#durable` |
+ | exclusive | boolean | - | Whether the queue should be used only by one connection or not | `http://a.ml/vocabularies/apiBinding#exclusive` |
+ | autoDelete | boolean | - | Whether the exchange should be deleted when the last queue is unbound from it | `http://a.ml/vocabularies/apiBinding#autoDelete` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## Amqp091Queue020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue020`
 * `http://a.ml/vocabularies/document#DomainElement`
 
  | Name | Value | Sorted | Documentation | Namespace |
@@ -1764,6 +1914,72 @@ Types:
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | - | Field with utility data to be used in Base Unit processing | `http://a.ml/vocabularies/document#processingData` |
  | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | - | Contains information of the source from which the base unit was generated | `http://a.ml/vocabularies/document#sourceInformation` |
 
+## KafkaChannelBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaChannelBinding`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topic | string | - | Kafka topic name if different from channel name. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | partitions | int | - | Number of partitions configured on this topic. | `http://a.ml/vocabularies/apiBinding#partitions` |
+ | replicas | int | - | Number of replicas configured on this topic. | `http://a.ml/vocabularies/apiBinding#replicas` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaChannelBinding030
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaChannelBinding030`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topic | string | - | Kafka topic name if different from channel name. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | partitions | int | - | Number of partitions configured on this topic. | `http://a.ml/vocabularies/apiBinding#partitions` |
+ | replicas | int | - | Number of replicas configured on this topic. | `http://a.ml/vocabularies/apiBinding#replicas` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaChannelBinding040
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaChannelBinding040`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topicConfiguration040 | [KafkaTopicConfiguration040](#kafkatopicconfiguration040) | - | Topic configuration properties that are relevant for the API. | `http://a.ml/vocabularies/apiBinding#topicConfiguration040` |
+ | topic | string | - | Kafka topic name if different from channel name. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | partitions | int | - | Number of partitions configured on this topic. | `http://a.ml/vocabularies/apiBinding#partitions` |
+ | replicas | int | - | Number of replicas configured on this topic. | `http://a.ml/vocabularies/apiBinding#replicas` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaChannelBinding050
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaChannelBinding050`
+* `http://a.ml/vocabularies/apiBinding#ChannelBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | topicConfiguration050 | [KafkaTopicConfiguration050](#kafkatopicconfiguration050) | - | Topic configuration properties that are relevant for the API. | `http://a.ml/vocabularies/apiBinding#topicConfiguration050` |
+ | topic | string | - | Kafka topic name if different from channel name. | `http://a.ml/vocabularies/apiBinding#topic` |
+ | partitions | int | - | Number of partitions configured on this topic. | `http://a.ml/vocabularies/apiBinding#partitions` |
+ | replicas | int | - | Number of replicas configured on this topic. | `http://a.ml/vocabularies/apiBinding#replicas` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## KafkaMessageBinding
 
 Types:
@@ -1773,6 +1989,37 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | messageKey | [Shape](#shape) | - | Schema that defines the message key | `http://a.ml/vocabularies/apiBinding#messageKey` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaMessageBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaMessageBinding010`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | messageKey | [Shape](#shape) | - | Schema that defines the message key | `http://a.ml/vocabularies/apiBinding#messageKey` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaMessageBinding030
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaMessageBinding030`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | schemaIdLocation | string | - | If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. header or payload). | `http://a.ml/vocabularies/apiBinding#schemaIdLocation` |
+ | schemaIdPayloadEncoding | string | - | Number of bytes or vendor specific values when schema id is encoded in payload (e.g confluent/ apicurio-legacy / apicurio-new). | `http://a.ml/vocabularies/apiBinding#schemaIdPayloadEncoding` |
+ | schemaLookupStrategy | string | - | Freeform string for any naming strategy class to use. Clients should default to the vendor default if not supplied. | `http://a.ml/vocabularies/apiBinding#schemaLookupStrategy` |
  | messageKey | [Shape](#shape) | - | Schema that defines the message key | `http://a.ml/vocabularies/apiBinding#messageKey` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
@@ -1792,6 +2039,67 @@ Types:
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaServerBinding
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaServerBinding`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | schemaRegistryUrl | string | - | API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used) | `http://a.ml/vocabularies/apiBinding#schemaRegistryUrl` |
+ | schemaRegistryVendor | string | - | The vendor of Schema Registry and Kafka serdes library that should be used | `http://a.ml/vocabularies/apiBinding#schemaRegistryVendor` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## KafkaTopicConfiguration
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaTopicConfiguration`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | CleanupPolicy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#CleanupPolicy` |
+ | RetentionMs | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionMs` |
+ | RetentionBytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionBytes` |
+ | DeleteRetentionMs | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#DeleteRetentionMs` |
+ | MaxMessageBytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#MaxMessageBytes` |
+
+## KafkaTopicConfiguration040
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaTopicConfiguration040`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | CleanupPolicy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#CleanupPolicy` |
+ | RetentionMs | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionMs` |
+ | RetentionBytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionBytes` |
+ | DeleteRetentionMs | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#DeleteRetentionMs` |
+ | MaxMessageBytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#MaxMessageBytes` |
+
+## KafkaTopicConfiguration050
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#KafkaTopicConfiguration050`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | ConfluentKeySchemaValidation | boolean | - | It shows whether the schema validation for the message key is enabled. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentKeySchemaValidation` |
+ | ConfluentKeySubjectNameStrategy | string | - | The name of the schema lookup strategy for the message key. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentKeySubjectNameStrategy` |
+ | ConfluentValueSchemaValidation | boolean | - | It shows whether the schema validation for the message value is enabled. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentValueSchemaValidation` |
+ | ConfluentValueSubjectNameStrategy | string | - | The name of the schema lookup strategy for the message value. Vendor specific config. | `http://a.ml/vocabularies/apiBinding#ConfluentValueSubjectNameStrategy` |
+ | CleanupPolicy | [string] | false | The cleanup.policy configuration option. | `http://a.ml/vocabularies/apiBinding#CleanupPolicy` |
+ | RetentionMs | int | - | The retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionMs` |
+ | RetentionBytes | int | - | The retention.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#RetentionBytes` |
+ | DeleteRetentionMs | int | - | The delete.retention.ms configuration option. | `http://a.ml/vocabularies/apiBinding#DeleteRetentionMs` |
+ | MaxMessageBytes | int | - | The max.message.bytes configuration option. | `http://a.ml/vocabularies/apiBinding#MaxMessageBytes` |
 
 ## Key
 Model that represents the Key of an element to be retrieved by the federated graph

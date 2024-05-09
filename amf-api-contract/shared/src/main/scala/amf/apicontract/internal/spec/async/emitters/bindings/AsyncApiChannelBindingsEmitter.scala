@@ -17,44 +17,28 @@ import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{
   IBMMQChannelQueue,
   IBMMQChannelTopic
 }
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{
+  HasTopicConfiguration,
+  KafkaChannelBinding,
+  KafkaChannelBinding040,
+  KafkaChannelBinding050,
+  KafkaTopicConfiguration
+}
 import amf.apicontract.client.scala.model.domain.bindings.pulsar.{PulsarChannelBinding, PulsarChannelRetention}
 import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  Amqp091ChannelBindingModel,
-  Amqp091ChannelExchangeModel,
-  Amqp091QueueModel,
-  AnypointMQChannelBindingModel,
-  GooglePubSubChannelBindingModel,
-  GooglePubSubMessageStoragePolicyModel,
-  GooglePubSubSchemaDefinitionModel,
-  GooglePubSubSchemaSettingsModel,
-  IBMMQChannelBindingModel,
-  IBMMQChannelQueueModel,
-  IBMMQChannelTopicModel,
- PulsarChannelBindingModel,
-  PulsarChannelRetentionModel, WebSocketsChannelBindingModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.spec.async.emitters.domain
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{Amqp, AnypointMQ, GooglePubSub, IBMMQ, Pulsar, WebSockets}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import org.mulesoft.common.client.lexical.Position
-import amf.core.client.scala.model.domain.{AmfScalar, ObjectNode, Shape}
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.render.BaseEmitters.{
-  ArrayEmitter,
-  EntryPartEmitter,
-  ScalarEmitter,
-  ValueEmitter,
-  pos,
-  traverse
-}
-import amf.core.internal.render.BaseEmitters.{ArrayEmitter, ValueEmitter, pos, traverse}
+import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
-import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.internal.spec.oas.emitter.{OasNodeShapeEmitter, OasScalarShapeEmitter}
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
@@ -72,8 +56,9 @@ class AsyncApiChannelBindingsEmitter(binding: ChannelBinding, ordering: SpecOrde
     case binding: WebSocketsChannelBinding   => Some(new WebSocketChannelBindingEmitter(binding, ordering))
     case binding: IBMMQChannelBinding        => Some(new IBMMQChannelBindingEmitter(binding, ordering))
     case binding: AnypointMQChannelBinding   => Some(new AnypointMQChannelBindingEmitter(binding, ordering))
-    case binding: PulsarChannelBinding     => Some(new PulsarChannelBindingEmitter(binding, ordering))
+    case binding: PulsarChannelBinding       => Some(new PulsarChannelBindingEmitter(binding, ordering))
     case binding: GooglePubSubChannelBinding => Some(new GooglePubSubChannelBindingEmitter(binding, ordering))
+    case binding: KafkaChannelBinding        => Some(new KafkaChannelBindingEmitter(binding, ordering))
     case _                                   => None
   }
 
@@ -145,12 +130,16 @@ class Amqp091ChannelExchangeEmitter(binding: Amqp091ChannelExchange, ordering: S
         fs.entry(Amqp091ChannelExchangeModel.Type).foreach(f => result += ValueEmitter("type", f))
         fs.entry(Amqp091ChannelExchangeModel.Durable).foreach(f => result += ValueEmitter("durable", f))
         fs.entry(Amqp091ChannelExchangeModel.AutoDelete).foreach(f => result += ValueEmitter("autoDelete", f))
-        fs.entry(Amqp091ChannelExchangeModel.VHost).foreach(f => result += ValueEmitter("vhost", f))
+        fs.entry(Amqp091ChannelExchange020Model.VHost).foreach { f =>
+          if (!isSynthesized(f)) result += ValueEmitter("vhost", f)
+        }
 
         traverse(ordering.sorted(result), emitter)
       }
     )
   }
+
+  private def isSynthesized(f: FieldEntry): Boolean = f.value.annotations.contains(classOf[SynthesizedField])
 
   override def position(): Position = pos(binding.annotations)
 }
@@ -168,7 +157,7 @@ class Amqp091ChannelQueueEmitter(binding: Amqp091Queue, ordering: SpecOrdering) 
         fs.entry(Amqp091QueueModel.Exclusive).foreach(f => result += ValueEmitter("exclusive", f))
         fs.entry(Amqp091QueueModel.Durable).foreach(f => result += ValueEmitter("durable", f))
         fs.entry(Amqp091QueueModel.AutoDelete).foreach(f => result += ValueEmitter("autoDelete", f))
-        fs.entry(Amqp091QueueModel.VHost).foreach { f =>
+        fs.entry(Amqp091Queue020Model.VHost).foreach { f =>
           if (!isSynthesized(f)) result += ValueEmitter("vhost", f)
         }
         traverse(ordering.sorted(result), emitter)
@@ -192,8 +181,7 @@ class IBMMQChannelBindingEmitter(binding: IBMMQChannelBinding, ordering: SpecOrd
         val fs     = binding.fields
 
         fs.entry(IBMMQChannelBindingModel.DestinationType).foreach(f => result += ValueEmitter("destinationType", f))
-        fs.entry(IBMMQChannelBindingModel.MaxMsgLength)
-          .foreach(f => result += ValueEmitter("maxMsgLength", f))
+        fs.entry(IBMMQChannelBindingModel.MaxMsgLength).foreach(f => result += ValueEmitter("maxMsgLength", f))
 
         result ++= emitQueueAndTopicProperties
 
@@ -406,4 +394,71 @@ class PulsarChannelRetentionEmitter(binding: PulsarChannelRetention, ordering: S
   }
 
   override def position(): Position = pos(binding.annotations)
+}
+
+class KafkaChannelBindingEmitter(binding: KafkaChannelBinding, ordering: SpecOrdering)
+    extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(Kafka),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(KafkaChannelBindingModel.Topic).foreach(f => result += ValueEmitter("topic", f))
+        fs.entry(KafkaChannelBindingModel.Partitions).foreach(f => result += ValueEmitter("partitions", f))
+        fs.entry(KafkaChannelBindingModel.Replicas).foreach(f => result += ValueEmitter("replicas", f))
+
+        binding match {
+          case bindingWithTopic: HasTopicConfiguration =>
+            Option(bindingWithTopic.topicConfiguration).foreach(topicConfiguration =>
+              result += new KafkaTopicConfigurationEmitter(topicConfiguration, ordering)
+            )
+          case _ => // ignore
+        }
+
+        emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class KafkaTopicConfigurationEmitter(topicConfiguration: KafkaTopicConfiguration, ordering: SpecOrdering)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      YNode("topicConfiguration"),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = topicConfiguration.fields
+
+        fs.entry(KafkaTopicConfigurationModel.CleanupPolicy)
+          .foreach(f => result += ArrayEmitter("cleanup.policy", f, ordering))
+        fs.entry(KafkaTopicConfigurationModel.RetentionMs).foreach(f => result += ValueEmitter("retention.ms", f))
+        fs.entry(KafkaTopicConfigurationModel.RetentionBytes).foreach(f => result += ValueEmitter("retention.bytes", f))
+        fs.entry(KafkaTopicConfigurationModel.DeleteRetentionMs)
+          .foreach(f => result += ValueEmitter("delete.retention.ms", f))
+        fs.entry(KafkaTopicConfigurationModel.MaxMessageBytes)
+          .foreach(f => result += ValueEmitter("max.message.bytes", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentKeySchemaValidation)
+          .foreach(f => result += ValueEmitter("confluent.key.schema.validation", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentKeySubjectNameStrategy)
+          .foreach(f => result += ValueEmitter("confluent.key.subject.name.strategy", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentValueSchemaValidation)
+          .foreach(f => result += ValueEmitter("confluent.value.schema.validation", f))
+        fs.entry(KafkaTopicConfiguration050Model.ConfluentValueSubjectNameStrategy)
+          .foreach(f => result += ValueEmitter("confluent.value.subject.name.strategy", f))
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(topicConfiguration.annotations)
 }

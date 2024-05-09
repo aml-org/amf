@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-headers-ref.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference #/components/schemas/UserHeadersOne
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-headers-ref.yaml#/async-api/endpoint/the-third-channel/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/anypointmq-message
+  Property: 
+  Range: [(53,12)-(55,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/anypoint-headers-ref.yaml

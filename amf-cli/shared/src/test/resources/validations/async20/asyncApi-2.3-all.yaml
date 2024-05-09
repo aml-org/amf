@@ -1,0 +1,129 @@
+asyncapi: 2.3.0
+info:
+  title: Market Data API
+  version: 1.0.0
+  description: This API provides real-time market data updates.
+servers:
+  theName:
+    url: some.com
+    protocol: ibmmq
+    bindings:
+      ibmmq:
+        groupId: test
+        ccdtQueueManagerName: test
+        cipherSpec: test
+        multiEndpointServer: true
+        heartBeatInterval: 123
+channels:
+  first-channel:
+    subscribe:
+      summary: Subscribe to market updates
+      message:
+        name: errorMessage
+        summary: Message with market data information.
+        description: |
+          test
+        payload:
+          type: object
+          properties:
+            prop1:
+              type: string
+        examples:
+          -
+            name: error
+            summary: example
+            headers:
+              exampleHeader: InlineHeader
+            payload:
+              userId: user345
+              status: offline
+  second-channel:
+    bindings:
+      ibmmq:
+        destinationType: topic
+        topic:
+          string: test
+          objectName: test
+          durablePermitted: true
+          lastMsgRetained: false
+        maxMsgLength: 123
+        bindingVersion: test
+    publish:
+      bindings:
+        ibmmq: { }
+      message:
+        bindings:
+          ibmmq:
+            type: binary
+            description: test
+            expiry: 123
+            bindingVersion: test
+            headers: test1, test2, test3
+        payload:
+          type: string
+    description: some channel
+  third-channel:
+    bindings:
+      anypointmq:
+        destination: test
+        destinationType: exchange
+        bindingVersion: 0.1.0
+    description: some channel
+    publish:
+      bindings:
+        anypointmq: {}
+      message:
+        bindings:
+          anypointmq:
+            headers:
+              type: object
+              properties:
+                messageId:
+                  type: string
+            bindingVersion: 0.1.0
+        payload:
+          type: string
+  forth-channel:
+    publish:
+      bindings:
+        solace:
+          bindingVersion: 0.3.0
+          destinations:
+            -
+              destinationType: queue
+              queue:
+                name: CreatedHREvents
+                accessType: exclusive
+                maxMsgSpoolSize: test
+                maxTtl: test
+                topicSubscriptions:
+                  - person/*/created
+            -
+              destinationType: topic
+              topic:
+                topicSubscriptions:
+                  - person/*/updated
+components:
+  messages:
+    marketData:
+      name: messageName
+      summary: Message with market data information.
+      description: |
+        test
+      payload:
+        $ref: "#/components/schemas/market"
+      examples:
+        -
+          name: updatemessage
+          summary: explain
+          payload:
+            userId: user123
+            status: online
+          headers:
+            exampleHeader: HeaderValue
+  schemas:
+    market:
+      type: object
+      properties:
+        type:
+          type: string

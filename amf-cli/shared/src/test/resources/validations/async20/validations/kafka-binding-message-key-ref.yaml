@@ -1,0 +1,43 @@
+asyncapi: 2.2.0
+info:
+  title: Test API
+  version: 1.0.0
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.2.0
+            key: # inlined key
+              type: string
+              enum:
+                - someKey
+
+  another-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.2.0
+            key: # key with a valid ref
+              $ref: '#/components/schemas/testSchema'
+
+  the-third-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.2.0
+            key: # key with an invalid ref
+              $ref: '#/components/schemas/invalidRef' # should throw not found error
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

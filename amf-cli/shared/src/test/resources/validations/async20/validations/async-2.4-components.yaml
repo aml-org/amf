@@ -1,0 +1,34 @@
+asyncapi: 2.4.0
+info:
+  title: components-2.4
+  version: 1.0.0
+components:
+  servers:
+    myserver:
+      url: http://localhost:5000/ws
+      protocol: ws
+  channels:
+    myChannel:
+      description: mychannel
+  serverVariables:
+    environment:
+      default: dev-api
+      description: Development API environment
+    version:
+      default: v2
+      description: Development API version
+servers:
+  production:
+    $ref: "#/components/servers/myserver"
+  development:
+    url: https://{environment}.example.com/{version}
+    description: Development server using referenced server variables.
+    protocol: https
+    variables:
+      environment:
+        $ref: "#/components/serverVariables/environment"
+      version:
+        $ref: "#/components/serverVariables/version"
+channels:
+  some/events:
+    $ref: "#/components/channels/myChannel"

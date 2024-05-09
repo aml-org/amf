@@ -1,0 +1,28 @@
+asyncapi: '2.0.0'
+info:
+  title: Amqp channel binding
+  version: '1.0.0'
+
+channels:
+  default-version-channel:
+    subscribe:
+      operationId: default-version-operation
+      bindings:
+        amqp:
+          replyTo: valid # since no version is specified, defaults to 0.1.0 where replyTo is valid
+
+  wrong-version-channel:
+    subscribe:
+      operationId: wrong-version-operation
+      bindings:
+        amqp:
+          bindingVersion: 1.2.3 # invalid version, should throw warning
+          replyTo: valid # since an invalid version is specified, defaults to 0.1.0 where replyTo is valid
+
+  specific-version-channel:
+    subscribe:
+      operationId: specific-version-operation
+      bindings:
+        amqp:
+          bindingVersion: 0.3.0
+          replyTo: invalid # version 0.3.0 doesn't have replyTo, should throw violation

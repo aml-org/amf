@@ -2,7 +2,9 @@ package amf.apicontract.client.platform.model.domain.bindings.amqp
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, OperationBinding}
 import amf.apicontract.client.scala.model.domain.bindings.amqp.{
-  Amqp091OperationBinding => InternalAmqp091OperationBinding
+  Amqp091OperationBinding => InternalAmqp091OperationBinding,
+  Amqp091OperationBinding010 => InternalAmqp091OperationBinding010,
+  Amqp091OperationBinding030 => InternalAmqp091OperationBinding030
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
@@ -10,12 +12,10 @@ import amf.core.client.platform.model.{BoolField, IntField, StrField}
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class Amqp091OperationBinding(override private[amf] val _internal: InternalAmqp091OperationBinding)
+abstract class Amqp091OperationBinding(override private[amf] val _internal: InternalAmqp091OperationBinding)
     extends OperationBinding
     with BindingVersion {
 
-  @JSExportTopLevel("Amqp091OperationBinding")
-  def this() = this(InternalAmqp091OperationBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
@@ -29,9 +29,9 @@ case class Amqp091OperationBinding(override private[amf] val _internal: Internal
   def deliveryMode: IntField    = _internal.deliveryMode
   def mandatory: BoolField      = _internal.mandatory
   def bcc: ClientList[StrField] = _internal.bcc.asClient
-  def replyTo: StrField         = _internal.replyTo
-  def timestamp: BoolField      = _internal.timestamp
-  def ack: BoolField            = _internal.ack
+
+  def timestamp: BoolField = _internal.timestamp
+  def ack: BoolField       = _internal.ack
 
   def withExpiration(expiration: Int): this.type = {
     _internal.withExpiration(expiration)
@@ -68,11 +68,6 @@ case class Amqp091OperationBinding(override private[amf] val _internal: Internal
     this
   }
 
-  def withReplyTo(replyTo: String): this.type = {
-    _internal.withReplyTo(replyTo)
-    this
-  }
-
   def withTimestamp(timestamp: Boolean): this.type = {
     _internal.withTimestamp(timestamp)
     this
@@ -82,6 +77,30 @@ case class Amqp091OperationBinding(override private[amf] val _internal: Internal
     _internal.withAck(ack)
     this
   }
+}
 
-  override def linkCopy(): Amqp091OperationBinding = _internal.linkCopy()
+@JSExportAll
+case class Amqp091OperationBinding010(override private[amf] val _internal: InternalAmqp091OperationBinding010)
+    extends Amqp091OperationBinding(_internal) {
+
+  @JSExportTopLevel("Amqp091OperationBinding010")
+  def this() = this(InternalAmqp091OperationBinding010())
+
+  def replyTo: StrField = _internal.replyTo
+  def withReplyTo(replyTo: String): this.type = {
+    _internal.withReplyTo(replyTo)
+    this
+  }
+
+  override def linkCopy(): Amqp091OperationBinding010 = _internal.linkCopy()
+}
+
+@JSExportAll
+case class Amqp091OperationBinding030(override private[amf] val _internal: InternalAmqp091OperationBinding030)
+    extends Amqp091OperationBinding(_internal) {
+
+  @JSExportTopLevel("Amqp091OperationBinding030")
+  def this() = this(InternalAmqp091OperationBinding030())
+
+  override def linkCopy(): Amqp091OperationBinding030 = _internal.linkCopy()
 }

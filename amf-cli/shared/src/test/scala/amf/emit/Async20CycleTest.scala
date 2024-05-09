@@ -35,12 +35,21 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "empty-binding-and-annotations.yaml",
       "empty-binding-and-annotations.%s"
     ),
-    FixtureData("Amqp 0.9.1 channel binding", "amqp-channel-binding.yaml", "amqp-channel-binding.%s"),
+    FixtureData(
+      "Amqp 0.9.1 channel binding version 0.1.0",
+      "amqp-channel-binding-010.yaml",
+      "amqp-channel-binding-010.%s"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 channel binding version 0.2.0",
+      "amqp-channel-binding-020.yaml",
+      "amqp-channel-binding-020.%s"
+    ),
     FixtureData("Amqp 0.9.1 message binding", "amqp-message-binding.yaml", "amqp-message-binding.%s"),
     FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.%s"),
     FixtureData("Http message binding", "http-message-binding.yaml", "http-message-binding.%s"),
     FixtureData("Http operation binding", "http-operation-binding.yaml", "http-operation-binding.%s"),
-    FixtureData("Kafka message binding", "kafka-message-binding.yaml", "kafka-message-binding.%s"),
+    FixtureData("Kafka message binding", "kafka-message-binding-010.yaml", "kafka-message-binding.%s"),
     FixtureData("Kafka operation binding", "kafka-operation-binding.yaml", "kafka-operation-binding.%s"),
     FixtureData("Mqtt message binding", "mqtt-message-binding.yaml", "mqtt-message-binding.%s"),
     FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.%s"),
@@ -59,7 +68,13 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "components/external-operation-traits.%s"
     ),
     FixtureData("Message traits", "components/message-traits.yaml", "components/message-traits.%s"),
-    FixtureData("Draft-7 external reference", "draft-7/references.yaml", "draft-7/references.%s")
+    FixtureData("Draft-7 external reference", "draft-7/references.yaml", "draft-7/references.%s"),
+    FixtureData("Async 2.1 all", "asyncApi-2.1-all.yaml", "asyncApi-2.1-all.%s"),
+    FixtureData("Async 2.2 all", "asyncApi-2.2-all.yaml", "asyncApi-2.2-all.%s"),
+    FixtureData("Async 2.3 all", "asyncApi-2.3-all.yaml", "asyncApi-2.3-all.%s"),
+    FixtureData("Async 2.4 all", "asyncApi-2.4-all.yaml", "asyncApi-2.4-all.%s"),
+    FixtureData("Async 2.5 all", "asyncApi-2.5-all.yaml", "asyncApi-2.5-all.%s"),
+    FixtureData("Async 2.6 all", "asyncApi-2.6-all.yaml", "asyncApi-2.6-all.%s")
   )
 
   def cyclesAsyncAsync: Seq[FixtureData] = Seq(
@@ -84,9 +99,14 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/empty-binding-and-annotations.yaml"
     ),
     FixtureData(
-      "Amqp 0.9.1 channel binding",
-      "bindings/amqp-channel-binding.yaml",
-      "bindings/amqp-channel-binding.yaml"
+      "Amqp 0.9.1 channel binding version 0.1.0",
+      "bindings/amqp-channel-binding-010.yaml",
+      "bindings/amqp-channel-binding-010.yaml"
+    ),
+    FixtureData(
+      "Amqp 0.9.1 channel binding version 0.2.0",
+      "bindings/amqp-channel-binding-020.yaml",
+      "bindings/amqp-channel-binding-020.yaml"
     ),
     FixtureData(
       "Amqp 0.9.1 message binding",
@@ -104,11 +124,15 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/http-operation-binding.yaml",
       "bindings/http-operation-binding.yaml"
     ),
-    FixtureData("Kafka message binding", "bindings/kafka-message-binding.yaml", "bindings/kafka-message-binding.yaml"),
+    FixtureData(
+      "Kafka message binding",
+      "bindings/kafka-message-binding.yaml",
+      "bindings/kafka-message-binding.yaml.yaml"
+    ),
     FixtureData(
       "Kafka operation binding",
       "bindings/kafka-operation-binding.yaml",
-      "bindings/kafka-operation-binding.yaml"
+      "bindings/kafka-operation-binding.yaml.yaml"
     ),
     FixtureData("Mqtt message binding", "bindings/mqtt-message-binding.yaml", "bindings/mqtt-message-binding.yaml"),
     FixtureData(
@@ -198,6 +222,36 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "Async 2.2 all",
       "asyncApi-2.2-all.yaml",
       "asyncApi-2.2-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.3 all",
+      "asyncApi-2.3-all.yaml",
+      "asyncApi-2.3-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.4 all",
+      "asyncApi-2.4-all.yaml",
+      "asyncApi-2.4-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.5 all",
+      "asyncApi-2.5-all.yaml",
+      "asyncApi-2.5-all.yaml"
+    ),
+    FixtureData(
+      "Async 2.6 all",
+      "asyncApi-2.6-all.yaml",
+      "asyncApi-2.6-all.yaml"
+    ),
+    FixtureData(
+      "Kafka server binding",
+      "bindings/kafka-server-binding.yaml",
+      "bindings/kafka-server-binding.yaml"
+    ),
+    FixtureData(
+      "Kafka channel binding",
+      "bindings/kafka-channel-binding.yaml",
+      "bindings/kafka-channel-binding.yaml"
     )
 
 // TODO: figure out why this test is commented out

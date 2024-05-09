@@ -1,0 +1,43 @@
+asyncapi: '2.0.0'
+info:
+  title: test API
+  version: '1.0.0'
+
+servers:
+  production:
+    url: kafka-server-binding
+    protocol: kafka
+    bindings:
+      kafka:
+        schemaRegistryUrl: https://my-schema-registry.com
+        schemaRegistryVendor: confluent
+        bindingVersion: 0.1.0 # invalid version, kafka server binding added on 0.3.0 onwards
+
+channels:
+  some-channel:
+    bindings:
+      kafka:
+        topic: my-specific-topic-name
+        partitions: 20
+        replicas: 3
+        bindingVersion: 0.1.0 # invalid version, kafka server binding added on 0.3.0 onwards
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 9.9.9 # invalid bindingVersion, defaults to 0.1.0 and throws error
+            key:
+              type: string
+              enum:
+                - someKey
+      bindings:
+        kafka:
+          bindingVersion: 9.9.9 # invalid bindingVersion, defaults to 0.1.0 and throws error
+          groupId:
+            type: string
+            enum:
+              - myGroupId
+          clientId:
+            type: string
+            enum:
+              - myClientId

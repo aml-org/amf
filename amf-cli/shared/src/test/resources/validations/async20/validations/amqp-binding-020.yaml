@@ -1,0 +1,24 @@
+asyncapi: '2.0.0'
+info:
+  title: Amqp channel binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    bindings:
+      amqp:
+        bindingVersion: 0.2.0
+        exchange:
+          name: some name
+          type: topic
+          durable: false
+          autoDelete: true
+          vhost: /some-some
+          invalidKey: should throw error
+        queue:
+          name: somename
+          durable: true
+          exclusive: false
+          autoDelete: true
+          vhost: /some-some
+          invalidKey: should throw error

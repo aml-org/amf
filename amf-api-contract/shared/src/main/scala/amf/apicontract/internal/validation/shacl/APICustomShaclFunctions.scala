@@ -1,20 +1,14 @@
 package amf.apicontract.internal.validation.shacl
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQChannelBinding, IBMMQMessageBinding}
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{HasTopicConfiguration, KafkaChannelBinding040}
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  AnypointMQMessageBindingModel,
-  BindingHeaders,
-  BindingQuery,
-  HttpMessageBindingModel,
-  IBMMQChannelBindingModel,
-  IBMMQMessageBindingModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.metamodel.domain.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel,
@@ -770,7 +764,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                   )
               }
 
-            case elem =>
+            case elem if elem != null =>
               validate(
                 validationInfo(
                   AnypointMQMessageBindingModel.Headers,
@@ -778,6 +772,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                   elem.annotations
                 )
               )
+            case _ => // ignore
           }
         }
       },
@@ -806,7 +801,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             validate(
               validationInfo(
                 IBMMQMessageBindingModel.Headers,
-                "headers MUST NOT be specified if type = string or jms in an IBMMQ Message Binding",
+                "IBMMQ message Binding 'headers' MUST NOT be specified if 'type' field is 'string' or 'jms'",
                 element.annotations
               )
             )
@@ -829,6 +824,46 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               )
             )
           }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "KafkaTopicConfigurationValidations"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val topicConfiguration = element.asInstanceOf[HasTopicConfiguration].topicConfiguration
+          val cleanupPolicy      = topicConfiguration.cleanupPolicy.map(_.value())
+          if (cleanupPolicy.nonEmpty && cleanupPolicy.intersect(Seq("delete", "compact")).isEmpty)
+            validate(
+              validationInfo(
+                KafkaTopicConfigurationModel.CleanupPolicy,
+                "Kafka Topic Configuration 'cleanup.policy' field can only contain 'delete' and/or 'compact'.",
+                topicConfiguration.annotations
+              )
+            )
+          if (topicConfiguration.retentionMs.value() < -1)
+            validate(
+              validationInfo(
+                KafkaTopicConfigurationModel.RetentionMs,
+                "Kafka Topic Configuration 'retention.ms' field valid values are [-1,...]",
+                topicConfiguration.annotations
+              )
+            )
+          if (topicConfiguration.deleteRetentionMs.value() < 0)
+            validate(
+              validationInfo(
+                KafkaTopicConfigurationModel.DeleteRetentionMs,
+                "Kafka topic configuration 'delete.retention.ms' field must be a positive number",
+                topicConfiguration.annotations
+              )
+            )
+          if (topicConfiguration.maxMessageBytes.value() < 0)
+            validate(
+              validationInfo(
+                KafkaTopicConfigurationModel.MaxMessageBytes,
+                "Kafka topic configuration 'max.message.bytes' field must be a positive number",
+                topicConfiguration.annotations
+              )
+            )
         }
       }
     )

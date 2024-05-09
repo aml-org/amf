@@ -1,0 +1,38 @@
+asyncapi: 2.0.0
+info:
+  title: Kafka message binding
+  version: 1.0.0
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.3.0
+            key:
+              type: string
+              enum:
+                - someKey
+            schemaIdLocation: test string
+            schemaIdPayloadEncoding: test string
+            schemaLookupStrategy: test string
+  another-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.2.0
+            key:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

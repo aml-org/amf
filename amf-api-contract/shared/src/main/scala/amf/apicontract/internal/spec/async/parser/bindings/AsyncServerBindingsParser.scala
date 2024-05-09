@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.async.parser.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.{ServerBinding, ServerBindings}
 import amf.apicontract.internal.metamodel.domain.bindings.ServerBindingsModel
-import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{IBMMQ, Mqtt, Pulsar, Solace}
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{IBMMQ, Kafka, Mqtt, Pulsar, Solace}
 import amf.apicontract.internal.spec.async.parser.bindings.server._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServerBindings
@@ -17,7 +17,8 @@ object AsyncServerBindingsParser {
     Mqtt   -> MqttServerBindingParser,
     IBMMQ  -> IBMMQServerBindingParser,
     Solace -> SolaceServerBindingParser,
-    Pulsar -> PulsarServerBindingParser
+    Pulsar -> PulsarServerBindingParser,
+    Kafka  -> KafkaServerBindingParser
   )
 }
 case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)

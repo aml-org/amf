@@ -8,7 +8,28 @@ channels:
       message:
         bindings:
           kafka:
+            bindingVersion: 0.3.0
             key:
               type: string
               enum:
                 - someKey
+            schemaIdLocation: test string
+            schemaIdPayloadEncoding: test string
+            schemaLookupStrategy: test string
+  another-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.2.0
+            key: # key with a valid ref
+              $ref: '#/components/schemas/testSchema'
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.
