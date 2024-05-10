@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-version.yaml
 Profile: 
 Conforms: false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
@@ -11,4 +11,12 @@ Level: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-version.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/googlepubsub-channel-010
   Property: 
   Range: [(12,6)-(15,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-version.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
+  Message: Version 9.9.9 is not supported in a GooglePubSub Message Binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-version.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message-010
+  Property: 
+  Range: [(19,8)-(21,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-version.yaml

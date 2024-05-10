@@ -5,6 +5,8 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBin
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
   GooglePubSubMessageBinding,
+  GooglePubSubMessageBinding010,
+  GooglePubSubMessageBinding020,
   GooglePubSubSchemaDefinition
 }
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding
@@ -15,6 +17,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091MessageBindingModel,
   AnypointMQMessageBindingModel,
   GooglePubSubMessageBindingModel,
+  GooglePubSubSchemaDefinition010Model,
   GooglePubSubSchemaDefinitionModel,
   HttpMessageBinding030Model,
   HttpMessageBindingModel,
@@ -227,11 +230,17 @@ class GooglePubSubMessageBindingEmitter(binding: GooglePubSubMessageBinding, ord
             )
           )
         fs.entry(GooglePubSubMessageBindingModel.OrderingKey).foreach(f => result += ValueEmitter("orderingKey", f))
-        Option(binding.schema).foreach(schema => result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering))
+        binding match {
+          case default: GooglePubSubMessageBinding010 =>
+            Option(default.schema).foreach(schema =>
+              result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering)
+            )
+          case latest: GooglePubSubMessageBinding020 =>
+            Option(latest.schema).foreach(schema => result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering))
+        }
 
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
-
       }
     )
   }
@@ -247,7 +256,7 @@ class GooglePubSubSchemaDefinitionEmitter(binding: GooglePubSubSchemaDefinition,
         val fs     = binding.fields
 
         fs.entry(GooglePubSubSchemaDefinitionModel.Name).foreach(f => result += ValueEmitter("name", f))
-        fs.entry(GooglePubSubSchemaDefinitionModel.FieldType).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(GooglePubSubSchemaDefinition010Model.FieldType).foreach(f => result += ValueEmitter("type", f))
 
         traverse(ordering.sorted(result), emitter)
       }

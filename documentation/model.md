@@ -86,8 +86,12 @@ AMF Model Documentation
 * [GooglePubSubChannelBinding010](#googlepubsubchannelbinding010)
 * [GooglePubSubChannelBinding020](#googlepubsubchannelbinding020)
 * [GooglePubSubMessageBinding](#googlepubsubmessagebinding)
+* [GooglePubSubMessageBinding010](#googlepubsubmessagebinding010)
+* [GooglePubSubMessageBinding020](#googlepubsubmessagebinding020)
 * [GooglePubSubMessageStoragePolicy](#googlepubsubmessagestoragepolicy)
 * [GooglePubSubSchemaDefinition](#googlepubsubschemadefinition)
+* [GooglePubSubSchemaDefinition010](#googlepubsubschemadefinition010)
+* [GooglePubSubSchemaDefinition020](#googlepubsubschemadefinition020)
 * [GooglePubSubSchemaSettings](#googlepubsubschemasettings)
 * [HttpApiKeySettings](#httpapikeysettings)
 * [HttpMessageBinding](#httpmessagebinding)
@@ -1715,6 +1719,38 @@ Types:
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## GooglePubSubMessageBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubMessageBinding010`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | attribute | [ObjectNode](#objectnode) | - | Attributes for this message | `http://a.ml/vocabularies/apiBinding#attribute` |
+ | orderingKey | string | - | If non-empty, identifies related messages for which publish order should be respected | `http://a.ml/vocabularies/apiBinding#orderingKey` |
+ | schemaDefinition | [GooglePubSubSchemaDefinition010](#googlepubsubschemadefinition010) | - | Define Schema | `http://a.ml/vocabularies/apiBinding#schemaDefinition` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubMessageBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubMessageBinding020`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | attribute | [ObjectNode](#objectnode) | - | Attributes for this message | `http://a.ml/vocabularies/apiBinding#attribute` |
+ | orderingKey | string | - | If non-empty, identifies related messages for which publish order should be respected | `http://a.ml/vocabularies/apiBinding#orderingKey` |
+ | schemaDefinition | [GooglePubSubSchemaDefinition020](#googlepubsubschemadefinition020) | - | Define Schema | `http://a.ml/vocabularies/apiBinding#schemaDefinition` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## GooglePubSubMessageStoragePolicy
 
 Types:
@@ -1735,7 +1771,29 @@ Types:
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
  | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubSchemaDefinition010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition010`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
  | type | string | - | The type of the schema | `http://a.ml/vocabularies/apiBinding#type` |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## GooglePubSubSchemaDefinition020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition020`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## GooglePubSubSchemaSettings

@@ -384,13 +384,21 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
       case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubSchemaSettings =>
         GooglePubSubSchemaSettings(s)
     }
-    platform.registerWrapper(GooglePubSubMessageBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubMessageBinding =>
-        GooglePubSubMessageBinding(s)
+    platform.registerWrapper(GooglePubSubMessageBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubMessageBinding010 =>
+        GooglePubSubMessageBinding010(s)
     }
-    platform.registerWrapper(GooglePubSubSchemaDefinitionModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubSchemaDefinition =>
-        GooglePubSubSchemaDefinition(s)
+    platform.registerWrapper(GooglePubSubMessageBinding020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubMessageBinding020 =>
+        GooglePubSubMessageBinding020(s)
+    }
+    platform.registerWrapper(GooglePubSubSchemaDefinition010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubSchemaDefinition010 =>
+        GooglePubSubSchemaDefinition010(s)
+    }
+    platform.registerWrapper(GooglePubSubSchemaDefinition020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.googlepubsub.GooglePubSubSchemaDefinition020 =>
+        GooglePubSubSchemaDefinition020(s)
     }
     platform.registerWrapper(APIContractProcessingDataModel) {
       case s: amf.apicontract.client.scala.model.document.APIContractProcessingData => APIContractProcessingData(s)

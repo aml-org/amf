@@ -40,9 +40,12 @@ object Async25Syntax extends SpecSyntax {
       "schema",
       "bindingVersion"
     ),
-    "GooglePubSubMessageSchema" -> Set(
+    "GooglePubSubMessageSchema010" -> Set(
       "name",
       "type"
+    ),
+    "GooglePubSubMessageSchema020" -> Set(
+      "name"
     )
   )
 }

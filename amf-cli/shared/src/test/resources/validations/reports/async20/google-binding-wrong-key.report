@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
 Profile: 
 Conforms: false
-Number of results: 6
+Number of results: 7
 
 Level: Violation
 
@@ -40,15 +40,23 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'WrongKey4' not supported in a ASYNC 2.5 GooglePubSubMessageBinding node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message-010
   Property: 
   Range: [(41,10)-(42,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Property 'WrongKey5' not supported in a ASYNC 2.5 GooglePubSubMessageSchema node
+  Message: Property 'WrongKey5' not supported in a ASYNC 2.5 GooglePubSubMessageSchema010 node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/some-message/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010
   Property: 
   Range: [(45,12)-(46,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'type' not supported in a ASYNC 2.5 GooglePubSubMessageSchema020 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml#/declares/msg/other-message/message-bindings/bindings/googlepubsub-message-020/googlepubsub-schemaDefinition-020
+  Property: 
+  Range: [(52,12)-(53,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/google-binding-wrong-key.yaml
