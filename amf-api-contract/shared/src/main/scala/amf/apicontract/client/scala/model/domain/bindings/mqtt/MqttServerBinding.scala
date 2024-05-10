@@ -14,7 +14,9 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
     with BindingVersion
     with Key {
   override protected def bindingVersionField: Field = BindingVersion
+  override def key: StrField                        = fields.field(MqttServerBindingModel.key)
   override def meta: MqttServerBindingModel.type    = MqttServerBindingModel
+  override def componentId: String                  = "/mqtt-server"
 
   def clientId: StrField           = fields.field(ClientId)
   def cleanSession: BoolField      = fields.field(CleanSession)
@@ -26,26 +28,21 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
   def withLastWill(lastWill: MqttServerLastWill): this.type = set(LastWill, lastWill)
   def withKeepAlive(keepAlive: Int): this.type              = set(KeepAlive, keepAlive)
 
-  override def componentId: String           = "/mqtt-server"
   override def linkCopy(): MqttServerBinding = MqttServerBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     MqttServerBinding.apply
-
-  override def key: StrField = fields.field(MqttServerBindingModel.key)
 }
 
 object MqttServerBinding {
-
-  def apply(): MqttServerBinding = apply(Annotations())
-
-  def apply(annotations: Annotations): MqttServerBinding = apply(Fields(), annotations)
-
+  def apply(): MqttServerBinding                                         = apply(Annotations())
+  def apply(annotations: Annotations): MqttServerBinding                 = apply(Fields(), annotations)
   def apply(fields: Fields, annotations: Annotations): MqttServerBinding = new MqttServerBinding(fields, annotations)
 }
 
 class MqttServerLastWill(override val fields: Fields, override val annotations: Annotations) extends DomainElement {
   override def meta: MqttServerLastWillModel.type = MqttServerLastWillModel
+  override def componentId: String                = "/mqtt-last-will"
 
   def topic: StrField   = fields.field(Topic)
   def qos: IntField     = fields.field(Qos)
@@ -56,15 +53,10 @@ class MqttServerLastWill(override val fields: Fields, override val annotations: 
   def withQos(qos: Int): this.type            = set(Qos, qos)
   def withRetain(retain: Boolean): this.type  = set(Retain, retain)
   def withMessage(message: String): this.type = set(Message, message)
-
-  override def componentId: String = "/mqtt-last-will"
 }
 
 object MqttServerLastWill {
-
-  def apply(): MqttServerLastWill = apply(Annotations())
-
-  def apply(annotations: Annotations): MqttServerLastWill = apply(Fields(), annotations)
-
+  def apply(): MqttServerLastWill                                         = apply(Annotations())
+  def apply(annotations: Annotations): MqttServerLastWill                 = apply(Fields(), annotations)
   def apply(fields: Fields, annotations: Annotations): MqttServerLastWill = new MqttServerLastWill(fields, annotations)
 }
