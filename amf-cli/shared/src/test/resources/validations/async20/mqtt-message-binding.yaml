@@ -9,4 +9,11 @@ channels:
       message:
         bindings:
           mqtt:
-            bindingVersion: 31.07.92
+            bindingVersion: 0.1.0
+
+  other-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            bindingVersion: 0.2.0

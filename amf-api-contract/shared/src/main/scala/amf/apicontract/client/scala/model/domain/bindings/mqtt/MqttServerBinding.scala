@@ -7,15 +7,18 @@ import amf.apicontract.internal.metamodel.domain.bindings.MqttServerBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerLastWillModel._
 import amf.apicontract.internal.metamodel.domain.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, ServerBinding}
+import amf.apicontract.internal.metamodel.domain.bindings.MqttServerBinding020Model.{
+  MaximumPacketSize,
+  SessionExpiryInterval
+}
 import amf.shapes.client.scala.model.domain.Key
 
-class MqttServerBinding(override val fields: Fields, override val annotations: Annotations)
+abstract class MqttServerBinding(override val fields: Fields, override val annotations: Annotations)
     extends ServerBinding
     with BindingVersion
     with Key {
   override protected def bindingVersionField: Field = BindingVersion
   override def key: StrField                        = fields.field(MqttServerBindingModel.key)
-  override def meta: MqttServerBindingModel.type    = MqttServerBindingModel
   override def componentId: String                  = "/mqtt-server"
 
   def clientId: StrField           = fields.field(ClientId)
@@ -27,17 +30,47 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
   def withCleanSession(cleanSession: Boolean): this.type    = set(CleanSession, cleanSession)
   def withLastWill(lastWill: MqttServerLastWill): this.type = set(LastWill, lastWill)
   def withKeepAlive(keepAlive: Int): this.type              = set(KeepAlive, keepAlive)
-
-  override def linkCopy(): MqttServerBinding = MqttServerBinding().withId(id)
-
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
-    MqttServerBinding.apply
 }
 
-object MqttServerBinding {
-  def apply(): MqttServerBinding                                         = apply(Annotations())
-  def apply(annotations: Annotations): MqttServerBinding                 = apply(Fields(), annotations)
-  def apply(fields: Fields, annotations: Annotations): MqttServerBinding = new MqttServerBinding(fields, annotations)
+class MqttServerBinding010(override val fields: Fields, override val annotations: Annotations)
+    extends MqttServerBinding(fields, annotations) {
+  override def meta: MqttServerBindingModel.type = MqttServerBindingModel
+  override def componentId: String               = "/mqtt-server-010"
+  override def linkCopy(): MqttServerBinding010  = MqttServerBinding010().withId(id)
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    MqttServerBinding010.apply
+}
+
+object MqttServerBinding010 {
+  def apply(): MqttServerBinding010                         = apply(Annotations())
+  def apply(annotations: Annotations): MqttServerBinding010 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): MqttServerBinding010 =
+    new MqttServerBinding010(fields, annotations)
+}
+
+class MqttServerBinding020(override val fields: Fields, override val annotations: Annotations)
+    extends MqttServerBinding(fields, annotations) {
+  override def meta: MqttServerBindingModel.type = MqttServerBindingModel
+  override def componentId: String               = "/mqtt-server-020"
+
+  def sessionExpiryInterval: IntField = fields.field(SessionExpiryInterval)
+  def maximumPacketSize: IntField     = fields.field(MaximumPacketSize)
+
+  def withSessionExpiryInterval(sessionExpiryInterval: Int): this.type =
+    set(SessionExpiryInterval, sessionExpiryInterval)
+  def withMaximumPacketSize(maximumPacketSize: Int): this.type =
+    set(MaximumPacketSize, maximumPacketSize)
+
+  override def linkCopy(): MqttServerBinding020 = MqttServerBinding020().withId(id)
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    MqttServerBinding020.apply
+}
+
+object MqttServerBinding020 {
+  def apply(): MqttServerBinding020                         = apply(Annotations())
+  def apply(annotations: Annotations): MqttServerBinding020 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): MqttServerBinding020 =
+    new MqttServerBinding020(fields, annotations)
 }
 
 class MqttServerLastWill(override val fields: Fields, override val annotations: Annotations) extends DomainElement {

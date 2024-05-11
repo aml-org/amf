@@ -80,6 +80,9 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
         "0.1.0"
       case ("GooglePubSubMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) =>
         "0.1.0"
+      case ("MqttServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)    => "0.1.0"
+      case ("MqttOperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
+      case ("MqttMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
     }
   }
 

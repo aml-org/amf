@@ -10,8 +10,17 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object MqttOperationBindingParser extends BindingParser[MqttOperationBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): MqttOperationBinding = {
-    val binding = MqttOperationBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
+    val map            = entry.value.as[YMap]
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "MqttOperationBinding", ctx.specSettings.spec)
+
+    val binding = bindingVersion match {
+      case "0.2.0" | "latest" => MqttOperationBinding(Annotations(entry))
+      case "0.1.0"            => MqttOperationBinding(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = MqttOperationBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Mqtt Server Binding")
+        defaultBinding
+    }
 
     map.key("qos", MqttOperationBindingModel.Qos in binding)
     map.key("retain", MqttOperationBindingModel.Retain in binding)

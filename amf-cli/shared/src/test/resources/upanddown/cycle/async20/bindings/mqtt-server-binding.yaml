@@ -2,9 +2,10 @@ asyncapi: 2.0.0
 info:
   title: Mqtt channel binding
   version: 1.0.0
-channels: {}
+channels: { }
 servers:
   some-server:
+    protocol: mqtt
     url: http://some.com
     bindings:
       mqtt:
@@ -16,4 +17,20 @@ servers:
           retain: true
           message: A last will message
         keepAlive: 12
-        bindingVersion: 3.4.3
+
+  other-server:
+    protocol: mqtt
+    url: http://some.com
+    bindings:
+      mqtt:
+        clientId: someid
+        cleanSession: true
+        lastWill:
+          topic: some
+          qos: 2
+          retain: true
+          message: A last will message
+        keepAlive: 12
+        bindingVersion: 0.2.0
+        sessionExpiryInterval: 123
+        maximumPacketSize: 123

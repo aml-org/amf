@@ -3,7 +3,8 @@ package amf.apicontract.internal.metamodel.domain.bindings
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttMessageBinding,
   MqttOperationBinding,
-  MqttServerBinding,
+  MqttServerBinding010,
+  MqttServerBinding020,
   MqttServerLastWill
 }
 import amf.core.client.scala.model.domain.AmfObject
@@ -13,11 +14,10 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Int, Str}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
-object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
-  override val `type`: List[ValueType]  = ApiBinding + "MqttServerBinding" :: ServerBindingModel.`type`
-  override val key: Field               = Type
-  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttServerBinding")
-  override def modelInstance: AmfObject = MqttServerBinding()
+trait MqttServerBindingModel extends ServerBindingModel with BindingVersion {
+  override val `type`: List[ValueType] = ApiBinding + "MqttServerBinding" :: ServerBindingModel.`type`
+  override val key: Field              = Type
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "MqttServerBinding")
 
   val ClientId: Field =
     Field(Str, ApiBinding + "clientId", ModelDoc(ModelVocabularies.ApiBinding, "clientId", "The client identifier"))
@@ -47,6 +47,53 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
 
   override def fields: List[Field] =
     List(ClientId, CleanSession, LastWill, KeepAlive, BindingVersion) ++ ServerBindingModel.fields
+}
+
+object MqttServerBindingModel extends MqttServerBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("MqttServerBindingModel is an abstract class")
+}
+
+object MqttServerBinding010Model extends MqttServerBindingModel {
+  override val `type`: List[ValueType]  = ApiBinding + "MqttServerBinding010" :: ServerBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttServerBinding010")
+  override def modelInstance: AmfObject = MqttServerBinding010()
+}
+
+object MqttServerBinding020Model extends MqttServerBindingModel {
+  override val `type`: List[ValueType]  = ApiBinding + "MqttServerBinding020" :: ServerBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttServerBinding020")
+  override def modelInstance: AmfObject = MqttServerBinding020()
+
+  val SessionExpiryInterval: Field = Field(
+    Int,
+    ApiBinding + "sessionExpiryInterval",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "sessionExpiryInterval",
+      "Interval in seconds or a Schema Object containing the definition of the interval. The broker maintains a session for a disconnected client until this interval expires."
+    )
+  )
+
+  val MaximumPacketSize: Field = Field(
+    Int,
+    ApiBinding + "maximumPacketSize",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "maximumPacketSize",
+      "Number of bytes or a Schema Object representing the maximum packet size the client is willing to accept."
+    )
+  )
+
+  override def fields: List[Field] =
+    List(
+      SessionExpiryInterval,
+      MaximumPacketSize,
+      ClientId,
+      CleanSession,
+      LastWill,
+      KeepAlive,
+      BindingVersion
+    ) ++ ServerBindingModel.fields
 }
 
 object MqttServerLastWillModel extends DomainElementModel {

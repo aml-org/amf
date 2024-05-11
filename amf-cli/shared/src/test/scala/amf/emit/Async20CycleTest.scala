@@ -144,7 +144,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/mqtt-operation-binding.yaml",
       "bindings/mqtt-operation-binding.yaml"
     ),
-    FixtureData("Mqtt server binding", "bindings/mqtt-server-binding.yaml", "bindings/mqtt-server-binding.yaml"),
+    FixtureData(
+      "Mqtt server binding",
+      "bindings/mqtt-server-binding.yaml",
+      "bindings/mqtt-server-binding.yaml"
+    ),
     FixtureData("Websockets channel binding", "bindings/ws-channel-binding.yaml", "bindings/ws-channel-binding.yaml"),
     FixtureData("RAML type - simple union", "raml-types/simple-union.yaml", "raml-types/simple-union.yaml"),
     FixtureData("RAML type - simple object", "raml-types/simple-object.yaml", "raml-types/simple-object.yaml"),

@@ -7,6 +7,7 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.apicontract.internal.metamodel.domain.bindings.{
   IBMMQServerBindingModel,
   KafkaServerBindingModel,
+  MqttServerBinding020Model,
   MqttServerBindingModel,
   MqttServerLastWillModel,
   PulsarServerBindingModel,
@@ -60,6 +61,10 @@ class MqttServerBindingEmitter(binding: MqttServerBinding, ordering: SpecOrderin
         fs.entry(MqttServerBindingModel.KeepAlive).foreach(f => result += ValueEmitter("keepAlive", f))
         fs.entry(MqttServerBindingModel.LastWill)
           .foreach(_ => result += new LastWillEmitter(binding.lastWill, ordering))
+        fs.entry(MqttServerBinding020Model.SessionExpiryInterval)
+          .foreach(f => result += ValueEmitter("sessionExpiryInterval", f))
+        fs.entry(MqttServerBinding020Model.MaximumPacketSize)
+          .foreach(f => result += ValueEmitter("maximumPacketSize", f))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

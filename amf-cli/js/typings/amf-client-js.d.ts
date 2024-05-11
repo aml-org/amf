@@ -5578,6 +5578,108 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
+  export class MqttServerBinding010 implements MqttServerBinding {
+    cleanSession: BoolField;
+    clientId: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    keepAlive: IntField;
+    lastWill: MqttServerLastWill;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCleanSession(cleanSession: boolean): this;
+
+    withClientId(clientId: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKeepAlive(keepAlive: number): this;
+
+    withLastWill(lastWill: MqttServerLastWill): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class MqttServerBinding020 implements MqttServerBinding {
+    cleanSession: BoolField;
+    clientId: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    keepAlive: IntField;
+    lastWill: MqttServerLastWill;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    sessionExpiryInterval: number;
+    maximumPacketSize: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCleanSession(cleanSession: boolean): this;
+
+    withClientId(clientId: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKeepAlive(keepAlive: number): this;
+
+    withLastWill(lastWill: MqttServerLastWill): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withSessionExpiryInterval(sessionExpiryInterval: number): this;
+
+    withMaximumPacketSize(maximumPacketSize: number): this;
+  }
   export class MqttServerLastWill implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;

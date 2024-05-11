@@ -397,15 +397,38 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   test("test MqttServerBinding") {
     val mqttServerLastWill = new MqttServerLastWill()
-    val mqttServerBinding = new MqttServerBinding()
+      .withTopic(s)
+      .withQos(123)
+      .withRetain(true)
+      .withMessage(s)
+    mqttServerLastWill.topic.value() shouldBe s
+    mqttServerLastWill.qos.value() shouldBe 123
+    mqttServerLastWill.retain.value() shouldBe true
+    mqttServerLastWill.message.value() shouldBe s
+
+    val mqttServerBinding010 = new MqttServerBinding010()
       .withClientId(s)
       .withCleanSession(true)
       .withLastWill(mqttServerLastWill)
       .withKeepAlive(2)
-    mqttServerBinding.clientId.value() shouldBe s
-    mqttServerBinding.cleanSession.value() shouldBe true
-    mqttServerBinding.lastWill shouldBe mqttServerLastWill
-    mqttServerBinding.keepAlive.value() shouldBe 2
+    mqttServerBinding010.clientId.value() shouldBe s
+    mqttServerBinding010.cleanSession.value() shouldBe true
+    mqttServerBinding010.lastWill shouldBe mqttServerLastWill
+    mqttServerBinding010.keepAlive.value() shouldBe 2
+
+    val mqttServerBinding020 = new MqttServerBinding020()
+      .withClientId(s)
+      .withCleanSession(true)
+      .withLastWill(mqttServerLastWill)
+      .withKeepAlive(2)
+      .withSessionExpiryInterval(123)
+      .withMaximumPacketSize(123)
+    mqttServerBinding020.clientId.value() shouldBe s
+    mqttServerBinding020.cleanSession.value() shouldBe true
+    mqttServerBinding020.lastWill shouldBe mqttServerLastWill
+    mqttServerBinding020.keepAlive.value() shouldBe 2
+    mqttServerBinding020.sessionExpiryInterval.value() shouldBe 123
+    mqttServerBinding020.maximumPacketSize.value() shouldBe 123
   }
 
   test("test OperationBindings") {
@@ -421,7 +444,7 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   test("test ServerBindings") {
     val internalServerBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.ServerBinding] =
-      Seq(new MqttServerBinding()._internal)
+      Seq(new MqttServerBinding010()._internal)
     val clientServerBindings: ClientList[ServerBinding] = internalServerBindings.asClient
     val serverBindings = new ServerBindings()
       .withName(s)

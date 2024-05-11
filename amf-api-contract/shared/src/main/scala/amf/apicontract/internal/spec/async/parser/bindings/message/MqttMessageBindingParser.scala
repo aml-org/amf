@@ -9,9 +9,17 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object MqttMessageBindingParser extends BindingParser[MqttMessageBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): MqttMessageBinding = {
-    val binding = MqttMessageBinding(Annotations(entry))
+    val map            = entry.value.as[YMap]
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "MqttMessageBinding", ctx.specSettings.spec)
 
-    val map = entry.value.as[YMap]
+    val binding = bindingVersion match {
+      case "0.2.0" | "latest" => MqttMessageBinding(Annotations(entry))
+      case "0.1.0"            => MqttMessageBinding(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = MqttMessageBinding(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Mqtt Server Binding")
+        defaultBinding
+    }
 
     parseBindingVersion(binding, MqttMessageBindingModel.BindingVersion, map)
 

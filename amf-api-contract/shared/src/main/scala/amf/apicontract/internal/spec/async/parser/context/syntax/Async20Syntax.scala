@@ -128,11 +128,20 @@ object Async20Syntax extends SpecSyntax {
       "retain",
       "bindingVersion"
     ),
-    "mqttServerBinding" -> Set(
+    "mqttServerBinding010" -> Set(
       "clientId",
       "cleanSession",
       "lastWill",
       "keepAlive",
+      "bindingVersion"
+    ),
+    "mqttServerBinding020" -> Set(
+      "clientId",
+      "cleanSession",
+      "lastWill",
+      "keepAlive",
+      "sessionExpiryInterval",
+      "maximumPacketSize",
       "bindingVersion"
     ),
     "mqttServerLastWill" -> Set(
