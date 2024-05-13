@@ -899,7 +899,14 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'method' for channel binding object must be one of 'GET' or 'POST'"
       ),
       AMFValidation(
-        owlClass = apiBinding("MqttOperationBinding"),
+        owlClass = apiBinding("MqttOperationBinding010"),
+        owlProperty = apiBinding("qos"),
+        constraint = sh("pattern"),
+        value = "^[0-2]$",
+        openApiErrorMessage = "'qos' for mqtt operation binding object must be one of 0, 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("MqttOperationBinding020"),
         owlProperty = apiBinding("qos"),
         constraint = sh("pattern"),
         value = "^[0-2]$",
@@ -1007,7 +1014,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Http operation binding must be either 'request' or 'response'"
       ),
       AMFValidation(
-        owlClass = apiBinding("MqttServerBinding"),
+        owlClass = apiBinding("MqttServerBinding010"),
+        owlProperty = apiBinding("keepAlive"),
+        constraint = sh("minInclusive"),
+        openApiErrorMessage = "'keepAlive' must be greater than 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("MqttServerBinding020"),
         owlProperty = apiBinding("keepAlive"),
         constraint = sh("minInclusive"),
         openApiErrorMessage = "'keepAlive' must be greater than 0"
@@ -1062,7 +1075,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt server last will binding object must be one 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("MqttServerBinding"),
+        owlClass = apiBinding("MqttServerBinding010"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("minInclusive"),
+        openApiErrorMessage = "'expiration' must be greater than 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("MqttServerBinding020"),
         owlProperty = apiBinding("expiration"),
         constraint = sh("minInclusive"),
         openApiErrorMessage = "'expiration' must be greater than 0"

@@ -123,9 +123,15 @@ object Async20Syntax extends SpecSyntax {
       "messageType",
       "bindingVersion"
     ),
-    "mqttOperationBinding" -> Set(
+    "mqttOperationBinding010" -> Set(
       "qos",
       "retain",
+      "bindingVersion"
+    ),
+    "mqttOperationBinding020" -> Set(
+      "qos",
+      "retain",
+      "messageExpiryInterval",
       "bindingVersion"
     ),
     "mqttServerBinding010" -> Set(

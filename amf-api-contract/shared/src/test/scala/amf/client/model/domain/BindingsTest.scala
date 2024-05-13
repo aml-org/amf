@@ -388,11 +388,19 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test MqttOperationBinding") {
-    val mqttOperationBinding = new MqttOperationBinding()
+    val binding010 = new MqttOperationBinding010()
       .withQos(2)
       .withRetain(true)
-    mqttOperationBinding.qos.value() shouldBe 2
-    mqttOperationBinding.retain.value() shouldBe true
+    binding010.qos.value() shouldBe 2
+    binding010.retain.value() shouldBe true
+
+    val binding020 = new MqttOperationBinding020()
+      .withQos(2)
+      .withRetain(true)
+      .withMessageExpiryInterval(123)
+    binding020.qos.value() shouldBe 2
+    binding020.retain.value() shouldBe true
+    binding020.messageExpiryInterval.value() shouldBe 123
   }
 
   test("test MqttServerBinding") {
@@ -433,7 +441,7 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   test("test OperationBindings") {
     val OperationBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.OperationBinding] =
-      Seq(new MqttOperationBinding()._internal)
+      Seq(new MqttOperationBinding010()._internal)
     val clientOperationBindings = OperationBindings.asClient
     val operationBindings = new OperationBindings()
       .withName(s)

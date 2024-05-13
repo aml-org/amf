@@ -9,3 +9,11 @@ channels:
         mqtt:
           qos: 1
           retain: false
+  other-channel:
+    publish:
+      bindings:
+        mqtt:
+          qos: 1
+          retain: false
+          bindingVersion: 0.2.0
+          messageExpiryInterval: 123

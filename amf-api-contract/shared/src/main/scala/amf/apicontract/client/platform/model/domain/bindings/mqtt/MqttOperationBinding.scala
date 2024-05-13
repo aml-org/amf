@@ -2,18 +2,19 @@ package amf.apicontract.client.platform.model.domain.bindings.mqtt
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, OperationBinding}
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttOperationBinding => InternalMqttOperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
+  MqttOperationBinding => InternalMqttOperationBinding,
+  MqttOperationBinding010 => InternalMqttOperationBinding010,
+  MqttOperationBinding020 => InternalMqttOperationBinding020
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class MqttOperationBinding(override private[amf] val _internal: InternalMqttOperationBinding)
+abstract class MqttOperationBinding(override private[amf] val _internal: InternalMqttOperationBinding)
     extends OperationBinding
     with BindingVersion {
-  @JSExportTopLevel("MqttOperationBinding")
-  def this() = this(InternalMqttOperationBinding())
-
   def qos: IntField     = _internal.qos
   def retain: BoolField = _internal.retain
 
@@ -33,7 +34,28 @@ case class MqttOperationBinding(override private[amf] val _internal: InternalMqt
     _internal.withBindingVersion(bindingVersion)
     this
   }
+}
 
-  override def linkCopy(): MqttOperationBinding = _internal.linkCopy()
+@JSExportAll
+case class MqttOperationBinding010(override private[amf] val _internal: InternalMqttOperationBinding010)
+    extends MqttOperationBinding(_internal) {
+  @JSExportTopLevel("MqttOperationBinding010")
+  def this() = this(InternalMqttOperationBinding010())
+  override def linkCopy(): MqttOperationBinding010 = _internal.linkCopy()
+}
 
+@JSExportAll
+case class MqttOperationBinding020(override private[amf] val _internal: InternalMqttOperationBinding020)
+    extends MqttOperationBinding(_internal) {
+  @JSExportTopLevel("MqttOperationBinding020")
+  def this() = this(InternalMqttOperationBinding020())
+
+  def messageExpiryInterval: IntField = _internal.messageExpiryInterval
+
+  def withMessageExpiryInterval(messageExpiryInterval: Int): this.type = {
+    _internal.withMessageExpiryInterval(messageExpiryInterval)
+    this
+  }
+
+  override def linkCopy(): MqttOperationBinding020 = _internal.linkCopy()
 }

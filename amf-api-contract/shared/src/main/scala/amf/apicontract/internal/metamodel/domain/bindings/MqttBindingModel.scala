@@ -2,7 +2,8 @@ package amf.apicontract.internal.metamodel.domain.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttMessageBinding,
-  MqttOperationBinding,
+  MqttOperationBinding010,
+  MqttOperationBinding020,
   MqttServerBinding010,
   MqttServerBinding020,
   MqttServerLastWill
@@ -84,16 +85,7 @@ object MqttServerBinding020Model extends MqttServerBindingModel {
     )
   )
 
-  override def fields: List[Field] =
-    List(
-      SessionExpiryInterval,
-      MaximumPacketSize,
-      ClientId,
-      CleanSession,
-      LastWill,
-      KeepAlive,
-      BindingVersion
-    ) ++ ServerBindingModel.fields
+  override def fields: List[Field] = List(SessionExpiryInterval, MaximumPacketSize) ++ MqttServerBindingModel.fields
 }
 
 object MqttServerLastWillModel extends DomainElementModel {
@@ -145,10 +137,9 @@ object MqttServerLastWillModel extends DomainElementModel {
   override def fields: List[Field] = List(Topic, Qos, Retain, Message) ++ DomainElementModel.fields
 }
 
-object MqttOperationBindingModel extends OperationBindingModel with BindingVersion {
-  override def modelInstance: AmfObject = MqttOperationBinding()
-  override val `type`: List[ValueType]  = ApiBinding + "MqttOperationBinding" :: OperationBindingModel.`type`
-  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttOperationBinding")
+trait MqttOperationBindingModel extends OperationBindingModel with BindingVersion {
+  override val `type`: List[ValueType] = ApiBinding + "MqttOperationBinding" :: OperationBindingModel.`type`
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "MqttOperationBinding")
 
   val Qos: Field =
     Field(
@@ -171,6 +162,35 @@ object MqttOperationBindingModel extends OperationBindingModel with BindingVersi
   override val key: Field = Type
 
   override def fields: List[Field] = List(Qos, Retain, BindingVersion) ++ OperationBindingModel.fields
+}
+
+object MqttOperationBindingModel extends MqttOperationBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("MqttOperationBinding is an abstract class")
+}
+
+object MqttOperationBinding010Model extends MqttOperationBindingModel {
+  override def modelInstance: AmfObject = MqttOperationBinding010()
+  override val `type`: List[ValueType]  = ApiBinding + "MqttOperationBinding010" :: OperationBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttOperationBinding010")
+}
+
+object MqttOperationBinding020Model extends MqttOperationBindingModel {
+  override def modelInstance: AmfObject = MqttOperationBinding020()
+  override val `type`: List[ValueType]  = ApiBinding + "MqttOperationBinding020" :: OperationBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttOperationBinding020")
+
+  val MessageExpiryInterval: Field =
+    Field(
+      Int,
+      ApiBinding + "messageExpiryInterval",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "messageExpiryInterval",
+        "Interval in seconds or a Schema Object containing the definition of the lifetime of the message."
+      )
+    )
+
+  override def fields: List[Field] = MessageExpiryInterval +: MqttOperationBindingModel.fields
 }
 
 object MqttMessageBindingModel extends MessageBindingModel with BindingVersion {

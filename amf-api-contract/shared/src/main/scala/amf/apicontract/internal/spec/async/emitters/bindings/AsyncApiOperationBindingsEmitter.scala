@@ -5,35 +5,18 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationB
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
-import amf.apicontract.client.scala.model.domain.bindings.solace.{
-  SolaceOperationBinding,
-  SolaceOperationDestination,
-  SolaceOperationQueue,
-  SolaceOperationTopic
-}
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  Amqp091OperationBinding010Model,
-  Amqp091OperationBinding030Model,
-  Amqp091OperationBindingModel,
-  HttpOperationBinding010Model,
-  HttpOperationBindingModel,
-  KafkaOperationBindingModel,
-  MqttOperationBindingModel,
-  SolaceOperationBindingModel,
-  SolaceOperationQueueModel,
-  SolaceOperationTopicModel
-}
+import amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding
+import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.emitters.domain.AsyncApiDestinationsEmitter
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Solace
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import org.yaml.model.YDocument.EntryBuilder
-import org.yaml.model.{YDocument, YMap, YNode}
+import org.mulesoft.common.client.lexical.Position
+import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
@@ -117,6 +100,8 @@ class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecO
 
         fs.entry(MqttOperationBindingModel.Qos).foreach(f => result += ValueEmitter("qos", f))
         fs.entry(MqttOperationBindingModel.Retain).foreach(f => result += ValueEmitter("retain", f))
+        fs.entry(MqttOperationBinding020Model.MessageExpiryInterval)
+          .foreach(f => result += ValueEmitter("messageExpiryInterval", f))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

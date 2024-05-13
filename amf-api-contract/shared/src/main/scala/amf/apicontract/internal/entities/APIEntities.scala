@@ -99,6 +99,8 @@ private[amf] object APIEntities extends Entities {
     MqttServerBinding020Model,
     MqttServerLastWillModel,
     MqttOperationBindingModel,
+    MqttOperationBinding010Model,
+    MqttOperationBinding020Model,
     MqttMessageBindingModel,
     ServerBindingModel,
     WebSocketsChannelBindingModel,

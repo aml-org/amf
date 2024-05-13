@@ -134,6 +134,8 @@ AMF Model Documentation
 * [Module](#module)
 * [MqttMessageBinding](#mqttmessagebinding)
 * [MqttOperationBinding](#mqttoperationbinding)
+* [MqttOperationBinding010](#mqttoperationbinding010)
+* [MqttOperationBinding020](#mqttoperationbinding020)
 * [MqttServerBinding](#mqttserverbinding)
 * [MqttServerBinding010](#mqttserverbinding010)
 * [MqttServerBinding020](#mqttserverbinding020)
@@ -2475,6 +2477,37 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | qos | int | - | Defines how hard the broker/client will try to ensure that a message is received | `http://a.ml/vocabularies/apiBinding#qos` |
+ | retain | boolean | - | Whether the broker should retain the message or not | `http://a.ml/vocabularies/apiBinding#retain` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttOperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttOperationBinding010`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | qos | int | - | Defines how hard the broker/client will try to ensure that a message is received | `http://a.ml/vocabularies/apiBinding#qos` |
+ | retain | boolean | - | Whether the broker should retain the message or not | `http://a.ml/vocabularies/apiBinding#retain` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttOperationBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttOperationBinding020`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | messageExpiryInterval | int | - | Interval in seconds or a Schema Object containing the definition of the lifetime of the message. | `http://a.ml/vocabularies/apiBinding#messageExpiryInterval` |
  | qos | int | - | Defines how hard the broker/client will try to ensure that a message is received | `http://a.ml/vocabularies/apiBinding#qos` |
  | retain | boolean | - | Whether the broker should retain the message or not | `http://a.ml/vocabularies/apiBinding#retain` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
