@@ -23,7 +23,8 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   HttpMessageBindingModel,
   IBMMQMessageBindingModel,
   KafkaMessageBinding030Model,
-  KafkaMessageBindingModel
+  KafkaMessageBindingModel,
+  MqttMessageBinding020Model
 }
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{
@@ -132,6 +133,16 @@ class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(im
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
+
+        fs.entry(MqttMessageBinding020Model.PayloadFormatIndicator)
+          .foreach(f => result += ValueEmitter("payloadFormatIndicator", f))
+        fs.entry(MqttMessageBinding020Model.CorrelationData)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("correlationData", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
+        fs.entry(MqttMessageBinding020Model.ContentType).foreach(f => result += ValueEmitter("contentType", f))
+        fs.entry(MqttMessageBinding020Model.ResponseTopic).foreach(f => result += ValueEmitter("responseTopic", f))
+
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
       }

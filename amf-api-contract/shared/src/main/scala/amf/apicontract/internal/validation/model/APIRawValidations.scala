@@ -1033,6 +1033,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt server binding last will object must be one of 0, 1 or 2"
       ),
       AMFValidation(
+        owlClass = apiBinding("MqttMessageBinding020"),
+        owlProperty = apiBinding("payloadFormatIndicator"),
+        constraint = sh("pattern"),
+        value = "^[0-1]$",
+        message = "'payloadFormatIndicator' for mqtt message binding must be 0 or 1"
+      ),
+      AMFValidation(
         owlClass = apiBinding("Amqp091OperationBinding010"),
         owlProperty = apiBinding("deliveryMode"),
         constraint = sh("pattern"),

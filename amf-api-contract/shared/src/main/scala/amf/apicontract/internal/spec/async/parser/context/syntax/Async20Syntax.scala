@@ -156,7 +156,14 @@ object Async20Syntax extends SpecSyntax {
       "retain",
       "message"
     ),
-    "mqttMessageBinding" -> Set(
+    "mqttMessageBinding010" -> Set(
+      "bindingVersion"
+    ),
+    "mqttMessageBinding020" -> Set(
+      "payloadFormatIndicator",
+      "correlationData",
+      "contentType",
+      "responseTopic",
       "bindingVersion"
     ),
     "httpMessageBinding020" -> Set(

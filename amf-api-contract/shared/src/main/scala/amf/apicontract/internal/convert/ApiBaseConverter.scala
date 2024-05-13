@@ -79,6 +79,8 @@ trait ApiBaseConverter
     with KafkaTopicConfiguration040Converter
     with KafkaTopicConfiguration050Converter
     with MqttMessageBindingConverter
+    with MqttMessageBinding010Converter
+    with MqttMessageBinding020Converter
     with MqttOperationBindingConverter
     with MqttOperationBinding010Converter
     with MqttOperationBinding020Converter
@@ -416,6 +418,22 @@ trait MqttMessageBindingConverter extends PlatformSecrets {
     override def asClient(from: MqttMessageBinding): domain.bindings.mqtt.MqttMessageBinding =
       platform.wrap[domain.bindings.mqtt.MqttMessageBinding](from)
     override def asInternal(from: domain.bindings.mqtt.MqttMessageBinding): MqttMessageBinding = from._internal
+  }
+}
+trait MqttMessageBinding010Converter extends PlatformSecrets {
+  implicit object MqttMessageBinding010Matcher
+      extends BidirectionalMatcher[MqttMessageBinding010, domain.bindings.mqtt.MqttMessageBinding010] {
+    override def asClient(from: MqttMessageBinding010): domain.bindings.mqtt.MqttMessageBinding010 =
+      platform.wrap[domain.bindings.mqtt.MqttMessageBinding010](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttMessageBinding010): MqttMessageBinding010 = from._internal
+  }
+}
+trait MqttMessageBinding020Converter extends PlatformSecrets {
+  implicit object MqttMessageBinding020Matcher
+      extends BidirectionalMatcher[MqttMessageBinding020, domain.bindings.mqtt.MqttMessageBinding020] {
+    override def asClient(from: MqttMessageBinding020): domain.bindings.mqtt.MqttMessageBinding020 =
+      platform.wrap[domain.bindings.mqtt.MqttMessageBinding020](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttMessageBinding020): MqttMessageBinding020 = from._internal
   }
 }
 trait MqttOperationBindingConverter extends PlatformSecrets {

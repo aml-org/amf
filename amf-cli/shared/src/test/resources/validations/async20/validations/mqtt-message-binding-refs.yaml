@@ -9,17 +9,22 @@ channels:
       message:
         bindings:
           mqtt:
-            bindingVersion: 0.1.0
+            payloadFormatIndicator: 0
+            correlationData: # inline
+              type: string
+              format: uuid
+            contentType: application/json
+            responseTopic: response/client
+            bindingVersion: 0.2.0
 
   other-channel:
     publish:
       message:
         bindings:
-          mqtt:
-            payloadFormatIndicator: 0
+          mqtt: # valid ref
+            payloadFormatIndicator: 1
             correlationData:
-              type: string
-              format: uuid
+              $ref: '#/components/schemas/testSchema'
             contentType: application/json
             responseTopic: response/client
             bindingVersion: 0.2.0
@@ -28,10 +33,10 @@ channels:
     publish:
       message:
         bindings:
-          mqtt: # valid ref
+          mqtt: # invalid ref
             payloadFormatIndicator: 1
             correlationData:
-              $ref: '#/components/schemas/testSchema'
+              $ref: '#/components/schemas/invalidRef' # should throw error
             contentType: application/json
             responseTopic: response/client
             bindingVersion: 0.2.0

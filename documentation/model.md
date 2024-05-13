@@ -133,6 +133,8 @@ AMF Model Documentation
 * [MessageBindings](#messagebindings)
 * [Module](#module)
 * [MqttMessageBinding](#mqttmessagebinding)
+* [MqttMessageBinding010](#mqttmessagebinding010)
+* [MqttMessageBinding020](#mqttmessagebinding020)
 * [MqttOperationBinding](#mqttoperationbinding)
 * [MqttOperationBinding010](#mqttoperationbinding010)
 * [MqttOperationBinding020](#mqttoperationbinding020)
@@ -2464,6 +2466,36 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttMessageBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttMessageBinding010`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttMessageBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttMessageBinding020`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | payloadFormatIndicator | int | - | Either: 0 (zero): Indicates that the payload is unspecified bytes, or 1: Indicates that the payload is UTF-8 encoded character data. | `http://a.ml/vocabularies/apiBinding#payloadFormatIndicator` |
+ | correlationData | [Shape](#shape) | - | Correlation Data is used by the sender of the request message to identify which request the response message is for when it is received. | `http://a.ml/vocabularies/apiBinding#correlationData` |
+ | contentType | string | - | String describing the content type of the message payload. This should not conflict with the contentType field of the associated AsyncAPI Message object. | `http://a.ml/vocabularies/apiBinding#contentType` |
+ | responseTopic | string | - | The topic (channel URI) for a response message. | `http://a.ml/vocabularies/apiBinding#responseTopic` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |

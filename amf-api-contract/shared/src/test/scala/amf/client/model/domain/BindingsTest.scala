@@ -382,9 +382,21 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test MqttMessageBinding") {
-    val binding = new MqttMessageBinding()
+    val binding010 = new MqttMessageBinding010()
       .withBindingVersion(s)
-    binding._internal.componentId shouldBe "/mqtt-message"
+    binding010._internal.componentId shouldBe "/mqtt-message-010"
+
+    val binding020 = new MqttMessageBinding020()
+      .withBindingVersion(s)
+      .withPayloadFormatIndicator(123)
+      .withContentType(s)
+      .withCorrelationData(shape)
+      .withResponseTopic(s)
+    binding020._internal.componentId shouldBe "/mqtt-message-020"
+    binding020.payloadFormatIndicator.value() shouldBe 123
+    binding020.contentType.value() shouldBe s
+    binding020.correlationData._internal shouldBe shape._internal
+    binding020.responseTopic.value() shouldBe s
   }
 
   test("test MqttOperationBinding") {

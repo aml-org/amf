@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-message-binding-format.yaml
+Profile: ASYNC 2.0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#MqttMessageBinding020-payloadFormatIndicator-pattern
+  Message: 'payloadFormatIndicator' for mqtt message binding must be 0 or 1
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-message-binding-format.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings/bindings/mqtt-message-020
+  Property: http://a.ml/vocabularies/apiBinding#payloadFormatIndicator
+  Range: [(12,36)-(12,39)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-message-binding-format.yaml

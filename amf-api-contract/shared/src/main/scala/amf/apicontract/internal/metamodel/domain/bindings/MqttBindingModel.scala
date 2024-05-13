@@ -2,6 +2,8 @@ package amf.apicontract.internal.metamodel.domain.bindings
 
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttMessageBinding,
+  MqttMessageBinding010,
+  MqttMessageBinding020,
   MqttOperationBinding010,
   MqttOperationBinding020,
   MqttServerBinding010,
@@ -13,7 +15,7 @@ import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Int, Str}
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 
 trait MqttServerBindingModel extends ServerBindingModel with BindingVersion {
   override val `type`: List[ValueType] = ApiBinding + "MqttServerBinding" :: ServerBindingModel.`type`
@@ -193,10 +195,72 @@ object MqttOperationBinding020Model extends MqttOperationBindingModel {
   override def fields: List[Field] = MessageExpiryInterval +: MqttOperationBindingModel.fields
 }
 
-object MqttMessageBindingModel extends MessageBindingModel with BindingVersion {
-  override val key: Field               = Type
-  override val `type`: List[ValueType]  = ApiBinding + "MqttMessageBinding" :: MessageBindingModel.`type`
-  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttMessageBinding")
-  override def modelInstance: AmfObject = MqttMessageBinding()
-  override def fields: List[Field]      = List(BindingVersion) ++ MessageBindingModel.fields
+trait MqttMessageBindingModel extends MessageBindingModel with BindingVersion {
+  override val key: Field              = Type
+  override val `type`: List[ValueType] = ApiBinding + "MqttMessageBinding" :: MessageBindingModel.`type`
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "MqttMessageBinding")
+  override def fields: List[Field]     = BindingVersion +: MessageBindingModel.fields
+}
+
+object MqttMessageBindingModel extends MqttMessageBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("MqttMessageBinding is an abstract class")
+}
+
+object MqttMessageBinding010Model extends MqttMessageBindingModel {
+  override val `type`: List[ValueType]  = ApiBinding + "MqttMessageBinding010" :: MessageBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttMessageBinding010")
+  override def modelInstance: AmfObject = MqttMessageBinding010()
+}
+
+object MqttMessageBinding020Model extends MqttMessageBindingModel {
+  override val `type`: List[ValueType]  = ApiBinding + "MqttMessageBinding020" :: MessageBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "MqttMessageBinding020")
+  override def modelInstance: AmfObject = MqttMessageBinding020()
+
+  val PayloadFormatIndicator: Field =
+    Field(
+      Int,
+      ApiBinding + "payloadFormatIndicator",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "payloadFormatIndicator",
+        "Either: 0 (zero): Indicates that the payload is unspecified bytes, or 1: Indicates that the payload is UTF-8 encoded character data."
+      )
+    )
+
+  val CorrelationData: Field =
+    Field(
+      ShapeModel,
+      ApiBinding + "correlationData",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "correlationData",
+        "Correlation Data is used by the sender of the request message to identify which request the response message is for when it is received."
+      )
+    )
+
+  val ContentType: Field =
+    Field(
+      Str,
+      ApiBinding + "contentType",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "contentType",
+        "String describing the content type of the message payload. This should not conflict with the contentType field of the associated AsyncAPI Message object."
+      )
+    )
+
+  val ResponseTopic: Field =
+    Field(
+      Str,
+      ApiBinding + "responseTopic",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "responseTopic",
+        "The topic (channel URI) for a response message."
+      )
+    )
+
+  override def fields: List[Field] =
+    List(PayloadFormatIndicator, CorrelationData, ContentType, ResponseTopic) ++ MqttMessageBindingModel.fields
 }
