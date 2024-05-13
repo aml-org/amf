@@ -5,7 +5,12 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerBindingModel._
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerLastWillModel._
-import amf.apicontract.internal.metamodel.domain.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  MqttServerBinding010Model,
+  MqttServerBinding020Model,
+  MqttServerBindingModel,
+  MqttServerLastWillModel
+}
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, ServerBinding}
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerBinding020Model.{
   MaximumPacketSize,
@@ -34,9 +39,9 @@ abstract class MqttServerBinding(override val fields: Fields, override val annot
 
 class MqttServerBinding010(override val fields: Fields, override val annotations: Annotations)
     extends MqttServerBinding(fields, annotations) {
-  override def meta: MqttServerBindingModel.type = MqttServerBindingModel
-  override def componentId: String               = "/mqtt-server-010"
-  override def linkCopy(): MqttServerBinding010  = MqttServerBinding010().withId(id)
+  override def meta: MqttServerBinding010Model.type = MqttServerBinding010Model
+  override def componentId: String                  = "/mqtt-server-010"
+  override def linkCopy(): MqttServerBinding010     = MqttServerBinding010().withId(id)
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     MqttServerBinding010.apply
 }
@@ -50,8 +55,8 @@ object MqttServerBinding010 {
 
 class MqttServerBinding020(override val fields: Fields, override val annotations: Annotations)
     extends MqttServerBinding(fields, annotations) {
-  override def meta: MqttServerBindingModel.type = MqttServerBindingModel
-  override def componentId: String               = "/mqtt-server-020"
+  override def meta: MqttServerBinding020Model.type = MqttServerBinding020Model
+  override def componentId: String                  = "/mqtt-server-020"
 
   def sessionExpiryInterval: IntField = fields.field(SessionExpiryInterval)
   def maximumPacketSize: IntField     = fields.field(MaximumPacketSize)

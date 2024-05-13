@@ -54,7 +54,7 @@
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server-010",
                     "@type": [
-                      "http://a.ml/vocabularies/apiBinding#MqttServerBinding",
+                      "http://a.ml/vocabularies/apiBinding#MqttServerBinding010",
                       "http://a.ml/vocabularies/apiBinding#ServerBinding",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -425,9 +425,19 @@
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020",
                     "@type": [
-                      "http://a.ml/vocabularies/apiBinding#MqttServerBinding",
+                      "http://a.ml/vocabularies/apiBinding#MqttServerBinding020",
                       "http://a.ml/vocabularies/apiBinding#ServerBinding",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiBinding#sessionExpiryInterval": [
+                      {
+                        "@value": 123
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiBinding#maximumPacketSize": [
+                      {
+                        "@value": 123
+                      }
                     ],
                     "http://a.ml/vocabularies/apiBinding#clientId": [
                       {
@@ -566,7 +576,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_6",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_8",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
@@ -579,7 +589,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_4",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_6",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiBinding#clientId"
@@ -588,6 +598,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(26,8)-(27,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_4",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(25,6)-(37,0)]"
                               }
                             ]
                           },
@@ -634,17 +657,30 @@
                             "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_3",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020"
+                                "@value": "http://a.ml/vocabularies/apiBinding#maximumPacketSize"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(25,6)-(37,0)]"
+                                "@value": "[(36,8)-(37,0)]"
                               }
                             ]
                           },
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_5",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiBinding#sessionExpiryInterval"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(35,8)-(36,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020/source-map/lexical/element_7",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiBinding#lastWill"
