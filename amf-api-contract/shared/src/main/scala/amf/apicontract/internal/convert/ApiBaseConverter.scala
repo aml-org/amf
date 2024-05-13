@@ -67,7 +67,11 @@ trait ApiBaseConverter
     with Amqp091OperationBinding030Converter
     with EmptyBindingConverter
     with HttpMessageBindingConverter
+    with HttpMessageBinding020Converter
+    with HttpMessageBinding030Converter
     with HttpOperationBindingConverter
+    with HttpOperationBinding010Converter
+    with HttpOperationBinding020Converter
     with KafkaMessageBindingConverter
     with KafkaMessageBinding010Converter
     with KafkaMessageBinding030Converter
@@ -261,12 +265,46 @@ trait HttpMessageBindingConverter extends PlatformSecrets {
     override def asInternal(from: domain.bindings.http.HttpMessageBinding): HttpMessageBinding = from._internal
   }
 }
+trait HttpMessageBinding020Converter extends PlatformSecrets {
+  implicit object HttpMessageBinding020Matcher
+      extends BidirectionalMatcher[HttpMessageBinding020, domain.bindings.http.HttpMessageBinding020] {
+    override def asClient(from: HttpMessageBinding020): domain.bindings.http.HttpMessageBinding020 =
+      platform.wrap[domain.bindings.http.HttpMessageBinding020](from)
+    override def asInternal(from: domain.bindings.http.HttpMessageBinding020): HttpMessageBinding020 = from._internal
+  }
+}
+trait HttpMessageBinding030Converter extends PlatformSecrets {
+  implicit object HttpMessageBinding030Matcher
+      extends BidirectionalMatcher[HttpMessageBinding030, domain.bindings.http.HttpMessageBinding030] {
+    override def asClient(from: HttpMessageBinding030): domain.bindings.http.HttpMessageBinding030 =
+      platform.wrap[domain.bindings.http.HttpMessageBinding030](from)
+    override def asInternal(from: domain.bindings.http.HttpMessageBinding030): HttpMessageBinding030 = from._internal
+  }
+}
 trait HttpOperationBindingConverter extends PlatformSecrets {
   implicit object HttpOperationBindingMatcher
       extends BidirectionalMatcher[HttpOperationBinding, domain.bindings.http.HttpOperationBinding] {
     override def asClient(from: HttpOperationBinding): domain.bindings.http.HttpOperationBinding =
       platform.wrap[domain.bindings.http.HttpOperationBinding](from)
     override def asInternal(from: domain.bindings.http.HttpOperationBinding): HttpOperationBinding = from._internal
+  }
+}
+trait HttpOperationBinding010Converter extends PlatformSecrets {
+  implicit object HttpOperationBinding010Matcher
+      extends BidirectionalMatcher[HttpOperationBinding010, domain.bindings.http.HttpOperationBinding010] {
+    override def asClient(from: HttpOperationBinding010): domain.bindings.http.HttpOperationBinding010 =
+      platform.wrap[domain.bindings.http.HttpOperationBinding010](from)
+    override def asInternal(from: domain.bindings.http.HttpOperationBinding010): HttpOperationBinding010 =
+      from._internal
+  }
+}
+trait HttpOperationBinding020Converter extends PlatformSecrets {
+  implicit object HttpOperationBinding020Matcher
+      extends BidirectionalMatcher[HttpOperationBinding020, domain.bindings.http.HttpOperationBinding020] {
+    override def asClient(from: HttpOperationBinding020): domain.bindings.http.HttpOperationBinding020 =
+      platform.wrap[domain.bindings.http.HttpOperationBinding020](from)
+    override def asInternal(from: domain.bindings.http.HttpOperationBinding020): HttpOperationBinding020 =
+      from._internal
   }
 }
 trait KafkaMessageBindingConverter extends PlatformSecrets {

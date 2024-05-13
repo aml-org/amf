@@ -82,8 +82,13 @@ object Async20Syntax extends SpecSyntax {
       "autoDelete",
       "vhost"
     ),
-    "httpOperationBinding" -> Set(
+    "httpOperationBinding010" -> Set(
       "type",
+      "method",
+      "query",
+      "bindingVersion"
+    ),
+    "httpOperationBinding020" -> Set(
       "method",
       "query",
       "bindingVersion"
@@ -139,8 +144,13 @@ object Async20Syntax extends SpecSyntax {
     "mqttMessageBinding" -> Set(
       "bindingVersion"
     ),
-    "httpMessageBinding" -> Set(
+    "httpMessageBinding020" -> Set(
       "headers",
+      "bindingVersion"
+    ),
+    "httpMessageBinding030" -> Set(
+      "headers",
+      "statusCode",
       "bindingVersion"
     ),
     "kafkaMessageBinding010" -> Set(

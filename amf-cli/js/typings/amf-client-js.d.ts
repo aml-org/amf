@@ -3810,6 +3810,87 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
+  export class HttpMessageBinding020 implements HttpMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    headers: Shape;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withHeaders(headers: Shape): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class HttpMessageBinding030 implements HttpMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    headers: Shape;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    statusCode: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withHeaders(headers: Shape): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withStatusCode(statusCode: number): this;
+  }
   export class HttpOperationBinding implements OperationBinding {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -3819,7 +3900,6 @@ declare module "amf-client-js" {
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
     method: StrField;
-    operationType: StrField;
     position: Range;
     query: Shape;
 
@@ -3851,7 +3931,92 @@ declare module "amf-client-js" {
 
     withMethod(method: string): this;
 
+    withQuery(query: Shape): this;
+  }
+  export class HttpOperationBinding010 implements HttpOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    method: StrField;
+    operationType: StrField;
+    position: Range;
+    query: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpOperationBinding010;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withMethod(method: string): this;
+
     withOperationType(type: string): this;
+
+    withQuery(query: Shape): this;
+  }
+  export class HttpOperationBinding020 implements HttpOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    method: StrField;
+    position: Range;
+    query: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpOperationBinding020;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withMethod(method: string): this;
 
     withQuery(query: Shape): this;
   }

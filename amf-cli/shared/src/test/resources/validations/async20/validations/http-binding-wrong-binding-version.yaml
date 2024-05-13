@@ -1,0 +1,48 @@
+asyncapi: 2.0.0
+
+info:
+  title: test API
+  version: 1.0.0
+
+channels:
+  /test1: # defaults to 0.1.0
+    subscribe:
+      message:
+        bindings:
+          http: {}
+      bindings:
+        http:
+          type: response
+
+  /test2: # specific to 0.2.0
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.2.0
+      bindings:
+        http:
+          bindingVersion: 0.2.0
+
+  /test3: # specific to 0.3.0
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.3.0
+            statusCode: 123 # new key added in 0.3.0
+      bindings:
+        http:
+          bindingVersion: 0.3.0
+
+  /invalid:
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 9.9.9 # doesn't exist, throws error
+      bindings:
+        http:
+          bindingVersion: 9.9.9 # doesn't exist, throws error
+          type: response
+          method: GET

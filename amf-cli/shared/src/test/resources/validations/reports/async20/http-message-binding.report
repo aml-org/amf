@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml
+Profile: ASYNC 2.0
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#HttpMessageBinding030-statusCode-pattern
+  Message: Status code for a Response must be a value between 100 and 599
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml#/async-api/endpoint/%2Finvalid/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/http-message-030
+  Property: http://a.ml/vocabularies/apiBinding#statusCode
+  Range: [(22,24)-(22,27)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#HttpMessageBinding030-statusCode-pattern
+  Message: Status code for a Response must be a value between 100 and 599
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml#/async-api/endpoint/%2Finvalid2/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/http-message-030
+  Property: http://a.ml/vocabularies/apiBinding#statusCode
+  Range: [(30,24)-(30,27)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#HttpMessageBinding030-statusCode-pattern
+  Message: Status code for a Response must be a value between 100 and 599
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml#/async-api/endpoint/%2Finvalid3/supportedOperation/subscribe/returns/resp/default-response/message-bindings/bindings/http-message-030
+  Property: http://a.ml/vocabularies/apiBinding#statusCode
+  Range: [(38,24)-(38,28)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/http-message-binding.yaml

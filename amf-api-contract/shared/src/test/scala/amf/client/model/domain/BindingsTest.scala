@@ -171,21 +171,35 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test HttpMessageBinding") {
-    val binding = new HttpMessageBinding()
+    val binding020 = new HttpMessageBinding020()
       .withBindingVersion(s)
       .withHeaders(shape)
-    binding.headers._internal shouldBe shape._internal
+    binding020.headers._internal shouldBe shape._internal
+
+    val binding030 = new HttpMessageBinding030()
+      .withBindingVersion(s)
+      .withHeaders(shape)
+      .withStatusCode(123)
+    binding030.headers._internal shouldBe shape._internal
+    binding030.statusCode.value() shouldBe 123
   }
 
   test("test HttpOperationBinding") {
-    val binding = new HttpOperationBinding()
+    val binding01 = new HttpOperationBinding010()
       .withBindingVersion(s)
       .withMethod(s)
       .withQuery(shape)
       .withOperationType(s)
-    binding.method.value() shouldBe s
-    binding.operationType.value() shouldBe s
-    binding.query._internal shouldBe shape._internal
+    binding01.method.value() shouldBe s
+    binding01.operationType.value() shouldBe s
+    binding01.query._internal shouldBe shape._internal
+
+    val binding02 = new HttpOperationBinding020()
+      .withBindingVersion(s)
+      .withMethod(s)
+      .withQuery(shape)
+    binding02.method.value() shouldBe s
+    binding02.query._internal shouldBe shape._internal
   }
 
   test("test KafkaMessageBinding") {

@@ -792,12 +792,19 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Info object 'version' is mandatory"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpMessageBinding"),
+        owlClass = apiBinding("HttpMessageBinding020"),
         owlProperty = apiBinding("headers"),
         uri = amfParser("mandatory-header-name-pattern"),
         constraint = shape("mandatoryHeaderBindingNamePattern"),
-        ramlErrorMessage = "Header name must comply RFC-7230",
-        openApiErrorMessage = "Header name must comply RFC-7230",
+        message = "Header name must comply RFC-7230",
+        severity = SeverityLevels.WARNING
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("headers"),
+        uri = amfParser("mandatory-header-name-pattern"),
+        constraint = shape("mandatoryHeaderBindingNamePattern"),
+        message = "Header name must comply RFC-7230",
         severity = SeverityLevels.WARNING
       ),
       AMFValidation(
@@ -921,7 +928,7 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'type' for amqp 0.9.1 channel exchange object must be one of 'topic', 'direct', 'fanout', 'default' or 'headers'"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("method"),
         constraint = sh("in"),
         value = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
@@ -929,7 +936,15 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding020"),
+        owlProperty = apiBinding("method"),
+        constraint = sh("in"),
+        value = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
+        openApiErrorMessage =
+          "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("operationType"),
         constraint = minCount,
         value = "1",
@@ -940,7 +955,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiBinding("name"),
         constraint = sh("maxLength"),
         value = "255",
-        openApiErrorMessage = "'type' for http operation binding is required"
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
         owlClass = apiBinding("Amqp091ChannelExchange010"),
@@ -971,7 +986,14 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
+        owlProperty = apiBinding("operationType"),
+        constraint = sh("pattern"),
+        value = """^(request|response)$""".stripMargin,
+        openApiErrorMessage = "Http operation binding must be either 'request' or 'response'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding020"),
         owlProperty = apiBinding("operationType"),
         constraint = sh("pattern"),
         value = """^(request|response)$""".stripMargin,
@@ -1071,13 +1093,25 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
-        owlClass = apiBinding("HttpMessageBinding"),
+        owlClass = apiBinding("HttpMessageBinding020"),
         owlProperty = apiBinding("headers"),
         constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
+      ),
+      AMFValidation(
+        message = "'headers' property of ws channel binding must be of type object and have properties",
+        owlClass = apiBinding("HttpOperationBinding010"),
+        owlProperty = apiBinding("query"),
+        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
+      ),
+      AMFValidation(
+        message = "'headers' property of ws channel binding must be of type object and have properties",
+        owlClass = apiBinding("HttpOperationBinding020"),
         owlProperty = apiBinding("query"),
         constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
       ),
@@ -1260,6 +1294,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiBinding("KafkaChannelBinding050"),
         owlProperty = apiBinding("replicas"),
         constraint = shape("KafkaTopicConfigurationValidations")
+      ),
+      AMFValidation(
+        message = "Status code for a Response must be a value between 100 and 599",
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("statusCode"),
+        constraint = sh("pattern"),
+        value = "^([1-5]{1}[0-9]{2})$"
       )
     ) ++ baseApiValidations("AsyncAPI")
 

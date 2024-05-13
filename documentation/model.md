@@ -89,7 +89,11 @@ AMF Model Documentation
 * [GooglePubSubSchemaSettings](#googlepubsubschemasettings)
 * [HttpApiKeySettings](#httpapikeysettings)
 * [HttpMessageBinding](#httpmessagebinding)
+* [HttpMessageBinding020](#httpmessagebinding020)
+* [HttpMessageBinding030](#httpmessagebinding030)
 * [HttpOperationBinding](#httpoperationbinding)
+* [HttpOperationBinding010](#httpoperationbinding010)
+* [HttpOperationBinding020](#httpoperationbinding020)
 * [HttpSettings](#httpsettings)
 * [IBMMQChannelBinding](#ibmmqchannelbinding)
 * [IBMMQChannelQueue](#ibmmqchannelqueue)
@@ -1740,6 +1744,35 @@ Types:
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## HttpMessageBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#HttpMessageBinding020`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | headers | [Shape](#shape) | - | A Schema object containing the definitions for HTTP-specific headers | `http://a.ml/vocabularies/apiBinding#headers` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## HttpMessageBinding030
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#HttpMessageBinding030`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | statusCode | int | - | The HTTP response status code according to RFC 9110. | `http://a.ml/vocabularies/apiBinding#statusCode` |
+ | headers | [Shape](#shape) | - | A Schema object containing the definitions for HTTP-specific headers | `http://a.ml/vocabularies/apiBinding#headers` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## HttpOperationBinding
 
 Types:
@@ -1749,7 +1782,37 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | method | string | - | Operation binding method | `http://a.ml/vocabularies/apiBinding#method` |
+ | query | [Shape](#shape) | - | A Schema object containing the definitions for each query parameter | `http://a.ml/vocabularies/apiBinding#query` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## HttpOperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#HttpOperationBinding010`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
  | operationType | string | - | Type of operation | `http://a.ml/vocabularies/apiBinding#operationType` |
+ | method | string | - | Operation binding method | `http://a.ml/vocabularies/apiBinding#method` |
+ | query | [Shape](#shape) | - | A Schema object containing the definitions for each query parameter | `http://a.ml/vocabularies/apiBinding#query` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## HttpOperationBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#HttpOperationBinding020`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
  | method | string | - | Operation binding method | `http://a.ml/vocabularies/apiBinding#method` |
  | query | [Shape](#shape) | - | A Schema object containing the definitions for each query parameter | `http://a.ml/vocabularies/apiBinding#query` |
  | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |

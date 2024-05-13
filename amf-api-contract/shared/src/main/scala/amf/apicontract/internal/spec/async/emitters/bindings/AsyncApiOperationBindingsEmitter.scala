@@ -15,6 +15,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091OperationBinding010Model,
   Amqp091OperationBinding030Model,
   Amqp091OperationBindingModel,
+  HttpOperationBinding010Model,
   HttpOperationBindingModel,
   KafkaOperationBindingModel,
   MqttOperationBindingModel,
@@ -66,7 +67,7 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
         val fs     = binding.fields
         val result = ListBuffer[EntryEmitter]()
 
-        fs.entry(HttpOperationBindingModel.OperationType).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(HttpOperationBinding010Model.OperationType).foreach(f => result += ValueEmitter("type", f))
         fs.entry(HttpOperationBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(HttpOperationBindingModel.Query)
           .foreach(f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))

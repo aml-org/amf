@@ -16,6 +16,7 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   AnypointMQMessageBindingModel,
   GooglePubSubMessageBindingModel,
   GooglePubSubSchemaDefinitionModel,
+  HttpMessageBinding030Model,
   HttpMessageBindingModel,
   IBMMQMessageBindingModel,
   KafkaMessageBinding030Model,
@@ -79,6 +80,8 @@ class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(im
 
         fs.entry(HttpMessageBindingModel.Headers)
           .foreach(f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
+        fs.entry(HttpMessageBinding030Model.StatusCode).foreach(f => result += ValueEmitter("statusCode", f))
+
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

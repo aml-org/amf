@@ -1,0 +1,65 @@
+asyncapi: 2.0.0
+
+info:
+  title: test API
+  version: 1.0.0
+
+channels:
+  /test1:
+    subscribe:
+      message:
+        bindings:
+          http:
+            headers: # inline
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+      bindings:
+        http:
+          type: request
+          method: GET
+          query: # inline
+            type: object
+            properties:
+              eventID:
+                type: string
+                description: Unique identifier for the event.
+  /test2:
+    subscribe:
+      message:
+        bindings:
+          http:
+            headers: # valid ref
+              $ref: '#/components/schemas/testSchema'
+      bindings:
+        http:
+          type: request
+          method: GET
+          query: # valid ref
+            $ref: '#/components/schemas/testSchema'
+
+  /test3:
+    subscribe:
+      message:
+        bindings:
+          http:
+            headers: # invalid ref
+              $ref: '#/components/schemas/invalidSchema'
+      bindings:
+        http:
+          type: request
+          method: GET
+          query: # invalid ref
+            $ref: '#/components/schemas/invalidSchema'
+
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

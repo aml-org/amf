@@ -105,6 +105,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("required-httpOperationBinding-type.yaml", Some("required-httpOperationBinding-type.report"))
   }
 
+  test("Invalid httpOperationBinding type") {
+    validate("invalid-httpOperationBinding-type.yaml", Some("invalid-httpOperationBinding-type.report"))
+  }
+
   test("HttpOperationBinding type must be request or response") {
     validate("required-httpOperationBinding-type-values.yaml", Some("required-httpOperationBinding-type-values.report"))
   }
@@ -495,5 +499,17 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Async Kafka topic configuration validations") {
     validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
+  }
+
+  test("Async http wrong binding version") {
+    validate("http-binding-wrong-binding-version.yaml", Some("http-binding-wrong-binding-version.report"))
+  }
+
+  test("Async http query and headers refs") {
+    validate("http-binding-references.yaml", Some("http-binding-references.report"))
+  }
+
+  test("Async http message binding valid status code") {
+    validate("http-message-binding.yaml", Some("http-message-binding.report"))
   }
 }
