@@ -1,5 +1,5 @@
 package amf.apicontract.client.scala.model.domain.bindings.mqtt
-import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -14,7 +14,9 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, ServerBinding}
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerBinding020Model.{
   MaximumPacketSize,
-  SessionExpiryInterval
+  MaximumPacketSizeSchema,
+  SessionExpiryInterval,
+  SessionExpiryIntervalSchema
 }
 import amf.shapes.client.scala.model.domain.Key
 
@@ -58,13 +60,21 @@ class MqttServerBinding020(override val fields: Fields, override val annotations
   override def meta: MqttServerBinding020Model.type = MqttServerBinding020Model
   override def componentId: String                  = "/mqtt-server-020"
 
-  def sessionExpiryInterval: IntField = fields.field(SessionExpiryInterval)
-  def maximumPacketSize: IntField     = fields.field(MaximumPacketSize)
+  def sessionExpiryInterval: IntField    = fields.field(SessionExpiryInterval)
+  def sessionExpiryIntervalSchema: Shape = fields.field(SessionExpiryIntervalSchema)
+
+  def maximumPacketSize: IntField    = fields.field(MaximumPacketSize)
+  def maximumPacketSizeSchema: Shape = fields.field(MaximumPacketSizeSchema)
 
   def withSessionExpiryInterval(sessionExpiryInterval: Int): this.type =
     set(SessionExpiryInterval, sessionExpiryInterval)
+  def withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema: Shape): this.type =
+    set(SessionExpiryIntervalSchema, sessionExpiryIntervalSchema)
+
   def withMaximumPacketSize(maximumPacketSize: Int): this.type =
     set(MaximumPacketSize, maximumPacketSize)
+  def withMaximumPacketSizeSchema(maximumPacketSizeSchema: Shape): this.type =
+    set(MaximumPacketSizeSchema, maximumPacketSizeSchema)
 
   override def linkCopy(): MqttServerBinding020 = MqttServerBinding020().withId(id)
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

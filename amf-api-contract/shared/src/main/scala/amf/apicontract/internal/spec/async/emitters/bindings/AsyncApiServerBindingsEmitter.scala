@@ -19,8 +19,10 @@ import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaServerBindi
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
 import amf.apicontract.client.scala.model.domain.bindings.pulsar.PulsarServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding
+import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings._
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.SynthesizedField
 import org.yaml.model.{YDocument, YNode}
 
@@ -46,8 +48,9 @@ class AsyncApiServerBindingsEmitter(binding: ServerBinding, ordering: SpecOrderi
   override def position(): Position = pos(binding.annotations)
 }
 
-class MqttServerBindingEmitter(binding: MqttServerBinding, ordering: SpecOrdering)
-    extends AsyncApiCommonBindingEmitter {
+class MqttServerBindingEmitter(binding: MqttServerBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
@@ -63,8 +66,16 @@ class MqttServerBindingEmitter(binding: MqttServerBinding, ordering: SpecOrderin
           .foreach(_ => result += new LastWillEmitter(binding.lastWill, ordering))
         fs.entry(MqttServerBinding020Model.SessionExpiryInterval)
           .foreach(f => result += ValueEmitter("sessionExpiryInterval", f))
+        fs.entry(MqttServerBinding020Model.SessionExpiryIntervalSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("sessionExpiryInterval", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         fs.entry(MqttServerBinding020Model.MaximumPacketSize)
           .foreach(f => result += ValueEmitter("maximumPacketSize", f))
+        fs.entry(MqttServerBinding020Model.MaximumPacketSizeSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("maximumPacketSize", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

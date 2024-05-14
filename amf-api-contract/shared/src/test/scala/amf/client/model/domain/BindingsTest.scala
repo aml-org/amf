@@ -443,12 +443,16 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
       .withKeepAlive(2)
       .withSessionExpiryInterval(123)
       .withMaximumPacketSize(123)
+      .withSessionExpiryIntervalSchema(shape)
+      .withMaximumPacketSizeSchema(shape)
     mqttServerBinding020.clientId.value() shouldBe s
     mqttServerBinding020.cleanSession.value() shouldBe true
     mqttServerBinding020.lastWill shouldBe mqttServerLastWill
     mqttServerBinding020.keepAlive.value() shouldBe 2
     mqttServerBinding020.sessionExpiryInterval.value() shouldBe 123
     mqttServerBinding020.maximumPacketSize.value() shouldBe 123
+    mqttServerBinding020.sessionExpiryIntervalSchema._internal shouldBe shape._internal
+    mqttServerBinding020.maximumPacketSizeSchema._internal shouldBe shape._internal
   }
 
   test("test OperationBindings") {

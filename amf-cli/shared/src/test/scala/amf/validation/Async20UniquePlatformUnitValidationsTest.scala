@@ -518,11 +518,15 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("http-message-binding.yaml", Some("http-message-binding.report"))
   }
 
-  test("Async mqtt message binding reference objects") {
+  test("Async mqtt message binding should warn invalid references") {
     validate("mqtt-message-binding-refs.yaml", Some("mqtt-message-binding-refs.report"))
   }
 
   test("Async mqtt message binding payloadFormatIndicator") {
     validate("mqtt-message-binding-format.yaml", Some("mqtt-message-binding-format.report"))
+  }
+
+  test("Async mqtt server binding should warn invalid references") {
+    validate("mqtt-server-binding-schemas.yaml", Some("mqtt-server-binding-schemas.report"))
   }
 }

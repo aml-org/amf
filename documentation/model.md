@@ -2590,7 +2590,9 @@ Types:
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
  | sessionExpiryInterval | int | - | Interval in seconds or a Schema Object containing the definition of the interval. The broker maintains a session for a disconnected client until this interval expires. | `http://a.ml/vocabularies/apiBinding#sessionExpiryInterval` |
+ | sessionExpiryIntervalSchema | [Shape](#shape) | - | Interval in seconds or a Schema Object containing the definition of the interval. The broker maintains a session for a disconnected client until this interval expires. | `http://a.ml/vocabularies/apiBinding#sessionExpiryIntervalSchema` |
  | maximumPacketSize | int | - | Number of bytes or a Schema Object representing the maximum packet size the client is willing to accept. | `http://a.ml/vocabularies/apiBinding#maximumPacketSize` |
+ | maximumPacketSizeSchema | [Shape](#shape) | - | Number of bytes or a Schema Object representing the maximum packet size the client is willing to accept. | `http://a.ml/vocabularies/apiBinding#maximumPacketSizeSchema` |
  | clientId | string | - | The client identifier | `http://a.ml/vocabularies/apiBinding#clientId` |
  | cleanSession | boolean | - | Whether to create a persistent connection or not | `http://a.ml/vocabularies/apiBinding#cleanSession` |
  | lastWill | [MqttServerLastWill](#mqttserverlastwill) | - | Last Will and Testament configuration | `http://a.ml/vocabularies/apiBinding#lastWill` |

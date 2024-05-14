@@ -8,7 +8,7 @@ import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttServerLastWill => InternalMqttServerLastWill
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.model.domain.DomainElement
+import amf.core.client.platform.model.domain.{DomainElement, Shape}
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -60,16 +60,27 @@ case class MqttServerBinding020(override private[amf] val _internal: InternalMqt
   @JSExportTopLevel("MqttServerBinding020")
   def this() = this(InternalMqttServerBinding020())
 
-  def sessionExpiryInterval: IntField = _internal.sessionExpiryInterval
-  def maximumPacketSize: IntField     = _internal.maximumPacketSize
+  def sessionExpiryInterval: IntField    = _internal.sessionExpiryInterval
+  def sessionExpiryIntervalSchema: Shape = _internal.sessionExpiryIntervalSchema
+
+  def maximumPacketSize: IntField    = _internal.maximumPacketSize
+  def maximumPacketSizeSchema: Shape = _internal.maximumPacketSizeSchema
 
   def withSessionExpiryInterval(sessionExpiryInterval: Int): this.type = {
     _internal.withSessionExpiryInterval(sessionExpiryInterval)
     this
   }
+  def withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema: Shape): this.type = {
+    _internal.withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema)
+    this
+  }
 
   def withMaximumPacketSize(maximumPacketSize: Int): this.type = {
     _internal.withMaximumPacketSize(maximumPacketSize)
+    this
+  }
+  def withMaximumPacketSizeSchema(maximumPacketSizeSchema: Shape): this.type = {
+    _internal.withMaximumPacketSizeSchema(maximumPacketSizeSchema)
     this
   }
 

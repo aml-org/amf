@@ -77,6 +77,16 @@ object MqttServerBinding020Model extends MqttServerBindingModel {
     )
   )
 
+  val SessionExpiryIntervalSchema: Field = Field(
+    ShapeModel,
+    ApiBinding + "sessionExpiryIntervalSchema",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "sessionExpiryIntervalSchema",
+      "Interval in seconds or a Schema Object containing the definition of the interval. The broker maintains a session for a disconnected client until this interval expires."
+    )
+  )
+
   val MaximumPacketSize: Field = Field(
     Int,
     ApiBinding + "maximumPacketSize",
@@ -87,7 +97,22 @@ object MqttServerBinding020Model extends MqttServerBindingModel {
     )
   )
 
-  override def fields: List[Field] = List(SessionExpiryInterval, MaximumPacketSize) ++ MqttServerBindingModel.fields
+  val MaximumPacketSizeSchema: Field = Field(
+    ShapeModel,
+    ApiBinding + "maximumPacketSizeSchema",
+    ModelDoc(
+      ModelVocabularies.ApiBinding,
+      "maximumPacketSizeSchema",
+      "Number of bytes or a Schema Object representing the maximum packet size the client is willing to accept."
+    )
+  )
+
+  override def fields: List[Field] = List(
+    SessionExpiryInterval,
+    SessionExpiryIntervalSchema,
+    MaximumPacketSize,
+    MaximumPacketSizeSchema
+  ) ++ MqttServerBindingModel.fields
 }
 
 object MqttServerLastWillModel extends DomainElementModel {

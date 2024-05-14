@@ -5811,7 +5811,9 @@ declare module "amf-client-js" {
     linkTarget: undefined | DomainElement;
     position: Range;
     sessionExpiryInterval: number;
+    sessionExpiryIntervalSchema: Shape;
     maximumPacketSize: number;
+    maximumPacketSizeSchema: Shape;
 
     constructor();
 
@@ -5849,7 +5851,11 @@ declare module "amf-client-js" {
 
     withSessionExpiryInterval(sessionExpiryInterval: number): this;
 
+    withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema: Shape): this;
+
     withMaximumPacketSize(maximumPacketSize: number): this;
+
+    withMaximumPacketSizeSchema(maximumPacketSizeSchema: Shape): this;
   }
   export class MqttServerLastWill implements DomainElement {
     customDomainProperties: Array<DomainExtension>;

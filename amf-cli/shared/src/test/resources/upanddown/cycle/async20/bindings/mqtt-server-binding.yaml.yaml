@@ -2,7 +2,7 @@ asyncapi: 2.0.0
 info:
   title: Mqtt channel binding
   version: 1.0.0
-channels: { }
+channels: {}
 servers:
   some-server:
     protocol: mqtt
@@ -17,7 +17,6 @@ servers:
           retain: true
           message: A last will message
         keepAlive: 12
-
   other-server:
     protocol: mqtt
     url: http://some.com
@@ -34,7 +33,6 @@ servers:
         bindingVersion: 0.2.0
         sessionExpiryInterval: 123
         maximumPacketSize: 123
-
   inline-server:
     protocol: mqtt
     url: http://some.com
@@ -51,7 +49,6 @@ servers:
           properties:
             a:
               type: string
-
   valid-reference-server:
     protocol: mqtt
     url: http://some.com
@@ -59,10 +56,17 @@ servers:
       mqtt:
         bindingVersion: 0.2.0
         sessionExpiryInterval:
-          $ref: '#/components/schemas/testSchema'
+          type: object
+          properties:
+            eventID:
+              type: string
+              description: Unique identifier for the event.
         maximumPacketSize:
-          $ref: '#/components/schemas/testSchema'
-
+          type: object
+          properties:
+            eventID:
+              type: string
+              description: Unique identifier for the event.
 components:
   schemas:
     testSchema:
