@@ -4,17 +4,25 @@ import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.GooglePubSub
 
 object Async25Syntax extends SpecSyntax {
-  override val nodes: Map[String, Set[String]] = add(Async24Syntax.nodes,
+  override val nodes: Map[String, Set[String]] = add(
+    Async24Syntax.nodes,
     "server" -> Set(
       "tags"
     ),
-    "bindings"-> Set(GooglePubSub),
-    "GooglePubSubChannelBinding" -> Set(
+    "bindings" -> Set(GooglePubSub),
+    "GooglePubSubChannelBinding010" -> Set(
       "labels",
       "messageRetentionDuration",
       "messageStoragePolicy",
       "schemaSettings",
       "topic",
+      "bindingVersion"
+    ),
+    "GooglePubSubChannelBinding020" -> Set(
+      "labels",
+      "messageRetentionDuration",
+      "messageStoragePolicy",
+      "schemaSettings",
       "bindingVersion"
     ),
     "GooglePubSubMessageStoragePolicy" -> Set(
@@ -32,9 +40,12 @@ object Async25Syntax extends SpecSyntax {
       "schema",
       "bindingVersion"
     ),
-    "GooglePubSubMessageSchema" -> Set(
+    "GooglePubSubMessageSchema010" -> Set(
       "name",
       "type"
+    ),
+    "GooglePubSubMessageSchema020" -> Set(
+      "name"
     )
   )
 }

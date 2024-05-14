@@ -6,8 +6,10 @@ import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
 import amf.apicontract.client.platform.model.domain.bindings.mqtt._
 import amf.apicontract.client.platform.model.domain.bindings.websockets._
+import amf.apicontract.client.platform.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain.ObjectNode
 import amf.shapes.client.platform.model.domain.AnyShape
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
@@ -19,6 +21,7 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   val stringSeq                            = Seq(s)
   val clientStringList: ClientList[String] = stringSeq.asClient
   val shape                                = new AnyShape()
+  val node                                 = new ObjectNode()
 
   override protected def beforeAll(): Unit = {
     APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
@@ -302,6 +305,69 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     binding050.partitions.value() shouldBe 123
     binding050.replicas.value() shouldBe 123
     binding050.topicConfiguration._internal shouldBe topicConfiguration050._internal
+  }
+
+  test("GooglePubSubChannelBinding") {
+    val messageStoragePolicy = new GooglePubSubMessageStoragePolicy()
+      .withAllowedPersistenceRegions(stringSeq.asClient)
+
+    val schemaSettings = new GooglePubSubSchemaSettings()
+      .withName(s)
+      .withEncoding(s)
+      .withFirstRevisionId(s)
+      .withLastRevisionId(s)
+
+    val binding010 = new GooglePubSubChannelBinding010()
+      .withBindingVersion(s)
+      .withMessageRetentionDuration(s)
+      .withMessageStoragePolicy(messageStoragePolicy)
+      .withSchemaSettings(schemaSettings)
+      .withTopic(s)
+
+    binding010.messageRetentionDuration.value() shouldBe s
+    binding010.messageStoragePolicy._internal shouldBe messageStoragePolicy._internal
+    binding010.schemaSettings._internal shouldBe schemaSettings._internal
+    binding010.topic.value() shouldBe s
+
+    val binding020 = new GooglePubSubChannelBinding020()
+      .withBindingVersion(s)
+      .withMessageRetentionDuration(s)
+      .withMessageStoragePolicy(messageStoragePolicy)
+      .withSchemaSettings(schemaSettings)
+
+    binding020.messageRetentionDuration.value() shouldBe s
+    binding020.messageStoragePolicy._internal shouldBe messageStoragePolicy._internal
+    binding020.schemaSettings._internal shouldBe schemaSettings._internal
+  }
+
+  test("test GooglePubSubMessageBinding") {
+    val schema010 = new GooglePubSubSchemaDefinition010()
+      .withName(s)
+      .withFieldType(s)
+    schema010.name.value() shouldBe s
+    schema010.fieldType.value() shouldBe s
+
+    val binding010 = new GooglePubSubMessageBinding010()
+      .withBindingVersion(s)
+      .withOrderingKey(s)
+      .withAttributes(node)
+      .withSchema(schema010)
+    binding010.orderingKey.value() shouldBe s
+    binding010.attributes._internal shouldBe node._internal
+    binding010.schema._internal shouldBe schema010._internal
+
+    val schema020 = new GooglePubSubSchemaDefinition020()
+      .withName(s)
+    schema020.name.value() shouldBe s
+
+    val binding020 = new GooglePubSubMessageBinding020()
+      .withBindingVersion(s)
+      .withOrderingKey(s)
+      .withAttributes(node)
+      .withSchema(schema020)
+    binding020.orderingKey.value() shouldBe s
+    binding020.attributes._internal shouldBe node._internal
+    binding020.schema._internal shouldBe schema020._internal
   }
 
   test("test MessageBindings") {

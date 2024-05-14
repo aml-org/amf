@@ -373,8 +373,13 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.5 tags in servers") {
     validate("server-tags.yaml", Some("server-tags.report"))
   }
-  test("Async 2.5 bindings in channel and message") {
-    validate("binding-wrong-key.yaml", Some("binding-wrong-key.report"))
+
+  test("Async 2.5 google pub sub closed shape") {
+    validate("google-binding-wrong-key.yaml", Some("google-binding-wrong-key.report"))
+  }
+
+  test("Async 2.5 google pub sub wrong version") {
+    validate("google-binding-wrong-version.yaml", Some("google-binding-wrong-version.report"))
   }
 
   test("Async 2.4 Server Variables") {

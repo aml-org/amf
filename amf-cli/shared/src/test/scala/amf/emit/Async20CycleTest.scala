@@ -203,9 +203,9 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/pulsar-binding-only-required.yaml"
     ),
     FixtureData(
-      "GooglePubSub message-binding and channel-binding",
-      "bindings/gps-message-binding.yaml",
-      "bindings/gps-message-binding.yaml"
+      "GooglePubSub message and channel binding",
+      "bindings/google-pub-sub-binding.yaml",
+      "bindings/google-pub-sub-binding.yaml"
     ),
     FixtureData(
       "async 2.4+ explicit security field in operation bindings",

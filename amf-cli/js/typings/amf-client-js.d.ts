@@ -3597,7 +3597,41 @@ declare module "amf-client-js" {
     withUsage(usage: string): this;
   }
   export class GooglePubSubChannelBinding implements ChannelBinding {
+    labels: ObjectNode;
+    messageRetentionDuration: StrField;
+    messageStoragePolicy: GooglePubSubMessageStoragePolicy;
+    schemaSettings: GooglePubSubSchemaSettings;
+    bindingVersion: StrField;
 
+    withLabels(labels: ObjectNode): this;
+    withMessageRetentionDuration(messageRetentionDuration: string): this;
+    withMessageStoragePolicy(messageStoragePolicy: GooglePubSubMessageStoragePolicy): this;
+    withSchemaSettings(schemaSettings: GooglePubSubSchemaSettings): this;
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubChannelBinding010 implements GooglePubSubChannelBinding {
     labels: ObjectNode;
     messageRetentionDuration: StrField;
     messageStoragePolicy: GooglePubSubMessageStoragePolicy;
@@ -3610,6 +3644,41 @@ declare module "amf-client-js" {
     withMessageStoragePolicy(messageStoragePolicy: GooglePubSubMessageStoragePolicy): this;
     withSchemaSettings(schemaSettings: GooglePubSubSchemaSettings): this;
     withTopic(topic: string): this;
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubChannelBinding020 implements GooglePubSubChannelBinding {
+    labels: ObjectNode;
+    messageRetentionDuration: StrField;
+    messageStoragePolicy: GooglePubSubMessageStoragePolicy;
+    schemaSettings: GooglePubSubSchemaSettings;
+    bindingVersion: StrField;
+
+    withLabels(labels: ObjectNode): this;
+    withMessageRetentionDuration(messageRetentionDuration: string): this;
+    withMessageStoragePolicy(messageStoragePolicy: GooglePubSubMessageStoragePolicy): this;
+    withSchemaSettings(schemaSettings: GooglePubSubSchemaSettings): this;
     withBindingVersion(bindingVersion: string): this;
 
     customDomainProperties: Array<DomainExtension>;
@@ -3681,7 +3750,6 @@ declare module "amf-client-js" {
     withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class GooglePubSubMessageBinding implements MessageBinding {
-
     attributes: ObjectNode;
     orderingKey: StrField;
     schema: GooglePubSubSchemaDefinition;
@@ -3712,13 +3780,110 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
     withLinkTarget(target: undefined): this;
   }
-  export class GooglePubSubSchemaDefinition implements DomainElement {
+  export class GooglePubSubMessageBinding010 implements GooglePubSubMessageBinding {
+    attributes: ObjectNode;
+    orderingKey: StrField;
+    schema: GooglePubSubSchemaDefinition010;
 
+    withAttributes(attributes: ObjectNode): this;
+    withOrderingKey(orderingKey: string): this;
+    withSchema(schema: GooglePubSubSchemaDefinition010): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubMessageBinding020 implements GooglePubSubMessageBinding {
+    attributes: ObjectNode;
+    orderingKey: StrField;
+    schema: GooglePubSubSchemaDefinition020;
+
+    withAttributes(attributes: ObjectNode): this;
+    withOrderingKey(orderingKey: string): this;
+    withSchema(schema: GooglePubSubSchemaDefinition020): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubSchemaDefinition implements DomainElement {
+    name: StrField;
+    withName(name: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class GooglePubSubSchemaDefinition010 implements GooglePubSubSchemaDefinition {
     name: StrField;
     fieldType: StrField;
 
     withName(name: string): this;
     withFieldType(fieldType: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class GooglePubSubSchemaDefinition020 implements GooglePubSubSchemaDefinition {
+    name: StrField;
+    withName(name: string): this;
 
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;

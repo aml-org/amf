@@ -289,7 +289,7 @@ class GooglePubSubChannelBindingEmitter(binding: GooglePubSubChannelBinding, ord
           )
         fs.entry(GooglePubSubChannelBindingModel.MessageRetentionDuration)
           .foreach(f => result += ValueEmitter("messageRetentionDuration", f))
-        fs.entry(GooglePubSubChannelBindingModel.Topic).foreach(f => result += ValueEmitter("topic", f))
+        fs.entry(GooglePubSubChannelBinding010Model.Topic).foreach(f => result += ValueEmitter("topic", f))
         Option(binding.messageStoragePolicy).foreach(policy =>
           result += new GooglePubSubStoragePolicyEmitter(policy, ordering)
         )

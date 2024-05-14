@@ -1,0 +1,20 @@
+asyncapi: 2.5.0
+
+info:
+  title: GooglePubSub Binding test
+  version: 1.0.0
+
+servers: {}
+
+channels:
+  some-channel:
+    bindings:
+      googlepubsub:
+        bindingVersion: 9.9.9
+
+components:
+  messages:
+    some-message:
+      bindings:
+        googlepubsub:
+          bindingVersion: 9.9.9

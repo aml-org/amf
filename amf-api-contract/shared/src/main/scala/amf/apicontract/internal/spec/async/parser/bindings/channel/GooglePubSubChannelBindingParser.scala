@@ -2,10 +2,13 @@ package amf.apicontract.internal.spec.async.parser.bindings.channel
 
 import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
   GooglePubSubChannelBinding,
+  GooglePubSubChannelBinding010,
+  GooglePubSubChannelBinding020,
   GooglePubSubMessageStoragePolicy,
   GooglePubSubSchemaSettings
 }
 import amf.apicontract.internal.metamodel.domain.bindings.{
+  GooglePubSubChannelBinding010Model,
   GooglePubSubChannelBindingModel,
   GooglePubSubMessageStoragePolicyModel,
   GooglePubSubSchemaSettingsModel
@@ -19,8 +22,17 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object GooglePubSubChannelBindingParser extends BindingParser[GooglePubSubChannelBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): GooglePubSubChannelBinding = {
-    val binding = GooglePubSubChannelBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
+    val map            = entry.value.as[YMap]
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "GooglePubSubChannelBinding", ctx.specSettings.spec)
+
+    val binding = bindingVersion match {
+      case "0.2.0" | "latest" => GooglePubSubChannelBinding020(Annotations(entry))
+      case "0.1.0"            => GooglePubSubChannelBinding010(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = GooglePubSubChannelBinding010(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "GooglePubSub Channel Binding")
+        defaultBinding
+    }
 
     map.key(
       "labels",
@@ -30,16 +42,21 @@ object GooglePubSubChannelBindingParser extends BindingParser[GooglePubSubChanne
       }
     )
     map.key("messageRetentionDuration", GooglePubSubChannelBindingModel.MessageRetentionDuration in binding)
-    map.key("topic", GooglePubSubChannelBindingModel.Topic in binding)
-
     parseMessageStoragePolicy(binding, map)
     parseSchemaSettings(binding, map)
     parseBindingVersion(binding, GooglePubSubChannelBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding, map, "GooglePubSubChannelBinding")
-    binding
+    bindingVersion match {
+      case "0.2.0" | "latest" =>
+        ctx.closedShape(binding, map, "GooglePubSubChannelBinding020")
+      case _ =>
+        map.key("topic", GooglePubSubChannelBinding010Model.Topic in binding)
+        ctx.closedShape(binding, map, "GooglePubSubChannelBinding010")
+    }
 
+    binding
   }
+
   private def parseSchemaSettings(binding: GooglePubSubChannelBinding, map: YMap)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
@@ -78,5 +95,4 @@ object GooglePubSubChannelBindingParser extends BindingParser[GooglePubSubChanne
       }
     )
   }
-
 }

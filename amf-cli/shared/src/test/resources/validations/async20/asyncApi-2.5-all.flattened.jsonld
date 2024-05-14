@@ -586,7 +586,7 @@
       ],
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1232,28 +1232,28 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(112,0)-(131,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#GooglePubSubChannelBinding",
+        "http://a.ml/vocabularies/apiBinding#GooglePubSubChannelBinding010",
         "http://a.ml/vocabularies/apiBinding#ChannelBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
+      "http://a.ml/vocabularies/apiBinding#topic": "projects/your-project/topics/topic-proto-schema",
       "http://a.ml/vocabularies/apiBinding#labels": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1"
       },
       "http://a.ml/vocabularies/apiBinding#messageRetentionDuration": "86400s",
       "http://a.ml/vocabularies/apiBinding#messageStoragePolicy": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy"
       },
       "http://a.ml/vocabularies/apiBinding#schemaSettings": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings"
       },
-      "http://a.ml/vocabularies/apiBinding#topic": "projects/your-project/topics/topic-proto-schema",
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
       "http://a.ml/vocabularies/apiBinding#type": "googlepubsub",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map"
         }
       ]
     },
@@ -1999,27 +1999,27 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(113,6)-(131,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1",
       "@type": [
         "http://a.ml/vocabularies/data#Object",
         "http://a.ml/vocabularies/data#Node",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/data#label1": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1"
       },
       "http://a.ml/vocabularies/data#label2": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2"
       },
       "http://a.ml/vocabularies/core#name": "object_1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#GooglePubSubMessageStoragePolicy",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -2030,57 +2030,57 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaSettings",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
+      "http://a.ml/vocabularies/core#name": "projects/your-project/schemas/messageAvro",
       "http://a.ml/vocabularies/apiBinding#encoding": "binary",
       "http://a.ml/vocabularies/apiBinding#firstRevisionId": "1.0.0",
       "http://a.ml/vocabularies/apiBinding#lastRevisionId": "2.0.0",
-      "http://a.ml/vocabularies/apiBinding#name": "projects/your-project/schemas/messageAvro",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_6"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_6"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_5"
         }
       ]
     },
@@ -2856,7 +2856,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(114,0)-(131,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
@@ -2871,12 +2871,12 @@
       "http://a.ml/vocabularies/core#name": "label1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
@@ -2891,108 +2891,108 @@
       "http://a.ml/vocabularies/core#name": "label2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_3"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_6",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#topic",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(137,8)-(138,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#labels",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(134,8)-(137,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageRetentionDuration",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(138,8)-(139,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(133,6)-(133,18)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_6",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#schemaSettings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(143,8)-(148,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_4",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#topic",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(137,8)-(138,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#labels",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(134,8)-(137,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(133,6)-(133,18)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageStoragePolicy",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(139,8)-(143,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(133,6)-(148,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/source-map/lexical/element_5",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageStoragePolicy",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(139,8)-(143,0)]"
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/source-map/lexical/element_5",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#messageRetentionDuration",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(138,8)-(139,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/server/some.com/variable/parameter/path/environment/scalar/environment/scalar_1/source-map/synthesized-field/element_1",
@@ -3682,97 +3682,97 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(114,8)-(131,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#label1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(135,10)-(136,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#label2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(136,10)-(137,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(135,0)-(137,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy",
       "http://a.ml/vocabularies/document-source-maps#value": "[(139,29)-(143,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-messageStoragePolicy/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-messageStoragePolicy/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#allowedPersistenceRegions",
       "http://a.ml/vocabularies/document-source-maps#value": "[(140,10)-(143,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#lastRevisionId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(147,10)-(148,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(143,23)-(148,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(145,10)-(146,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#firstRevisionId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(146,10)-(147,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/googlepubsub-schemaSettings/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(143,23)-(148,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#lastRevisionId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(147,10)-(148,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#encoding",
       "http://a.ml/vocabularies/document-source-maps#value": "[(144,10)-(145,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/googlepubsub-schemaSettings/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(145,10)-(146,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/scheme/oauth2/settings/oauth2/flows/implicit/scope/write%3Apets",
@@ -4261,33 +4261,33 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(127,0)-(131,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(135,18)-(135,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-operation/object_1/label2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/async-api/endpoint/topic-proto-schema/channel-bindings/bindings/googlepubsub-channel-010/object_1/label2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(136,18)-(136,24)]"
     },
     {
@@ -4818,7 +4818,7 @@
       ],
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -5137,24 +5137,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#GooglePubSubMessageBinding",
+        "http://a.ml/vocabularies/apiBinding#GooglePubSubMessageBinding010",
         "http://a.ml/vocabularies/apiBinding#MessageBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiBinding#attribute": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1"
       },
       "http://a.ml/vocabularies/apiBinding#orderingKey": "userEventOrder",
       "http://a.ml/vocabularies/apiBinding#schemaDefinition": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "0.1.0",
       "http://a.ml/vocabularies/apiBinding#type": "googlepubsub",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map"
         }
       ]
     },
@@ -5565,59 +5565,59 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(181,8)-(183,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1",
       "@type": [
         "http://a.ml/vocabularies/data#Object",
         "http://a.ml/vocabularies/data#Node",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/data#exampleAttribute": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute"
       },
       "http://a.ml/vocabularies/core#name": "object_1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition",
+        "http://a.ml/vocabularies/apiBinding#GooglePubSubSchemaDefinition010",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/apiBinding#name": "projects/your-project/schemas/message-avro",
       "http://a.ml/vocabularies/apiBinding#type": "avro",
+      "http://a.ml/vocabularies/core#name": "projects/your-project/schemas/message-avro",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_5"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_4"
         }
       ]
     },
@@ -5925,7 +5925,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(182,10)-(183,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
@@ -5940,73 +5940,73 @@
       "http://a.ml/vocabularies/core#name": "exampleAttribute",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_5",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(156,10)-(157,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(152,8)-(160,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#schemaDefinition",
       "http://a.ml/vocabularies/document-source-maps#value": "[(157,10)-(160,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(152,8)-(152,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#attribute",
       "http://a.ml/vocabularies/document-source-maps#value": "[(153,10)-(155,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#orderingKey",
       "http://a.ml/vocabularies/document-source-maps#value": "[(155,10)-(156,0)]"
     },
@@ -6148,52 +6148,52 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(188,15)-(188,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(154,0)-(155,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#exampleAttribute",
       "http://a.ml/vocabularies/document-source-maps#value": "[(154,12)-(155,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(158,12)-(159,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(159,12)-(160,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/googlepubsub-schemaDefinition",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(158,12)-(159,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/googlepubsub-schemaDefinition-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(157,17)-(160,0)]"
     },
     {
@@ -6242,18 +6242,18 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(176,27)-(176,38)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message/object_1/exampleAttribute",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/messageAvro/message-bindings/bindings/googlepubsub-message-010/object_1/exampleAttribute",
       "http://a.ml/vocabularies/document-source-maps#value": "[(154,30)-(154,42)]"
     }
   ]

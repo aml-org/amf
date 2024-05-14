@@ -1,15 +1,18 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{GooglePubSubChannelBinding, GooglePubSubMessageBinding, GooglePubSubMessageStoragePolicy, GooglePubSubSchemaDefinition, GooglePubSubSchemaSettings}
-import amf.apicontract.internal.metamodel.domain.bindings.GooglePubSubChannelBindingModel.Type
+import amf.apicontract.client.scala.model.domain.bindings.googlepubsub._
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain._
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
 
-object GooglePubSubMessageBindingModel extends MessageBindingModel with BindingVersion {
+trait GooglePubSubMessageBindingModel extends MessageBindingModel with BindingVersion {
+  override val key: Field              = Type
+  override val `type`: List[ValueType] = ApiBinding + "GooglePubSubMessageBinding" :: MessageBindingModel.`type`
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageBinding")
 
   val Attributes: Field =
     Field(
@@ -40,17 +43,52 @@ object GooglePubSubMessageBindingModel extends MessageBindingModel with BindingV
       )
     )
 
-  override def modelInstance: AmfObject = GooglePubSubMessageBinding()
+  override def fields: List[Field] = List(Attributes, OrderingKey, Schema, BindingVersion) ++ MessageBindingModel.fields
+}
+
+object GooglePubSubMessageBindingModel extends GooglePubSubMessageBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("GooglePubSubMessageBindingModel is an abstract class")
+}
+
+object GooglePubSubMessageBinding010Model extends GooglePubSubMessageBindingModel {
+  override def modelInstance: AmfObject = GooglePubSubMessageBinding010()
+  override val `type`: List[ValueType]  = ApiBinding + "GooglePubSubMessageBinding010" :: MessageBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageBinding010")
+
+  override val Schema: Field =
+    Field(
+      GooglePubSubSchemaDefinition010Model,
+      ApiBinding + "schemaDefinition",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "schema",
+        "Define Schema"
+      )
+    )
 
   override def fields: List[Field] = List(Attributes, OrderingKey, Schema, BindingVersion) ++ MessageBindingModel.fields
-
-  override val `type`: List[ValueType] = ApiBinding + "GooglePubSubMessageBinding" :: MessageBindingModel.`type`
-
-  override val key: Field = Type
-
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageBinding")
 }
-object GooglePubSubChannelBindingModel extends ChannelBindingModel with BindingVersion {
+
+object GooglePubSubMessageBinding020Model extends GooglePubSubMessageBindingModel {
+  override def modelInstance: AmfObject = GooglePubSubMessageBinding020()
+  override val `type`: List[ValueType]  = ApiBinding + "GooglePubSubMessageBinding020" :: MessageBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageBinding020")
+
+  override val Schema: Field =
+    Field(
+      GooglePubSubSchemaDefinition020Model,
+      ApiBinding + "schemaDefinition",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "schema",
+        "Define Schema"
+      )
+    )
+
+  override def fields: List[Field] = List(Attributes, OrderingKey, Schema, BindingVersion) ++ MessageBindingModel.fields
+}
+
+trait GooglePubSubChannelBindingModel extends ChannelBindingModel with BindingVersion {
   val Labels: Field =
     Field(
       ObjectNodeModel,
@@ -91,21 +129,11 @@ object GooglePubSubChannelBindingModel extends ChannelBindingModel with BindingV
       )
     )
 
-  val Topic: Field =
-    Field(
-      Str,
-      ApiBinding + "topic",
-      ModelDoc(ModelVocabularies.ApiBinding, "topic", "The Google Cloud Pub/Sub Topic name")
-    )
-
-  override def modelInstance: AmfObject = GooglePubSubChannelBinding()
-
   override def fields: List[Field] = List(
     Labels,
     MessageRetentionDuration,
     MessageStoragePolicy,
     SchemaSettings,
-    Topic,
     BindingVersion
   ) ++ ChannelBindingModel.fields
 
@@ -115,7 +143,36 @@ object GooglePubSubChannelBindingModel extends ChannelBindingModel with BindingV
 
   override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubChannelBinding")
 }
+
+object GooglePubSubChannelBindingModel extends GooglePubSubChannelBindingModel {
+  override def modelInstance: AmfObject = throw new Exception("GooglePubSubChannelBindingModel is an abstract class")
+}
+
+object GooglePubSubChannelBinding010Model extends GooglePubSubChannelBindingModel {
+  override def modelInstance: AmfObject = GooglePubSubChannelBinding010()
+  override val `type`: List[ValueType]  = ApiBinding + "GooglePubSubChannelBinding010" :: ChannelBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubChannelBinding010")
+
+  val Topic: Field =
+    Field(
+      Str,
+      ApiBinding + "topic",
+      ModelDoc(ModelVocabularies.ApiBinding, "topic", "The Google Cloud Pub/Sub Topic name")
+    )
+
+  override def fields: List[Field] = List(Topic) ++ GooglePubSubChannelBindingModel.fields
+}
+
+object GooglePubSubChannelBinding020Model extends GooglePubSubChannelBindingModel {
+  override def modelInstance: AmfObject = GooglePubSubChannelBinding020()
+  override val `type`: List[ValueType]  = ApiBinding + "GooglePubSubChannelBinding020" :: ChannelBindingModel.`type`
+  override val doc: ModelDoc            = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubChannelBinding020")
+}
+
 object GooglePubSubMessageStoragePolicyModel extends DomainElementModel {
+  def modelInstance: AmfObject = GooglePubSubMessageStoragePolicy()
+  val `type`: List[ValueType]  = ApiBinding + "GooglePubSubMessageStoragePolicy" :: DomainElementModel.`type`
+  override val doc: ModelDoc   = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageStoragePolicy")
 
   val AllowedPersistenceRegions: Field =
     Field(
@@ -127,18 +184,14 @@ object GooglePubSubMessageStoragePolicyModel extends DomainElementModel {
         "A list of IDs of GCP regions where messages that are published to the topic may be persisted in storage"
       )
     )
-  def modelInstance: AmfObject = GooglePubSubMessageStoragePolicy()
 
   def fields: List[Field] = List(AllowedPersistenceRegions) ++ DomainElementModel.fields
-
-  val `type`: List[ValueType] = ApiBinding + "GooglePubSubMessageStoragePolicy" :: DomainElementModel.`type`
-
-  val key: Field = Type
-
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubMessageStoragePolicy")
-
 }
-object GooglePubSubSchemaSettingsModel extends DomainElementModel {
+
+object GooglePubSubSchemaSettingsModel extends DomainElementModel with NameFieldSchema {
+  def modelInstance: AmfObject = GooglePubSubSchemaSettings()
+  val `type`: List[ValueType]  = ApiBinding + "GooglePubSubSchemaSettings" :: DomainElementModel.`type`
+  override val doc: ModelDoc   = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaSettings")
 
   val Encoding: Field =
     Field(
@@ -169,35 +222,23 @@ object GooglePubSubSchemaSettingsModel extends DomainElementModel {
       )
     )
 
-  val Name: Field =
-    Field(
-      Str,
-      ApiBinding + "name",
-      ModelDoc(
-        ModelVocabularies.ApiBinding,
-        "name",
-        "Name of the schema that messages published should be validated against"
-      )
-    )
-
-  def modelInstance: AmfObject = GooglePubSubSchemaSettings()
-
-  def fields: List[Field] = List(Encoding, FirstRevisionId, LastRevisionId, Name) ++ DomainElementModel.fields
-
-  val `type`: List[ValueType] = ApiBinding + "GooglePubSubSchemaSettings" :: DomainElementModel.`type`
-
-  val key: Field = Type
-
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaSettings")
-
+  def fields: List[Field] = List(Name, Encoding, FirstRevisionId, LastRevisionId) ++ DomainElementModel.fields
 }
-object GooglePubSubSchemaDefinitionModel extends DomainElementModel {
-  val Name: Field =
-    Field(
-      Str,
-      ApiBinding + "name",
-      ModelDoc(ModelVocabularies.ApiBinding, "name", "The name of the schema")
-    )
+
+trait GooglePubSubSchemaDefinitionModel extends DomainElementModel with NameFieldSchema {
+  val `type`: List[ValueType] = ApiBinding + "GooglePubSubSchemaDefinition" :: DomainElementModel.`type`
+  override val doc: ModelDoc  = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaDefinition")
+  def fields: List[Field]     = List(Name) ++ DomainElementModel.fields
+}
+
+object GooglePubSubSchemaDefinitionModel extends GooglePubSubSchemaDefinitionModel {
+  override def modelInstance: AmfObject = throw new Exception("GooglePubSubSchemaDefinitionModel is an abstract class")
+}
+
+object GooglePubSubSchemaDefinition010Model extends GooglePubSubSchemaDefinitionModel {
+  def modelInstance: AmfObject         = GooglePubSubSchemaDefinition010()
+  override val `type`: List[ValueType] = ApiBinding + "GooglePubSubSchemaDefinition010" :: DomainElementModel.`type`
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaDefinition010")
 
   val FieldType: Field =
     Field(
@@ -206,14 +247,11 @@ object GooglePubSubSchemaDefinitionModel extends DomainElementModel {
       ModelDoc(ModelVocabularies.ApiBinding, "type", "The type of the schema")
     )
 
-  def modelInstance: AmfObject = GooglePubSubSchemaDefinition()
+  override def fields: List[Field] = FieldType +: GooglePubSubSchemaDefinitionModel.fields
+}
 
-  def fields: List[Field] = List(Name, FieldType) ++ DomainElementModel.fields
-
-  val `type`: List[ValueType] = ApiBinding + "GooglePubSubSchemaDefinition" :: DomainElementModel.`type`
-
-  val key: Field = Type
-
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaDefinition")
-
+object GooglePubSubSchemaDefinition020Model extends GooglePubSubSchemaDefinitionModel {
+  def modelInstance: AmfObject         = GooglePubSubSchemaDefinition020()
+  override val `type`: List[ValueType] = ApiBinding + "GooglePubSubSchemaDefinition020" :: DomainElementModel.`type`
+  override val doc: ModelDoc           = ModelDoc(ModelVocabularies.ApiBinding, "GooglePubSubSchemaDefinition020")
 }
