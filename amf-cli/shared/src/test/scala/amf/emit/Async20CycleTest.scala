@@ -150,7 +150,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData(
       "Mqtt operation binding",
       "bindings/mqtt-operation-binding.yaml",
-      "bindings/mqtt-operation-binding.yaml"
+      "bindings/mqtt-operation-binding.yaml.yaml"
     ),
     FixtureData(
       "Mqtt server binding",

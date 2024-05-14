@@ -1,5 +1,5 @@
 package amf.apicontract.client.scala.model.domain.bindings.mqtt
-import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -10,7 +10,10 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.metamodel.domain.bindings.MqttOperationBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
-import amf.apicontract.internal.metamodel.domain.bindings.MqttOperationBinding020Model.MessageExpiryInterval
+import amf.apicontract.internal.metamodel.domain.bindings.MqttOperationBinding020Model.{
+  MessageExpiryInterval,
+  MessageExpiryIntervalSchema
+}
 import amf.shapes.client.scala.model.domain.Key
 
 abstract class MqttOperationBinding(override val fields: Fields, override val annotations: Annotations)
@@ -51,9 +54,13 @@ class MqttOperationBinding020(override val fields: Fields, override val annotati
   override def componentId: String                     = "/mqtt-operation-020"
   override def meta: MqttOperationBinding020Model.type = MqttOperationBinding020Model
 
-  def messageExpiryInterval: IntField = fields.field(MessageExpiryInterval)
+  def messageExpiryInterval: IntField    = fields.field(MessageExpiryInterval)
+  def messageExpiryIntervalSchema: Shape = fields.field(MessageExpiryIntervalSchema)
+
   def withMessageExpiryInterval(messageExpiryInterval: Int): this.type =
     set(MessageExpiryInterval, messageExpiryInterval)
+  def withMessageExpiryIntervalSchema(messageExpiryIntervalSchema: Shape): this.type =
+    set(MessageExpiryIntervalSchema, messageExpiryIntervalSchema)
 
   override def linkCopy(): MqttOperationBinding020 = MqttOperationBinding020().withId(id)
 

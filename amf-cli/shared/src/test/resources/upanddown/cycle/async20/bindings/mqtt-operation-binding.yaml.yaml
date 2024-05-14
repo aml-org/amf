@@ -25,8 +25,11 @@ channels:
           retain: false
           bindingVersion: 0.2.0
           messageExpiryInterval:
-            $ref: '#/components/schemas/testSchema'
-
+            type: object
+            properties:
+              eventID:
+                type: string
+                description: Unique identifier for the event.
 components:
   schemas:
     testSchema:

@@ -32,7 +32,14 @@ object MqttOperationBindingParser extends BindingParser[MqttOperationBinding] {
 
     bindingVersion match {
       case "0.2.0" | "latest" =>
-        map.key("messageExpiryInterval", MqttOperationBinding020Model.MessageExpiryInterval in binding)
+        map.key("messageExpiryInterval").foreach { entry =>
+          parseIntOrRefOrSchema(
+            binding,
+            entry,
+            MqttOperationBinding020Model.MessageExpiryInterval,
+            MqttOperationBinding020Model.MessageExpiryIntervalSchema
+          )
+        }
         ctx.closedShape(binding, map, "mqttOperationBinding020")
       case _ =>
         ctx.closedShape(binding, map, "mqttOperationBinding010")

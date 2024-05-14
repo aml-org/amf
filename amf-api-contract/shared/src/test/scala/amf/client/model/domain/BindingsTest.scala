@@ -410,9 +410,11 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
       .withQos(2)
       .withRetain(true)
       .withMessageExpiryInterval(123)
+      .withMessageExpiryIntervalSchema(shape)
     binding020.qos.value() shouldBe 2
     binding020.retain.value() shouldBe true
     binding020.messageExpiryInterval.value() shouldBe 123
+    binding020.messageExpiryIntervalSchema._internal shouldBe shape._internal
   }
 
   test("test MqttServerBinding") {

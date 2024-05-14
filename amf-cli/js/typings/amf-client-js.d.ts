@@ -5668,6 +5668,7 @@ declare module "amf-client-js" {
     qos: IntField;
     retain: BoolField;
     messageExpiryInterval: IntField;
+    messageExpiryIntervalSchema: Shape;
 
     constructor();
 
@@ -5700,6 +5701,8 @@ declare module "amf-client-js" {
     withRetain(retain: boolean): this;
 
     withMessageExpiryInterval(messageExpiryInterval: number): this;
+
+    withMessageExpiryIntervalSchema(messageExpiryIntervalSchema: Shape): this;
   }
   export class MqttServerBinding implements ServerBinding {
     cleanSession: BoolField;

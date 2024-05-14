@@ -102,6 +102,10 @@ class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecO
         fs.entry(MqttOperationBindingModel.Retain).foreach(f => result += ValueEmitter("retain", f))
         fs.entry(MqttOperationBinding020Model.MessageExpiryInterval)
           .foreach(f => result += ValueEmitter("messageExpiryInterval", f))
+        fs.entry(MqttOperationBinding020Model.MessageExpiryIntervalSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("messageExpiryInterval", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

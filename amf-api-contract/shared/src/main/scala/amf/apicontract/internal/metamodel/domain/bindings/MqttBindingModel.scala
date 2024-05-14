@@ -217,6 +217,17 @@ object MqttOperationBinding020Model extends MqttOperationBindingModel {
       )
     )
 
+  val MessageExpiryIntervalSchema: Field =
+    Field(
+      ShapeModel,
+      ApiBinding + "messageExpiryIntervalSchema",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "messageExpiryIntervalSchema",
+        "Interval in seconds or a Schema Object containing the definition of the lifetime of the message."
+      )
+    )
+
   override def fields: List[Field] = MessageExpiryInterval +: MqttOperationBindingModel.fields
 }
 

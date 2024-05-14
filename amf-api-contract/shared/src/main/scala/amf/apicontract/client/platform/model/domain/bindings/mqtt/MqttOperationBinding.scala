@@ -8,6 +8,7 @@ import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttOperationBinding020 => InternalMqttOperationBinding020
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain.Shape
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -50,10 +51,16 @@ case class MqttOperationBinding020(override private[amf] val _internal: Internal
   @JSExportTopLevel("MqttOperationBinding020")
   def this() = this(InternalMqttOperationBinding020())
 
-  def messageExpiryInterval: IntField = _internal.messageExpiryInterval
+  def messageExpiryInterval: IntField    = _internal.messageExpiryInterval
+  def messageExpiryIntervalSchema: Shape = _internal.messageExpiryIntervalSchema
 
   def withMessageExpiryInterval(messageExpiryInterval: Int): this.type = {
     _internal.withMessageExpiryInterval(messageExpiryInterval)
+    this
+  }
+
+  def withMessageExpiryIntervalSchema(messageExpiryIntervalSchema: Shape): this.type = {
+    _internal.withMessageExpiryIntervalSchema(messageExpiryIntervalSchema)
     this
   }
 
