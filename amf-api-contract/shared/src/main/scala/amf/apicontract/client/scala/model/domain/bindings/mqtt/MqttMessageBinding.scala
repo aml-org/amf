@@ -11,10 +11,11 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 import amf.apicontract.internal.metamodel.domain.bindings.MqttMessageBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, MessageBinding}
 import amf.apicontract.internal.metamodel.domain.bindings.MqttMessageBinding020Model.{
+  ContentType,
   CorrelationData,
   PayloadFormatIndicator,
-  ContentType,
-  ResponseTopic
+  ResponseTopic,
+  ResponseTopicSchema
 }
 import amf.shapes.client.scala.model.domain.Key
 
@@ -52,12 +53,14 @@ class MqttMessageBinding020(override val fields: Fields, override val annotation
   def correlationData: Shape           = fields.field(CorrelationData)
   def contentType: StrField            = fields.field(ContentType)
   def responseTopic: StrField          = fields.field(ResponseTopic)
+  def responseTopicSchema: Shape       = fields.field(ResponseTopicSchema)
 
   def withPayloadFormatIndicator(payloadFormatIndicator: Int): this.type =
     set(PayloadFormatIndicator, payloadFormatIndicator)
-  def withCorrelationData(correlationData: Shape): this.type = set(CorrelationData, correlationData)
-  def withContentType(contentType: String): this.type        = set(ContentType, contentType)
-  def withResponseTopic(responseTopic: String): this.type    = set(ResponseTopic, responseTopic)
+  def withCorrelationData(correlationData: Shape): this.type         = set(CorrelationData, correlationData)
+  def withContentType(contentType: String): this.type                = set(ContentType, contentType)
+  def withResponseTopic(responseTopic: String): this.type            = set(ResponseTopic, responseTopic)
+  def withResponseTopicSchema(responseTopicSchema: Shape): this.type = set(ResponseTopicSchema, responseTopicSchema)
 
   override def linkCopy(): MqttMessageBinding020 = MqttMessageBinding020().withId(id)
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

@@ -33,7 +33,7 @@ object MqttOperationBindingParser extends BindingParser[MqttOperationBinding] {
     bindingVersion match {
       case "0.2.0" | "latest" =>
         map.key("messageExpiryInterval").foreach { entry =>
-          parseIntOrRefOrSchema(
+          parseScalarOrRefOrSchema(
             binding,
             entry,
             MqttOperationBinding020Model.MessageExpiryInterval,

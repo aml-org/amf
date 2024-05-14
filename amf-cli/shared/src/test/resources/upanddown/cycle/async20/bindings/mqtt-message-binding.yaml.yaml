@@ -47,13 +47,20 @@ channels:
         bindings:
           mqtt:
             payloadFormatIndicator: 1
-            correlationData:
-              $ref: '#/components/schemas/testSchema'
             contentType: application/json
-            responseTopic:
-              $ref: '#/components/schemas/testSchema'
             bindingVersion: 0.2.0
-
+            correlationData:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+            responseTopic:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
 components:
   schemas:
     testSchema:

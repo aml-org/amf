@@ -297,6 +297,17 @@ object MqttMessageBinding020Model extends MqttMessageBindingModel {
       )
     )
 
+  val ResponseTopicSchema: Field =
+    Field(
+      ShapeModel,
+      ApiBinding + "responseTopicSchema",
+      ModelDoc(
+        ModelVocabularies.ApiBinding,
+        "responseTopicSchema",
+        "The topic (channel URI) for a response message."
+      )
+    )
+
   override def fields: List[Field] =
     List(PayloadFormatIndicator, CorrelationData, ContentType, ResponseTopic) ++ MqttMessageBindingModel.fields
 }

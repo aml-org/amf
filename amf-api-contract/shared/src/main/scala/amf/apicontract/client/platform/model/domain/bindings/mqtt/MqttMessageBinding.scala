@@ -41,6 +41,7 @@ case class MqttMessageBinding020(override private[amf] val _internal: InternalMq
   def correlationData: Shape           = _internal.correlationData
   def contentType: StrField            = _internal.contentType
   def responseTopic: StrField          = _internal.responseTopic
+  def responseTopicSchema: Shape       = _internal.responseTopicSchema
 
   def withPayloadFormatIndicator(payloadFormatIndicator: Int): this.type = {
     _internal.withPayloadFormatIndicator(payloadFormatIndicator)
@@ -59,6 +60,11 @@ case class MqttMessageBinding020(override private[amf] val _internal: InternalMq
 
   def withResponseTopic(responseTopic: String): this.type = {
     _internal.withResponseTopic(responseTopic)
+    this
+  }
+
+  def withResponseTopicSchema(responseTopicSchema: Shape): this.type = {
+    _internal.withResponseTopicSchema(responseTopicSchema)
     this
   }
 

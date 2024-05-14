@@ -37,7 +37,14 @@ object MqttMessageBindingParser extends BindingParser[MqttMessageBinding] {
           }
         }
         map.key("contentType", MqttMessageBinding020Model.ContentType in binding)
-        map.key("responseTopic", MqttMessageBinding020Model.ResponseTopic in binding)
+        map.key("responseTopic").foreach { entry =>
+          parseScalarOrRefOrSchema(
+            binding,
+            entry,
+            MqttMessageBinding020Model.ResponseTopic,
+            MqttMessageBinding020Model.ResponseTopicSchema
+          )
+        }
         ctx.closedShape(binding, map, "mqttMessageBinding020")
       case _ =>
         ctx.closedShape(binding, map, "mqttMessageBinding010")

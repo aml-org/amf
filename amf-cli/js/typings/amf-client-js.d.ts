@@ -5537,6 +5537,7 @@ declare module "amf-client-js" {
     correlationData: Shape;
     contentType: StrField;
     responseTopic: StrField;
+    responseTopicSchema: Shape;
 
     constructor();
 
@@ -5571,6 +5572,8 @@ declare module "amf-client-js" {
     withContentType(contentType: string): this;
 
     withResponseTopic(responseTopic: string): this;
+
+    withResponseTopicSchema(responseTopicSchema: Shape): this;
   }
   export class MqttOperationBinding implements OperationBinding {
     customDomainProperties: Array<DomainExtension>;

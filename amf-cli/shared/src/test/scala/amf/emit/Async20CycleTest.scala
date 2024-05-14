@@ -146,7 +146,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/kafka-operation-binding.yaml",
       "bindings/kafka-operation-binding.yaml.yaml"
     ),
-    FixtureData("Mqtt message binding", "bindings/mqtt-message-binding.yaml", "bindings/mqtt-message-binding.yaml"),
+    FixtureData(
+      "Mqtt message binding",
+      "bindings/mqtt-message-binding.yaml",
+      "bindings/mqtt-message-binding.yaml.yaml"
+    ),
     FixtureData(
       "Mqtt operation binding",
       "bindings/mqtt-operation-binding.yaml",

@@ -55,7 +55,7 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
   protected def isSemVer(str: String): Boolean = {
     val regex = """^([0-9]+)\.([0-9]+)\.([0-9]+)$""".r
-    regex.findFirstIn(str).isDefined
+    regex.findFirstIn(str).isDefined || str == "latest"
   }
 
   protected def getDefaultBindingVersion(binding: String, spec: Spec): String = {
@@ -177,11 +177,11 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
     ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
   }
 
-  def parseIntOrRefOrSchema(binding: DomainElement, entry: YMapEntry, intField: Field, schemaField: Field)(implicit
+  def parseScalarOrRefOrSchema(binding: DomainElement, entry: YMapEntry, intField: Field, schemaField: Field)(implicit
       ctx: AsyncWebApiContext
   ): Unit = {
     entry.value.tagType match {
-      case YType.Int =>
+      case YType.Int | YType.Str =>
         Some(entry).foreach(intField in binding)
       case YType.Map =>
         ctx.link(entry.value) match {

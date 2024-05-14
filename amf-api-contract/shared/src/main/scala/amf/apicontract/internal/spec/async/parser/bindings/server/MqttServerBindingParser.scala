@@ -42,7 +42,7 @@ object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
     bindingVersion match {
       case "0.2.0" | "latest" =>
         map.key("sessionExpiryInterval").foreach { entry =>
-          parseIntOrRefOrSchema(
+          parseScalarOrRefOrSchema(
             binding,
             entry,
             MqttServerBinding020Model.SessionExpiryInterval,
@@ -50,7 +50,7 @@ object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
           )
         }
         map.key("maximumPacketSize").foreach { entry =>
-          parseIntOrRefOrSchema(
+          parseScalarOrRefOrSchema(
             binding,
             entry,
             MqttServerBinding020Model.MaximumPacketSize,

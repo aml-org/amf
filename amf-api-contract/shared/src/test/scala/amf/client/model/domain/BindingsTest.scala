@@ -392,11 +392,13 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
       .withContentType(s)
       .withCorrelationData(shape)
       .withResponseTopic(s)
+      .withResponseTopicSchema(shape)
     binding020._internal.componentId shouldBe "/mqtt-message-020"
     binding020.payloadFormatIndicator.value() shouldBe 123
     binding020.contentType.value() shouldBe s
     binding020.correlationData._internal shouldBe shape._internal
     binding020.responseTopic.value() shouldBe s
+    binding020.responseTopicSchema._internal shouldBe shape._internal
   }
 
   test("test MqttOperationBinding") {

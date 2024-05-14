@@ -142,6 +142,10 @@ class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(im
           )
         fs.entry(MqttMessageBinding020Model.ContentType).foreach(f => result += ValueEmitter("contentType", f))
         fs.entry(MqttMessageBinding020Model.ResponseTopic).foreach(f => result += ValueEmitter("responseTopic", f))
+        fs.entry(MqttMessageBinding020Model.ResponseTopicSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("responseTopic", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
 
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
