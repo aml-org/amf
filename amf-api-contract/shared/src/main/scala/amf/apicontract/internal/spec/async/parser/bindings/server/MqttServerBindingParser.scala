@@ -13,10 +13,9 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
 }
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import org.yaml.model.{YMap, YMapEntry, YType}
+import org.yaml.model.{YMap, YMapEntry}
 
 object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): MqttServerBinding = {
@@ -40,24 +39,11 @@ object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
 
     parseBindingVersion(binding, MqttServerBindingModel.BindingVersion, map)
 
-    def parseIntOrRefOrSchema(entry: YMapEntry, intField: Field, schemaField: Field): Unit = {
-      entry.value.tagType match {
-        case YType.Int =>
-          Some(entry).foreach(intField in binding)
-        case YType.Map =>
-          ctx.link(entry.value) match {
-            case Left(fullRef) =>
-              handleRef(fullRef, "schemas", entry, schemaField, binding)
-            case Right(_) =>
-              parseSchema(schemaField, binding, entry)
-          }
-      }
-    }
-
     bindingVersion match {
       case "0.2.0" | "latest" =>
         map.key("sessionExpiryInterval").foreach { entry =>
           parseIntOrRefOrSchema(
+            binding,
             entry,
             MqttServerBinding020Model.SessionExpiryInterval,
             MqttServerBinding020Model.SessionExpiryIntervalSchema
@@ -65,6 +51,7 @@ object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
         }
         map.key("maximumPacketSize").foreach { entry =>
           parseIntOrRefOrSchema(
+            binding,
             entry,
             MqttServerBinding020Model.MaximumPacketSize,
             MqttServerBinding020Model.MaximumPacketSizeSchema

@@ -176,4 +176,20 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
   ): Unit = {
     ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
   }
+
+  def parseIntOrRefOrSchema(binding: DomainElement, entry: YMapEntry, intField: Field, schemaField: Field)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
+    entry.value.tagType match {
+      case YType.Int =>
+        Some(entry).foreach(intField in binding)
+      case YType.Map =>
+        ctx.link(entry.value) match {
+          case Left(fullRef) =>
+            handleRef(fullRef, "schemas", entry, schemaField, binding)
+          case Right(_) =>
+            parseSchema(schemaField, binding, entry)
+        }
+    }
+  }
 }
