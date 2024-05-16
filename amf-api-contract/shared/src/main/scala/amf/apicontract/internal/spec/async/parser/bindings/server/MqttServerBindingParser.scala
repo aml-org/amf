@@ -1,7 +1,16 @@
 package amf.apicontract.internal.spec.async.parser.bindings.server
 
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
-import amf.apicontract.internal.metamodel.domain.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
+import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
+  MqttServerBinding,
+  MqttServerBinding010,
+  MqttServerBinding020,
+  MqttServerLastWill
+}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  MqttServerBinding020Model,
+  MqttServerBindingModel,
+  MqttServerLastWillModel
+}
 import amf.apicontract.internal.spec.async.parser.bindings.BindingParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.core.internal.parser.YMapOps
@@ -10,8 +19,17 @@ import org.yaml.model.{YMap, YMapEntry}
 
 object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
   override def parse(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): MqttServerBinding = {
-    val binding = MqttServerBinding(Annotations(entry))
-    val map     = entry.value.as[YMap]
+    val map            = entry.value.as[YMap]
+    val bindingVersion = getBindingVersion(entry.value.as[YMap], "MqttServerBinding", ctx.specSettings.spec)
+
+    val binding = bindingVersion match {
+      case "0.2.0" | "latest" => MqttServerBinding020(Annotations(entry))
+      case "0.1.0"            => MqttServerBinding010(Annotations(entry))
+      case invalidVersion =>
+        val defaultBinding = MqttServerBinding010(Annotations(entry))
+        invalidBindingVersion(defaultBinding, invalidVersion, "Mqtt Server Binding")
+        defaultBinding
+    }
 
     map.key("clientId", MqttServerBindingModel.ClientId in binding)
     map.key("cleanSession", MqttServerBindingModel.CleanSession in binding)
@@ -21,7 +39,28 @@ object MqttServerBindingParser extends BindingParser[MqttServerBinding] {
 
     parseBindingVersion(binding, MqttServerBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding, map, "mqttServerBinding")
+    bindingVersion match {
+      case "0.2.0" | "latest" =>
+        map.key("sessionExpiryInterval").foreach { entry =>
+          parseScalarOrRefOrSchema(
+            binding,
+            entry,
+            MqttServerBinding020Model.SessionExpiryInterval,
+            MqttServerBinding020Model.SessionExpiryIntervalSchema
+          )
+        }
+        map.key("maximumPacketSize").foreach { entry =>
+          parseScalarOrRefOrSchema(
+            binding,
+            entry,
+            MqttServerBinding020Model.MaximumPacketSize,
+            MqttServerBinding020Model.MaximumPacketSizeSchema
+          )
+        }
+        ctx.closedShape(binding, map, "mqttServerBinding020")
+      case _ =>
+        ctx.closedShape(binding, map, "mqttServerBinding010")
+    }
 
     binding
   }

@@ -382,35 +382,86 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
   }
 
   test("test MqttMessageBinding") {
-    val binding = new MqttMessageBinding()
+    val binding010 = new MqttMessageBinding010()
       .withBindingVersion(s)
-    binding._internal.componentId shouldBe "/mqtt-message"
+    binding010._internal.componentId shouldBe "/mqtt-message-010"
+
+    val binding020 = new MqttMessageBinding020()
+      .withBindingVersion(s)
+      .withPayloadFormatIndicator(123)
+      .withContentType(s)
+      .withCorrelationData(shape)
+      .withResponseTopic(s)
+      .withResponseTopicSchema(shape)
+    binding020._internal.componentId shouldBe "/mqtt-message-020"
+    binding020.payloadFormatIndicator.value() shouldBe 123
+    binding020.contentType.value() shouldBe s
+    binding020.correlationData._internal shouldBe shape._internal
+    binding020.responseTopic.value() shouldBe s
+    binding020.responseTopicSchema._internal shouldBe shape._internal
   }
 
   test("test MqttOperationBinding") {
-    val mqttOperationBinding = new MqttOperationBinding()
+    val binding010 = new MqttOperationBinding010()
       .withQos(2)
       .withRetain(true)
-    mqttOperationBinding.qos.value() shouldBe 2
-    mqttOperationBinding.retain.value() shouldBe true
+    binding010.qos.value() shouldBe 2
+    binding010.retain.value() shouldBe true
+
+    val binding020 = new MqttOperationBinding020()
+      .withQos(2)
+      .withRetain(true)
+      .withMessageExpiryInterval(123)
+      .withMessageExpiryIntervalSchema(shape)
+    binding020.qos.value() shouldBe 2
+    binding020.retain.value() shouldBe true
+    binding020.messageExpiryInterval.value() shouldBe 123
+    binding020.messageExpiryIntervalSchema._internal shouldBe shape._internal
   }
 
   test("test MqttServerBinding") {
     val mqttServerLastWill = new MqttServerLastWill()
-    val mqttServerBinding = new MqttServerBinding()
+      .withTopic(s)
+      .withQos(123)
+      .withRetain(true)
+      .withMessage(s)
+    mqttServerLastWill.topic.value() shouldBe s
+    mqttServerLastWill.qos.value() shouldBe 123
+    mqttServerLastWill.retain.value() shouldBe true
+    mqttServerLastWill.message.value() shouldBe s
+
+    val mqttServerBinding010 = new MqttServerBinding010()
       .withClientId(s)
       .withCleanSession(true)
       .withLastWill(mqttServerLastWill)
       .withKeepAlive(2)
-    mqttServerBinding.clientId.value() shouldBe s
-    mqttServerBinding.cleanSession.value() shouldBe true
-    mqttServerBinding.lastWill shouldBe mqttServerLastWill
-    mqttServerBinding.keepAlive.value() shouldBe 2
+    mqttServerBinding010.clientId.value() shouldBe s
+    mqttServerBinding010.cleanSession.value() shouldBe true
+    mqttServerBinding010.lastWill shouldBe mqttServerLastWill
+    mqttServerBinding010.keepAlive.value() shouldBe 2
+
+    val mqttServerBinding020 = new MqttServerBinding020()
+      .withClientId(s)
+      .withCleanSession(true)
+      .withLastWill(mqttServerLastWill)
+      .withKeepAlive(2)
+      .withSessionExpiryInterval(123)
+      .withMaximumPacketSize(123)
+      .withSessionExpiryIntervalSchema(shape)
+      .withMaximumPacketSizeSchema(shape)
+    mqttServerBinding020.clientId.value() shouldBe s
+    mqttServerBinding020.cleanSession.value() shouldBe true
+    mqttServerBinding020.lastWill shouldBe mqttServerLastWill
+    mqttServerBinding020.keepAlive.value() shouldBe 2
+    mqttServerBinding020.sessionExpiryInterval.value() shouldBe 123
+    mqttServerBinding020.maximumPacketSize.value() shouldBe 123
+    mqttServerBinding020.sessionExpiryIntervalSchema._internal shouldBe shape._internal
+    mqttServerBinding020.maximumPacketSizeSchema._internal shouldBe shape._internal
   }
 
   test("test OperationBindings") {
     val OperationBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.OperationBinding] =
-      Seq(new MqttOperationBinding()._internal)
+      Seq(new MqttOperationBinding010()._internal)
     val clientOperationBindings = OperationBindings.asClient
     val operationBindings = new OperationBindings()
       .withName(s)
@@ -421,7 +472,7 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   test("test ServerBindings") {
     val internalServerBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.ServerBinding] =
-      Seq(new MqttServerBinding()._internal)
+      Seq(new MqttServerBinding010()._internal)
     val clientServerBindings: ClientList[ServerBinding] = internalServerBindings.asClient
     val serverBindings = new ServerBindings()
       .withName(s)

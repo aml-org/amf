@@ -306,14 +306,25 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
       case s: amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaTopicConfiguration050 =>
         KafkaTopicConfiguration050(s)
     }
-    platform.registerWrapper(MqttMessageBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding => MqttMessageBinding(s)
+    platform.registerWrapper(MqttMessageBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding010 => MqttMessageBinding010(s)
     }
-    platform.registerWrapper(MqttOperationBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding => MqttOperationBinding(s)
+    platform.registerWrapper(MqttMessageBinding020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding020 => MqttMessageBinding020(s)
     }
-    platform.registerWrapper(MqttServerBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttServerBinding => MqttServerBinding(s)
+    platform.registerWrapper(MqttOperationBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding010 =>
+        MqttOperationBinding010(s)
+    }
+    platform.registerWrapper(MqttOperationBinding020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding020 =>
+        MqttOperationBinding020(s)
+    }
+    platform.registerWrapper(MqttServerBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttServerBinding010 => MqttServerBinding010(s)
+    }
+    platform.registerWrapper(MqttServerBinding020Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttServerBinding020 => MqttServerBinding020(s)
     }
     platform.registerWrapper(MqttServerLastWillModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttServerLastWill => MqttServerLastWill(s)

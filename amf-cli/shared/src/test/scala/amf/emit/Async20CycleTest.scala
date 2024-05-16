@@ -51,8 +51,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Http operation binding", "http-operation-binding.yaml", "http-operation-binding.%s"),
     FixtureData("Kafka message binding", "kafka-message-binding-010.yaml", "kafka-message-binding.%s"),
     FixtureData("Kafka operation binding", "kafka-operation-binding.yaml", "kafka-operation-binding.%s"),
-    FixtureData("Mqtt message binding", "mqtt-message-binding.yaml", "mqtt-message-binding.%s"),
-    FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.%s"),
+    FixtureData(
+      "Mqtt message binding",
+      "mqtt-message-binding.yaml",
+      "mqtt-message-binding.%s"
+    ),
+    FixtureData(
+      "Mqtt operation binding",
+      "mqtt-operation-binding.yaml",
+      "mqtt-operation-binding.%s"
+    ),
     FixtureData("Mqtt server binding", "mqtt-server-binding.yaml", "mqtt-server-binding.%s"),
     FixtureData("Websockets channel binding", "ws-channel-binding.yaml", "ws-channel-binding.%s"),
     FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.%s"),
@@ -138,13 +146,21 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/kafka-operation-binding.yaml",
       "bindings/kafka-operation-binding.yaml.yaml"
     ),
-    FixtureData("Mqtt message binding", "bindings/mqtt-message-binding.yaml", "bindings/mqtt-message-binding.yaml"),
+    FixtureData(
+      "Mqtt message binding",
+      "bindings/mqtt-message-binding.yaml",
+      "bindings/mqtt-message-binding.yaml.yaml"
+    ),
     FixtureData(
       "Mqtt operation binding",
       "bindings/mqtt-operation-binding.yaml",
-      "bindings/mqtt-operation-binding.yaml"
+      "bindings/mqtt-operation-binding.yaml.yaml"
     ),
-    FixtureData("Mqtt server binding", "bindings/mqtt-server-binding.yaml", "bindings/mqtt-server-binding.yaml"),
+    FixtureData(
+      "Mqtt server binding",
+      "bindings/mqtt-server-binding.yaml",
+      "bindings/mqtt-server-binding.yaml.yaml"
+    ),
     FixtureData("Websockets channel binding", "bindings/ws-channel-binding.yaml", "bindings/ws-channel-binding.yaml"),
     FixtureData("RAML type - simple union", "raml-types/simple-union.yaml", "raml-types/simple-union.yaml"),
     FixtureData("RAML type - simple object", "raml-types/simple-object.yaml", "raml-types/simple-object.yaml"),

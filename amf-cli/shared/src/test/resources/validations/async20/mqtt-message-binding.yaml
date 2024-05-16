@@ -9,4 +9,38 @@ channels:
       message:
         bindings:
           mqtt:
-            bindingVersion: 31.07.92
+            bindingVersion: 0.1.0
+
+  other-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 0
+            correlationData:
+              type: string
+              format: uuid
+            contentType: application/json
+            responseTopic: response/client
+            bindingVersion: 0.2.0
+
+  some-other-channel:
+    publish:
+      message:
+        bindings:
+          mqtt: # valid ref
+            payloadFormatIndicator: 1
+            correlationData:
+              $ref: '#/components/schemas/testSchema'
+            contentType: application/json
+            responseTopic: response/client
+            bindingVersion: 0.2.0
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

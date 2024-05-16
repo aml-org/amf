@@ -5488,6 +5488,93 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
+  export class MqttMessageBinding010 implements MqttMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class MqttMessageBinding020 implements MqttMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    payloadFormatIndicator: IntField;
+    correlationData: Shape;
+    contentType: StrField;
+    responseTopic: StrField;
+    responseTopicSchema: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withPayloadFormatIndicator(payloadFormatIndicator: number): this;
+
+    withCorrelationData(correlationData: Shape): this;
+
+    withContentType(contentType: string): this;
+
+    withResponseTopic(responseTopic: string): this;
+
+    withResponseTopicSchema(responseTopicSchema: Shape): this;
+  }
   export class MqttOperationBinding implements OperationBinding {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -5529,6 +5616,96 @@ declare module "amf-client-js" {
     withQos(qos: number): this;
 
     withRetain(retain: boolean): this;
+  }
+  export class MqttOperationBinding010 implements MqttOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    qos: IntField;
+    retain: BoolField;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withQos(qos: number): this;
+
+    withRetain(retain: boolean): this;
+  }
+  export class MqttOperationBinding020 implements MqttOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    qos: IntField;
+    retain: BoolField;
+    messageExpiryInterval: IntField;
+    messageExpiryIntervalSchema: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withQos(qos: number): this;
+
+    withRetain(retain: boolean): this;
+
+    withMessageExpiryInterval(messageExpiryInterval: number): this;
+
+    withMessageExpiryIntervalSchema(messageExpiryIntervalSchema: Shape): this;
   }
   export class MqttServerBinding implements ServerBinding {
     cleanSession: BoolField;
@@ -5577,6 +5754,114 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
 
     withLinkTarget(target: undefined): this;
+  }
+  export class MqttServerBinding010 implements MqttServerBinding {
+    cleanSession: BoolField;
+    clientId: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    keepAlive: IntField;
+    lastWill: MqttServerLastWill;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCleanSession(cleanSession: boolean): this;
+
+    withClientId(clientId: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKeepAlive(keepAlive: number): this;
+
+    withLastWill(lastWill: MqttServerLastWill): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class MqttServerBinding020 implements MqttServerBinding {
+    cleanSession: BoolField;
+    clientId: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    keepAlive: IntField;
+    lastWill: MqttServerLastWill;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    sessionExpiryInterval: number;
+    sessionExpiryIntervalSchema: Shape;
+    maximumPacketSize: number;
+    maximumPacketSizeSchema: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCleanSession(cleanSession: boolean): this;
+
+    withClientId(clientId: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKeepAlive(keepAlive: number): this;
+
+    withLastWill(lastWill: MqttServerLastWill): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withSessionExpiryInterval(sessionExpiryInterval: number): this;
+
+    withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema: Shape): this;
+
+    withMaximumPacketSize(maximumPacketSize: number): this;
+
+    withMaximumPacketSizeSchema(maximumPacketSizeSchema: Shape): this;
   }
   export class MqttServerLastWill implements DomainElement {
     customDomainProperties: Array<DomainExtension>;

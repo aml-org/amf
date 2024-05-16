@@ -79,8 +79,14 @@ trait ApiBaseConverter
     with KafkaTopicConfiguration040Converter
     with KafkaTopicConfiguration050Converter
     with MqttMessageBindingConverter
+    with MqttMessageBinding010Converter
+    with MqttMessageBinding020Converter
     with MqttOperationBindingConverter
+    with MqttOperationBinding010Converter
+    with MqttOperationBinding020Converter
     with MqttServerBindingConverter
+    with MqttServerBinding010Converter
+    with MqttServerBinding020Converter
     with WebSocketsChannelBindingConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
@@ -414,6 +420,22 @@ trait MqttMessageBindingConverter extends PlatformSecrets {
     override def asInternal(from: domain.bindings.mqtt.MqttMessageBinding): MqttMessageBinding = from._internal
   }
 }
+trait MqttMessageBinding010Converter extends PlatformSecrets {
+  implicit object MqttMessageBinding010Matcher
+      extends BidirectionalMatcher[MqttMessageBinding010, domain.bindings.mqtt.MqttMessageBinding010] {
+    override def asClient(from: MqttMessageBinding010): domain.bindings.mqtt.MqttMessageBinding010 =
+      platform.wrap[domain.bindings.mqtt.MqttMessageBinding010](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttMessageBinding010): MqttMessageBinding010 = from._internal
+  }
+}
+trait MqttMessageBinding020Converter extends PlatformSecrets {
+  implicit object MqttMessageBinding020Matcher
+      extends BidirectionalMatcher[MqttMessageBinding020, domain.bindings.mqtt.MqttMessageBinding020] {
+    override def asClient(from: MqttMessageBinding020): domain.bindings.mqtt.MqttMessageBinding020 =
+      platform.wrap[domain.bindings.mqtt.MqttMessageBinding020](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttMessageBinding020): MqttMessageBinding020 = from._internal
+  }
+}
 trait MqttOperationBindingConverter extends PlatformSecrets {
   implicit object MqttOperationBindingMatcher
       extends BidirectionalMatcher[MqttOperationBinding, domain.bindings.mqtt.MqttOperationBinding] {
@@ -422,12 +444,46 @@ trait MqttOperationBindingConverter extends PlatformSecrets {
     override def asInternal(from: domain.bindings.mqtt.MqttOperationBinding): MqttOperationBinding = from._internal
   }
 }
+trait MqttOperationBinding010Converter extends PlatformSecrets {
+  implicit object MqttOperationBinding010Matcher
+      extends BidirectionalMatcher[MqttOperationBinding010, domain.bindings.mqtt.MqttOperationBinding010] {
+    override def asClient(from: MqttOperationBinding010): domain.bindings.mqtt.MqttOperationBinding010 =
+      platform.wrap[domain.bindings.mqtt.MqttOperationBinding010](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttOperationBinding010): MqttOperationBinding010 =
+      from._internal
+  }
+}
+trait MqttOperationBinding020Converter extends PlatformSecrets {
+  implicit object MqttOperationBinding020Matcher
+      extends BidirectionalMatcher[MqttOperationBinding020, domain.bindings.mqtt.MqttOperationBinding020] {
+    override def asClient(from: MqttOperationBinding020): domain.bindings.mqtt.MqttOperationBinding020 =
+      platform.wrap[domain.bindings.mqtt.MqttOperationBinding020](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttOperationBinding020): MqttOperationBinding020 =
+      from._internal
+  }
+}
 trait MqttServerBindingConverter extends PlatformSecrets {
   implicit object MqttServerBindingMatcher
       extends BidirectionalMatcher[MqttServerBinding, domain.bindings.mqtt.MqttServerBinding] {
     override def asClient(from: MqttServerBinding): domain.bindings.mqtt.MqttServerBinding =
       platform.wrap[domain.bindings.mqtt.MqttServerBinding](from)
     override def asInternal(from: domain.bindings.mqtt.MqttServerBinding): MqttServerBinding = from._internal
+  }
+}
+trait MqttServerBinding010Converter extends PlatformSecrets {
+  implicit object MqttServerBinding010Matcher
+      extends BidirectionalMatcher[MqttServerBinding010, domain.bindings.mqtt.MqttServerBinding010] {
+    override def asClient(from: MqttServerBinding010): domain.bindings.mqtt.MqttServerBinding010 =
+      platform.wrap[domain.bindings.mqtt.MqttServerBinding010](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttServerBinding010): MqttServerBinding010 = from._internal
+  }
+}
+trait MqttServerBinding020Converter extends PlatformSecrets {
+  implicit object MqttServerBinding020Matcher
+      extends BidirectionalMatcher[MqttServerBinding020, domain.bindings.mqtt.MqttServerBinding020] {
+    override def asClient(from: MqttServerBinding020): domain.bindings.mqtt.MqttServerBinding020 =
+      platform.wrap[domain.bindings.mqtt.MqttServerBinding020](from)
+    override def asInternal(from: domain.bindings.mqtt.MqttServerBinding020): MqttServerBinding020 = from._internal
   }
 }
 trait WebSocketsChannelBindingConverter extends PlatformSecrets {

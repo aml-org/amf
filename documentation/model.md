@@ -133,8 +133,14 @@ AMF Model Documentation
 * [MessageBindings](#messagebindings)
 * [Module](#module)
 * [MqttMessageBinding](#mqttmessagebinding)
+* [MqttMessageBinding010](#mqttmessagebinding010)
+* [MqttMessageBinding020](#mqttmessagebinding020)
 * [MqttOperationBinding](#mqttoperationbinding)
+* [MqttOperationBinding010](#mqttoperationbinding010)
+* [MqttOperationBinding020](#mqttoperationbinding020)
 * [MqttServerBinding](#mqttserverbinding)
+* [MqttServerBinding010](#mqttserverbinding010)
+* [MqttServerBinding020](#mqttserverbinding020)
 * [MqttServerLastWill](#mqttserverlastwill)
 * [NamedExampleFragment](#namedexamplefragment)
 * [NilShape](#nilshape)
@@ -2464,6 +2470,36 @@ Types:
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## MqttMessageBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttMessageBinding010`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttMessageBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttMessageBinding020`
+* `http://a.ml/vocabularies/apiBinding#MessageBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | payloadFormatIndicator | int | - | Either: 0 (zero): Indicates that the payload is unspecified bytes, or 1: Indicates that the payload is UTF-8 encoded character data. | `http://a.ml/vocabularies/apiBinding#payloadFormatIndicator` |
+ | correlationData | [Shape](#shape) | - | Correlation Data is used by the sender of the request message to identify which request the response message is for when it is received. | `http://a.ml/vocabularies/apiBinding#correlationData` |
+ | contentType | string | - | String describing the content type of the message payload. This should not conflict with the contentType field of the associated AsyncAPI Message object. | `http://a.ml/vocabularies/apiBinding#contentType` |
+ | responseTopic | string | - | The topic (channel URI) for a response message. | `http://a.ml/vocabularies/apiBinding#responseTopic` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## MqttOperationBinding
 
 Types:
@@ -2479,6 +2515,37 @@ Types:
  | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## MqttOperationBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttOperationBinding010`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | qos | int | - | Defines how hard the broker/client will try to ensure that a message is received | `http://a.ml/vocabularies/apiBinding#qos` |
+ | retain | boolean | - | Whether the broker should retain the message or not | `http://a.ml/vocabularies/apiBinding#retain` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttOperationBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttOperationBinding020`
+* `http://a.ml/vocabularies/apiBinding#OperationBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | messageExpiryInterval | int | - | Interval in seconds or a Schema Object containing the definition of the lifetime of the message. | `http://a.ml/vocabularies/apiBinding#messageExpiryInterval` |
+ | qos | int | - | Defines how hard the broker/client will try to ensure that a message is received | `http://a.ml/vocabularies/apiBinding#qos` |
+ | retain | boolean | - | Whether the broker should retain the message or not | `http://a.ml/vocabularies/apiBinding#retain` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
 ## MqttServerBinding
 
 Types:
@@ -2488,6 +2555,44 @@ Types:
 
  | Name | Value | Sorted | Documentation | Namespace |
  | ------ | ------ | ------ | ------ | ------ |
+ | clientId | string | - | The client identifier | `http://a.ml/vocabularies/apiBinding#clientId` |
+ | cleanSession | boolean | - | Whether to create a persistent connection or not | `http://a.ml/vocabularies/apiBinding#cleanSession` |
+ | lastWill | [MqttServerLastWill](#mqttserverlastwill) | - | Last Will and Testament configuration | `http://a.ml/vocabularies/apiBinding#lastWill` |
+ | keepAlive | int | - | Interval in seconds of the longest period of time the broker and the client can endure without sending a message | `http://a.ml/vocabularies/apiBinding#keepAlive` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttServerBinding010
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttServerBinding010`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | clientId | string | - | The client identifier | `http://a.ml/vocabularies/apiBinding#clientId` |
+ | cleanSession | boolean | - | Whether to create a persistent connection or not | `http://a.ml/vocabularies/apiBinding#cleanSession` |
+ | lastWill | [MqttServerLastWill](#mqttserverlastwill) | - | Last Will and Testament configuration | `http://a.ml/vocabularies/apiBinding#lastWill` |
+ | keepAlive | int | - | Interval in seconds of the longest period of time the broker and the client can endure without sending a message | `http://a.ml/vocabularies/apiBinding#keepAlive` |
+ | bindingVersion | string | - | The version of this binding | `http://a.ml/vocabularies/apiBinding#bindingVersion` |
+ | type | string | - | Binding for a corresponding known type | `http://a.ml/vocabularies/apiBinding#type` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MqttServerBinding020
+
+Types:
+* `http://a.ml/vocabularies/apiBinding#MqttServerBinding020`
+* `http://a.ml/vocabularies/apiBinding#ServerBinding`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | sessionExpiryInterval | int | - | Interval in seconds or a Schema Object containing the definition of the interval. The broker maintains a session for a disconnected client until this interval expires. | `http://a.ml/vocabularies/apiBinding#sessionExpiryInterval` |
+ | sessionExpiryIntervalSchema | [Shape](#shape) | - | Interval in seconds or a Schema Object containing the definition of the interval. The broker maintains a session for a disconnected client until this interval expires. | `http://a.ml/vocabularies/apiBinding#sessionExpiryIntervalSchema` |
+ | maximumPacketSize | int | - | Number of bytes or a Schema Object representing the maximum packet size the client is willing to accept. | `http://a.ml/vocabularies/apiBinding#maximumPacketSize` |
+ | maximumPacketSizeSchema | [Shape](#shape) | - | Number of bytes or a Schema Object representing the maximum packet size the client is willing to accept. | `http://a.ml/vocabularies/apiBinding#maximumPacketSizeSchema` |
  | clientId | string | - | The client identifier | `http://a.ml/vocabularies/apiBinding#clientId` |
  | cleanSession | boolean | - | Whether to create a persistent connection or not | `http://a.ml/vocabularies/apiBinding#cleanSession` |
  | lastWill | [MqttServerLastWill](#mqttserverlastwill) | - | Last Will and Testament configuration | `http://a.ml/vocabularies/apiBinding#lastWill` |
