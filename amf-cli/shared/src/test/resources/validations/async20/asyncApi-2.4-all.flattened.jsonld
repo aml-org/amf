@@ -1148,7 +1148,7 @@
       ],
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1852,25 +1852,25 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(92,0)-(96,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#SolaceOperationBinding",
+        "http://a.ml/vocabularies/apiBinding#SolaceOperation020Binding",
         "http://a.ml/vocabularies/apiBinding#OperationBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiBinding#destinations": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1"
         }
       ],
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "0.2.0",
       "http://a.ml/vocabularies/apiBinding#type": "solace",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map"
         }
       ]
     },
@@ -2596,7 +2596,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(93,8)-(94,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#SolaceOperationDestination020",
         "http://a.ml/vocabularies/apiBinding#SolaceOperationDestination",
@@ -2605,49 +2605,49 @@
       "http://a.ml/vocabularies/apiBinding#destinationType": "queue",
       "http://a.ml/vocabularies/apiBinding#deliveryMode": "persistent",
       "http://a.ml/vocabularies/apiBinding#queue": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#SolaceOperationDestination020",
         "http://a.ml/vocabularies/apiBinding#SolaceOperationDestination",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
+      "http://a.ml/vocabularies/apiBinding#topic": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic"
+      },
       "http://a.ml/vocabularies/apiBinding#destinationType": "topic",
       "http://a.ml/vocabularies/apiBinding#deliveryMode": "persistent",
-      "http://a.ml/vocabularies/apiBinding#topic": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic"
-      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_2"
         }
       ]
     },
@@ -3252,8 +3252,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(99,8)-(99,18)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010",
       "@type": [
+        "http://a.ml/vocabularies/apiBinding#SolaceOperationQueue010",
         "http://a.ml/vocabularies/apiBinding#SolaceOperationQueue",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -3263,34 +3264,34 @@
       "http://a.ml/vocabularies/apiBinding#accessType": "exclusive",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#SolaceOperationTopic",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -3300,50 +3301,50 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(115,10)-(116,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#destinations",
       "http://a.ml/vocabularies/document-source-maps#value": "[(116,10)-(129,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(114,8)-(114,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020",
       "http://a.ml/vocabularies/document-source-maps#value": "[(114,8)-(129,0)]"
     },
     {
@@ -3756,74 +3757,74 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(102,10)-(109,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#deliveryMode",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#destinationType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(118,14)-(119,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#queue",
       "http://a.ml/vocabularies/document-source-maps#value": "[(119,14)-(124,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020",
       "http://a.ml/vocabularies/document-source-maps#value": "[(118,0)-(124,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#deliveryMode",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#destinationType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(125,14)-(126,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#topic",
       "http://a.ml/vocabularies/document-source-maps#value": "[(126,14)-(129,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#destinationType",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(125,14)-(126,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(125,0)-(129,0)]"
     },
     {
@@ -4036,27 +4037,27 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(104,14)-(104,18)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#topicSubscriptions",
       "http://a.ml/vocabularies/document-source-maps#value": "[(122,16)-(124,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#accessType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(121,16)-(122,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(119,20)-(124,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic",
       "http://a.ml/vocabularies/document-source-maps#value": "[(126,20)-(129,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.4-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#topicSubscriptions",
       "http://a.ml/vocabularies/document-source-maps#value": "[(127,16)-(129,0)]"
     },

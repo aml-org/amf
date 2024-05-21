@@ -13,7 +13,7 @@ object SolaceServerBindingParser extends BindingParser[SolaceServerBinding] {
     val bindingVersion = getBindingVersion(entry.value.as[YMap], "SolaceServerBinding", ctx.specSettings.spec)
     val map     = entry.value.as[YMap]
     val binding: SolaceServerBinding = bindingVersion match {
-      case "0.1.0" | "0.2.0" | "latest" => SolaceServerBinding(Annotations(entry))
+      case "0.1.0" | "0.2.0" | "0.3.0" | "latest" => SolaceServerBinding(Annotations(entry))
       case invalidVersion =>
         val defaultBinding = SolaceServerBinding(Annotations(entry))
         invalidBindingVersion(defaultBinding, invalidVersion, "Solace Server Binding")

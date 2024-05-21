@@ -31,7 +31,12 @@ object Async23Syntax extends SpecSyntax {
         "queue",
         "topic"
       ),
-      "SolaceOperationQueue" -> Set(
+      "SolaceOperationQueue010" -> Set(
+        "name",
+        "topicSubscriptions",
+        "accessType",
+      ),
+      "SolaceOperationQueue030" -> Set(
         "name",
         "topicSubscriptions",
         "accessType",

@@ -14,9 +14,9 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.3 SolaceOperationQueue node
+  Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.3 SolaceOperationQueue010 node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020/solace-queue
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010
   Property: 
   Range: [(24,16)-(25,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.3 SolaceOperationTopic node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation/destinations/solace-operation-destination-020_1/solace-topic
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_1/solace-topic
   Property: 
   Range: [(29,16)-(30,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml
@@ -32,7 +32,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.3 SolaceOperationBinding node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020
   Property: 
   Range: [(32,10)-(33,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-extra-key.yaml

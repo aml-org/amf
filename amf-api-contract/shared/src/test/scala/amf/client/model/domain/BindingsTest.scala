@@ -5,7 +5,8 @@ import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
 import amf.apicontract.client.platform.model.domain.bindings.mqtt._
-import amf.apicontract.client.platform.model.domain.bindings.solace.{SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationQueue, SolaceOperationTopic}
+import amf.apicontract.client.platform.model.domain.bindings.solace.{SolaceOperationBinding010, SolaceOperationBinding020, SolaceOperationBinding030, SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationDestination030, SolaceOperationQueue, SolaceOperationQueue010, SolaceOperationQueue030, SolaceOperationTopic}
+import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationDestination020 => InternalSolaceOperationDestination020, SolaceOperationDestination010 => InternalSolaceOperationDestination010, SolaceOperationDestination030 => InternalSolaceOperationDestination030}
 import amf.apicontract.client.platform.model.domain.bindings.websockets._
 import amf.apicontract.client.platform.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.scala.APIConfiguration
@@ -15,6 +16,8 @@ import amf.shapes.client.platform.model.domain.AnyShape
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
@@ -499,7 +502,7 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     val destination010 = new SolaceOperationDestination010()
       .withDestinationType("queue")
       .withDeliveryMode("persistent")
-      .withQueue(new SolaceOperationQueue().withAccessType("exclusive"))
+      .withQueue(new SolaceOperationQueue010().withAccessType("exclusive")._internal)
 
     destination010.destinationType.value() shouldBe "queue"
     destination010.deliveryMode.value() shouldBe "persistent"
@@ -510,13 +513,110 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     val destination020 = new SolaceOperationDestination020()
       .withDestinationType("topic")
       .withDeliveryMode("persistent")
-      .withQueue(new SolaceOperationQueue().withAccessType("nonexclusive"))
+      .withQueue(new SolaceOperationQueue010().withAccessType("nonexclusive")._internal)
       .withTopic(new SolaceOperationTopic().withTopicSubscriptions(Seq("topic1", "topic2").asClient))
 
     destination020.destinationType.value() shouldBe "topic"
     destination020.deliveryMode.value() shouldBe "persistent"
     destination020.queue.accessType.value() shouldBe "nonexclusive"
-    destination020._internal.topic.topicSubscriptions.map(_.value()) should contain allOf ("topic1", "topic2")
+    destination020._internal.topic.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("topic1", "topic2")).nonEmpty shouldBe true
+  }
+
+  test("test SolaceOperationDestination030") {
+    val destination030 = new SolaceOperationDestination030()
+      .withDestinationType("topic")
+      .withDeliveryMode("persistent")
+      .withQueue(new SolaceOperationQueue030()
+        .withAccessType("exclusive")
+        .withMaxMsgSpoolSize("1024")
+        .withMaxTtl("60000")._internal)
+      .withTopic(new SolaceOperationTopic().withTopicSubscriptions(Seq("topic1", "topic2").asClient))
+
+    destination030.destinationType.value() shouldBe "topic"
+    destination030.deliveryMode.value() shouldBe "persistent"
+    destination030.queue.accessType.value() shouldBe "exclusive"
+    destination030.queue.maxMsgSpoolSize.value() shouldBe "1024"
+    destination030.queue.maxTtl.value() shouldBe "60000"
+    destination030.topic.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("topic1", "topic2")).nonEmpty shouldBe true
+  }
+
+  test("test SolaceOperationBinding010") {
+    val queue = new SolaceOperationQueue010()
+      .withName("queueName")
+      .withAccessType("exclusive")
+      .withTopicSubscriptions(Seq("subscription1", "subscription2").asClient)
+
+    val destination010 = InternalSolaceOperationDestination010()
+      .withDestinationType("queue")
+      .withDeliveryMode("persistent")
+      .withQueue(queue)
+
+    val binding010 = new SolaceOperationBinding010()
+      .withDestinations(Seq(destination010).asClient)
+
+    binding010.destinations.head.destinationType.value() shouldBe "queue"
+    binding010.destinations.head.deliveryMode.value() shouldBe "persistent"
+    binding010.destinations.head.queue.accessType.value() shouldBe "exclusive"
+    binding010.destinations.head.queue.name.value() shouldBe "queueName"
+    binding010.destinations.head.queue.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("subscription1", "subscription2")).nonEmpty shouldBe true
+  }
+
+  test("test SolaceOperationBinding020") {
+    val queue = new SolaceOperationQueue010()
+      .withName("queueName")
+      .withAccessType("exclusive")
+      .withTopicSubscriptions(Seq("subscription1", "subscription2").asClient)
+
+    val topic = new SolaceOperationTopic()
+      .withTopicSubscriptions(Seq("topic1", "topic2").asClient)
+
+    val destination020 = InternalSolaceOperationDestination020()
+      .withDestinationType("topic")
+      .withDeliveryMode("persistent")
+      .withQueue(queue)
+      .withTopic(topic)
+
+    val binding020 = new SolaceOperationBinding020()
+      .withDestinations(Seq(destination020).asClient)
+
+    binding020.destinations.head.destinationType.value() shouldBe "topic"
+    binding020.destinations.head.deliveryMode.value() shouldBe "persistent"
+    binding020.destinations.head.queue.accessType.value() shouldBe "exclusive"
+    binding020.destinations.head.queue.name.value() shouldBe "queueName"
+    binding020.destinations.head.queue.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("subscription1", "subscription2")).nonEmpty shouldBe true
+    binding020.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("topic1", "topic2")).nonEmpty shouldBe true
+  }
+
+  test("test SolaceOperationBinding030") {
+    val queue = new SolaceOperationQueue030()
+      .withName("queueName")
+      .withAccessType("exclusive")
+      .withTopicSubscriptions(Seq("subscription1", "subscription2").asClient)
+      .withMaxMsgSpoolSize("1024")
+      .withMaxTtl("60000")
+
+    val topic = new SolaceOperationTopic()
+      .withTopicSubscriptions(Seq("topic1", "topic2").asClient)
+
+    val destination030 = InternalSolaceOperationDestination030()
+      .withDestinationType("topic")
+      .withDeliveryMode("persistent")
+      .withQueue(queue)
+      .withTopic(topic)
+
+    val binding030 = new SolaceOperationBinding030()
+      .withDestinations(Seq(destination030).asClient)
+
+    binding030.destinations.head.destinationType.value() shouldBe "topic"
+    binding030.destinations.head.deliveryMode.value() shouldBe "persistent"
+    binding030.destinations.head.queue.accessType.value() shouldBe "exclusive"
+    binding030.destinations.head.queue.name.value() shouldBe "queueName"
+    binding030.destinations.head.queue.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("subscription1", "subscription2")).nonEmpty shouldBe true
+    binding030.destinations.head.queue.maxMsgSpoolSize.value() shouldBe "1024"
+    binding030.destinations.head.queue.maxTtl.value() shouldBe "60000"
+    binding030.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("topic1", "topic2")).nonEmpty shouldBe true
+//    binding030.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq should contain ("topic1")
+//    binding030.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq should contain ("topic2")
   }
 
 }

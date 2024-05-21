@@ -1227,6 +1227,20 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "exclusive,nonexclusive"
       ),
       AMFValidation(
+        message = "Invalid 'maxMsgSpoolSize' value. Must be a non-negative integer.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxMsgSpoolSize"),
+        constraint = sh("datatype"),
+        value = "xsd:integer"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxTtl' value. Must be a non-negative integer.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxTtl"),
+        constraint = sh("datatype"),
+        value = "xsd:integer"
+      ),
+      AMFValidation(
         message = "Invalid 'destinationType' value. The options are: 'exchange', 'queue' or 'fifo-queue'.",
         owlClass = apiBinding("AnypointMQChannelBinding"),
         owlProperty = apiBinding("destinationType"),
