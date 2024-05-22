@@ -282,6 +282,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "solace operation queue binding",
       "bindings/solace-operation-queue-binding.yaml",
       "bindings/solace-operation-queue-binding.yaml"
+    ),
+      FixtureData(
+      "solace binding 0.4.0 version",
+      "bindings/solace-0.4.0-version.yaml",
+      "bindings/solace-0.4.0-version.yaml"
     )
 
 // TODO: figure out why this test is commented out

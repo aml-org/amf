@@ -336,9 +336,13 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(EmptyBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.EmptyBinding => EmptyBinding(s)
     }
-    platform.registerWrapper(SolaceServerBindingModel) {
-      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding =>
-        SolaceServerBinding(s)
+    platform.registerWrapper(SolaceServerBinding010Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding010 =>
+        SolaceServerBinding010(s)
+    }
+    platform.registerWrapper(SolaceServerBinding040Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceServerBinding040 =>
+        SolaceServerBinding040(s)
     }
     platform.registerWrapper(SolaceOperationBinding010Model) {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding010 =>
@@ -352,6 +356,10 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding030 =>
         SolaceOperationBinding030(s)
     }
+    platform.registerWrapper(SolaceOperationBinding040Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding040 =>
+        SolaceOperationBinding040(s)
+    }
     platform.registerWrapper(SolaceOperationDestination010Model) {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination010 =>
         SolaceOperationDestination010(s)
@@ -363,6 +371,10 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(SolaceOperationDestination030Model) {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination030 =>
         SolaceOperationDestination030(s)
+    }
+    platform.registerWrapper(SolaceOperationDestination040Model) {
+      case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationDestination040 =>
+        SolaceOperationDestination040(s)
     }
     platform.registerWrapper(SolaceOperationQueue010Model) {
       case s: amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationQueue010 =>

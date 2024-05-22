@@ -16,9 +16,21 @@ object Async23Syntax extends SpecSyntax {
         "msgVpn",
         "bindingVersion"
       ),
+      "SolaceServerBinding040" -> Set(
+        "msgVpn",
+        "bindingVersion",
+        "clientName"
+      ),
       "SolaceOperationBinding" -> Set(
         "destinations",
         "bindingVersion"
+      ),
+      "SolaceOperationBinding040" -> Set(
+        "destinations",
+        "bindingVersion",
+        "timeToLive",
+        "priority",
+        "dmqEligible"
       ),
       "SolaceOperationDestination010" -> Set(
         "destinationType",
@@ -28,6 +40,13 @@ object Async23Syntax extends SpecSyntax {
       "SolaceOperationDestination020" -> Set(
         "destinationType",
         "deliveryMode",
+        "queue",
+        "topic"
+      ),
+      "SolaceOperationDestination040" -> Set(
+        "destinationType",
+        "deliveryMode",
+        "bindingVersion",
         "queue",
         "topic"
       ),

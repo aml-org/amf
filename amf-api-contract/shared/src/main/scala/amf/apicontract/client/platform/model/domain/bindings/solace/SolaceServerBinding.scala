@@ -1,19 +1,22 @@
 package amf.apicontract.client.platform.model.domain.bindings.solace
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ServerBinding}
-import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceServerBinding => InternalSolaceServerBinding}
+import amf.apicontract.client.scala.model.domain.bindings.solace.{
+  SolaceServerBinding => InternalSolaceServerBinding,
+  SolaceServerBinding010 => InternalSolaceServerBinding010,
+  SolaceServerBinding040 => InternalSolaceServerBinding040
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model
 import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.Linkable
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class SolaceServerBinding(override private[amf] val _internal: InternalSolaceServerBinding)
+abstract class SolaceServerBinding(override private[amf] val _internal: InternalSolaceServerBinding)
     extends ServerBinding
     with BindingVersion {
-  @JSExportTopLevel("SolaceServerBinding")
-  def this() = this(InternalSolaceServerBinding())
 
   def msgVpn: StrField = _internal.msgVpn
 
@@ -29,5 +32,22 @@ case class SolaceServerBinding(override private[amf] val _internal: InternalSola
     this
   }
 
+}
+
+case class SolaceServerBinding010(override private[amf] val _internal: InternalSolaceServerBinding010)
+    extends SolaceServerBinding(_internal) {
+  @JSExportTopLevel("InternalSolaceServerBinding010")
+  def this() = this(InternalSolaceServerBinding010())
+  override def linkCopy(): SolaceServerBinding = _internal.linkCopy()
+}
+case class SolaceServerBinding040(override private[amf] val _internal: InternalSolaceServerBinding040)
+    extends SolaceServerBinding(_internal) {
+  @JSExportTopLevel("InternalSolaceServerBinding040")
+  def this() = this(InternalSolaceServerBinding040())
+  def clientName: StrField = _internal.clientName
+  def withClientName(clientName: String): this.type = {
+    _internal.withClientName(clientName)
+    this
+  }
   override def linkCopy(): SolaceServerBinding = _internal.linkCopy()
 }

@@ -4,15 +4,7 @@ import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  IBMMQServerBindingModel,
-  KafkaServerBindingModel,
-  MqttServerBinding020Model,
-  MqttServerBindingModel,
-  MqttServerLastWillModel,
-  PulsarServerBindingModel,
-  SolaceServerBindingModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings.{IBMMQServerBindingModel, KafkaServerBindingModel,MqttServerBinding020Model, MqttServerBindingModel, MqttServerLastWillModel, PulsarServerBindingModel, SolaceServerBinding040Model, SolaceServerBindingModel}
 import amf.apicontract.client.scala.model.domain.bindings.ServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.IBMMQServerBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaServerBinding
@@ -146,6 +138,7 @@ class SolaceServerBindingEmitter(binding: SolaceServerBinding, ordering: SpecOrd
         val fs     = binding.fields
 
         fs.entry(SolaceServerBindingModel.MsgVpn).foreach(f => result += ValueEmitter("msgVpn", f))
+        fs.entry(SolaceServerBinding040Model.ClientName).foreach(f => result += ValueEmitter("clientName", f))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

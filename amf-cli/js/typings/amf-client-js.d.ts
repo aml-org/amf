@@ -8169,10 +8169,6 @@ declare module "amf-client-js" {
   export class SkippedValidationPluginEvent {}
   export class SolaceOperationBinding implements OperationBinding {
 
-    destinations: Array<SolaceOperationDestination>;
-    bindingVersion: StrField;
-
-    withDestinations(destinations: Array<SolaceOperationDestination>): this;
     withBindingVersion(bindingVersion: string): this;
 
     customDomainProperties: Array<DomainExtension>;
@@ -8197,17 +8193,242 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
     withLinkTarget(target: undefined): this;
   }
+  export class SolaceOperationBinding010 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination>;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination>): this;
+  }
+  export class SolaceOperationBinding020 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination020>;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination020>): this;
+  }
+  export class SolaceOperationBinding030 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination030>;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination030>): this;
+  }
+  export class SolaceOperationBinding040 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination040>;
+    timeToLive: IntField;
+    priority: IntField;
+    dmqEligible:BoolField;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination040>): this;
+    withTimeToLive(timeToLive: number): this;
+    withPriority(priority:number): this;
+    withDmqEligible(dmqEligible:boolean): this;
+  }
   export class SolaceOperationDestination implements DomainElement {
 
     destinationType: StrField;
     deliveryMode: StrField;
     queue: SolaceOperationQueue;
-    topic: SolaceOperationTopic;
 
     withDestinationType(destinationType: string): this;
     withDeliveryMode(deliveryMode: string): this;
     withQueue(queue: SolaceOperationQueue): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination010 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue010;
+
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue010): this;
+
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination020 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue010;
+    topic: SolaceOperationTopic;
+    destinations: Array<SolaceOperationDestination020>;
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue010): this;
+    withDestinations(destinations: Array<SolaceOperationDestination020>): this;
     withTopic(topic: SolaceOperationTopic): this;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+
+    position: Range;
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination030 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue030;
+    topic: SolaceOperationTopic;
+    destinations: Array<SolaceOperationDestination030>;
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue030): this;
+    withTopic(topic: SolaceOperationTopic): this;
+    withDestinations(destinations: Array<SolaceOperationDestination030>): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination040 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue030;
+    topic: SolaceOperationTopic;
+    destinations: Array<SolaceOperationDestination040>;
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue030): this;
+    withTopic(topic: SolaceOperationTopic): this;
+    withDestinations(destinations: Array<SolaceOperationDestination040>): this;
 
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -8224,6 +8445,54 @@ declare module "amf-client-js" {
     withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class SolaceOperationQueue implements DomainElement {
+
+    topicSubscriptions: Array<StrField>;
+    accessType: StrField;
+    name: StrField;
+
+    withTopicSubscriptions(topicSubscriptions: Array<string>): this;
+    withAccessType(accessType: string): this;
+    withName(name: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationQueue010 implements SolaceOperationQueue {
+
+    topicSubscriptions: Array<StrField>;
+    accessType: StrField;
+    name: StrField;
+
+    withTopicSubscriptions(topicSubscriptions: Array<string>): this;
+    withAccessType(accessType: string): this;
+    withName(name: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationQueue030 implements SolaceOperationQueue {
 
     topicSubscriptions: Array<StrField>;
     accessType: StrField;
@@ -8254,7 +8523,6 @@ declare module "amf-client-js" {
   export class SolaceOperationTopic implements DomainElement {
 
     topicSubscriptions: Array<StrField>;
-
     withTopicSubscriptions(topicSubscriptions: Array<string>): this;
 
     customDomainProperties: Array<DomainExtension>;
@@ -8270,6 +8538,127 @@ declare module "amf-client-js" {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
     withId(id: string): this;
     withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceServerBinding implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    msgVpn: StrField;
+    clientName: StrField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): SolaceServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withMsgVpn(msgVpn: string): this;
+
+    withClientName(clientName: string): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+  }
+  export class SolaceServerBinding010 implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): SolaceServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+  }
+  export class SolaceServerBinding040 implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    clientName: StrField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): SolaceServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withMsgVpn(msgVpn: string): this;
+
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
   }
   export interface Spec {
     readonly id: string;

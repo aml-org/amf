@@ -5,8 +5,8 @@ import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http._
 import amf.apicontract.client.platform.model.domain.bindings.kafka._
 import amf.apicontract.client.platform.model.domain.bindings.mqtt._
-import amf.apicontract.client.platform.model.domain.bindings.solace.{SolaceOperationBinding010, SolaceOperationBinding020, SolaceOperationBinding030, SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationDestination030, SolaceOperationQueue, SolaceOperationQueue010, SolaceOperationQueue030, SolaceOperationTopic}
-import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationDestination020 => InternalSolaceOperationDestination020, SolaceOperationDestination010 => InternalSolaceOperationDestination010, SolaceOperationDestination030 => InternalSolaceOperationDestination030}
+import amf.apicontract.client.platform.model.domain.bindings.solace.{SolaceOperationBinding010, SolaceOperationBinding020, SolaceOperationBinding030, SolaceOperationBinding040, SolaceOperationDestination010, SolaceOperationDestination020, SolaceOperationDestination030, SolaceOperationQueue, SolaceOperationQueue010, SolaceOperationQueue030, SolaceOperationTopic}
+import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationDestination010 => InternalSolaceOperationDestination010, SolaceOperationDestination020 => InternalSolaceOperationDestination020, SolaceOperationDestination030 => InternalSolaceOperationDestination030, SolaceOperationDestination040 => InternalSolaceOperationDestination040}
 import amf.apicontract.client.platform.model.domain.bindings.websockets._
 import amf.apicontract.client.platform.model.domain.bindings.googlepubsub._
 import amf.apicontract.client.scala.APIConfiguration
@@ -615,8 +615,42 @@ class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
     binding030.destinations.head.queue.maxMsgSpoolSize.value() shouldBe "1024"
     binding030.destinations.head.queue.maxTtl.value() shouldBe "60000"
     binding030.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("topic1", "topic2")).nonEmpty shouldBe true
-//    binding030.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq should contain ("topic1")
-//    binding030.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq should contain ("topic2")
+  }
+  test("test SolaceOperationBinding040") {
+    val queue = new SolaceOperationQueue030()
+      .withName("queueName")
+      .withAccessType("exclusive")
+      .withTopicSubscriptions(Seq("subscription1", "subscription2").asClient)
+      .withMaxMsgSpoolSize("1024")
+      .withMaxTtl("60000")
+
+    val topic = new SolaceOperationTopic()
+      .withTopicSubscriptions(Seq("topic1", "topic2").asClient)
+
+    val destination040 = InternalSolaceOperationDestination040()
+      .withDestinationType("topic")
+      .withDeliveryMode("persistent")
+      .withQueue(queue)
+      .withTopic(topic)
+      .withBindingVersion("0.4.0")
+
+    val binding040 = new SolaceOperationBinding040()
+      .withDestinations(Seq(destination040).asClient)
+      .withTimeToLive(60000)
+      .withPriority(1)
+      .withDmqEligible(true)
+
+    binding040.destinations.head.destinationType.value() shouldBe "topic"
+    binding040.destinations.head.deliveryMode.value() shouldBe "persistent"
+    binding040.destinations.head.queue.accessType.value() shouldBe "exclusive"
+    binding040.destinations.head.queue.name.value() shouldBe "queueName"
+    binding040.destinations.head.queue.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("subscription1", "subscription2")).nonEmpty shouldBe true
+    binding040.destinations.head.queue.maxMsgSpoolSize.value() shouldBe "1024"
+    binding040.destinations.head.queue.maxTtl.value() shouldBe "60000"
+    binding040.destinations.head.topic.topicSubscriptions.map(_.value()).toSeq.intersect(Seq("topic1", "topic2")).nonEmpty shouldBe true
+    binding040.timeToLive.value() shouldBe 60000
+    binding040.priority.value() shouldBe 1
+    binding040.dmqEligible.value() shouldBe true
   }
 
 }

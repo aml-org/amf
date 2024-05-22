@@ -1220,6 +1220,57 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "direct,persistent"
       ),
       AMFValidation(
+        message = "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxMsgSpoolSize"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxTtl' value. It should be a string representing the maximum time-to-live for messages.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxTtl"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      // Validation for SolaceOperationDestination040
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination040"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination040"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      // Validation for SolaceOperationBinding040
+      AMFValidation(
+        message = "Invalid 'timeToLive' value. It should be a positive integer or a valid schema reference.",
+        owlClass = apiBinding("SolaceOperationBinding040"),
+        owlProperty = apiBinding("timeToLive"),
+        constraint = sh("datatype"),
+        value = "xsd:integer"
+      ),
+      AMFValidation(
+        message = "Invalid 'priority' value. The valid range is 0-255.",
+        owlClass = apiBinding("SolaceOperationBinding040"),
+        owlProperty = apiBinding("priority"),
+        constraint = sh("in"),
+        value = (0 to 255).mkString(",")
+      ),
+      AMFValidation(
+        message = "Invalid 'dmqEligible' value. The options are: 'true' or 'false'.",
+        owlClass = apiBinding("SolaceOperationBinding040"),
+        owlProperty = apiBinding("dmqEligible"),
+        constraint = sh("in"),
+        value = "true,false"
+      ),
+      AMFValidation(
         message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
         owlClass = apiBinding("SolaceOperationQueue"),
         owlProperty = apiBinding("accessType"),

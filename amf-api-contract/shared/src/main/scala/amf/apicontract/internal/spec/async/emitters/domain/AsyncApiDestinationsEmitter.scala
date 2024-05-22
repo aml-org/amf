@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.async.emitters.domain
 
-import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationDestination, SolaceOperationDestination020, SolaceOperationDestination030, SolaceOperationQueue, SolaceOperationQueue030, SolaceOperationTopic}
+import amf.apicontract.client.scala.model.domain.bindings.solace.{SolaceOperationDestination, SolaceOperationDestination020, SolaceOperationDestination030, SolaceOperationDestination040, SolaceOperationQueue, SolaceOperationQueue030, SolaceOperationTopic}
 import amf.apicontract.internal.metamodel.domain.bindings.{SolaceOperationDestinationModel, SolaceOperationQueue010Model, SolaceOperationQueue030Model, SolaceOperationQueueModel, SolaceOperationTopicModel}
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
@@ -61,6 +61,8 @@ class SingleDestinationEmitter(binding: SolaceOperationDestination, ordering: Sp
         Option(binding020.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
       case binding030: SolaceOperationDestination030 =>
         Option(binding030.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
+      case binding040:  SolaceOperationDestination040 =>
+        Option(binding040.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
       case _ =>
     }
 

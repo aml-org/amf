@@ -542,4 +542,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("solace-invalid-queue-version.yaml", Some("solace-invalid-queue-version.report"))
   }
 
+  test("Async Solace 0.4.0 invalid version") {
+    validate("solace-0.4.0-invalid.yaml", Some("solace-0.4.0-invalid.report"))
+  }
+
 }

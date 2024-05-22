@@ -5611,6 +5611,16 @@
                               "http://a.ml/vocabularies/apiBinding#SolaceOperationDestination",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
+                            "http://a.ml/vocabularies/apiBinding#destinationType": [
+                              {
+                                "@value": "topic"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#deliveryMode": [
+                              {
+                                "@value": "persistent"
+                              }
+                            ],
                             "http://a.ml/vocabularies/apiBinding#topic": [
                               {
                                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_2/solace-topic",
@@ -5661,16 +5671,6 @@
                                 ]
                               }
                             ],
-                            "http://a.ml/vocabularies/apiBinding#destinationType": [
-                              {
-                                "@value": "topic"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/apiBinding#deliveryMode": [
-                              {
-                                "@value": "persistent"
-                              }
-                            ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
                                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_2/source-map",
@@ -5697,12 +5697,12 @@
                                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_2/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiBinding#topic"
+                                        "@value": "http://a.ml/vocabularies/apiBinding#destinationType"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(133,14)-(136,0)]"
+                                        "@value": "[(132,14)-(133,0)]"
                                       }
                                     ]
                                   },
@@ -5710,12 +5710,12 @@
                                     "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.6-all.yaml#/async-api/endpoint/forth-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020_2/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiBinding#destinationType"
+                                        "@value": "http://a.ml/vocabularies/apiBinding#topic"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(132,14)-(133,0)]"
+                                        "@value": "[(133,14)-(136,0)]"
                                       }
                                     ]
                                   },

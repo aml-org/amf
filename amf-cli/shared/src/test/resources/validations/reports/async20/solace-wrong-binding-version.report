@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
   Message: Version 9.9.9 is not supported in a Solace Server Binding
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-binding-version.yaml#/async-api/server/solace.example.com/server-bindings/bindings/solace-server
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-binding-version.yaml#/async-api/server/solace.example.com/server-bindings/bindings/solace-server-binding-010
   Property: 
   Range: [(13,6)-(16,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-binding-version.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'invalidKey' not supported in a ASYNC 2.4 SolaceServerBinding node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-binding-version.yaml#/async-api/server/solace.example.com_1/server-bindings/bindings/solace-server
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-binding-version.yaml#/async-api/server/solace.example.com_1/server-bindings/bindings/solace-server-binding-010
   Property: 
   Range: [(23,8)-(24,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-binding-version.yaml

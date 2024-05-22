@@ -1,20 +1,7 @@
 package amf.apicontract.client.scala.model.domain.bindings.solace
 
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  SolaceOperationBinding010Model,
-  SolaceOperationBinding020Model,
-  SolaceOperationBinding030Model,
-  SolaceOperationBindingModel,
-  SolaceOperationDestination010Model,
-  SolaceOperationDestination020Model,
-  SolaceOperationDestination030Model,
-  SolaceOperationDestinationModel,
-  SolaceOperationQueue010Model,
-  SolaceOperationQueue030Model,
-  SolaceOperationQueueModel,
-  SolaceOperationTopicModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings.{SolaceOperationBinding010Model, SolaceOperationBinding020Model, SolaceOperationBinding030Model, SolaceOperationBinding040Model, SolaceOperationBindingModel, SolaceOperationDestination010Model, SolaceOperationDestination020Model, SolaceOperationDestination030Model, SolaceOperationDestination040Model, SolaceOperationDestinationModel, SolaceOperationQueue010Model, SolaceOperationQueue030Model, SolaceOperationQueueModel, SolaceOperationTopicModel}
 import amf.apicontract.internal.metamodel.domain.bindings.SolaceOperationBindingModel._
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Solace
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
@@ -93,6 +80,33 @@ object SolaceOperationBinding030 {
   def apply(fields: Fields, annotations: Annotations): SolaceOperationBinding030 =
     new SolaceOperationBinding030(fields, annotations)
 }
+class SolaceOperationBinding040(fields: Fields, annotations: Annotations)
+  extends SolaceOperationBinding(fields, annotations) {
+
+  override def destinations: Seq[SolaceOperationDestination040] = fields.field(SolaceOperationBinding040Model.Destinations)
+
+  def withDestinations(destinations: Seq[SolaceOperationDestination040]): this.type = setArray(Destinations, destinations)
+
+  def timeToLive: IntField = fields.field(SolaceOperationBinding040Model.TimeToLive)
+  def priority: IntField = fields.field(SolaceOperationBinding040Model.Priority)
+  def dmqEligible: BoolField = fields.field(SolaceOperationBinding040Model.DmqEligible)
+
+  def withTimeToLive(value: Int): this.type = set(SolaceOperationBinding040Model.TimeToLive, value)
+  def withPriority(value: Int): this.type = set(SolaceOperationBinding040Model.Priority, value)
+  def withDmqEligible(value: Boolean): this.type = set(SolaceOperationBinding040Model.DmqEligible, value)
+
+  override def componentId: String = s"/$Solace-operation-040"
+  override def meta: SolaceOperationBinding040Model.type = SolaceOperationBinding040Model
+  override def linkCopy(): SolaceOperationBinding = SolaceOperationBinding040().withId(id)
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SolaceOperationBinding040.apply
+}
+object SolaceOperationBinding040 {
+  def apply(): SolaceOperationBinding040 = apply(Annotations())
+  def apply(annotations: Annotations): SolaceOperationBinding040 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): SolaceOperationBinding040 =
+    new SolaceOperationBinding040(fields, annotations)
+}
 
 //Operation Destination
 abstract class SolaceOperationDestination(override val fields: Fields, override val annotations: Annotations)
@@ -151,7 +165,7 @@ class SolaceOperationDestination030(override val fields: Fields, override val an
   override def componentId: String                           = s"/$Solace-operation-destination-030"
   override def queue: SolaceOperationQueue030 = fields.field(SolaceOperationDestination030Model.Queue)
   def withQueue(queue: SolaceOperationQueue030): this.type = set(SolaceOperationDestination030Model.Queue, queue)
-  def destinations: Seq[SolaceOperationDestination030]       = fields.field(SolaceOperationBinding030Model.Destinations)
+  def destinations: Seq[SolaceOperationDestination030]       = fields.field(SolaceOperationBinding030Model.Destinations) //proque tiene destinations?
   def withDestinations(destinations: Seq[SolaceOperationDestination030]): this.type = setArray(SolaceOperationBinding030Model.Destinations, destinations)
   def topic: SolaceOperationTopic                            = fields.field(SolaceOperationDestination030Model.Topic)
   def withTopic(topic: SolaceOperationTopic): this.type      = set(SolaceOperationDestination030Model.Topic, topic)
@@ -162,6 +176,27 @@ object SolaceOperationDestination030 {
   def apply(annotations: Annotations): SolaceOperationDestination030 = apply(Fields(), annotations)
   def apply(fields: Fields, annotations: Annotations): SolaceOperationDestination030 =
     new SolaceOperationDestination030(fields, annotations)
+}
+
+class SolaceOperationDestination040(override val fields: Fields, override val annotations: Annotations)
+  extends SolaceOperationDestination(fields, annotations) {
+  override def meta: SolaceOperationDestination040Model.type = SolaceOperationDestination040Model
+  override def componentId: String = s"/$Solace-operation-destination-040"
+  override def queue: SolaceOperationQueue030 = fields.field(SolaceOperationDestination040Model.Queue)
+  def withQueue(queue: SolaceOperationQueue030): this.type = set(SolaceOperationDestination040Model.Queue, queue)
+  def topic: SolaceOperationTopic                            = fields.field(SolaceOperationDestination040Model.Topic)
+  def withTopic(topic: SolaceOperationTopic): this.type      = set(SolaceOperationDestination040Model.Topic, topic)
+  def destinations: Seq[SolaceOperationDestination040]       = fields.field(SolaceOperationBinding040Model.Destinations)
+  def withDestinations(destinations: Seq[SolaceOperationDestination040]): this.type = setArray(SolaceOperationBinding040Model.Destinations, destinations)
+  def withBindingVersion(bindingVersion: String): this.type = set(SolaceOperationDestination040Model.BindingVersion, bindingVersion)
+  def bindingVersion: StrField = fields.field(SolaceOperationDestination040Model.BindingVersion)
+}
+
+object SolaceOperationDestination040 {
+  def apply(): SolaceOperationDestination040 = apply(Annotations())
+  def apply(annotations: Annotations): SolaceOperationDestination040 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): SolaceOperationDestination040 =
+    new SolaceOperationDestination040(fields, annotations)
 }
 // Operation Queue
 abstract class SolaceOperationQueue(override val fields: Fields, override val annotations: Annotations)
