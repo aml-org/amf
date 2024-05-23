@@ -1,0 +1,38 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml
+Profile: 
+Conforms: false
+Number of results: 4
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
+  Message: Version 9.9.9 is not supported in a Solace Operation Binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-010
+  Property: 
+  Range: [(17,8)-(34,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'maxMsgSpoolSize' not supported in a ASYNC 2.3 SolaceOperationQueue010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-010/destinations/solace-operation-destination-010/solace-operation-queue-010
+  Property: 
+  Range: [(27,16)-(28,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'maxTtl' not supported in a ASYNC 2.3 SolaceOperationQueue010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-010/destinations/solace-operation-destination-010/solace-operation-queue-010
+  Property: 
+  Range: [(28,16)-(29,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'topic' not supported in a ASYNC 2.3 SolaceOperationDestination010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-010/destinations/solace-operation-destination-010_1
+  Property: 
+  Range: [(31,14)-(34,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml

@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationB
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
-import amf.apicontract.client.scala.model.domain.bindings.solace.SolaceOperationBinding
+import amf.apicontract.client.scala.model.domain.bindings.solace._
 import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.emitters.domain.AsyncApiDestinationsEmitter
@@ -159,6 +159,13 @@ class SolaceOperationBindingEmitter(binding: SolaceOperationBinding, ordering: S
 
         fs.entry(SolaceOperationBindingModel.Destinations)
           .foreach(f => result += AsyncApiDestinationsEmitter(f, ordering))
+        binding match {
+          case binding040: SolaceOperationBinding040 =>
+            fs.entry(SolaceOperationBinding040Model.TimeToLive).foreach(f => result += ValueEmitter("timeToLive", f))
+            fs.entry(SolaceOperationBinding040Model.Priority).foreach(f => result += ValueEmitter("priority", f))
+            fs.entry(SolaceOperationBinding040Model.DmqEligible).foreach(f => result += ValueEmitter("dmqEligible", f))
+          case _ =>
+        }
 
         emitBindingVersion(fs, result)
 

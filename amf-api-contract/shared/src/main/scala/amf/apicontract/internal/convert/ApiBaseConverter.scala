@@ -96,9 +96,21 @@ trait ApiBaseConverter
     with Amqp091Queue010Converter
     with Amqp091Queue020Converter
     with SolaceServerBindingConverter
+    with SolaceServerBinding010Converter
+    with SolaceServerBinding040Converter
     with SolaceOperationBindingConverter
+    with SolaceOperationBinding010Converter
+    with SolaceOperationBinding020Converter
+    with SolaceOperationBinding030Converter
+    with SolaceOperationBinding040Converter
     with SolaceOperationDestinationConverter
+    with SolaceOperationDestination010Converter
+    with SolaceOperationDestination020Converter
+    with SolaceOperationDestination030Converter
+    with SolaceOperationDestination040Converter
     with SolaceOperationQueueConverter
+    with SolaceOperationQueue010Converter
+    with SolaceOperationQueue030Converter
     with SolaceOperationTopicConverter
     with AnypointMQMessageBindingConverter
     with AnypointMQChannelBindingConverter
@@ -599,6 +611,24 @@ trait SolaceServerBindingConverter extends PlatformSecrets {
       from._internal
   }
 }
+trait SolaceServerBinding010Converter extends PlatformSecrets {
+  implicit object SolaceServerBinding010Matcher
+    extends BidirectionalMatcher[SolaceServerBinding010, domain.bindings.solace.SolaceServerBinding010] {
+    override def asClient(from: SolaceServerBinding010): domain.bindings.solace.SolaceServerBinding010 =
+      platform.wrap[domain.bindings.solace.SolaceServerBinding010](from)
+    override def asInternal(from: domain.bindings.solace.SolaceServerBinding010): SolaceServerBinding010 =
+      from._internal
+  }
+}
+trait SolaceServerBinding040Converter extends PlatformSecrets {
+  implicit object SolaceServerBinding040Matcher
+    extends BidirectionalMatcher[SolaceServerBinding040, domain.bindings.solace.SolaceServerBinding040] {
+    override def asClient(from: SolaceServerBinding040): domain.bindings.solace.SolaceServerBinding040 =
+      platform.wrap[domain.bindings.solace.SolaceServerBinding040](from)
+    override def asInternal(from: domain.bindings.solace.SolaceServerBinding040): SolaceServerBinding040 =
+      from._internal
+  }
+}
 
 trait SolaceOperationBindingConverter extends PlatformSecrets {
   implicit object SolaceOperationBindingMatcher
@@ -606,6 +636,56 @@ trait SolaceOperationBindingConverter extends PlatformSecrets {
     override def asClient(from: SolaceOperationBinding): domain.bindings.solace.SolaceOperationBinding =
       platform.wrap[domain.bindings.solace.SolaceOperationBinding](from)
     override def asInternal(from: domain.bindings.solace.SolaceOperationBinding): SolaceOperationBinding =
+      from._internal
+  }
+}
+
+trait SolaceOperationBinding010Converter extends PlatformSecrets {
+  implicit object SolaceOperationBinding010Matcher
+      extends BidirectionalMatcher[
+        SolaceOperationBinding010,
+        domain.bindings.solace.SolaceOperationBinding010
+      ] {
+    override def asClient(from: SolaceOperationBinding010): domain.bindings.solace.SolaceOperationBinding010 =
+      platform.wrap[domain.bindings.solace.SolaceOperationBinding010](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationBinding010): SolaceOperationBinding010 =
+      from._internal
+  }
+}
+
+trait SolaceOperationBinding020Converter extends PlatformSecrets {
+  implicit object SolaceOperationBinding020Matcher
+      extends BidirectionalMatcher[
+        SolaceOperationBinding020,
+        domain.bindings.solace.SolaceOperationBinding020
+      ] {
+    override def asClient(from: SolaceOperationBinding020): domain.bindings.solace.SolaceOperationBinding020 =
+      platform.wrap[domain.bindings.solace.SolaceOperationBinding020](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationBinding020): SolaceOperationBinding020 =
+      from._internal
+  }
+}
+trait SolaceOperationBinding030Converter extends PlatformSecrets {
+  implicit object SolaceOperationBinding030Matcher
+      extends BidirectionalMatcher[
+        SolaceOperationBinding030,
+        domain.bindings.solace.SolaceOperationBinding030
+      ] {
+    override def asClient(from: SolaceOperationBinding030): domain.bindings.solace.SolaceOperationBinding030 =
+      platform.wrap[domain.bindings.solace.SolaceOperationBinding030](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationBinding030): SolaceOperationBinding030 =
+      from._internal
+  }
+}
+trait SolaceOperationBinding040Converter extends PlatformSecrets {
+  implicit object SolaceOperationBinding040Matcher
+    extends BidirectionalMatcher[
+      SolaceOperationBinding040,
+      domain.bindings.solace.SolaceOperationBinding040
+    ] {
+    override def asClient(from: SolaceOperationBinding040): domain.bindings.solace.SolaceOperationBinding040 =
+      platform.wrap[domain.bindings.solace.SolaceOperationBinding040](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationBinding040): SolaceOperationBinding040 =
       from._internal
   }
 }
@@ -619,6 +699,55 @@ trait SolaceOperationDestinationConverter extends PlatformSecrets {
       from._internal
   }
 }
+trait SolaceOperationDestination010Converter extends PlatformSecrets {
+  implicit object SolaceOperationDestination010Matcher
+      extends BidirectionalMatcher[
+        SolaceOperationDestination010,
+        domain.bindings.solace.SolaceOperationDestination010
+      ] {
+    override def asClient(from: SolaceOperationDestination010): domain.bindings.solace.SolaceOperationDestination010 =
+      platform.wrap[domain.bindings.solace.SolaceOperationDestination010](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationDestination010): SolaceOperationDestination010 =
+      from._internal
+  }
+}
+
+trait SolaceOperationDestination020Converter extends PlatformSecrets {
+  implicit object SolaceOperationDestination020Matcher
+      extends BidirectionalMatcher[
+        SolaceOperationDestination020,
+        domain.bindings.solace.SolaceOperationDestination020
+      ] {
+    override def asClient(from: SolaceOperationDestination020): domain.bindings.solace.SolaceOperationDestination020 =
+      platform.wrap[domain.bindings.solace.SolaceOperationDestination020](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationDestination020): SolaceOperationDestination020 =
+      from._internal
+  }
+}
+trait SolaceOperationDestination030Converter extends PlatformSecrets {
+  implicit object SolaceOperationDestination030Matcher
+      extends BidirectionalMatcher[
+        SolaceOperationDestination030,
+        domain.bindings.solace.SolaceOperationDestination030
+      ] {
+    override def asClient(from: SolaceOperationDestination030): domain.bindings.solace.SolaceOperationDestination030 =
+      platform.wrap[domain.bindings.solace.SolaceOperationDestination030](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationDestination030): SolaceOperationDestination030 =
+      from._internal
+  }
+}
+trait SolaceOperationDestination040Converter extends PlatformSecrets {
+  implicit object SolaceOperationDestination040Matcher
+    extends BidirectionalMatcher[
+      SolaceOperationDestination040,
+      domain.bindings.solace.SolaceOperationDestination040
+    ] {
+    override def asClient(from: SolaceOperationDestination040): domain.bindings.solace.SolaceOperationDestination040 =
+      platform.wrap[domain.bindings.solace.SolaceOperationDestination040](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationDestination040): SolaceOperationDestination040 =
+      from._internal
+  }
+}
 
 trait SolaceOperationQueueConverter extends PlatformSecrets {
   implicit object SolaceOperationQueueMatcher
@@ -626,6 +755,26 @@ trait SolaceOperationQueueConverter extends PlatformSecrets {
     override def asClient(from: SolaceOperationQueue): domain.bindings.solace.SolaceOperationQueue =
       platform.wrap[domain.bindings.solace.SolaceOperationQueue](from)
     override def asInternal(from: domain.bindings.solace.SolaceOperationQueue): SolaceOperationQueue =
+      from._internal
+  }
+}
+
+trait SolaceOperationQueue010Converter extends PlatformSecrets {
+  implicit object SolaceOperationQueue010Matcher
+      extends BidirectionalMatcher[SolaceOperationQueue010, domain.bindings.solace.SolaceOperationQueue010] {
+    override def asClient(from: SolaceOperationQueue010): domain.bindings.solace.SolaceOperationQueue010 =
+      platform.wrap[domain.bindings.solace.SolaceOperationQueue010](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationQueue010): SolaceOperationQueue010 =
+      from._internal
+  }
+}
+
+trait SolaceOperationQueue030Converter extends PlatformSecrets {
+  implicit object SolaceOperationQueue030Matcher
+      extends BidirectionalMatcher[SolaceOperationQueue030, domain.bindings.solace.SolaceOperationQueue030] {
+    override def asClient(from: SolaceOperationQueue030): domain.bindings.solace.SolaceOperationQueue030 =
+      platform.wrap[domain.bindings.solace.SolaceOperationQueue030](from)
+    override def asInternal(from: domain.bindings.solace.SolaceOperationQueue030): SolaceOperationQueue030 =
       from._internal
   }
 }

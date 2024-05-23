@@ -1,4 +1,4 @@
-asyncapi: 2.3.0
+asyncapi: 2.4.0
 info:
   title: test solace binding
   version: 1.0.0
@@ -10,7 +10,6 @@ servers:
       solace:
         msgVpn: test
         bindingVersion: 0.1.0
-        thisKeyIsNotAllowed: should throw validation error
 channels:
   some-channel:
     publish:
@@ -18,15 +17,15 @@ channels:
         solace:
           bindingVersion: 0.2.0
           destinations:
-            - destinationType: queue
+            -
+              destinationType: queue
               queue:
                 name: CreatedHREvents
-                thisKeyIsNotAllowed: should throw validation error
+                accessType: test
                 topicSubscriptions:
                   - person/*/created
-            - destinationType: topic
+            -
+              destinationType: topic
               topic:
-                thisKeyIsNotAllowed: should throw validation error
                 topicSubscriptions:
                   - person/*/updated
-          thisKeyIsNotAllowed: should throw validation error

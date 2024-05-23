@@ -9,24 +9,25 @@ servers:
     bindings:
       solace:
         msgVpn: test
-        bindingVersion: 0.1.0
-        thisKeyIsNotAllowed: should throw validation error
+        bindingVersion: 0.3.0
 channels:
   some-channel:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.2.0
+          bindingVersion: 0.3.0
           destinations:
-            - destinationType: queue
+            -
+              destinationType: queue
               queue:
                 name: CreatedHREvents
-                thisKeyIsNotAllowed: should throw validation error
+                accessType: exclusive
                 topicSubscriptions:
                   - person/*/created
-            - destinationType: topic
+                maxMsgSpoolSize: this is a string
+                maxTtl: this is a string
+            -
+              destinationType: topic
               topic:
-                thisKeyIsNotAllowed: should throw validation error
                 topicSubscriptions:
                   - person/*/updated
-          thisKeyIsNotAllowed: should throw validation error

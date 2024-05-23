@@ -1,0 +1,23 @@
+
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-queue-version.yaml
+Profile:
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'maxMsgSpoolSize' not supported in a ASYNC 2.3 SolaceOperationQueue010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010
+  Property:
+  Range: [(27,16)-(28,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-queue-version.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'maxTtl' not supported in a ASYNC 2.3 SolaceOperationQueue010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010
+  Property:
+  Range: [(28,16)-(29,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-wrong-queue-version.yaml
