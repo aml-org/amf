@@ -12,7 +12,7 @@ object Async23Syntax extends SpecSyntax {
         "servers",
         "channels"
       ),
-      "SolaceServerBinding" -> Set(
+      "SolaceServerBinding010" -> Set(
         "msgVpn",
         "bindingVersion"
       ),
@@ -21,7 +21,7 @@ object Async23Syntax extends SpecSyntax {
         "bindingVersion",
         "clientName"
       ),
-      "SolaceOperationBinding" -> Set(
+      "SolaceOperationBinding010" -> Set(
         "destinations",
         "bindingVersion"
       ),

@@ -175,7 +175,7 @@ case class SolaceOperationDestination030(override private[amf] val _internal: In
   def withDestinations(destinations: ClientList[SolaceOperationDestination030]): this.type = {
     _internal.withDestinations(destinations.asInternal)
     this
-  } //es un destination no deberia tener un destination
+  }
 }
 @JSExportAll
 case class SolaceOperationDestination040(override private[amf] val _internal: InternalSolaceOperationDestination040)
@@ -192,7 +192,7 @@ case class SolaceOperationDestination040(override private[amf] val _internal: In
     _internal.withTopic(topic)
     this
   }
-  def destinations: ClientList[SolaceOperationDestination040] = _internal.destinations.asClient //crear
+  def destinations: ClientList[SolaceOperationDestination040] = _internal.destinations.asClient
   def withDestinations(destinations: ClientList[SolaceOperationDestination040]): this.type = {
     _internal.withDestinations(destinations.asInternal)
     this

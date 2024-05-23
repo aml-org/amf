@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.6 PulsarChannelRetention node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/pulsar-operation/pulsar-retention
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/pulsar-channel/pulsar-retention
   Property: 
   Range: [(28,10)-(29,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-extra-key.yaml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'thisKeyIsNotAllowed' not supported in a ASYNC 2.6 PulsarChannelBinding node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/pulsar-operation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-extra-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/pulsar-channel
   Property: 
   Range: [(32,8)-(33,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-extra-key.yaml

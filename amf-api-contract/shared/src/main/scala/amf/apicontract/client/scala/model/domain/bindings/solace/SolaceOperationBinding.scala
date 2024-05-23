@@ -142,7 +142,7 @@ class SolaceOperationDestination020(override val fields: Fields, override val an
     extends SolaceOperationDestination(fields, annotations) {
   override def meta: SolaceOperationDestination020Model.type = SolaceOperationDestination020Model
   override def componentId: String                           = s"/$Solace-operation-destination-020"
-  override def queue: SolaceOperationQueue010 = fields.field(SolaceOperationDestination020Model.Queue) //se le pasa la queue de 010, la del 020 es la misma
+  override def queue: SolaceOperationQueue010 = fields.field(SolaceOperationDestination020Model.Queue)
   def withQueue(queue: SolaceOperationQueue010): this.type = set(SolaceOperationDestination020Model.Queue, queue)
   def topic: SolaceOperationTopic                            = fields.field(SolaceOperationDestination020Model.Topic)
   def withTopic(topic: SolaceOperationTopic): this.type      = set(SolaceOperationDestination020Model.Topic, topic)
@@ -165,7 +165,7 @@ class SolaceOperationDestination030(override val fields: Fields, override val an
   override def componentId: String                           = s"/$Solace-operation-destination-030"
   override def queue: SolaceOperationQueue030 = fields.field(SolaceOperationDestination030Model.Queue)
   def withQueue(queue: SolaceOperationQueue030): this.type = set(SolaceOperationDestination030Model.Queue, queue)
-  def destinations: Seq[SolaceOperationDestination030]       = fields.field(SolaceOperationBinding030Model.Destinations) //proque tiene destinations?
+  def destinations: Seq[SolaceOperationDestination030]       = fields.field(SolaceOperationBinding030Model.Destinations)
   def withDestinations(destinations: Seq[SolaceOperationDestination030]): this.type = setArray(SolaceOperationBinding030Model.Destinations, destinations)
   def topic: SolaceOperationTopic                            = fields.field(SolaceOperationDestination030Model.Topic)
   def withTopic(topic: SolaceOperationTopic): this.type      = set(SolaceOperationDestination030Model.Topic, topic)

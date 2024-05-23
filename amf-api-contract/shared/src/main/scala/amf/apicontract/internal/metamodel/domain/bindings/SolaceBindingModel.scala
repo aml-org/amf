@@ -58,8 +58,7 @@ object SolaceServerBinding040Model extends SolaceServerBindingModel {
 
 
 //Operation Binding
-trait SolaceOperationBindingModel extends OperationBindingModel with BindingVersion { // crear operationbinding model para todas las verisones ovverideando destinanation y que cada uno
-  //devuelta otro array segun su version
+trait SolaceOperationBindingModel extends OperationBindingModel with BindingVersion {
   val Destinations: Field =
     Field(
       Array(SolaceOperationDestinationModel),
@@ -95,9 +94,9 @@ object SolaceOperationBinding010Model extends SolaceOperationBindingModel {
   override def modelInstance: AmfObject = SolaceOperationBinding010()
   override def fields: List[Field] = List(Destinations, BindingVersion) ++ OperationBindingModel.fields
 
-  override val `type`: List[ValueType] = ApiBinding + "SolaceOperation010Binding" :: OperationBindingModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "SolaceOperationBinding010" :: OperationBindingModel.`type`
 
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationBinding")
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationBinding010")
 }
 object SolaceOperationBinding020Model extends SolaceOperationBindingModel {
  override val Destinations: Field =
@@ -112,9 +111,9 @@ object SolaceOperationBinding020Model extends SolaceOperationBindingModel {
   override def modelInstance: AmfObject = SolaceOperationBinding020()
   override def fields: List[Field] = List(Destinations, BindingVersion) ++ OperationBindingModel.fields
 
-  override val `type`: List[ValueType] = ApiBinding + "SolaceOperation020Binding" :: OperationBindingModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "SolaceOperationBinding020" :: OperationBindingModel.`type`
 
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperation020Binding")
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationBinding020")
 }
 object SolaceOperationBinding030Model extends SolaceOperationBindingModel {
  override val Destinations: Field =
@@ -129,11 +128,11 @@ object SolaceOperationBinding030Model extends SolaceOperationBindingModel {
   override def modelInstance: AmfObject = SolaceOperationBinding030()
   override def fields: List[Field] = List(Destinations, BindingVersion) ++ OperationBindingModel.fields
 
-  override val `type`: List[ValueType] = ApiBinding + "SolaceOperation030Binding" :: OperationBindingModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "SolaceOperationBinding030" :: OperationBindingModel.`type`
 
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperation030Binding")
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationBinding030")
 }
-object SolaceOperationBinding040Model extends SolaceOperationBindingModel { //en este model los objectos pueden ser de varios tipos
+object SolaceOperationBinding040Model extends SolaceOperationBindingModel {
   val TimeToLive: Field = Field(
     Int,
     ApiBinding + "timeToLive",
@@ -394,9 +393,9 @@ object SolaceOperationQueue030Model extends SolaceOperationQueueModel {
   override def modelInstance: AmfObject = SolaceOperationQueue030()
 
   override val `type`: List[ValueType] =
-    ApiBinding + "SolaceOperationQueue030Model" :: SolaceOperationDestinationModel.`type`
+    ApiBinding + "SolaceOperationQueue030" :: SolaceOperationDestinationModel.`type`
 
-  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationQueue030Model")
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationQueue030")
   override def fields: List[Field] = List(MaxMsgSpoolSize, MaxTtl) ++ DomainElementModel.fields
 }
 

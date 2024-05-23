@@ -30,7 +30,7 @@ object SolaceServerBindingParser extends BindingParser[SolaceServerBinding] {
 
     parseBindingVersion(binding, SolaceServerBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding, map, "SolaceServerBinding")
+    ctx.closedShape(binding, map, "SolaceServerBinding010")
 
     binding
   }

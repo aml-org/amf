@@ -45,7 +45,7 @@ object SolaceOperationBindingParser extends BindingParser[SolaceOperationBinding
 
     parseBindingVersion(binding, SolaceOperationBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding, map, "SolaceOperationBinding")
+    ctx.closedShape(binding, map, "SolaceOperationBinding010")
 
     binding
   }

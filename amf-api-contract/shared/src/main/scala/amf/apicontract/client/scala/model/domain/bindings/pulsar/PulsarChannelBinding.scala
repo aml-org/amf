@@ -35,7 +35,7 @@ class PulsarChannelBinding(override val fields: Fields, override val annotations
 
   override def key: StrField = fields.field(PulsarChannelBindingModel.key)
 
-  override def componentId: String              = s"/$Pulsar-operation"
+  override def componentId: String              = s"/$Pulsar-channel"
   override def linkCopy(): PulsarChannelBinding = PulsarChannelBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

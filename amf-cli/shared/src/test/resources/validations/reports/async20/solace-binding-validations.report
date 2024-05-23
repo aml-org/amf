@@ -21,7 +21,7 @@ Level: Violation
   Range: [(21,28)-(21,46)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml
 
-- Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationQueue-accessType-in
+- Constraint: http://a.ml/vocabularies/amf/parser#SolaceOperationQueue010-accessType-in
   Message: Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-binding-validations.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-020/destinations/solace-operation-destination-020/solace-operation-queue-010

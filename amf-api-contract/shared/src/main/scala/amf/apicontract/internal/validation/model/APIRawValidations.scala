@@ -1227,8 +1227,36 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "xsd:string"
       ),
       AMFValidation(
+        message = "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
+        owlClass = apiBinding("SolaceOperationQueue040"),
+        owlProperty = apiBinding("maxMsgSpoolSize"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      AMFValidation(
         message = "Invalid 'maxTtl' value. It should be a string representing the maximum time-to-live for messages.",
         owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxTtl"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      AMFValidation(
+        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
+        owlClass = apiBinding("SolaceOperationQueue010"),
+        owlProperty = apiBinding("accessType"),
+        constraint = sh("in"),
+        value = "exclusive,nonexclusive"
+      ),
+      AMFValidation(
+        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
+        owlClass = apiBinding("SolaceOperationQueue040"),
+        owlProperty = apiBinding("accessType"),
+        constraint = sh("in"),
+        value = "exclusive,nonexclusive"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxTtl' value. It should be a string representing the maximum time-to-live for messages.",
+        owlClass = apiBinding("SolaceOperationQueue040"),
         owlProperty = apiBinding("maxTtl"),
         constraint = sh("datatype"),
         value = "xsd:string"
@@ -1269,13 +1297,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiBinding("dmqEligible"),
         constraint = sh("in"),
         value = "true,false"
-      ),
-      AMFValidation(
-        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
-        owlClass = apiBinding("SolaceOperationQueue"),
-        owlProperty = apiBinding("accessType"),
-        constraint = sh("in"),
-        value = "exclusive,nonexclusive"
       ),
       AMFValidation(
         message = "Invalid 'maxMsgSpoolSize' value. Must be a non-negative integer.",

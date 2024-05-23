@@ -3898,7 +3898,7 @@ Types:
 ## SolaceOperationBinding010
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#SolaceOperation010Binding`
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationBinding010`
 * `http://a.ml/vocabularies/apiBinding#OperationBinding`
 * `http://a.ml/vocabularies/document#DomainElement`
 
@@ -3912,7 +3912,7 @@ Types:
 ## SolaceOperationBinding020
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#SolaceOperation020Binding`
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationBinding020`
 * `http://a.ml/vocabularies/apiBinding#OperationBinding`
 * `http://a.ml/vocabularies/document#DomainElement`
 
@@ -3926,7 +3926,7 @@ Types:
 ## SolaceOperationBinding030
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#SolaceOperation030Binding`
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationBinding030`
 * `http://a.ml/vocabularies/apiBinding#OperationBinding`
 * `http://a.ml/vocabularies/document#DomainElement`
 
@@ -4055,7 +4055,7 @@ Types:
 ## SolaceOperationQueue030
 
 Types:
-* `http://a.ml/vocabularies/apiBinding#SolaceOperationQueue030Model`
+* `http://a.ml/vocabularies/apiBinding#SolaceOperationQueue030`
 * `http://a.ml/vocabularies/apiBinding#SolaceOperationDestination`
 * `http://a.ml/vocabularies/document#DomainElement`
 

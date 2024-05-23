@@ -23,7 +23,7 @@ abstract class SolaceServerBinding(override val fields: Fields, override val ann
 class SolaceServerBinding010(override val fields: Fields, override val annotations: Annotations)
     extends SolaceServerBinding(fields, annotations) {
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ???
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SolaceServerBinding010.apply
   override def componentId: String = s"/$Solace-server-binding-010"
   override def meta: SolaceServerBinding010Model.type = SolaceServerBinding010Model
   override def linkCopy(): SolaceServerBinding = SolaceServerBinding010().withId(id)
