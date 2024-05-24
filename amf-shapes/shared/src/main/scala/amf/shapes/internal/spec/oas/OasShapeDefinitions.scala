@@ -14,7 +14,10 @@ trait OasShapeDefinitions {
   val oas3ComponentsPrefix = "#/components/"
 
   def stripDefinitionsPrefix(url: String)(implicit ctx: ShapeParserContext): String = {
-    if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
+    if (
+      ctx.spec == Spec.OAS30 || ctx.spec == Spec.ASYNC20 || ctx.spec == Spec.ASYNC21 || ctx.spec == Spec.ASYNC22 ||
+      ctx.spec == Spec.ASYNC23 || ctx.spec == Spec.ASYNC24 || ctx.spec == Spec.ASYNC25 || ctx.spec == Spec.ASYNC26
+    ) url.stripPrefix(oas3DefinitionsPrefix)
     else url.stripPrefix(oas2DefinitionsPrefix)
   }
 
@@ -30,7 +33,8 @@ trait OasShapeDefinitions {
       spec: Option[Spec] = None,
       jsonSchemaVersion: Option[JSONSchemaVersion] = None
   ): String = spec match {
-    case Some(Spec.OAS30) | Some(Spec.ASYNC20) =>
+    case Some(Spec.OAS30) | Some(Spec.ASYNC20) | Some(Spec.ASYNC21) | Some(Spec.ASYNC22) |
+         Some(Spec.ASYNC23) | Some(Spec.ASYNC24) | Some(Spec.ASYNC25) | Some(Spec.ASYNC26) =>
       if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
     case Some(Spec.JSONSCHEMA)
         if jsonSchemaVersion.exists(version => version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) =>

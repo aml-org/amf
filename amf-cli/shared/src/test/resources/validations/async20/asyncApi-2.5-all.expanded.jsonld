@@ -7520,12 +7520,17 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/marketData/payload/default/shape/schema/shape/schema"
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/shape/market"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
                   {
-                    "@value": "#/components/schemas/market"
+                    "@value": "market"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
                   }
                 ],
                 "http://www.w3.org/ns/shacl#name": [
@@ -7541,10 +7546,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/marketData/payload/default/shape/schema/source-map/synthesized-field/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/marketData/payload/default/shape/schema/source-map/synthesized-field/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/document#link-target"
+                            "@value": "http://a.ml/vocabularies/document#link-label"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7557,7 +7562,20 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/marketData/payload/default/shape/schema/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/document#link-label"
+                            "@value": "http://a.ml/vocabularies/document#recursive"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/asyncApi-2.5-all.yaml#/declares/msg/marketData/payload/default/shape/schema/source-map/synthesized-field/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/document#link-target"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
