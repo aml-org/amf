@@ -61,12 +61,13 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
   }
 
   private def amfConfigFrom(spec: Spec): AMFConfiguration = spec match {
-    case Spec.OAS30   => OASConfiguration.OAS30()
-    case Spec.OAS20   => OASConfiguration.OAS20()
-    case Spec.RAML10  => RAMLConfiguration.RAML10()
-    case Spec.RAML08  => RAMLConfiguration.RAML08()
-    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
-    case _            => throw new IllegalArgumentException
+    case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS20  => OASConfiguration.OAS20()
+    case Spec.RAML10 => RAMLConfiguration.RAML10()
+    case Spec.RAML08 => RAMLConfiguration.RAML08()
+    case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
+      AsyncAPIConfiguration.Async20()
+    case _ => throw new IllegalArgumentException
   }
 }
 
