@@ -9,12 +9,13 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 
+import scala.collection.immutable.Queue
 import scala.collection.mutable
 
 case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) {
 
   private val algorithm: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
-  private var queue: Seq[Shape]            = Seq.empty
+  private var queue: Queue[Shape]          = Queue()
 
   def log(msg: String): Unit                 = context.logger.log(msg)
   def getCached(shape: Shape): Option[Shape] = context.resolvedInheritanceIndex.get(shape.id)
@@ -62,13 +63,9 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
   private def addToCache(shape: Shape, id: String) = context.resolvedInheritanceIndex += (shape, id)
   private def addToCache(shape: Shape)             = context.resolvedInheritanceIndex += shape
 
-  def removeFromQueue(shape: Shape): Unit = {
-    log(s"removing from queue: ${shape.debugInfo()}")
-    queue = queue.filterNot(_ == shape)
-  }
   def queue(shape: Shape): Unit = {
     log(s"queueing: ${shape.debugInfo()}")
-    queue = queue :+ shape
+    queue = queue enqueue shape
   }
 
   def normalize(shape: Shape, skipQueue: Boolean = false): Shape = {
@@ -82,9 +79,9 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
         addToCache(result)
 
         while (queue.nonEmpty && !skipQueue) {
-          val next = queue.head
+          val (next, newQueue) = queue.dequeue
           log(s"queue is not empty ----- ")
-          queue = queue.tail
+          queue = newQueue
           normalize(next, skipQueue = true) // do not nest queued normalizations
         }
 
@@ -141,14 +138,17 @@ case class ShapeNormalizationInheritanceResolver(context: NormalizationContext) 
     }
   }
 
-  private def inheritFromSuperTypes(shape: Shape, superTypes: Seq[Shape]) = {
+  private def inheritFromSuperTypes(shape: Shape, superTypes: Seq[Shape]): Shape = {
     shape.fields.removeField(ShapeModel.Inherits)
     superTypes.fold(shape) { (accShape, superType) =>
-      // go up the inheritance chain before applying type. We want to apply inheritance with the accumulated super type
+      // Go up the inheritance chain before applying type. We want to apply inheritance with the accumulated super type
       log(s"inherit from super type: ${superType.debugInfo()}")
+
+      // Runs normalize for super shape
       context.logger.addPadding()
       val normalizedSuperType = normalize(superType, skipQueue = true)
       context.logger.removePadding()
+
       if (detectedRecursion) accShape
       else {
 

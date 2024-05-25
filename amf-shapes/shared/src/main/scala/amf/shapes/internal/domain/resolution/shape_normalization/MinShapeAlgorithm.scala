@@ -673,12 +673,14 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     case DataType.Integer => true
     case _                => false
   }
+
   private def isNumeric(dataType: String): Boolean = dataType match {
     case DataType.Float | DataType.Double | DataType.Number | DataType.Integer | DataType.Long => true
     case _                                                                                     => false
   }
 
   private def areSameShape(child: Shape, parent: Shape): Boolean = child.id == parent.id && child.id != null
+
   def computeMinShape(child: Shape, parent: Shape): Shape = {
     if (areSameShape(child, parent)) return child
 
@@ -916,25 +918,24 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
     val superProperties = superNode.properties
     val baseProperties  = baseNode.properties
 
+    // Calculate which properties are overwritten by the baseNode
     type IsOverridden = Boolean
     type PropertyPath = String
 
-    val commonProps: mutable.HashMap[PropertyPath, IsOverridden] = mutable.HashMap()
+    val propsToOverride: mutable.HashMap[PropertyPath, IsOverridden] = mutable.HashMap()
 
-    superProperties.foreach(p => commonProps.put(p.path.value(), false))
+    superProperties.foreach(p => propsToOverride.put(p.path.value(), false))
     baseProperties.foreach { p =>
-      if (commonProps.contains(p.path.value())) {
-        commonProps.put(p.path.value(), true)
-      } else {
-        commonProps.put(p.path.value(), false)
-      }
+      val isOverridden = propsToOverride.contains(p.path.value())
+      propsToOverride.put(p.path.value(), isOverridden)
     }
 
-    val minProps = commonProps.map {
+    val minProps = propsToOverride.map {
       case (path, true) =>
-        val child  = baseProperties.find(_.path.is(path)).get
-        val parent = superProperties.find(_.path.is(path)).get
-        if (parent.id != child.id) {
+        // It returns true because the prop is present in both nodes
+        val childProp  = baseProperties.find(_.path.is(path)).get
+        val parentProp = superProperties.find(_.path.is(path)).get
+        if (parentProp.id != childProp.id) {
 
           /** We need to ensure the child property "belongs" to the current node in order to create a new inheritance.
             * This is because the child property might have been inherited from another parent and we end up mutating
@@ -948,12 +949,11 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
             *
             * The range of Child.a is [Node1, Node2] while Parent1.a is just Node1
             */
-          val childCopy = child.copyShape()
-          childCopy.withId(child.id)
+          val childPropCopy = childProp.copyShape().withId(childProp.id)
 
-          createNewInheritanceAndQueue(childCopy, parent)
+          createNewInheritanceAndQueue(childPropCopy, parentProp)
         } else {
-          child
+          childProp
         }
 
       case (path, false) =>
