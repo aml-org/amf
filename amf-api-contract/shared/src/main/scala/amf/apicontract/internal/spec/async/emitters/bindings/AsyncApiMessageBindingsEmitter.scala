@@ -5,6 +5,8 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBin
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.googlepubsub.{
   GooglePubSubMessageBinding,
+  GooglePubSubMessageBinding010,
+  GooglePubSubMessageBinding020,
   GooglePubSubSchemaDefinition
 }
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding
@@ -15,11 +17,14 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091MessageBindingModel,
   AnypointMQMessageBindingModel,
   GooglePubSubMessageBindingModel,
+  GooglePubSubSchemaDefinition010Model,
   GooglePubSubSchemaDefinitionModel,
+  HttpMessageBinding030Model,
   HttpMessageBindingModel,
   IBMMQMessageBindingModel,
   KafkaMessageBinding030Model,
-  KafkaMessageBindingModel
+  KafkaMessageBindingModel,
+  MqttMessageBinding020Model
 }
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.{
@@ -79,6 +84,8 @@ class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(im
 
         fs.entry(HttpMessageBindingModel.Headers)
           .foreach(f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
+        fs.entry(HttpMessageBinding030Model.StatusCode).foreach(f => result += ValueEmitter("statusCode", f))
+
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -126,6 +133,20 @@ class MqttMessageEmitter(binding: MqttMessageBinding, ordering: SpecOrdering)(im
       _.obj { emitter =>
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
+
+        fs.entry(MqttMessageBinding020Model.PayloadFormatIndicator)
+          .foreach(f => result += ValueEmitter("payloadFormatIndicator", f))
+        fs.entry(MqttMessageBinding020Model.CorrelationData)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("correlationData", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
+        fs.entry(MqttMessageBinding020Model.ContentType).foreach(f => result += ValueEmitter("contentType", f))
+        fs.entry(MqttMessageBinding020Model.ResponseTopic).foreach(f => result += ValueEmitter("responseTopic", f))
+        fs.entry(MqttMessageBinding020Model.ResponseTopicSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("responseTopic", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
+
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
       }
@@ -224,11 +245,17 @@ class GooglePubSubMessageBindingEmitter(binding: GooglePubSubMessageBinding, ord
             )
           )
         fs.entry(GooglePubSubMessageBindingModel.OrderingKey).foreach(f => result += ValueEmitter("orderingKey", f))
-        Option(binding.schema).foreach(schema => result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering))
+        binding match {
+          case default: GooglePubSubMessageBinding010 =>
+            Option(default.schema).foreach(schema =>
+              result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering)
+            )
+          case latest: GooglePubSubMessageBinding020 =>
+            Option(latest.schema).foreach(schema => result += new GooglePubSubSchemaDefinitionEmitter(schema, ordering))
+        }
 
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
-
       }
     )
   }
@@ -244,7 +271,7 @@ class GooglePubSubSchemaDefinitionEmitter(binding: GooglePubSubSchemaDefinition,
         val fs     = binding.fields
 
         fs.entry(GooglePubSubSchemaDefinitionModel.Name).foreach(f => result += ValueEmitter("name", f))
-        fs.entry(GooglePubSubSchemaDefinitionModel.FieldType).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(GooglePubSubSchemaDefinition010Model.FieldType).foreach(f => result += ValueEmitter("type", f))
 
         traverse(ordering.sorted(result), emitter)
       }

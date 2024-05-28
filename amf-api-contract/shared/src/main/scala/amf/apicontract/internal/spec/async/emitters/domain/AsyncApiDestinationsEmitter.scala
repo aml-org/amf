@@ -2,11 +2,18 @@ package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.bindings.solace.{
   SolaceOperationDestination,
+  SolaceOperationDestination010,
+  SolaceOperationDestination020,
+  SolaceOperationDestination030,
+  SolaceOperationDestination040,
   SolaceOperationQueue,
+  SolaceOperationQueue030,
   SolaceOperationTopic
 }
 import amf.apicontract.internal.metamodel.domain.bindings.{
   SolaceOperationDestinationModel,
+  SolaceOperationQueue010Model,
+  SolaceOperationQueue030Model,
   SolaceOperationQueueModel,
   SolaceOperationTopicModel
 }
@@ -63,8 +70,19 @@ class SingleDestinationEmitter(destination: SolaceOperationDestination, ordering
       }
     }
 
-    Option(destination.queue).foreach(queue => result += new SolaceOperationQueueEmitter(queue, ordering))
-    Option(destination.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
+    Option(destination.queue).foreach { queue =>
+      val emitter = new SolaceOperationQueueEmitter(queue, ordering)
+      result += emitter
+    }
+    destination match {
+      case binding020: SolaceOperationDestination020 =>
+        Option(binding020.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
+      case binding030: SolaceOperationDestination030 =>
+        Option(binding030.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
+      case binding040: SolaceOperationDestination040 =>
+        Option(binding040.topic).foreach(topic => result += new SolaceOperationTopicEmitter(topic, ordering))
+      case _ =>
+    }
 
     result ++= AnnotationsEmitter(destination, ordering).emitters
 
@@ -89,8 +107,9 @@ class SolaceOperationQueueEmitter(queue: SolaceOperationQueue, ordering: SpecOrd
         fs.entry(SolaceOperationQueueModel.TopicSubscriptions)
           .foreach(f => result += spec.arrayEmitter("topicSubscriptions", f, ordering))
         fs.entry(SolaceOperationQueueModel.AccessType).foreach(f => result += ValueEmitter("accessType", f))
-        fs.entry(SolaceOperationQueueModel.MaxMsgSpoolSize).foreach(f => result += ValueEmitter("maxMsgSpoolSize", f))
-        fs.entry(SolaceOperationQueueModel.MaxTtl).foreach(f => result += ValueEmitter("maxTtl", f))
+        fs.entry(SolaceOperationQueue030Model.MaxMsgSpoolSize)
+          .foreach(f => result += ValueEmitter("maxMsgSpoolSize", f))
+        fs.entry(SolaceOperationQueue030Model.MaxTtl).foreach(f => result += ValueEmitter("maxTtl", f))
 
         traverse(ordering.sorted(result), emitter)
       }

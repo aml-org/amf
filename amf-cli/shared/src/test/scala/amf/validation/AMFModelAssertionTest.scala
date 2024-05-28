@@ -31,17 +31,19 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath                        = "file://amf-cli/shared/src/test/resources/validations"
-  val ro: RenderOptions               = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
-  val graphqlConfig: AMFConfiguration = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
-  val ramlConfig: AMFConfiguration    = RAMLConfiguration.RAML10().withRenderOptions(ro)
-  val ramlClient: AMFBaseUnitClient   = ramlConfig.baseUnitClient()
-  val raml08Config: AMFConfiguration  = RAMLConfiguration.RAML08().withRenderOptions(ro)
-  val raml08Client: AMFBaseUnitClient = raml08Config.baseUnitClient()
-  val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
-  val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
-  val asyncConfig: AMFConfiguration   = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
-  val asyncClient: AMFBaseUnitClient  = asyncConfig.baseUnitClient()
+  val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
+  val ro: RenderOptions                      = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
+  val graphqlConfig: AMFConfiguration        = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
+  val ramlConfig: AMFConfiguration           = RAMLConfiguration.RAML10().withRenderOptions(ro)
+  val ramlClient: AMFBaseUnitClient          = ramlConfig.baseUnitClient()
+  val raml08Config: AMFConfiguration         = RAMLConfiguration.RAML08().withRenderOptions(ro)
+  val raml08Client: AMFBaseUnitClient        = raml08Config.baseUnitClient()
+  val oasConfig: AMFConfiguration            = OASConfiguration.OAS30().withRenderOptions(ro)
+  val oasClient: AMFBaseUnitClient           = oasConfig.baseUnitClient()
+  val oasComponentsConfig: AMFConfiguration  = OASConfiguration.OAS30Component().withRenderOptions(ro)
+  val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
+  val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
+  val asyncClient: AMFBaseUnitClient         = asyncConfig.baseUnitClient()
 
   def modelAssertion(
       path: String,
@@ -663,6 +665,16 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
       serverSecurityScopes.size shouldBe 2
       operationSecurityScopes.size shouldBe 2
+    }
+  }
+
+  // W-13014769
+  test("OAS components parsing should throw unresolved references like OAS 3") {
+    val api = s"$basePath/oas3/oas-components-unresolved-ref.yaml"
+    oasComponentsClient.parse(api).flatMap { parseResultComponents =>
+      oasClient.parse(api).map { parseResultOas =>
+        parseResultOas.toString() shouldEqual parseResultComponents.toString()
+      }
     }
   }
 }

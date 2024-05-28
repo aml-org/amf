@@ -9,14 +9,14 @@ servers:
     bindings:
       solace:
         msgVpn: test
-        bindingVersion: 1.2.3
+        bindingVersion: 0.1.0
         thisKeyIsNotAllowed: should throw validation error
 channels:
   some-channel:
     publish:
       bindings:
         solace:
-          bindingVersion: 0.3.0
+          bindingVersion: 0.2.0
           destinations:
             - destinationType: queue
               queue:

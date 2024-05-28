@@ -5,34 +5,18 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationB
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
-import amf.apicontract.client.scala.model.domain.bindings.solace.{
-  SolaceOperationBinding,
-  SolaceOperationDestination,
-  SolaceOperationQueue,
-  SolaceOperationTopic
-}
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  Amqp091OperationBinding010Model,
-  Amqp091OperationBinding030Model,
-  Amqp091OperationBindingModel,
-  HttpOperationBindingModel,
-  KafkaOperationBindingModel,
-  MqttOperationBindingModel,
-  SolaceOperationBindingModel,
-  SolaceOperationQueueModel,
-  SolaceOperationTopicModel
-}
+import amf.apicontract.client.scala.model.domain.bindings.solace._
+import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.async.emitters.domain.AsyncApiDestinationsEmitter
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Solace
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import org.yaml.model.YDocument.EntryBuilder
-import org.yaml.model.{YDocument, YMap, YNode}
+import org.mulesoft.common.client.lexical.Position
+import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
@@ -66,7 +50,7 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
         val fs     = binding.fields
         val result = ListBuffer[EntryEmitter]()
 
-        fs.entry(HttpOperationBindingModel.OperationType).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(HttpOperationBinding010Model.OperationType).foreach(f => result += ValueEmitter("type", f))
         fs.entry(HttpOperationBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(HttpOperationBindingModel.Query)
           .foreach(f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
@@ -116,6 +100,12 @@ class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecO
 
         fs.entry(MqttOperationBindingModel.Qos).foreach(f => result += ValueEmitter("qos", f))
         fs.entry(MqttOperationBindingModel.Retain).foreach(f => result += ValueEmitter("retain", f))
+        fs.entry(MqttOperationBinding020Model.MessageExpiryInterval)
+          .foreach(f => result += ValueEmitter("messageExpiryInterval", f))
+        fs.entry(MqttOperationBinding020Model.MessageExpiryIntervalSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("messageExpiryInterval", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -169,6 +159,13 @@ class SolaceOperationBindingEmitter(binding: SolaceOperationBinding, ordering: S
 
         fs.entry(SolaceOperationBindingModel.Destinations)
           .foreach(f => result += AsyncApiDestinationsEmitter(f, ordering))
+        binding match {
+          case binding040: SolaceOperationBinding040 =>
+            fs.entry(SolaceOperationBinding040Model.TimeToLive).foreach(f => result += ValueEmitter("timeToLive", f))
+            fs.entry(SolaceOperationBinding040Model.Priority).foreach(f => result += ValueEmitter("priority", f))
+            fs.entry(SolaceOperationBinding040Model.DmqEligible).foreach(f => result += ValueEmitter("dmqEligible", f))
+          case _ =>
+        }
 
         emitBindingVersion(fs, result)
 

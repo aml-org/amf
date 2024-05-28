@@ -57,7 +57,9 @@ object OasTypeParser {
 
   private def getSchemaVersion(ctx: ShapeParserContext) = {
     if (ctx.spec == Spec.OAS30) OAS30SchemaVersion(Schema)
-    else if (ctx.spec == Spec.ASYNC20) JSONSchemaDraft7SchemaVersion
+    else if (
+      ctx.spec == Spec.ASYNC20 || ctx.spec == Spec.ASYNC21 || ctx.spec == Spec.ASYNC22 || ctx.spec == Spec.ASYNC23 || ctx.spec == Spec.ASYNC24 || ctx.spec == Spec.ASYNC25 || ctx.spec == Spec.ASYNC26
+    ) JSONSchemaDraft7SchemaVersion
     else OAS20SchemaVersion(Schema)
   }
 }

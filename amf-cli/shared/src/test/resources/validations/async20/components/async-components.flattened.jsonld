@@ -1223,7 +1223,7 @@
       "http://a.ml/vocabularies/core#name": "someMessageBinding",
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/kafka-message-010"
@@ -1263,7 +1263,7 @@
       "http://a.ml/vocabularies/core#name": "someOperationBinding",
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1337,7 +1337,7 @@
       "http://a.ml/vocabularies/core#name": "someServerBinding",
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1742,9 +1742,9 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#MqttMessageBinding",
+        "http://a.ml/vocabularies/apiBinding#MqttMessageBinding010",
         "http://a.ml/vocabularies/apiBinding#MessageBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -1752,7 +1752,7 @@
       "http://a.ml/vocabularies/apiBinding#type": "mqtt",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map"
         }
       ]
     },
@@ -1815,22 +1815,22 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#HttpOperationBinding",
+        "http://a.ml/vocabularies/apiBinding#HttpOperationBinding010",
         "http://a.ml/vocabularies/apiBinding#OperationBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiBinding#operationType": "request",
       "http://a.ml/vocabularies/apiBinding#method": "TRACE",
       "http://a.ml/vocabularies/apiBinding#query": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "31.07.92",
       "http://a.ml/vocabularies/apiBinding#type": "http",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map"
         }
       ]
     },
@@ -1930,9 +1930,9 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#MqttServerBinding",
+        "http://a.ml/vocabularies/apiBinding#MqttServerBinding010",
         "http://a.ml/vocabularies/apiBinding#ServerBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -1943,7 +1943,7 @@
       "http://a.ml/vocabularies/apiBinding#type": "mqtt",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map"
         }
       ]
     },
@@ -2477,19 +2477,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map/lexical/element_1"
         }
       ]
     },
@@ -2567,7 +2567,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2578,39 +2578,39 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "schema",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_5"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_4"
         }
       ]
     },
@@ -2692,28 +2692,28 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_5"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_4"
         }
       ]
     },
@@ -3120,18 +3120,18 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,8)-(41,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(73,8)-(74,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(72,6)-(72,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someMessageBinding/bindings/mqtt-message-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(72,6)-(74,0)]"
     },
     {
@@ -3174,7 +3174,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(74,6)-(77,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -3187,67 +3187,67 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "some",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_5",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(93,8)-(94,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(92,6)-(101,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#query",
       "http://a.ml/vocabularies/document-source-maps#value": "[(96,8)-(101,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(92,6)-(92,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#operationType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(94,8)-(95,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#method",
       "http://a.ml/vocabularies/document-source-maps#value": "[(95,8)-(96,0)]"
     },
@@ -3267,32 +3267,32 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(106,6)-(108,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_5",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(86,8)-(87,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010",
       "http://a.ml/vocabularies/document-source-maps#value": "[(82,6)-(87,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#keepAlive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(85,8)-(86,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(82,6)-(82,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#clientId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(83,8)-(84,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someServerBinding/bindings/mqtt-server-010/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#cleanSession",
       "http://a.ml/vocabularies/document-source-maps#value": "[(84,8)-(85,0)]"
     },
@@ -3549,7 +3549,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(76,10)-(77,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -3565,44 +3565,44 @@
       "http://www.w3.org/ns/shacl#name": "some",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(96,14)-(101,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(98,10)-(101,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(97,10)-(97,14)]"
     },
     {
@@ -3739,32 +3739,32 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,12)-(32,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some",
       "http://a.ml/vocabularies/document-source-maps#value": "[(99,12)-(101,0)]"
     },
     {
@@ -3817,17 +3817,17 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some",
       "http://a.ml/vocabularies/document-source-maps#value": "[(100,14)-(100,18)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some",
       "http://a.ml/vocabularies/document-source-maps#value": "[(99,12)-(101,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation/shape/schema/property/property/some/scalar/some/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/async-components.yaml#/declares/someOperationBinding/bindings/http-operation-010/shape/schema/property/property/some/scalar/some/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(100,14)-(101,0)]"
     },

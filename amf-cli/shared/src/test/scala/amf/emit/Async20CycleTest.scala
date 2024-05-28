@@ -51,8 +51,16 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Http operation binding", "http-operation-binding.yaml", "http-operation-binding.%s"),
     FixtureData("Kafka message binding", "kafka-message-binding-010.yaml", "kafka-message-binding.%s"),
     FixtureData("Kafka operation binding", "kafka-operation-binding.yaml", "kafka-operation-binding.%s"),
-    FixtureData("Mqtt message binding", "mqtt-message-binding.yaml", "mqtt-message-binding.%s"),
-    FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.%s"),
+    FixtureData(
+      "Mqtt message binding",
+      "mqtt-message-binding.yaml",
+      "mqtt-message-binding.%s"
+    ),
+    FixtureData(
+      "Mqtt operation binding",
+      "mqtt-operation-binding.yaml",
+      "mqtt-operation-binding.%s"
+    ),
     FixtureData("Mqtt server binding", "mqtt-server-binding.yaml", "mqtt-server-binding.%s"),
     FixtureData("Websockets channel binding", "ws-channel-binding.yaml", "ws-channel-binding.%s"),
     FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.%s"),
@@ -118,7 +126,11 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/amqp-operation-binding.yaml",
       "bindings/amqp-operation-binding.yaml"
     ),
-    FixtureData("Http message binding", "bindings/http-message-binding.yaml", "bindings/http-message-binding.yaml"),
+    FixtureData(
+      "Http message binding",
+      "bindings/http-message-binding.yaml",
+      "bindings/http-message-binding.yaml"
+    ),
     FixtureData(
       "Http operation binding",
       "bindings/http-operation-binding.yaml",
@@ -134,13 +146,21 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/kafka-operation-binding.yaml",
       "bindings/kafka-operation-binding.yaml.yaml"
     ),
-    FixtureData("Mqtt message binding", "bindings/mqtt-message-binding.yaml", "bindings/mqtt-message-binding.yaml"),
+    FixtureData(
+      "Mqtt message binding",
+      "bindings/mqtt-message-binding.yaml",
+      "bindings/mqtt-message-binding.yaml.yaml"
+    ),
     FixtureData(
       "Mqtt operation binding",
       "bindings/mqtt-operation-binding.yaml",
-      "bindings/mqtt-operation-binding.yaml"
+      "bindings/mqtt-operation-binding.yaml.yaml"
     ),
-    FixtureData("Mqtt server binding", "bindings/mqtt-server-binding.yaml", "bindings/mqtt-server-binding.yaml"),
+    FixtureData(
+      "Mqtt server binding",
+      "bindings/mqtt-server-binding.yaml",
+      "bindings/mqtt-server-binding.yaml.yaml"
+    ),
     FixtureData("Websockets channel binding", "bindings/ws-channel-binding.yaml", "bindings/ws-channel-binding.yaml"),
     FixtureData("RAML type - simple union", "raml-types/simple-union.yaml", "raml-types/simple-union.yaml"),
     FixtureData("RAML type - simple object", "raml-types/simple-object.yaml", "raml-types/simple-object.yaml"),
@@ -199,9 +219,9 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "bindings/pulsar-binding-only-required.yaml"
     ),
     FixtureData(
-      "GooglePubSub message-binding and channel-binding",
-      "bindings/gps-message-binding.yaml",
-      "bindings/gps-message-binding.yaml"
+      "GooglePubSub message and channel binding",
+      "bindings/google-pub-sub-binding.yaml",
+      "bindings/google-pub-sub-binding.yaml"
     ),
     FixtureData(
       "async 2.4+ explicit security field in operation bindings",
@@ -252,6 +272,21 @@ class Async20CycleTest extends FunSuiteCycleTests {
       "Kafka channel binding",
       "bindings/kafka-channel-binding.yaml",
       "bindings/kafka-channel-binding.yaml"
+    ),
+    FixtureData(
+      "solace operation destination binding",
+      "bindings/solace-binding-operation.yaml",
+      "bindings/solace-binding-operation.yaml"
+    ),
+    FixtureData(
+      "solace operation queue binding",
+      "bindings/solace-operation-queue-binding.yaml",
+      "bindings/solace-operation-queue-binding.yaml"
+    ),
+      FixtureData(
+      "solace binding 0.4.0 version",
+      "bindings/solace-0.4.0-version.yaml",
+      "bindings/solace-0.4.0-version.yaml"
     )
 
 // TODO: figure out why this test is commented out

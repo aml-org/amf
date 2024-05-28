@@ -1,0 +1,15 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: oas components test
+
+paths: { }
+
+components:
+  schemas:
+    RequestTypeTOPaged:
+      description: "RequestTypeTOPaged"
+      type: "object"
+      allOf:
+        - $ref: "#/components/responses/PageResponse"
+        - type: "string"

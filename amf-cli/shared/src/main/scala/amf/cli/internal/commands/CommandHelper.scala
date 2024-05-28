@@ -119,12 +119,13 @@ trait CommandHelper {
   }
 
   private def configFor(spec: Spec): Option[AMFConfiguration] = spec match {
-    case Spec.RAML10  => Some(RAMLConfiguration.RAML10())
-    case Spec.RAML08  => Some(RAMLConfiguration.RAML08())
-    case Spec.OAS20   => Some(OASConfiguration.OAS20())
-    case Spec.OAS30   => Some(OASConfiguration.OAS30())
-    case Spec.ASYNC20 => Some(AsyncAPIConfiguration.Async20())
-    case _            => None
+    case Spec.RAML10 => Some(RAMLConfiguration.RAML10())
+    case Spec.RAML08 => Some(RAMLConfiguration.RAML08())
+    case Spec.OAS20  => Some(OASConfiguration.OAS20())
+    case Spec.OAS30  => Some(OASConfiguration.OAS30())
+    case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
+      Some(AsyncAPIConfiguration.Async20())
+    case _ => None
   }
 
   def effectiveVendor(spec: Option[String]): Spec = spec.flatMap(Spec.unapply).getOrElse(Spec("unknown"))

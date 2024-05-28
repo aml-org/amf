@@ -17,5 +17,21 @@ servers:
           retain: true
           message: Connection failure
         keepAlive: 12
-        bindingVersion: 3.4.3
+
+  other-server:
+    url: http://some.com
+    protocol: amqp
+    bindings:
+      mqtt:
+        clientId: someid
+        cleanSession: true
+        lastWill:
+          topic: some
+          qos: 2
+          retain: true
+          message: Connection failure
+        keepAlive: 12
+        bindingVersion: 0.2.0
+        sessionExpiryInterval: 123
+        maximumPacketSize: 123
 channels: {}

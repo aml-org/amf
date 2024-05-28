@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
+  Message: Version 9.9.9 is not supported in a Solace Operation Binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-030
+  Property: 
+  Range: [(17,8)-(34,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-invalid-queue-version.yaml

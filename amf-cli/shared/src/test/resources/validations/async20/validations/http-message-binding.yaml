@@ -1,0 +1,38 @@
+asyncapi: 2.0.0
+
+info:
+  title: test API
+  version: 1.0.0
+
+channels:
+  /test: # specific to 0.3.0
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.3.0
+            statusCode: 200 # new key added in 0.3.0, only admits HTTP Status Codes
+
+  /invalid:
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.3.0
+            statusCode: 000 # should trow error
+
+  /invalid2:
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.3.0
+            statusCode: 999 # should trow error
+
+  /invalid3:
+    subscribe:
+      message:
+        bindings:
+          http:
+            bindingVersion: 0.3.0
+            statusCode: 1000 # should trow error

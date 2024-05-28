@@ -1,0 +1,46 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml
+Profile: 
+Conforms: false
+Number of results: 5
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'clientName' not supported in a ASYNC 2.3 SolaceServerBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml#/async-api/server/some.com/server-bindings/bindings/solace-server-binding-010
+  Property: 
+  Range: [(12,8)-(13,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#unsupported-binding-version
+  Message: Version 9.9.9 is not supported in a Solace Operation Binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-030
+  Property: 
+  Range: [(18,8)-(38,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'timeToLive' not supported in a ASYNC 2.3 SolaceOperationBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-030
+  Property: 
+  Range: [(35,10)-(36,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'priority' not supported in a ASYNC 2.3 SolaceOperationBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-030
+  Property: 
+  Range: [(36,10)-(37,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'dmqEligible' not supported in a ASYNC 2.3 SolaceOperationBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/operation-bindings/bindings/solace-operation-030
+  Property: 
+  Range: [(37,10)-(38,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/solace-0.4.0-invalid.yaml

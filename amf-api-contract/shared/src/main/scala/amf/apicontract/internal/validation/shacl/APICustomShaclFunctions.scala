@@ -830,40 +830,44 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "KafkaTopicConfigurationValidations"
 
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val topicConfiguration = element.asInstanceOf[HasTopicConfiguration].topicConfiguration
-          val cleanupPolicy      = topicConfiguration.cleanupPolicy.map(_.value())
-          if (cleanupPolicy.nonEmpty && cleanupPolicy.intersect(Seq("delete", "compact")).isEmpty)
-            validate(
-              validationInfo(
-                KafkaTopicConfigurationModel.CleanupPolicy,
-                "Kafka Topic Configuration 'cleanup.policy' field can only contain 'delete' and/or 'compact'.",
-                topicConfiguration.annotations
-              )
-            )
-          if (topicConfiguration.retentionMs.value() < -1)
-            validate(
-              validationInfo(
-                KafkaTopicConfigurationModel.RetentionMs,
-                "Kafka Topic Configuration 'retention.ms' field valid values are [-1,...]",
-                topicConfiguration.annotations
-              )
-            )
-          if (topicConfiguration.deleteRetentionMs.value() < 0)
-            validate(
-              validationInfo(
-                KafkaTopicConfigurationModel.DeleteRetentionMs,
-                "Kafka topic configuration 'delete.retention.ms' field must be a positive number",
-                topicConfiguration.annotations
-              )
-            )
-          if (topicConfiguration.maxMessageBytes.value() < 0)
-            validate(
-              validationInfo(
-                KafkaTopicConfigurationModel.MaxMessageBytes,
-                "Kafka topic configuration 'max.message.bytes' field must be a positive number",
-                topicConfiguration.annotations
-              )
-            )
+          element match {
+            case hasTopic: HasTopicConfiguration =>
+              val topicConfiguration = hasTopic.topicConfiguration
+              val cleanupPolicy      = topicConfiguration.cleanupPolicy.map(_.value())
+              if (cleanupPolicy.nonEmpty && cleanupPolicy.intersect(Seq("delete", "compact")).isEmpty)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.CleanupPolicy,
+                    "Kafka Topic Configuration 'cleanup.policy' field can only contain 'delete' and/or 'compact'.",
+                    topicConfiguration.annotations
+                  )
+                )
+              if (topicConfiguration.retentionMs.value() < -1)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.RetentionMs,
+                    "Kafka Topic Configuration 'retention.ms' field valid values are [-1,...]",
+                    topicConfiguration.annotations
+                  )
+                )
+              if (topicConfiguration.deleteRetentionMs.value() < 0)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.DeleteRetentionMs,
+                    "Kafka topic configuration 'delete.retention.ms' field must be a positive number",
+                    topicConfiguration.annotations
+                  )
+                )
+              if (topicConfiguration.maxMessageBytes.value() < 0)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.MaxMessageBytes,
+                    "Kafka topic configuration 'max.message.bytes' field must be a positive number",
+                    topicConfiguration.annotations
+                  )
+                )
+            case _ => // ignore
+          }
         }
       }
     )

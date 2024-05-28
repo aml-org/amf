@@ -9,6 +9,7 @@ import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, AsyncApi20, Spec}
 class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-cli/shared/src/test/resources/resolution/async20/"
   private val validationsPath: String = "amf-cli/shared/src/test/resources/validations/async20/"
+  private val referencePath: String   = "amf-cli/shared/src/test/resources/references/async/"
 
   multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
     config =>
@@ -306,6 +307,26 @@ class Async20ResolutionTest extends ResolutionTest {
       "operation-security-explicit.yaml",
       Async20YamlHint,
       target = Async20YamlHint
+    )
+  }
+
+  test("async 2.0 should resolve inner references correctly") {
+    cycle(
+      "async20.yaml",
+      "async20.yaml.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint,
+      directory = referencePath
+    )
+  }
+
+  test("async 2.6 should resolve inner references correctly") {
+    cycle(
+      "async26.yaml",
+      "async26.yaml.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint,
+      directory = referencePath
     )
   }
 

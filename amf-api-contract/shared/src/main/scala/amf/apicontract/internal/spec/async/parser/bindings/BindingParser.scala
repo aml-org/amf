@@ -55,7 +55,7 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
 
   protected def isSemVer(str: String): Boolean = {
     val regex = """^([0-9]+)\.([0-9]+)\.([0-9]+)$""".r
-    regex.findFirstIn(str).isDefined
+    regex.findFirstIn(str).isDefined || str == "latest"
   }
 
   protected def getDefaultBindingVersion(binding: String, spec: Spec): String = {
@@ -69,10 +69,24 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       case ("KafkaOperationBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)              => "0.3.0"
       case ("KafkaMessageBinding", ASYNC20)                                                                  => "0.1.0"
       case ("KafkaMessageBinding", ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)                => "0.3.0"
+
       // defined in 0.3.0 onwards
-      case ("KafkaServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
-      // defined in 0.3.0 onwards
+      case ("KafkaServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)  => "0.3.0"
       case ("KafkaChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
+
+      case ("HttpOperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
+      case ("HttpMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
+      case ("GooglePubSubChannelBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) =>
+        "0.1.0"
+      case ("GooglePubSubMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) =>
+        "0.1.0"
+      case ("MqttServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)    => "0.1.0"
+      case ("MqttOperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.1.0"
+      case ("MqttMessageBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26)   => "0.1.0"
+      case("SolaceServerBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
+      case("SolaceOperationBinding", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
+      case("SolaceOperationDestination", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
+      case("SolaceOperationQueue", ASYNC20 | ASYNC21 | ASYNC22 | ASYNC23 | ASYNC24 | ASYNC25 | ASYNC26) => "0.3.0"
     }
   }
 
@@ -165,5 +179,21 @@ trait BindingParser[+Binding <: DomainElement] extends SpecParserOps {
       schema: String
   ): Unit = {
     ctx.violation(RequiredField, node, s"field '$missingField' is required in a $schema")
+  }
+
+  def parseScalarOrRefOrSchema(binding: DomainElement, entry: YMapEntry, intField: Field, schemaField: Field)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
+    entry.value.tagType match {
+      case YType.Int | YType.Str =>
+        Some(entry).foreach(intField in binding)
+      case YType.Map =>
+        ctx.link(entry.value) match {
+          case Left(fullRef) =>
+            handleRef(fullRef, "schemas", entry, schemaField, binding)
+          case Right(_) =>
+            parseSchema(schemaField, binding, entry)
+        }
+    }
   }
 }

@@ -3,11 +3,10 @@ package amf.shapes.internal.spec.async.parser
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
-import amf.core.internal.remote.Spec.ASYNC20
-import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.parser.{OasLikeIgnoreCriteria, OasLink}
+import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.RamlWebApiContextType
 import org.yaml.model.YNode
 
 case class Async2Settings private (syntax: SpecSyntax, spec: Spec) extends SpecSettings {

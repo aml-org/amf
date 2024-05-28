@@ -82,8 +82,13 @@ object Async20Syntax extends SpecSyntax {
       "autoDelete",
       "vhost"
     ),
-    "httpOperationBinding" -> Set(
+    "httpOperationBinding010" -> Set(
       "type",
+      "method",
+      "query",
+      "bindingVersion"
+    ),
+    "httpOperationBinding020" -> Set(
       "method",
       "query",
       "bindingVersion"
@@ -118,16 +123,31 @@ object Async20Syntax extends SpecSyntax {
       "messageType",
       "bindingVersion"
     ),
-    "mqttOperationBinding" -> Set(
+    "mqttOperationBinding010" -> Set(
       "qos",
       "retain",
       "bindingVersion"
     ),
-    "mqttServerBinding" -> Set(
+    "mqttOperationBinding020" -> Set(
+      "qos",
+      "retain",
+      "messageExpiryInterval",
+      "bindingVersion"
+    ),
+    "mqttServerBinding010" -> Set(
       "clientId",
       "cleanSession",
       "lastWill",
       "keepAlive",
+      "bindingVersion"
+    ),
+    "mqttServerBinding020" -> Set(
+      "clientId",
+      "cleanSession",
+      "lastWill",
+      "keepAlive",
+      "sessionExpiryInterval",
+      "maximumPacketSize",
       "bindingVersion"
     ),
     "mqttServerLastWill" -> Set(
@@ -136,11 +156,23 @@ object Async20Syntax extends SpecSyntax {
       "retain",
       "message"
     ),
-    "mqttMessageBinding" -> Set(
+    "mqttMessageBinding010" -> Set(
       "bindingVersion"
     ),
-    "httpMessageBinding" -> Set(
+    "mqttMessageBinding020" -> Set(
+      "payloadFormatIndicator",
+      "correlationData",
+      "contentType",
+      "responseTopic",
+      "bindingVersion"
+    ),
+    "httpMessageBinding020" -> Set(
       "headers",
+      "bindingVersion"
+    ),
+    "httpMessageBinding030" -> Set(
+      "headers",
+      "statusCode",
       "bindingVersion"
     ),
     "kafkaMessageBinding010" -> Set(

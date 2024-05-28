@@ -1,0 +1,67 @@
+asyncapi: '2.4.0'
+info:
+  title: Solace Messaging API
+  version: '1.0.0'
+  description: API to interact with Solace messaging system
+
+servers:
+  solaceServer:
+    url: solace.example.com
+    protocol: solace
+    description: Solace broker connection
+    bindings:
+      solace:
+        msgVpn: yourVpn
+        bindingVersion: '9.9.9' #wrong version
+  anotherServer:
+    url: solace.example.com
+    protocol: solace
+    description: Solace broker connection
+    bindings:
+      solace:
+        msgVpn: yourVpn
+        invalidKey: invalid # closeShape invalid
+        bindingVersion: '0.1.0'
+channels:
+  user/created:
+    publish:
+      operationId: publishUserId
+      bindings:
+        solace:
+          bindingVersion: '0.1.0' #invalid version topi added in 0.2.0 version
+          destinations:
+            - destinationType: queue
+              deliveryMode: persistent
+              queue:
+                name: userQueue
+                topicSubscriptions:
+                  - user/created
+                  - user/modified
+              topic:
+                topicSubscriptions:
+                  - user/all
+  user/deleted:
+    publish:
+      operationId: deletedUserId
+      bindings:
+        solace:
+          bindingVersion: '0.2.0' #valid version topic added in 0.2.0 version
+          destinations:
+            - destinationType: queue
+              deliveryMode: persistent
+              queue:
+                name: userQueue
+                topicSubscriptions:
+                  - user/deleted
+              topic:
+                topicSubscriptions:
+                  - user/all
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            userId:
+              type: string
+            userName:
+              type: string

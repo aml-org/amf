@@ -36,6 +36,7 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
       assertPaths(rootMap, module)
       ctx.closedShape(module, rootMap, "root")
     }
+    ctx.futureDeclarations.resolve()
     module
   }
 

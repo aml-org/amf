@@ -105,6 +105,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("required-httpOperationBinding-type.yaml", Some("required-httpOperationBinding-type.report"))
   }
 
+  test("Invalid httpOperationBinding type") {
+    validate("invalid-httpOperationBinding-type.yaml", Some("invalid-httpOperationBinding-type.report"))
+  }
+
   test("HttpOperationBinding type must be request or response") {
     validate("required-httpOperationBinding-type-values.yaml", Some("required-httpOperationBinding-type-values.report"))
   }
@@ -369,8 +373,13 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async 2.5 tags in servers") {
     validate("server-tags.yaml", Some("server-tags.report"))
   }
-  test("Async 2.5 bindings in channel and message") {
-    validate("binding-wrong-key.yaml", Some("binding-wrong-key.report"))
+
+  test("Async 2.5 google pub sub closed shape") {
+    validate("google-binding-wrong-key.yaml", Some("google-binding-wrong-key.report"))
+  }
+
+  test("Async 2.5 google pub sub wrong version") {
+    validate("google-binding-wrong-version.yaml", Some("google-binding-wrong-version.report"))
   }
 
   test("Async 2.4 Server Variables") {
@@ -496,4 +505,45 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Async Kafka topic configuration validations") {
     validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
   }
+
+  test("Async http wrong binding version") {
+    validate("http-binding-wrong-binding-version.yaml", Some("http-binding-wrong-binding-version.report"))
+  }
+
+  test("Async http query and headers refs") {
+    validate("http-binding-references.yaml", Some("http-binding-references.report"))
+  }
+
+  test("Async http message binding valid status code") {
+    validate("http-message-binding.yaml", Some("http-message-binding.report"))
+  }
+
+  test("Async mqtt message binding should warn invalid references") {
+    validate("mqtt-message-binding-refs.yaml", Some("mqtt-message-binding-refs.report"))
+  }
+
+  test("Async mqtt message binding payloadFormatIndicator") {
+    validate("mqtt-message-binding-format.yaml", Some("mqtt-message-binding-format.report"))
+  }
+
+  test("Async mqtt server binding should warn invalid references") {
+    validate("mqtt-server-binding-schemas.yaml", Some("mqtt-server-binding-schemas.report"))
+  }
+
+  test("Async Solace wrong binding Version") {
+    validate("solace-wrong-binding-version.yaml", Some("solace-wrong-binding-version.report"))
+  }
+
+  test("Async Solace Queue wrong binding Version") {
+    validate("solace-wrong-queue-version.yaml", Some("solace-wrong-queue-version.report"))
+  }
+
+  test("Async Solace Queue Invalid binding Version") {
+    validate("solace-invalid-queue-version.yaml", Some("solace-invalid-queue-version.report"))
+  }
+
+  test("Async Solace 0.4.0 invalid version") {
+    validate("solace-0.4.0-invalid.yaml", Some("solace-0.4.0-invalid.report"))
+  }
+
 }

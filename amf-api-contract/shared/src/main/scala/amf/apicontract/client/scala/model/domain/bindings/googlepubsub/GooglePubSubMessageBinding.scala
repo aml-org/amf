@@ -4,7 +4,11 @@ import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, Messa
 import amf.apicontract.internal.metamodel.domain.bindings.BindingVersion.BindingVersion
 import amf.apicontract.internal.metamodel.domain.bindings.GooglePubSubMessageBindingModel._
 import amf.apicontract.internal.metamodel.domain.bindings.{
+  GooglePubSubMessageBinding010Model,
+  GooglePubSubMessageBinding020Model,
   GooglePubSubMessageBindingModel,
+  GooglePubSubSchemaDefinition010Model,
+  GooglePubSubSchemaDefinition020Model,
   GooglePubSubSchemaDefinitionModel
 }
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.GooglePubSub
@@ -14,53 +18,95 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.Key
 
-class GooglePubSubMessageBinding(override val fields: Fields, override val annotations: Annotations)
+abstract class GooglePubSubMessageBinding(override val fields: Fields, override val annotations: Annotations)
     extends MessageBinding
     with BindingVersion
     with Key {
+  override protected def bindingVersionField: Field = BindingVersion
+  override def key: StrField                        = fields.field(GooglePubSubMessageBindingModel.key)
+  override def componentId: String                  = s"/$GooglePubSub-message"
 
-  override protected def bindingVersionField: Field               = BindingVersion
-  override def meta: GooglePubSubMessageBindingModel.type         = GooglePubSubMessageBindingModel
-  def attributes: ObjectNode                                      = fields.field(Attributes)
-  def orderingKey: StrField                                       = fields.field(OrderingKey)
-  def schema: GooglePubSubSchemaDefinition                        = fields.field(Schema)
-  def withAttributes(attributes: ObjectNode): this.type           = set(Attributes, attributes)
-  def withOrderingKey(orderingKey: String): this.type             = set(OrderingKey, orderingKey)
-  def withSchema(schema: GooglePubSubSchemaDefinition): this.type = set(Schema, schema)
+  def attributes: ObjectNode = fields.field(Attributes)
+  def orderingKey: StrField  = fields.field(OrderingKey)
 
-  override def key: StrField = fields.field(GooglePubSubMessageBindingModel.key)
+  def withAttributes(attributes: ObjectNode): this.type = set(Attributes, attributes)
+  def withOrderingKey(orderingKey: String): this.type   = set(OrderingKey, orderingKey)
+}
 
-  override def componentId: String = s"/$GooglePubSub-message"
+class GooglePubSubMessageBinding010(override val fields: Fields, override val annotations: Annotations)
+    extends GooglePubSubMessageBinding(fields, annotations) {
+  override def meta: GooglePubSubMessageBinding010Model.type = GooglePubSubMessageBinding010Model
+  override def componentId: String                           = s"/$GooglePubSub-message-010"
 
-  override def linkCopy(): GooglePubSubMessageBinding = GooglePubSubMessageBinding().withId(id)
+  def schema: GooglePubSubSchemaDefinition010                        = fields.field(Schema)
+  def withSchema(schema: GooglePubSubSchemaDefinition010): this.type = set(Schema, schema)
+
+  override def linkCopy(): GooglePubSubMessageBinding010 = GooglePubSubMessageBinding010().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
-    GooglePubSubMessageBinding.apply
-
+    GooglePubSubMessageBinding010.apply
 }
 
-object GooglePubSubMessageBinding {
-  def apply(): GooglePubSubMessageBinding                         = apply(Annotations())
-  def apply(annotations: Annotations): GooglePubSubMessageBinding = apply(Fields(), annotations)
-  def apply(fields: Fields, annotations: Annotations): GooglePubSubMessageBinding =
-    new GooglePubSubMessageBinding(fields, annotations)
-
+object GooglePubSubMessageBinding010 {
+  def apply(): GooglePubSubMessageBinding010                         = apply(Annotations())
+  def apply(annotations: Annotations): GooglePubSubMessageBinding010 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): GooglePubSubMessageBinding010 =
+    new GooglePubSubMessageBinding010(fields, annotations)
 }
 
-class GooglePubSubSchemaDefinition(val fields: Fields, val annotations: Annotations) extends DomainElement {
-  def meta: GooglePubSubSchemaDefinitionModel.type = GooglePubSubSchemaDefinitionModel
-  def name: StrField                               = fields.field(GooglePubSubSchemaDefinitionModel.Name)
-  def fieldType: StrField                          = fields.field(GooglePubSubSchemaDefinitionModel.FieldType)
-  def withName(name: String): this.type            = set(GooglePubSubSchemaDefinitionModel.Name, name)
-  def withFieldType(fieldType: String): this.type  = set(GooglePubSubSchemaDefinitionModel.FieldType, fieldType)
-  def componentId: String                          = s"/$GooglePubSub-schemaDefinition"
+class GooglePubSubMessageBinding020(override val fields: Fields, override val annotations: Annotations)
+    extends GooglePubSubMessageBinding(fields, annotations) {
+  override def meta: GooglePubSubMessageBinding020Model.type = GooglePubSubMessageBinding020Model
+  override def componentId: String                           = s"/$GooglePubSub-message-020"
 
+  def schema: GooglePubSubSchemaDefinition020                        = fields.field(Schema)
+  def withSchema(schema: GooglePubSubSchemaDefinition020): this.type = set(Schema, schema)
+
+  override def linkCopy(): GooglePubSubMessageBinding020 = GooglePubSubMessageBinding020().withId(id)
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    GooglePubSubMessageBinding020.apply
 }
 
-object GooglePubSubSchemaDefinition {
-  def apply(): GooglePubSubSchemaDefinition                         = apply(Annotations())
-  def apply(annotations: Annotations): GooglePubSubSchemaDefinition = apply(Fields(), annotations)
-  def apply(fields: Fields, annotations: Annotations): GooglePubSubSchemaDefinition =
-    new GooglePubSubSchemaDefinition(fields, annotations)
+object GooglePubSubMessageBinding020 {
+  def apply(): GooglePubSubMessageBinding020                         = apply(Annotations())
+  def apply(annotations: Annotations): GooglePubSubMessageBinding020 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): GooglePubSubMessageBinding020 =
+    new GooglePubSubMessageBinding020(fields, annotations)
+}
 
+abstract class GooglePubSubSchemaDefinition(val fields: Fields, val annotations: Annotations) extends DomainElement {
+  def componentId: String = s"/$GooglePubSub-schemaDefinition"
+
+  def name: StrField                    = fields.field(GooglePubSubSchemaDefinitionModel.Name)
+  def withName(name: String): this.type = set(GooglePubSubSchemaDefinitionModel.Name, name)
+}
+
+class GooglePubSubSchemaDefinition010(override val fields: Fields, override val annotations: Annotations)
+    extends GooglePubSubSchemaDefinition(fields, annotations) {
+  def meta: GooglePubSubSchemaDefinition010Model.type = GooglePubSubSchemaDefinition010Model
+  override def componentId: String                    = s"/$GooglePubSub-schemaDefinition-010"
+
+  def fieldType: StrField                         = fields.field(GooglePubSubSchemaDefinition010Model.FieldType)
+  def withFieldType(fieldType: String): this.type = set(GooglePubSubSchemaDefinition010Model.FieldType, fieldType)
+}
+
+object GooglePubSubSchemaDefinition010 {
+  def apply(): GooglePubSubSchemaDefinition010                         = apply(Annotations())
+  def apply(annotations: Annotations): GooglePubSubSchemaDefinition010 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): GooglePubSubSchemaDefinition010 =
+    new GooglePubSubSchemaDefinition010(fields, annotations)
+}
+
+class GooglePubSubSchemaDefinition020(override val fields: Fields, override val annotations: Annotations)
+    extends GooglePubSubSchemaDefinition(fields, annotations) {
+  def meta: GooglePubSubSchemaDefinition020Model.type = GooglePubSubSchemaDefinition020Model
+  override def componentId: String                    = s"/$GooglePubSub-schemaDefinition-020"
+}
+
+object GooglePubSubSchemaDefinition020 {
+  def apply(): GooglePubSubSchemaDefinition020                         = apply(Annotations())
+  def apply(annotations: Annotations): GooglePubSubSchemaDefinition020 = apply(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): GooglePubSubSchemaDefinition020 =
+    new GooglePubSubSchemaDefinition020(fields, annotations)
 }

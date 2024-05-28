@@ -3597,7 +3597,41 @@ declare module "amf-client-js" {
     withUsage(usage: string): this;
   }
   export class GooglePubSubChannelBinding implements ChannelBinding {
+    labels: ObjectNode;
+    messageRetentionDuration: StrField;
+    messageStoragePolicy: GooglePubSubMessageStoragePolicy;
+    schemaSettings: GooglePubSubSchemaSettings;
+    bindingVersion: StrField;
 
+    withLabels(labels: ObjectNode): this;
+    withMessageRetentionDuration(messageRetentionDuration: string): this;
+    withMessageStoragePolicy(messageStoragePolicy: GooglePubSubMessageStoragePolicy): this;
+    withSchemaSettings(schemaSettings: GooglePubSubSchemaSettings): this;
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubChannelBinding010 implements GooglePubSubChannelBinding {
     labels: ObjectNode;
     messageRetentionDuration: StrField;
     messageStoragePolicy: GooglePubSubMessageStoragePolicy;
@@ -3610,6 +3644,41 @@ declare module "amf-client-js" {
     withMessageStoragePolicy(messageStoragePolicy: GooglePubSubMessageStoragePolicy): this;
     withSchemaSettings(schemaSettings: GooglePubSubSchemaSettings): this;
     withTopic(topic: string): this;
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubChannelBinding020 implements GooglePubSubChannelBinding {
+    labels: ObjectNode;
+    messageRetentionDuration: StrField;
+    messageStoragePolicy: GooglePubSubMessageStoragePolicy;
+    schemaSettings: GooglePubSubSchemaSettings;
+    bindingVersion: StrField;
+
+    withLabels(labels: ObjectNode): this;
+    withMessageRetentionDuration(messageRetentionDuration: string): this;
+    withMessageStoragePolicy(messageStoragePolicy: GooglePubSubMessageStoragePolicy): this;
+    withSchemaSettings(schemaSettings: GooglePubSubSchemaSettings): this;
     withBindingVersion(bindingVersion: string): this;
 
     customDomainProperties: Array<DomainExtension>;
@@ -3681,7 +3750,6 @@ declare module "amf-client-js" {
     withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class GooglePubSubMessageBinding implements MessageBinding {
-
     attributes: ObjectNode;
     orderingKey: StrField;
     schema: GooglePubSubSchemaDefinition;
@@ -3712,13 +3780,110 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
     withLinkTarget(target: undefined): this;
   }
-  export class GooglePubSubSchemaDefinition implements DomainElement {
+  export class GooglePubSubMessageBinding010 implements GooglePubSubMessageBinding {
+    attributes: ObjectNode;
+    orderingKey: StrField;
+    schema: GooglePubSubSchemaDefinition010;
 
+    withAttributes(attributes: ObjectNode): this;
+    withOrderingKey(orderingKey: string): this;
+    withSchema(schema: GooglePubSubSchemaDefinition010): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubMessageBinding020 implements GooglePubSubMessageBinding {
+    attributes: ObjectNode;
+    orderingKey: StrField;
+    schema: GooglePubSubSchemaDefinition020;
+
+    withAttributes(attributes: ObjectNode): this;
+    withOrderingKey(orderingKey: string): this;
+    withSchema(schema: GooglePubSubSchemaDefinition020): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+  }
+  export class GooglePubSubSchemaDefinition implements DomainElement {
+    name: StrField;
+    withName(name: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class GooglePubSubSchemaDefinition010 implements GooglePubSubSchemaDefinition {
     name: StrField;
     fieldType: StrField;
 
     withName(name: string): this;
     withFieldType(fieldType: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class GooglePubSubSchemaDefinition020 implements GooglePubSubSchemaDefinition {
+    name: StrField;
+    withName(name: string): this;
 
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -3810,6 +3975,87 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
+  export class HttpMessageBinding020 implements HttpMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    headers: Shape;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withHeaders(headers: Shape): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class HttpMessageBinding030 implements HttpMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    headers: Shape;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    statusCode: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withHeaders(headers: Shape): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withStatusCode(statusCode: number): this;
+  }
   export class HttpOperationBinding implements OperationBinding {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -3819,7 +4065,6 @@ declare module "amf-client-js" {
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
     method: StrField;
-    operationType: StrField;
     position: Range;
     query: Shape;
 
@@ -3851,7 +4096,92 @@ declare module "amf-client-js" {
 
     withMethod(method: string): this;
 
+    withQuery(query: Shape): this;
+  }
+  export class HttpOperationBinding010 implements HttpOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    method: StrField;
+    operationType: StrField;
+    position: Range;
+    query: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpOperationBinding010;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withMethod(method: string): this;
+
     withOperationType(type: string): this;
+
+    withQuery(query: Shape): this;
+  }
+  export class HttpOperationBinding020 implements HttpOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    method: StrField;
+    position: Range;
+    query: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): HttpOperationBinding020;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withMethod(method: string): this;
 
     withQuery(query: Shape): this;
   }
@@ -5158,6 +5488,93 @@ declare module "amf-client-js" {
 
     withLinkTarget(target: undefined): this;
   }
+  export class MqttMessageBinding010 implements MqttMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class MqttMessageBinding020 implements MqttMessageBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    payloadFormatIndicator: IntField;
+    correlationData: Shape;
+    contentType: StrField;
+    responseTopic: StrField;
+    responseTopicSchema: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttMessageBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withPayloadFormatIndicator(payloadFormatIndicator: number): this;
+
+    withCorrelationData(correlationData: Shape): this;
+
+    withContentType(contentType: string): this;
+
+    withResponseTopic(responseTopic: string): this;
+
+    withResponseTopicSchema(responseTopicSchema: Shape): this;
+  }
   export class MqttOperationBinding implements OperationBinding {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -5199,6 +5616,96 @@ declare module "amf-client-js" {
     withQos(qos: number): this;
 
     withRetain(retain: boolean): this;
+  }
+  export class MqttOperationBinding010 implements MqttOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    qos: IntField;
+    retain: BoolField;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withQos(qos: number): this;
+
+    withRetain(retain: boolean): this;
+  }
+  export class MqttOperationBinding020 implements MqttOperationBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    qos: IntField;
+    retain: BoolField;
+    messageExpiryInterval: IntField;
+    messageExpiryIntervalSchema: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttOperationBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withQos(qos: number): this;
+
+    withRetain(retain: boolean): this;
+
+    withMessageExpiryInterval(messageExpiryInterval: number): this;
+
+    withMessageExpiryIntervalSchema(messageExpiryIntervalSchema: Shape): this;
   }
   export class MqttServerBinding implements ServerBinding {
     cleanSession: BoolField;
@@ -5247,6 +5754,114 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
 
     withLinkTarget(target: undefined): this;
+  }
+  export class MqttServerBinding010 implements MqttServerBinding {
+    cleanSession: BoolField;
+    clientId: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    keepAlive: IntField;
+    lastWill: MqttServerLastWill;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCleanSession(cleanSession: boolean): this;
+
+    withClientId(clientId: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKeepAlive(keepAlive: number): this;
+
+    withLastWill(lastWill: MqttServerLastWill): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+  }
+  export class MqttServerBinding020 implements MqttServerBinding {
+    cleanSession: BoolField;
+    clientId: StrField;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    keepAlive: IntField;
+    lastWill: MqttServerLastWill;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+    sessionExpiryInterval: number;
+    sessionExpiryIntervalSchema: Shape;
+    maximumPacketSize: number;
+    maximumPacketSizeSchema: Shape;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): MqttServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCleanSession(cleanSession: boolean): this;
+
+    withClientId(clientId: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withKeepAlive(keepAlive: number): this;
+
+    withLastWill(lastWill: MqttServerLastWill): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+    withSessionExpiryInterval(sessionExpiryInterval: number): this;
+
+    withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema: Shape): this;
+
+    withMaximumPacketSize(maximumPacketSize: number): this;
+
+    withMaximumPacketSizeSchema(maximumPacketSizeSchema: Shape): this;
   }
   export class MqttServerLastWill implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -7554,10 +8169,6 @@ declare module "amf-client-js" {
   export class SkippedValidationPluginEvent {}
   export class SolaceOperationBinding implements OperationBinding {
 
-    destinations: Array<SolaceOperationDestination>;
-    bindingVersion: StrField;
-
-    withDestinations(destinations: Array<SolaceOperationDestination>): this;
     withBindingVersion(bindingVersion: string): this;
 
     customDomainProperties: Array<DomainExtension>;
@@ -7582,17 +8193,242 @@ declare module "amf-client-js" {
     withLinkLabel(label: string): this;
     withLinkTarget(target: undefined): this;
   }
+  export class SolaceOperationBinding010 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination>;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination>): this;
+  }
+  export class SolaceOperationBinding020 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination020>;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination020>): this;
+  }
+  export class SolaceOperationBinding030 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination030>;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination030>): this;
+  }
+  export class SolaceOperationBinding040 implements SolaceOperationBinding {
+
+    withBindingVersion(bindingVersion: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: DomainElement | undefined;
+    position: Range;
+    destinations: Array<SolaceOperationDestination040>;
+    timeToLive: IntField;
+    priority: IntField;
+    dmqEligible:BoolField;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    link<T>(): T;
+    link<T>(label: string): T;
+    linkCopy(): Linkable;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+    withLinkLabel(label: string): this;
+    withLinkTarget(target: undefined): this;
+    withDestinations(destinations: Array<SolaceOperationDestination040>): this;
+    withTimeToLive(timeToLive: number): this;
+    withPriority(priority:number): this;
+    withDmqEligible(dmqEligible:boolean): this;
+  }
   export class SolaceOperationDestination implements DomainElement {
 
     destinationType: StrField;
     deliveryMode: StrField;
     queue: SolaceOperationQueue;
-    topic: SolaceOperationTopic;
 
     withDestinationType(destinationType: string): this;
     withDeliveryMode(deliveryMode: string): this;
     withQueue(queue: SolaceOperationQueue): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination010 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue010;
+
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue010): this;
+
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination020 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue010;
+    topic: SolaceOperationTopic;
+    destinations: Array<SolaceOperationDestination020>;
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue010): this;
+    withDestinations(destinations: Array<SolaceOperationDestination020>): this;
     withTopic(topic: SolaceOperationTopic): this;
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+
+    position: Range;
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination030 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue030;
+    topic: SolaceOperationTopic;
+    destinations: Array<SolaceOperationDestination030>;
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue030): this;
+    withTopic(topic: SolaceOperationTopic): this;
+    withDestinations(destinations: Array<SolaceOperationDestination030>): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationDestination040 implements SolaceOperationDestination {
+
+    destinationType: StrField;
+    deliveryMode: StrField;
+    queue: SolaceOperationQueue030;
+    topic: SolaceOperationTopic;
+    destinations: Array<SolaceOperationDestination040>;
+
+    withDestinationType(destinationType: string): this;
+    withDeliveryMode(deliveryMode: string): this;
+    withQueue(queue: SolaceOperationQueue030): this;
+    withTopic(topic: SolaceOperationTopic): this;
+    withDestinations(destinations: Array<SolaceOperationDestination040>): this;
 
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
@@ -7609,6 +8445,54 @@ declare module "amf-client-js" {
     withIsExternalLink(isExternalLink: boolean): DomainElement;
   }
   export class SolaceOperationQueue implements DomainElement {
+
+    topicSubscriptions: Array<StrField>;
+    accessType: StrField;
+    name: StrField;
+
+    withTopicSubscriptions(topicSubscriptions: Array<string>): this;
+    withAccessType(accessType: string): this;
+    withName(name: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationQueue010 implements SolaceOperationQueue {
+
+    topicSubscriptions: Array<StrField>;
+    accessType: StrField;
+    name: StrField;
+
+    withTopicSubscriptions(topicSubscriptions: Array<string>): this;
+    withAccessType(accessType: string): this;
+    withName(name: string): this;
+
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+
+    annotations(): Annotations;
+    graph(): Graph;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+    withId(id: string): this;
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceOperationQueue030 implements SolaceOperationQueue {
 
     topicSubscriptions: Array<StrField>;
     accessType: StrField;
@@ -7639,7 +8523,6 @@ declare module "amf-client-js" {
   export class SolaceOperationTopic implements DomainElement {
 
     topicSubscriptions: Array<StrField>;
-
     withTopicSubscriptions(topicSubscriptions: Array<string>): this;
 
     customDomainProperties: Array<DomainExtension>;
@@ -7655,6 +8538,127 @@ declare module "amf-client-js" {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
     withId(id: string): this;
     withIsExternalLink(isExternalLink: boolean): DomainElement;
+  }
+  export class SolaceServerBinding implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    msgVpn: StrField;
+    clientName: StrField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): SolaceServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withMsgVpn(msgVpn: string): this;
+
+    withClientName(clientName: string): this;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+  }
+  export class SolaceServerBinding010 implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): SolaceServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
+  }
+  export class SolaceServerBinding040 implements ServerBinding {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    isLink: boolean;
+    linkLabel: StrField;
+    linkTarget: undefined | DomainElement;
+    clientName: StrField;
+    position: Range;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    link<T>(label: string): T;
+
+    link<T>(): T;
+
+    linkCopy(): SolaceServerBinding;
+
+    withBindingVersion(bindingVersion: string): this;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withMsgVpn(msgVpn: string): this;
+
+
+    withLinkLabel(label: string): this;
+
+    withLinkTarget(target: undefined): this;
+
   }
   export interface Spec {
     readonly id: string;

@@ -3,20 +3,20 @@ package amf.apicontract.client.platform.model.domain.bindings.mqtt
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ServerBinding}
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
   MqttServerBinding => InternalMqttServerBinding,
+  MqttServerBinding010 => InternalMqttServerBinding010,
+  MqttServerBinding020 => InternalMqttServerBinding020,
   MqttServerLastWill => InternalMqttServerLastWill
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.model.domain.DomainElement
+import amf.core.client.platform.model.domain.{DomainElement, Shape}
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class MqttServerBinding(override private[amf] val _internal: InternalMqttServerBinding)
+abstract class MqttServerBinding(override private[amf] val _internal: InternalMqttServerBinding)
     extends ServerBinding
     with BindingVersion {
-  @JSExportTopLevel("MqttServerBinding")
-  def this() = this(InternalMqttServerBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {
     _internal.withBindingVersion(bindingVersion)
@@ -44,8 +44,47 @@ case class MqttServerBinding(override private[amf] val _internal: InternalMqttSe
     _internal.withKeepAlive(keepAlive)
     this
   }
+}
 
-  override def linkCopy(): MqttServerBinding = _internal.linkCopy()
+@JSExportAll
+case class MqttServerBinding010(override private[amf] val _internal: InternalMqttServerBinding010)
+    extends MqttServerBinding(_internal) {
+  @JSExportTopLevel("MqttServerBinding010")
+  def this() = this(InternalMqttServerBinding010())
+  override def linkCopy(): MqttServerBinding010 = _internal.linkCopy()
+}
+
+@JSExportAll
+case class MqttServerBinding020(override private[amf] val _internal: InternalMqttServerBinding020)
+    extends MqttServerBinding(_internal) {
+  @JSExportTopLevel("MqttServerBinding020")
+  def this() = this(InternalMqttServerBinding020())
+
+  def sessionExpiryInterval: IntField    = _internal.sessionExpiryInterval
+  def sessionExpiryIntervalSchema: Shape = _internal.sessionExpiryIntervalSchema
+
+  def maximumPacketSize: IntField    = _internal.maximumPacketSize
+  def maximumPacketSizeSchema: Shape = _internal.maximumPacketSizeSchema
+
+  def withSessionExpiryInterval(sessionExpiryInterval: Int): this.type = {
+    _internal.withSessionExpiryInterval(sessionExpiryInterval)
+    this
+  }
+  def withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema: Shape): this.type = {
+    _internal.withSessionExpiryIntervalSchema(sessionExpiryIntervalSchema)
+    this
+  }
+
+  def withMaximumPacketSize(maximumPacketSize: Int): this.type = {
+    _internal.withMaximumPacketSize(maximumPacketSize)
+    this
+  }
+  def withMaximumPacketSizeSchema(maximumPacketSizeSchema: Shape): this.type = {
+    _internal.withMaximumPacketSizeSchema(maximumPacketSizeSchema)
+    this
+  }
+
+  override def linkCopy(): MqttServerBinding020 = _internal.linkCopy()
 }
 
 @JSExportAll

@@ -232,7 +232,7 @@ object IBMMQChannelQueueModel extends DomainElementModel with NameFieldSchema {
     ModelDoc(ModelVocabularies.ApiBinding, "exclusive", "Specifies if it is recommended to open the queue exclusively.")
   )
 
-  override def fields: List[Field] = List(ObjectName, IsPartitioned, Exclusive) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, ObjectName, IsPartitioned, Exclusive) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "IBMMQChannelQueue" :: DomainElementModel.`type`
 
@@ -280,7 +280,7 @@ object IBMMQChannelTopicModel extends DomainElementModel with NameFieldSchema {
   )
 
   override def fields: List[Field] =
-    List(String, ObjectName, DurablePermitted, LastMsgRetained) ++ DomainElementModel.fields
+    List(Name, String, ObjectName, DurablePermitted, LastMsgRetained) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "IBMMQChannelTopic" :: DomainElementModel.`type`
 

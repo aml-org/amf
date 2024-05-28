@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-server-binding-schemas.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference #/components/schemas/invalidRef
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-server-binding-schemas.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020
+  Property: 
+  Range: [(26,8)-(28,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-server-binding-schemas.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference #/components/schemas/invalidRef
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-server-binding-schemas.yaml#/async-api/server/http%3A%2F%2Fsome.com_1/server-bindings/bindings/mqtt-server-020
+  Property: 
+  Range: [(28,8)-(31,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mqtt-server-binding-schemas.yaml
