@@ -249,17 +249,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/auto-generated-name/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/auto-generated-name/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#default-node": [
@@ -315,11 +315,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(10,0)]"
@@ -328,6 +323,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#examples",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,8)-(10,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/endpoint/%2Fsessions%2F/supportedOperation/post/expects/request/payload/multipart%2Fform-data/any/schema/source-map/default-node/element_0",

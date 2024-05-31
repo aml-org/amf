@@ -138,22 +138,22 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#13": "true"
+        },
+        "resolved-link": {
+          "#13": "amf://id#16"
+        },
         "lexical": {
           "core:description": "[(32,6)-(33,0)]",
           "#13": "[(31,4)-(40,0)]",
           "core:name": "[(31,4)-(31,13)]"
         },
-        "resolved-link": {
-          "#13": "amf://id#16"
-        },
-        "virtual-element": {
-          "#13": "true"
+        "resolved-link-target": {
+          "#13": "amf://id#14"
         },
         "declared-element": {
           "#13": ""
-        },
-        "resolved-link-target": {
-          "#13": "amf://id#15"
         }
       }
     },
@@ -244,21 +244,21 @@
           "doc:recursive": "true",
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#1": "amf://id#11"
-        },
         "type-property-lexical-info": {
           "#1": "[(24,6)-(24,10)]"
         },
-        "lexical": {
-          "shacl:name": "[(23,4)-(23,17)]",
-          "#1": "[(23,4)-(30,0)]"
+        "resolved-link": {
+          "#1": "amf://id#12"
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#11"
         },
         "declared-element": {
           "#1": ""
         },
-        "resolved-link-target": {
-          "#1": "amf://id#12"
+        "lexical": {
+          "shacl:name": "[(23,4)-(23,17)]",
+          "#1": "[(23,4)-(30,0)]"
         }
       }
     },
@@ -358,12 +358,12 @@
       ],
       "shacl:name": "status",
       "smaps": {
-        "type-property-lexical-info": {
-          "#3": "[(27,10)-(27,14)]"
-        },
         "lexical": {
           "shacl:datatype": "[(27,10)-(28,0)]",
           "#3": "[(26,8)-(28,0)]"
+        },
+        "type-property-lexical-info": {
+          "#3": "[(27,10)-(27,14)]"
         }
       }
     },
@@ -383,12 +383,12 @@
       ],
       "shacl:name": "text",
       "smaps": {
-        "type-property-lexical-info": {
-          "#5": "[(29,10)-(29,14)]"
-        },
         "lexical": {
           "shacl:datatype": "[(29,10)-(30,0)]",
           "#5": "[(28,8)-(30,0)]"
+        },
+        "type-property-lexical-info": {
+          "#5": "[(29,10)-(29,14)]"
         }
       }
     },

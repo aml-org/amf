@@ -313,12 +313,12 @@
                           }
                         ],
                         "smaps": {
-                          "type-property-lexical-info": {
-                            "#4": "[(36,10)-(36,14)]"
-                          },
                           "lexical": {
                             "shacl:datatype": "[(36,10)-(37,0)]",
                             "#4": "[(35,8)-(37,0)]"
+                          },
+                          "type-property-lexical-info": {
+                            "#4": "[(36,10)-(36,14)]"
                           }
                         }
                       }
@@ -352,21 +352,21 @@
                   "synthesized-field": {
                     "shacl:closed": "true"
                   },
-                  "resolved-link": {
-                    "#2": "amf://id#7"
-                  },
                   "type-property-lexical-info": {
                     "#2": "[(33,6)-(33,10)]"
                   },
-                  "lexical": {
-                    "shacl:name": "[(32,4)-(32,7)]",
-                    "#2": "[(32,4)-(37,0)]"
+                  "resolved-link": {
+                    "#2": "amf://id#7"
+                  },
+                  "resolved-link-target": {
+                    "#2": "amf://id#5"
                   },
                   "declared-element": {
                     "#2": ""
                   },
-                  "resolved-link-target": {
-                    "#2": "amf://id#6"
+                  "lexical": {
+                    "shacl:name": "[(32,4)-(32,7)]",
+                    "#2": "[(32,4)-(37,0)]"
                   }
                 }
               }
@@ -440,12 +440,12 @@
                           }
                         ],
                         "smaps": {
-                          "type-property-lexical-info": {
-                            "#10": "[(31,10)-(31,14)]"
-                          },
                           "lexical": {
                             "shacl:datatype": "[(31,10)-(32,0)]",
                             "#10": "[(30,8)-(32,0)]"
+                          },
+                          "type-property-lexical-info": {
+                            "#10": "[(31,10)-(31,14)]"
                           }
                         }
                       }
@@ -479,21 +479,21 @@
                   "synthesized-field": {
                     "shacl:closed": "true"
                   },
-                  "resolved-link": {
-                    "#8": "amf://id#13"
-                  },
                   "type-property-lexical-info": {
                     "#8": "[(28,6)-(28,10)]"
                   },
-                  "lexical": {
-                    "shacl:name": "[(27,4)-(27,7)]",
-                    "#8": "[(27,4)-(32,0)]"
+                  "resolved-link": {
+                    "#8": "amf://id#13"
+                  },
+                  "resolved-link-target": {
+                    "#8": "amf://id#11"
                   },
                   "declared-element": {
                     "#8": ""
                   },
-                  "resolved-link-target": {
-                    "#8": "amf://id#12"
+                  "lexical": {
+                    "shacl:name": "[(27,4)-(27,7)]",
+                    "#8": "[(27,4)-(32,0)]"
                   }
                 }
               }
@@ -567,12 +567,12 @@
                       }
                     ],
                     "smaps": {
-                      "type-property-lexical-info": {
-                        "#4": "[(36,10)-(36,14)]"
-                      },
                       "lexical": {
                         "shacl:datatype": "[(36,10)-(37,0)]",
                         "#4": "[(35,8)-(37,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#4": "[(36,10)-(36,14)]"
                       }
                     }
                   }
@@ -606,21 +606,21 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "resolved-link": {
-                "#2": "amf://id#7"
-              },
               "type-property-lexical-info": {
                 "#2": "[(33,6)-(33,10)]"
               },
-              "lexical": {
-                "shacl:name": "[(32,4)-(32,7)]",
-                "#2": "[(32,4)-(37,0)]"
+              "resolved-link": {
+                "#2": "amf://id#7"
+              },
+              "resolved-link-target": {
+                "#2": "amf://id#5"
               },
               "declared-element": {
                 "#2": ""
               },
-              "resolved-link-target": {
-                "#2": "amf://id#6"
+              "lexical": {
+                "shacl:name": "[(32,4)-(32,7)]",
+                "#2": "[(32,4)-(37,0)]"
               }
             }
           },
@@ -673,12 +673,12 @@
                       }
                     ],
                     "smaps": {
-                      "type-property-lexical-info": {
-                        "#10": "[(31,10)-(31,14)]"
-                      },
                       "lexical": {
                         "shacl:datatype": "[(31,10)-(32,0)]",
                         "#10": "[(30,8)-(32,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#10": "[(31,10)-(31,14)]"
                       }
                     }
                   }
@@ -712,21 +712,21 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "resolved-link": {
-                "#8": "amf://id#13"
-              },
               "type-property-lexical-info": {
                 "#8": "[(28,6)-(28,10)]"
               },
-              "lexical": {
-                "shacl:name": "[(27,4)-(27,7)]",
-                "#8": "[(27,4)-(32,0)]"
+              "resolved-link": {
+                "#8": "amf://id#13"
+              },
+              "resolved-link-target": {
+                "#8": "amf://id#11"
               },
               "declared-element": {
                 "#8": ""
               },
-              "resolved-link-target": {
-                "#8": "amf://id#12"
+              "lexical": {
+                "shacl:name": "[(27,4)-(27,7)]",
+                "#8": "[(27,4)-(32,0)]"
               }
             }
           }
@@ -735,6 +735,12 @@
           "synthesized-field": {
             "doc:recursive": "true",
             "shacl:closed": "true"
+          },
+          "declared-element": {
+            "#1": ""
+          },
+          "resolved-link-target": {
+            "#1": "amf://id#18"
           },
           "resolved-link": {
             "#1": "amf://id#1"
@@ -746,12 +752,6 @@
             "#1": "[(18,4)-(27,0)]",
             "raml-shapes:discriminatorMapping": "[(24,8)-(27,0)]",
             "shacl:name": "[(18,4)-(18,10)]"
-          },
-          "declared-element": {
-            "#1": ""
-          },
-          "resolved-link-target": {
-            "#1": "amf://id#18"
           }
         }
       },
@@ -804,12 +804,12 @@
                   }
                 ],
                 "smaps": {
-                  "type-property-lexical-info": {
-                    "#10": "[(31,10)-(31,14)]"
-                  },
                   "lexical": {
                     "shacl:datatype": "[(31,10)-(32,0)]",
                     "#10": "[(30,8)-(32,0)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#10": "[(31,10)-(31,14)]"
                   }
                 }
               }
@@ -843,21 +843,21 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
-          "resolved-link": {
-            "#8": "amf://id#13"
-          },
           "type-property-lexical-info": {
             "#8": "[(28,6)-(28,10)]"
           },
-          "lexical": {
-            "shacl:name": "[(27,4)-(27,7)]",
-            "#8": "[(27,4)-(32,0)]"
+          "resolved-link": {
+            "#8": "amf://id#13"
+          },
+          "resolved-link-target": {
+            "#8": "amf://id#11"
           },
           "declared-element": {
             "#8": ""
           },
-          "resolved-link-target": {
-            "#8": "amf://id#12"
+          "lexical": {
+            "shacl:name": "[(27,4)-(27,7)]",
+            "#8": "[(27,4)-(32,0)]"
           }
         }
       },
@@ -910,12 +910,12 @@
                   }
                 ],
                 "smaps": {
-                  "type-property-lexical-info": {
-                    "#4": "[(36,10)-(36,14)]"
-                  },
                   "lexical": {
                     "shacl:datatype": "[(36,10)-(37,0)]",
                     "#4": "[(35,8)-(37,0)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#4": "[(36,10)-(36,14)]"
                   }
                 }
               }
@@ -949,21 +949,21 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
-          "resolved-link": {
-            "#2": "amf://id#7"
-          },
           "type-property-lexical-info": {
             "#2": "[(33,6)-(33,10)]"
           },
-          "lexical": {
-            "shacl:name": "[(32,4)-(32,7)]",
-            "#2": "[(32,4)-(37,0)]"
+          "resolved-link": {
+            "#2": "amf://id#7"
+          },
+          "resolved-link-target": {
+            "#2": "amf://id#5"
           },
           "declared-element": {
             "#2": ""
           },
-          "resolved-link-target": {
-            "#2": "amf://id#6"
+          "lexical": {
+            "shacl:name": "[(32,4)-(32,7)]",
+            "#2": "[(32,4)-(37,0)]"
           }
         }
       }
