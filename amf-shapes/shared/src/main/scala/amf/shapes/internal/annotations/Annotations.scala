@@ -15,6 +15,15 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
     Some(ParsedJSONSchema(value))
 }
 
+case class IsAVROSchema(avroType: String) extends EternalSerializedAnnotation {
+  override val name: String  = "avro-schema"
+  override val value: String = avroType
+}
+
+object IsAVROSchema {
+  def unparse(avroType: String): Option[Annotation] = Some(IsAVROSchema(avroType))
+}
+
 case class DocumentDeclarationKey(key: String) extends EternalSerializedAnnotation {
   override val name: String  = "document-declaration-key"
   override val value: String = key
@@ -84,7 +93,7 @@ case class BaseVirtualNode(ast: YPart) extends Annotation
 
 case class InputTypeField() extends Annotation
 
-/** When getting a schema from and external file, it's original name may be replaced by a new one. That original name is the one
-  * stored by this Annotation. Used by ALS to link.
+/** When getting a schema from and external file, it's original name may be replaced by a new one. That original name is
+  * the one stored by this Annotation. Used by ALS to link.
   */
 case class TargetName(name: YPart) extends Annotation
