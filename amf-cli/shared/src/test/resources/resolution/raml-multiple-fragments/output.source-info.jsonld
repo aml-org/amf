@@ -243,17 +243,17 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#15": "amf://id#15"
-        },
-        "lexical": {
-          "#15": "[(4,2)-(7,22)]"
-        },
         "declared-element": {
           "#15": ""
         },
         "resolved-link-target": {
           "#15": "amf://id#2"
+        },
+        "resolved-link": {
+          "#15": "amf://id#15"
+        },
+        "lexical": {
+          "#15": "[(4,2)-(7,22)]"
         }
       }
     },
@@ -273,21 +273,21 @@
       ],
       "shacl:name": "b",
       "smaps": {
-        "resolved-link-target": {
-          "#16": "amf://id#9"
-        },
-        "declared-element": {
-          "#16": ""
-        },
         "lexical": {
           "shacl:datatype": "[(5,4)-(6,0)]",
           "#16": "[(4,2)-(6,0)]"
         },
-        "type-property-lexical-info": {
-          "#16": "[(5,4)-(5,8)]"
+        "declared-element": {
+          "#16": ""
+        },
+        "resolved-link-target": {
+          "#16": "amf://id#9"
         },
         "resolved-link": {
           "#16": "amf://id#16"
+        },
+        "type-property-lexical-info": {
+          "#16": "[(5,4)-(5,8)]"
         }
       }
     },
@@ -308,22 +308,22 @@
       "shacl:name": "c",
       "core:description": "this is a data type",
       "smaps": {
-        "declared-element": {
-          "#17": ""
-        },
-        "resolved-link": {
-          "#17": "amf://id#17"
-        },
         "lexical": {
           "core:description": "[(2,0)-(3,0)]",
           "#17": "[(2,0)-(3,12)]",
           "shacl:datatype": "[(3,0)-(3,12)]"
         },
-        "type-property-lexical-info": {
-          "#17": "[(3,0)-(3,4)]"
+        "resolved-link": {
+          "#17": "amf://id#17"
+        },
+        "declared-element": {
+          "#17": ""
         },
         "resolved-link-target": {
           "#17": "amf://id#14"
+        },
+        "type-property-lexical-info": {
+          "#17": "[(3,0)-(3,4)]"
         }
       }
     },
@@ -350,12 +350,12 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "declared-element": {
+          "#2": ""
+        },
         "lexical": {
           "shacl:name": "[(4,2)-(4,8)]",
           "#2": "[(4,2)-(7,22)]"
-        },
-        "declared-element": {
-          "#2": ""
         }
       }
     },
@@ -383,13 +383,13 @@
       ],
       "shacl:name": "SomeString",
       "smaps": {
-        "declared-element": {
-          "#9": ""
-        },
         "lexical": {
           "shacl:name": "[(4,2)-(4,12)]",
           "#9": "[(4,2)-(6,0)]",
           "shacl:datatype": "[(5,4)-(6,0)]"
+        },
+        "declared-element": {
+          "#9": ""
         },
         "type-property-lexical-info": {
           "#9": "[(5,4)-(5,8)]"
@@ -412,13 +412,13 @@
       ],
       "shacl:name": "SomeNumber",
       "smaps": {
-        "declared-element": {
-          "#10": ""
-        },
         "lexical": {
           "shacl:name": "[(6,2)-(6,12)]",
           "#10": "[(6,2)-(7,16)]",
           "shacl:datatype": "[(7,4)-(7,16)]"
+        },
+        "declared-element": {
+          "#10": ""
         },
         "type-property-lexical-info": {
           "#10": "[(7,4)-(7,8)]"
@@ -450,13 +450,13 @@
       "shacl:name": "type",
       "core:description": "this is a data type",
       "smaps": {
-        "type-property-lexical-info": {
-          "#14": "[(3,0)-(3,4)]"
-        },
         "lexical": {
           "core:description": "[(2,0)-(3,0)]",
           "#14": "[(2,0)-(3,12)]",
           "shacl:datatype": "[(3,0)-(3,12)]"
+        },
+        "type-property-lexical-info": {
+          "#14": "[(3,0)-(3,4)]"
         }
       }
     },

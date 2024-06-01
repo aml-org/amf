@@ -145,17 +145,17 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/type-property-lexical-info/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/declared-element/element_0"
         }
       ]
     },
@@ -164,17 +164,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -194,6 +194,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(10,12)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(14,5)]"
@@ -204,16 +209,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(9,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,14)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(13,7)]"
@@ -222,6 +217,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,24)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declares/shape/ObjType/scalar/additionalProperties",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,14)]"
     }
   ]
 }

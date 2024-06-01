@@ -157,17 +157,17 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/external-fragment-ref/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/declared-element/element_0"
         }
       ]
     },
@@ -221,6 +221,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "trait.raml"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,30)]"
@@ -229,11 +234,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,9)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/declares/trait/secured",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/api.raml#/references/0/trait/default-abstract/object_1/queryParameters",

@@ -109,14 +109,14 @@
         "@id": "#7"
       },
       "smaps": {
-        "body-parameter": {
-          "#6": "true"
-        },
         "lexical": {
           "raml-shapes:schema": "[(16,10)-(48,28)]",
           "core:name": "[(15,10)-(16,0)]",
           "#6": "[(12,9)-(48,28)]",
           "core:mediaType": "[(13,10)-(14,0)]"
+        },
+        "body-parameter": {
+          "#6": "true"
         }
       }
     },
@@ -148,14 +148,14 @@
         }
       ],
       "smaps": {
-        "parameter-binding-in-body-lexical-info": {
-          "#7": "[(14,10)-(15,0)]"
-        },
         "lexical": {
           "apiContract:examples": "[(17,12)-(25,0)]",
           "shacl:closed": "[(26,12)-(27,0)]",
           "#7": "[(16,10)-(48,28)]",
           "shacl:name": "[(15,10)-(16,0)]"
+        },
+        "parameter-binding-in-body-lexical-info": {
+          "#7": "[(14,10)-(15,0)]"
         },
         "type-property-lexical-info": {
           "#7": "[(25,12)-(25,16)]"
@@ -282,12 +282,12 @@
       ],
       "shacl:name": "address",
       "smaps": {
-        "type-property-lexical-info": {
-          "#16": "[(33,16)-(33,20)]"
-        },
         "lexical": {
           "shacl:closed": "[(34,16)-(35,0)]",
           "#16": "[(32,14)-(44,0)]"
+        },
+        "type-property-lexical-info": {
+          "#16": "[(33,16)-(33,20)]"
         }
       }
     },
@@ -308,13 +308,13 @@
       "raml-shapes:format": "int",
       "shacl:name": "id",
       "smaps": {
-        "type-property-lexical-info": {
-          "#24": "[(45,16)-(45,20)]"
-        },
         "lexical": {
           "raml-shapes:format": "[(46,16)-(47,0)]",
           "#24": "[(44,14)-(47,0)]",
           "shacl:datatype": "[(45,16)-(46,0)]"
+        },
+        "type-property-lexical-info": {
+          "#24": "[(45,16)-(45,20)]"
         }
       }
     },
@@ -334,12 +334,12 @@
       ],
       "shacl:name": "name",
       "smaps": {
-        "type-property-lexical-info": {
-          "#26": "[(48,16)-(48,20)]"
-        },
         "lexical": {
           "shacl:datatype": "[(48,16)-(48,28)]",
           "#26": "[(47,14)-(48,28)]"
+        },
+        "type-property-lexical-info": {
+          "#26": "[(48,16)-(48,20)]"
         }
       }
     },
@@ -516,13 +516,13 @@
         }
       ],
       "smaps": {
-        "type-property-lexical-info": {
-          "#18": "[(41,20)-(41,24)]"
-        },
         "lexical": {
           "apiContract:examples": "[(40,20)-(41,0)]",
           "#18": "[(39,18)-(42,0)]",
           "shacl:datatype": "[(41,20)-(42,0)]"
+        },
+        "type-property-lexical-info": {
+          "#18": "[(41,20)-(41,24)]"
         }
       }
     },
@@ -542,12 +542,12 @@
       ],
       "shacl:name": "city",
       "smaps": {
-        "type-property-lexical-info": {
-          "#22": "[(43,20)-(43,24)]"
-        },
         "lexical": {
           "shacl:datatype": "[(43,20)-(44,0)]",
           "#22": "[(42,18)-(44,0)]"
+        },
+        "type-property-lexical-info": {
+          "#22": "[(43,20)-(43,24)]"
         }
       }
     },

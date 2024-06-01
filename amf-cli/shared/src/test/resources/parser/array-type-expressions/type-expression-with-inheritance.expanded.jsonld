@@ -256,21 +256,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#type-expression": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/inherits/array/default-array/source-map/type-expression/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/inherits/array/default-array"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "Person[]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/inherits/array/default-array/source-map/lexical/element_0",
@@ -285,6 +270,21 @@
                       }
                     ]
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#type-expression": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/inherits/array/default-array/source-map/type-expression/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/inherits/array/default-array"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "Person[]"
+                      }
+                    ]
+                  }
                 ]
               }
             ]
@@ -295,21 +295,6 @@
             "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
@@ -374,6 +359,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(6,4)-(7,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/array/myTypeExpression"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }
@@ -584,6 +584,21 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/Person/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/Person"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/Person/source-map/lexical/element_2",
@@ -621,21 +636,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(8,2)-(11,0)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/Person/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/Person"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
                   }
                 ]
               }
@@ -831,6 +831,21 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/AnotherPerson/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/AnotherPerson"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/AnotherPerson/source-map/lexical/element_2",
@@ -868,21 +883,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(11,2)-(13,25)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/AnotherPerson/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/type-expression-with-inheritance.raml#/declares/shape/AnotherPerson"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
                   }
                 ]
               }

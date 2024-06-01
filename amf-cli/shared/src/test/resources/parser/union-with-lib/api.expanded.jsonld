@@ -138,21 +138,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/scalar/A/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/scalar/A"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/scalar/A/source-map/lexical/element_2",
@@ -190,6 +175,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(3,2)-(4,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/scalar/A/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/scalar/A"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
                       }
                     ]
                   }
@@ -295,21 +295,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/union/B/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/union/B"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/union/B/source-map/lexical/element_1",
@@ -334,6 +319,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(4,2)-(4,3)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/union/B/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/references/0/declares/union/B"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
                       }
                     ]
                   }
@@ -559,21 +559,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/declares/union/tripleUnion/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/declares/union/tripleUnion"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/declares/union/tripleUnion/source-map/lexical/element_1",
@@ -598,6 +583,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(6,1)-(6,12)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/declares/union/tripleUnion/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/union-with-lib/api.raml#/declares/union/tripleUnion"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

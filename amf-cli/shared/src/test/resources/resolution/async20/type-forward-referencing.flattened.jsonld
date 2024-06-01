@@ -69,21 +69,21 @@
       ],
       "shacl:name": "OtherSchema",
       "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#2"
-        },
-        "declared-element": {
-          "#1": ""
-        },
         "lexical": {
           "shacl:datatype": "[(11,6)-(13,0)]",
           "#1": "[(10,4)-(13,0)]"
         },
-        "type-property-lexical-info": {
-          "#1": "[(11,6)-(11,10)]"
+        "declared-element": {
+          "#1": ""
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#2"
         },
         "resolved-link": {
           "#1": "amf://id#1"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(11,6)-(11,10)]"
         }
       }
     },
@@ -103,13 +103,13 @@
       ],
       "shacl:name": "MySchema",
       "smaps": {
-        "declared-element": {
-          "#2": ""
-        },
         "lexical": {
           "shacl:name": "[(10,4)-(10,12)]",
           "#2": "[(10,4)-(13,0)]",
           "shacl:datatype": "[(11,6)-(13,0)]"
+        },
+        "declared-element": {
+          "#2": ""
         },
         "type-property-lexical-info": {
           "#2": "[(11,6)-(11,10)]"

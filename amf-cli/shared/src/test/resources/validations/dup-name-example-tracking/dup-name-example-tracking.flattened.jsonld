@@ -135,11 +135,11 @@
         }
       ],
       "smaps": {
-        "lexical": {
-          "#24": "[(13,9)-(22,0)]"
-        },
         "virtual-element": {
           "#24": "true"
+        },
+        "lexical": {
+          "#24": "[(13,9)-(22,0)]"
         }
       }
     },
@@ -157,11 +157,11 @@
         }
       ],
       "smaps": {
-        "lexical": {
-          "#27": "[(24,9)-(31,13)]"
-        },
         "virtual-element": {
           "#27": "true"
+        },
+        "lexical": {
+          "#27": "[(24,9)-(31,13)]"
         }
       }
     },
@@ -230,18 +230,18 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#4": "amf://id#4"
-        },
-        "lexical": {
-          "shacl:name": "[(7,2)-(7,10)]",
-          "#4": "[(7,2)-(11,0)]"
-        },
         "declared-element": {
           "#4": ""
         },
         "resolved-link-target": {
+          "#4": "amf://id#18"
+        },
+        "resolved-link": {
           "#4": "amf://id#19"
+        },
+        "lexical": {
+          "shacl:name": "[(7,2)-(7,10)]",
+          "#4": "[(7,2)-(11,0)]"
         }
       }
     },
@@ -390,12 +390,12 @@
         "synthesized-field": {
           "core:name": "true"
         },
+        "parsed-json-example": {
+          "#8": "{\n  \"ok\" : true\n}"
+        },
         "lexical": {
           "data:ok": "[(2,2)-(2,13)]",
           "#8": "[(1,0)-(3,1)]"
-        },
-        "parsed-json-example": {
-          "#8": "{\n  \"ok\" : true\n}"
         }
       }
     },
@@ -414,12 +414,12 @@
         "synthesized-field": {
           "core:name": "true"
         },
+        "parsed-json-example": {
+          "#13": "{\n  \"ok\" : true\n}\n"
+        },
         "lexical": {
           "data:ok": "[(20,25)-(20,36)]",
           "#13": "[(19,23)-(21,24)]"
-        },
-        "parsed-json-example": {
-          "#13": "{\n  \"ok\" : true\n}\n"
         }
       }
     },
@@ -438,12 +438,12 @@
         "synthesized-field": {
           "core:name": "true"
         },
+        "parsed-json-example": {
+          "#16": "{\n  \"ok\" : true\n}"
+        },
         "lexical": {
           "data:ok": "[(30,25)-(30,36)]",
           "#16": "[(29,23)-(31,24)]"
-        },
-        "parsed-json-example": {
-          "#16": "{\n  \"ok\" : true\n}"
         }
       }
     },
