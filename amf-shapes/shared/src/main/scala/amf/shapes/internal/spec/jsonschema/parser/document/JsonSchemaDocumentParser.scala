@@ -4,7 +4,7 @@ import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.core.client.scala.model.document.BaseUnitProcessingData
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel}
+import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Spec
@@ -34,48 +34,44 @@ case class JsonSchemaDocumentParser(root: Root)(implicit val ctx: ShapeParserCon
     extends DeclarationKeyCollector
     with QuickFieldParserOps {
 
-  private val doc: YDocument = root.parsed.asInstanceOf[SyamlParsedDocument].document
-
   def parse(): JsonSchemaDocument = {
+    val yDocument: YDocument = root.parsed.asInstanceOf[SyamlParsedDocument].document
 
-    val document = JsonSchemaDocument(Annotations(doc))
+    val doc = JsonSchemaDocument(Annotations(yDocument))
       .withLocation(root.location)
       .withProcessingData(BaseUnitProcessingData().withSourceSpec(Spec.JSONSCHEMA))
 
-    document.set(BaseUnitModel.Location, root.location)
-
-    doc.toOption[YMap].foreach { rootMap =>
+    yDocument.toOption[YMap].foreach { rootMap =>
       ctx.setJsonSchemaAST(rootMap)
 
       val fullRef = normalizeRef()
 
       val tempShape = temporalShape(rootMap, fullRef)
 
-      val (schemaVersion, _) = setSchemaVersion(rootMap, document)
+      val (schemaVersion, _) = setSchemaVersion(rootMap, doc)
 
       val references =
-        BaseReferencesParser(document, root.location, "uses".asOasExtension, rootMap, root.references).parse()
+        BaseReferencesParser(doc, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
-      if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
+      if (references.nonEmpty) doc.withReferences(references.baseUnitReferences())
 
       // Parsing declaration schemas from "definitions" or "$defs"
       parseTypeDeclarations(
         rootMap,
         declarationsKey(schemaVersion),
         Some(this),
-        Some(document),
+        Some(doc),
         Option(schemaVersion)
       )
-      addDeclarationsToModel(document, ctx.shapes.values.toList)
+      addDeclarationsToModel(doc, ctx.shapes.values.toList)
 
       val rootSchema = parseRootSchema(rootMap, schemaVersion)
-      document.set(DocumentModel.Encodes, rootSchema, Annotations.inferred())
+      doc.set(DocumentModel.Encodes, rootSchema, Annotations.inferred())
 
       resolveFutureDeclarations(fullRef, tempShape, rootSchema)
-
     }
 
-    document
+    doc
   }
 
   private def normalizeRef(): String = {
