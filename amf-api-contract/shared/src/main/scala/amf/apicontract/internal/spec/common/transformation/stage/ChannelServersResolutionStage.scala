@@ -10,6 +10,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
 
 /** Replaces dummy servers parsed in channels with the real ones defined in the root servers object
@@ -73,9 +74,13 @@ class ChannelServersResolutionStage(profile: ProfileName, val keepEditingInfo: B
         val nonExistentServers = endpointServers.filterNot(sv => isServerDeclared(sv, declaredServers))
         nonExistentServers.foreach { sv =>
           errorHandler.violation(
-            UndeclaredChannelServer,
-            sv,
-            s"Server '${sv.name.value()}' in channel '${endPoint.path.value()}' is not defined in the servers root object"
+            specification = UndeclaredChannelServer,
+            node = sv,
+            property = Some(EndPointModel.Servers.value.iri()),
+            message =
+              s"Server '${sv.name.value()}' in channel '${endPoint.path.value()}' is not defined in the servers root object",
+            lexical = Some(LexicalInformation(sv.annotations.lexical())),
+            location = sv.annotations.location()
           )
         }
     }
