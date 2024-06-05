@@ -92,10 +92,12 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/source-map/lexical/element_1"
-        },
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/source-map/virtual-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/source-map/lexical/element_0"
         }
@@ -164,14 +166,14 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(15,0)]"
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(15,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(15,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/message-traits.yaml#/async-api/endpoint/aChannel/supportedOperation/publish/something/expects/request/payload/default",

@@ -91,10 +91,12 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/source-map/lexical/element_1"
-        },
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/source-map/virtual-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/source-map/lexical/element_0"
         }
@@ -152,14 +154,14 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(14,38)]"
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(14,38)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(14,38)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/amqp-message-binding.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/message-bindings",
