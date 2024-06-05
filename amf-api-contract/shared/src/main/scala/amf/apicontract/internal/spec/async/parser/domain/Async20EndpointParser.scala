@@ -49,7 +49,7 @@ class Async20EndpointParser(entry: YMapEntry, parentId: String, collector: List[
       "subscribe|publish",
       entries => {
         val operations = parseOperations(entries)
-        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))
+        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations.virtual()), Annotations.virtual())
       }
     )
 
