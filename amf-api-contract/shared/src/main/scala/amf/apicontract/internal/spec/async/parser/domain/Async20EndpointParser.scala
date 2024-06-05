@@ -73,7 +73,7 @@ class Async22EndpointParser(
       entry => {
         val nodes = entry.value.as[YSequence].nodes
         val servers = nodes.map { n =>
-          val server = Server()
+          val server = Server(Annotations(n))
           server.setWithoutId(
             ServerModel.Name,
             AmfScalar(n.toString, Annotations(n.value)),
