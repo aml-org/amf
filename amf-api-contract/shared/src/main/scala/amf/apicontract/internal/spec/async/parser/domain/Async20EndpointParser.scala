@@ -49,7 +49,7 @@ class Async20EndpointParser(entry: YMapEntry, parentId: String, collector: List[
       "subscribe|publish",
       entries => {
         val operations = parseOperations(entries)
-        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))
+        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations.virtual()), Annotations.virtual())
       }
     )
 
@@ -73,7 +73,7 @@ class Async22EndpointParser(
       entry => {
         val nodes = entry.value.as[YSequence].nodes
         val servers = nodes.map { n =>
-          val server = Server()
+          val server = Server(Annotations(n))
           server.setWithoutId(
             ServerModel.Name,
             AmfScalar(n.toString, Annotations(n.value)),
