@@ -1,0 +1,17 @@
+[
+    {
+        "avroSchema": {
+            "type": "array",
+            "items": "boolean"
+        }
+    },
+    {
+        "avroSchema": {
+            "type": "array",
+            "items": {
+                "type": "map",
+                "values": "bytes"
+            }
+        }
+    }
+]

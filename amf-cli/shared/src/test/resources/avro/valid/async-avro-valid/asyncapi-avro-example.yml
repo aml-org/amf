@@ -1,0 +1,34 @@
+asyncapi: 2.4.0
+info:
+  title: Avro Example
+  version: 1.0.0
+  description: |-
+    An Avro example
+
+channels:
+  'tweets':
+    description: This is the firehose of all Tweets
+    publish:
+      summary: Just spit out tweets.
+      operationId: spamTweets
+      message:
+        name: tweets
+        title: Tweets
+        tags:
+          - name: Twitter
+        schemaFormat: application/vnd.apache.avro+yaml;version=1.9.0
+        payload:
+          type: record
+          name: twitter_schema
+          namespace: com.example.avro
+          fields:
+          - name: username
+            type: string
+            doc: Name of the user account on Twitter
+          - name: tweet
+            type: string
+            doc: The content of the user's Tweet
+          - name: timestamp
+            type: long
+            doc: Unix epoch time in seconds
+          doc: A basic schema for Tweets
