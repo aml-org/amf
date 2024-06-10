@@ -3,9 +3,10 @@ package amf.shapes.internal.domain.metamodel
 import amf.core.client.scala.vocabulary.Namespace.{Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.domain.metamodel.avro.AvroFields
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
 
 trait AnyShapeModel
@@ -13,15 +14,16 @@ trait AnyShapeModel
     with ExternalSourceElementModel
     with ExamplesField
     with DocumentationField
-    with WithSemanticContext {
+    with WithSemanticContext
+    with AvroFields {
 
-  val XMLSerialization = Field(
+  val XMLSerialization: Field = Field(
     XMLSerializerModel,
     Shapes + "xmlSerialization",
     ModelDoc(ModelVocabularies.Shapes, "XmlSerialization", "Information about how to serialize")
   )
 
-  val Comment =
+  val Comment: Field =
     Field(
       Str,
       Core + "comment",
@@ -35,7 +37,7 @@ trait AnyShapeModel
   override val `type`: List[ValueType] =
     List(Shapes + "AnyShape") ++ ShapeModel.`type`
 
-  override def modelInstance = AnyShape()
+  override def modelInstance: AnyShape = AnyShape()
 }
 
 object AnyShapeModel extends AnyShapeModel {
@@ -48,5 +50,13 @@ object AnyShapeModel extends AnyShapeModel {
   )
 
   override val fields: List[Field] =
-    ShapeModel.fields ++ List(Documentation, XMLSerialization, Comment, Examples) ++ ExternalSourceElementModel.fields
+    ShapeModel.fields ++ List(
+      Documentation,
+      XMLSerialization,
+      Comment,
+      Examples,
+      AvroNamespace,
+      Aliases,
+      Size
+    ) ++ ExternalSourceElementModel.fields
 }
