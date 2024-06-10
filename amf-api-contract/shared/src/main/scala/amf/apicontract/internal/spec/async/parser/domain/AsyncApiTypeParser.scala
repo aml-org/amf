@@ -1,6 +1,9 @@
 package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
+import amf.apicontract.internal.spec.avro.AvroSettings
+import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
+import amf.apicontract.internal.spec.avro.parser.domain.AvroShapeParser
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.spec.toRaml
@@ -46,8 +49,8 @@ object AsyncSchemaFormats {
     value match {
       case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(SchemaPosition.Schema)
       case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion
-      // async20 schemas are handled with draft 7. Avro schema is not supported
-      case _ => JSONSchemaDraft7SchemaVersion
+      case Some(format) if avroSchema.contains(format)  => AVROSchema()
+      case _ => JSONSchemaDraft7SchemaVersion // async20 schemas are handled with draft 7 by default
     }
 }
 
@@ -57,7 +60,9 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
-    case _                   => OasTypeParser(entry, adopt, version).parse()
+    case AVROSchema(_) =>
+      new AvroShapeParser(YMapEntryLike(entry).asMap)(new AvroSchemaContext(ctx, AvroSettings)).parse()
+    case _ => OasTypeParser(entry, adopt, version).parse()
   }
 }
 
