@@ -11,7 +11,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.internal.spec.common.{RAML10SchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.common.{AVROSchema, RAML10SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.emitter.OasTypePartEmitter
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
 import org.yaml.model.YDocument.EntryBuilder
@@ -27,8 +27,9 @@ case class AsyncSchemaEmitter(
   override def emit(b: EntryBuilder): Unit = {
     val schemaVersion = AsyncSchemaFormats.getSchemaVersion(mediaType)(spec.eh)
     schemaVersion match {
-      case RAML10SchemaVersion => emitAsRaml(b)
-      case _                   => emitAsOas(b, schemaVersion)
+      case RAML10SchemaVersion  => emitAsRaml(b)
+      case AVROSchema(avroType) => emitAsAvro(b, schemaVersion, avroType) // todo: is it necessary?
+      case _                    => emitAsOas(b, schemaVersion)
     }
   }
 
@@ -43,6 +44,17 @@ case class AsyncSchemaEmitter(
   }
 
   private def emitAsOas(b: EntryBuilder, schemaVersion: SchemaVersion): Unit = {
+    b.entry(
+      key,
+      b => {
+        val newCtx = new Async20SpecEmitterContext(spec.eh, config = spec.renderConfig, schemaVersion = schemaVersion)
+        OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
+          .emit(b)
+      }
+    )
+  }
+
+  private def emitAsAvro(b: EntryBuilder, schemaVersion: SchemaVersion, avroType: String): Unit = {
     b.entry(
       key,
       b => {
