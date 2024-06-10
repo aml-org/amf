@@ -4,6 +4,7 @@ import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.shapes.internal.document.metamodel.{
+  AvroSchemaDocumentModel,
   DataTypeFragmentModel,
   JsonLDInstanceDocumentModel,
   JsonSchemaDocumentModel
@@ -56,6 +57,7 @@ private[amf] object ShapeEntities extends Entities {
     KeyModel,
     PropertyKeyMappingModel,
     JsonLDInstanceDocumentModel,
-    JsonLDElementModel
+    JsonLDElementModel,
+    AvroSchemaDocumentModel
   )
 }
