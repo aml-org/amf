@@ -2,28 +2,21 @@ package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeBaseParser(map) {
-  private val shape = NodeShape(map)
+  override val shape: NodeShape = NodeShape(map)
 
-  override def parse(): NodeShape = {
-    map.key("name", (AnyShapeModel.Name in shape).allowingAnnotations)
-    map.key("namespace", (AnyShapeModel.AvroNamespace in shape).allowingAnnotations)
-    map.key("doc", (ShapeModel.Description in shape).allowingAnnotations)
-    map.key("aliases", (AnyShapeModel.Aliases in shape).allowingAnnotations)
-    map.key("fields", parseFieldsEntry)
+  override def parseSpecificFields(): Unit = {
     // todo: parse default
-    shape
+    map.key("fields", parseFieldsEntry)
   }
 
-  def parseFieldsEntry(e: YMapEntry): Unit = {
+  private def parseFieldsEntry(e: YMapEntry): Unit = {
     val fields = e.value.as[Seq[YMap]].flatMap(parseField)
     shape.withProperties(fields)
   }
@@ -37,7 +30,7 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroS
     maybeShape
   }
 
-  def buildProperty(anyShape: AnyShape): PropertyShape =
+  private def buildProperty(anyShape: AnyShape): PropertyShape =
     PropertyShape(Annotations.virtual()).withName("field").withRange(anyShape)
 
 }

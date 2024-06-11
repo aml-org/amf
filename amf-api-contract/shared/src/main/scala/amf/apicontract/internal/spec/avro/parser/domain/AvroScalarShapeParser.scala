@@ -2,11 +2,10 @@ package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.vocabulary.Namespace.Xsd
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, ScalarShape}
-import amf.shapes.internal.domain.parser.XsdTypeDefMapping
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YScalar}
 
 /** parses primitive avro types such as null, boolean, int, long, float, double, bytes, string */
 case class AvroScalarShapeParser(`type`: String, maybeMap: Option[YMap])(implicit ctx: AvroSchemaContext)
@@ -19,10 +18,13 @@ case class AvroScalarShapeParser(`type`: String, maybeMap: Option[YMap])(implici
 
   private def annotationsFromMap(map: YMap) = (Annotations(map), Annotations(map.entries.head))
 
+  override val shape: ScalarShape = ScalarShape(annotations)
+
   override def parse(): AnyShape = `type` match {
     case "null" => NilShape(annotations).withName(`type`)
     case s if avroPrimitiveTypes.contains(s) =>
-      ScalarShape(annotations).withName(`type`).withDataType(DataType(`type`), typeAnnotations)
-    case _ => AnyShape(annotations)
+      val name: String = maybeMap.flatMap(_.key("name").map(_.value.as[YScalar].text)).getOrElse(`type`)
+      shape.withName(name).withDataType(DataType(`type`), typeAnnotations)
+    case _ => shape
   }
 }
