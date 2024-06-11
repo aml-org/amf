@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidTypesType
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.annotations.IsAVROSchema
+import amf.shapes.internal.annotations.AVROSchemaType
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKeyExtractor {
@@ -22,7 +22,7 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
         ctx.violation(InvalidTypesType, "", s"Invalid tag type $other for type name", value.location)
         (None, "invalid avro type")
     }
-    maybeShape.map(_.annotations += IsAVROSchema(avroType))
+    maybeShape.map(_.annotations += AVROSchemaType(avroType))
     maybeShape
   }
 

@@ -14,7 +14,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{BaseVirtualNode, IsAVROSchema, TargetName}
+import amf.shapes.internal.annotations.{BaseVirtualNode, AVROSchemaType, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
@@ -686,7 +686,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val transformBU     = transformResult.baseUnit
 
       val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
-      schema.annotations.contains(classOf[IsAVROSchema]) shouldBe true
+      schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
   }
 }

@@ -15,13 +15,13 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
     Some(ParsedJSONSchema(value))
 }
 
-case class IsAVROSchema(avroType: String) extends EternalSerializedAnnotation {
+case class AVROSchemaType(avroType: String) extends EternalSerializedAnnotation {
   override val name: String  = "avro-schema"
   override val value: String = avroType
 }
 
-object IsAVROSchema {
-  def unparse(avroType: String): Option[Annotation] = Some(IsAVROSchema(avroType))
+object AVROSchemaType {
+  def unparse(avroType: String): Option[Annotation] = Some(AVROSchemaType(avroType))
 }
 
 case class DocumentDeclarationKey(key: String) extends EternalSerializedAnnotation {
