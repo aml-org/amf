@@ -59,6 +59,7 @@ case class AsyncSchemaEmitter(
       key,
       b => {
         val newCtx = new Async20SpecEmitterContext(spec.eh, config = spec.renderConfig, schemaVersion = schemaVersion)
+        // todo: call a specific AVRO Schema emitter (tbd in W-15633198)
         OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
           .emit(b)
       }
