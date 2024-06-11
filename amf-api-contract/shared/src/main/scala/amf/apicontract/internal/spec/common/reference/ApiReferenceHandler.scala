@@ -85,10 +85,10 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
       case Raml10.id | Raml08.id             => ramlLinks(part)
       case Oas20.id | Oas30.id | AwsOas30.id => oasLinks(part)
       case JsonSchema.id                     => oasLinks(part)
-      case AvroSchema.id                     => oasLinks(part) // TODO: what to put here?
       case AsyncApi20.id =>
         oasLinks(part)
         ramlLinks(part)
+      case _ => // ignore
     }
   }
 

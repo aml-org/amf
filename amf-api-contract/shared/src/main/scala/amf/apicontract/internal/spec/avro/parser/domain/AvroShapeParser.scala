@@ -36,12 +36,12 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case "enum"                => parseEnum()
       case "fixed"               => parseFixed()
       case _ if name.isPrimitive => parsePrimitiveType(name)
-      case _                     => AnyShape() // ignore todo: validate UnsuppportedTypeValidation()
+      // todo: should validate invalid type when using the AVRO Validator, maybe save raw json in an annotation.
+      case _ => AnyShape() // ignore
     }
   }
 
-  private def parseRecord() = new AvroRecordParser(map).parse()
-
+  private def parseRecord()                                = new AvroRecordParser(map).parse()
   private def parseEnum(): AnyShape                        = new AvroEnumParser(map).parse()
   private def parsePrimitiveType(`type`: String): AnyShape = AvroScalarShapeParser(`type`, Some(map)).parse()
   private def parseFixed(): AnyShape                       = AvroFixedShapeParser(map).parse()
