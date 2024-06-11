@@ -11,7 +11,7 @@ abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: S
 
   protected def setMembers(anyShape: AnyShape): Unit
 
-  def parse(): AnyShape = {
+  override def parse(): AnyShape = {
     map
       .key(membersKey)
       .map(parseMembers)

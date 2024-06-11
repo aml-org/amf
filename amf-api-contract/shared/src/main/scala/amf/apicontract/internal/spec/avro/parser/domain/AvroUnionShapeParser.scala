@@ -12,5 +12,4 @@ case class AvroUnionShapeParser(members: Seq[YNode], node: YNode)(implicit ctx: 
     val parsedMembers = members.map(node => AvroTextParser(node).parse())
     shape.withAnyOf(parsedMembers)
   }
-
 }

@@ -18,8 +18,8 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case YType.Str =>
         val specificType = value.as[YScalar].text
         (Some(parseType(specificType)), specificType)
-      case other =>
-        ctx.violation(InvalidTypesType, "", s"Invalid tag type $other for type name", value.location)
+      case _ =>
+        // todo: should validate invalid type when using the AVRO Validator
         (None, "invalid avro type")
     }
     maybeShape.map(_.annotations += AVROSchemaType(avroType))

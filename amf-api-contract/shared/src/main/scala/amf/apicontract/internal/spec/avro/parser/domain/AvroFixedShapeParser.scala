@@ -9,15 +9,10 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import org.yaml.model.YMap
 
 case class AvroFixedShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeBaseParser(map) {
+  override val shape: AnyShape =
+    ScalarShape(Annotations(map)).withDataType(Xsd.base + "fixed", Annotations(map.entries.head))
 
-  override def parse(): AnyShape = {
-    val datatype = Xsd.base + "fixed" // todo: is this correct? necessary? same question as scalar shape parser
-    val shape    = ScalarShape(Annotations(map)).withDataType(datatype, Annotations(map.entries.head))
-    map.key("name", AnyShapeModel.Name in shape)
-    map.key("namespace", (AnyShapeModel.AvroNamespace in shape).allowingAnnotations)
-    map.key("aliases", (AnyShapeModel.Aliases in shape).allowingAnnotations)
-    map.key("doc", (AnyShapeModel.Description in shape).allowingAnnotations)
+  override def parseSpecificFields(): Unit = {
     map.key("size", (AnyShapeModel.Size in shape).allowingAnnotations)
-    shape
   }
 }
