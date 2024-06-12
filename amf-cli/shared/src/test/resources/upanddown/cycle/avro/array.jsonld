@@ -20,7 +20,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/array.json#/array/default-array/scalar/string",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/array.json#/array/default-array/scalar/default-scalar",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -31,11 +31,6 @@
             "http://www.w3.org/ns/shacl#datatype": [
               {
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "string"
               }
             ]
           }
