@@ -8,7 +8,8 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeBaseParser(map) {
+class AvroRecordParser(map: YMap, types: Map[String, AnyShape] = Map())(implicit ctx: AvroSchemaContext)
+    extends AvroShapeBaseParser(map, types) {
   override val shape: NodeShape = NodeShape(map)
 
   override def parseSpecificFields(): Unit = {
@@ -32,7 +33,6 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroS
 
   private def buildProperty(anyShape: AnyShape): PropertyShape =
     PropertyShape(Annotations.virtual()).withName("field").withRange(anyShape)
-
 }
 
 // todo: analyze defaulting to base shape parser instead

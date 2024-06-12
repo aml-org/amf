@@ -7,20 +7,25 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model.{YMap, YNode}
 
-abstract class AvroShapeBaseParser(map: YMap)(implicit ctx: AvroSchemaContext)
+abstract class AvroShapeBaseParser(map: YMap, types: Map[String, AnyShape] = Map())(implicit ctx: AvroSchemaContext)
     extends QuickFieldParserOps
     with AvroKeyExtractor {
   val shape: AnyShape
 
   def parse(): AnyShape = {
-    map.key("name", AnyShapeModel.Name in shape)
-    map.key("namespace", (AnyShapeModel.AvroNamespace in shape).allowingAnnotations)
-    map.key("aliases", (AnyShapeModel.Aliases in shape).allowingAnnotations)
-    map.key("doc", (AnyShapeModel.Description in shape).allowingAnnotations)
+    parseCommonFields()
     parseSpecificFields()
     shape
   }
 
+  def parseCommonFields(): Unit = {
+    map.key("name", AnyShapeModel.Name in shape)
+    map.key("namespace", (AnyShapeModel.AvroNamespace in shape).allowingAnnotations)
+    map.key("aliases", (AnyShapeModel.Aliases in shape).allowingAnnotations)
+    map.key("doc", (AnyShapeModel.Description in shape).allowingAnnotations)
+  }
+
+  // each specific parser should override and parse it's specific fields
   def parseSpecificFields(): Unit = {}
 }
 
