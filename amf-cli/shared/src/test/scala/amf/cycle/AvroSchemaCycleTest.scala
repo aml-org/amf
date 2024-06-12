@@ -35,7 +35,7 @@ class AvroSchemaCycleTest extends FunSuiteCycleTests {
     cycle("map.json", "map.jsonld")
   }
 
-  test("Can parse a record") {
+  test("Can parse a record with a recursive reference") {
     cycle("record.json", "record.jsonld")
   }
 }

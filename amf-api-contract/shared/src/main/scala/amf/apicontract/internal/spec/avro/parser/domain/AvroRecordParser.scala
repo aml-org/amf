@@ -23,7 +23,6 @@ class AvroRecordParser(map: YMap, types: Map[String, AnyShape] = Map())(implicit
   }
 
   def parseField(map: YMap): Option[PropertyShape] = {
-    // todo: support name and aliases parsed in field types
     val maybeShape: Option[PropertyShape] = AvroRecordFieldParser(map).parse().map(buildProperty)
     maybeShape.foreach { p =>
       map.key("order", PropertyShapeModel.SerializationOrder in p)

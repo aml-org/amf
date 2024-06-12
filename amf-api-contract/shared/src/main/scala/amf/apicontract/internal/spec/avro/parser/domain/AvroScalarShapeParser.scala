@@ -2,10 +2,9 @@ package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.client.scala.model.DataType
-import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, ScalarShape}
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.YMap
 
 /** parses primitive avro types such as null, boolean, int, long, float, double, bytes, string */
 case class AvroScalarShapeParser(`type`: String, maybeMap: Option[YMap])(implicit ctx: AvroSchemaContext)
