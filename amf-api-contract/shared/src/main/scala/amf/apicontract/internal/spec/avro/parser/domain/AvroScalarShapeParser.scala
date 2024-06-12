@@ -23,8 +23,8 @@ case class AvroScalarShapeParser(`type`: String, maybeMap: Option[YMap])(implici
   override def parse(): AnyShape = `type` match {
     case "null" => NilShape(annotations).withName(`type`)
     case s if avroPrimitiveTypes.contains(s) =>
-      val name: String = maybeMap.flatMap(_.key("name").map(_.value.as[YScalar].text)).getOrElse(`type`)
-      shape.withName(name).withDataType(DataType(`type`), typeAnnotations)
+      parseCommonFields()
+      shape.withDataType(DataType(`type`), typeAnnotations)
     case _ => shape
   }
 }

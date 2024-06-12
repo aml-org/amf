@@ -1,6 +1,5 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidTypesType
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.AVROSchemaType
 import org.yaml.model.{YMap, YNode, YScalar, YType}
