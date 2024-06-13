@@ -13,6 +13,4 @@ trait GraphQLFederationFunSuiteCycleTests extends FunSuiteCycleTests {
       .withRenderOptions(options.getOrElse(renderOptions()))
       .withErrorHandlerProvider(() => eh.getOrElse(IgnoringErrorHandler))
   }
-
-  override def renderOptions(): RenderOptions = super.renderOptions().withPrettyPrint
 }
