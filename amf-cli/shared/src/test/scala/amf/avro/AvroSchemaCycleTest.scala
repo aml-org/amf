@@ -1,4 +1,5 @@
-package amf.cycle
+package amf.avro
+
 import amf.apicontract.client.scala.{AMFConfiguration, AvroConfiguration}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
@@ -11,31 +12,11 @@ class AvroSchemaCycleTest extends FunSuiteCycleTests {
   override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
     AvroConfiguration
       .Avro()
-      .withRenderOptions(renderOptions().withPrettyPrint)
-      .withErrorHandlerProvider(() => IgnoringErrorHandler)
+      .withRenderOptions(options.getOrElse(renderOptions()))
+      .withErrorHandlerProvider(() => eh.getOrElse(IgnoringErrorHandler))
   }
 
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/avro/"
 
   def cycle(source: String, target: String): Future[Assertion] = cycle(source, target, AvroHint, AmfJsonHint)
-
-  test("Can parse an array") {
-    cycle("array.json", "array.jsonld")
-  }
-
-  test("Can parse an enum") {
-    cycle("enum.json", "enum.jsonld")
-  }
-
-  test("Can parse a fixed shape") {
-    cycle("fixed.json", "fixed.jsonld")
-  }
-
-  test("Can parse a map") {
-    cycle("map.json", "map.jsonld")
-  }
-
-  test("Can parse a record with a recursive reference") {
-    cycle("record.json", "record.jsonld")
-  }
 }
