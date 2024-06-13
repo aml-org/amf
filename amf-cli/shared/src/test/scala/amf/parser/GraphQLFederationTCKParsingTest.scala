@@ -18,6 +18,4 @@ class GraphQLFederationTCKParsingTest extends GraphQLFederationFunSuiteCycleTest
       }
     }
   }
-
-  override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }
