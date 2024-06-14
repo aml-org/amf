@@ -122,13 +122,23 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/record.json#/shape/LongList/property/property/field_1/union/next/anyOf/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/record.json#/shape/LongList/property/property/field_1/union/next/anyOf/shape/default-node",
                     "@type": [
-                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/record.json#/shape/LongList"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "LongList"
+                      }
                     ]
                   }
                 ],
@@ -139,7 +149,7 @@
                 ],
                 "http://a.ml/vocabularies/core#description": [
                   {
-                    "@value": "this is a documentation for the union type"
+                    "@value": "this is a documentation for the union type with recursive element"
                   }
                 ],
                 "http://a.ml/vocabularies/shapes#namespace": [

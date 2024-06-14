@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.client.scala.model.DataType
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape}
 import org.yaml.model.YMap
 
 /** parses primitive avro types such as null, boolean, int, long, float, double, bytes, string */
@@ -24,6 +24,9 @@ case class AvroScalarShapeParser(`type`: String, maybeMap: Option[YMap])(implici
     case s if avroPrimitiveTypes.contains(s) =>
       parseCommonFields()
       shape.withDataType(DataType(`type`), typeAnnotations)
+    case _ if ctx.globalSpace.contains(`type`) =>
+      val originalShape = ctx.globalSpace(`type`).asInstanceOf[NodeShape]
+      originalShape.link(`type`, originalShape.annotations)
     case _ => shape
   }
 }
