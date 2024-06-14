@@ -8,8 +8,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-class AvroRecordParser(map: YMap, types: Map[String, AnyShape] = Map())(implicit ctx: AvroSchemaContext)
-    extends AvroShapeBaseParser(map, types) {
+class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeBaseParser(map) {
   override val shape: NodeShape = NodeShape(map)
 
   override def parseSpecificFields(): Unit = {

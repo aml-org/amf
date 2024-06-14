@@ -5,14 +5,15 @@ import amf.core.internal.parser.YMapOps
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
-import org.yaml.model.{YMap, YNode}
+import org.yaml.model._
 
-abstract class AvroShapeBaseParser(map: YMap, types: Map[String, AnyShape] = Map())(implicit ctx: AvroSchemaContext)
+abstract class AvroShapeBaseParser(map: YMap)(implicit ctx: AvroSchemaContext)
     extends QuickFieldParserOps
     with AvroKeyExtractor {
   val shape: AnyShape
 
   def parse(): AnyShape = {
+    addTypeToCache()
     parseCommonFields()
     parseSpecificFields()
     shape
@@ -27,6 +28,15 @@ abstract class AvroShapeBaseParser(map: YMap, types: Map[String, AnyShape] = Map
 
   // each specific parser should override and parse it's specific fields
   def parseSpecificFields(): Unit = {}
+
+  private def addTypeToCache(): Unit = {
+    def getText(node: YNode)                             = node.as[YScalar].text
+    def getAliases(entry: YMapEntry): IndexedSeq[String] = entry.value.as[YSequence].nodes.map(getText)
+    val name                                             = map.key("name").map(name => getText(name.value))
+    val aliases                                          = map.key("aliases").map(getAliases)
+    name.foreach(ctx.globalSpace.put(_, shape))
+    aliases.foreach(_.foreach(alias => ctx.globalSpace.put(alias, shape)))
+  }
 }
 
 trait AvroKeyExtractor {
