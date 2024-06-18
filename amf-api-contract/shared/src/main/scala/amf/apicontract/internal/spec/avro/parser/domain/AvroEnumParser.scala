@@ -7,10 +7,11 @@ import amf.core.internal.parser.{YMapOps, YScalarYRead}
 import amf.shapes.client.scala.model.domain.AnyShape
 import org.yaml.model._
 
-class AvroEnumParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroScalarShapeParser("string", Some(map)) {
+class AvroEnumParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroTextTypeParser("string", Some(map)) {
 
   override def parse(): AnyShape = {
     val shape = super.parse()
+    parseCommonFields()
     parseSpecificFields()
     shape
   }

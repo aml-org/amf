@@ -8,7 +8,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import org.yaml.model.YMap
 
-case class AvroFixedShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeBaseParser(map) {
+case class AvroFixedShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroComplexShapeParser(map) {
   override val shape: AnyShape =
     ScalarShape(Annotations(map)).withDataType(Xsd.base + "fixed", Annotations(map.entries.head))
 

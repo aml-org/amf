@@ -7,6 +7,6 @@ import org.yaml.model.{YNode, YScalar}
 case class AvroTextParser(node: YNode)(implicit ctx: AvroSchemaContext) extends AvroKeyExtractor {
   def parse(): AnyShape = {
     val `type` = node.as[YScalar].text
-    AvroScalarShapeParser(`type`, None).parse()
+    AvroTextTypeParser(`type`, None).parse()
   }
 }

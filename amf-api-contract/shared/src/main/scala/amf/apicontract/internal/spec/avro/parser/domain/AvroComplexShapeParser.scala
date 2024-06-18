@@ -7,7 +7,7 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
 
-abstract class AvroShapeBaseParser(map: YMap)(implicit ctx: AvroSchemaContext)
+abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext)
     extends QuickFieldParserOps
     with AvroKeyExtractor {
   val shape: AnyShape
