@@ -9,17 +9,13 @@ import amf.shapes.internal.document.metamodel.JsonSchemaDocumentModel.SchemaVers
 
 class JsonSchemaDocument(override val fields: Fields, override val annotations: Annotations)
     extends Document(fields, annotations) {
-
-  override def encodes: Shape = super.encodes.asInstanceOf[Shape]
+  override def encodes: Shape                     = super.encodes.asInstanceOf[Shape]
+  override def meta: JsonSchemaDocumentModel.type = JsonSchemaDocumentModel
 
   def schemaVersion: StrField = fields.field(SchemaVersion)
-
-  override def meta = JsonSchemaDocumentModel
-
 }
 
 object JsonSchemaDocument {
-  def apply(): JsonSchemaDocument = apply(Annotations())
-
+  def apply(): JsonSchemaDocument                         = apply(Annotations())
   def apply(annotations: Annotations): JsonSchemaDocument = new JsonSchemaDocument(Fields(), annotations)
 }

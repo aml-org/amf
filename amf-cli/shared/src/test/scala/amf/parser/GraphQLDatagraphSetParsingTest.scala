@@ -21,6 +21,4 @@ trait GraphQLDatagraphSetParsingTest extends GraphQLFunSuiteCycleTests {
       cycle(api, dumpedGraphQL, GraphQLHint, GraphQLHint)
     }
   }
-
-  override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }

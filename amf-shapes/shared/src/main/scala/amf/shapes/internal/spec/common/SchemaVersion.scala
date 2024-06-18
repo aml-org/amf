@@ -84,3 +84,6 @@ object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7", "http:
 object JSONSchemaDraft201909SchemaVersion
     extends JSONSchemaVersion("draft-2019-09", "http://json-schema.org/draft/2019-09/schema#")
 object JSONSchemaUnspecifiedVersion extends JSONSchemaVersion("", "")
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~ AVRO ~~~~~~~~~~~~~~~~~~~~~~~~
+case class AVROSchema(avroType: String = "") extends SchemaVersion("avro")

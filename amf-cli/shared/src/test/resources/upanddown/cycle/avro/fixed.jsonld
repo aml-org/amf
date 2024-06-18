@@ -1,0 +1,80 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json",
+    "@type": [
+      "http://a.ml/vocabularies/document#AvroSchemaDocumentModel",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#fixed"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "md5"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#size": [
+          {
+            "@value": 16
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5/source-map/avro-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "fixed"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "Avro"
+          }
+        ]
+      }
+    ]
+  }
+]
