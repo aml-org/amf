@@ -6,7 +6,8 @@ import org.yaml.model.YMap
 
 case class AvroMapShapeParser(map: YMap)(implicit ctx: AvroSchemaContext)
     extends AvroCollectionShapeParser[NodeShape](map, "values") {
-  // TODO: parse defaults
   override val shape: NodeShape                     = NodeShape(map)
   override def setMembers(anyShape: AnyShape): Unit = shape.withAdditionalPropertiesSchema(anyShape)
+
+  override def parseSpecificFields(): Unit = {}
 }

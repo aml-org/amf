@@ -35,6 +35,21 @@
             ]
           }
         ],
+        "http://www.w3.org/ns/shacl#defaultValue": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node/object_1",
+            "@type": [
+              "http://a.ml/vocabularies/data#Object",
+              "http://a.ml/vocabularies/data#Node",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "object_1"
+              }
+            ]
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node/source-map",

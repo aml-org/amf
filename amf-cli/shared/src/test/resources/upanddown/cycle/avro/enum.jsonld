@@ -28,6 +28,31 @@
             "@value": "Suit"
           }
         ],
+        "http://www.w3.org/ns/shacl#defaultValue": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/enum.json#/scalar/Suit/scalar_1",
+            "@type": [
+              "http://a.ml/vocabularies/data#Scalar",
+              "http://a.ml/vocabularies/data#Node",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/data#value": [
+              {
+                "@value": "SPADES"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "scalar_1"
+              }
+            ]
+          }
+        ],
         "http://www.w3.org/ns/shacl#in": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/enum.json#/scalar/Suit/list",

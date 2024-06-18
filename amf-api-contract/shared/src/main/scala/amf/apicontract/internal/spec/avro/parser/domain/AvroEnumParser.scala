@@ -13,11 +13,11 @@ class AvroEnumParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroTex
     val shape = super.parse()
     parseCommonFields()
     parseSpecificFields()
+    parseDefault()
     shape
   }
 
   override def parseSpecificFields(): Unit = {
-    // todo: parse default
     map
       .key("symbols")
       .map(parseSymbols)

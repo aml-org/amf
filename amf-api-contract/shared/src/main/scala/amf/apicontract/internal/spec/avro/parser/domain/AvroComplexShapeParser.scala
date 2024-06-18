@@ -1,7 +1,10 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
+import amf.core.internal.datanode.DataNodeParser
+import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
@@ -16,6 +19,7 @@ abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext
     addTypeToCache()
     parseCommonFields()
     parseSpecificFields()
+    parseDefault()
     shape
   }
 
@@ -27,7 +31,17 @@ abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext
   }
 
   // each specific parser should override and parse it's specific fields
-  def parseSpecificFields(): Unit = {}
+  def parseSpecificFields(): Unit
+
+  def parseDefault(): Unit = {
+    map.key(
+      "default",
+      entry => {
+        val dataNode = DataNodeParser(entry.value).parse()
+        shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+      }
+    )
+  }
 
   private def addTypeToCache(): Unit = {
     def getText(node: YNode)                             = node.as[YScalar].text

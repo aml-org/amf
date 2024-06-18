@@ -35,6 +35,23 @@
             ]
           }
         ],
+        "http://www.w3.org/ns/shacl#defaultValue": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/array.json#/array/default-array/array_1",
+            "@type": [
+              "http://a.ml/vocabularies/data#Array",
+              "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+              "http://a.ml/vocabularies/data#Node",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#member": [],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "array_1"
+              }
+            ]
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/array.json#/array/default-array/source-map",
