@@ -52,6 +52,31 @@
                     "@value": "this is a documentation for the primitive type"
                   }
                 ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/record.json#/shape/LongList/property/property/field/scalar/value/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "123"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/shapes#namespace": [
                   {
                     "@value": "fields"
@@ -150,6 +175,31 @@
                 "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "this is a documentation for the union type with recursive element"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/record.json#/shape/LongList/property/property/field_1/union/next/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "null"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/shapes#namespace": [

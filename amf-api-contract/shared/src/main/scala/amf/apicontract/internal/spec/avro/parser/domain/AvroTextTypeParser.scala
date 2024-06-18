@@ -23,11 +23,16 @@ case class AvroTextTypeParser(`type`: String, maybeMap: Option[YMap], isRecordFi
   override def parse(): AnyShape = `type` match {
     case "null" => NilShape(annotations).withName(`type`)
     case s if avroPrimitiveTypes.contains(s) =>
-      if (isRecordField) parseCommonFields()
+      if (isRecordField) {
+        parseCommonFields()
+        parseDefault()
+      }
       shape.withDataType(DataType(`type`), typeAnnotations)
     case _ if ctx.globalSpace.contains(`type`) =>
       val originalShape = ctx.globalSpace(`type`).asInstanceOf[NodeShape]
       originalShape.link(`type`, originalShape.annotations)
     case _ => shape
   }
+
+  override def parseSpecificFields(): Unit = {}
 }

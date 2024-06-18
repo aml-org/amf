@@ -11,7 +11,8 @@
       "name": "value",
       "namespace": "fields",
       "doc": "this is a documentation for the primitive type",
-      "type": "long"
+      "type": "long",
+      "default": 123
     },
     {
       "name": "next",
@@ -20,7 +21,8 @@
       "type": [
         "null",
         "LongList"
-      ]
+      ],
+      "default": null
     }
   ]
 }

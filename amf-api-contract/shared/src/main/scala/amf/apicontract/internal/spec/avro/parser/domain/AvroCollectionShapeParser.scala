@@ -16,6 +16,7 @@ abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: S
       .key(membersKey)
       .map(parseMembers)
       .foreach(setMembers)
+    parseDefault()
     shape
   }
 
