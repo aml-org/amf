@@ -5,7 +5,7 @@ import amf.shapes.client.scala.model.domain.UnionShape
 import org.yaml.model.{YMap, YNode}
 
 case class AvroUnionShapeParser(members: Seq[YNode], node: YNode)(implicit ctx: AvroSchemaContext)
-    extends AvroShapeBaseParser(node.as[YMap]) {
+    extends AvroComplexShapeParser(node.as[YMap]) {
   override val shape: UnionShape = UnionShape(node).withName("union")
 
   // todo: parse default, should be the default value of the first element of the union (usually null)

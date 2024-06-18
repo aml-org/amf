@@ -6,7 +6,7 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import org.yaml.model.{YMap, YMapEntry}
 
 abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: String)(implicit ctx: AvroSchemaContext)
-    extends AvroShapeBaseParser(map) {
+    extends AvroComplexShapeParser(map) {
   val shape: T
 
   protected def setMembers(anyShape: AnyShape): Unit
@@ -19,5 +19,5 @@ abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: S
     shape
   }
 
-  protected def parseMembers(e: YMapEntry): AnyShape = AvroScalarShapeParser(e.value.as[String], None).parse()
+  protected def parseMembers(e: YMapEntry): AnyShape = AvroTextTypeParser(e.value.as[String], None).parse()
 }
