@@ -1,0 +1,32 @@
+asyncapi: 2.0.0
+info:
+  title: My API
+  version: '1.0.0'
+channels:
+  mychannel:
+    publish:
+      message:
+        schemaFormat: application/vnd.apache.avro;version=1.8.2
+        payload:
+          type: record
+          name: Person
+          fields:
+            - name: name
+              type: string
+            - name: age
+              type:
+                - "null"
+                - int
+              default: null
+            - name: favoriteProgrammingLanguage
+              type:
+                name: ProgrammingLanguage
+                type: enum
+                symbols: ["JS", "Java", "Go", "Rust", "C"]
+            - name: address
+              type:
+                name: Address
+                type: record
+                fields:
+                  - name: zipcode
+                    type: int
