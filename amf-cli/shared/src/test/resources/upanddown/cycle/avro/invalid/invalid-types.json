@@ -1,0 +1,42 @@
+{
+  "type": "record",
+  "name": "ConnectionRequested",
+  "namespace": "com.foo.connections",
+  "doc": "An example schema to illustrate the issue",
+  "fields": [
+    {
+      "name": "metadata",
+      "type": {
+        "type": "record",
+        "name": "EventMetadata",
+        "namespace": "com.foo",
+        "fields": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "doc": "Unique identifier for this specific event"
+          },
+          {
+            "name": "timestamp",
+            "type": "timestamp",
+            "doc": "Instant the event took place"
+          }
+        ],
+        "invalidAttribute": "This is not allowed"
+      }
+    },
+    {
+      "name": "auth_code",
+      "type": "encryptedString",
+      "doc": "Encrypted auth_code received when user authorizes the app."
+    },
+    {
+      "name": "triggered_by",
+      "type": {
+        "type": "string",
+        "logicalType": "invalidType"
+      },
+      "doc": "ID of the user who triggered this event."
+    }
+  ]
+}
