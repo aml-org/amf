@@ -20,7 +20,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -29,7 +29,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/name/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -42,23 +42,18 @@
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
                 ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "name"
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/name/scalar/default-scalar/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field/scalar/name/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/name/scalar/default-scalar/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/name/scalar/default-scalar"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -74,12 +69,12 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "name"
               }
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -88,7 +83,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#UnionShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -98,7 +93,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#anyOf": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age/anyOf/nil/null",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age/anyOf/nil/null",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#NilShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -112,7 +107,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age/anyOf/scalar/default-scalar",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age/anyOf/scalar/default-scalar",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -134,7 +129,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#defaultValue": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age/scalar_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age/scalar_1",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -159,16 +154,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_1/union/age"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/union/age"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -184,12 +179,37 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "age"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#defaultValue": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/age/scalar_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "null"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "scalar_1"
+                  }
+                ]
               }
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -198,7 +218,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -218,11 +238,11 @@
                 ],
                 "http://www.w3.org/ns/shacl#in": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/list",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/list",
                     "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                     "http://www.w3.org/2000/01/rdf-schema#_1": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/in/data-node",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -242,7 +262,7 @@
                     ],
                     "http://www.w3.org/2000/01/rdf-schema#_2": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/in/data-node_4",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -262,7 +282,7 @@
                     ],
                     "http://www.w3.org/2000/01/rdf-schema#_3": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/in/data-node_5",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node_2",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -282,7 +302,7 @@
                     ],
                     "http://www.w3.org/2000/01/rdf-schema#_4": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/in/data-node_6",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node_3",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -302,7 +322,7 @@
                     ],
                     "http://www.w3.org/2000/01/rdf-schema#_5": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/in/data-node_7",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node_4",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -324,16 +344,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_2/scalar/ProgrammingLanguage"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -349,12 +369,12 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "favoriteProgrammingLanguage"
               }
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -363,7 +383,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -373,7 +393,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/property/property/field",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/property/property/zipcode",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -382,7 +402,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/property/property/field/scalar/zipcode",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -395,23 +415,18 @@
                             "@id": "http://www.w3.org/2001/XMLSchema#int"
                           }
                         ],
-                        "http://www.w3.org/ns/shacl#name": [
-                          {
-                            "@value": "zipcode"
-                          }
-                        ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/property/property/field/scalar/zipcode/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/property/property/field/scalar/zipcode/source-map/avro-schema/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar/source-map/avro-schema/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/property/property/field/scalar/zipcode"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -427,7 +442,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#name": [
                       {
-                        "@value": "field"
+                        "@value": "zipcode"
                       }
                     ]
                   }
@@ -439,16 +454,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/field_3/shape/Address"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum-schema.json#/shape/default-node/property/property/address/shape/Address"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -464,7 +479,7 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "address"
               }
             ]
           }

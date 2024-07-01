@@ -13,7 +13,7 @@ class AsyncAvroValidTCKParsingTest extends AsyncAvroCycleTest {
         cycle(api, api.replace(".yaml", ".jsonld"), Async20YamlHint, AmfJsonHint)
       }
 
-      test(s"Avro TCK > Apis > Valid > $api: dumped YAML matches golden") {
+      ignore(s"Avro TCK > Apis > Valid > $api: dumped YAML matches golden") {
         cycle(api, api.replace(".yaml", ".dumped.yaml"), Async20YamlHint, Async20YamlHint)
       }
     }

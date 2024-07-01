@@ -20,7 +20,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -29,7 +29,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -39,7 +39,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -48,7 +48,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -63,16 +63,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field/scalar/default-scalar/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/scalar/default-scalar/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field/scalar/default-scalar/source-map/avro-schema/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/scalar/default-scalar/source-map/avro-schema/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field/scalar/default-scalar"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/scalar/default-scalar"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -88,12 +88,17 @@
                     ],
                     "http://www.w3.org/ns/shacl#name": [
                       {
-                        "@value": "field"
+                        "@value": "id"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "Unique identifier for this specific event"
                       }
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -102,7 +107,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field_3/scalar/default-scalar",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/scalar/default-scalar",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -117,16 +122,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field_3/scalar/default-scalar/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/scalar/default-scalar/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field_3/scalar/default-scalar/source-map/avro-schema/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/scalar/default-scalar/source-map/avro-schema/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/property/property/field_3/scalar/default-scalar"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/scalar/default-scalar"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -142,7 +147,12 @@
                     ],
                     "http://www.w3.org/ns/shacl#name": [
                       {
-                        "@value": "field"
+                        "@value": "timestamp"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "Instant the event took place"
                       }
                     ]
                   }
@@ -164,16 +174,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field/shape/EventMetadata"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -189,12 +199,17 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "metadata"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "Metadata about the event."
               }
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -203,7 +218,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_1/scalar/auth_code",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -216,28 +231,18 @@
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
                 ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "auth_code"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#description": [
-                  {
-                    "@value": "Encrypted auth_code received when user authorizes the app."
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_1/scalar/auth_code/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/scalar/default-scalar/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_1/scalar/auth_code/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/scalar/default-scalar/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_1/scalar/auth_code"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/scalar/default-scalar"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -253,12 +258,17 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "auth_code"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "Encrypted auth_code received when user authorizes the app."
               }
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_2",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -267,7 +277,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_2/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -282,16 +292,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_2/scalar/default-scalar/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/scalar/default-scalar/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_2/scalar/default-scalar/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/scalar/default-scalar/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/field_2/scalar/default-scalar"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/scalar/default-scalar"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -307,7 +317,12 @@
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "field"
+                "@value": "triggered_by"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "ID of the user who triggered this event."
               }
             ]
           }
