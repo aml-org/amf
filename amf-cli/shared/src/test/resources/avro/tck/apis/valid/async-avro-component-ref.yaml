@@ -1,0 +1,36 @@
+asyncapi: 2.1.0
+info:
+  title: My API
+  version: '1.0.0'
+components:
+  schemas:
+    Person:
+      type: string
+      name: Person
+      fields:
+        - name: name
+          type: string
+        - name: age
+          type:
+            - "null"
+            - int
+          default: null
+        - name: favoriteProgrammingLanguage
+          type:
+            name: ProgrammingLanguage
+            type: enum
+            symbols: ["JS", "Java", "Go", "Rust", "C"]
+        - name: address
+          type:
+            name: Address
+            type: record
+            fields:
+              - name: zipcode
+                type: int
+channels:
+  mychannel:
+    publish:
+      message:
+        schemaFormat: application/vnd.apache.avro;version=1.8.2
+        payload:
+          $ref: '#/components/schemas/Person'

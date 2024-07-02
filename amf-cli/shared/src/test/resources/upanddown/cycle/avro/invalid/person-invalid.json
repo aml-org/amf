@@ -1,0 +1,77 @@
+{
+  "name": "Person",
+  "namespace": "com.company",
+  "type": "record",
+  "fields": [
+    {
+      "name": "name",
+      "type": "str", // Invalid type: "str" should be "string"
+      "default": 123 // Invalid default type: Should be a string, not a number
+    },
+    {
+      "name": "serialNo",
+      "type": "string",
+      "default": 456 // Invalid default type: Default for a string should be a string
+    },
+    {
+      "name": "email",
+      "type": ["null", "string"],
+      "default": "notAnEmail" // Invalid format if email validation were expected
+    },
+    {
+      "name": "age",
+      "type": ["null", "int"],
+      "default": "old" // Invalid default type: Default for an int should be an integer
+    },
+    {
+      "name": "favoriteProgrammingLanguage",
+      "type": {
+        "name": "ProgrammingLanguage",
+        "type": "enumeration", // Incorrect type: should be "enum"
+        "symbols": ["JS", "Java", "Go", "Rust", "C#"], // Invalid symbol: "C#" is not in the original list
+        "default": "Python" // Invalid default: "Python" is not one of the defined symbols
+      }
+    },
+    {
+      "name": "certifications",
+      "type": {
+        "type": "list", // Invalid type: should be "array"
+        "items": "string"
+      }
+    },
+    {
+      "name": "address",
+      "type": {
+        "name": "Address",
+        "type": "record",
+        "fields": [
+          {
+            "name": "zipcode",
+            "type": "string" // Invalid
+          },
+          {
+            "name": "country",
+            "type": ["null", "str"] // Invalid
+          }
+        ]
+      }
+    },
+    {
+      "name": "weight",
+      "type": "double", // Incorrect type
+      "default": "heavy" // Non-numeric default
+    },
+    {
+      "name": "height",
+      "type": "double",
+      "default": "tall" // Non-numeric default
+    },
+    {
+      "name": "someid",
+      "type": {
+        "type": "string",
+        "logicalType": "uid" // Invalid logical type: should be "uuid"
+      }
+    }
+  ]
+}

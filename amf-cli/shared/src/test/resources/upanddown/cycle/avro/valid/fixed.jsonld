@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json",
     "@type": [
       "http://a.ml/vocabularies/document#AvroSchemaDocumentModel",
       "http://a.ml/vocabularies/document#Document",
@@ -10,7 +10,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/scalar/md5",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -35,16 +35,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/scalar/md5/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#avro-schema": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5/source-map/avro-schema/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/scalar/md5/source-map/avro-schema/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/scalar/md5"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/scalar/md5"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -65,7 +65,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/fixed.json#/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],
