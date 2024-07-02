@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json",
     "@type": [
       "http://a.ml/vocabularies/document#AvroSchemaDocumentModel",
       "http://a.ml/vocabularies/document#Document",
@@ -10,7 +10,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/shape/default-node",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -20,7 +20,7 @@
         ],
         "http://www.w3.org/ns/shacl#additionalPropertiesSchema": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node/scalar/default-scalar",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/shape/default-node/scalar/default-scalar",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -37,7 +37,7 @@
         ],
         "http://www.w3.org/ns/shacl#defaultValue": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node/object_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/shape/default-node/object_1",
             "@type": [
               "http://a.ml/vocabularies/data#Object",
               "http://a.ml/vocabularies/data#Node",
@@ -52,16 +52,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/shape/default-node/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#avro-schema": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node/source-map/avro-schema/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/shape/default-node/source-map/avro-schema/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/shape/default-node"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/shape/default-node"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -82,7 +82,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/map.json#/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map.json#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],
