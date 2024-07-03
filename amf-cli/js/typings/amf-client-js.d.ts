@@ -1443,6 +1443,9 @@ declare module "amf-client-js" {
     writeOnly: BoolField;
     xmlSerialization: XMLSerializer;
     xone: Array<Shape>;
+    namespace: StrField;
+    aliases: Array<StrField>;
+    size: IntField;
 
     constructor();
 
@@ -1531,6 +1534,12 @@ declare module "amf-client-js" {
     withXMLSerialization(xmlSerialization: XMLSerializer): this;
 
     withXone(subShapes: Array<Shape>): this;
+
+    withNamespace(namespace: string): this;
+
+    withAliases(aliases: Array<string>): this;
+
+    withSize(size: number): this;
   }
   export class Api<A> implements DomainElement {
     accepts: Array<StrField>;
@@ -1715,6 +1724,9 @@ declare module "amf-client-js" {
     withTermsOfService(terms: string): this;
 
     withVersion(version: string): this;
+  }
+  export class AvroConfiguration {
+    static Avro(): AMFConfiguration;
   }
   export class BaseAMLBaseUnitClient extends AMFGraphBaseUnitClient {
     parseDialect(url: string): Promise<AMLDialectResult>;
