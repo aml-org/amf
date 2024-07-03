@@ -15,7 +15,8 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
     with ExternalSourceElement
     with InheritanceChain
     with DocumentedElement
-    with ExemplifiedDomainElement {
+    with ExemplifiedDomainElement
+    with AvroShapeFields {
 
   // This is used in ShapeNormalization to know if a Shape should go through the AnyShapeAdjuster
   private[amf] val isConcreteShape: Boolean = false
