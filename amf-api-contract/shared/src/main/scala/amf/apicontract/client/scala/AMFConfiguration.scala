@@ -157,6 +157,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   }
 }
 
+// AVRO is in alpha support mode
 object AvroConfiguration extends APIConfigurationBuilder {
   def Avro(): AMFConfiguration =
     common().withPlugins(List(AvroParsePlugin)) // TODO: add validation profiles and serialization
