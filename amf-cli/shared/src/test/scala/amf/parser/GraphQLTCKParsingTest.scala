@@ -31,8 +31,12 @@ class GraphQLTCKParsingTest extends GraphQLFunSuiteCycleTests {
   }
 
   test("GraphQL TCK > Apis > Valid > directive-repeatable.graphql: dumped Flattened JSON matches golden") {
-    cycle("directive-repeatable.graphql", "directive-repeatable.flattened.jsonld", GraphQLHint, AmfJsonHint, renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint))
+    cycle(
+      "directive-repeatable.graphql",
+      "directive-repeatable.flattened.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint)
+    )
   }
-
-  override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }

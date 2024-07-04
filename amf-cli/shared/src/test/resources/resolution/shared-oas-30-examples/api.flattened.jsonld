@@ -138,17 +138,17 @@
       "core:name": "requestBody",
       "apiContract:payload": [
         {
-          "@id": "#19"
+          "@id": "#13"
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#39": "true"
+        },
         "lexical": {
           "core:name": "[(19,6)-(19,17)]",
           "#39": "[(8,6)-(27,0)]",
           "apiContract:parameter": "[(8,6)-(19,0)]"
-        },
-        "virtual-element": {
-          "#39": "true"
         }
       }
     },
@@ -165,7 +165,7 @@
       "core:description": "Ok",
       "apiContract:payload": [
         {
-          "@id": "#18"
+          "@id": "#12"
         }
       ],
       "smaps": {
@@ -197,11 +197,11 @@
         }
       ],
       "smaps": {
-        "lexical": {
-          "#45": "[(41,6)-(81,0)]"
-        },
         "virtual-element": {
           "#45": "true"
+        },
+        "lexical": {
+          "#45": "[(41,6)-(81,0)]"
         },
         "declared-element": {
           "#45": ""
@@ -225,19 +225,19 @@
         }
       ],
       "smaps": {
-        "resolved-link-target": {
-          "#43": "amf://id#30"
-        },
         "lexical": {
           "apiContract:payload": "[(65,6)-(72,0)]",
           "#43": "[(63,4)-(72,0)]",
           "core:description": "[(64,6)-(65,0)]"
         },
-        "declared-element": {
-          "#43": ""
-        },
         "resolved-link": {
           "#43": "amf://id#44"
+        },
+        "resolved-link-target": {
+          "#43": "amf://id#30"
+        },
+        "declared-element": {
+          "#43": ""
         }
       }
     },
@@ -258,7 +258,7 @@
       "apiContract:binding": "query",
       "apiContract:payload": [
         {
-          "@id": "#21"
+          "@id": "#15"
         }
       ],
       "smaps": {
@@ -277,7 +277,7 @@
       }
     },
     {
-      "@id": "#19",
+      "@id": "#13",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -296,13 +296,13 @@
         "lexical": {
           "apiContract:examples": "[(24,12)-(27,0)]",
           "core:mediaType": "[(21,10)-(21,26)]",
-          "#19": "[(21,10)-(27,0)]",
+          "#13": "[(21,10)-(27,0)]",
           "raml-shapes:schema": "[(22,12)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#12",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -315,7 +315,7 @@
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(32,14)-(34,0)]",
-          "#18": "[(31,12)-(37,0)]",
+          "#12": "[(31,12)-(37,0)]",
           "core:mediaType": "[(31,12)-(31,28)]"
         }
       }
@@ -345,15 +345,15 @@
           "apiContract:explode": "true",
           "apiContract:required": "true"
         },
+        "declared-element": {
+          "#28": ""
+        },
         "lexical": {
           "apiContract:payload": "[(86,6)-(92,64)]",
           "apiContract:style": "[(85,6)-(86,0)]",
           "#28": "[(82,4)-(92,64)]",
           "apiContract:paramName": "[(83,6)-(84,0)]",
           "apiContract:binding": "[(84,6)-(85,0)]"
-        },
-        "declared-element": {
-          "#28": ""
         }
       }
     },
@@ -408,7 +408,7 @@
       }
     },
     {
-      "@id": "#21",
+      "@id": "#15",
       "@type": [
         "apiContract:Payload",
         "core:Payload",
@@ -427,7 +427,7 @@
         "lexical": {
           "apiContract:examples": "[(16,14)-(19,0)]",
           "core:mediaType": "[(13,12)-(13,28)]",
-          "#21": "[(13,12)-(19,0)]",
+          "#15": "[(13,12)-(19,0)]",
           "raml-shapes:schema": "[(14,14)-(16,0)]"
         }
       }
@@ -462,21 +462,21 @@
           "doc:recursive": "true",
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#1": "amf://id#27"
-        },
         "type-property-lexical-info": {
           "#1": "[(50,6)-(50,10)]"
         },
-        "lexical": {
-          "shacl:name": "[(49,4)-(49,17)]",
-          "#1": "[(49,4)-(56,0)]"
+        "resolved-link": {
+          "#1": "amf://id#27"
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#22"
         },
         "declared-element": {
           "#1": ""
         },
-        "resolved-link-target": {
-          "#1": "amf://id#23"
+        "lexical": {
+          "shacl:name": "[(49,4)-(49,17)]",
+          "#1": "[(49,4)-(56,0)]"
         }
       }
     },
@@ -498,8 +498,14 @@
           "doc:raw": "true",
           "doc:strict": "true"
         },
+        "declared-element": {
+          "#6": ""
+        },
+        "resolved-link-target": {
+          "#6": "amf://id#16"
+        },
         "resolved-link": {
-          "#6": "amf://id#15"
+          "#6": "amf://id#21"
         },
         "lexical": {
           "doc:structuredValue": "[(59,6)-(62,0)]",
@@ -507,14 +513,8 @@
           "#6": "[(57,4)-(62,0)]",
           "apiContract:guiSummary": "[(58,6)-(59,0)]"
         },
-        "declared-element": {
-          "#6": ""
-        },
-        "resolved-link-target": {
-          "#6": "amf://id#11"
-        },
         "tracked-element": {
-          "#6": "amf://id#21,amf://id#17,amf://id#19,amf://id#16,amf://id#20,amf://id#18"
+          "#6": "amf://id#13,amf://id#10,amf://id#11,amf://id#15,amf://id#14,amf://id#12"
         }
       }
     },
@@ -638,12 +638,12 @@
       ],
       "shacl:name": "status",
       "smaps": {
-        "type-property-lexical-info": {
-          "#3": "[(53,10)-(53,14)]"
-        },
         "lexical": {
           "shacl:datatype": "[(53,10)-(54,0)]",
           "#3": "[(52,8)-(54,0)]"
+        },
+        "type-property-lexical-info": {
+          "#3": "[(53,10)-(53,14)]"
         }
       }
     },
@@ -663,12 +663,12 @@
       ],
       "shacl:name": "text",
       "smaps": {
-        "type-property-lexical-info": {
-          "#5": "[(55,10)-(55,14)]"
-        },
         "lexical": {
           "shacl:datatype": "[(55,10)-(56,0)]",
           "#5": "[(54,8)-(56,0)]"
+        },
+        "type-property-lexical-info": {
+          "#5": "[(55,10)-(55,14)]"
         }
       }
     },
@@ -794,12 +794,12 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#32": "true"
+        },
         "lexical": {
           "core:name": "[(73,4)-(73,13)]",
           "#32": "[(73,4)-(81,0)]"
-        },
-        "virtual-element": {
-          "#32": "true"
         },
         "declared-element": {
           "#32": ""

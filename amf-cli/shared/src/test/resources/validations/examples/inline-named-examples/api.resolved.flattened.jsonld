@@ -68,12 +68,12 @@
         }
       ],
       "smaps": {
-        "parent-end-point": {
-          "#68": "amf://id#35"
-        },
         "lexical": {
           "apiContract:path": "[(24,2)-(24,20)]",
           "#68": "[(24,2)-(37,3)]"
+        },
+        "parent-end-point": {
+          "#68": "amf://id#35"
         }
       }
     },
@@ -159,12 +159,12 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#37": "true"
+        },
         "lexical": {
           "apiContract:payload": "[(11,4)-(15,0)]",
           "#37": "[(11,9)-(15,0)]"
-        },
-        "virtual-element": {
-          "#37": "true"
         }
       }
     },
@@ -322,12 +322,12 @@
         }
       ],
       "smaps": {
-        "auto-generated-name": {
-          "#39": ""
-        },
         "lexical": {
           "apiContract:examples": "[(14,8)-(15,0)]",
           "#39": "[(12,6)-(15,0)]"
+        },
+        "auto-generated-name": {
+          "#39": ""
         },
         "type-property-lexical-info": {
           "#39": "[(13,8)-(13,12)]"
@@ -353,12 +353,12 @@
         }
       ],
       "smaps": {
-        "auto-generated-name": {
-          "#55": ""
-        },
         "lexical": {
           "apiContract:examples": "[(22,12)-(24,0)]",
           "#55": "[(20,10)-(24,0)]"
+        },
+        "auto-generated-name": {
+          "#55": ""
         },
         "type-property-lexical-info": {
           "#55": "[(21,12)-(21,16)]"
@@ -382,13 +382,13 @@
       "shacl:name": "schema",
       "core:description": "The organization's specific ID",
       "smaps": {
-        "type-property-lexical-info": {
-          "#73": "[(27,8)-(27,12)]"
-        },
         "lexical": {
           "core:description": "[(28,8)-(29,0)]",
           "#73": "[(26,6)-(29,0)]",
           "shacl:datatype": "[(27,8)-(28,0)]"
+        },
+        "type-property-lexical-info": {
+          "#73": "[(27,8)-(27,12)]"
         }
       }
     },
@@ -423,20 +423,20 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "resolved-link-target": {
-          "#23": "amf://id#3"
-        },
         "type-property-lexical-info": {
           "#23": "[(2,0)-(2,4)]"
         },
-        "lexical": {
-          "#23": "[(2,0)-(20,0)]"
+        "resolved-link-target": {
+          "#23": "amf://id#3"
+        },
+        "declared-element": {
+          "#23": ""
         },
         "resolved-link": {
           "#23": "amf://id#32"
         },
-        "declared-element": {
-          "#23": ""
+        "lexical": {
+          "#23": "[(2,0)-(20,0)]"
         }
       }
     },
@@ -668,12 +668,12 @@
       "shacl:name": "alternate_id?",
       "core:description": "The alternate ID of the organization",
       "smaps": {
-        "inherited-shapes": {
-          "#5": "amf://id#8"
-        },
         "lexical": {
           "core:description": "[(6,4)-(7,0)]",
           "#5": "[(4,16)-(7,0)]"
+        },
+        "inherited-shapes": {
+          "#5": "amf://id#8"
         },
         "type-property-lexical-info": {
           "#5": "[(5,4)-(5,8)]"
@@ -704,12 +704,12 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "type-property-lexical-info": {
+          "#10": "[(9,4)-(9,8)]"
+        },
         "lexical": {
           "core:description": "[(8,4)-(9,0)]",
           "#10": "[(7,2)-(17,0)]"
-        },
-        "type-property-lexical-info": {
-          "#10": "[(9,4)-(9,8)]"
         }
       }
     },
@@ -730,13 +730,13 @@
       "shacl:name": "created_at",
       "core:description": "The date of creation of the organization",
       "smaps": {
-        "type-property-lexical-info": {
-          "#16": "[(18,4)-(18,8)]"
-        },
         "lexical": {
           "core:description": "[(19,4)-(20,0)]",
           "#16": "[(17,2)-(20,0)]",
           "shacl:datatype": "[(18,4)-(19,0)]"
+        },
+        "type-property-lexical-info": {
+          "#16": "[(18,4)-(18,8)]"
         }
       }
     },
@@ -1247,13 +1247,13 @@
       "shacl:name": "id",
       "core:description": "ID of the category",
       "smaps": {
-        "type-property-lexical-info": {
-          "#12": "[(12,8)-(12,12)]"
-        },
         "lexical": {
           "core:description": "[(13,8)-(14,0)]",
           "#12": "[(11,6)-(14,0)]",
           "shacl:datatype": "[(12,8)-(13,0)]"
+        },
+        "type-property-lexical-info": {
+          "#12": "[(12,8)-(12,12)]"
         }
       }
     },
@@ -1274,13 +1274,13 @@
       "shacl:name": "name",
       "core:description": "The name of the category",
       "smaps": {
-        "type-property-lexical-info": {
-          "#14": "[(15,8)-(15,12)]"
-        },
         "lexical": {
           "core:description": "[(16,8)-(17,0)]",
           "#14": "[(14,6)-(17,0)]",
           "shacl:datatype": "[(15,8)-(16,0)]"
+        },
+        "type-property-lexical-info": {
+          "#14": "[(15,8)-(15,12)]"
         }
       }
     },
@@ -1642,11 +1642,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#3": "[(2,0)-(20,0)]"
-        },
         "type-property-lexical-info": {
           "#3": "[(2,0)-(2,4)]"
+        },
+        "lexical": {
+          "#3": "[(2,0)-(20,0)]"
         }
       }
     },

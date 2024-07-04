@@ -32,6 +32,7 @@ AMF Model Documentation
 * [ArrayNode](#arraynode)
 * [ArrayShape](#arrayshape)
 * [AsyncApi](#asyncapi)
+* [AvroSchemaDocument](#avroschemadocument)
 * [BaseApi](#baseapi)
 * [BaseIRI](#baseiri)
 * [BaseUnit](#baseunit)
@@ -657,6 +658,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -770,6 +774,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -801,6 +808,28 @@ Types:
  | security | [[SecurityRequirement](#securityrequirement)] | false | Textual indication of the kind of security scheme used | `http://a.ml/vocabularies/security#security` |
  | tag | [[Tag](#tag)] | false | Additionally custom tagged information | `http://a.ml/vocabularies/apiContract#tag` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## AvroSchemaDocument
+A Document that represents an AVRO Schema Fragment
+Types:
+* `http://a.ml/vocabularies/document#AvroSchemaDocumentModel`
+* `http://a.ml/vocabularies/document#Document`
+* `http://a.ml/vocabularies/document#Fragment`
+* `http://a.ml/vocabularies/document#Module`
+* `http://a.ml/vocabularies/document#Unit`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | encodes | [DomainElement](#domainelement) | - | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | `http://a.ml/vocabularies/document#encodes` |
+ | declares | [[DomainElement](#domainelement)] | false | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | `http://a.ml/vocabularies/document#declares` |
+ | version | string | - | Version of the current model | `http://a.ml/vocabularies/document#version` |
+ | references | [[BaseUnit](#baseunit)] | false | references across base units | `http://a.ml/vocabularies/document#references` |
+ | usage | string | - | Human readable description of the unit | `http://a.ml/vocabularies/document#usage` |
+ | describedBy | url | - | Link to the AML dialect describing a particular subgraph of information | `http://a.ml/vocabularies/meta#describedBy` |
+ | root | boolean | - | Indicates if the base unit represents the root of the document model obtained from parsing | `http://a.ml/vocabularies/document#root` |
+ | package | string | - | Logical identifier providing a common namespace for the information in this base unit | `http://a.ml/vocabularies/document#package` |
+ | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | - | Field with utility data to be used in Base Unit processing | `http://a.ml/vocabularies/document#processingData` |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | - | Contains information of the source from which the base unit was generated | `http://a.ml/vocabularies/document#sourceInformation` |
 
 ## BaseApi
 Top level element describing any kind of API
@@ -1646,6 +1675,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -2390,6 +2422,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -2685,6 +2720,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -2777,6 +2815,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -3530,6 +3571,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -3588,6 +3632,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -4247,6 +4294,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -4317,6 +4367,9 @@ Types:
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
+ | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
+ | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
+ | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |

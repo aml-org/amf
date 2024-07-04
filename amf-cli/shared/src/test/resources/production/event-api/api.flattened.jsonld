@@ -65,12 +65,12 @@
         }
       ],
       "smaps": {
-        "parent-end-point": {
-          "#38": "amf://id#37"
-        },
         "lexical": {
           "apiContract:path": "[(34,2)-(34,7)]",
           "#38": "[(34,2)-(35,22)]"
+        },
+        "parent-end-point": {
+          "#38": "amf://id#37"
         }
       }
     },
@@ -215,19 +215,19 @@
         "@id": "#18"
       },
       "smaps": {
-        "resolved-link-target": {
-          "#17": "amf://id#34"
-        },
-        "declared-element": {
-          "#17": ""
-        },
         "lexical": {
           "doc:dataNode": "[(18,4)-(33,0)]",
           "#17": "[(17,2)-(33,0)]",
           "core:name": "[(17,2)-(17,14)]"
         },
         "resolved-link": {
+          "#17": "amf://id#34"
+        },
+        "resolved-link-target": {
           "#17": "amf://id#33"
+        },
+        "declared-element": {
+          "#17": ""
         }
       }
     },
@@ -254,11 +254,11 @@
         "default-node": {
           "#48": ""
         },
-        "virtual-element": {
-          "#48": "true"
-        },
         "lexical": {
           "#48": "[(34,3)-(34,7)]"
+        },
+        "virtual-element": {
+          "#48": "true"
         }
       }
     },
@@ -377,6 +377,12 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "declared-element": {
+          "#1": ""
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#13"
+        },
         "resolved-link": {
           "#1": "amf://id#16"
         },
@@ -384,12 +390,6 @@
           "core:name": "[(6,4)-(7,0)]",
           "#1": "[(5,2)-(16,0)]",
           "shacl:name": "[(5,2)-(5,7)]"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "resolved-link-target": {
-          "#1": "amf://id#14"
         }
       }
     },
@@ -588,11 +588,11 @@
       },
       "shacl:name": "details?",
       "smaps": {
-        "type-property-lexical-info": {
-          "#7": "[(11,8)-(11,12)]"
-        },
         "lexical": {
           "#7": "[(10,6)-(16,0)]"
+        },
+        "type-property-lexical-info": {
+          "#7": "[(11,8)-(11,12)]"
         }
       }
     },

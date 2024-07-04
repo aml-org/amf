@@ -88,6 +88,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
       case AsyncApi20.id =>
         oasLinks(part)
         ramlLinks(part)
+      case _ => // ignore
     }
   }
 

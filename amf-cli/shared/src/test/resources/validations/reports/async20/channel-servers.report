@@ -9,6 +9,6 @@ Level: Violation
   Message: Server 'notDefinedServer' in channel 'users/signup' is not defined in the servers root object
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-servers.yaml#/async-api/endpoint/users%2Fsignup/servers/null_3
-  Property: 
-  Range: 
-  Location: 
+  Property: http://a.ml/vocabularies/apiContract#server
+  Range: [(12,8)-(12,24)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-servers.yaml

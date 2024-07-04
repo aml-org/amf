@@ -154,11 +154,11 @@
                               "synthesized-field": {
                                 "shacl:closed": "true"
                               },
-                              "lexical": {
-                                "#18": "[(15,8)-(19,0)]"
-                              },
                               "type-property-lexical-info": {
                                 "#18": "[(16,10)-(16,14)]"
+                              },
+                              "lexical": {
+                                "#18": "[(15,8)-(19,0)]"
                               }
                             }
                           }
@@ -196,8 +196,10 @@
                 "apiContract:server": "true"
               },
               "lexical": {
-                "apiContract:supportedOperation": "[(12,0)-(19,0)]",
                 "#14": "[(11,2)-(19,0)]"
+              },
+              "virtual-element": {
+                "apiContract:supportedOperation": "true"
               }
             }
           }
@@ -362,17 +364,17 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "resolved-link": {
-                "#8": "amf://id#10"
-              },
-              "lexical": {
-                "#8": "[(3,0)-(6,0)]"
-              },
               "type-property-lexical-info": {
                 "#8": "[(3,0)-(3,4)]"
               },
               "resolved-link-target": {
                 "#8": "amf://id#8"
+              },
+              "resolved-link": {
+                "#8": "amf://id#10"
+              },
+              "lexical": {
+                "#8": "[(3,0)-(6,0)]"
               }
             }
           }
@@ -520,13 +522,13 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#11": ""
-          },
           "lexical": {
             "shacl:name": "[(8,4)-(8,10)]",
             "#11": "[(8,4)-(10,0)]",
             "shacl:datatype": "[(9,6)-(10,0)]"
+          },
+          "declared-element": {
+            "#11": ""
           },
           "type-property-lexical-info": {
             "#11": "[(9,6)-(9,10)]"

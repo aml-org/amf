@@ -2,7 +2,6 @@ asyncapi: 2.0.0
 info:
   title: Test API
   version: 1.0.0
-
 channels:
   some-channel:
     bindings:
@@ -11,7 +10,6 @@ channels:
         partitions: 20
         replicas: 3
         bindingVersion: 0.3.0
-
   other-channel:
     bindings:
       kafka:
@@ -27,7 +25,6 @@ channels:
           retention.bytes: 1000000000
           delete.retention.ms: 86400000
           max.message.bytes: 1048588
-
   the-other-channel:
     bindings:
       kafka:

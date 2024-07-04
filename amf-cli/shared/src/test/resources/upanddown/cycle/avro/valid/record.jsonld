@@ -1,0 +1,331 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json",
+    "@type": [
+      "http://a.ml/vocabularies/document#AvroSchemaDocumentModel",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#long"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar/default-scalar/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar/default-scalar/source-map/avro-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "long"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "this is a documentation for the primitive type"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#defaultValue": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "123"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "scalar_1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#UnionShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#anyOf": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/anyOf/nil/null",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#NilShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/anyOf/shape/default-node",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "LongList"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "next"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#description": [
+                  {
+                    "@value": "this is a documentation for the union type with recursive element"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "null"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#namespace": [
+                  {
+                    "@value": "fields"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/source-map/avro-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "union"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "next"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "this is a documentation for the union type with recursive element"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#defaultValue": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/scalar_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "null"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "scalar_1"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "LongList"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "this is a documentation for the record type"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#namespace": [
+          {
+            "@value": "root"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#aliases": [
+          {
+            "@value": "LinkedLongs"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/source-map/avro-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "record"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#package": [
+      {
+        "@value": "root"
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "Avro"
+          }
+        ]
+      }
+    ]
+  }
+]

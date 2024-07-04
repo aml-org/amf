@@ -144,16 +144,14 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     amfConfig.baseUnitClient().render(unit, config.targetMediaType)
   }
-  def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
+
+  def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
-    val amfConfig: AMFConfiguration = APIConfiguration.API()
-    val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
-      amfConfig.withRenderOptions(r)
-    })
-    eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
-      renderedConfig.withErrorHandlerProvider(() => e)
-    )
+    APIConfiguration
+      .API()
+      .withRenderOptions(options.getOrElse(renderOptions()))
+      .withErrorHandlerProvider(() => eh.getOrElse(IgnoringErrorHandler))
   }
 
   protected def buildConfig(

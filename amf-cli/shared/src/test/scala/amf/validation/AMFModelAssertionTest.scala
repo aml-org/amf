@@ -14,7 +14,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
+import amf.shapes.internal.annotations.{BaseVirtualNode, AVROSchemaType, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
@@ -675,6 +675,18 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       oasClient.parse(api).map { parseResultOas =>
         parseResultOas.toString() shouldEqual parseResultComponents.toString()
       }
+    }
+  }
+
+  // W-15633176
+  test("parse AVRO Schema in an Async API") {
+    val api = s"$basePath/avro/valid-avro-schema.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+
+      val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
+      schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
   }
 }

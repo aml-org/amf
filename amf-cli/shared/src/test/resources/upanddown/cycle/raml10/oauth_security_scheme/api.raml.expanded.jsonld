@@ -256,21 +256,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/oauth_security_scheme/api.raml#/declares/scheme/auth/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/oauth_security_scheme/api.raml#/declares/scheme/auth"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/oauth_security_scheme/api.raml#/declares/scheme/auth/source-map/lexical/element_3",
@@ -321,6 +306,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(5,2)-(13,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/oauth_security_scheme/api.raml#/declares/scheme/auth/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/oauth_security_scheme/api.raml#/declares/scheme/auth"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

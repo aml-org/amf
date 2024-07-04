@@ -162,11 +162,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/lexical/element_2"
@@ -176,6 +171,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
@@ -223,6 +223,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/type-property-lexical-info/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/lexical/element_2"
@@ -232,11 +237,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/lexical/element_1"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/declared-element/element_0"
         }
       ]
     },
@@ -288,11 +288,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,11)]"
@@ -306,6 +301,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(9,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/source-map/type-property-lexical-info/element_0",
@@ -366,6 +366,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(12,8)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(9,12)]"
@@ -379,11 +384,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(13,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/shape/ParentType",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declares/any/ChildType/inherits/shape/default-node/source-map/synthesized-field/element_0",

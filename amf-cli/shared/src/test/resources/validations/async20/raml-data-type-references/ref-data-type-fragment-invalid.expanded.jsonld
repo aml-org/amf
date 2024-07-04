@@ -121,8 +121,10 @@
                 "apiContract:server": "true"
               },
               "lexical": {
-                "apiContract:supportedOperation": "[(13,0)-(18,0)]",
                 "#7": "[(12,2)-(18,0)]"
+              },
+              "virtual-element": {
+                "apiContract:supportedOperation": "true"
               }
             }
           }
@@ -240,13 +242,13 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#4": ""
-          },
           "lexical": {
             "shacl:name": "[(8,4)-(8,8)]",
             "#4": "[(8,4)-(11,0)]",
             "shacl:datatype": "[(9,6)-(11,0)]"
+          },
+          "declared-element": {
+            "#4": ""
           },
           "type-property-lexical-info": {
             "#4": "[(9,6)-(9,10)]"
