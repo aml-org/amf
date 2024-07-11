@@ -6,9 +6,9 @@ channels:
   myChannel:
     publish:
       message:
-        schemaFormat: application/vnd.apache.avro;version=1.8.2
+        schemaFormat: application/vnd.apache.avro;version=1.9.0
         payload:
-          $ref: 'schema-1.8.2.avsc'
+          $ref: 'schema-1.9.0.avsc'
 # tratar de validar esta referencia.
 # Crear dump y jsold files.
 # Agregar json con schemas simples. Tratando de abarcar toda la spec de avro (fields, types)

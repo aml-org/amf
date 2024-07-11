@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml",
+    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/async-api",
+        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/async-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#AsyncAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -28,7 +28,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/async-api/endpoint/myChannel",
+            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/async-api/endpoint/myChannel",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/async-api/endpoint/myChannel/supportedOperation/publish",
+                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/async-api/endpoint/myChannel/supportedOperation/publish",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/core#Operation",
@@ -53,7 +53,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/core#Request",
@@ -62,7 +62,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default",
+                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/core#Payload",
@@ -70,38 +70,7 @@
                         ],
                         "http://a.ml/vocabularies/apiContract#schemaMediaType": [
                           {
-                            "@value": "application/vnd.apache.avro;version=1.8.2"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/shapes#schema": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/any/schema",
-                            "@type": [
-                              "http://a.ml/vocabularies/shapes#AnyShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document#link-target": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/references/0/any/schema"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#link-label": [
-                              {
-                                "@value": "schema-1.8.2.avsc"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#name": [
-                              {
-                                "@value": "schema"
-                              }
-                            ]
+                            "@value": "application/vnd.apache.avro;version=1.9.0"
                           }
                         ]
                       }
@@ -121,7 +90,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -139,24 +108,27 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/references/0",
+        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/references/0",
         "@type": [
-          "http://a.ml/vocabularies/shapes#DataTypeFragment",
+          "http://a.ml/vocabularies/document#ExternalFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/references/0/any/schema",
+            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/references/0/external",
             "@type": [
-              "http://a.ml/vocabularies/shapes#AnyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#ExternalDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://www.w3.org/ns/shacl#name": [
+            "http://a.ml/vocabularies/document#raw": [
               {
-                "@value": "schema"
+                "@value": "{\n  \"type\": \"record\",\n  \"name\": \"Person\",\n  \"fields\": [\n    {\"name\": \"name\", \"type\": \"string\", \"example\": \"Donkey\"},\n    {\"name\": \"age\", \"type\": [\"null\", \"int\"], \"default\": null},\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\"name\": \"ProgrammingLanguage\", \"type\": \"enum\", \"symbols\": [\"JS\", \"Java\", \"Go\", \"Rust\", \"C\"]}\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [{\"name\": \"zipcode\", \"type\": \"int\"}]\n      }\n    }\n  ],\n}\n"
+              }
+            ],
+            "http://a.ml/vocabularies/core#mediaType": [
+              {
+                "@value": "application/json"
               }
             ]
           }
@@ -168,7 +140,7 @@
         ],
         "http://a.ml/vocabularies/document#processingData": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.8.2.yaml#/references/0/BaseUnitProcessingData",
+            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-ref-1.9.0.yaml#/references/0/BaseUnitProcessingData",
             "@type": [
               "http://a.ml/vocabularies/document#BaseUnitProcessingData"
             ],

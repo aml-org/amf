@@ -70,39 +70,7 @@
                         ],
                         "http://a.ml/vocabularies/apiContract#schemaMediaType": [
                           {
-                            "@value": "application/vnd.apache.avro;version=1.8.2"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/shapes#schema": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/async-avro-component-ref.yaml#/async-api/endpoint/mychannel/supportedOperation/publish/expects/request/payload/default/scalar/schema",
-                            "@type": [
-                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                              "http://a.ml/vocabularies/shapes#AnyShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/document#link-target": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/async-avro-component-ref.yaml#/declares/scalar/Person"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#link-label": [
-                              {
-                                "@value": "Person"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#name": [
-                              {
-                                "@value": "schema"
-                              }
-                            ]
+                            "@value": "application/vnd.apache.avro;version=1.9.0"
                           }
                         ]
                       }
