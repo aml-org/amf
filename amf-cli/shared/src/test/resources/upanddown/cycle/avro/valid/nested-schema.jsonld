@@ -51,6 +51,29 @@
                       {
                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/arr/array/default-array/scalar/default-scalar/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/arr/array/default-array/scalar/default-scalar/source-map/avro-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/arr/array/default-array/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ],
@@ -203,16 +226,75 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/nil/null",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array",
                     "@type": [
-                      "http://a.ml/vocabularies/shapes#NilShape",
+                      "http://a.ml/vocabularies/shapes#ArrayShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://www.w3.org/ns/shacl#name": [
+                    "http://a.ml/vocabularies/shapes#items": [
                       {
-                        "@value": "null"
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array/scalar/default-scalar/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array/scalar/default-scalar/source-map/avro-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array/source-map/avro-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/nested_arr/array/default-array/array/default-array"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "array"
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
