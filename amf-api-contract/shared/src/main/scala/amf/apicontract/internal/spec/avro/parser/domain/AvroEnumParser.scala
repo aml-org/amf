@@ -2,7 +2,9 @@ package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.client.scala.model.domain.{AmfArray, ScalarNode}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{YMapOps, YScalarYRead}
 import amf.shapes.client.scala.model.domain.AnyShape
 import org.yaml.model._
@@ -18,10 +20,10 @@ class AvroEnumParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroTex
   }
 
   override def parseSpecificFields(): Unit = {
-    map
-      .key("symbols")
-      .map(parseSymbols)
-      .map(shape.withValues)
+    map.key("symbols").map { entry =>
+      val symbols = parseSymbols(entry)
+      shape.setWithoutId(ShapeModel.Values, AmfArray(symbols, Annotations(entry.value)), Annotations(entry))
+    }
   }
 
   private def parseSymbols(e: YMapEntry): Seq[ScalarNode] = {

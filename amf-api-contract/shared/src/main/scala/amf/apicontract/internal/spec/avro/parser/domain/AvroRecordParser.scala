@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
+import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -9,6 +10,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.shapes.internal.domain.metamodel.NodeShapeModel.Properties
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroComplexShapeParser(map) {
@@ -21,15 +23,25 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
 
   private def parseFieldsEntry(e: YMapEntry): Unit = {
     val fields = e.value.as[Seq[YMap]].flatMap(parseField)
-    shape.withProperties(fields)
+    shape.setWithoutId(Properties, AmfArray(fields, Annotations(e.value)), Annotations(e))
   }
 
   def parseField(map: YMap): Option[PropertyShape] = {
-    val maybeShape: Option[PropertyShape] = AvroRecordFieldParser(map).parse().map(buildProperty)
+    val maybeShape =
+      AvroRecordFieldParser(map)
+        .parse()
+        .map { s =>
+          // add the map annotations + the avro type annotation to the PropertyShape wrapper
+          var ann = Annotations(map)
+          getAvroType(s).foreach(avroTypeAnnotation => ann = ann += avroTypeAnnotation)
+          val p = PropertyShape(ann).withRange(s)
+          p.setWithoutId(PropertyShapeModel.Range, s, s.annotations)
+        }
     maybeShape.foreach { p =>
       map.key("name", AnyShapeModel.Name in p)
       map.key("aliases", AnyShapeModel.Aliases in p)
       map.key("doc", AnyShapeModel.Description in p)
+      // todo: change to new field Order (being a string)
       map.key("order", PropertyShapeModel.SerializationOrder in p)
       map.key(
         "default",
@@ -41,9 +53,6 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
     }
     maybeShape
   }
-
-  private def buildProperty(anyShape: AnyShape): PropertyShape =
-    PropertyShape(Annotations.virtual()).withName("field").withRange(anyShape)
 }
 
 case class AvroRecordFieldParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeParser(map) {

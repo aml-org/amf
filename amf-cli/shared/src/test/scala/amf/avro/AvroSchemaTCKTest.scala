@@ -21,7 +21,7 @@ class AvroSchemaValidTCKTest extends AvroSchemaCycleTest {
   }
 
   test("array with an schema in items field") {
-    cycle("array-with-items-schema.json", "array-with-items-schema.jsonld", AvroHint, AmfJsonHint)
+    cycle("record.json", "record.jsonld", AvroHint, AmfJsonHint)
   }
 
   override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint

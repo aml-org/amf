@@ -1,11 +1,13 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations.AVROSchemaType
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
@@ -63,4 +65,6 @@ trait AvroKeyExtractor {
     def isPrimitive: Boolean =
       Seq("null", "boolean", "int", "long", "float", "double", "bytes", "string").contains(value)
   }
+
+  def getAvroType(shape: Shape): Option[AVROSchemaType] = shape.annotations.find(classOf[AVROSchemaType])
 }
