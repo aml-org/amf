@@ -207,6 +207,19 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                   {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/source-map/avro-schema/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "union"
+                      }
+                    ]
+                  },
+                  {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/source-map/avro-schema/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {

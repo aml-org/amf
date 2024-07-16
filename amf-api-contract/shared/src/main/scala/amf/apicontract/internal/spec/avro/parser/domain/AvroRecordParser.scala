@@ -31,13 +31,17 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
       AvroRecordFieldParser(map)
         .parse()
         .map { s =>
-          val p = PropertyShape(Annotations(map)).withRange(s)
+          // add the map annotations + the avro type annotation to the PropertyShape wrapper
+          var ann = Annotations(map)
+          getAvroType(s).foreach(avroTypeAnnotation => ann = ann += avroTypeAnnotation)
+          val p = PropertyShape(ann).withRange(s)
           p.setWithoutId(PropertyShapeModel.Range, s, s.annotations)
         }
     maybeShape.foreach { p =>
       map.key("name", AnyShapeModel.Name in p)
       map.key("aliases", AnyShapeModel.Aliases in p)
       map.key("doc", AnyShapeModel.Description in p)
+      // todo: change to new field Order (being a string)
       map.key("order", PropertyShapeModel.SerializationOrder in p)
       map.key(
         "default",
