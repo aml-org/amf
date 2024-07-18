@@ -83,7 +83,7 @@ class Async20ConcreteOperationParser(entry: YMapEntry, adopt: Operation => Opera
   override protected def parseMessages(map: YMap, operation: Operation): Unit = map.key(
     "message",
     messageEntry =>
-      AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
+      AsyncHelper.messageType(entry.key.as[YScalar].text) foreach { msgType =>
         val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
         operation.fields
           .setWithoutId(msgType.field, AmfArray(messages, Annotations(messageEntry.value)), Annotations(messageEntry))
