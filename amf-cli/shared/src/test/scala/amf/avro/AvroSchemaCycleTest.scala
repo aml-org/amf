@@ -16,7 +16,16 @@ class AvroSchemaCycleTest extends FunSuiteCycleTests {
       .withErrorHandlerProvider(() => eh.getOrElse(IgnoringErrorHandler))
   }
 
+  def avroConfiguration(): AMFConfiguration = {
+    AvroConfiguration
+      .Avro()
+      .withRenderOptions(renderOptions())
+      .withErrorHandlerProvider(() => IgnoringErrorHandler)
+
+  }
+
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/avro/"
 
-  def cycle(source: String, target: String): Future[Assertion] = cycle(source, target, AvroHint, AmfJsonHint)
+  def cycle(source: String, target: String): Future[Assertion] =
+    cycle(source, target, AvroHint, AmfJsonHint, amfConfig = Some(avroConfiguration()))
 }
