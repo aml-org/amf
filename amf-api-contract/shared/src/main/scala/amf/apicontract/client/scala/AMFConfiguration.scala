@@ -13,7 +13,7 @@ import amf.apicontract.internal.spec.avro.transformation.{
   AvroSchemaEditingPipeline,
   AvroSchemaTransformationPipeline
 }
-import amf.apicontract.internal.spec.avro.AvroParsePlugin
+import amf.apicontract.internal.spec.avro.{AvroParsePlugin, AvroRenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
@@ -166,7 +166,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 object AvroConfiguration extends APIConfigurationBuilder {
   def Avro(): AMFConfiguration = {
     common()
-      .withPlugins(List(AvroParsePlugin)) // TODO: add validation profiles and serialization
+      .withPlugins(List(AvroParsePlugin, AvroRenderPlugin)) // TODO: add validation profiles and serialization
       .withTransformationPipelines(
         List(
           AvroSchemaTransformationPipeline(),
