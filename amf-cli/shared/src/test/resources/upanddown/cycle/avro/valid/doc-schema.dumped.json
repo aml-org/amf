@@ -6,35 +6,35 @@
   "fields": [
     {
       "name": "metadata",
+      "doc": "Metadata about the event.",
       "type": {
         "type": "record",
         "name": "EventMetadata",
         "namespace": "com.foo",
+        "doc": "Metadata associated with every published event",
         "fields": [
           {
             "name": "id",
-            "type": "string",
-            "doc": "Unique identifier for this specific event"
+            "doc": "Unique identifier for this specific event",
+            "type": "string"
           },
           {
             "name": "timestamp",
-            "type": "string",
-            "doc": "Instant the event took place"
+            "doc": "Instant the event took place",
+            "type": "string"
           }
-        ],
-        "doc": "Metadata associated with every published event"
-      },
-      "doc": "Metadata about the event."
+        ]
+      }
     },
     {
       "name": "auth_code",
-      "type": "string",
-      "doc": "Encrypted auth_code received when user authorizes the app."
+      "doc": "Encrypted auth_code received when user authorizes the app.",
+      "type": "string"
     },
     {
       "name": "triggered_by",
-      "type": "string",
-      "doc": "ID of the user who triggered this event."
+      "doc": "ID of the user who triggered this event.",
+      "type": "string"
     }
   ]
 }

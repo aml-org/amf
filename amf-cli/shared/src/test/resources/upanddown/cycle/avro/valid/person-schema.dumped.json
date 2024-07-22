@@ -1,7 +1,7 @@
 {
+  "type": "record",
   "name": "Person",
   "namespace": "com.company",
-  "type": "record",
   "fields": [
     {
       "name": "name",
@@ -30,8 +30,8 @@
     {
       "name": "favoriteProgrammingLanguage",
       "type": {
-        "name": "ProgrammingLanguage",
         "type": "enum",
+        "name": "ProgrammingLanguage",
         "symbols": [
           "JS",
           "Java",
@@ -44,16 +44,14 @@
     },
     {
       "name": "certifications",
-      "type": {
-        "type": "array",
-        "items": "string"
-      }
+      "type": "array",
+      "items": "string"
     },
     {
       "name": "address",
       "type": {
-        "name": "Address",
         "type": "record",
+        "name": "Address",
         "fields": [
           {
             "name": "zipcode",

@@ -35,7 +35,9 @@ abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext
   // each specific parser should override and parse it's specific fields
   def parseSpecificFields(): Unit
 
-  def parseDefault(): Unit = {
+  def parseDefault(): Unit = parseDefault(map, shape)
+
+  def parseDefault(map: YMap, shape: Shape): Unit = {
     map.key(
       "default",
       entry => {

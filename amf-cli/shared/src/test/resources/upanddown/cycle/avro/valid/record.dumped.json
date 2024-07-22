@@ -10,18 +10,18 @@
     {
       "name": "value",
       "doc": "this is a documentation for the primitive type",
-      "type": "long",
       "order": "ascending",
+      "type": "long",
       "default": 123
     },
     {
+      "order": "descending",
       "name": "next",
       "doc": "this is a documentation for the union type with recursive element",
       "type": [
         "null",
         "LongList"
       ],
-      "order": "descending",
       "default": null
     }
   ]
