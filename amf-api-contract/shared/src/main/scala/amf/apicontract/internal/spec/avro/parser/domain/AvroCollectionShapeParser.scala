@@ -3,9 +3,8 @@ package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.internal.parser.YMapOps
 import amf.shapes.client.scala.model.domain.AnyShape
-import org.yaml.model.{YMap, YMapEntry}
 import amf.shapes.internal.annotations.AVROSchemaType
-import org.yaml.model.YScalar
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: String)(implicit ctx: AvroSchemaContext)
     extends AvroComplexShapeParser(map) {

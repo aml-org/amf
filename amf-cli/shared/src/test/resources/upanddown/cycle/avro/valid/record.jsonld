@@ -67,6 +67,11 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 1
+              }
+            ],
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "value"
@@ -274,11 +279,6 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/shapes#namespace": [
-                  {
-                    "@value": "fields"
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/source-map",
@@ -302,6 +302,11 @@
                     ]
                   }
                 ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": -1
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
