@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/avro/doc/apis/invalid-async-ref.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Cannot find link reference ../schemas/schema-1.9.0.json#/fields
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(10,8)-(11,54)]
+  Location: file://amf-cli/shared/src/test/resources/avro/doc/apis/invalid-async-ref.yaml

@@ -55,13 +55,13 @@ object AsyncSchemaFormats {
 }
 
 case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(implicit
-                                                                                              val ctx: OasLikeWebApiContext
+    val ctx: OasLikeWebApiContext
 ) {
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion => CustomReferenceParser(YMapEntryLike(entry), parseRamlType, adopt).parse()
-    case AVROSchema(_) => CustomReferenceParser(YMapEntryLike(entry), parseAvroSchema, adopt).parse()
-    case _ => OasTypeParser(entry, adopt, version).parse()
+    case AVROSchema(_)       => CustomReferenceParser(YMapEntryLike(entry), parseAvroSchema, adopt).parse()
+    case _                   => OasTypeParser(entry, adopt, version).parse()
   }
 
   private def parseRamlType(entry: YMapEntryLike): Option[Shape] = {
@@ -79,7 +79,7 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
 }
 
 case class CustomReferenceParser(entry: YMapEntryLike, parser: YMapEntryLike => Option[Shape], adopt: Shape => Unit)(
-  implicit val ctx: OasLikeWebApiContext
+    implicit val ctx: OasLikeWebApiContext
 ) {
 
   def parse(): Option[Shape] = {
@@ -94,6 +94,7 @@ case class CustomReferenceParser(entry: YMapEntryLike, parser: YMapEntryLike => 
   private def handleRef(refValue: String): Option[Shape] = {
     val link = dataTypeFragmentRef(refValue)
       .orElse(typeDefinedInLibraryRef(refValue))
+      .orElse(avroSchemaDocRef(refValue))
       .orElse(externalFragmentRef(refValue))
 
     if (link.isEmpty)
@@ -110,6 +111,11 @@ case class CustomReferenceParser(entry: YMapEntryLike, parser: YMapEntryLike => 
     val result = ctx.declarations.findType(refValue, SearchScope.Fragments)
     result.foreach(linkAndAdopt(_, refValue))
     result
+  }
+
+  private def avroSchemaDocRef(refValue: String): Option[Shape] = {
+    val result = ctx.declarations.findEncodedTypeInDocFragment(refValue)
+    result.map(linkAndAdopt(_, refValue))
   }
 
   private def typeDefinedInLibraryRef(refValue: String): Option[Shape] = {
