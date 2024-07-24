@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.avro.emitters.domain
 
 import amf.apicontract.internal.spec.avro.emitters.context.AvroShapeEmitterContext
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -19,7 +19,8 @@ case class AvroUnionShapeEmitter(
       "type",
       _.list { lb =>
         unionShape.anyOf.foreach {
-          case _: NilShape => lb += "null"
+          case _: NilShape               => lb += "null"
+          case recursive: RecursiveShape => lb += recursive.name.value()
           case complex: Shape if spec.isComplex(complex) =>
             lb.obj { entryBuilder =>
               val shapeEmitter = AvroShapeEmitter(complex, ordering)

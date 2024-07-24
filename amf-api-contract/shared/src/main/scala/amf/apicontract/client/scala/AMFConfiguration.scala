@@ -166,7 +166,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 object AvroConfiguration extends APIConfigurationBuilder {
   def Avro(): AMFConfiguration = {
     common()
-      .withPlugins(List(AvroParsePlugin, AvroRenderPlugin)) // TODO: add validation profiles and serialization
+      .withPlugins(List(AvroParsePlugin, AvroRenderPlugin)) // TODO: add validation profiles
       .withTransformationPipelines(
         List(
           AvroSchemaTransformationPipeline(),

@@ -13,7 +13,8 @@ case class AvroTextParser(node: YNode)(implicit ctx: AvroSchemaContext) extends 
         val parsedShape = AvroTextTypeParser(scalar.text, None).parse()
         parsedShape.annotations += AVROSchemaType(avroType)
         parsedShape
-      case map: YMap => new AvroShapeParser(map).parse().getOrElse(AnyShape())
+      case map: YMap => // todo: putting an empty AnyShape when the union type is incorrect is kinda weird behavior
+        new AvroShapeParser(map).parse().getOrElse(AnyShape())
     }
   }
 }
