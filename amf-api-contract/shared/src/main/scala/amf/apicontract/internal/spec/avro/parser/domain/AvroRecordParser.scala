@@ -17,42 +17,43 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
   override def parseSpecificFields(): Unit = map.key("fields", parseFieldsEntry)
 
   private def parseFieldsEntry(e: YMapEntry): Unit = {
-    val fields = e.value.as[Seq[YMap]].flatMap(parseField)
+    val fields = e.value.as[Seq[YMap]].map(parseField)
     shape.setWithoutId(Properties, AmfArray(fields, Annotations(e.value)), Annotations(e))
   }
 
-  def parseField(map: YMap): Option[PropertyShape] = {
-    val maybeShape =
-      AvroRecordFieldParser(map)
-        .parse()
-        .map { fieldShape =>
-          // add the map annotations + the avro-schema annotation to the PropertyShape wrapper
-          var ann = Annotations(map)
-          getAvroType(fieldShape).foreach(avroTypeAnnotation => ann = ann += avroTypeAnnotation)
-          val p = PropertyShape(ann).withRange(fieldShape)
-          p.setWithoutId(PropertyShapeModel.Range, fieldShape, fieldShape.annotations)
-        }
-    maybeShape.foreach { p =>
-      map.key("name", AnyShapeModel.Name in p)
-      map.key("aliases", AnyShapeModel.Aliases in p)
-      map.key("doc", AnyShapeModel.Description in p)
-      map
-        .key("order")
-        .foreach(f =>
-          f.value.value match {
-            case scalar: YScalar =>
-              val orderIntMapping = AvroFieldOrder.fromString(scalar.text)
-              p.set(
-                PropertyShapeModel.SerializationOrder,
-                AmfScalar(orderIntMapping, Annotations(f.value)),
-                Annotations(f)
-              )
-            case _ =>
-          }
-        )
-      super.parseDefault(map, p)
+  private def parsePropertyRange(p: PropertyShape, map: YMap, ann: Annotations): Unit = {
+    AvroRecordFieldParser(map).parse() match {
+      case Some(fieldShape) =>
+        getAvroType(fieldShape).foreach(avroTypeAnnotation => ann += avroTypeAnnotation)
+        p.setWithoutId(PropertyShapeModel.Range, fieldShape, fieldShape.annotations)
+      case None =>
+        p.setWithoutId(PropertyShapeModel.Range, AnyShape(ann), ann)
     }
-    maybeShape
+  }
+
+  def parseField(map: YMap): PropertyShape = {
+    val ann = Annotations(map)
+    val p   = PropertyShape(ann)
+    parsePropertyRange(p, map, ann)
+    map.key("name", AnyShapeModel.Name in p)
+    map.key("aliases", AnyShapeModel.Aliases in p)
+    map.key("doc", AnyShapeModel.Description in p)
+    map
+      .key("order")
+      .foreach(f =>
+        f.value.value match {
+          case scalar: YScalar =>
+            val orderIntMapping = AvroFieldOrder.fromString(scalar.text)
+            p.set(
+              PropertyShapeModel.SerializationOrder,
+              AmfScalar(orderIntMapping, Annotations(f.value)),
+              Annotations(f)
+            )
+          case _ =>
+        }
+      )
+    super.parseDefault(map, p)
+    p
   }
 }
 
