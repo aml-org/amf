@@ -13,6 +13,7 @@ import amf.shapes.internal.document.apicontract.validation.json.{
   JSONTokenerHack,
   ScalarTokenerHack
 }
+import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema._
@@ -154,7 +155,7 @@ case class JvmReportValidationProcessor(
     override val profileName: ProfileName,
     shape: Shape,
     override protected var intermediateResults: Seq[AMFValidationResult] = Seq()
-) extends ReportValidationProcessor {
+) extends JsonSchemaReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 

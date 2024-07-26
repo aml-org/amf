@@ -9,20 +9,20 @@ import amf.core.client.scala.validation.payload.{
   ValidatePayloadRequest
 }
 import amf.core.internal.remote.Mimes._
-import amf.shapes.internal.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
+import amf.shapes.internal.domain.apicontract.unsafe.AvroSchemaValidatorBuilder
 
-trait JsonSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationPlugin with CommonShapeValidation {
-  override val id: String                   = "AMF Payload Validation"
-  private val payloadMediaType: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
+trait AvroSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationPlugin with CommonShapeValidation {
+  override val id: String                   = "AMF AVRO Payload Validation"
+  private val payloadMediaType: Seq[String] = Seq(`application/json`)
 
   override def applies(element: ValidatePayloadRequest): Boolean = {
     val ValidatePayloadRequest(shape, mediaType, _) = element
-    isAnyShape(shape) && supportsMediaType(mediaType) && !isAvroSchemaShape(shape)
+    isAnyShape(shape) && supportsMediaType(mediaType) && isAvroSchemaShape(shape)
   }
 
   private def supportsMediaType(mediaType: String) = payloadMediaType.contains(mediaType)
 }
-object JsonSchemaShapePayloadValidationPlugin extends JsonSchemaShapePayloadValidationPlugin {
+object AvroSchemaShapePayloadValidationPlugin extends AvroSchemaShapePayloadValidationPlugin {
 
   override def validator(
       shape: Shape,
@@ -30,11 +30,11 @@ object JsonSchemaShapePayloadValidationPlugin extends JsonSchemaShapePayloadVali
       config: ShapeValidationConfiguration,
       validationMode: ValidationMode
   ): AMFShapePayloadValidator = {
-    JsonSchemaValidatorBuilder.payloadValidator(shape, mediaType, validationMode, config)
+    AvroSchemaValidatorBuilder.payloadValidator(shape, mediaType, validationMode, config)
   }
 }
 
-private[amf] object FailFastJsonSchemaPayloadValidationPlugin extends JsonSchemaShapePayloadValidationPlugin {
+private[amf] object FailFastAvroSchemaPayloadValidationPlugin extends AvroSchemaShapePayloadValidationPlugin {
 
   override def validator(
       shape: Shape,
@@ -42,6 +42,6 @@ private[amf] object FailFastJsonSchemaPayloadValidationPlugin extends JsonSchema
       config: ShapeValidationConfiguration,
       validationMode: ValidationMode
   ): AMFShapePayloadValidator = {
-    JsonSchemaValidatorBuilder.failFastValidator(shape, mediaType, validationMode, config)
+    AvroSchemaValidatorBuilder.failFastValidator(shape, mediaType, validationMode, config)
   }
 }

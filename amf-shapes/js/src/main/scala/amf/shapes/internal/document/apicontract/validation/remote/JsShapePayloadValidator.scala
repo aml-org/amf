@@ -5,6 +5,7 @@ import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
+import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema._
 
@@ -108,7 +109,7 @@ class JsShapePayloadValidator(
 case class JsReportValidationProcessor(
     override val profileName: ProfileName,
     override protected var intermediateResults: Seq[AMFValidationResult] = Seq()
-) extends ReportValidationProcessor {
+) extends JsonSchemaReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 

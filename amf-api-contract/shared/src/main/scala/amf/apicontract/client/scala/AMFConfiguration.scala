@@ -8,21 +8,12 @@ import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
 import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
 import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
-import amf.apicontract.internal.spec.avro.transformation.{
-  AvroSchemaCachePipeline,
-  AvroSchemaEditingPipeline,
-  AvroSchemaTransformationPipeline
-}
+import amf.apicontract.internal.spec.avro.transformation.{AvroSchemaCachePipeline, AvroSchemaEditingPipeline, AvroSchemaTransformationPipeline}
 import amf.apicontract.internal.spec.avro.{AvroParsePlugin, AvroRenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.transformation.compatibility.{
-  Oas20CompatibilityPipeline,
-  Oas3CompatibilityPipeline,
-  Raml08CompatibilityPipeline,
-  Raml10CompatibilityPipeline
-}
+import amf.apicontract.internal.transformation.compatibility.{Oas20CompatibilityPipeline, Oas3CompatibilityPipeline, Raml08CompatibilityPipeline, Raml10CompatibilityPipeline}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.APIPayloadValidationPlugin
@@ -49,7 +40,7 @@ import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
+import amf.shapes.client.scala.plugin.{AvroSchemaShapePayloadValidationPlugin, JsonSchemaShapePayloadValidationPlugin}
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 import amf.shapes.internal.spec.jsonschema.JsonSchemaParsePlugin
@@ -82,7 +73,8 @@ trait APIConfigurationBuilder {
       configuration.idAdopterProvider
     ).withPlugins(
       List(
-        JsonSchemaShapePayloadValidationPlugin
+        JsonSchemaShapePayloadValidationPlugin,
+        AvroSchemaShapePayloadValidationPlugin
       )
     ).withFallback(ApiContractFallbackPlugin())
     result

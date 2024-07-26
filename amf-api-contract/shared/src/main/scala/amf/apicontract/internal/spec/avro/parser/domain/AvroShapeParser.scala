@@ -22,6 +22,9 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
         (None, "invalid avro type")
     }
     maybeShape.map(_.annotations += AVROSchemaType(avroType)) // avroType = record, enum, fixed, array, map, etc.
+    // TODO ADD ANNOTATION AVRO-RAW WITH RAW TEXT OF THE SCHEMA NODE (EMIT YNODE)
+
+    // TODO HACER VALIDACION DEL AVRO SCHEMA ACA
     maybeShape
   }
 
