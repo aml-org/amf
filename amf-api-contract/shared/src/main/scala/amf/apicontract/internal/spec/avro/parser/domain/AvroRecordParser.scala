@@ -14,10 +14,7 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroComplexShapeParser(map) {
   override val shape: NodeShape = NodeShape(map)
 
-  override def parseSpecificFields(): Unit = {
-    // todo: parse default
-    map.key("fields", parseFieldsEntry)
-  }
+  override def parseSpecificFields(): Unit = map.key("fields", parseFieldsEntry)
 
   private def parseFieldsEntry(e: YMapEntry): Unit = {
     val fields = e.value.as[Seq[YMap]].flatMap(parseField)
@@ -28,18 +25,17 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
     val maybeShape =
       AvroRecordFieldParser(map)
         .parse()
-        .map { s =>
-          // add the map annotations + the avro type annotation to the PropertyShape wrapper
+        .map { fieldShape =>
+          // add the map annotations + the avro-schema annotation to the PropertyShape wrapper
           var ann = Annotations(map)
-          getAvroType(s).foreach(avroTypeAnnotation => ann = ann += avroTypeAnnotation)
-          val p = PropertyShape(ann).withRange(s)
-          p.setWithoutId(PropertyShapeModel.Range, s, s.annotations)
+          getAvroType(fieldShape).foreach(avroTypeAnnotation => ann = ann += avroTypeAnnotation)
+          val p = PropertyShape(ann).withRange(fieldShape)
+          p.setWithoutId(PropertyShapeModel.Range, fieldShape, fieldShape.annotations)
         }
     maybeShape.foreach { p =>
       map.key("name", AnyShapeModel.Name in p)
       map.key("aliases", AnyShapeModel.Aliases in p)
       map.key("doc", AnyShapeModel.Description in p)
-      // todo: change to new field Order (being a string)
       map
         .key("order")
         .foreach(f =>

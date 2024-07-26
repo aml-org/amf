@@ -11,11 +11,11 @@ class AvroSchemaEditingPipeline private (urlShortening: Boolean = true, val name
 
   private def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
 
-  override def steps: Seq[TransformationStep] = Seq()
-//    Seq(
-//      new ReferenceResolutionStage(true),
-//      new ShapeNormalizationForUnitStage(AVROSCHEMA, keepEditingInfo = true)
-//    ) ++ url :+ SourceInformationStage
+  override def steps: Seq[TransformationStep] =
+    Seq(
+      new ReferenceResolutionStage(true),
+      new ShapeNormalizationForUnitStage(AVROSCHEMA, keepEditingInfo = true)
+    ) ++ url :+ SourceInformationStage
 }
 
 object AvroSchemaEditingPipeline {
