@@ -1,0 +1,96 @@
+{
+  "type": "record",
+  "name": "AllTypes",
+  "namespace": "root",
+  "aliases": [
+    "EveryTypeInTheSameSchema"
+  ],
+  "doc": "this schema contains every possible type you can declare in avro inside it's fields",
+  "fields": [
+    {
+      "name": "boolean-primitive-type",
+      "doc": "this is a documentation for the boolean primitive type",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "int-primitive-type",
+      "doc": "this is a documentation for the int primitive type",
+      "type": "int",
+      "default": 123
+    },
+    {
+      "name": "long-primitive-type",
+      "doc": "this is a documentation for the long primitive type",
+      "type": "long",
+      "default": 123
+    },
+    {
+      "name": "float-primitive-type",
+      "doc": "this is a documentation for the float primitive type",
+      "type": "float",
+      "default": 1.0
+    },
+    {
+      "name": "double-primitive-type",
+      "doc": "this is a documentation for the double primitive type",
+      "type": "double",
+      "default": 1.0
+    },
+    {
+      "name": "bytes-primitive-type",
+      "doc": "this is a documentation for the bytes primitive type",
+      "type": "bytes",
+      "default": "\u00FF"
+    },
+    {
+      "name": "string-primitive-type",
+      "doc": "this is a documentation for the string primitive type",
+      "type": "string",
+      "default": "foo"
+    },
+    {
+      "name": "union",
+      "doc": "this is a documentation for the union type with recursive element",
+      "type": [
+        "null",
+        "LongList"
+      ],
+      "default": null
+    },
+    {
+      "type": "array",
+      "items": "long",
+      "default": []
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "type": "enum",
+      "name": "Suit",
+      "symbols": [
+        "SPADES",
+        "HEARTS",
+        "DIAMONDS",
+        "CLUBS"
+      ],
+      "default": "SPADES"
+    },
+    {
+      "type": "fixed",
+      "size": 16,
+      "name": "md5"
+    },
+    {
+      "type": "map",
+      "values": "long",
+      "default": {}
+    }
+  ]
+}
