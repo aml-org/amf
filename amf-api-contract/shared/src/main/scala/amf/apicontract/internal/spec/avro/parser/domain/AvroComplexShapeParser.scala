@@ -1,9 +1,9 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfArray, ArrayNode, DataNode, Shape}
 import amf.core.internal.datanode.DataNodeParser
-import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.{ArrayNodeModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -41,8 +41,18 @@ abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext
     map.key(
       "default",
       entry => {
-        val dataNode = DataNodeParser(entry.value).parse()
-        shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+        val dataNode: DataNode = DataNodeParser(entry.value).parse()
+        dataNode match {
+          // todo: by default the DataNodeParser returns ArrayNodes without annotations (we should add them in amf-core?)
+          case arrayNode: ArrayNode =>
+            arrayNode.setWithoutId(
+              ArrayNodeModel.Member,
+              AmfArray(arrayNode.members, Annotations.inferred()),
+              Annotations.inferred()
+            )
+            shape.set(ShapeModel.Default, arrayNode, Annotations(entry))
+          case node => shape.set(ShapeModel.Default, node, Annotations(entry))
+        }
       }
     )
   }
