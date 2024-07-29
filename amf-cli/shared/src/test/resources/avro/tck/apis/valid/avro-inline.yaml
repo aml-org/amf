@@ -48,7 +48,7 @@ channels:
               doc: this is a documentation for the union type with recursive element
               type:
                 - null
-                - LongList
+                - AllTypes
               default: null
             - type: array
               items: long
@@ -72,3 +72,14 @@ channels:
             - type: map
               values: long
               default: {}
+            - name: this is the field name # an array doesn't have name/order/aliases fields, they belong to the record field
+              doc: this is the field doc
+              order: ascending # this maps to a numeric value in the model (-1/0/1 for descending, ignore, ascending)
+              aliases:
+                - this is a field alias
+              type: array
+              items: long
+              default: []
+            - type: # type field can be a string declaring the type (like all the rest) or an object with a schema (like here)
+                type: array
+                items: string
