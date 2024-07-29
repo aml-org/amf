@@ -12,7 +12,7 @@ class AvroSchemaValidTCKTest extends AvroSchemaCycleTest {
       test(s"Avro Schema TCK > Schemas > Valid > $schema: JSON to JSON-LD matches golden") {
         cycle(schema, schema.replace(".json", ".jsonld"), AvroHint, AmfJsonHint, amfConfig = Some(avroConfiguration()))
       }
-      // Todo: des-ingnore in emission
+
       test(s"Avro Schema TCK > Schemas > Valid > $schema: JSON to dumped JSON matches golden") {
         cycle(
           schema,
@@ -37,8 +37,8 @@ class AvroSchemaValidTCKTest extends AvroSchemaCycleTest {
 
   test("Test specific parsing") {
     cycle(
-      "map-with-values-schema.json",
-      "map-with-values-schema.jsonld",
+      "record.json",
+      "record.jsonld",
       AvroHint,
       AmfJsonHint,
       amfConfig = Some(avroConfiguration())

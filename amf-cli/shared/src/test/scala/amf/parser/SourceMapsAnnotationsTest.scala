@@ -1,7 +1,6 @@
 package amf.parser
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
-import amf.core.client.scala.config.RenderOptions
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AvroConfiguration}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
@@ -9,7 +8,6 @@ import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
-import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
@@ -18,7 +16,6 @@ import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.collection.GenTraversableOnce
 import scala.concurrent.{ExecutionContext, Future}
 
 /** iterates the BaseUnit checking if both field and value have the SourceAST or a VirtualNode annotation. The value may
@@ -79,6 +76,10 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
   ignore("Test GraphQLFederation annotations") {
     runTest("federation.graphql", Some(GraphQLFederationConfiguration.GraphQLFederation()))
+  }
+
+  test("Test AVRO annotations") {
+    runTest("all-types-avro.json", Some(AvroConfiguration.Avro()))
   }
 
   private def parse(file: String, config: Option[AMFConfiguration] = None): Future[BaseUnit] = {
