@@ -1,11 +1,13 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
+import amf.core.client.scala.model.domain.{AmfArray, ArrayNode, DataNode, Shape}
 import amf.core.internal.datanode.DataNodeParser
-import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.{ArrayNodeModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations.AVROSchemaType
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
@@ -33,12 +35,24 @@ abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext
   // each specific parser should override and parse it's specific fields
   def parseSpecificFields(): Unit
 
-  def parseDefault(): Unit = {
+  def parseDefault(): Unit = parseDefault(map, shape)
+
+  def parseDefault(map: YMap, shape: Shape): Unit = {
     map.key(
       "default",
       entry => {
-        val dataNode = DataNodeParser(entry.value).parse()
-        shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+        val dataNode: DataNode = DataNodeParser(entry.value).parse()
+        dataNode match {
+          // todo: by default the DataNodeParser returns ArrayNodes without annotations (we should add them in amf-core?)
+          case arrayNode: ArrayNode =>
+            arrayNode.setWithoutId(
+              ArrayNodeModel.Member,
+              AmfArray(arrayNode.members, Annotations.inferred()),
+              Annotations.inferred()
+            )
+            shape.set(ShapeModel.Default, arrayNode, Annotations(entry))
+          case node => shape.set(ShapeModel.Default, node, Annotations(entry))
+        }
       }
     )
   }
@@ -63,4 +77,6 @@ trait AvroKeyExtractor {
     def isPrimitive: Boolean =
       Seq("null", "boolean", "int", "long", "float", "double", "bytes", "string").contains(value)
   }
+
+  def getAvroType(shape: Shape): Option[AVROSchemaType] = shape.annotations.find(classOf[AVROSchemaType])
 }

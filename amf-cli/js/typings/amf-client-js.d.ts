@@ -6642,6 +6642,7 @@ declare module "amf-client-js" {
     static readonly GRAPHQL_FEDERATION: ProfileName;
     static readonly GRPC: ProfileName;
     static readonly JSONSCHEMA: ProfileName;
+    static readonly AVROSCHEMA: ProfileName;
     static readonly OAS20: ProfileName;
     static readonly OAS30: ProfileName;
     static readonly PAYLOAD: ProfileName;

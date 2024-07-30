@@ -103,6 +103,12 @@ class ShapeDeclarations(
     }
   }
 
+  def findEncodedTypeInDocFragment(doc: String): Option[Shape] = {
+    documentFragments.get(doc).flatMap { case (encoded, _) =>
+      Some(encoded)
+    }
+  }
+
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
     findForType(key, _.asInstanceOf[ShapeDeclarations].shapes, scope) match {
       case Some(anyShape: AnyShape) => Some(anyShape)

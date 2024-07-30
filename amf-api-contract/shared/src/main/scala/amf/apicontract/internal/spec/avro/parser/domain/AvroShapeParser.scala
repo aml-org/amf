@@ -21,7 +21,7 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
         // todo: should validate invalid type when using the AVRO Validator
         (None, "invalid avro type")
     }
-    maybeShape.map(_.annotations += AVROSchemaType(avroType))
+    maybeShape.map(_.annotations += AVROSchemaType(avroType)) // avroType = record, enum, fixed, array, map, etc.
     maybeShape
   }
 

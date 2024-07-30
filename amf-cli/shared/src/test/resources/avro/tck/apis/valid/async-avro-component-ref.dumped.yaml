@@ -10,6 +10,6 @@ channels:
   mychannel:
     publish:
       message:
-        schemaFormat: application/vnd.apache.avro;version=1.8.2
+        schemaFormat: application/vnd.apache.avro;version=1.9.0
         payload:
           $ref: "#/components/schemas/Person"

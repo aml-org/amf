@@ -1220,14 +1220,16 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "direct,persistent"
       ),
       AMFValidation(
-        message = "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
+        message =
+          "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
         owlClass = apiBinding("SolaceOperationQueue030"),
         owlProperty = apiBinding("maxMsgSpoolSize"),
         constraint = sh("datatype"),
         value = "xsd:string"
       ),
       AMFValidation(
-        message = "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
+        message =
+          "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
         owlClass = apiBinding("SolaceOperationQueue040"),
         owlProperty = apiBinding("maxMsgSpoolSize"),
         constraint = sh("datatype"),
@@ -1672,7 +1674,8 @@ object APIRawValidations extends CommonValidationDefinitions {
     Oas20Profile      -> forProfile(Oas20Profile),
     Oas30Profile      -> forProfile(Oas30Profile),
     Async20Profile    -> forProfile(Async20Profile),
-    JsonSchemaProfile -> forProfile(JsonSchemaProfile)
+    JsonSchemaProfile -> forProfile(JsonSchemaProfile),
+    AvroSchemaProfile -> forProfile(AvroSchemaProfile)
   )
 
   override def forProfile(p: ProfileName): ProfileValidations = {
@@ -1683,6 +1686,7 @@ object APIRawValidations extends CommonValidationDefinitions {
       case Oas30Profile      => Oas30Validations
       case Async20Profile    => Async20Validations
       case JsonSchemaProfile => ShapeValidations
+      case AvroSchemaProfile => ShapeValidations // todo: should we do ShapeValidations?
       case AmfProfile        => AmfValidations
       case _ =>
         () => Seq.empty

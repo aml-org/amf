@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.async
 import amf.apicontract.internal.spec.async.AsyncHeader._
 import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.document
+import amf.apicontract.internal.spec.avro.AvroParsePlugin
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.apicontract.internal.spec.oas.OasLikeParsePlugin
 import amf.apicontract.internal.spec.raml.Raml10ParsePlugin
@@ -20,7 +21,7 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
   override def applies(element: Root): Boolean = AsyncHeader(element).isDefined
 
   override def validSpecsToReference: Seq[Spec] =
-    super.validSpecsToReference :+ Raml10ParsePlugin.spec
+    super.validSpecsToReference ++ Seq(Raml10ParsePlugin.spec, AvroParsePlugin.spec)
 
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`, Mimes.`application/json`)
 

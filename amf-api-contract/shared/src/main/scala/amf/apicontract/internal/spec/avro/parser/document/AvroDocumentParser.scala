@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.apicontract.internal.spec.avro.parser.domain.AvroShapeParser
 import amf.core.client.scala.model.document.BaseUnitProcessingData
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.internal.metamodel.document.{DocumentModel, FragmentModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
@@ -24,7 +24,7 @@ class AvroDocumentParser(root: Root)(implicit ctx: AvroSchemaContext) extends Qu
     map.key("namespace", (DocumentModel.Package in doc).allowingAnnotations)
 
     val parsedShape = parseType(map)
-    parsedShape.foreach(shape => doc.withEncodes(shape))
+    parsedShape.foreach(shape => doc.setWithoutId(FragmentModel.Encodes, shape, Annotations.inferred()))
     doc
   }
 

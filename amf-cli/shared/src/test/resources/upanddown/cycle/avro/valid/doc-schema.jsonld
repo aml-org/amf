@@ -95,6 +95,42 @@
                       {
                         "@value": "Unique identifier for this specific event"
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/source-map/avro-schema/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "string"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/source-map/avro-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   },
                   {
@@ -117,7 +153,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#datatype": [
                           {
-                            "@id": "http://www.w3.org/2001/XMLSchema#long"
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -136,7 +172,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "long"
+                                    "@value": "string"
                                   }
                                 ]
                               }
@@ -153,6 +189,42 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Instant the event took place"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/source-map/avro-schema/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "string"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/source-map/avro-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "string"
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -205,6 +277,42 @@
             "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Metadata about the event."
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/source-map/avro-schema/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "record"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/source-map/avro-schema/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "record"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -265,6 +373,42 @@
               {
                 "@value": "Encrypted auth_code received when user authorizes the app."
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/source-map/avro-schema/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/source-map/avro-schema/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "string"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           },
           {
@@ -323,6 +467,42 @@
             "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "ID of the user who triggered this event."
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/source-map/avro-schema/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/source-map/avro-schema/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "string"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

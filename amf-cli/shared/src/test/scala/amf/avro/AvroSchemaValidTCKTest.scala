@@ -1,29 +1,54 @@
-package amf.parser
+package amf.avro
 
-import amf.avro.AvroSchemaCycleTest
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, AvroHint}
 
 class AvroSchemaValidTCKTest extends AvroSchemaCycleTest {
   override def basePath: String = s"amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/"
 
-
   fs.syncFile(s"$basePath").list.foreach { schema =>
     if (schema.endsWith(".json") && !schema.endsWith(".dumped.json")) {
 
       test(s"Avro Schema TCK > Schemas > Valid > $schema: JSON to JSON-LD matches golden") {
-        cycle(schema, schema.replace(".json", ".jsonld"), AvroHint, AmfJsonHint)
+        cycle(schema, schema.replace(".json", ".jsonld"), AvroHint, AmfJsonHint, amfConfig = Some(avroConfiguration()))
       }
-      //Todo: des-ingnore in emission
-     ignore(s"Avro Schema TCK > Schemas > Valid > $schema: JSON to dumped JSON matches golden") {
-        cycle(schema, schema.replace(".json", ".dumped.json"), AvroHint, AvroHint)
+
+      test(s"Avro Schema TCK > Schemas > Valid > $schema: JSON to dumped JSON matches golden") {
+        cycle(
+          schema,
+          schema.replace(".json", ".dumped.json"),
+          AvroHint,
+          AvroHint,
+          amfConfig = Some(avroConfiguration())
+        )
       }
     }
   }
 
+  test("Test specific emission") {
+    cycle(
+      "record.json",
+      "record.dumped.json",
+      AvroHint,
+      AvroHint,
+      amfConfig = Some(avroConfiguration())
+    )
+  }
+
+  test("Test specific parsing") {
+    cycle(
+      "record.json",
+      "record.jsonld",
+      AvroHint,
+      AmfJsonHint,
+      amfConfig = Some(avroConfiguration())
+    )
+  }
+
   override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }
-// TCK invalid avro schemas. Uncomment to test validation
+
+// todo: TCK invalid avro schemas. Uncomment to test validation when it's available
 //class AvroSchemaInvalidTCKTest extends AvroSchemaCycleTest {
 //  override def basePath: String = s"amf-cli/shared/src/test/resources/upandown/cycle/avro/invalid/"
 //

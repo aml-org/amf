@@ -13,12 +13,18 @@
     },
     {
       "name": "email",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        "string"
+      ],
       "default": null
     },
     {
       "name": "age",
-      "type": ["null", "int"],
+      "type": [
+        "null",
+        "int"
+      ],
       "default": null
     },
     {
@@ -26,7 +32,13 @@
       "type": {
         "name": "ProgrammingLanguage",
         "type": "enum",
-        "symbols": ["JS", "Java", "Go", "Rust", "C"],
+        "symbols": [
+          "JS",
+          "Java",
+          "Go",
+          "Rust",
+          "C"
+        ],
         "default": "JS"
       }
     },
@@ -49,7 +61,10 @@
           },
           {
             "name": "country",
-            "type": ["null", "string"],
+            "type": [
+              "null",
+              "string"
+            ],
             "default": null
           }
         ]
@@ -65,10 +80,7 @@
     },
     {
       "name": "someid",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      }
+      "type": "string"
     }
   ]
 }

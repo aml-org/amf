@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/avro/doc/apis/invalid-avro-ref.raml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#invalid-cross-spec
+  Message: Cannot reference a Avro spec from a different spec
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(9,18)-(9,55)]
+  Location: file://amf-cli/shared/src/test/resources/avro/doc/apis/invalid-avro-ref.raml
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference '../schemas/schema-1.9.0.json'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/avro/doc/apis/invalid-avro-ref.raml#/web-api/endpoint/%2FanEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/inherits/unresolved
+  Property: 
+  Range: [(9,18)-(9,55)]
+  Location: file://amf-cli/shared/src/test/resources/avro/doc/apis/invalid-avro-ref.raml

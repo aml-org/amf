@@ -13,18 +13,12 @@
         "fields": [
           {
             "name": "id",
-            "type": {
-              "type": "string",
-              "logicalType": "uuid"
-            },
+            "type": "string",
             "doc": "Unique identifier for this specific event"
           },
           {
             "name": "timestamp",
-            "type": {
-              "type": "long",
-              "logicalType": "timestamp-millis"
-            },
+            "type": "string",
             "doc": "Instant the event took place"
           }
         ],
@@ -39,10 +33,7 @@
     },
     {
       "name": "triggered_by",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      },
+      "type": "string",
       "doc": "ID of the user who triggered this event."
     }
   ]
