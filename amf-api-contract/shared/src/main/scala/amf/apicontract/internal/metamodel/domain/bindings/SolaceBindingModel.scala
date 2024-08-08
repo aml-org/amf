@@ -252,7 +252,8 @@ object SolaceOperationDestination010Model extends SolaceOperationDestinationMode
       )
     )
   override def modelInstance: AmfObject = SolaceOperationDestination010()
-  override def fields: List[Field]      = List(DestinationType, DeliveryMode, Queue) ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(DestinationType, DeliveryMode, Queue) ++ SolaceOperationDestinationModel.fields
 
   override val `type`: List[ValueType] =
     ApiBinding + "SolaceOperationDestination010" :: SolaceOperationDestinationModel.`type`
@@ -280,7 +281,8 @@ object SolaceOperationDestination020Model extends SolaceOperationDestinationMode
         "Defines the properties of a queue."
       )
     )
-  override def fields: List[Field]      = List(DestinationType, DeliveryMode, Queue, Topic) ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(DestinationType, DeliveryMode, Queue, Topic) ++ SolaceOperationDestinationModel.fields
   override def modelInstance: AmfObject = SolaceOperationDestination020()
 
   override val `type`: List[ValueType] =
@@ -310,7 +312,8 @@ object SolaceOperationDestination030Model extends SolaceOperationDestinationMode
         "Defines the properties of a topic."
       )
     )
-  override def fields: List[Field]      = List(DestinationType, DeliveryMode, Queue, Topic) ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(DestinationType, DeliveryMode, Queue, Topic) ++ SolaceOperationDestinationModel.fields
   override def modelInstance: AmfObject = SolaceOperationDestination030()
 
   override val `type`: List[ValueType] =
@@ -347,7 +350,7 @@ object SolaceOperationDestination040Model extends SolaceOperationDestinationMode
 
   override def modelInstance: AmfObject = SolaceOperationDestination040()
   override def fields: List[Field] =
-    List(DestinationType, DeliveryMode, Queue, BindingVersion, Topic) ++ DomainElementModel.fields
+    List(DestinationType, DeliveryMode, Queue, BindingVersion, Topic) ++ SolaceOperationDestinationModel.fields
 
   override val `type`: List[ValueType] =
     ApiBinding + "SolaceOperationDestination040" :: SolaceOperationDestinationModel.`type`
@@ -379,7 +382,7 @@ trait SolaceOperationQueueModel extends DomainElementModel with NameFieldSchema 
   )
 
   override def fields: List[Field] =
-    List(TopicSubscriptions, AccessType) ++ DomainElementModel.fields
+    List(TopicSubscriptions, AccessType, Name) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "SolaceOperationQueue" :: DomainElementModel.`type`
 
@@ -425,7 +428,7 @@ object SolaceOperationQueue030Model extends SolaceOperationQueueModel {
     ApiBinding + "SolaceOperationQueue030" :: SolaceOperationDestinationModel.`type`
 
   override val doc: ModelDoc       = ModelDoc(ModelVocabularies.ApiBinding, "SolaceOperationQueue030")
-  override def fields: List[Field] = List(MaxMsgSpoolSize, MaxTtl) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(MaxMsgSpoolSize, MaxTtl) ++ SolaceOperationQueueModel.fields
 }
 
 //Operation Topic
