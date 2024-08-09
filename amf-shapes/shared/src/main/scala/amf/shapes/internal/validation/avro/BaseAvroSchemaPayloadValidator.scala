@@ -2,30 +2,28 @@ package amf.shapes.internal.validation.avro
 
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference}
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, SyamlParsedDocument}
 import amf.core.client.scala.validation.payload.{PayloadParsingResult, ShapeValidationConfiguration}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
-import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
+import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlSyntaxRenderPlugin}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.validation.common.{
-  CommonBaseSchemaPayloadValidator,
-  ReportValidationProcessor,
-  ValidationProcessor
-}
+import amf.shapes.internal.spec.common.emitter.PayloadEmitter
+import amf.shapes.internal.validation.common.{CommonBaseSchemaPayloadValidator, ReportValidationProcessor, ValidationProcessor}
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
 
+import java.io.StringWriter
 import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
@@ -104,6 +102,26 @@ abstract class BaseAvroSchemaPayloadValidator(
     schemaOption match {
       case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
       case None               => Right(None)
+    }
+  }
+  protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
+    val futureText = payload.raw match {
+      case Some("") => None
+      case _ =>
+        val document = PayloadEmitter(payload.encodes)(UnhandledErrorHandler).emitDocument()
+        val writer   = new StringWriter()
+        SyamlSyntaxRenderPlugin.emit(`application/json`, SyamlParsedDocument(document), writer).map(_.toString)
+    }
+
+    futureText map { text =>
+      payload.encodes match {
+        case node: ScalarNode
+          if node.dataType
+            .option()
+            .contains(DataType.String) && text.nonEmpty && text.head != '"' =>
+          "\"" + text.stripLineEnd + "\""
+        case _ => text.stripLineEnd
+      }
     }
   }
 

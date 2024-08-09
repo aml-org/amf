@@ -25,7 +25,7 @@ ThisBuild / resolvers ++= List(
 )
 ThisBuild / credentials ++= Common.credentials()
 
-val npmDeps = List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), ("avro-js" -> "1.11.1"))
+val npmDeps = List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), ("avro-js" -> "1.12.0"))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -75,7 +75,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "org.json", name = "json")
       ),
     //    AGREGAR DEPENDENCIA DE AVRO VALIDATOR JVM
-    libraryDependencies += "org.apache.avro" % "avro" % "1.11.1",
+    libraryDependencies += "org.apache.avro" % "avro" % "1.12.0",
     excludeDependencies += "com.fasterxml.jackson.core" % "jackson-databind", // transitive from everit
     libraryDependencies += "org.json"                   % "json" % "20231013",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
