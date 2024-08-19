@@ -1,4 +1,4 @@
-package amf.shapes.internal.validation.jsonschema
+package amf.shapes.internal.validation.common
 
 import amf.core.client.common.validation.{ProfileName, SeverityLevels}
 import amf.core.client.scala.model.domain.DomainElement
@@ -21,32 +21,6 @@ trait ReportValidationProcessor extends ValidationProcessor {
 
   protected def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
     r match {
-      case e: UnknownDiscriminator =>
-        Seq(
-          AMFValidationResult(
-            message = "Unknown discriminator value",
-            level = SeverityLevels.VIOLATION,
-            targetNode = element.map(_.id).getOrElse(""),
-            targetProperty = None,
-            validationId = ExampleValidationErrorSpecification.id,
-            position = element.flatMap(_.position()),
-            location = element.flatMap(_.location()),
-            source = e
-          )
-        )
-      case e: InvalidJsonObject =>
-        Seq(
-          AMFValidationResult(
-            message = "Unsupported chars in string value (probably a binary file)",
-            level = SeverityLevels.VIOLATION,
-            targetNode = element.map(_.id).getOrElse(""),
-            targetProperty = None,
-            validationId = ExampleValidationErrorSpecification.id,
-            position = element.flatMap(_.position()),
-            location = element.flatMap(_.location()),
-            source = e
-          )
-        )
       case other =>
         Seq(
           AMFValidationResult(
