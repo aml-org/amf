@@ -49,7 +49,7 @@ import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
+import amf.shapes.client.scala.plugin.{AvroSchemaShapePayloadValidationPlugin, JsonSchemaShapePayloadValidationPlugin}
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 import amf.shapes.internal.spec.jsonschema.JsonSchemaParsePlugin
@@ -82,7 +82,8 @@ trait APIConfigurationBuilder {
       configuration.idAdopterProvider
     ).withPlugins(
       List(
-        JsonSchemaShapePayloadValidationPlugin
+        JsonSchemaShapePayloadValidationPlugin,
+        AvroSchemaShapePayloadValidationPlugin
       )
     ).withFallback(ApiContractFallbackPlugin())
     result
@@ -166,7 +167,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 object AvroConfiguration extends APIConfigurationBuilder {
   def Avro(): AMFConfiguration = {
     common()
-      .withPlugins(List(AvroParsePlugin, AvroRenderPlugin)) // TODO: add validation profiles
+      .withPlugins(List(AvroParsePlugin, AvroRenderPlugin))
       .withTransformationPipelines(
         List(
           AvroSchemaTransformationPipeline(),
