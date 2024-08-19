@@ -52,6 +52,7 @@ abstract class BaseAvroSchemaPayloadValidator(
   override protected val supportedMediaTypes: Seq[String] = BaseAvroSchemaPayloadValidator.supportedMediaTypes
 
   override def validate(payload: String): Future[AMFValidationReport] = {
+    println("llego al baseAvroSchema")
     Future.successful(validateForPayload(payload, getReportProcessor))
   }
 
@@ -85,11 +86,13 @@ abstract class BaseAvroSchemaPayloadValidator(
       payload: String,
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
+    println(payload)
     if (!isValidMediaType(mediaType)) {
       validationProcessor.processResults(
         Seq(mediaTypeError(mediaType))
       )
     } else
+      println("entro al else the validateForPayload")
       try {
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
       } catch {
@@ -260,16 +263,20 @@ abstract class BaseAvroSchemaPayloadValidator(
       payload: (Option[LoadedObj], Option[PayloadParsingResult]),
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
+    println("entro al performValidation del baseAvro")
     payload match {
-      case (_, Some(result)) if result.hasError => validationProcessor.processResults(result.results)
+      case (_, Some(result)) if result.hasError =>  validationProcessor.processResults(result.results)
       case (Some(obj), resultOption) =>
+        println("entro al segundo case de perfomValidation")
         val fragmentOption = resultOption.map(_.fragment)
         try {
           {
             resultOption match {
               case _ if shape.isInstanceOf[AnyShape] =>
+                println("Shape is AnyShape, getting or creating schema")
                 getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
+                println("Shape is not AnyShape, returning validation error")
                 Left(
                   validationProcessor.processResults(
                     Seq(
@@ -289,19 +296,25 @@ abstract class BaseAvroSchemaPayloadValidator(
             }
           } match {
             case Right(Some(schema)) =>
+              println("Schema obtained successfully, calling validator")
               callValidator(schema, obj, fragmentOption, validationProcessor)
             case Left(result) =>
+              println("Error occurred during schema generation, returning result")
               result
             case _ =>
+              println("No schema or error, returning empty results")
               validationProcessor.processResults(Nil)
           }
         } catch {
           // TODO CHECKEAR SI HAY ALGUNA EXCEPTION ESPECIAL DEVUELTA POR EL VALIDADOR ACA
           case e: Exception =>
+            println(s"Exception caught during validation: ${e.getMessage}")
             validationProcessor.processException(e, fragmentOption.map(_.encodes))
         }
 
-      case _ => validationProcessor.processResults(Nil) // ignore
+      case _ =>
+        println("No valid payload or results, returning empty results")
+        validationProcessor.processResults(Nil) // ignore
     }
   }
 

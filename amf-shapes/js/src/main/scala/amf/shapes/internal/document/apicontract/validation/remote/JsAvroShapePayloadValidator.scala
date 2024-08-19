@@ -26,7 +26,7 @@ class JsAvroShapePayloadValidator(
     private val shouldFailFast: Boolean = false
 ) extends BaseAvroSchemaPayloadValidator(shape, mediaType, configuration, shouldFailFast) {
 
-  override type LoadedObj    = js.Dynamic
+  override type LoadedObj    = String
   override type LoadedSchema = AvroSchema
   // TODO HERE YOU HAVE TO MAKE THE CALLS TO THE VALIDATOR JS LIBRARY. CHECK JsShapePayloadValidator FOR REFERENCE
 
@@ -34,13 +34,14 @@ class JsAvroShapePayloadValidator(
     JsReportValidationProcessor(profileName, shape)
 
   protected def loadAvro(str: String): LoadedObj = {
-    val isObjectLike = str.startsWith("{") || str.startsWith("[")
-    try js.Dynamic.global.JSON.parse(str)
-    catch {
-      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] =>
-        if (isObjectLike) throw new InvalidJsonObject(e)
-        else throw new InvalidJsonValue(e)
-    }
+//    val isObjectLike = str.startsWith("{") || str.startsWith("[")
+//    try js.Dynamic.global.JSON.parse(str)
+//    catch {
+//      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] =>
+//        if (isObjectLike) throw new InvalidJsonObject(e)
+//        else throw new InvalidJsonValue(e)
+//    }
+    str
   }
 
   override protected def callValidator(
@@ -51,7 +52,8 @@ class JsAvroShapePayloadValidator(
   ): AMFValidationReport = {
     val validator = LazyAvro.default
     try {
-      val schema  = validator.parse(schema)
+      println("Llego a call validator the JSAvro")
+//      val schema  = validator.parse(schema)
       val correct = schema.isValid(obj)
 
       val results: Seq[AMFValidationResult] =
@@ -142,4 +144,10 @@ class JsAvroShapePayloadValidator(
     }
   }
 
+  override protected def loadAvroSchema(text: String): AvroSchema = {
+    println("entro")
+    val  variable = LazyAvro.default.parse(text)
+    println("salio")
+    variable
+  }
 }

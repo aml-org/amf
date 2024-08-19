@@ -11,6 +11,7 @@ import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
+import amf.shapes.internal.annotations.{AVRORawSchema, AVROSchemaType}
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -30,8 +31,10 @@ trait PayloadValidationUtils {
       s: Shape,
       mediaType: String,
       config: AMFGraphConfiguration = defaultConfig
-  ): AMFShapePayloadValidator =
+  ): AMFShapePayloadValidator = {
+    println(s)
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
+  }
 
   protected def validator(
       s: Shape,
@@ -77,7 +80,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Invalid trailing coma in json array payload") {
-
     val s     = ScalarShape().withDataType(DataTypes.String)
     val array = ArrayShape().withName("person")
     array.withItems(s)
@@ -106,7 +108,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("'null' conforms as null") {
-
     val payload   = "null"
     val shape     = ScalarShape().withDataType(DataTypes.Nil)
     val validator = payloadValidator(shape, `application/yaml`)
@@ -114,7 +115,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Big number against scalar shape") {
-
     val payload   = "22337203685477999090"
     val shape     = ScalarShape().withDataType(DataTypes.Number)
     val validator = payloadValidator(shape, `application/json`)
@@ -122,7 +122,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Very big number against scalar shape") {
-
     val payload   = "22e20000"
     val shape     = ScalarShape().withDataType(DataTypes.Number)
     val validator = payloadValidator(shape, `application/json`)
@@ -130,7 +129,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Big number against node shape") {
-
     val payload =
       """
           |{
@@ -148,7 +146,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Invalid payload for json media type") {
-
     val payload            = "Hello World"
     val stringShape: Shape = ScalarShape().withDataType(DataTypes.String)
     val shape = AnyShape()
@@ -159,16 +156,12 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Test control characters in the middle of a number") {
-
-    val test = ScalarShape().withDataType(DataTypes.Integer)
-
+    val test   = ScalarShape().withDataType(DataTypes.Integer)
     val report = payloadValidator(test, `application/json`).syncValidate("123\n1234")
     report.conforms shouldBe false
-
   }
 
   test("Test that any payload conforms against an any type") {
-
     val test = AnyShape()
 
     val report = payloadValidator(test, `application/json`).syncValidate("any example")
@@ -176,7 +169,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Test that an invalid object payload is validated against an any type") {
-
     val test = AnyShape()
     val payload = """{
                     |  "a": "something"
@@ -188,24 +180,20 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Test that recursive shape has a payload validator") {
-
     val innerShape     = ScalarShape().withDataType(DataTypes.Number)
     val recursiveShape = RecursiveShape(innerShape)
     val validator      = payloadValidator(recursiveShape, `application/json`)
     validator.syncValidate("5").conforms shouldBe true
     validator.syncValidate("true").conforms shouldBe false
-
   }
 
   test("Long type with int64 format is validated as long") {
-
     val shape     = ScalarShape().withDataType(DataTypes.Long).withFormat("int64")
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate("0.1").conforms shouldBe false
   }
 
   test("Json payload with trailing characters should throw error - Object test") {
-
     val propertyA = PropertyShape()
       .withName("a")
       .withRange(ScalarShape().withDataType(DataTypes.String))
@@ -220,7 +208,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Json payload with trailing characters should throw error - Array test") {
-
     val propertyA = PropertyShape()
       .withName("a")
       .withRange(ScalarShape().withDataType(DataTypes.String))
@@ -235,7 +222,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Date-time can only have 4 digits") {
-
     val shape     = ScalarShape().withDataType(DataTypes.DateTimeOnly)
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""22021-06-05T00:00:00"""").conforms shouldBe false
@@ -267,7 +253,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Leap year DateTimeOnly") {
-
     val shape     = ScalarShape().withDataType(DataTypes.DateTimeOnly)
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""2020-02-29T00:00:00"""").conforms shouldBe true
@@ -275,7 +260,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Leap year DateTime") {
-
     val shape     = ScalarShape().withDataType(DataTypes.DateTime)
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""2020-02-29T16:41:41.090Z"""").conforms shouldBe true
@@ -283,7 +267,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Leap year Date") {
-
     val shape     = ScalarShape().withDataType(DataTypes.Date)
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""2020-02-29"""").conforms shouldBe true
@@ -291,11 +274,53 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Leap year DateTime CRI Case") {
-
-    val shape = ScalarShape().withDataType(DataTypes.DateTime).withFormat("rfc3339")
+    val shape     = ScalarShape().withDataType(DataTypes.DateTime).withFormat("rfc3339")
     val validator = payloadValidator(shape, `application/json`)
     validator.syncValidate(""""2022-02-29T23:59:59Z""").conforms shouldBe false
     validator.syncValidate(""""2024-02-29T23:59:59Z"""").conforms shouldBe true
+  }
+
+  test("Invalid avro payload") {
+    val s     = ScalarShape().withDataType(DataTypes.String)
+    println("prueba")
+    val shape = NodeShape().withName("person")
+    shape.withProperty("someString").withRange(s)
+    shape.annotations += AVROSchemaType("record")
+
+    val raw =
+      """
+        |{
+        |  "type": "record",
+        |  "name": "LongList",
+        |  "namespace": "root",
+        |  "aliases": ["LinkedLongs"],
+        |  "fields": [
+        |    {
+        |      "name": "value",
+        |      "type": "long"
+        |    }
+        |  ]
+        |}
+        """.stripMargin
+
+    shape.annotations += AVRORawSchema(raw)
+
+    val payload =
+      """
+        |{
+        |  "someString": "invalid string value"
+        |}
+        """.stripMargin
+
+    val validator = payloadValidator(shape, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
+        println(r.toString)
+        assert(
+          !r.conforms
+        )
+      }
   }
 
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
