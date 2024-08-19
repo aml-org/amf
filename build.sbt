@@ -1,12 +1,12 @@
 import Common.snapshots
-import NpmOpsPlugin.autoImport._
+import NpmOpsPlugin.autoImport.*
+import Versions.versions
 import sbt.Keys.{libraryDependencies, resolvers}
+import sbtassembly.AssemblyPlugin.autoImport.assembly
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
 import sbtsonar.SonarPlugin.autoImport.sonarProperties
 
 import scala.language.postfixOps
-import Versions.versions
-import sbtassembly.AssemblyPlugin.autoImport.assembly
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
@@ -25,7 +25,8 @@ ThisBuild / resolvers ++= List(
 )
 ThisBuild / credentials ++= Common.credentials()
 
-val npmDeps = List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")))
+val npmDeps =
+  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), ("avro-js" -> "1.12.0"))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -74,6 +75,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2" excludeAll (
       ExclusionRule(organization = "org.json", name = "json")
     ),
+    libraryDependencies += "org.apache.avro"            % "avro" % "1.12.0",
     excludeDependencies += "com.fasterxml.jackson.core" % "jackson-databind", // transitive from everit
     libraryDependencies += "org.json"                   % "json" % "20231013",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
@@ -96,6 +98,11 @@ lazy val shapesJS =
     .in(file("./amf-shapes/js"))
     .sourceDependency(amlJSRef, amlLibJS)
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+    .settings(
+      scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+      Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
+      npmDependencies ++= npmDeps
+    )
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-Api-contract *********************************************
