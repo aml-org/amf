@@ -7,10 +7,11 @@ import amf.core.internal.metamodel.domain.{ArrayNodeModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.annotations.AVROSchemaType
+import amf.shapes.internal.annotations.{AVRORawSchema, AVROSchemaType}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
+import org.yaml.render.JsonRender
 
 abstract class AvroComplexShapeParser(map: YMap)(implicit ctx: AvroSchemaContext)
     extends QuickFieldParserOps
@@ -79,4 +80,13 @@ trait AvroKeyExtractor {
   }
 
   def getAvroType(shape: Shape): Option[AVROSchemaType] = shape.annotations.find(classOf[AVROSchemaType])
+
+  def getAvroRaw(shape: Shape): Option[AVRORawSchema] = shape.annotations.find(classOf[AVRORawSchema])
+
+  def annotatedAvroShape(parsedShape: AnyShape, avroType: String, node: YPart): AnyShape = {
+    parsedShape.annotations += AVROSchemaType(avroType) // avroType = record, enum, fixed, array, map, etc.
+    val raw = JsonRender.render(node, 0)
+    parsedShape.annotations += AVRORawSchema(raw)
+    parsedShape
+  }
 }

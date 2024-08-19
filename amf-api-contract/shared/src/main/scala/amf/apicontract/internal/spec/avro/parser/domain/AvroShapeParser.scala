@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.annotations.AVROSchemaType
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKeyExtractor {
@@ -22,7 +21,9 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
         // todo: should validate invalid type when using the AVRO Validator
         (None, "invalid avro type")
     }
-    maybeShape.map(_.annotations += AVROSchemaType(avroType)) // avroType = record, enum, fixed, array, map, etc.
+
+    maybeShape.map(annotatedAvroShape(_, avroType, map))
+    // TODO HACER VALIDACION DEL AVRO SCHEMA ACA
     maybeShape
   }
 
