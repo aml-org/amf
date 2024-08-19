@@ -7,6 +7,7 @@ import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
+import amf.shapes.internal.annotations.{AVRORawSchema, AVROSchemaType}
 
 class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJvm {
 
@@ -110,5 +111,46 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
         |}""".stripMargin
     val report = validator.syncValidate(payload)
     report.conforms shouldBe true
+  }
+
+  test("Invalid avro payload in JVM") {
+    val s     = ScalarShape().withDataType(DataTypes.String)
+    val shape = NodeShape().withName("person")
+    shape.withProperty("someString").withRange(s)
+    shape.annotations += AVROSchemaType("record")
+
+    val raw =
+      """
+        |{
+        |  "type": "record",
+        |  "name": "LongList",
+        |  "namespace": "root",
+        |  "aliases": ["LinkedLongs"],
+        |  "fields": [
+        |    {
+        |      "name": "value",
+        |      "type": "long"
+        |    }
+        |  ]
+        |}
+        """.stripMargin
+
+    shape.annotations += AVRORawSchema(raw)
+
+    val payload =
+      """
+        |{
+        |  "someString": "invalid string value"
+        |}
+        """.stripMargin
+
+    val validator = payloadValidator(shape, `application/json`)
+    validator
+      .validate(payload)
+      .map(r =>
+        assert(
+          !r.conforms
+        )
+      )
   }
 }

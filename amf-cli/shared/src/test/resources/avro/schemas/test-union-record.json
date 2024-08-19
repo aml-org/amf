@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "TestUnionRecord",
+  "namespace": "org.apache.avro.specific",
+  "fields": [
+    {
+      "name": "amount",
+      "type": [
+        "null",
+        "bytes"
+      ],
+      "default": null
+    }
+  ]
+}
