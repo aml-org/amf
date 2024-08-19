@@ -62,6 +62,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"value\",\n  \"doc\": \"this is a documentation for the primitive type\",\n  \"type\": \"long\",\n  \"order\": \"ascending\",\n  \"default\": 123\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -112,6 +127,21 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/value/source-map/avro-raw-schema/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "{\n  \"name\": \"value\",\n  \"doc\": \"this is a documentation for the primitive type\",\n  \"type\": \"long\",\n  \"order\": \"ascending\",\n  \"default\": 123\n}"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                   {
@@ -196,6 +226,21 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/anyOf/nil/null/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/anyOf/nil/null"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"null\""
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -236,6 +281,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "LongList"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/anyOf/shape/default-node/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/anyOf/shape/default-node"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"LongList\""
                               }
                             ]
                           }
@@ -299,6 +359,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/union/next"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"next\",\n  \"doc\": \"this is a documentation for the union type with recursive element\",\n  \"type\": [\n    \"null\",\n    \"LongList\"\n  ],\n  \"order\": \"descending\",\n  \"default\": null\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -349,6 +424,21 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/property/property/next/source-map/avro-raw-schema/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "{\n  \"name\": \"next\",\n  \"doc\": \"this is a documentation for the union type with recursive element\",\n  \"type\": [\n    \"null\",\n    \"LongList\"\n  ],\n  \"order\": \"descending\",\n  \"default\": null\n}"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                   {
@@ -419,6 +509,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "record"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList/source-map/avro-raw-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/record.json#/shape/LongList"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"type\": \"record\",\n  \"name\": \"LongList\",\n  \"namespace\": \"root\",\n  \"aliases\": [\n    \"LinkedLongs\"\n  ],\n  \"doc\": \"this is a documentation for the record type\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"doc\": \"this is a documentation for the primitive type\",\n      \"type\": \"long\",\n      \"order\": \"ascending\",\n      \"default\": 123\n    },\n    {\n      \"name\": \"next\",\n      \"doc\": \"this is a documentation for the union type with recursive element\",\n      \"type\": [\n        \"null\",\n        \"LongList\"\n      ],\n      \"order\": \"descending\",\n      \"default\": null\n    }\n  ]\n}"
                   }
                 ]
               }
