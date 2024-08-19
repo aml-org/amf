@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: raml-to-oas
+
+annotationTypes:
+  signature: string
+
+types:
+  CodeLibrary.CodeType:
+    type: string
+    description: "A custom code type representing some specific codes."
+    pattern: "[^\\s]+( [^\\s]+)*"
+    (signature): J9hVdR+Nf/
+
+  MyType: # Define a type that uses the CodeLibrary.CodeType
+    type: object
+    properties:
+      status:
+        type: CodeLibrary.CodeType
+        required: false
+        description: "Status"
+        (signature): UNmrZnouKe
+
+/resources:
+  /example:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: MyType

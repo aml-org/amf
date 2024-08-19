@@ -689,4 +689,17 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
   }
+
+ test("raml-to-oas"){
+   val api = s"$basePath/raml-to-oas.raml/"
+   ramlClient.parse(api) flatMap { parseResult =>
+     parseResult.conforms  shouldBe true
+     val transformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
+     val renderedOas = oasClient.render(transformResult.baseUnit, Mimes.`application/json`)
+     println(renderedOas)
+     transformResult.baseUnit.findByType("http://www.w3.org/2001/XMLSchema#string") should not be empty
+     Future.successful(succeed)
+
+   }
+ }
 }
