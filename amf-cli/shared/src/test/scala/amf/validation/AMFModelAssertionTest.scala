@@ -689,4 +689,17 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
   }
+
+  // W-16540082
+  test("test all primitive avro types XSD mappings") {
+    val api = s"$basePath/avro/all-primitive-types.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+
+      val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
+      asyncConfig.elementClient().buildJsonSchema(schema.asInstanceOf[NodeShape])
+      schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
+    }
+  }
 }
