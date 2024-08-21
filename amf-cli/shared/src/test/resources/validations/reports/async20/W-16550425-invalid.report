@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/W-16550425-invalid.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'dt.raml'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/W-16550425-invalid.yaml#/async-api/endpoint/%2Freferenced/supportedOperation/subscribe/returns/resp/default-response/payload/default/unresolved
+  Property: 
+  Range: [(11,10)-(12,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/W-16550425-invalid.yaml

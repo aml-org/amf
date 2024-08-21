@@ -1,0 +1,15 @@
+asyncapi: '2.6.0'
+info:
+  title: test-async26-dt-validation
+  version: '1.0.0'
+
+channels:
+  /referenced:
+    subscribe:
+      message:
+        payload:
+          $ref: dt.raml
+          examples:
+            ex:
+              name: lala
+              age: 1

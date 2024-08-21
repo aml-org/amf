@@ -546,4 +546,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("solace-0.4.0-invalid.yaml", Some("solace-0.4.0-invalid.report"))
   }
 
+  test("W-16550425: invalid reference") {
+    validate("W-16550425-invalid.yaml", Some("W-16550425-invalid.report"))
+  }
+
+  test("W-16550425: valid reference") {
+    validate("W-16550425-valid.yaml", Some("W-16550425-valid.report"))
+  }
+
 }
