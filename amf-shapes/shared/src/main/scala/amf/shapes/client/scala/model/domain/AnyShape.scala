@@ -4,7 +4,7 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.internal.annotations.{InlineDefinition, TypePropertyLexicalInfo}
+import amf.shapes.internal.annotations.{AVROSchemaType, InlineDefinition, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.domain.metamodel.AnyShapeModel._
 import org.yaml.model.YPart
@@ -74,6 +74,10 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
       !isNot &&
       !isConditional &&
       !fields.exists(AnyShapeModel.Inherits)
+
+  def avroSchemaType: Option[String] = annotations.find(classOf[AVROSchemaType]).map(_.avroType)
+
+  def isAvroSchema: Boolean = avroSchemaType.nonEmpty
 
 }
 
