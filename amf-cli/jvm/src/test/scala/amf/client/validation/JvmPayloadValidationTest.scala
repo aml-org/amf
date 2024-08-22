@@ -113,7 +113,7 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
     report.conforms shouldBe true
   }
 
-  test("Invalid avro payload in JVM") {
+  test("Invalid avro record payload in JVM") {
     val s     = ScalarShape().withDataType(DataTypes.String)
     val shape = NodeShape().withName("person")
     shape.withProperty("someString").withRange(s)
@@ -147,10 +147,34 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
     val validator = payloadValidator(shape, `application/json`)
     validator
       .validate(payload)
-      .map(r =>
-        assert(
-          !r.conforms
-        )
-      )
+      .map { r =>
+        println(r)
+        assert(!r.conforms)
+      }
+  }
+
+  test("valid avro int payload in JVM") {
+    val shape = ScalarShape().withName("int")
+    shape.annotations += AVROSchemaType("record")
+
+    val raw =
+      """
+        |{
+        |  "type": "int",
+        |  "name": "this is an int"
+        |}
+        """.stripMargin
+
+    shape.annotations += AVRORawSchema(raw)
+
+    val payload = "1"
+
+    val validator = payloadValidator(shape, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
+        println(r)
+        assert(r.conforms)
+      }
   }
 }
