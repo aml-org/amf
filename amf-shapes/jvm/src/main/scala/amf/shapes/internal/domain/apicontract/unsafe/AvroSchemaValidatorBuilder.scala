@@ -22,5 +22,5 @@ object AvroSchemaValidatorBuilder {
       validationMode: ValidationMode,
       configuration: ShapeValidationConfiguration
   ): BaseAvroSchemaPayloadValidator =
-    new JvmAvroShapePayloadValidator(shape, mediaType, validationMode, configuration, true)
+    new JvmAvroShapePayloadValidator(shape, mediaType, validationMode, configuration)
 }
