@@ -24,7 +24,6 @@ import amf.shapes.internal.validation.common.{
   ValidationProcessor
 }
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.ScalarPayloadForParam
 import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
@@ -43,8 +42,7 @@ object BaseAvroSchemaPayloadValidator {
 abstract class BaseAvroSchemaPayloadValidator(
     shape: Shape,
     mediaType: String,
-    configuration: ShapeValidationConfiguration,
-    shouldFailFast: Boolean
+    configuration: ShapeValidationConfiguration
 ) extends CommonBaseSchemaPayloadValidator {
 
   protected implicit val executionContext: ExecutionContext = configuration.executionContext
@@ -174,17 +172,17 @@ abstract class BaseAvroSchemaPayloadValidator(
       mediaType: String,
       payload: String
   ): (Option[LoadedObj], Option[PayloadParsingResult]) = {
-    if (mediaType == `application/json` && validationMode != ScalarRelaxedValidationMode)
+    if (mediaType == `application/json`)
       (Some(loadAvro(payload)), None)
     else {
-      buildPayloadNode(mediaType, payload)
+      (None, None)
     }
   }
 
-  private def parsePayloadWithErrorHandler(payload: String, mediaType: String): PayloadParsingResult = {
-    val errorHandler = configuration.eh()
-    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
-  }
+//  private def parsePayloadWithErrorHandler(payload: String, mediaType: String): PayloadParsingResult = {
+//    val errorHandler = configuration.eh()
+//    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
+//  }
 
   private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
     val options = generateParsingOptions()
@@ -245,19 +243,19 @@ abstract class BaseAvroSchemaPayloadValidator(
     }
   }
 
-  protected def buildPayloadNode(
-      mediaType: String,
-      payload: String
-  ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType) match {
-      case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
-        val frag = ScalarPayloadForParam(result.fragment, shape)
-        result.copy(fragment = frag)
-      case other => other
-    }
-    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
-    else (None, Some(fixedResult))
-  }
+//  protected def buildPayloadNode(
+//      mediaType: String,
+//      payload: String
+//  ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+//    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType) match {
+//      case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
+//        val frag = ScalarPayloadForParam(result.fragment, shape)
+//        result.copy(fragment = frag)
+//      case other => other
+//    }
+//    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
+//    else (None, Some(fixedResult))
+//  }
 
   private def performValidation(
       payload: (Option[LoadedObj], Option[PayloadParsingResult]),

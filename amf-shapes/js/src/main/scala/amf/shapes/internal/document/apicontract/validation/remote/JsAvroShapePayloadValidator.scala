@@ -22,9 +22,8 @@ class JsAvroShapePayloadValidator(
     private val shape: Shape,
     private val mediaType: String,
     protected val validationMode: ValidationMode,
-    private val configuration: ShapeValidationConfiguration,
-    private val shouldFailFast: Boolean = false
-) extends BaseAvroSchemaPayloadValidator(shape, mediaType, configuration, shouldFailFast) {
+    private val configuration: ShapeValidationConfiguration
+) extends BaseAvroSchemaPayloadValidator(shape, mediaType, configuration) {
 
   override type LoadedObj    = String
   override type LoadedSchema = AvroSchema
