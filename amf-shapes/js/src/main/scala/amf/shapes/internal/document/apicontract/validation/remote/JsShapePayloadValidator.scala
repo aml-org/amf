@@ -23,8 +23,9 @@ class JsShapePayloadValidator(
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = Dictionary[js.Dynamic]
 
-  override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
+  override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor = {
     JsReportValidationProcessor(profileName)
+  }
 
   override protected def loadDataNodeString(payload: PayloadFragment): Option[js.Dynamic] = {
     try {

@@ -31,8 +31,10 @@ trait PayloadValidationUtils {
       s: Shape,
       mediaType: String,
       config: AMFGraphConfiguration = defaultConfig
-  ): AMFShapePayloadValidator =
+  ): AMFShapePayloadValidator = {
+    println(s)
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
+  }
 
   protected def validator(
       s: Shape,
@@ -280,6 +282,7 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
 
   test("Invalid avro payload") {
     val s     = ScalarShape().withDataType(DataTypes.String)
+    println("prueba")
     val shape = NodeShape().withName("person")
     shape.withProperty("someString").withRange(s)
     shape.annotations += AVROSchemaType("record")

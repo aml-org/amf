@@ -83,16 +83,18 @@ protected[amf] object LazyAjv {
 
 @js.native
 @JSImport("avro-js", JSImport.Default)
-protected[amf] class Avro extends js.Object {
+protected[amf] object Avro extends js.Object {
   def parse(schema: String): AvroSchema = js.native
+
 //  def parse(schema: js.Object): AvroSchema = js.native
 }
 
 @js.native
 trait AvroSchema extends js.Object {
-  def isValid(data: js.Dynamic): Boolean = js.native
+  def isValid(data: String): Boolean = js.native
+
 }
 
 protected[amf] object LazyAvro {
-  lazy val default: Avro = new Avro()
+  lazy val default: Avro.type = Avro
 }
