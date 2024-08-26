@@ -13,9 +13,7 @@ import amf.shapes.internal.validation.avro.{
 }
 import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.{InvalidJsonObject, InvalidJsonValue}
 
-import scala.scalajs.js
 import scala.scalajs.js.{JavaScriptException, SyntaxError}
 
 class JsAvroShapePayloadValidator(
@@ -32,16 +30,7 @@ class JsAvroShapePayloadValidator(
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JsReportValidationProcessor(profileName, shape)
 
-  protected def loadAvro(str: String): LoadedObj = {
-//    val isObjectLike = str.startsWith("{") || str.startsWith("[")
-//    try js.Dynamic.global.JSON.parse(str)
-//    catch {
-//      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] =>
-//        if (isObjectLike) throw new InvalidJsonObject(e)
-//        else throw new InvalidJsonValue(e)
-//    }
-    str
-  }
+  protected def loadAvro(str: String): LoadedObj = str
 
   override protected def callValidator(
       schema: AvroSchema,
@@ -49,18 +38,14 @@ class JsAvroShapePayloadValidator(
       fragment: Option[PayloadFragment],
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
-    val validator = LazyAvro.default
     try {
-      println("Llego a call validator the JSAvro")
-//      val schema  = validator.parse(schema)
       val correct = schema.isValid(obj)
-
       val results: Seq[AMFValidationResult] =
         if (correct) Nil
         else {
           Seq(
             AMFValidationResult(
-              message = "Validation failed: does not conform with Avro schema.",
+              message = "Validation failed: payload does not conform with it's Avro schema definition.",
               level = SeverityLevels.VIOLATION,
               targetNode = fragment.map(_.encodes.id).getOrElse(""),
               targetProperty = fragment.map(_.encodes.id),
@@ -96,7 +81,7 @@ class JsAvroShapePayloadValidator(
       validationProcessor: ValidationProcessor
   ): Either[AMFValidationReport, Option[AvroSchema]] = {
     try {
-      val schema = loadAvro(avroSchema.toString).asInstanceOf[AvroSchema]
+      val schema = loadAvroSchema(avroSchema.toString)
       Right(Some(schema))
     } catch {
       case e: JavaScriptException =>
@@ -143,10 +128,6 @@ class JsAvroShapePayloadValidator(
     }
   }
 
-  override protected def loadAvroSchema(text: String): AvroSchema = {
-    println("entro")
-    val  variable = LazyAvro.default.parse(text)
-    println("salio")
-    variable
-  }
+  override protected def loadAvroSchema(text: String): AvroSchema =
+    LazyAvro.default.parse(text)
 }

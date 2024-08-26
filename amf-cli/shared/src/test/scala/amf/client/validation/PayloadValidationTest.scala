@@ -32,7 +32,6 @@ trait PayloadValidationUtils {
       mediaType: String,
       config: AMFGraphConfiguration = defaultConfig
   ): AMFShapePayloadValidator = {
-    println(s)
     config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
   }
 
@@ -282,7 +281,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
 
   test("Invalid avro payload") {
     val s     = ScalarShape().withDataType(DataTypes.String)
-    println("prueba")
     val shape = NodeShape().withName("person")
     shape.withProperty("someString").withRange(s)
     shape.annotations += AVROSchemaType("record")
@@ -322,6 +320,32 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
         )
       }
   }
+
+  // TODO: fix it (fails in JS)
+//  test("valid avro int payload") {
+//    val shape = ScalarShape().withName("int")
+//    shape.annotations += AVROSchemaType("record")
+//
+//    val raw =
+//      """
+//        |{
+//        |  "type": "int",
+//        |  "name": "this is an int"
+//        |}
+//        """.stripMargin
+//
+//    shape.annotations += AVRORawSchema(raw)
+//
+//    val payload = "1"
+//
+//    val validator = payloadValidator(shape, `application/json`)
+//    validator
+//      .validate(payload)
+//      .map { r =>
+//        println(r)
+//        assert(r.conforms)
+//      }
+//  }
 
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
