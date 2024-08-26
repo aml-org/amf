@@ -1,20 +1,15 @@
 package amf.shapes.internal.validation.avro
 
 import amf.core.client.common.validation._
-import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain._
-import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, SyamlParsedDocument}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.client.scala.validation.payload.{PayloadParsingResult, ShapeValidationConfiguration}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
-import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
-import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
-import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlSyntaxRenderPlugin}
+import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.AVRORawSchema
 import amf.shapes.internal.spec.common.emitter.PayloadEmitter
@@ -24,9 +19,6 @@ import amf.shapes.internal.validation.common.{
   ValidationProcessor
 }
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import org.mulesoft.common.client.lexical.SourceLocation
-import org.yaml.model.{IllegalTypeHandler, YError}
-import org.yaml.parser.YamlParser
 
 import java.io.StringWriter
 import scala.concurrent.{ExecutionContext, Future}
@@ -50,7 +42,6 @@ abstract class BaseAvroSchemaPayloadValidator(
   override protected val supportedMediaTypes: Seq[String] = BaseAvroSchemaPayloadValidator.supportedMediaTypes
 
   override def validate(payload: String): Future[AMFValidationReport] = {
-    println("llego al baseAvroSchema")
     Future.successful(validateForPayload(payload, getReportProcessor))
   }
 
@@ -90,7 +81,6 @@ abstract class BaseAvroSchemaPayloadValidator(
         Seq(mediaTypeError(mediaType))
       )
     } else
-      println("entro al else the validateForPayload")
       try {
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
       } catch {
@@ -179,102 +169,98 @@ abstract class BaseAvroSchemaPayloadValidator(
     }
   }
 
-//  private def parsePayloadWithErrorHandler(payload: String, mediaType: String): PayloadParsingResult = {
-//    val errorHandler = configuration.eh()
-//    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
-//  }
+  //  private def parsePayloadWithErrorHandler(payload: String, mediaType: String): PayloadParsingResult = {
+  //    val errorHandler = configuration.eh()
+  //    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
+  //  }
 
-  private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
-    val options = generateParsingOptions()
-    val ctx     = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences, options.getMaxJsonYamlDepth)
+  //  private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
+  //    val options = generateParsingOptions()
+  //    val ctx     = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences, options.getMaxJsonYamlDepth)
+  //
+  //    val parser = mediaType match {
+  //      case `application/json` => JsonParserFactory.fromChars(payload, options.getMaxJsonYamlDepth)(errorHandler)
+  //      case _ =>
+  //        YamlParser(payload, options.getMaxJsonYamlDepth)(
+  //          new SYamlAMFParserErrorHandler(errorHandler)
+  //        ) // todo should fail?
+  //    }
+  //    val node = parser.document().node
+  //    val parsedNode =
+  //      if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
+  //      else DataNodeParser(node)(ctx).parse()
+  //    PayloadFragment(parsedNode, mediaType)
+  //  }
 
-    val parser = mediaType match {
-      case `application/json` => JsonParserFactory.fromChars(payload, options.getMaxJsonYamlDepth)(errorHandler)
-      case _ =>
-        YamlParser(payload, options.getMaxJsonYamlDepth)(
-          new SYamlAMFParserErrorHandler(errorHandler)
-        ) // todo should fail?
-    }
-    val node = parser.document().node
-    val parsedNode =
-      if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
-      else DataNodeParser(node)(ctx).parse()
-    PayloadFragment(parsedNode, mediaType)
-  }
+  //  private def generateParsingOptions(): ParsingOptions = {
+  //    var po = ParsingOptions()
+  //    po = configuration.maxYamlReferences.foldLeft(po) { (options, myr) =>
+  //      options.setMaxYamlReferences(myr)
+  //    }
+  //    po = configuration.maxJsonYamlDepth.foldLeft(po) { (options, md) =>
+  //      options.setMaxJsonYamlDepth(md)
+  //    }
+  //    po
+  //  }
 
-  private def generateParsingOptions(): ParsingOptions = {
-    var po = ParsingOptions()
-    po = configuration.maxYamlReferences.foldLeft(po) { (options, myr) =>
-      options.setMaxYamlReferences(myr)
-    }
-    po = configuration.maxJsonYamlDepth.foldLeft(po) { (options, md) =>
-      options.setMaxJsonYamlDepth(md)
-    }
-    po
-  }
+  //  private def dataNodeParsingCtx(
+  //      errorHandler: AMFErrorHandler,
+  //      maxYamlRefs: Option[Int],
+  //      maxYamlJsonDepth: Option[Int]
+  //  ): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
+  //    new ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler {
+  //
+  //      override implicit val eh: AMFErrorHandler = errorHandler
+  //      val syamleh                               = new SYamlAMFParserErrorHandler(errorHandler)
+  //      override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
+  //        eh.violation(violationId, node, message, "")
+  //      override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =
+  //        eh.violation(violationId, node, message, "")
+  //      override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
+  //      override def refs: Seq[ParsedReference]                                                          = Seq.empty
+  //      override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs
+  //      override def getMaxYamlJsonDepth: Option[Int]    = maxYamlJsonDepth
+  //      override def fragments: Map[String, FragmentRef] = Map.empty
+  //
+  //      override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
+  //
+  //      override def violation(
+  //          specification: ValidationSpecification,
+  //          node: String,
+  //          message: String,
+  //          loc: SourceLocation
+  //      ): Unit = eh.violation(specification, node, message, loc)
+  //    }
+  //  }
 
-  private def dataNodeParsingCtx(
-      errorHandler: AMFErrorHandler,
-      maxYamlRefs: Option[Int],
-      maxYamlJsonDepth: Option[Int]
-  ): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
-    new ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler {
-
-      override implicit val eh: AMFErrorHandler = errorHandler
-      val syamleh                               = new SYamlAMFParserErrorHandler(errorHandler)
-      override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
-        eh.violation(violationId, node, message, "")
-      override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =
-        eh.violation(violationId, node, message, "")
-      override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
-      override def refs: Seq[ParsedReference]                                                          = Seq.empty
-      override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs
-      override def getMaxYamlJsonDepth: Option[Int]    = maxYamlJsonDepth
-      override def fragments: Map[String, FragmentRef] = Map.empty
-
-      override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
-
-      override def violation(
-          specification: ValidationSpecification,
-          node: String,
-          message: String,
-          loc: SourceLocation
-      ): Unit = eh.violation(specification, node, message, loc)
-    }
-  }
-
-//  protected def buildPayloadNode(
-//      mediaType: String,
-//      payload: String
-//  ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-//    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType) match {
-//      case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
-//        val frag = ScalarPayloadForParam(result.fragment, shape)
-//        result.copy(fragment = frag)
-//      case other => other
-//    }
-//    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
-//    else (None, Some(fixedResult))
-//  }
+  //  protected def buildPayloadNode(
+  //      mediaType: String,
+  //      payload: String
+  //  ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  //    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType) match {
+  //      case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
+  //        val frag = ScalarPayloadForParam(result.fragment, shape)
+  //        result.copy(fragment = frag)
+  //      case other => other
+  //    }
+  //    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
+  //    else (None, Some(fixedResult))
+  //  }
 
   private def performValidation(
       payload: (Option[LoadedObj], Option[PayloadParsingResult]),
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
-    println("entro al performValidation del baseAvro")
     payload match {
-      case (_, Some(result)) if result.hasError =>  validationProcessor.processResults(result.results)
+      case (_, Some(result)) if result.hasError => validationProcessor.processResults(result.results)
       case (Some(obj), resultOption) =>
-        println("entro al segundo case de perfomValidation")
         val fragmentOption = resultOption.map(_.fragment)
         try {
           {
             resultOption match {
               case _ if shape.isInstanceOf[AnyShape] =>
-                println("Shape is AnyShape, getting or creating schema")
                 getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
-                println("Shape is not AnyShape, returning validation error")
                 Left(
                   validationProcessor.processResults(
                     Seq(
@@ -293,18 +279,15 @@ abstract class BaseAvroSchemaPayloadValidator(
                 )
             }
           } match {
-            case Right(Some(schema)) =>
-              println("Schema obtained successfully, calling validator")
+            case Right(Some(schema)) => // Schema obtained successfully, calling validator with it
               callValidator(schema, obj, fragmentOption, validationProcessor)
-            case Left(result) =>
-              println("Error occurred during schema generation, returning result")
+            case Left(result) => // Error occurred during schema generation, returning that result
               result
-            case _ =>
-              println("No schema or error, returning empty results")
+            case _ => // No schema or payload error, returning empty results
               validationProcessor.processResults(Nil)
           }
         } catch {
-          // TODO CHECKEAR SI HAY ALGUNA EXCEPTION ESPECIAL DEVUELTA POR EL VALIDADOR ACA
+          // TODO CHEQUEAR SI HAY ALGUNA EXCEPTION ESPECIAL DEVUELTA POR EL VALIDADOR ACA
           case e: Exception =>
             println(s"Exception caught during validation: ${e.getMessage}")
             validationProcessor.processException(e, fragmentOption.map(_.encodes))
