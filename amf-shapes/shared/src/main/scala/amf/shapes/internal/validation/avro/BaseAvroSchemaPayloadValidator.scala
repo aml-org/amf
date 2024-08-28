@@ -57,6 +57,10 @@ abstract class BaseAvroSchemaPayloadValidator(
 
   protected def loadAvroSchema(text: String): LoadedSchema
 
+  def validateAvroSchema(): Seq[AMFValidationResult]
+
+  def getAvroRaw(shape: Shape): Option[AVRORawSchema] = shape.annotations.find(classOf[AVRORawSchema])
+
   protected def validateForFragment(
       fragment: PayloadFragment,
       validationProcessor: ValidationProcessor
@@ -75,7 +79,6 @@ abstract class BaseAvroSchemaPayloadValidator(
       payload: String,
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
-    println(payload)
     if (!isValidMediaType(mediaType)) {
       validationProcessor.processResults(
         Seq(mediaTypeError(mediaType))
@@ -312,9 +315,19 @@ abstract class BaseAvroSchemaPayloadValidator(
 trait AvroSchemaReportValidationProcessor extends ReportValidationProcessor {
   override def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
     r match {
-      // todo: catch and process each specific exception like the JsonSchemaReportValidationProcessor does in json-schema
       case other =>
-        super.processCommonException(other, element)
+        Seq(
+          AMFValidationResult(
+            message = s"Exception thrown in validation: ${r.getMessage}",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = other
+          )
+        )
     }
   }
 }
