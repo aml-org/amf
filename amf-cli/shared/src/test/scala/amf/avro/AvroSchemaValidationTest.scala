@@ -1,9 +1,9 @@
 package amf.avro
 
 import amf.apicontract.client.scala.{AMFConfiguration, AvroConfiguration}
-import amf.validation.UniquePlatformReportGenTest
+import amf.validation.MultiPlatformReportGenTest
 
-class AvroSchemaValidationTest extends UniquePlatformReportGenTest {
+class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/avro/schemas/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/avro/reports/"
