@@ -129,7 +129,7 @@ case class JvmReportValidationProcessor(
       case invalidType: NullPointerException if invalidType.getMessage.contains("") =>
         Seq(
           AMFValidationResult(
-            message = s"Invalid type: ${invalidType.getMessage}",
+            message = s"Invalid type: ${invalidType.getMessage.split("_").head}",
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
             targetProperty = Some(invalidType.getMessage.split(":").last.trim),
