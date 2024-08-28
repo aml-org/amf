@@ -1,5 +1,6 @@
 package amf.shapes.internal.document.apicontract.validation.remote
 
+import amf.core.client.common.validation.ProfileNames.AVROSCHEMA
 import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
@@ -9,10 +10,10 @@ import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.validation.avro.{AvroSchemaReportValidationProcessor, BaseAvroSchemaPayloadValidator}
 import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.InvalidJsonValue
+import amf.shapes.internal.validation.jsonschema.{InvalidAvroSchema, InvalidJsonValue}
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.io.DecoderFactory
-import org.apache.avro.{AvroTypeException, Schema}
+import org.apache.avro.{AvroTypeException, Schema, SchemaParseException}
 
 class JvmAvroShapePayloadValidator(
     private val shape: Shape,
@@ -21,7 +22,6 @@ class JvmAvroShapePayloadValidator(
     private val configuration: ShapeValidationConfiguration
 ) extends BaseAvroSchemaPayloadValidator(shape, mediaType, configuration) {
   lazy val parser = new Schema.Parser()
-  // TODO HERE YOU HAVE TO MAKE THE CALLS TO THE VALIDATOR JVM LIBRARY. CHECK JvmShapePayloadValidator FOR REFERENCE
 
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JvmReportValidationProcessor(profileName, shape)
@@ -29,19 +29,25 @@ class JvmAvroShapePayloadValidator(
   override protected type LoadedObj    = SchemaShape
   override protected type LoadedSchema = Schema
 
-  override protected def loadAvro(text: String): LoadedObj = try {
+  override protected def loadAvro(text: String): LoadedObj =
     SchemaShape(shape.annotations).withRaw(text)
-  } catch {
-    // todo: catch specific validations thrown by the library like withJsonExceptionCatching() in JvmShapePayloadValidator
-    case e: RuntimeException => throw new InvalidJsonValue(e)
-  }
 
   override protected def loadAvroSchema(text: String): LoadedSchema = try {
     val schema: Schema = parser.parse(text)
     schema
   } catch {
-    // todo: catch specific validations thrown by the library like withJsonExceptionCatching() in JvmShapePayloadValidator
     case e: RuntimeException => throw new InvalidJsonValue(e)
+  }
+
+  override def validateAvroSchema(): Seq[AMFValidationResult] = try {
+    val raw = getAvroRaw(shape) match {
+      case Some(rawAnn) => rawAnn.value
+      case None         => throw new InvalidAvroSchema(new RuntimeException())
+    }
+    parser.parse(raw)
+    Nil
+  } catch {
+    case e: RuntimeException => getReportProcessor(AVROSCHEMA).processException(e, Some(shape)).results
   }
 
   override protected def callValidator(
@@ -89,9 +95,24 @@ case class JvmReportValidationProcessor(
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
+  // todo: catch and process each specific exception
   override def processException(r: Throwable, element: Option[DomainElement]): AMFValidationReport = {
     val results = r match {
       case e: AvroTypeException =>
+        Seq(
+          AMFValidationResult(
+            message = s"invalid schema type: ${e.getMessage}",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = Some(e.getMessage.split(":").last.trim),
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = e
+          )
+        )
+
+      case e: SchemaParseException =>
         Seq(
           AMFValidationResult(
             message = e.getMessage,
@@ -104,8 +125,21 @@ case class JvmReportValidationProcessor(
             source = e
           )
         )
+// org.apache.avro.compiler.UnresolvedSchema
+      case invalidType: NullPointerException if invalidType.getMessage.contains("") =>
+        Seq(
+          AMFValidationResult(
+            message = s"Invalid type: ${invalidType.getMessage}",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = Some(invalidType.getMessage.split(":").last.trim),
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = invalidType
+          )
+        )
 
-      // todo: catch and process each specific exception like the JvmJsonSchemaReportValidationProcessor does in json-schema
       case other =>
         super.processCommonException(other, element)
     }

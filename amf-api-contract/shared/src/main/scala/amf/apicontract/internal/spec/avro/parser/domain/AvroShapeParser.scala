@@ -1,6 +1,8 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.domain.apicontract.unsafe.AvroSchemaValidatorBuilder.validateSchema
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAvroSchema
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKeyExtractor {
@@ -17,13 +19,24 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
         val specificType = value.as[YScalar].text
         (Some(parseType(specificType)), specificType)
       case _ =>
-
         // todo: should validate invalid type when using the AVRO Validator
         (None, "invalid avro type")
     }
 
     maybeShape.map(annotatedAvroShape(_, avroType, map))
-    // TODO HACER VALIDACION DEL AVRO SCHEMA ACA
+
+    maybeShape.foreach { shape =>
+      validateSchema(shape).foreach { validation =>
+        val msg = validation.message
+        // todo: fix them instead of filter them
+        val invalidDefaultValidation = msg.contains("[] not a ")
+        val invalidTypeValidation    = msg.startsWith("No type:") && msg.contains("\"type\":[")
+        val filterValidation         = invalidDefaultValidation || invalidTypeValidation
+        if (!filterValidation) {
+          ctx.violation(InvalidAvroSchema, shape, validation.message)
+        }
+      }
+    }
     maybeShape
   }
 
@@ -37,7 +50,7 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case "enum"                => parseEnum()
       case "fixed"               => parseFixed()
       case _ if name.isPrimitive => parsePrimitiveType(name)
-      // todo: should validate invalid type when using the AVRO Validator
+      // todo: should validate invalid type here? already validating with validator
       case _ => AnyShape() // ignore
     }
   }
