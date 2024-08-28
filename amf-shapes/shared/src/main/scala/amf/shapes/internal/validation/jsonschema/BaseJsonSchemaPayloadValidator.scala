@@ -36,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
 class InvalidJsonValue(e: Throwable)        extends RuntimeException(e)
+class InvalidAvroSchema(e: Throwable)       extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 

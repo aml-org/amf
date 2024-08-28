@@ -114,12 +114,7 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
   }
 
   test("Invalid avro record payload in JVM") {
-    val s     = ScalarShape().withDataType(DataTypes.String)
-    val shape = NodeShape().withName("person")
-    shape.withProperty("someString").withRange(s)
-    shape.annotations += AVROSchemaType("record")
-
-    val raw =
+    val rawSchema =
       """
         |{
         |  "type": "record",
@@ -135,7 +130,9 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
         |}
         """.stripMargin
 
-    shape.annotations += AVRORawSchema(raw)
+    val avroSchema = NodeShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
 
     val payload =
       """
@@ -144,20 +141,16 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
         |}
         """.stripMargin
 
-    val validator = payloadValidator(shape, `application/json`)
+    val validator = payloadValidator(avroSchema, `application/json`)
     validator
       .validate(payload)
       .map { r =>
-        println(r)
         assert(!r.conforms)
       }
   }
 
   test("valid avro int payload in JVM") {
-    val shape = ScalarShape().withName("int")
-    shape.annotations += AVROSchemaType("record")
-
-    val raw =
+    val rawSchema =
       """
         |{
         |  "type": "int",
@@ -165,15 +158,62 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
         |}
         """.stripMargin
 
-    shape.annotations += AVRORawSchema(raw)
+    val avroSchema = ScalarShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
 
     val payload = "1"
 
-    val validator = payloadValidator(shape, `application/json`)
+    val validator = payloadValidator(avroSchema, `application/json`)
     validator
       .validate(payload)
       .map { r =>
-        println(r)
+        assert(r.conforms)
+      }
+  }
+
+  test("valid avro record payload in JVM") {
+    val rawSchema =
+      """
+        |{
+        |  "type": "record",
+        |  "name": "LongList",
+        |  "namespace": "root",
+        |  "aliases": [
+        |    "LinkedLongs"
+        |  ],
+        |  "doc": "this is a documentation for the record type",
+        |  "fields": [
+        |    {
+        |      "name": "next",
+        |      "doc": "this is a documentation for the union type with recursive element",
+        |      "type": [
+        |        "null",
+        |        "LongList"
+        |      ],
+        |      "order": "descending",
+        |      "default": null
+        |    }
+        |  ]
+        |}
+        """.stripMargin
+
+    val avroSchema = NodeShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
+
+    val payload =
+      """
+        |{
+        |  "value": 123,
+        |  "next": null
+        |}
+        """.stripMargin
+
+    val validator = payloadValidator(avroSchema, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
         assert(r.conforms)
       }
   }

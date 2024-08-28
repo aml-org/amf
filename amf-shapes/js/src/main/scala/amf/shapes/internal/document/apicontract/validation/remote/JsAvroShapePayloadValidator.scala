@@ -130,4 +130,7 @@ class JsAvroShapePayloadValidator(
 
   override protected def loadAvroSchema(text: String): AvroSchema =
     LazyAvro.default.parse(text)
+
+  // todo: validate avro schema in JS
+  override def validateAvroSchema(): Seq[AMFValidationResult] = Nil
 }

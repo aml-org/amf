@@ -279,13 +279,8 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
     validator.syncValidate(""""2024-02-29T23:59:59Z"""").conforms shouldBe true
   }
 
-  test("Invalid avro payload") {
-    val s     = ScalarShape().withDataType(DataTypes.String)
-    val shape = NodeShape().withName("person")
-    shape.withProperty("someString").withRange(s)
-    shape.annotations += AVROSchemaType("record")
-
-    val raw =
+  test("Invalid avro record payload") {
+    val rawSchema =
       """
         |{
         |  "type": "record",
@@ -301,7 +296,9 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
         |}
         """.stripMargin
 
-    shape.annotations += AVRORawSchema(raw)
+    val avroSchema = NodeShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
 
     val payload =
       """
@@ -310,14 +307,11 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
         |}
         """.stripMargin
 
-    val validator = payloadValidator(shape, `application/json`)
+    val validator = payloadValidator(avroSchema, `application/json`)
     validator
       .validate(payload)
       .map { r =>
-        println(r.toString)
-        assert(
-          !r.conforms
-        )
+        assert(!r.conforms)
       }
   }
 
@@ -342,7 +336,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
 //    validator
 //      .validate(payload)
 //      .map { r =>
-//        println(r)
 //        assert(r.conforms)
 //      }
 //  }
