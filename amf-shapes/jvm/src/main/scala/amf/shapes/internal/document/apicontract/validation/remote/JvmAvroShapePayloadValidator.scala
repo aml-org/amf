@@ -41,7 +41,7 @@ class JvmAvroShapePayloadValidator(
 
   override def validateAvroSchema(): Seq[AMFValidationResult] = try {
     val raw = getAvroRaw(shape) match {
-      case Some(rawAnn) => rawAnn.value
+      case Some(rawAnn) => rawAnn.avroRawSchema
       case None         => throw new InvalidAvroSchema(new RuntimeException())
     }
     parser.parse(raw)
@@ -70,8 +70,9 @@ class JvmAvroShapePayloadValidator(
     }
   }
 
-  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] =
-    ??? // todo: WTF IS THIS
+  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
+    ???
+  }
 
   override protected def loadSchema(
       jsonSchema: CharSequence,

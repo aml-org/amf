@@ -24,10 +24,7 @@ object AVROSchemaType {
   def unparse(avroType: String): Option[Annotation] = Some(AVROSchemaType(avroType))
 }
 
-case class AVRORawSchema(avroRawSchema: String) extends EternalSerializedAnnotation {
-  override val name: String  = "avro-raw-schema"
-  override val value: String = avroRawSchema
-}
+case class AVRORawSchema(avroRawSchema: String) extends PerpetualAnnotation {}
 
 object AVRORawSchema {
   def unparse(avroRawSchema: String): Option[Annotation] = Some(AVRORawSchema(avroRawSchema))
