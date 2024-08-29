@@ -73,10 +73,10 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                     %% "scalajs-stubs"          % "1.1.0" % "provided",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2" excludeAll (
-      ExclusionRule(organization = "org.json", name = "json")
+      ExclusionRule(organization = "org.json", name = "json"),
+      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind")
     ),
     libraryDependencies += "org.apache.avro"            % "avro" % "1.12.0",
-    excludeDependencies += "com.fasterxml.jackson.core" % "jackson-databind", // transitive from everit
     libraryDependencies += "org.json"                   % "json" % "20231013",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
