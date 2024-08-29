@@ -84,6 +84,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'internal-avro-publish'
                 }
             }
             steps {
