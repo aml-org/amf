@@ -81,21 +81,6 @@
                                   }
                                 ]
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/scalar/default-scalar/source-map/avro-raw-schema/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "{\n  \"name\": \"id\",\n  \"type\": \"string\",\n  \"doc\": \"Unique identifier for this specific event\"\n}"
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
@@ -116,21 +101,6 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/id/source-map/avro-raw-schema/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/shapes#range"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "{\n  \"name\": \"id\",\n  \"type\": \"string\",\n  \"doc\": \"Unique identifier for this specific event\"\n}"
-                              }
-                            ]
-                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -206,21 +176,6 @@
                                   }
                                 ]
                               }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/scalar/default-scalar/source-map/avro-raw-schema/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/scalar/default-scalar"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "{\n  \"name\": \"timestamp\",\n  \"type\": \"string\",\n  \"doc\": \"Instant the event took place\"\n}"
-                                  }
-                                ]
-                              }
                             ]
                           }
                         ]
@@ -241,21 +196,6 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/property/property/timestamp/source-map/avro-raw-schema/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/shapes#range"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "{\n  \"name\": \"timestamp\",\n  \"type\": \"string\",\n  \"doc\": \"Instant the event took place\"\n}"
-                              }
-                            ]
-                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -324,21 +264,6 @@
                           }
                         ]
                       }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata/source-map/avro-raw-schema/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/shape/EventMetadata"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "{\n  \"type\": \"record\",\n  \"name\": \"EventMetadata\",\n  \"namespace\": \"com.foo\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"string\",\n      \"doc\": \"Unique identifier for this specific event\"\n    },\n    {\n      \"name\": \"timestamp\",\n      \"type\": \"string\",\n      \"doc\": \"Instant the event took place\"\n    }\n  ],\n  \"doc\": \"Metadata associated with every published event\"\n}"
-                          }
-                        ]
-                      }
                     ]
                   }
                 ]
@@ -359,21 +284,6 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/metadata/source-map/avro-raw-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "{\n  \"type\": \"record\",\n  \"name\": \"EventMetadata\",\n  \"namespace\": \"com.foo\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"string\",\n      \"doc\": \"Unique identifier for this specific event\"\n    },\n    {\n      \"name\": \"timestamp\",\n      \"type\": \"string\",\n      \"doc\": \"Instant the event took place\"\n    }\n  ],\n  \"doc\": \"Metadata associated with every published event\"\n}"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                   {
@@ -449,21 +359,6 @@
                           }
                         ]
                       }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/scalar/default-scalar/source-map/avro-raw-schema/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "{\n  \"name\": \"auth_code\",\n  \"type\": \"string\",\n  \"doc\": \"Encrypted auth_code received when user authorizes the app.\"\n}"
-                          }
-                        ]
-                      }
                     ]
                   }
                 ]
@@ -484,21 +379,6 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/auth_code/source-map/avro-raw-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "{\n  \"name\": \"auth_code\",\n  \"type\": \"string\",\n  \"doc\": \"Encrypted auth_code received when user authorizes the app.\"\n}"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                   {
@@ -574,21 +454,6 @@
                           }
                         ]
                       }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/scalar/default-scalar/source-map/avro-raw-schema/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/scalar/default-scalar"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "{\n  \"name\": \"triggered_by\",\n  \"type\": \"string\",\n  \"doc\": \"ID of the user who triggered this event.\"\n}"
-                          }
-                        ]
-                      }
                     ]
                   }
                 ]
@@ -609,21 +474,6 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/property/property/triggered_by/source-map/avro-raw-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "{\n  \"name\": \"triggered_by\",\n  \"type\": \"string\",\n  \"doc\": \"ID of the user who triggered this event.\"\n}"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                   {
@@ -689,21 +539,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "record"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested/source-map/avro-raw-schema/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/doc-schema.json#/shape/ConnectionRequested"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "{\n  \"type\": \"record\",\n  \"name\": \"ConnectionRequested\",\n  \"namespace\": \"com.foo.connections\",\n  \"doc\": \"An example schema to illustrate the issue\",\n  \"fields\": [\n    {\n      \"name\": \"metadata\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"EventMetadata\",\n        \"namespace\": \"com.foo\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"string\",\n            \"doc\": \"Unique identifier for this specific event\"\n          },\n          {\n            \"name\": \"timestamp\",\n            \"type\": \"string\",\n            \"doc\": \"Instant the event took place\"\n          }\n        ],\n        \"doc\": \"Metadata associated with every published event\"\n      },\n      \"doc\": \"Metadata about the event.\"\n    },\n    {\n      \"name\": \"auth_code\",\n      \"type\": \"string\",\n      \"doc\": \"Encrypted auth_code received when user authorizes the app.\"\n    },\n    {\n      \"name\": \"triggered_by\",\n      \"type\": \"string\",\n      \"doc\": \"ID of the user who triggered this event.\"\n    }\n  ]\n}"
                   }
                 ]
               }
