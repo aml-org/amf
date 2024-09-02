@@ -702,4 +702,15 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
   }
+
+  // W-16609870
+  test("async message payloads should be virtual by default unless explicitly declared") {
+    val api = s"$basePath/async20/virtual-payload-async.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val response  = getFirstResponse(parseResult.baseUnit, isWebApi = false)
+      val payload   = response.payloads.head
+      val isVirtual = payload.annotations.isVirtual
+      isVirtual shouldBe true
+    }
+  }
 }
