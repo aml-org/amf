@@ -19,7 +19,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.client.scala.model.domain.{Example, NodeShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, Example, NodeShape}
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
@@ -398,9 +398,12 @@ trait AsyncConcreteMessagePopulator {
     map.key("payload") match {
       case Some(entry) =>
         val schemaVersion = AsyncSchemaFormats.getSchemaVersion(payload)(ctx.eh)
-        AsyncApiTypeParser(entry, shape => shape.withName("schema"), schemaVersion)
-          .parse()
-          .foreach(s => payload.setWithoutId(PayloadModel.Schema, tracking(s, payload), Annotations(entry)))
+        val maybeSchema   = AsyncApiTypeParser(entry, shape => shape.withName("schema"), schemaVersion).parse()
+        payload.setWithoutId(
+          PayloadModel.Schema,
+          tracking(maybeSchema.getOrElse(AnyShape(Annotations(entry))), payload),
+          Annotations(entry)
+        )
       case None =>
         // if "payload" key is not explicit, make the Payload object a VirtualElement (W-16609870)
         payload.annotations += VirtualElement()
