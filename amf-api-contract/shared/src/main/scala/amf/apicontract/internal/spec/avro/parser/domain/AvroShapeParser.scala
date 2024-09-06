@@ -19,7 +19,6 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
         val specificType = value.as[YScalar].text
         (Some(parseType(specificType)), specificType)
       case _ =>
-        // todo: should validate invalid type when using the AVRO Validator
         (None, "invalid avro type")
     }
 

@@ -72,6 +72,17 @@
                           {
                             "@value": "application/vnd.apache.avro;version=1.9.0"
                           }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/async-avro-component-ref.yaml#/async-api/endpoint/mychannel/supportedOperation/publish/expects/request/payload/default/any/default-any",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ]
+                          }
                         ]
                       }
                     ]
