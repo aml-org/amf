@@ -21,9 +21,9 @@ import amf.core.internal.remote.{AvroSchema, Spec}
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
-import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
+import amf.shapes.internal.spec.common.{SchemaVersion, AVROSchema => AVROSchemaVersion}
 import org.yaml.model.YDocument.PartBuilder
 
 import scala.util.matching.Regex
@@ -37,8 +37,8 @@ class AvroSpecEmitterContext(
   override val factory: AvroSpecEmitterFactory = new AvroSpecEmitterFactory()(this)
   val spec: Spec                               = AvroSchema
   def schemasDeclarationsPath: String          = "/definitions/"
-  override def schemaVersion: SchemaVersion    = ???
-  override def nameRegex: Regex                = ???
+  override def schemaVersion: SchemaVersion    = AVROSchemaVersion()
+  override def nameRegex: Regex                = """^[a-zA-Z0-9.\-_]+$""".r
 }
 
 class AvroSpecEmitterFactory(implicit override val spec: AvroSpecEmitterContext) extends OasLikeSpecEmitterFactory {
