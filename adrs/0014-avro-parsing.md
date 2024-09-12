@@ -1,4 +1,4 @@
-# 13. AWS OAS parsing
+# 14. AVRO Support in AMF
 
 Date: 2024-07-02
 
@@ -10,8 +10,10 @@ Accepted
 
 ## Context
 
-Async 2.x supports AVRO Schemas and we currently don't. 
-We want to add support AVRO Schemas inside Async APIs and as a standalone documents.
+Async 2.x supports AVRO Schemas, and we currently don't. 
+We want to add support of AVRO Schemas:
+- inside Async APIs
+- as a standalone document
 
 We need to decide:
 - how are we going to map AVRO Schemas to the AMF Model
@@ -50,10 +52,24 @@ We've also added 3 AVRO-specific fields to the `AnyShape` Model via the `AvroFie
 - Aliases
 - Size
 
+### Where we support and DON'T support AVRO Schemas
+We Support AVRO Schemas (inline or inside a `$ref`):
+- as a standalone document or file 
+  - we encourage users to use the `.avsc` file type to indicate that's an avro file, for better suggestions and so on in the platform).
+- inside a message payload in an AsyncAPI
+  - the key `schemaFormat` MUST be declared and specify it's an AVRO payload
 
-For now only parsing is done 
+We don't support AVRO Schemas:
+- inside components --> schemas in an AsyncAPI
+  - because we can't determine if it's an AVRO Schema or any other schema
+
+### AVRO Validation
+We'll use the Apache official plugins for JVM and JS.
 
 
 ## Consequences
 
-None so far.
+The validation plugins differ in interfaces, and each has some drawbacks:
+- in JVM validation per se is not supported, we try to parse an avro schema and throw parsing results if there are any
+  - this means we can't have the location of where the error is thrown
+- in JS the plugin supports validation with the `isValid()` method, but it's difficult to even have the error message
