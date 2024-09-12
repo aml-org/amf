@@ -119,18 +119,12 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/async-avro-component-ref.yaml#/declares/scalar/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/async-avro-component-ref.yaml#/declares/any/Person",
         "@type": [
-          "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
-          {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
         ],
         "http://www.w3.org/ns/shacl#name": [
           {

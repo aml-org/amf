@@ -1,10 +1,10 @@
-asyncapi: 2.0.0
+asyncapi: 2.6.0
 info:
-  title: My API
+  title: asyncrefavro
   version: 1.0.0
 channels:
-  myChannel:
-    publish:
+  ch1:
+    subscribe:
       message:
         payload:
           type: record
@@ -38,5 +38,5 @@ channels:
                 fields:
                   -
                     name: zipcode
-                    type: int
+                    type: string
         schemaFormat: application/vnd.apache.avro;version=1.9.0
