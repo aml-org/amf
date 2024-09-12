@@ -13,6 +13,14 @@ class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
     validate("enum.json", configOverride = Some(config))
   }
 
+  test("invalid enum avro default value") {
+    validate(
+      "enum-wrong-default.json",
+      Some("enum-wrong-default.report"),
+      configOverride = Some(config)
+    )
+  }
+
   test("valid map avro schema") {
     validate("map.json", configOverride = Some(config))
   }
