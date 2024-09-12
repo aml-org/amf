@@ -1,11 +1,12 @@
 import Common.snapshots
-import NpmOpsPlugin.autoImport._
+import NpmOpsPlugin.autoImport.*
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
 import sbtsonar.SonarPlugin.autoImport.sonarProperties
 
 import scala.language.postfixOps
 import Versions.versions
+import sbt.ExclusionRule
 import sbtassembly.AssemblyPlugin.autoImport.assembly
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
@@ -72,10 +73,13 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                     %% "scalajs-stubs"          % "1.1.0" % "provided",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2" excludeAll (
-      ExclusionRule(organization = "org.json", name = "json")
+      ExclusionRule(organization = "org.json", name = "json"),
+      // commons-collections:commons-collections:3.2.2
+      ExclusionRule(organization = "commons-collections", name = "commons-collections")
     ),
     excludeDependencies += "com.fasterxml.jackson.core" % "jackson-databind", // transitive from everit
-    libraryDependencies += "org.json"                   % "json" % "20231013",
+    libraryDependencies += "org.json"                   % "json"                 % "20231013",
+    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.4",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
