@@ -53,6 +53,21 @@
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/scalar/md5/source-map/avro-raw-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/fixed.json#/scalar/md5"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"type\": \"fixed\",\n  \"size\": 16,\n  \"name\": \"md5\"\n}"
+                  }
+                ]
+              }
             ]
           }
         ]

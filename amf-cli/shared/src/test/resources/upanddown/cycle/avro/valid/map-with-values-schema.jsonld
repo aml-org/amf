@@ -63,6 +63,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map-with-values-schema.json#/shape/default-node/shape/default-node/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map-with-values-schema.json#/shape/default-node/shape/default-node/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "\"long\""
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -85,6 +100,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "map"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map-with-values-schema.json#/shape/default-node/shape/default-node/source-map/avro-raw-schema/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map-with-values-schema.json#/shape/default-node/shape/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "{\n  \"type\": \"map\",\n  \"values\": \"long\"\n}"
                       }
                     ]
                   }
@@ -125,6 +155,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "map"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map-with-values-schema.json#/shape/default-node/source-map/avro-raw-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/map-with-values-schema.json#/shape/default-node"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"type\": \"map\",\n  \"values\": {\n    \"type\": \"map\",\n    \"values\": \"long\"\n  },\n  \"default\": {}\n}"
                   }
                 ]
               }

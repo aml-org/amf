@@ -159,6 +159,21 @@
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum.json#/scalar/Suit/source-map/avro-raw-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/enum.json#/scalar/Suit"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"type\": \"enum\",\n  \"name\": \"Suit\",\n  \"symbols\": [\n    \"SPADES\",\n    \"HEARTS\",\n    \"DIAMONDS\",\n    \"CLUBS\"\n  ],\n  \"default\": \"SPADES\"\n}"
+                  }
+                ]
+              }
             ]
           }
         ]

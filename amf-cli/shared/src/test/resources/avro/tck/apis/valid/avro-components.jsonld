@@ -180,6 +180,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/name/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/name/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"name\",\n  \"type\": \"string\",\n  \"example\": \"Donkey\"\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -195,6 +210,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/name/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/name/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "{\n  \"name\": \"name\",\n  \"type\": \"string\",\n  \"example\": \"Donkey\"\n}"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -279,6 +309,21 @@
                                       }
                                     ]
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/avro-raw-schema/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/union/age/anyOf/nil/null"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "\"null\""
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -314,6 +359,21 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "int"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "\"int\""
                                       }
                                     ]
                                   }
@@ -372,6 +432,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/union/age/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/union/age"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"age\",\n  \"type\": [\n    \"null\",\n    \"int\"\n  ],\n  \"default\": null,\n  \"example\": 123\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -412,6 +487,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/age/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "{\n  \"name\": \"age\",\n  \"type\": [\n    \"null\",\n    \"int\"\n  ],\n  \"default\": null,\n  \"example\": 123\n}"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -623,6 +713,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"ProgrammingLanguage\",\n  \"type\": \"enum\",\n  \"symbols\": [\n    \"JS\",\n    \"Java\",\n    \"Go\",\n    \"Rust\",\n    \"C\"\n  ],\n  \"default\": \"JS\"\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -638,6 +743,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/favoriteProgrammingLanguage/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/favoriteProgrammingLanguage/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "{\n  \"name\": \"ProgrammingLanguage\",\n  \"type\": \"enum\",\n  \"symbols\": [\n    \"JS\",\n    \"Java\",\n    \"Go\",\n    \"Rust\",\n    \"C\"\n  ],\n  \"default\": \"JS\"\n}"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -732,6 +852,21 @@
                                           }
                                         ]
                                       }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "{\n  \"name\": \"zipcode\",\n  \"type\": \"int\",\n  \"example\": 53003\n}"
+                                          }
+                                        ]
+                                      }
                                     ]
                                   }
                                 ]
@@ -747,6 +882,21 @@
                                 "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/shape/Address/property/property/zipcode/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/shape/Address/property/property/zipcode/source-map/avro-raw-schema/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/shapes#range"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "{\n  \"name\": \"zipcode\",\n  \"type\": \"int\",\n  \"example\": 53003\n}"
+                                      }
+                                    ]
+                                  }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                                   {
@@ -805,6 +955,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/shape/Address/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/shape/Address"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"Address\",\n  \"type\": \"record\",\n  \"fields\": [\n    {\n      \"name\": \"zipcode\",\n      \"type\": \"int\",\n      \"example\": 53003\n    }\n  ]\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -820,6 +985,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/address/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "{\n  \"name\": \"Address\",\n  \"type\": \"record\",\n  \"fields\": [\n    {\n      \"name\": \"zipcode\",\n      \"type\": \"int\",\n      \"example\": 53003\n    }\n  ]\n}"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -895,6 +1075,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/someid/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/someid/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"someid\",\n  \"type\": \"string\",\n  \"logicalType\": \"uuid\"\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -910,6 +1105,21 @@
                         "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/someid/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/property/property/someid/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "{\n  \"name\": \"someid\",\n  \"type\": \"string\",\n  \"logicalType\": \"uuid\"\n}"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                           {
@@ -965,6 +1175,21 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "record"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/avro-components.yaml#/declares/msg/testMessage/payload/default/shape/Person"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"Person\",\n  \"type\": \"record\",\n  \"fields\": [\n    {\n      \"name\": \"name\",\n      \"type\": \"string\",\n      \"example\": \"Donkey\"\n    },\n    {\n      \"name\": \"age\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null,\n      \"example\": 123\n    },\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\n        \"name\": \"ProgrammingLanguage\",\n        \"type\": \"enum\",\n        \"symbols\": [\n          \"JS\",\n          \"Java\",\n          \"Go\",\n          \"Rust\",\n          \"C\"\n        ],\n        \"default\": \"JS\"\n      }\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [\n          {\n            \"name\": \"zipcode\",\n            \"type\": \"int\",\n            \"example\": 53003\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"someid\",\n      \"type\": \"string\",\n      \"logicalType\": \"uuid\"\n    }\n  ]\n}"
                           }
                         ]
                       }
