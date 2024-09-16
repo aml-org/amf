@@ -67,15 +67,9 @@ abstract class BaseAvroSchemaPayloadValidator(
     }
   }
 
-  /* i need to do this check?? */
-  protected def validateForPayload(
-      payload: String,
-      validationProcessor: ValidationProcessor
-  ): AMFValidationReport = {
+  protected def validateForPayload(payload: String, validationProcessor: ValidationProcessor): AMFValidationReport = {
     if (!isValidMediaType(mediaType)) {
-      validationProcessor.processResults(
-        Seq(mediaTypeError(mediaType))
-      )
+      validationProcessor.processResults(Seq(mediaTypeError(mediaType)))
     } else
       try {
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
@@ -97,23 +91,22 @@ abstract class BaseAvroSchemaPayloadValidator(
   }
 
   private def getRawAvroSchema(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    val raw = shape.annotations.find(classOf[AVRORawSchema]).map(_.avroRawSchema)
-    if (raw.isEmpty) {
-      // TODO complete the result to make it a valid violation that the shape doesn't have the raw annotation
-      // emitirlo?
-      val result = AMFValidationResult(
-        "should have AVRO Raw annotation",
-        SeverityLevels.VIOLATION,
-        shape.id,
-        None,
-        "",
-        None,
-        None,
-        shape
-      )
-      validationProcessor.keepResults(Seq(result))
+    getAvroRaw(shape) match {
+      case Some(ann) => Some(ann.avroRawSchema)
+      case None =>
+        val result = AMFValidationResult(
+          "should have AVRO Raw annotation",
+          SeverityLevels.VIOLATION,
+          shape.id,
+          Some(shape.id),
+          "",
+          shape.position(),
+          shape.location(),
+          shape
+        )
+        validationProcessor.keepResults(Seq(result))
+        None
     }
-    raw
   }
 
   private def getOrCreateSchema(
@@ -133,94 +126,10 @@ abstract class BaseAvroSchemaPayloadValidator(
     }
   }
 
-  protected def buildPayloadObj(
-      mediaType: String,
-      payload: String
-  ): (Option[LoadedObj], Option[PayloadParsingResult]) = {
+  protected def buildPayloadObj(mediaType: String, payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) =
     if (mediaType == `application/json`)
       (Some(loadAvro(payload)), None)
-    else {
-      (None, None)
-    }
-  }
-
-  //  private def parsePayloadWithErrorHandler(payload: String, mediaType: String): PayloadParsingResult = {
-  //    val errorHandler = configuration.eh()
-  //    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
-  //  }
-
-  //  private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
-  //    val options = generateParsingOptions()
-  //    val ctx     = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences, options.getMaxJsonYamlDepth)
-  //
-  //    val parser = mediaType match {
-  //      case `application/json` => JsonParserFactory.fromChars(payload, options.getMaxJsonYamlDepth)(errorHandler)
-  //      case _ =>
-  //        YamlParser(payload, options.getMaxJsonYamlDepth)(
-  //          new SYamlAMFParserErrorHandler(errorHandler)
-  //        ) // todo should fail?
-  //    }
-  //    val node = parser.document().node
-  //    val parsedNode =
-  //      if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
-  //      else DataNodeParser(node)(ctx).parse()
-  //    PayloadFragment(parsedNode, mediaType)
-  //  }
-
-  //  private def generateParsingOptions(): ParsingOptions = {
-  //    var po = ParsingOptions()
-  //    po = configuration.maxYamlReferences.foldLeft(po) { (options, myr) =>
-  //      options.setMaxYamlReferences(myr)
-  //    }
-  //    po = configuration.maxJsonYamlDepth.foldLeft(po) { (options, md) =>
-  //      options.setMaxJsonYamlDepth(md)
-  //    }
-  //    po
-  //  }
-
-  //  private def dataNodeParsingCtx(
-  //      errorHandler: AMFErrorHandler,
-  //      maxYamlRefs: Option[Int],
-  //      maxYamlJsonDepth: Option[Int]
-  //  ): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
-  //    new ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler {
-  //
-  //      override implicit val eh: AMFErrorHandler = errorHandler
-  //      val syamleh                               = new SYamlAMFParserErrorHandler(errorHandler)
-  //      override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
-  //        eh.violation(violationId, node, message, "")
-  //      override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =
-  //        eh.violation(violationId, node, message, "")
-  //      override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
-  //      override def refs: Seq[ParsedReference]                                                          = Seq.empty
-  //      override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs
-  //      override def getMaxYamlJsonDepth: Option[Int]    = maxYamlJsonDepth
-  //      override def fragments: Map[String, FragmentRef] = Map.empty
-  //
-  //      override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
-  //
-  //      override def violation(
-  //          specification: ValidationSpecification,
-  //          node: String,
-  //          message: String,
-  //          loc: SourceLocation
-  //      ): Unit = eh.violation(specification, node, message, loc)
-  //    }
-  //  }
-
-  //  protected def buildPayloadNode(
-  //      mediaType: String,
-  //      payload: String
-  //  ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-  //    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType) match {
-  //      case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
-  //        val frag = ScalarPayloadForParam(result.fragment, shape)
-  //        result.copy(fragment = frag)
-  //      case other => other
-  //    }
-  //    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
-  //    else (None, Some(fixedResult))
-  //  }
+    else (None, None)
 
   private def performValidation(
       payload: (Option[LoadedObj], Option[PayloadParsingResult]),
@@ -262,7 +171,6 @@ abstract class BaseAvroSchemaPayloadValidator(
               validationProcessor.processResults(Nil)
           }
         } catch {
-          // TODO CHEQUEAR SI HAY ALGUNA EXCEPTION ESPECIAL DEVUELTA POR EL VALIDADOR ACA
           case e: Exception =>
             println(s"Exception caught during validation: ${e.getMessage}")
             validationProcessor.processException(e, fragmentOption.map(_.encodes))
@@ -274,13 +182,11 @@ abstract class BaseAvroSchemaPayloadValidator(
     }
   }
 
-  private def buildCandidate(mediaType: String, payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
+  private def buildCandidate(mediaType: String, payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) =
     buildPayloadObj(mediaType, payload)
-  }
 
-  private def buildCandidate(payload: PayloadFragment): (Option[LoadedObj], Option[PayloadParsingResult]) = {
+  private def buildCandidate(payload: PayloadFragment): (Option[LoadedObj], Option[PayloadParsingResult]) =
     (loadDataNodeString(payload), Some(PayloadParsingResult(payload, Nil)))
-  }
 
 }
 
