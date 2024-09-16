@@ -7,10 +7,14 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.shapes.client.scala.model.domain.SchemaShape
-import amf.shapes.internal.validation.avro.{AvroSchemaReportValidationProcessor, BaseAvroSchemaPayloadValidator}
+import amf.shapes.internal.validation.avro.{
+  AvroRawNotFound,
+  AvroSchemaReportValidationProcessor,
+  BaseAvroSchemaPayloadValidator,
+  InvalidAvroValue
+}
 import amf.shapes.internal.validation.common.ValidationProcessor
-import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.{InvalidAvroSchema, InvalidJsonValue}
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.io.DecoderFactory
 import org.apache.avro.{AvroTypeException, Schema, SchemaParseException}
@@ -36,18 +40,19 @@ class JvmAvroShapePayloadValidator(
     val schema: Schema = parser.parse(text)
     schema
   } catch {
-    case e: RuntimeException => throw new InvalidJsonValue(e)
+    case e: RuntimeException => throw new InvalidAvroValue(e)
   }
 
   override def validateAvroSchema(): Seq[AMFValidationResult] = try {
-    val raw = getAvroRaw(shape) match {
-      case Some(rawAnn) => rawAnn.avroRawSchema
-      case None         => throw new InvalidAvroSchema(new RuntimeException())
+    getAvroRaw(shape) match {
+      case Some(rawAnn) =>
+        parser.parse(rawAnn.avroRawSchema) // if the schema has something wrong throws Exception and we catch it
+        Nil
+      case None =>
+        getReportProcessor(AVROSCHEMA).processException(new AvroRawNotFound(), Some(shape)).results
     }
-    parser.parse(raw)
-    Nil
   } catch {
-    case e: RuntimeException => getReportProcessor(AVROSCHEMA).processException(e, Some(shape)).results
+    case e: Exception => getReportProcessor(AVROSCHEMA).processException(e, Some(shape)).results
   }
 
   override protected def callValidator(
@@ -108,7 +113,7 @@ case class JvmReportValidationProcessor(
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
             targetProperty = Some(e.getMessage.split(":").last.trim),
-            validationId = ExampleValidationErrorSpecification.id,
+            validationId = SchemaException.id,
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = e
@@ -122,7 +127,7 @@ case class JvmReportValidationProcessor(
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
             targetProperty = Some(e.getMessage.split(":").last.trim),
-            validationId = ExampleValidationErrorSpecification.id,
+            validationId = SchemaException.id,
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = e
@@ -136,10 +141,24 @@ case class JvmReportValidationProcessor(
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
             targetProperty = Some(invalidType.getMessage.split(":").last.trim),
-            validationId = ExampleValidationErrorSpecification.id,
+            validationId = SchemaException.id,
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = invalidType
+          )
+        )
+
+      case avroRawNotFound: AvroRawNotFound =>
+        Seq(
+          AMFValidationResult(
+            message = "AVRORawSchema annotation not found in schema",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = SchemaException.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = avroRawNotFound
           )
         )
 

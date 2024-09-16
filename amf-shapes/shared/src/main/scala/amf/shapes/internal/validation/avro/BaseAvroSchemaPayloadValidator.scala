@@ -20,6 +20,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidAvroObject(e: Throwable)       extends RuntimeException(e)
 class InvalidAvroValue(e: Throwable)        extends RuntimeException(e)
+class AvroRawNotFound                       extends RuntimeException
 
 object BaseAvroSchemaPayloadValidator {
   val supportedMediaTypes: Seq[String] = Seq(`application/json`)
