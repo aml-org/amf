@@ -70,9 +70,11 @@ class JvmAvroShapePayloadValidator(
     }
   }
 
-  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
-    ???
-  }
+  // we don't need to JSON-parse the raw as in JSON Schema because the validation plugin uses the raw string
+  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] =
+    literalRepresentation(payload) map { raw =>
+      SchemaShape(payload.annotations).withRaw(raw).withMediaType(payload.mediaType.value())
+    }
 
   override protected def loadSchema(
       jsonSchema: CharSequence,

@@ -116,9 +116,7 @@ abstract class BaseJsonSchemaPayloadValidator(
       fragmentShape: Shape,
       validationProcessor: ValidationProcessor
   ): Either[AMFValidationReport, Option[LoadedSchema]] = {
-
     val schemaOption: Option[CharSequence] = generateSchemaString(fragmentShape, validationProcessor)
-
     schemaOption match {
       case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
       case None               => Right(None)
