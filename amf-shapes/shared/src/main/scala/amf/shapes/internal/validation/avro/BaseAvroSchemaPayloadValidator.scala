@@ -23,7 +23,7 @@ class InvalidAvroValue(e: Throwable)        extends RuntimeException(e)
 class AvroRawNotFound                       extends RuntimeException
 
 object BaseAvroSchemaPayloadValidator {
-  val supportedMediaTypes: Seq[String] = Seq(`application/json`)
+  val supportedMediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
 }
 
 abstract class BaseAvroSchemaPayloadValidator(

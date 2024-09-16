@@ -13,7 +13,7 @@ import amf.shapes.internal.domain.apicontract.unsafe.AvroSchemaValidatorBuilder
 
 trait AvroSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationPlugin with CommonShapeValidation {
   override val id: String                   = "AMF AVRO Payload Validation"
-  private val payloadMediaType: Seq[String] = Seq(`application/json`)
+  private val payloadMediaType: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
 
   override def applies(element: ValidatePayloadRequest): Boolean = {
     val ValidatePayloadRequest(shape, mediaType, _) = element
