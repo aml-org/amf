@@ -162,6 +162,20 @@ case class JvmReportValidationProcessor(
           )
         )
 
+      case numberFormatException: NumberFormatException =>
+        Seq(
+          AMFValidationResult(
+            message = s"default value should be a number: ${numberFormatException.getMessage}",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = SchemaException.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = numberFormatException
+          )
+        )
+
       case other =>
         super.processCommonException(other, element)
     }
