@@ -67,9 +67,21 @@ We don't support AVRO Schemas:
 We'll use the Apache official plugins for JVM and JS.
 
 
-## Consequences
+## Consequences / Constraints
 
-The validation plugins differ in interfaces, and each has some drawbacks:
-- in JVM validation per se is not supported, we try to parse an avro schema and throw parsing results if there are any
+The validation plugins differ in interfaces and implementations, and each has some constraints:
+
+### JVM avro validation plugin
+- validation per se is not supported, we try to parse an avro schema and throw parsing results if there are any
   - this means we can't have the location of where the error is thrown
+- when a validation is thrown, the rest of the file is not being searched for more validations
+  - this is particularly important in large avro schemas, where many errors can be found but only one is shown
+- `"default"` values are not being validated when the type is `bytes`, `map`, or `array`
+
+
+### JS avro validation plugin
 - in JS the plugin supports validation with the `isValid()` method, but it's difficult to even have the error message
+
+### Both JVM & JS validation plugins
+- the name of a schema can't have special characters like `-`, `$`, `%`, etc.
+  -  this is not specified in the [Avro Schema Specification](https://avro.apache.org/docs/1.12.0/specification), but it's validated by the validator 
