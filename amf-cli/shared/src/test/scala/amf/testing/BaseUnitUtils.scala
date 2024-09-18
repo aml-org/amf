@@ -1,12 +1,13 @@
 package amf.testing
 
-import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
+import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
+import amf.core.client.scala.AMFResult
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{Annotation, DomainElement, Shape}
 import amf.core.internal.annotations.SourceYPart
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.document.{AvroSchemaDocument, JsonSchemaDocument}
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -60,4 +61,6 @@ object BaseUnitUtils {
   def hasAnnotation[T <: Annotation](annotation: Class[T], annotations: Annotations): Boolean = {
     annotations.find(annotation).isDefined
   }
+
+  def getAvroShape(result: AMFResult): Shape = result.baseUnit.asInstanceOf[AvroSchemaDocument].encodes
 }
