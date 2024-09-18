@@ -14,7 +14,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{BaseVirtualNode, AVROSchemaType, TargetName}
+import amf.shapes.internal.annotations.{AVROSchemaType, BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
@@ -44,6 +44,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
   val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
   val asyncClient: AMFBaseUnitClient         = asyncConfig.baseUnitClient()
+  val avroConfig: AMFConfiguration           = AvroConfiguration.Avro().withRenderOptions(ro)
+  val avroClient: AMFBaseUnitClient          = avroConfig.baseUnitClient()
 
   def modelAssertion(
       path: String,
@@ -711,6 +713,17 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val payload       = response.payloads.head
       val payloadSchema = payload.schema
       payloadSchema should not be null
+    }
+  }
+
+  // W-16596042
+  test("avro map empty values field should have lexical information") {
+    val api = s"$basePath/avro/map-empty-values.avsc"
+    avroClient.parse(api) flatMap { parseResult =>
+      val transformResult = avroClient.transform(parseResult.baseUnit)
+      val mapShape        = getAvroShape(transformResult).asInstanceOf[NodeShape]
+      val values          = mapShape.additionalPropertiesSchema
+      values.annotations.lexical() should not be null
     }
   }
 }
