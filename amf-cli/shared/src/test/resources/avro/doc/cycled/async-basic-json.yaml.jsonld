@@ -270,11 +270,6 @@
           "@id": "#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
-      "sourcemaps:defined-by-spec": [
-        {
-          "@id": "#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/source-map/defined-by-spec/element_0"
-        }
-      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/source-map/lexical/element_0"
@@ -305,11 +300,6 @@
       "@id": "#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/source-map/synthesized-field/element_0",
       "sourcemaps:element": "doc:link-label",
       "sourcemaps:value": "true"
-    },
-    {
-      "@id": "#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/source-map/defined-by-spec/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-json.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema",
-      "sourcemaps:value": "RAML 1.0"
     },
     {
       "@id": "#/async-api/endpoint/myChannel/supportedOperation/publish/expects/request/payload/default/shape/schema/source-map/lexical/element_0",
@@ -496,6 +486,11 @@
         },
         {
           "@id": "#/references/0/shape/Person/source-map/lexical/element_1"
+        }
+      ],
+      "sourcemaps:defined-by-spec": [
+        {
+          "@id": "#/references/0/shape/Person/source-map/defined-by-spec/element_0"
         }
       ],
       "sourcemaps:avro-schema": [
@@ -763,6 +758,11 @@
       "@id": "#/references/0/shape/Person/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-json.yaml#/references/0/shape/Person",
       "sourcemaps:value": "[(1,0)-(20,1)]"
+    },
+    {
+      "@id": "#/references/0/shape/Person/source-map/defined-by-spec/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-json.yaml#/references/0/shape/Person",
+      "sourcemaps:value": "Avro"
     },
     {
       "@id": "#/references/0/shape/Person/source-map/avro-schema/element_0",
