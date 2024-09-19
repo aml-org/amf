@@ -1,18 +1,13 @@
 package amf.shapes.internal.document.apicontract.validation.remote
 
 import amf.core.client.common.validation.ProfileNames.AVROSCHEMA
-import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
+import amf.core.client.common.validation.{ProfileName, ProfileNames, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.shapes.client.scala.model.domain.SchemaShape
-import amf.shapes.internal.validation.avro.{
-  AvroRawNotFound,
-  AvroSchemaReportValidationProcessor,
-  BaseAvroSchemaPayloadValidator,
-  InvalidAvroValue
-}
+import amf.shapes.internal.validation.avro.{AvroRawNotFound, AvroSchemaReportValidationProcessor, BaseAvroSchemaPayloadValidator, InvalidAvroSchema}
 import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
@@ -30,27 +25,25 @@ class JvmAvroShapePayloadValidator(
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JvmReportValidationProcessor(profileName, shape)
 
-  override protected type LoadedObj    = SchemaShape
+  override protected type LoadedObj    = SchemaShape // The Raw is the original payload to validate
   override protected type LoadedSchema = Schema
 
-  override protected def loadAvro(text: String): LoadedObj =
-    SchemaShape(shape.annotations).withRaw(text)
+  override protected def loadAvro(text: String): LoadedObj = SchemaShape(shape.annotations).withRaw(text)
 
   override protected def loadAvroSchema(text: String): LoadedSchema = try {
-    val schema: Schema = parser.parse(text)
-    schema
+    parser.parse(text)
   } catch {
-    case e: RuntimeException => throw new InvalidAvroValue(e)
+    case e: Exception =>
+      throw new InvalidAvroSchema(e)
   }
 
   override def validateAvroSchema(): Seq[AMFValidationResult] = try {
-    getAvroRaw(shape) match {
-      case Some(rawAnn) =>
-        parser.parse(rawAnn.avroRawSchema) // if the schema has something wrong throws Exception and we catch it
-        Nil
-      case None =>
-        getReportProcessor(AVROSCHEMA).processException(new AvroRawNotFound(), Some(shape)).results
+    val raw = getAvroRaw(shape) match {
+      case Some(raw) => raw
+      case None      => throw new AvroRawNotFound()
     }
+    parser.parse(raw)
+    Nil
   } catch {
     case e: Exception => getReportProcessor(AVROSCHEMA).processException(e, Some(shape)).results
   }
@@ -82,15 +75,27 @@ class JvmAvroShapePayloadValidator(
     }
 
   override protected def loadSchema(
-      jsonSchema: CharSequence,
+      avroSchema: CharSequence,
       element: DomainElement,
       validationProcessor: ValidationProcessor
   ): Either[AMFValidationReport, Option[LoadedSchema]] = {
     try {
-      val schema = loadAvroSchema(jsonSchema.toString)
+      val schema = loadAvroSchema(avroSchema.toString)
       Right(Some(schema))
     } catch {
-      case e: Exception => Left(validationProcessor.processException(e, Some(element)))
+      case e: Exception =>
+        val result = AMFValidationResult(
+          message = s"Error in AVRO Schema: ${e.getMessage}",
+          level = SeverityLevels.VIOLATION,
+          targetNode = Option(element.id).getOrElse(""),
+          targetProperty = Option(element.id), // this is not correct should be the specific property of the element
+          validationId = SchemaException.id,
+          position = element.position(),
+          location = element.location(),
+          source = e
+        )
+        validationProcessor.processResults(Seq(result))
+        Left(AMFValidationReport(element.location().getOrElse(""), ProfileNames.AVROSCHEMA, Seq(result)))
     }
   }
 }
@@ -145,20 +150,6 @@ case class JvmReportValidationProcessor(
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = invalidType
-          )
-        )
-
-      case avroRawNotFound: AvroRawNotFound =>
-        Seq(
-          AMFValidationResult(
-            message = "AVRORawSchema annotation not found in schema",
-            level = SeverityLevels.VIOLATION,
-            targetNode = element.map(_.id).getOrElse(""),
-            targetProperty = None,
-            validationId = SchemaException.id,
-            position = element.flatMap(_.position()),
-            location = element.flatMap(_.location()),
-            source = avroRawNotFound
           )
         )
 

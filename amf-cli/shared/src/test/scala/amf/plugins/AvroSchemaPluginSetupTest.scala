@@ -31,7 +31,7 @@ class AvroSchemaPluginSetupTest extends AsyncFunSuite with Matchers with FileAss
       val doc = parsed.baseUnit.asInstanceOf[AvroSchemaDocument]
       doc.declares should have size 0  // avro documents don't have declarations
       doc.encodes shouldBe a[AnyShape] // the avro schema
-      doc.encodes.asInstanceOf[AnyShape].name.value() should equal("LongList")
+      doc.encodes.asInstanceOf[AnyShape].name.value() should equal("Person")
     }
   }
 
@@ -45,7 +45,7 @@ class AvroSchemaPluginSetupTest extends AsyncFunSuite with Matchers with FileAss
       val doc = parsed.baseUnit.asInstanceOf[AvroSchemaDocument]
       doc.declares should have size 0  // avro documents don't have declarations
       doc.encodes shouldBe a[AnyShape] // the avro schema
-      doc.encodes.asInstanceOf[AnyShape].name.value() should equal("LongList")
+      doc.encodes.asInstanceOf[AnyShape].name.value() should equal("Person")
     }
   }
 
