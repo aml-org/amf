@@ -7,9 +7,16 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.shapes.client.scala.model.domain.SchemaShape
-import amf.shapes.internal.validation.avro.{AvroRawNotFound, AvroSchemaReportValidationProcessor, BaseAvroSchemaPayloadValidator}
+import amf.shapes.internal.validation.avro.{
+  AvroRawNotFound,
+  AvroSchemaReportValidationProcessor,
+  BaseAvroSchemaPayloadValidator
+}
 import amf.shapes.internal.validation.common.ValidationProcessor
-import amf.shapes.internal.validation.definitions.ShapePayloadValidations.{ExampleValidationErrorSpecification, SchemaException}
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations.{
+  ExampleValidationErrorSpecification,
+  SchemaException
+}
 
 import scala.scalajs.js.JavaScriptException
 
@@ -89,12 +96,6 @@ class JsAvroShapePayloadValidator(
         validationProcessor.processResults(Seq(result))
       case e: JavaScriptException =>
         validationProcessor.processException(e, fragment.map(_.encodes))
-    }
-  }
-
-  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
-    literalRepresentation(payload) map { payloadText =>
-      loadAvro(payloadText)
     }
   }
 
