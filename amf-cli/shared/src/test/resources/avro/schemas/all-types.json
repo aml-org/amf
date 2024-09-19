@@ -52,7 +52,7 @@
       "doc": "this is a documentation for the union type with recursive element",
       "type": [
         "null",
-        "LongList"
+        "AllTypes"
       ],
       "default": null
     },
@@ -60,14 +60,16 @@
       "type": "array",
       "items": "long",
       "default": [],
-      "name": "arrayType"
+      "name": "array1"
     },
     {
       "type": "array",
       "items": {
         "type": "array",
-        "items": "string"
+        "items": "string",
+        "name": "innerArray1"
       },
+      "name": "array2",
       "default": []
     },
     {

@@ -27,7 +27,7 @@ ThisBuild / resolvers ++= List(
 ThisBuild / credentials ++= Common.credentials()
 
 val npmDeps =
-  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), ("avro-js" -> "1.12.0"))
+  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.12.0")))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 

@@ -6,6 +6,7 @@ import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
+import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator}
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
@@ -315,30 +316,68 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
       }
   }
 
-  // TODO: fix it (fails in JS)
-//  test("valid avro int payload") {
-//    val shape = ScalarShape().withName("int")
-//    shape.annotations += AVROSchemaType("record")
-//
-//    val raw =
-//      """
-//        |{
-//        |  "type": "int",
-//        |  "name": "this is an int"
-//        |}
-//        """.stripMargin
-//
-//    shape.annotations += AVRORawSchema(raw)
-//
-//    val payload = "1"
-//
-//    val validator = payloadValidator(shape, `application/json`)
-//    validator
-//      .validate(payload)
-//      .map { r =>
-//        assert(r.conforms)
-//      }
-//  }
+
+  test("valid avro int payload") {
+    val shape = ScalarShape().withName("int")
+    shape.annotations += AVROSchemaType("record")
+
+    val raw =
+      """
+        |{
+        |  "type": "int",
+        |  "name": "this is an int"
+        |}
+        """.stripMargin
+
+    shape.annotations += AVRORawSchema(raw)
+
+    val payload = "1"
+
+    val validator = payloadValidator(shape, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
+        assert(r.conforms)
+      }
+  }
+
+  protected def makeAvroShape(raw: String, kind: String, base: AnyShape): AnyShape = {
+    base.annotations += AVROSchemaType(kind)
+    base.annotations += AVRORawSchema(raw)
+    base
+  }
+
+  protected def reportContainError(report: AMFValidationReport, message: String): Boolean = {
+    report.results.exists(result => result.message.contains(message))
+  }
 
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
+}
+
+object AvroTestSchemas {
+  val invalidSchema: String = // Schema and field has no name
+    """
+      |{
+      |  "type": "record",
+      |  "fields": [
+      |    {
+      |      "type": "string"
+      |    }
+      |  ]
+      |}
+        """.stripMargin
+
+  val recordSchema: String =
+    """
+      |{
+      |  "type": "record",
+      |  "name": "recordTest",
+      |  "fields": [
+      |    {
+      |      "name": "a",
+      |      "type": "string"
+      |    }
+      |  ]
+      |}
+        """.stripMargin
 }

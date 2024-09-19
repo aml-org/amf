@@ -27,10 +27,11 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
     maybeShape.foreach { shape =>
       validateSchema(shape).foreach { validation =>
         val msg = validation.message
-        // todo: fix them instead of filter them
+        // todo: fix them instead of filter theme
         val invalidDefaultValidation = msg.contains("[] not a ")
-        val invalidTypeValidation    = msg.startsWith("No type:") && msg.contains("\"type\":[")
-        val filterValidation         = invalidDefaultValidation || invalidTypeValidation
+        val invalidTypeValidationJvm = msg.startsWith("No type:") && msg.contains("\"type\":[")
+        val invalidTypeValidationJs  = msg.startsWith("unknown type: [")
+        val filterValidation         = invalidDefaultValidation || invalidTypeValidationJvm || invalidTypeValidationJs
         if (!filterValidation) {
           ctx.violation(InvalidAvroSchema, shape, validation.message)
         }

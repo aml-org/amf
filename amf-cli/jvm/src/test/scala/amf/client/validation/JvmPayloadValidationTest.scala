@@ -217,4 +217,16 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
         assert(r.conforms)
       }
   }
+
+  test("invalid avro with schema error in JVM") {
+    val schema     = AvroTestSchemas.invalidSchema
+    val payload    = "{}"
+    val avroSchema = makeAvroShape(schema, "record", NodeShape())
+
+    val validator = payloadValidator(avroSchema, `application/json`)
+    validator.validate(payload).map { report =>
+      assert(!report.conforms)
+      assert(reportContainError(report, "org.apache.avro.SchemaParseException"))
+    }
+  }
 }

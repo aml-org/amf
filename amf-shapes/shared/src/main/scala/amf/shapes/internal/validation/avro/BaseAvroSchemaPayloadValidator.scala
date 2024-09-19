@@ -13,13 +13,17 @@ import amf.shapes.internal.validation.common.{
   ReportValidationProcessor,
   ValidationProcessor
 }
-import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations.{
+  ExampleValidationErrorSpecification,
+  SchemaException
+}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidAvroObject(e: Throwable)       extends RuntimeException(e)
 class InvalidAvroValue(e: Throwable)        extends RuntimeException(e)
+class InvalidAvroSchema(e: Throwable)       extends RuntimeException(e)
 class AvroRawNotFound                       extends RuntimeException
 
 object BaseAvroSchemaPayloadValidator {
@@ -54,7 +58,7 @@ abstract class BaseAvroSchemaPayloadValidator(
 
   def validateAvroSchema(): Seq[AMFValidationResult]
 
-  def getAvroRaw(shape: Shape): Option[AVRORawSchema] = shape.annotations.find(classOf[AVRORawSchema])
+  def getAvroRaw(shape: Shape): Option[String] = shape.annotations.find(classOf[AVRORawSchema]).map(_.avroRawSchema)
 
   protected def validateForFragment(
       fragment: PayloadFragment,
@@ -91,23 +95,22 @@ abstract class BaseAvroSchemaPayloadValidator(
     }
   }
 
-  private def getRawAvroSchema(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    getAvroRaw(shape) match {
-      case Some(ann) => Some(ann.avroRawSchema)
-      case None =>
-        val result = AMFValidationResult(
-          "should have AVRO Raw annotation",
-          SeverityLevels.VIOLATION,
-          shape.id,
-          Some(shape.id),
-          "",
-          shape.position(),
-          shape.location(),
-          shape
-        )
-        validationProcessor.keepResults(Seq(result))
-        None
+  private def getRawAvroSchema(shape: Shape, validationProcessor: ValidationProcessor): Option[String] = {
+    val schemaRaw = getAvroRaw(shape)
+    if (schemaRaw.isEmpty) {
+      val result = AMFValidationResult(
+        "AvroRaw annotation is missing",
+        SeverityLevels.VIOLATION,
+        shape.id,
+        None,
+        SchemaException.id,
+        shape.position(),
+        shape.location(),
+        shape
+      )
+      validationProcessor.keepResults(Seq(result))
     }
+    schemaRaw
   }
 
   private def getOrCreateSchema(
@@ -173,12 +176,10 @@ abstract class BaseAvroSchemaPayloadValidator(
           }
         } catch {
           case e: Exception =>
-            println(s"Exception caught during validation: ${e.getMessage}")
             validationProcessor.processException(e, fragmentOption.map(_.encodes))
         }
 
       case _ =>
-        println("No valid payload or results, returning empty results")
         validationProcessor.processResults(Nil) // ignore
     }
   }
@@ -194,6 +195,19 @@ abstract class BaseAvroSchemaPayloadValidator(
 trait AvroSchemaReportValidationProcessor extends ReportValidationProcessor {
   override def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
     r match {
+      case avroRawNotFound: AvroRawNotFound =>
+        Seq(
+          AMFValidationResult(
+            message = "AVRORawSchema annotation not found in schema",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = SchemaException.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = avroRawNotFound
+          )
+        )
       case other =>
         Seq(
           AMFValidationResult(

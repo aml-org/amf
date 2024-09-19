@@ -424,7 +424,7 @@
         "doc:DomainElement"
       ],
       "raml-shapes:range": {
-        "@id": "#/references/0/shape/Person/property/property/age/union/age"
+        "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar"
       },
       "shacl:name": "age",
       "shacl:defaultValue": {
@@ -560,29 +560,22 @@
       ]
     },
     {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age",
+      "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar",
       "@type": [
-        "raml-shapes:UnionShape",
+        "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "raml-shapes:anyOf": [
+      "shacl:datatype": [
         {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null"
-        },
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar"
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "shacl:name": "age",
-      "shacl:defaultValue": {
-        "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1"
-      },
       "sourcemaps:sources": [
         {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map"
+          "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map"
         }
       ]
     },
@@ -593,10 +586,10 @@
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:value": "null",
+      "data:value": "30",
       "shacl:datatype": [
         {
-          "@id": "http://www.w3.org/2001/XMLSchema#nil"
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
       "core:name": "scalar_1",
@@ -772,7 +765,7 @@
     {
       "@id": "#/references/0/shape/Person/source-map/avro-raw-schema/element_0",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person",
-      "sourcemaps:value": "{\n  \"type\": \"record\",\n  \"name\": \"Person\",\n  \"fields\": [\n    {\n      \"name\": \"name\",\n      \"type\": \"string\",\n      \"example\": \"Donkey\"\n    },\n    {\n      \"name\": \"age\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null\n    },\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\n        \"name\": \"ProgrammingLanguage\",\n        \"type\": \"enum\",\n        \"symbols\": [\n          \"JS\",\n          \"Java\",\n          \"Go\",\n          \"Rust\",\n          \"C\"\n        ]\n      }\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [\n          {\n            \"name\": \"zipcode\",\n            \"type\": \"int\"\n          }\n        ]\n      }\n    }\n  ]\n}"
+      "sourcemaps:value": "{\n  \"type\": \"record\",\n  \"name\": \"Person\",\n  \"fields\": [\n    {\n      \"name\": \"name\",\n      \"type\": \"string\",\n      \"example\": \"Donkey\"\n    },\n    {\n      \"name\": \"age\",\n      \"type\": \"int\",\n      \"default\": 30\n    },\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\n        \"name\": \"ProgrammingLanguage\",\n        \"type\": \"enum\",\n        \"symbols\": [\n          \"JS\",\n          \"Java\",\n          \"Go\",\n          \"Rust\",\n          \"C\"\n        ]\n      }\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [\n          {\n            \"name\": \"zipcode\",\n            \"type\": \"int\"\n          }\n        ]\n      }\n    }\n  ]\n}"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/name/scalar/default-scalar/source-map",
@@ -829,87 +822,26 @@
       "sourcemaps:value": "string"
     },
     {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null",
-      "@type": [
-        "raml-shapes:NilShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:name": "null",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#integer"
-        }
-      ],
-      "sourcemaps:sources": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "null",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#nil"
-        }
-      ],
-      "core:name": "scalar_1",
-      "sourcemaps:sources": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map",
+      "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_3"
+          "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/lexical/element_1"
         },
         {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_1"
-        },
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_0"
-        },
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_2"
+          "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:avro-schema": [
         {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/avro-schema/element_0"
+          "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/avro-schema/element_0"
         }
       ],
       "sourcemaps:avro-raw-schema": [
         {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/avro-raw-schema/element_0"
+          "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/avro-raw-schema/element_0"
         }
       ]
     },
@@ -940,32 +872,32 @@
     {
       "@id": "#/references/0/shape/Person/property/property/age/source-map/lexical/element_1",
       "sourcemaps:element": "raml-shapes:range",
-      "sourcemaps:value": "[(6,4)-(6,61)]"
+      "sourcemaps:value": "[(6,4)-(6,49)]"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/age/source-map/lexical/element_0",
       "sourcemaps:element": "shacl:defaultValue",
-      "sourcemaps:value": "[(6,45)-(6,60)]"
+      "sourcemaps:value": "[(6,35)-(6,48)]"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/age/source-map/lexical/element_2",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age",
-      "sourcemaps:value": "[(6,4)-(6,61)]"
+      "sourcemaps:value": "[(6,4)-(6,49)]"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/age/source-map/avro-raw-schema/element_0",
       "sourcemaps:element": "raml-shapes:range",
-      "sourcemaps:value": "{\n  \"name\": \"age\",\n  \"type\": [\n    \"null\",\n    \"int\"\n  ],\n  \"default\": null\n}"
+      "sourcemaps:value": "{\n  \"name\": \"age\",\n  \"type\": \"int\",\n  \"default\": 30\n}"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/age/source-map/avro-schema/element_1",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age",
-      "sourcemaps:value": "union"
+      "sourcemaps:value": "int"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/age/source-map/avro-schema/element_0",
       "sourcemaps:element": "raml-shapes:range",
-      "sourcemaps:value": "union"
+      "sourcemaps:value": "int"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/list",
@@ -1142,95 +1074,24 @@
       "sourcemaps:value": "{\n  \"name\": \"name\",\n  \"type\": \"string\",\n  \"example\": \"Donkey\"\n}"
     },
     {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:virtual-element": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/virtual-element/element_0"
-        }
-      ],
-      "sourcemaps:avro-schema": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/avro-schema/element_0"
-        }
-      ],
-      "sourcemaps:avro-raw-schema": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/avro-raw-schema/element_0"
-        }
-      ]
+      "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/scalar/default-scalar",
+      "sourcemaps:value": "[(6,4)-(6,49)]"
     },
     {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:virtual-element": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/virtual-element/element_0"
-        }
-      ],
-      "sourcemaps:avro-schema": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/avro-schema/element_0"
-        }
-      ],
-      "sourcemaps:avro-raw-schema": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map",
-      "@type": [
-        "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:synthesized-field": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map/synthesized-field/element_0"
-        }
-      ],
-      "sourcemaps:lexical": [
-        {
-          "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_3",
-      "sourcemaps:element": "shacl:name",
+      "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
       "sourcemaps:value": "[(6,5)-(6,18)]"
     },
     {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_1",
-      "sourcemaps:element": "raml-shapes:anyOf",
-      "sourcemaps:value": "[(6,4)-(6,61)]"
+      "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/avro-schema/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/scalar/default-scalar",
+      "sourcemaps:value": "int"
     },
     {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_0",
-      "sourcemaps:element": "shacl:defaultValue",
-      "sourcemaps:value": "[(6,45)-(6,60)]"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/lexical/element_2",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age",
-      "sourcemaps:value": "[(6,4)-(6,61)]"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/avro-schema/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age",
-      "sourcemaps:value": "union"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/source-map/avro-raw-schema/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age",
-      "sourcemaps:value": "{\n  \"name\": \"age\",\n  \"type\": [\n    \"null\",\n    \"int\"\n  ],\n  \"default\": null\n}"
+      "@id": "#/references/0/shape/Person/property/property/age/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/scalar/default-scalar",
+      "sourcemaps:value": "{\n  \"name\": \"age\",\n  \"type\": \"int\",\n  \"default\": 30\n}"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/age/scalar_1/source-map/synthesized-field/element_1",
@@ -1245,7 +1106,7 @@
     {
       "@id": "#/references/0/shape/Person/property/property/age/scalar_1/source-map/lexical/element_0",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/scalar_1",
-      "sourcemaps:value": "[(6,56)-(6,60)]"
+      "sourcemaps:value": "[(6,46)-(6,48)]"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node",
@@ -1446,51 +1307,6 @@
       "@id": "#/references/0/shape/Person/property/property/address/shape/Address/source-map/avro-raw-schema/element_0",
       "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/address/shape/Address",
       "sourcemaps:value": "{\n  \"name\": \"Address\",\n  \"type\": \"record\",\n  \"fields\": [\n    {\n      \"name\": \"zipcode\",\n      \"type\": \"int\"\n    }\n  ]\n}"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/virtual-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null",
-      "sourcemaps:value": "true"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/avro-schema/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null",
-      "sourcemaps:value": "null"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/avro-raw-schema/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/anyOf/nil/null",
-      "sourcemaps:value": "\"null\""
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/virtual-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar",
-      "sourcemaps:value": "true"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/avro-schema/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar",
-      "sourcemaps:value": "int"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar",
-      "sourcemaps:value": "\"int\""
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map/synthesized-field/element_1",
-      "sourcemaps:element": "shacl:datatype",
-      "sourcemaps:value": "true"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map/synthesized-field/element_0",
-      "sourcemaps:element": "core:name",
-      "sourcemaps:value": "true"
-    },
-    {
-      "@id": "#/references/0/shape/Person/property/property/age/union/age/scalar_1/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/avro/doc/apis/async-basic-avsc.yaml#/references/0/shape/Person/property/property/age/union/age/scalar_1",
-      "sourcemaps:value": "[(6,56)-(6,60)]"
     },
     {
       "@id": "#/references/0/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/in/data-node/source-map",
