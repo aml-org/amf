@@ -52,6 +52,12 @@ abstract class BaseAvroSchemaPayloadValidator(
     validateForPayload(payload, getReportProcessor)
   }
 
+  // we don't need to JSON-parse the raw as in JSON Schema because the validation plugin uses the raw string
+  override def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] =
+    literalRepresentation(payload) map { payloadText =>
+      loadAvro(payloadText)
+    }
+
   protected def loadAvro(text: String): LoadedObj
 
   protected def loadAvroSchema(text: String): LoadedSchema

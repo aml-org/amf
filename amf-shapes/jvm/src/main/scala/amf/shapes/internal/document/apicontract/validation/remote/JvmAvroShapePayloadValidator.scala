@@ -7,7 +7,12 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.shapes.client.scala.model.domain.SchemaShape
-import amf.shapes.internal.validation.avro.{AvroRawNotFound, AvroSchemaReportValidationProcessor, BaseAvroSchemaPayloadValidator, InvalidAvroSchema}
+import amf.shapes.internal.validation.avro.{
+  AvroRawNotFound,
+  AvroSchemaReportValidationProcessor,
+  BaseAvroSchemaPayloadValidator,
+  InvalidAvroSchema
+}
 import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
@@ -68,12 +73,6 @@ class JvmAvroShapePayloadValidator(
     }
   }
 
-  // we don't need to JSON-parse the raw as in JSON Schema because the validation plugin uses the raw string
-  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] =
-    literalRepresentation(payload) map { raw =>
-      SchemaShape(payload.annotations).withRaw(raw).withMediaType(payload.mediaType.value())
-    }
-
   override protected def loadSchema(
       avroSchema: CharSequence,
       element: DomainElement,
@@ -108,13 +107,16 @@ case class JvmReportValidationProcessor(
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
-  // todo: catch and process each specific exception
   override def processException(r: Throwable, element: Option[DomainElement]): AMFValidationReport = {
     val results = r match {
       case e: AvroTypeException =>
+        val msg =
+          if (e.getMessage.contains("field name not found")) e.getMessage
+          else s"invalid schema type: ${e.getMessage}"
+        // todo: may enrich message by adding the raw schema in which the error was found (to mitigate not having the location)
         Seq(
           AMFValidationResult(
-            message = s"invalid schema type: ${e.getMessage}",
+            message = msg,
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
             targetProperty = Some(e.getMessage.split(":").last.trim),
