@@ -19,7 +19,6 @@ class AsyncAvroValidTCKParsingTest extends AsyncAvroCycleTest {
   }
 
   test("test async with an AVRO Schema parsing") {
-    cycle("avro-inline.yaml", "avro-inline.dumped.yaml", Async20YamlHint, Async20YamlHint)
+    cycle("avro-map-values-union.yaml", "avro-map-values-union.dumped.yaml", Async20YamlHint, Async20YamlHint)
   }
-
 }

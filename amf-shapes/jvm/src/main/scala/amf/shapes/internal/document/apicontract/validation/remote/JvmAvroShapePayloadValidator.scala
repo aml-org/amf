@@ -42,6 +42,7 @@ class JvmAvroShapePayloadValidator(
       throw new InvalidAvroSchema(e)
   }
 
+  // used for validating parsed shape in parsing
   override def validateAvroSchema(): Seq[AMFValidationResult] = try {
     val raw = getAvroRaw(shape) match {
       case Some(raw) => raw

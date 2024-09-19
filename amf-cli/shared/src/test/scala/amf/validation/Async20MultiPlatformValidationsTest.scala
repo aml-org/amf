@@ -5,7 +5,12 @@ import org.scalatest.matchers.should.Matchers
 class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest with Matchers {
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/async20/validations/"
+  val avroTCKPath: String          = "file://amf-cli/shared/src/test/resources/avro/tck/apis/valid/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
+
+  test("Validate avro payload in message") {
+    validate("avro-map-values-union.yaml", Some("avro-map-values-union.report"), avroTCKPath)
+  }
 
   test("Draft 7 - conditional sub schemas validations") {
     validate("draft-7-validations.yaml", Some("draft-7-validations.report"))

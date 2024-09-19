@@ -26,6 +26,7 @@ object AvroSchemaValidatorBuilder {
   ): BaseAvroSchemaPayloadValidator =
     new JvmAvroShapePayloadValidator(shape, mediaType, validationMode, configuration)
 
+  // used for validating parsed shape in parsing
   def validateSchema(
       schema: Shape,
       mediaType: String = Mimes.`application/json`,
