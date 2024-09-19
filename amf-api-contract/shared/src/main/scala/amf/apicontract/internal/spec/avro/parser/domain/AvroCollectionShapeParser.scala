@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.AnyShape
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
 
 abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: String)(implicit ctx: AvroSchemaContext)
     extends AvroComplexShapeParser(map) {
@@ -27,7 +27,9 @@ abstract class AvroCollectionShapeParser[T <: AnyShape](map: YMap, membersKey: S
         val avroType    = scalar.text
         val parsedShape = AvroTextTypeParser(avroType, None).parse()
         annotatedAvroShape(parsedShape, avroType, e.value)
-      case map: YMap => new AvroShapeParser(map).parse().getOrElse(AnyShape(Annotations(e.value)))
+      case map: YMap      => new AvroShapeParser(map).parse().getOrElse(AnyShape(Annotations(e.value)))
+      case seq: YSequence => AvroUnionShapeParser(seq.nodes, map).parse()
+      case _              => AnyShape(Annotations(e.value))
     }
   }
 }

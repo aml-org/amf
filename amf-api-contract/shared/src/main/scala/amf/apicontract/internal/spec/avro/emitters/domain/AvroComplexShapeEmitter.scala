@@ -19,12 +19,11 @@ abstract class AvroComplexShapeEmitter(
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val avroType = spec.getAvroType(shape).getOrElse("default")
-    avroType match {
-      case "union" => // do not emit "type": "union"
+    spec.getAvroType(shape) match {
+      case Some("union") => // do not emit "type": "union"
       // do not emit type in record fields (it's inside the range)
-      case s: String if !shape.isInstanceOf[PropertyShape] => b.entry("type", s)
-      case _                                               => // ignore
+      case Some(s: String) if !shape.isInstanceOf[PropertyShape] && s.nonEmpty => b.entry("type", s)
+      case _                                                                   => // do not emit empty types
     }
     emitCommonFields(b)
     emitSpecificFields(b)
@@ -32,10 +31,16 @@ abstract class AvroComplexShapeEmitter(
   }
 
   def emitCommonFields(b: EntryBuilder): Unit = {
-    shape.fields.entry(AnyShapeModel.Name).foreach(f => b.entry("name", f.scalar.toString))
-    shape.fields.entry(AnyShapeModel.AvroNamespace).foreach(f => b.entry("namespace", f.scalar.toString))
-    shape.fields.entry(AnyShapeModel.Aliases).foreach(f => spec.arrayEmitter("aliases", f, ordering).emit(b))
-    shape.fields.entry(AnyShapeModel.Description).foreach(f => b.entry("doc", f.scalar.toString))
+    shape.fields.entry(AnyShapeModel.Name).foreach(f => if (!f.value.isSynthesized) b.entry("name", f.scalar.toString))
+    shape.fields
+      .entry(AnyShapeModel.AvroNamespace)
+      .foreach(f => if (!f.value.isSynthesized) b.entry("namespace", f.scalar.toString))
+    shape.fields
+      .entry(AnyShapeModel.Aliases)
+      .foreach(f => if (!f.value.isSynthesized) spec.arrayEmitter("aliases", f, ordering).emit(b))
+    shape.fields
+      .entry(AnyShapeModel.Description)
+      .foreach(f => if (!f.value.isSynthesized) b.entry("doc", f.scalar.toString))
   }
 
   def emitSpecificFields(b: EntryBuilder): Unit
