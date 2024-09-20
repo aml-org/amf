@@ -215,57 +215,6 @@
                   }
                 ]
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/schema-in-field.json#/shape/AllTypes/property/property/default-property/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/schema-in-field.json#/shape/AllTypes/property/property/default-property/source-map/avro-raw-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"array\",\n    \"items\": \"string\"\n  },\n  \"default\": []\n}"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/schema-in-field.json#/shape/AllTypes/property/property/default-property/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/schema-in-field.json#/shape/AllTypes/property/property/default-property"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "array"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/schema-in-field.json#/shape/AllTypes/property/property/default-property/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "array"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
