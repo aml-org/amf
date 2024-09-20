@@ -51,7 +51,7 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
           case _ =>
         }
       )
-    super.parseDefault(map, p)
+    super.parseDefault(map, p.range)
     p
   }
 }
