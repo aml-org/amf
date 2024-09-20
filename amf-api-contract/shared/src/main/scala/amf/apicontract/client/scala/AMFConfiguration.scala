@@ -13,6 +13,7 @@ import amf.apicontract.internal.spec.avro.transformation.{
   AvroSchemaEditingPipeline,
   AvroSchemaTransformationPipeline
 }
+import amf.apicontract.internal.spec.avro.validation.AvroSchemaPayloadValidationPlugin
 import amf.apicontract.internal.spec.avro.{AvroParsePlugin, AvroRenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
@@ -53,6 +54,8 @@ import amf.shapes.client.scala.plugin.{AvroSchemaShapePayloadValidationPlugin, J
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 import amf.shapes.internal.spec.jsonschema.JsonSchemaParsePlugin
+import amf.shapes.internal.validation.model.ShapeEffectiveValidations.AvroSchemaEffectiveValidations
+import amf.shapes.internal.validation.model.ShapeValidationProfiles.AvroSchemaValidationProfile
 
 import scala.concurrent.Future
 
@@ -167,7 +170,13 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 object AvroConfiguration extends APIConfigurationBuilder {
   def Avro(): AMFConfiguration = {
     common()
-      .withPlugins(List(AvroParsePlugin, AvroRenderPlugin))
+      .withPlugins(
+        List(
+          AvroParsePlugin,
+          AvroRenderPlugin,
+          AvroSchemaPayloadValidationPlugin()
+        )
+      )
       .withTransformationPipelines(
         List(
           AvroSchemaTransformationPipeline(),
@@ -175,6 +184,7 @@ object AvroConfiguration extends APIConfigurationBuilder {
           AvroSchemaCachePipeline()
         )
       )
+      .withValidationProfile(AvroSchemaValidationProfile, AvroSchemaEffectiveValidations)
   }
 }
 
