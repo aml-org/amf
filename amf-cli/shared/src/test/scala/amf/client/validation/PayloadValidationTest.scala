@@ -1,6 +1,7 @@
 package amf.client.validation
 
 import amf.cli.internal.convert.NativeOps
+import amf.client.validation.AvroTestSchemas.recordSchema
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.AMFGraphConfiguration
@@ -281,30 +282,14 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   }
 
   test("Invalid avro record payload") {
-    val rawSchema =
-      """
-        |{
-        |  "type": "record",
-        |  "name": "LongList",
-        |  "namespace": "root",
-        |  "aliases": ["LinkedLongs"],
-        |  "fields": [
-        |    {
-        |      "name": "value",
-        |      "type": "long"
-        |    }
-        |  ]
-        |}
-        """.stripMargin
-
     val avroSchema = NodeShape()
     avroSchema.annotations += AVROSchemaType("record")
-    avroSchema.annotations += AVRORawSchema(rawSchema)
+    avroSchema.annotations += AVRORawSchema(AvroTestSchemas.recordSchema)
 
     val payload =
       """
         |{
-        |  "someString": "invalid string value"
+        |  "shouldBeString": 123
         |}
         """.stripMargin
 
@@ -315,7 +300,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
         assert(!r.conforms)
       }
   }
-
 
   test("valid avro int payload") {
     val shape = ScalarShape().withName("int")
@@ -378,6 +362,14 @@ object AvroTestSchemas {
       |      "type": "string"
       |    }
       |  ]
+      |}
+        """.stripMargin
+
+  val int =
+    """
+      |{
+      |  "type": "int",
+      |  "name": "this is an int"
       |}
         """.stripMargin
 }

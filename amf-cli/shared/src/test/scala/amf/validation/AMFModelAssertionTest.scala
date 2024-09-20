@@ -5,6 +5,7 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -724,6 +725,48 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val mapShape        = getAvroShape(transformResult).asInstanceOf[NodeShape]
       val values          = mapShape.additionalPropertiesSchema
       values.annotations.lexical() should not be null
+    }
+  }
+
+  // W-16701643
+  test("async avro payload validation") {
+    val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      parseResult.results.isEmpty shouldBe true
+      transformResult.results.isEmpty shouldBe true
+      val avroPayload = getFirstResponsePayload(transformResult.baseUnit, isWebApi = false)
+      val avroShape   = avroPayload.schema
+      val payloadValidator = asyncConfig
+        .elementClient()
+        .payloadValidatorFor(avroShape, Mimes.`application/json`, ValidationMode.StrictValidationMode)
+      val invalidPayload = """{"simpleIntField": "invalid string value"}""".trim
+      val validPayload   = """{"simpleIntField": 123}""".trim
+      val invalidResult  = payloadValidator.syncValidate(invalidPayload)
+      val validResult    = payloadValidator.syncValidate(validPayload)
+      invalidResult.conforms shouldBe false
+      validResult.conforms shouldBe true
+    }
+  }
+
+  // W-16701643
+  test("async avro payload validation with avro payload in external file") {
+    val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example-refs.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      parseResult.results.isEmpty shouldBe true
+      transformResult.results.isEmpty shouldBe true
+      val avroPayload = getFirstResponsePayload(transformResult.baseUnit, isWebApi = false)
+      val avroShape   = avroPayload.schema
+      val payloadValidator = asyncConfig
+        .elementClient()
+        .payloadValidatorFor(avroShape, Mimes.`application/json`, ValidationMode.StrictValidationMode)
+      val invalidPayload = """{"simpleIntField": "invalid string value"}""".trim
+      val validPayload   = """{"simpleIntField": 123}""".trim
+      val invalidResult  = payloadValidator.syncValidate(invalidPayload)
+      val validResult    = payloadValidator.syncValidate(validPayload)
+      invalidResult.conforms shouldBe false
+      validResult.conforms shouldBe true
     }
   }
 }
