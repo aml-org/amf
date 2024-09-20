@@ -164,4 +164,14 @@ class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
       configOverride = Some(config)
     )
   }
+
+  if (platform.name == "jvm") { // We were able only to change this behavior in JVM validator. JS one is still strict (only letter, numbers and '_')
+    test("validate record name with special chars") {
+      validate(
+        "name-with-special-chars.json",
+        None,
+        configOverride = Some(config)
+      )
+    }
+  }
 }
