@@ -161,4 +161,12 @@ class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
       configOverride = Some(config)
     )
   }
+
+  test("validate wrong type") {
+    validate(
+      "wrong-type.json",
+      Some("wrong-type.json.report"),
+      configOverride = Some(config)
+    )
+  }
 }

@@ -1,7 +1,9 @@
 package amf.apicontract.internal.spec.avro.parser.domain
+
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.apicontract.unsafe.AvroSchemaValidatorBuilder.validateSchema
+import amf.shapes.internal.validation.avro.AvroKnownErrors
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAvroSchema
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
@@ -18,26 +20,19 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case YType.Str =>
         val specificType = value.as[YScalar].text
         (Some(parseType(specificType)), specificType)
-      case _ =>
-        (None, "invalid avro type")
+      case _ => (None, "invalid")
     }
 
-    maybeShape.map(annotatedAvroShape(_, avroType, map))
+    postProcessShape(maybeShape, avroType, map)
 
-    maybeShape.foreach { shape =>
-      validateSchema(shape).foreach { validation =>
-        val msg = validation.message
-        // todo: fix them instead of filter theme
-        val invalidDefaultValidation = msg.contains("[] not a ")
-        val invalidTypeValidationJvm = msg.startsWith("No type:") && msg.contains("\"type\":[")
-        val invalidTypeValidationJs  = msg.startsWith("unknown type: [")
-        val filterValidation         = invalidDefaultValidation || invalidTypeValidationJvm || invalidTypeValidationJs
-        if (!filterValidation) {
-          ctx.violation(InvalidAvroSchema, shape, validation.message)
-        }
-      }
-    }
     maybeShape
+  }
+
+  private def postProcessShape(maybeShape: Option[AnyShape], avroType: String, map: YMap): Unit = {
+    val shape = maybeShape.getOrElse(AnyShape(map))
+    annotatedAvroShape(shape, avroType, map)
+    val results = validateSchema(shape)
+    AvroKnownErrors.filterResults(results).foreach(r => ctx.violation(InvalidAvroSchema, shape, r.message))
   }
 
   private def parseUnion(members: Seq[YNode]): AnyShape = AvroUnionShapeParser(members, map).parse()
