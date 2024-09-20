@@ -42,6 +42,31 @@
                     "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                   }
                 ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/boolean-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "false"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/boolean-primitive-type/scalar/default-scalar/source-map",
@@ -91,31 +116,6 @@
               {
                 "@value": "this is a documentation for the boolean primitive type"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/boolean-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "false"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -139,6 +139,31 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/int-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "123"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -190,31 +215,6 @@
               {
                 "@value": "this is a documentation for the int primitive type"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/int-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "123"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -238,6 +238,31 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#long"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/long-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "123"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -289,31 +314,6 @@
               {
                 "@value": "this is a documentation for the long primitive type"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/long-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "123"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -337,6 +337,31 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#float"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/float-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "1.0"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#double"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -388,31 +413,6 @@
               {
                 "@value": "this is a documentation for the float primitive type"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/float-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "1.0"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#double"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -436,6 +436,31 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/double-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "1.0"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#double"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -487,31 +512,6 @@
               {
                 "@value": "this is a documentation for the double primitive type"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/double-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "1.0"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#double"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -535,6 +535,31 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#bytes"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/bytes-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "\u00FF"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -586,31 +611,6 @@
               {
                 "@value": "this is a documentation for the bytes primitive type"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/bytes-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "\u00FF"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -634,6 +634,31 @@
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
                     "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/string-primitive-type/scalar/default-scalar/scalar_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "foo"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -684,31 +709,6 @@
             "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "this is a documentation for the string primitive type"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/string-primitive-type/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "foo"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
               }
             ]
           },
@@ -916,31 +916,6 @@
               {
                 "@value": "this is a documentation for the union type with recursive element"
               }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/union/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "null"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#nil"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
             ]
           },
           {
@@ -1069,23 +1044,6 @@
                         ]
                       }
                     ]
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/default-property/array_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Array",
-                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/2000/01/rdf-schema#member": [],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "array_1"
                   }
                 ]
               }
@@ -1267,23 +1225,6 @@
                         ]
                       }
                     ]
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/default-property_1/array_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Array",
-                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/2000/01/rdf-schema#member": [],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "array_1"
                   }
                 ]
               }
@@ -1471,31 +1412,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "Suit"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/Suit/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "SPADES"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
               }
             ]
           },
@@ -1702,21 +1618,6 @@
                         ]
                       }
                     ]
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/all-types.json#/shape/AllTypes/property/property/default-property_2/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "object_1"
                   }
                 ]
               }

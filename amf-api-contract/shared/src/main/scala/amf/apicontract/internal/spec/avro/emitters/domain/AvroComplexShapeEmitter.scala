@@ -47,11 +47,11 @@ abstract class AvroComplexShapeEmitter(
 
   def emitDefault(b: EntryBuilder): Unit = {
     shape match {
-      case p: PropertyShape if p.range.fields.entry(ShapeModel.Default).isDefined => return
-      case _                                                                      =>
-    }
-    shape.fields.entry(ShapeModel.Default).foreach { _ =>
-      b.entry("default", DataNodeEmitter(shape.default, ordering)(spec.eh).emit(_))
+      case p: PropertyShape => // ignore because the range has the default
+      case _ =>
+        shape.fields.entry(ShapeModel.Default).foreach { _ =>
+          b.entry("default", DataNodeEmitter(shape.default, ordering)(spec.eh).emit(_))
+        }
     }
   }
 

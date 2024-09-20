@@ -92,6 +92,23 @@
                     ]
                   }
                 ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/arr/array/default-array/array_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Array",
+                      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/2000/01/rdf-schema#member": [],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "array_1"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/arr/array/default-array/source-map",
@@ -135,23 +152,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "arr"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/arr/array_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Array",
-                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/2000/01/rdf-schema#member": [],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "array_1"
-                  }
-                ]
               }
             ]
           },
@@ -228,6 +228,21 @@
                     ]
                   }
                 ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/map/shape/default-node/object_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "object_1"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/map/shape/default-node/source-map",
@@ -271,21 +286,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "map"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/nested-schema.json#/shape/TestRecordWithMapsAndArrays/property/property/map/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "object_1"
-                  }
-                ]
               }
             ]
           },

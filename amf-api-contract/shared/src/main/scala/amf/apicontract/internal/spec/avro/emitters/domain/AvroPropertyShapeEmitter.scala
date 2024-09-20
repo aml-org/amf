@@ -41,8 +41,7 @@ case class AvroPropertyShapeEmitter(
         }
 
       case nestedShape =>
-        val avroType = spec.getAvroType(nestedShape).getOrElse("default")
-        b.entry("type", avroType)
+        AvroShapeEmitter(nestedShape, ordering).entries().foreach(e => e.emit(b))
     }
   }
 
@@ -70,7 +69,7 @@ case class AvroPropertyShapeEmitter(
     checkDuplicatedField(AnyShapeModel.Description, "doc")
   }
 
-  def isFieldDefinedTwice(field: Field): Boolean = {
+  private def isFieldDefinedTwice(field: Field): Boolean = {
     val propField  = prop.fields.entry(field)
     val rangeField = prop.range.fields.entry(field)
     propField match {
@@ -86,7 +85,7 @@ case class AvroPropertyShapeEmitter(
   }
 
   // checks if common fields are defined differently in the prop and it's range
-  def areCommonFieldsDefinedTwice(): Boolean = {
+  private def areCommonFieldsDefinedTwice(): Boolean = {
     val commonFields = Seq(AnyShapeModel.Name, AnyShapeModel.Aliases, AnyShapeModel.Description)
     commonFields.map(isFieldDefinedTwice).exists(identity)
   }
@@ -94,5 +93,4 @@ case class AvroPropertyShapeEmitter(
   override def position(): Position = pos(prop.annotations)
 
   def emitters(): Seq[EntryEmitter] = Seq(this)
-
 }
