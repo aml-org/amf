@@ -80,7 +80,7 @@ object AvroFieldOrder extends Enumeration {
 }
 
 case class AvroRecordFieldParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeParser(map) {
-  override def parseTypeEntry(value: YNode): Option[AnyShape] = {
+  override def parseTypeEntry(value: YNode, isRoot: Boolean = false): Option[AnyShape] = {
     value.asOption[YMap] match {
       case Some(map) => AvroRecordFieldParser(map).parse()
       case _         => super.parseTypeEntry(value)

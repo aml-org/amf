@@ -3,16 +3,15 @@ package amf.apicontract.internal.spec.avro.parser.domain
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.apicontract.unsafe.AvroSchemaValidatorBuilder.validateSchema
-import amf.shapes.internal.validation.avro.AvroKnownErrors
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAvroSchema
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKeyExtractor {
   val typeValue: Option[YNode] = map.typeValue
 
-  def parse(): Option[AnyShape] = typeValue.flatMap(parseTypeEntry)
+  def parse(): Option[AnyShape] = typeValue.flatMap(parseTypeEntry(_, isRoot = true))
 
-  def parseTypeEntry(value: YNode): Option[AnyShape] = {
+  def parseTypeEntry(value: YNode, isRoot: Boolean = false): Option[AnyShape] = {
     val (maybeShape, avroType) = value.tagType match {
       case YType.Seq =>
         val union = parseUnion(value.as[Seq[YNode]])
@@ -23,16 +22,17 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case _ => (None, "invalid")
     }
 
-    postProcessShape(maybeShape, avroType, map)
+    postProcessShape(maybeShape, avroType, map, isRoot)
 
     maybeShape
   }
 
-  private def postProcessShape(maybeShape: Option[AnyShape], avroType: String, map: YMap): Unit = {
+  private def postProcessShape(maybeShape: Option[AnyShape], avroType: String, map: YMap, isRoot: Boolean): Unit = {
     val shape = maybeShape.getOrElse(AnyShape(map))
     annotatedAvroShape(shape, avroType, map)
-    val results = validateSchema(shape)
-    AvroKnownErrors.filterResults(results).foreach(r => ctx.violation(InvalidAvroSchema, shape, r.message))
+    if (isRoot) {
+      validateSchema(shape).foreach(r => ctx.violation(InvalidAvroSchema, shape, r.message))
+    }
   }
 
   private def parseUnion(members: Seq[YNode]): AnyShape = AvroUnionShapeParser(members, map).parse()

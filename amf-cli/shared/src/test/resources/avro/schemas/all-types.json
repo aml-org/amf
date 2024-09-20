@@ -48,50 +48,73 @@
       "default": "foo"
     },
     {
-      "name": "union",
+      "name": "unionProperty",
       "doc": "this is a documentation for the union type with recursive element",
       "type": [
         "null",
         "AllTypes"
-      ],
-      "default": null
+      ]
     },
     {
-      "type": "array",
-      "items": "long",
-      "default": [],
-      "name": "array1"
-    },
-    {
-      "type": "array",
-      "items": {
+      "name": "arrayProperty1",
+      "type": {
         "type": "array",
-        "items": "string",
-        "name": "innerArray1"
-      },
-      "name": "array2",
-      "default": []
+        "items": "long",
+        "default": [
+          30000000000,
+          30000000000
+        ]
+      }
     },
     {
-      "type": "enum",
-      "name": "Suit",
-      "symbols": [
-        "SPADES",
-        "HEARTS",
-        "DIAMONDS",
-        "CLUBS"
-      ],
-      "default": "SPADES"
+      "name": "arrayProperty2",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": "string",
+          "name": "innerArray1"
+        },
+        "default": [
+          [
+            "a",
+            "b"
+          ],
+          [
+            "c"
+          ]
+        ]
+      }
     },
     {
-      "type": "fixed",
-      "size": 16,
-      "name": "md5"
+      "name": "enumProperty",
+      "type": {
+        "name": "Suit",
+        "type": "enum",
+        "symbols": [
+          "SPADES",
+          "HEARTS",
+          "DIAMONDS",
+          "CLUBS"
+        ],
+        "default": "SPADES"
+      }
     },
     {
-      "type": "map",
-      "values": "long",
-      "default": {}
+      "name": "propertyFixed",
+      "type": {
+        "type": "fixed",
+        "size": 16,
+        "name": "md5"
+      }
+    },
+    {
+      "name": "propertyMap",
+      "type": {
+        "type": "map",
+        "values": "long",
+        "default": {}
+      }
     }
   ]
 }

@@ -10,9 +10,12 @@
     {
       "name": "next",
       "doc": "this is a documentation for the union type with recursive element",
-      "type": "array",
-      "items": "LongList",
-      "order": "descending"
+      "type": [
+        "null",
+        "LongList"
+      ],
+      "order": "descending",
+      "default": null
     }
   ]
 }
