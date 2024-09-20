@@ -27,4 +27,32 @@ class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest wit
   test("Validate example defined in message trait") {
     validate("applied-message-trait-invalid-example.yaml", Some("invalid-example-applied-trait.report"))
   }
+
+  test("Validate avro payload against an invalid example defined in message examples") {
+    validate(
+      "async-avro-payload-validation/invalid-payload-example.yaml",
+      Some("async-avro-payload-validation/invalid-payload-example.report")
+    )
+  }
+
+  test("Validate avro payload against a valid example defined in message examples") {
+    validate(
+      "async-avro-payload-validation/valid-payload-example.yaml",
+      Some("async-avro-payload-validation/valid-payload-example.report")
+    )
+  }
+
+  test("Validate avro payload (as ref) against an invalid example defined in message examples") {
+    validate(
+      "async-avro-payload-validation/invalid-payload-example-refs.yaml",
+      Some("async-avro-payload-validation/invalid-payload-example-refs.report")
+    )
+  }
+
+  test("Validate avro payload (as ref) against a valid example defined in message examples") {
+    validate(
+      "async-avro-payload-validation/valid-payload-example-refs.yaml",
+      Some("async-avro-payload-validation/valid-payload-example-refs.report")
+    )
+  }
 }
