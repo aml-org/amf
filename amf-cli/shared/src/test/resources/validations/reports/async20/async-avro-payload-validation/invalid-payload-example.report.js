@@ -10,5 +10,5 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml#/async-api/endpoint/first-channel/supportedOperation/subscribe/returns/resp/default-response/examples/example/default-example_1
   Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml#/async-api/endpoint/first-channel/supportedOperation/subscribe/returns/resp/default-response/examples/example/default-example_1
-  Range: [(21,0)-(22,34)]
+  Range: [(20,0)-(21,34)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml
