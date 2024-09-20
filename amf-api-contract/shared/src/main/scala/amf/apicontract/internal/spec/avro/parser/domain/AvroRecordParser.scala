@@ -24,10 +24,9 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
   private def parsePropertyRange(p: PropertyShape, map: YMap, ann: Annotations): Unit = {
     AvroRecordFieldParser(map).parse() match {
       case Some(fieldShape) =>
-        getAvroType(fieldShape).foreach(avroTypeAnnotation => ann += avroTypeAnnotation)
-        p.setWithoutId(PropertyShapeModel.Range, fieldShape, fieldShape.annotations)
+        p.setWithoutId(PropertyShapeModel.Range, fieldShape, Annotations.inferred())
       case None =>
-        p.setWithoutId(PropertyShapeModel.Range, AnyShape(ann), ann)
+        p.setWithoutId(PropertyShapeModel.Range, AnyShape(ann), Annotations.inferred())
     }
   }
 
