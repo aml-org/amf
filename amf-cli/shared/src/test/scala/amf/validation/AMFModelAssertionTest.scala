@@ -769,4 +769,15 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       validResult.conforms shouldBe true
     }
   }
+
+  // bug ALS
+  test("avro record empty `type` field should have lexical information") {
+    val api = s"$basePath/avro/record-empty-type.avsc"
+    avroClient.parse(api) flatMap { parseResult =>
+      val transformResult   = avroClient.transform(parseResult.baseUnit)
+      val record            = getAvroShape(transformResult).asInstanceOf[NodeShape]
+      val recordFieldSchema = record.properties.head.range
+      recordFieldSchema.annotations.lexical() should not be null
+    }
+  }
 }
