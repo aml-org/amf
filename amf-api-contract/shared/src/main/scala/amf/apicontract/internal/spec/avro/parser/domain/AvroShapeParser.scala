@@ -46,7 +46,7 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case "fixed"               => parseFixed()
       case _ if name.isPrimitive => parsePrimitiveType(name)
       // todo: should validate invalid type here? already validating with validator
-      case _ => AnyShape() // ignore
+      case _ => AnyShape(map)
     }
   }
 
