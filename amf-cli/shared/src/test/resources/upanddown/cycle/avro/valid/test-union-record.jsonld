@@ -71,6 +71,21 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/union/amount/anyOf/nil/null/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/union/amount/anyOf/nil/null"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"null\""
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -106,6 +121,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "bytes"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/union/amount/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/union/amount/anyOf/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"bytes\""
                               }
                             ]
                           }
@@ -164,6 +194,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/union/amount/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/union/amount"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"amount\",\n  \"type\": [\n    \"null\",\n    \"bytes\"\n  ],\n  \"default\": null\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -172,67 +217,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "amount"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "null"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#nil"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "union"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/property/property/amount/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "union"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -264,6 +248,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "record"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord/source-map/avro-raw-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/test-union-record.json#/shape/TestUnionRecord"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"type\": \"record\",\n  \"name\": \"TestUnionRecord\",\n  \"namespace\": \"org.apache.avro.specific\",\n  \"fields\": [\n    {\n      \"name\": \"amount\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ],\n      \"default\": null\n    }\n  ]\n}"
                   }
                 ]
               }

@@ -29,5 +29,4 @@ case class OasTypePartEmitter(
     }
 
   override def position(): Position = getEmitters.headOption.map(_.position()).getOrElse(ZERO)
-
 }

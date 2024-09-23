@@ -94,4 +94,10 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     _internal.withSize(size)
     this
   }
+
+  @JSExport
+  def avroSchemaType(): ClientOption[String] = _internal.avroSchemaType.asClient
+
+  @JSExport
+  def isAvroSchema(): Boolean = _internal.isAvroSchema
 }

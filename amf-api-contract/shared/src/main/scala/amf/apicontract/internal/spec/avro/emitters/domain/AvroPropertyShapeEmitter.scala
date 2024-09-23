@@ -2,6 +2,7 @@ package amf.apicontract.internal.spec.avro.emitters.domain
 
 import amf.apicontract.internal.spec.avro.emitters.context.AvroShapeEmitterContext
 import amf.apicontract.internal.spec.avro.parser.domain.AvroFieldOrder
+import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
@@ -40,8 +41,7 @@ case class AvroPropertyShapeEmitter(
         }
 
       case nestedShape =>
-        val avroType = spec.getAvroType(nestedShape).getOrElse("default")
-        b.entry("type", avroType)
+        AvroShapeEmitter(nestedShape, ordering).entries().foreach(e => e.emit(b))
     }
   }
 
@@ -50,10 +50,16 @@ case class AvroPropertyShapeEmitter(
     def checkDuplicatedField(field: Field, avroField: String): Unit = {
       prop.fields.entry(field).foreach { f =>
         val rangeNameField = prop.range.fields.entry(field)
-        rangeNameField match {
-          case Some(fe: FieldEntry) if f.scalar.toString != fe.value.toString => b.entry(avroField, f.scalar.toString)
-          case None                                                           => b.entry(avroField, f.scalar.toString)
-          case _                                                              => // ignore
+        val shouldEmit = rangeNameField match {
+          case Some(fe: FieldEntry) if f.scalar.toString != fe.value.toString => true
+          case None                                                           => true
+          case _                                                              => false
+        }
+        if (shouldEmit) {
+          f.value.value match {
+            case AmfArray(values, _) => b.entry(avroField, _.list(pb => values.foreach(pb += _.toString)))
+            case _                   => b.entry(avroField, f.scalar.toString)
+          }
         }
       }
     }
@@ -63,7 +69,7 @@ case class AvroPropertyShapeEmitter(
     checkDuplicatedField(AnyShapeModel.Description, "doc")
   }
 
-  def isFieldDefinedTwice(field: Field): Boolean = {
+  private def isFieldDefinedTwice(field: Field): Boolean = {
     val propField  = prop.fields.entry(field)
     val rangeField = prop.range.fields.entry(field)
     propField match {
@@ -79,7 +85,7 @@ case class AvroPropertyShapeEmitter(
   }
 
   // checks if common fields are defined differently in the prop and it's range
-  def areCommonFieldsDefinedTwice(): Boolean = {
+  private def areCommonFieldsDefinedTwice(): Boolean = {
     val commonFields = Seq(AnyShapeModel.Name, AnyShapeModel.Aliases, AnyShapeModel.Description)
     commonFields.map(isFieldDefinedTwice).exists(identity)
   }
@@ -87,5 +93,4 @@ case class AvroPropertyShapeEmitter(
   override def position(): Position = pos(prop.annotations)
 
   def emitters(): Seq[EntryEmitter] = Seq(this)
-
 }

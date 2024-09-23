@@ -1,8 +1,8 @@
 package amf.shapes.internal.domain.parser
 
 import amf.core.client.scala.model.DataType
-import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.common.TypeDef._
 import org.yaml.model.YType
 
 /** XSD TypeDef mapping
@@ -93,6 +93,7 @@ object TypeDefXsdMapping {
       case DataType.Time         => TimeOnlyType
       case DataType.Date         => DateOnlyType
       case DataType.Byte         => ByteType
+      case DataType.Bytes        => BytesType
       case DataType.Binary       => BinaryType
       case DataType.Password     => PasswordType
       case DataType.Nil          => NilType

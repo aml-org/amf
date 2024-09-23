@@ -4,12 +4,10 @@ info:
   version: 1.0.0
 components:
   schemas:
-    Person:
-      type: string
+    Person: {}
 channels:
   mychannel:
     publish:
       message:
         schemaFormat: application/vnd.apache.avro;version=1.9.0
-        payload:
-          $ref: "#/components/schemas/Person"
+        payload: {}

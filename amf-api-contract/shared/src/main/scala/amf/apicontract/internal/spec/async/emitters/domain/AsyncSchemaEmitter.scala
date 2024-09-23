@@ -2,18 +2,20 @@ package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.internal.spec.async.emitters.context.Async20SpecEmitterContext
 import amf.apicontract.internal.spec.async.parser.domain.AsyncSchemaFormats
+import amf.apicontract.internal.spec.avro.emitters.context.AvroShapeEmitterContext
+import amf.apicontract.internal.spec.avro.emitters.domain.AvroShapeEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasLikeSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter
 import amf.apicontract.internal.spec.spec.toRaml
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.{AVROSchema, RAML10SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.emitter.OasTypePartEmitter
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
 case class AsyncSchemaEmitter(
@@ -59,9 +61,9 @@ case class AsyncSchemaEmitter(
       key,
       b => {
         val newCtx = new Async20SpecEmitterContext(spec.eh, config = spec.renderConfig, schemaVersion = schemaVersion)
-        // todo: call a specific AVRO Schema emitter (tbd in W-15633198)
-        OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
-          .emit(b)
+        val entries =
+          AvroShapeEmitter(shape, ordering)(AvroShapeEmitterContext(newCtx.eh, newCtx.renderConfig)).entries()
+        b.obj((traverse(entries, _)))
       }
     )
   }

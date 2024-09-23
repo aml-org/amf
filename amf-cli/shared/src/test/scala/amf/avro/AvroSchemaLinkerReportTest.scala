@@ -2,9 +2,10 @@ package amf.avro
 
 import amf.apicontract.client.scala.AsyncAPIConfiguration.Async20
 import amf.apicontract.client.scala.RAMLConfiguration.RAML10
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.validation.UniquePlatformReportGenTest
 
-class AvroSchemaLinkerReportTest extends UniquePlatformReportGenTest with AvroSchemaDocumentTest {
+class AvroSchemaLinkerReportTest extends UniquePlatformReportGenTest with AvroSchemaDocumentTest with PlatformSecrets {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/avro/doc/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/avro/doc/reports/"
 

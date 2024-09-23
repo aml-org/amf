@@ -165,10 +165,6 @@ pipeline {
 
                     echo "Starting $EXAMPLES_JOB"
                     build job: EXAMPLES_JOB, wait: false
-
-                    def newAmfVersion = sbtArtifactVersion("apiContractJVM")
-                    echo "Starting ApiQuery hook $API_QUERY_JOB with amf version: ${newAmfVersion}"
-                    build job: API_QUERY_JOB, wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
                 }
             }
         }

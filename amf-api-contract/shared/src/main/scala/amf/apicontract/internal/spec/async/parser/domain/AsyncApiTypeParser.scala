@@ -11,7 +11,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.DefinedBySpec
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.core.internal.remote.Raml10
+import amf.core.internal.remote.{Raml10, AvroSchema}
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
@@ -70,11 +70,14 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
     val result =
       Raml10TypeParser(entry, "schema", adopt, TypeInfo(), AnyDefaultType)(context).parse()
     context.futureDeclarations.resolve()
+    result.foreach(_.annotations += DefinedBySpec(Raml10))
     result
   }
 
   private def parseAvroSchema(entry: YMapEntryLike): Option[Shape] = {
-    new AvroShapeParser(entry.asMap)(new AvroSchemaContext(ctx, AvroSettings)).parse()
+    val result = new AvroShapeParser(entry.asMap)(new AvroSchemaContext(ctx, AvroSettings)).parse()
+    result.foreach(_.annotations += DefinedBySpec(AvroSchema))
+    result
   }
 }
 
@@ -83,12 +86,10 @@ case class CustomReferenceParser(entry: YMapEntryLike, parser: YMapEntryLike => 
 ) {
 
   def parse(): Option[Shape] = {
-    val shape = ctx.link(entry.value) match {
+    ctx.link(entry.value) match {
       case Left(refValue) => handleRef(refValue)
       case Right(_)       => parser(entry)
     }
-    shape.foreach(_.annotations += DefinedBySpec(Raml10))
-    shape
   }
 
   private def handleRef(refValue: String): Option[Shape] = {
@@ -115,6 +116,7 @@ case class CustomReferenceParser(entry: YMapEntryLike, parser: YMapEntryLike => 
 
   private def avroSchemaDocRef(refValue: String): Option[Shape] = {
     val result = ctx.declarations.findEncodedTypeInDocFragment(refValue)
+    result.foreach(_.annotations += DefinedBySpec(AvroSchema))
     result.map(linkAndAdopt(_, refValue))
   }
 

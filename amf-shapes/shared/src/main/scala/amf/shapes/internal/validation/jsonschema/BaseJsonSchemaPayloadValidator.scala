@@ -1,20 +1,15 @@
 package amf.shapes.internal.validation.jsonschema
 
 import amf.core.client.common.render.JsonSchemaDraft7
-import amf.core.client.common.validation.ProfileNames.AMF
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, SyamlParsedDocument}
-import amf.core.client.scala.validation.payload.{
-  AMFShapePayloadValidator,
-  PayloadParsingResult,
-  ShapeValidationConfiguration
-}
+import amf.core.client.scala.validation.payload.{PayloadParsingResult, ShapeValidationConfiguration}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
@@ -22,17 +17,19 @@ import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlSyntax
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.{AnyShape, FileShape, ScalarShape, UnionShape}
-import amf.shapes.internal.spec.common.emitter.PayloadEmitter
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
+import amf.shapes.internal.validation.common.{
+  CommonBaseSchemaPayloadValidator,
+  ReportValidationProcessor,
+  ValidationProcessor
+}
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator.supportedMediaTypes
-import org.mulesoft.common.client.lexical.SourceLocation
 import amf.shapes.internal.validation.payload.MaxNestingValueReached
+import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
 
 import java.io.StringWriter
-import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
@@ -50,12 +47,11 @@ abstract class BaseJsonSchemaPayloadValidator(
     mediaType: String,
     configuration: ShapeValidationConfiguration,
     shouldFailFast: Boolean
-) extends AMFShapePayloadValidator {
+) extends CommonBaseSchemaPayloadValidator {
 
-  private val defaultSeverity: String = SeverityLevels.VIOLATION
-  protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
-  protected def getReportProcessor: ValidationProcessor     = getReportProcessor(AMF)
   protected implicit val executionContext: ExecutionContext = configuration.executionContext
+
+  override protected val supportedMediaTypes: Seq[String] = BaseJsonSchemaPayloadValidator.supportedMediaTypes
 
   override def validate(payload: String): Future[AMFValidationReport] = {
     Future.successful(validateForPayload(payload, getReportProcessor))
@@ -69,36 +65,15 @@ abstract class BaseJsonSchemaPayloadValidator(
     validateForPayload(payload, getReportProcessor)
   }
 
-  protected type LoadedObj
-  protected type LoadedSchema
-  protected val validationMode: ValidationMode
-
   private val isFileShape: Boolean = shape.isInstanceOf[FileShape]
   private val isAnyType: Boolean = shape match {
     case as: AnyShape if as.isAnyType => true
     case _                            => false
   }
 
-  protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
-
-  protected def callValidator(
-      schema: LoadedSchema,
-      obj: LoadedObj,
-      fragment: Option[PayloadFragment],
-      validationProcessor: ValidationProcessor
-  ): AMFValidationReport
-
-  protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj]
-
   protected def loadJson(text: String): LoadedObj
 
   protected def loadJsonSchema(text: String): LoadedObj = loadJson(text)
-
-  protected def loadSchema(
-      jsonSchema: CharSequence,
-      element: DomainElement,
-      validationProcessor: ValidationProcessor
-  ): Either[AMFValidationReport, Option[LoadedSchema]]
 
   protected def validateForFragment(
       fragment: PayloadFragment,
@@ -119,20 +94,9 @@ abstract class BaseJsonSchemaPayloadValidator(
       payload: String,
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
-    if (!supportedMediaTypes.contains(mediaType)) {
+    if (!isValidMediaType(mediaType)) {
       validationProcessor.processResults(
-        Seq(
-          AMFValidationResult(
-            s"Unsupported payload media type '$mediaType', only ${supportedMediaTypes.toString()} supported",
-            SeverityLevels.VIOLATION,
-            "",
-            None,
-            ExampleValidationErrorSpecification.id,
-            None,
-            None,
-            null
-          )
-        )
+        Seq(mediaTypeError(mediaType))
       )
     } else
       try {
@@ -151,9 +115,7 @@ abstract class BaseJsonSchemaPayloadValidator(
       fragmentShape: Shape,
       validationProcessor: ValidationProcessor
   ): Either[AMFValidationReport, Option[LoadedSchema]] = {
-
     val schemaOption: Option[CharSequence] = generateSchemaString(fragmentShape, validationProcessor)
-
     schemaOption match {
       case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
       case None               => Right(None)
@@ -172,27 +134,6 @@ abstract class BaseJsonSchemaPayloadValidator(
     validationProcessor.keepResults(eh.getResults)
     val writer = new StringWriter()
     SyamlSyntaxRenderPlugin.emit(`application/json`, document, writer).map(_.toString)
-  }
-
-  protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
-    val futureText = payload.raw match {
-      case Some("") => None
-      case _ =>
-        val document = PayloadEmitter(payload.encodes)(UnhandledErrorHandler).emitDocument()
-        val writer   = new StringWriter()
-        SyamlSyntaxRenderPlugin.emit(`application/json`, SyamlParsedDocument(document), writer).map(_.toString)
-    }
-
-    futureText map { text =>
-      payload.encodes match {
-        case node: ScalarNode
-            if node.dataType
-              .option()
-              .contains(DataType.String) && text.nonEmpty && text.head != '"' =>
-          "\"" + text.stripLineEnd + "\""
-        case _ => text.stripLineEnd
-      }
-    }
   }
 
   private def getOrCreateSchema(
@@ -224,8 +165,7 @@ abstract class BaseJsonSchemaPayloadValidator(
     }
   }
 
-  private def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
-
+  private def parsePayloadWithErrorHandler(payload: String, mediaType: String): PayloadParsingResult = {
     val errorHandler = configuration.eh()
     PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
   }
@@ -290,7 +230,7 @@ abstract class BaseJsonSchemaPayloadValidator(
       mediaType: String,
       payload: String
   ): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, shape) match {
+    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
         result.copy(fragment = frag)
@@ -363,7 +303,6 @@ abstract class BaseJsonSchemaPayloadValidator(
 }
 
 object ScalarPayloadForParam {
-
   def apply(fragment: PayloadFragment, shape: Shape): PayloadFragment = {
     if (isString(shape) || unionWithString(shape)) {
 
@@ -384,5 +323,39 @@ object ScalarPayloadForParam {
     case u: UnionShape => u.anyOf.exists(isString)
     case _             => false
   }
+}
 
+trait JsonSchemaReportValidationProcessor extends ReportValidationProcessor {
+  override def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
+    r match {
+      case e: UnknownDiscriminator =>
+        Seq(
+          AMFValidationResult(
+            message = "Unknown discriminator value",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = e
+          )
+        )
+      case e: InvalidJsonObject =>
+        Seq(
+          AMFValidationResult(
+            message = "Unsupported chars in string value (probably a binary file)",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = e
+          )
+        )
+      case other =>
+        super.processCommonException(other, element)
+    }
+  }
 }

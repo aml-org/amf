@@ -1540,6 +1540,10 @@ declare module "amf-client-js" {
     withAliases(aliases: Array<string>): this;
 
     withSize(size: number): this;
+
+    avroSchemaType(): undefined | string;
+
+    isAvroSchema(): boolean;
   }
   export class Api<A> implements DomainElement {
     accepts: Array<StrField>;

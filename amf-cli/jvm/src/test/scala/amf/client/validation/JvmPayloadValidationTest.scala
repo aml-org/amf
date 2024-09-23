@@ -7,6 +7,7 @@ import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
+import amf.shapes.internal.annotations.{AVRORawSchema, AVROSchemaType}
 
 class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJvm {
 
@@ -110,5 +111,122 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
         |}""".stripMargin
     val report = validator.syncValidate(payload)
     report.conforms shouldBe true
+  }
+
+  test("Invalid avro record payload in JVM") {
+    val rawSchema =
+      """
+        |{
+        |  "type": "record",
+        |  "name": "LongList",
+        |  "namespace": "root",
+        |  "aliases": ["LinkedLongs"],
+        |  "fields": [
+        |    {
+        |      "name": "value",
+        |      "type": "long"
+        |    }
+        |  ]
+        |}
+        """.stripMargin
+
+    val avroSchema = NodeShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
+
+    val payload =
+      """
+        |{
+        |  "someString": "invalid string value"
+        |}
+        """.stripMargin
+
+    val validator = payloadValidator(avroSchema, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
+        assert(!r.conforms)
+      }
+  }
+
+  test("valid avro int payload in JVM") {
+    val rawSchema =
+      """
+        |{
+        |  "type": "int",
+        |  "name": "this is an int"
+        |}
+        """.stripMargin
+
+    val avroSchema = ScalarShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
+
+    val payload = "1"
+
+    val validator = payloadValidator(avroSchema, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
+        assert(r.conforms)
+      }
+  }
+
+  test("valid avro record payload in JVM") {
+    val rawSchema =
+      """
+        |{
+        |  "type": "record",
+        |  "name": "LongList",
+        |  "namespace": "root",
+        |  "aliases": [
+        |    "LinkedLongs"
+        |  ],
+        |  "doc": "this is a documentation for the record type",
+        |  "fields": [
+        |    {
+        |      "name": "next",
+        |      "doc": "this is a documentation for the union type with recursive element",
+        |      "type": [
+        |        "null",
+        |        "LongList"
+        |      ],
+        |      "order": "descending",
+        |      "default": null
+        |    }
+        |  ]
+        |}
+        """.stripMargin
+
+    val avroSchema = NodeShape()
+    avroSchema.annotations += AVROSchemaType("record")
+    avroSchema.annotations += AVRORawSchema(rawSchema)
+
+    val payload =
+      """
+        |{
+        |  "value": 123,
+        |  "next": null
+        |}
+        """.stripMargin
+
+    val validator = payloadValidator(avroSchema, `application/json`)
+    validator
+      .validate(payload)
+      .map { r =>
+        assert(r.conforms)
+      }
+  }
+
+  test("invalid avro with schema error in JVM") {
+    val schema     = AvroTestSchemas.invalidSchema
+    val payload    = "{}"
+    val avroSchema = makeAvroShape(schema, "record", NodeShape())
+
+    val validator = payloadValidator(avroSchema, `application/json`)
+    validator.validate(payload).map { report =>
+      assert(!report.conforms)
+      assert(reportContainError(report, "org.apache.avro.SchemaParseException"))
+    }
   }
 }

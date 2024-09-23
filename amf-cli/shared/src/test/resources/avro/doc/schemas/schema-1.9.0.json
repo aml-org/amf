@@ -3,7 +3,7 @@
   "name": "Person",
   "fields": [
     {"name": "name", "type": "string", "example": "Donkey"},
-    {"name": "age", "type": ["null", "int"], "default": null},
+    {"name": "age", "type": "int", "default": 30},
     {
       "name": "favoriteProgrammingLanguage",
       "type": {"name": "ProgrammingLanguage", "type": "enum", "symbols": ["JS", "Java", "Go", "Rust", "C"]}

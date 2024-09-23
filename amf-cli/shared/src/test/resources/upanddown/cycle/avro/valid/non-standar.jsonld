@@ -62,6 +62,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/name/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/name/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"name\",\n  \"type\": \"string\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -70,42 +85,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/name/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/name/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "string"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/name/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "string"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -152,6 +131,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/serialNo/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/serialNo/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"serialNo\",\n  \"type\": \"string\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -160,42 +154,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "serialNo"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/serialNo/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/serialNo/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/serialNo"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "string"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/serialNo/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "string"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -251,6 +209,21 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/union/email/anyOf/nil/null/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/union/email/anyOf/nil/null"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"null\""
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -286,6 +259,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "string"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/union/email/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/union/email/anyOf/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"string\""
                               }
                             ]
                           }
@@ -344,6 +332,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/union/email/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/union/email"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"email\",\n  \"type\": [\n    \"null\",\n    \"string\"\n  ],\n  \"default\": null\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -352,67 +355,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "email"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "null"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#nil"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "union"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/email/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "union"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -468,6 +410,21 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/union/age/anyOf/nil/null/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/union/age/anyOf/nil/null"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"null\""
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -483,7 +440,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#datatype": [
                       {
-                        "@id": "http://www.w3.org/2001/XMLSchema#int"
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -503,6 +460,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "int"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/union/age/anyOf/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"int\""
                               }
                             ]
                           }
@@ -561,6 +533,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/union/age/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/union/age"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"age\",\n  \"type\": [\n    \"null\",\n    \"int\"\n  ],\n  \"default\": null\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -569,67 +556,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "age"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#defaultValue": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/scalar_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Scalar",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#value": [
-                  {
-                    "@value": "null"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#nil"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "scalar_1"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "union"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/age/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "union"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -812,6 +738,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/favoriteProgrammingLanguage/scalar/ProgrammingLanguage"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"ProgrammingLanguage\",\n  \"type\": \"enum\",\n  \"symbols\": [\n    \"JS\",\n    \"Java\",\n    \"Go\",\n    \"Rust\",\n    \"C\"\n  ],\n  \"default\": \"JS\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -820,42 +761,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "favoriteProgrammingLanguage"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/favoriteProgrammingLanguage/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/favoriteProgrammingLanguage/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/favoriteProgrammingLanguage"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "enum"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/favoriteProgrammingLanguage/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "enum"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -912,6 +817,21 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/array/default-array/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/array/default-array/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "\"string\""
+                              }
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -937,6 +857,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/array/default-array/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/array/default-array"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"type\": \"array\",\n  \"items\": \"string\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -945,42 +880,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "certifications"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "array"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/certifications/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "array"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1023,7 +922,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#datatype": [
                           {
-                            "@id": "http://www.w3.org/2001/XMLSchema#int"
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1046,6 +945,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/zipcode/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"zipcode\",\n  \"type\": \"int\"\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -1054,42 +968,6 @@
                     "http://www.w3.org/ns/shacl#name": [
                       {
                         "@value": "zipcode"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/zipcode/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/zipcode/source-map/avro-schema/element_1",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/zipcode"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "int"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/zipcode/source-map/avro-schema/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/shapes#range"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "int"
-                              }
-                            ]
-                          }
-                        ]
                       }
                     ]
                   },
@@ -1145,6 +1023,21 @@
                                       }
                                     ]
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/union/country/anyOf/nil/null/source-map/avro-raw-schema/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/union/country/anyOf/nil/null"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "\"null\""
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1180,6 +1073,21 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "string"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/union/country/anyOf/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/union/country/anyOf/scalar/default-scalar"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "\"string\""
                                       }
                                     ]
                                   }
@@ -1238,6 +1146,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/union/country/source-map/avro-raw-schema/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/union/country"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "{\n  \"name\": \"country\",\n  \"type\": [\n    \"null\",\n    \"string\"\n  ],\n  \"default\": null\n}"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -1246,67 +1169,6 @@
                     "http://www.w3.org/ns/shacl#name": [
                       {
                         "@value": "country"
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#defaultValue": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/scalar_1",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "null"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#nil"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/core#name": [
-                          {
-                            "@value": "scalar_1"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/source-map/avro-schema/element_1",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "union"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/property/property/country/source-map/avro-schema/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/shapes#range"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "union"
-                              }
-                            ]
-                          }
-                        ]
                       }
                     ]
                   }
@@ -1336,6 +1198,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/shape/Address"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"Address\",\n  \"type\": \"record\",\n  \"fields\": [\n    {\n      \"name\": \"zipcode\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"country\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"default\": null\n    }\n  ]\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1344,42 +1221,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "address"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "record"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/address/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "record"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1426,6 +1267,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/weight/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/weight/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"weight\",\n  \"type\": \"float\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1434,42 +1290,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "weight"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/weight/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/weight/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/weight"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "float"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/weight/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "float"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1516,6 +1336,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/height/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/height/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"height\",\n  \"type\": \"double\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1524,42 +1359,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "height"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/height/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/height/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/height"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "double"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/height/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "double"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1606,6 +1405,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/someid/scalar/default-scalar/source-map/avro-raw-schema/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/someid/scalar/default-scalar"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "{\n  \"name\": \"someid\",\n  \"type\": \"string\"\n}"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1614,42 +1428,6 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "someid"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/someid/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#avro-schema": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/someid/source-map/avro-schema/element_1",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/someid"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "string"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/property/property/someid/source-map/avro-schema/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/shapes#range"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "string"
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }
@@ -1681,6 +1459,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "record"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person/source-map/avro-raw-schema/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/avro/valid/non-standar.json#/shape/Person"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"name\": \"Person\",\n  \"namespace\": \"com.company\",\n  \"type\": \"record\",\n  \"fields\": [\n    {\n      \"name\": \"name\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"serialNo\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"email\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"default\": null\n    },\n    {\n      \"name\": \"age\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null\n    },\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\n        \"name\": \"ProgrammingLanguage\",\n        \"type\": \"enum\",\n        \"symbols\": [\n          \"JS\",\n          \"Java\",\n          \"Go\",\n          \"Rust\",\n          \"C\"\n        ],\n        \"default\": \"JS\"\n      }\n    },\n    {\n      \"name\": \"certifications\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"string\"\n      }\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [\n          {\n            \"name\": \"zipcode\",\n            \"type\": \"int\"\n          },\n          {\n            \"name\": \"country\",\n            \"type\": [\n              \"null\",\n              \"string\"\n            ],\n            \"default\": null\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"weight\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"height\",\n      \"type\": \"double\"\n    },\n    {\n      \"name\": \"someid\",\n      \"type\": \"string\"\n    }\n  ]\n}"
                   }
                 ]
               }

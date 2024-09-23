@@ -5,6 +5,7 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -14,7 +15,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{BaseVirtualNode, AVROSchemaType, TargetName}
+import amf.shapes.internal.annotations.{AVROSchemaType, BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
@@ -44,6 +45,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
   val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
   val asyncClient: AMFBaseUnitClient         = asyncConfig.baseUnitClient()
+  val avroConfig: AMFConfiguration           = AvroConfiguration.Avro().withRenderOptions(ro)
+  val avroClient: AMFBaseUnitClient          = avroConfig.baseUnitClient()
 
   def modelAssertion(
       path: String,
@@ -687,6 +690,94 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
       val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
       schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
+    }
+  }
+
+  // W-16540082
+  test("test all primitive avro types XSD mappings") {
+    val api = s"$basePath/avro/all-primitive-types.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+
+      val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
+      asyncConfig.elementClient().buildJsonSchema(schema.asInstanceOf[NodeShape])
+      schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
+    }
+  }
+
+  // W-16609870
+  test("async avro message payloads should be virtual by default unless explicitly declared") {
+    val api = s"$basePath/async20/virtual-payload-async.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val response      = getFirstResponse(parseResult.baseUnit, isWebApi = false)
+      val payload       = response.payloads.head
+      val payloadSchema = payload.schema
+      payloadSchema should not be null
+    }
+  }
+
+  // W-16596042
+  test("avro map empty values field should have lexical information") {
+    val api = s"$basePath/avro/map-empty-values.avsc"
+    avroClient.parse(api) flatMap { parseResult =>
+      val transformResult = avroClient.transform(parseResult.baseUnit)
+      val mapShape        = getAvroShape(transformResult).asInstanceOf[NodeShape]
+      val values          = mapShape.additionalPropertiesSchema
+      values.annotations.lexical() should not be null
+    }
+  }
+
+  // W-16701643
+  test("async avro payload validation") {
+    val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      parseResult.results.isEmpty shouldBe true
+      transformResult.results.isEmpty shouldBe true
+      val avroPayload = getFirstResponsePayload(transformResult.baseUnit, isWebApi = false)
+      val avroShape   = avroPayload.schema
+      val payloadValidator = asyncConfig
+        .elementClient()
+        .payloadValidatorFor(avroShape, Mimes.`application/json`, ValidationMode.StrictValidationMode)
+      val invalidPayload = """{"simpleIntField": "invalid string value"}""".trim
+      val validPayload   = """{"simpleIntField": 123}""".trim
+      val invalidResult  = payloadValidator.syncValidate(invalidPayload)
+      val validResult    = payloadValidator.syncValidate(validPayload)
+      invalidResult.conforms shouldBe false
+      validResult.conforms shouldBe true
+    }
+  }
+
+  // W-16701643
+  test("async avro payload validation with avro payload in external file") {
+    val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example-refs.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      parseResult.results.isEmpty shouldBe true
+      transformResult.results.isEmpty shouldBe true
+      val avroPayload = getFirstResponsePayload(transformResult.baseUnit, isWebApi = false)
+      val avroShape   = avroPayload.schema
+      val payloadValidator = asyncConfig
+        .elementClient()
+        .payloadValidatorFor(avroShape, Mimes.`application/json`, ValidationMode.StrictValidationMode)
+      val invalidPayload = """{"simpleIntField": "invalid string value"}""".trim
+      val validPayload   = """{"simpleIntField": 123}""".trim
+      val invalidResult  = payloadValidator.syncValidate(invalidPayload)
+      val validResult    = payloadValidator.syncValidate(validPayload)
+      invalidResult.conforms shouldBe false
+      validResult.conforms shouldBe true
+    }
+  }
+
+  // bug ALS
+  test("avro record empty `type` field should have lexical information") {
+    val api = s"$basePath/avro/record-empty-type.avsc"
+    avroClient.parse(api) flatMap { parseResult =>
+      val transformResult   = avroClient.transform(parseResult.baseUnit)
+      val record            = getAvroShape(transformResult).asInstanceOf[NodeShape]
+      val recordFieldSchema = record.properties.head.range
+      recordFieldSchema.annotations.lexical() should not be null
     }
   }
 }

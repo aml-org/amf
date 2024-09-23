@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec
 
-import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.common.TypeDef._
 
 /** Oas type to TypeDef matcher
   */
@@ -59,6 +59,7 @@ trait OasTypeDefStringValueMatcher {
 
   def matchType(typeDef: TypeDef): String = typeDef match {
     case ByteType         => "string"
+    case BytesType        => "string"
     case BinaryType       => "string"
     case PasswordType     => "string"
     case StrType          => "string"
