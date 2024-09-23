@@ -11,17 +11,17 @@ import amf.core.internal.render.SpecOrdering.Lexical
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument
 
-object AvroTypeEmitter {
+object AvroDocumentEmitter {
   def apply(renderConfig: RenderConfiguration) =
-    new AvroTypeEmitter(Lexical, renderConfig)(renderConfig.errorHandler)
+    new AvroDocumentEmitter(Lexical, renderConfig)(renderConfig.errorHandler)
 
-  def apply(options: RenderOptions, errorHandler: AMFErrorHandler): AvroTypeEmitter = {
+  def apply(options: RenderOptions, errorHandler: AMFErrorHandler): AvroDocumentEmitter = {
     val renderConfig = EmptyRenderConfiguration(errorHandler, options)
-    new AvroTypeEmitter(Lexical, renderConfig)(errorHandler)
+    new AvroDocumentEmitter(Lexical, renderConfig)(errorHandler)
   }
 }
 
-case class AvroTypeEmitter(ordering: SpecOrdering, renderConfig: RenderConfiguration)(implicit
+case class AvroDocumentEmitter(ordering: SpecOrdering, renderConfig: RenderConfiguration)(implicit
     private val eh: AMFErrorHandler
 ) {
 

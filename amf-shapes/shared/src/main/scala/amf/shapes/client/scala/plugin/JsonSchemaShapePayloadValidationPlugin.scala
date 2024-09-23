@@ -9,22 +9,15 @@ import amf.core.client.scala.validation.payload.{
   ValidatePayloadRequest
 }
 import amf.core.internal.remote.Mimes._
-import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 
-trait JsonSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationPlugin {
+trait JsonSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationPlugin with CommonShapeValidation {
   override val id: String                   = "AMF Payload Validation"
   private val payloadMediaType: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
 
   override def applies(element: ValidatePayloadRequest): Boolean = {
     val ValidatePayloadRequest(shape, mediaType, _) = element
-    isAnyShape(shape) && supportsMediaType(mediaType)
-  }
-
-  private def isAnyShape(shape: Shape) = shape match {
-    case _: SchemaShape => false
-    case _: AnyShape    => true
-    case _              => false
+    isAnyShape(shape) && supportsMediaType(mediaType) && !isAvroSchemaShape(shape)
   }
 
   private def supportsMediaType(mediaType: String) = payloadMediaType.contains(mediaType)

@@ -4,8 +4,8 @@ info:
   version: '1.0.0'
 components:
   schemas:
-    Person:
-      type: string
+    Person: # THIS IS NOT SUPPORTED, SEE ADR 14
+      type: record
       name: Person
       fields:
         - name: name

@@ -22,7 +22,9 @@ case class AvroScalarShapeEmitter(
     avroType.foreach(avroSchemaType => b.entry("type", avroSchemaType.avroType))
     shape.fields.entry(ShapeModel.Name).foreach(f => b.entry("name", f.scalar.toString))
     shape.fields.entry(ShapeModel.Description).foreach(f => b.entry("doc", f.scalar.toString))
-    shape.fields.entry(ShapeModel.Default).foreach(_ => DataNodeEmitter(shape.default, ordering)(spec.eh))
+    shape.fields.entry(ShapeModel.Default).foreach { _ =>
+      b.entry("default", DataNodeEmitter(shape.default, ordering)(spec.eh).emit(_))
+    }
   }
 
   override def position(): Position = pos(shape.annotations)

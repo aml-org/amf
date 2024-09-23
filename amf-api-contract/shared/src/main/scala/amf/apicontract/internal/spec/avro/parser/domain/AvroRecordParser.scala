@@ -24,10 +24,9 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
   private def parsePropertyRange(p: PropertyShape, map: YMap, ann: Annotations): Unit = {
     AvroRecordFieldParser(map).parse() match {
       case Some(fieldShape) =>
-        getAvroType(fieldShape).foreach(avroTypeAnnotation => ann += avroTypeAnnotation)
-        p.setWithoutId(PropertyShapeModel.Range, fieldShape, fieldShape.annotations)
+        p.setWithoutId(PropertyShapeModel.Range, fieldShape, Annotations.inferred())
       case None =>
-        p.setWithoutId(PropertyShapeModel.Range, AnyShape(ann), ann)
+        p.setWithoutId(PropertyShapeModel.Range, AnyShape(ann), Annotations.inferred())
     }
   }
 
@@ -52,7 +51,7 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
           case _ =>
         }
       )
-    super.parseDefault(map, p)
+    super.parseDefault(map, p.range)
     p
   }
 }
@@ -81,7 +80,7 @@ object AvroFieldOrder extends Enumeration {
 }
 
 case class AvroRecordFieldParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroShapeParser(map) {
-  override def parseTypeEntry(value: YNode): Option[AnyShape] = {
+  override def parseTypeEntry(value: YNode, isRoot: Boolean = false): Option[AnyShape] = {
     value.asOption[YMap] match {
       case Some(map) => AvroRecordFieldParser(map).parse()
       case _         => super.parseTypeEntry(value)

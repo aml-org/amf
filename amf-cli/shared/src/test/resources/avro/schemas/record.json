@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "LongList",
+  "namespace": "root",
+  "aliases": [
+    "LinkedLongs"
+  ],
+  "doc": "this is a documentation for the record type",
+  "fields": [
+    {
+      "name": "value",
+      "doc": "this is a documentation for the primitive type",
+      "type": "long",
+      "order": "ascending",
+      "default": 123
+    },
+    {
+      "name": "next",
+      "doc": "this is a documentation for the union type with recursive element",
+      "type": [
+        "null",
+        "LongList"
+      ],
+      "order": "descending"
+    }
+  ]
+}

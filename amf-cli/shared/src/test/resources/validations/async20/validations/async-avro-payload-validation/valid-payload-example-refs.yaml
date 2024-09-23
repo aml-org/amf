@@ -1,0 +1,16 @@
+asyncapi: 2.6.0
+info:
+  version: 1.0.0
+  title: test Async+Avro API
+channels:
+  first-channel:
+    subscribe:
+      message:
+        contentType: "test"
+        schemaFormat: "application/vnd.apache.avro;version=1.9.0"
+        payload:
+          $ref: simple-person.avsc
+        examples:
+          - name: avro message example
+            payload:
+              simpleIntField: 123 # should validate correctly against avro payload

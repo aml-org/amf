@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/avro/schemas/map-wrong-default.json
+Profile: Avro
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/validation#schema-exception
+  Message: invalid schema type: Expected map-start. Got VALUE_STRING
+  Severity: Violation
+  Target: null
+  Property: Expected map-start. Got VALUE_STRING
+  Range: [(1,0)-(5,1)]
+  Location: file://amf-cli/shared/src/test/resources/avro/schemas/map-wrong-default.json

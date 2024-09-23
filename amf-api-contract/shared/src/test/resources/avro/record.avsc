@@ -1,28 +1,22 @@
 {
   "type": "record",
-  "name": "LongList",
+  "name": "Person",
   "namespace": "root",
-  "aliases": [
-    "LinkedLongs"
-  ],
   "doc": "this is a documentation for the record type",
   "fields": [
     {
-      "name": "value",
-      "doc": "this is a documentation for the primitive type",
-      "type": "long",
+      "name": "name",
+      "doc": "Person name",
+      "type": "string",
       "order": "ascending",
-      "default": 123
+      "default": "Jorge"
     },
     {
-      "name": "next",
-      "doc": "this is a documentation for the union type with recursive element",
-      "type": [
-        "null",
-        "LongList"
-      ],
+      "name": "age",
+      "doc": "Person age",
+      "type": "int",
       "order": "descending",
-      "default": null
+      "default": 30
     }
   ]
 }

@@ -26,7 +26,8 @@ ThisBuild / resolvers ++= List(
 )
 ThisBuild / credentials ++= Common.credentials()
 
-val npmDeps = List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")))
+val npmDeps =
+  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.12.0")))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -77,6 +78,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       // commons-collections:commons-collections:3.2.2
       ExclusionRule(organization = "commons-collections", name = "commons-collections")
     ),
+    libraryDependencies += "org.apache.avro"            % "avro" % "1.12.0",
     excludeDependencies += "com.fasterxml.jackson.core" % "jackson-databind", // transitive from everit
     libraryDependencies += "org.json"                   % "json"                 % "20231013",
     libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.4",
@@ -100,6 +102,11 @@ lazy val shapesJS =
     .in(file("./amf-shapes/js"))
     .sourceDependency(amlJSRef, amlLibJS)
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+    .settings(
+      scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+      Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
+      npmDependencies ++= npmDeps
+    )
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-Api-contract *********************************************

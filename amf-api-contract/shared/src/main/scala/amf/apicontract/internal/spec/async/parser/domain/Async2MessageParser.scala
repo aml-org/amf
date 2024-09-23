@@ -19,7 +19,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.client.scala.model.domain.{Example, NodeShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, Example, NodeShape}
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
@@ -33,7 +33,7 @@ trait AsyncMessageParser {
 object Async20MessageParser {
 
   def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
-    implicit ctx: AsyncWebApiContext
+      implicit ctx: AsyncWebApiContext
   ): AsyncMessageParser = {
     val populator = if (isTrait) Async20MessageTraitPopulator() else Async20ConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
@@ -43,7 +43,7 @@ object Async20MessageParser {
 
 object Async21MessageParser {
   def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
-    implicit ctx: AsyncWebApiContext
+      implicit ctx: AsyncWebApiContext
   ): AsyncMessageParser = {
     val populator = if (isTrait) Async21MessageTraitPopulator() else Async21ConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
@@ -53,7 +53,7 @@ object Async21MessageParser {
 
 object Async24MessageParser {
   def apply(entryLike: YMapEntryLike, parent: String, messageType: Option[MessageType], isTrait: Boolean = false)(
-    implicit ctx: AsyncWebApiContext
+      implicit ctx: AsyncWebApiContext
   ): AsyncMessageParser = {
     val populator = if (isTrait) Async24MessageTraitPopulator() else Async24ConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
@@ -62,14 +62,14 @@ object Async24MessageParser {
 }
 
 class Async20MessageParser(
-                            entryLike: YMapEntryLike,
-                            parent: String,
-                            messageType: Option[MessageType],
-                            populator: Async2MessagePopulator,
-                            finder: Finder[Message],
-                            isTrait: Boolean
-                          )(implicit val ctx: AsyncWebApiContext)
-  extends AsyncMessageParser
+    entryLike: YMapEntryLike,
+    parent: String,
+    messageType: Option[MessageType],
+    populator: Async2MessagePopulator,
+    finder: Finder[Message],
+    isTrait: Boolean
+)(implicit val ctx: AsyncWebApiContext)
+    extends AsyncMessageParser
     with SpecParserOps {
 
   def parse(): Message = {
@@ -142,7 +142,7 @@ class Async20MessageParser(
 }
 
 case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: MessageType)(implicit
-                                                                                           val ctx: AsyncWebApiContext
+    val ctx: AsyncWebApiContext
 ) {
   def parse(): List[Message] = {
     map.key("oneOf") match {
@@ -295,8 +295,8 @@ abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extend
       .getOrElse(MessageExamples(Nil, Nil))
 
   private def parseExample(parentNode: YMap, exampleNode: YMapEntry, name: String): Example = {
-    val node = exampleNode.value
-    val example  = Example(node).withName(name)
+    val node              = exampleNode.value
+    val example           = Example(node).withName(name)
     val exampleWithNaming = addExampleNaming(parentNode, example)
     ExampleDataParser(YMapEntryLike(node), exampleWithNaming, Oas3ExampleOptions).parse()
   }
@@ -305,9 +305,7 @@ abstract class Async2MessagePopulator()(implicit ctx: AsyncWebApiContext) extend
 
 }
 
-abstract class Async20MessagePopulator()(implicit  ctx: AsyncWebApiContext) extends Async2MessagePopulator{
-
-}
+abstract class Async20MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async2MessagePopulator {}
 abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async20MessagePopulator {
 
   override protected def addExampleNaming(node: YMap, example: Example): Example = {
@@ -320,14 +318,16 @@ abstract class Async21MessagePopulator()(implicit ctx: AsyncWebApiContext) exten
 
 abstract class Async24MessagePopulator()(implicit ctx: AsyncWebApiContext) extends Async21MessagePopulator {
 
-
   override def populate(map: YMap, message: Message): Message = {
     super.populate(map, message)
     map.key("messageId").foreach { entry =>
       val messageId = entry.value.toString()
       if (!ctx.registerMessageId(messageId))
         ctx.eh.violation(
-          ParserSideValidations.DuplicatedMessageId, message, s"Duplicated message id '$messageId'", entry.value.location
+          ParserSideValidations.DuplicatedMessageId,
+          message,
+          s"Duplicated message id '$messageId'",
+          entry.value.location
         )
       parseMessageId(map, message)
     }
@@ -337,7 +337,6 @@ abstract class Async24MessagePopulator()(implicit ctx: AsyncWebApiContext) exten
   private def parseMessageId(map: YMap, message: Message): Unit = {
     map.key("messageId", MessageModel.MessageId in message)
   }
-
 
 }
 
@@ -350,16 +349,16 @@ trait AsyncMessageTraitPopulator {
 }
 
 case class Async21MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
-  extends Async21MessagePopulator()
+    extends Async21MessagePopulator()
     with AsyncMessageTraitPopulator {
   override protected def parseTraits(map: YMap, message: Message): Unit = Unit
 
   override protected def parseSchema(map: YMap, payload: Payload): Unit = Unit
 
-  override def populate(map: YMap, message: Message): Message = innerPopulate(map,super.populate(map, message))
+  override def populate(map: YMap, message: Message): Message = innerPopulate(map, super.populate(map, message))
 }
 case class Async20MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
-  extends Async20MessagePopulator()
+    extends Async20MessagePopulator()
     with AsyncMessageTraitPopulator {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = Unit
@@ -370,7 +369,7 @@ case class Async20MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
 }
 
 case class Async24MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
-  extends Async24MessagePopulator()
+    extends Async24MessagePopulator()
     with AsyncMessageTraitPopulator {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = Unit
@@ -381,7 +380,9 @@ case class Async24MessageTraitPopulator()(implicit ctx: AsyncWebApiContext)
 }
 
 trait AsyncConcreteMessagePopulator {
-  protected def innerParseTrait(map: YMap,message: Message, parentId:String)(implicit ctx: AsyncWebApiContext): Unit = {
+  protected def innerParseTrait(map: YMap, message: Message, parentId: String)(implicit
+      ctx: AsyncWebApiContext
+  ): Unit = {
     map
       .key("traits")
       .map(entry => {
@@ -392,24 +393,34 @@ trait AsyncConcreteMessagePopulator {
           .setWithoutId(OperationModel.Extends, AmfArray(traits, Annotations(entry.value)), Annotations(entry))
       })
   }
+
   protected def innerParseSchema(map: YMap, payload: Payload)(implicit ctx: AsyncWebApiContext): Unit = {
-    map.key("payload").foreach { entry =>
-      val schemaVersion = AsyncSchemaFormats.getSchemaVersion(payload)(ctx.eh)
-      AsyncApiTypeParser(entry, shape => shape.withName("schema"), schemaVersion)
-        .parse()
-        .foreach(s => payload.setWithoutId(PayloadModel.Schema, tracking(s, payload), Annotations(entry)))
+    map.key("payload") match {
+      case Some(entry) =>
+        val schemaVersion = AsyncSchemaFormats.getSchemaVersion(payload)(ctx.eh)
+        val maybeSchema   = AsyncApiTypeParser(entry, shape => shape.withName("schema"), schemaVersion).parse()
+        payload.setWithoutId(
+          PayloadModel.Schema,
+          tracking(maybeSchema.getOrElse(AnyShape(Annotations(entry))), payload),
+          Annotations(entry)
+        )
+      case None =>
+        // if "payload" key is not explicit, make the Payload object a VirtualElement (W-16609870)
+        payload.annotations += VirtualElement()
     }
   }
 }
 
 case class Async21ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
-  extends Async21MessagePopulator() with AsyncConcreteMessagePopulator {
+    extends Async21MessagePopulator()
+    with AsyncConcreteMessagePopulator {
   override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
   override protected def parseSchema(map: YMap, payload: Payload): Unit = innerParseSchema(map, payload)
 }
 
 case class Async20ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
-  extends Async20MessagePopulator() with AsyncConcreteMessagePopulator() {
+    extends Async20MessagePopulator()
+    with AsyncConcreteMessagePopulator() {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
 
@@ -417,7 +428,8 @@ case class Async20ConcreteMessagePopulator(parentId: String)(implicit ctx: Async
 }
 
 case class Async24ConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWebApiContext)
-  extends Async24MessagePopulator() with AsyncConcreteMessagePopulator() {
+    extends Async24MessagePopulator()
+    with AsyncConcreteMessagePopulator() {
 
   override protected def parseTraits(map: YMap, message: Message): Unit = innerParseTrait(map, message, parentId)
 
