@@ -27,7 +27,7 @@ ThisBuild / resolvers ++= List(
 ThisBuild / credentials ++= Common.credentials()
 
 val npmDeps =
-  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.12.0")))
+  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.11.3")))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -79,10 +79,10 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "commons-collections", name = "commons-collections"),
       ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind"),
     ),
-    libraryDependencies += "org.apache.avro"            % "avro" % "1.12.0",
-    libraryDependencies += "org.json"                   % "json"                 % "20231013",
-    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.4",
-    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
+    libraryDependencies += "org.apache.avro"    % "avro"                 % "1.11.3",
+    libraryDependencies += "org.json"           % "json"                 % "20231013",
+    libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.4",
+    Compile / packageDoc / artifactPath        := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
