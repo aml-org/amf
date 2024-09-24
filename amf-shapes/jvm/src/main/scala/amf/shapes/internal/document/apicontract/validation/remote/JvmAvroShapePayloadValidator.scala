@@ -17,7 +17,7 @@ import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.io.DecoderFactory
-import org.apache.avro.{AvroTypeException, NameValidator, Schema, SchemaParseException}
+import org.apache.avro.{AvroTypeException, Schema, SchemaParseException}
 
 class JvmAvroShapePayloadValidator(
     private val shape: Shape,
@@ -26,7 +26,7 @@ class JvmAvroShapePayloadValidator(
     private val configuration: ShapeValidationConfiguration
 ) extends BaseAvroSchemaPayloadValidator(shape, mediaType, configuration) {
 
-  lazy val parser: Schema.Parser = new Schema.Parser(new CustomNameValidator()).setValidateDefaults(true)
+  lazy val parser: Schema.Parser = new Schema.Parser().setValidateDefaults(true)
 
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JvmReportValidationProcessor(profileName, shape)
@@ -175,23 +175,5 @@ case class JvmReportValidationProcessor(
         super.processCommonException(other, element)
     }
     processResults(results)
-  }
-}
-
-class CustomNameValidator extends NameValidator {
-  private val allowedChars = Seq('_', '-', '.')
-  override def validate(name: String): NameValidator.Result = {
-    if (name == null) return new NameValidator.Result("Null name")
-    val length = name.length
-    if (length == 0) return new NameValidator.Result("Empty name")
-    val first = name.charAt(0)
-    if (!(Character.isLetter(first) || first == '_'))
-      return new NameValidator.Result("Illegal initial character: " + name)
-    for (i <- 1 until length) {
-      val c = name.charAt(i)
-      if (!(Character.isLetterOrDigit(c) || allowedChars.contains(c)))
-        return new NameValidator.Result("Illegal character in: " + name)
-    }
-    NameValidator.OK
   }
 }
