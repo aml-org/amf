@@ -67,7 +67,7 @@ We don't support AVRO Schemas:
   - because we can't determine if it's an AVRO Schema or any other schema
 
 ### AVRO Validation
-We'll use the Apache official libraries for JVM and JS.
+We'll use the Apache official libraries for JVM and JS, in the version 1.11.3, due Java8 binary compatibility requirements.
 
 ## Consequences / Constraints
 
@@ -82,5 +82,5 @@ The validation plugins differ in interfaces and implementations, and each has so
 ### Both JVM & JS validation plugins
 - `"default"` values are not being validated when the type is `bytes`, `map`, or `array`
 - the validator treats as invalid an empty array as the default value for arrays (`"default": []`) even though the [Avro Schema Specification](https://avro.apache.org/docs/1.12.0/specification) has some examples with it
-- if an avro record has a field that is a union that includes the root record itself (recursive reference) we fail to validate it correctly because we treat that shape as an unresolved/undefined shape
-- in the future we'll try to ignore the cases that we are now failing and/or show a warning instead
+- if an avro record has a field that is a union that includes the root record itself (recursive reference) we fail to validate payloads (default value or payload validation) against that 'recursive union field' correctly. The root record works correctly. In the future we'll try to ignore the cases that we are now failing and/or show a warning instead.
+- the avro libraries are very restrictives with the allowed characters in naming definition (names of records for example). They only allow letters, numbers and `_` chars. We are not modifying this behavior.  
