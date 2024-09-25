@@ -11,7 +11,9 @@ case class AvroArrayShapeParser(map: YMap)(implicit ctx: AvroSchemaContext)
   override def setMembers(anyShape: AnyShape): Unit =
     shape.setWithoutId(ArrayShapeModel.Items, anyShape, Annotations.inferred())
 
-  override def parseMembers(e: YMapEntry): AnyShape = AvroTextParser(e.value).parse()
+  override def parseMembers(e: YMapEntry): AnyShape = {
+    AvroInlineTypeParser(e.value).parse()
+  }
 
   override def parseSpecificFields(): Unit = {}
 }

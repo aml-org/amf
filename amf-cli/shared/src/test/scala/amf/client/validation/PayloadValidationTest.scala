@@ -1,8 +1,8 @@
 package amf.client.validation
 
+import amf.apicontract.client.scala.AvroConfiguration
 import amf.cli.internal.convert.NativeOps
-import amf.client.validation.AvroTestSchemas.recordSchema
-import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode}
+import amf.core.client.common.validation.{ScalarRelaxedValidationMode, SeverityLevels, StrictValidationMode}
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -11,6 +11,7 @@ import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator}
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.model.document.AvroSchemaDocument
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
 import amf.shapes.internal.annotations.{AVRORawSchema, AVROSchemaType}
@@ -325,6 +326,36 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
       }
   }
 
+  test("avro union validation should return a warning") {
+    val schema     = "file://amf-cli/shared/src/test/resources/avro/schemas/union-simple-record-valid.json"
+    val payload    = "{}"
+
+    val client = AvroConfiguration.Avro().baseUnitClient()
+
+    for {
+      parseResult <- client.parse(schema)
+      validationResult <- client.validate(parseResult.baseUnit)
+    } yield {
+      // Warning in the unit validation report are filtered by UnitPayloadsValidation, so no warning here
+      assert(parseResult.conforms)
+      assert(parseResult.results.isEmpty)
+      assert(validationResult.conforms)
+      assert(parseResult.results.isEmpty)
+
+      val doc = parseResult.baseUnit.asInstanceOf[AvroSchemaDocument]
+      val record = doc.encodes.asInstanceOf[NodeShape]
+      val union = record.properties.head.range
+      assert(union.isInstanceOf[UnionShape] && union.asInstanceOf[AnyShape].avroSchemaType.contains("union"))
+
+      val validator = payloadValidator(union, `application/json`)
+      val report = validator.syncValidate(payload)
+      assert(report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.head.severityLevel == SeverityLevels.WARNING)
+      assert(report.results.head.message.contains("Cannot validate union schema kind payloads"))
+    }
+  }
+
   protected def makeAvroShape(raw: String, kind: String, base: AnyShape): AnyShape = {
     base.annotations += AVROSchemaType(kind)
     base.annotations += AVRORawSchema(raw)
@@ -365,7 +396,7 @@ object AvroTestSchemas {
       |}
         """.stripMargin
 
-  val int =
+  val int: String =
     """
       |{
       |  "type": "int",

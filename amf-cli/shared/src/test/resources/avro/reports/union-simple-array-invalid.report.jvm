@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/avro/schemas/union-simple-array-invalid.json
+Profile: Avro
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/validation#schema-exception
+  Message: invalid schema type: Expected string. Got VALUE_NUMBER_INT
+  Severity: Violation
+  Target: null
+  Property: Expected string. Got VALUE_NUMBER_INT
+  Range: [(1,0)-(5,1)]
+  Location: file://amf-cli/shared/src/test/resources/avro/schemas/union-simple-array-invalid.json
