@@ -145,48 +145,66 @@ abstract class BaseAvroSchemaPayloadValidator(
       payload: (Option[LoadedObj], Option[PayloadParsingResult]),
       validationProcessor: ValidationProcessor
   ): AMFValidationReport = {
-    payload match {
-      case (_, Some(result)) if result.hasError => validationProcessor.processResults(result.results)
-      case (Some(obj), resultOption) =>
-        val fragmentOption = resultOption.map(_.fragment)
-        try {
-          {
-            resultOption match {
-              case _ if shape.isInstanceOf[AnyShape] =>
-                getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
-              case _ =>
-                Left(
-                  validationProcessor.processResults(
-                    Seq(
-                      AMFValidationResult(
-                        "Cannot validate shape that is not an any shape",
-                        defaultSeverity,
-                        "",
-                        Some(shape.id),
-                        ExampleValidationErrorSpecification.id,
-                        shape.position(),
-                        shape.location(),
-                        null
+    shape match {
+      case s: AnyShape if s.avroSchemaType.contains("union") =>
+        validationProcessor.processResults(
+          Seq(
+            AMFValidationResult(
+              "Cannot validate union schema kind payloads",
+              SeverityLevels.WARNING,
+              "",
+              Some(shape.id),
+              ExampleValidationErrorSpecification.id,
+              shape.position(),
+              shape.location(),
+              null
+            )
+          )
+        )
+      case _ =>
+        payload match {
+          case (_, Some(result)) if result.hasError => validationProcessor.processResults(result.results)
+          case (Some(obj), resultOption) =>
+            val fragmentOption = resultOption.map(_.fragment)
+            try {
+              {
+                resultOption match {
+                  case _ if shape.isInstanceOf[AnyShape] =>
+                    getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
+                  case _ =>
+                    Left(
+                      validationProcessor.processResults(
+                        Seq(
+                          AMFValidationResult(
+                            "Cannot validate shape that is not an any shape",
+                            defaultSeverity,
+                            "",
+                            Some(shape.id),
+                            ExampleValidationErrorSpecification.id,
+                            shape.position(),
+                            shape.location(),
+                            null
+                          )
+                        )
                       )
                     )
-                  )
-                )
+                }
+              } match {
+                case Right(Some(schema)) => // Schema obtained successfully, calling validator with it
+                  callValidator(schema, obj, fragmentOption, validationProcessor)
+                case Left(result) => // Error occurred during schema generation, returning that result
+                  result
+                case _ => // No schema or payload error, returning empty results
+                  validationProcessor.processResults(Nil)
+              }
+            } catch {
+              case e: Exception =>
+                validationProcessor.processException(e, fragmentOption.map(_.encodes))
             }
-          } match {
-            case Right(Some(schema)) => // Schema obtained successfully, calling validator with it
-              callValidator(schema, obj, fragmentOption, validationProcessor)
-            case Left(result) => // Error occurred during schema generation, returning that result
-              result
-            case _ => // No schema or payload error, returning empty results
-              validationProcessor.processResults(Nil)
-          }
-        } catch {
-          case e: Exception =>
-            validationProcessor.processException(e, fragmentOption.map(_.encodes))
-        }
 
-      case _ =>
-        validationProcessor.processResults(Nil) // ignore
+          case _ =>
+            validationProcessor.processResults(Nil) // ignore
+        }
     }
   }
 

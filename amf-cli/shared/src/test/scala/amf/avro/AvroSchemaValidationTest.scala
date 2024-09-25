@@ -165,6 +165,55 @@ class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
     )
   }
 
+  test("validate simple union in record - valid") {
+    validate(
+      "union-simple-record-valid.json",
+      None,
+      configOverride = Some(config)
+    )
+  }
+
+  test("validate simple union in record - invalid") {
+    validate(
+      "union-simple-record-invalid.json",
+      Some("union-simple-record-invalid.report"),
+      configOverride = Some(config)
+    )
+  }
+
+  test("validate nullable union in record - valid") {
+    validate(
+      "union-nullable-record-valid.json",
+      None,
+      configOverride = Some(config)
+    )
+  }
+
+  test("validate nullable union in record - invalid") {
+    validate(
+      "union-nullable-record-invalid.json",
+      Some("union-nullable-record-invalid.report"),
+      configOverride = Some(config)
+    )
+  }
+
+  test("validate simple union in array - valid") {
+    validate(
+      "union-simple-array-valid.json",
+      None,
+      configOverride = Some(config)
+    )
+  }
+
+  test("validate simple union in array - invalid") {
+    validate(
+      "union-simple-array-invalid.json",
+      Some("union-simple-array-invalid.report"),
+      configOverride = Some(config)
+    )
+  }
+
+
 // TODO We need to see how implement this in with AVRO 1.11.3
 
 //  if (platform.name == "jvm") { // We were able only to change this behavior in JVM validator. JS one is still strict (only letter, numbers and '_')

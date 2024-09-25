@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "unionNullableRecord",
+  "namespace": "root",
+  "fields": [
+    {
+      "name": "nullableUnion",
+      "type": [ "null", "string"],
+      "default": 1234
+    }
+  ]
+}
