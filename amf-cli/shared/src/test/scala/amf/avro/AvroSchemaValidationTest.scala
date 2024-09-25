@@ -213,6 +213,14 @@ class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
     )
   }
 
+  test("validate union at root level is invalid") {
+    validate(
+      "union-root-invalid.json",
+      Some("union-root-invalid.report"),
+      configOverride = Some(config)
+    )
+  }
+
 
 // TODO We need to see how implement this in with AVRO 1.11.3
 
