@@ -10,7 +10,7 @@ Accepted
 
 ## Context
 
-Async 2.x supports AVRO Schemas, and we currently don't. 
+Async 2.x supports AVRO Schemas, and we currently don't.
 We want to add support of AVRO Schemas:
 - inside Async APIs
 - as a standalone document
@@ -54,12 +54,12 @@ We've also added 3 AVRO-specific fields to the `AnyShape` Model via the `AvroFie
 
 ### Where we support and DON'T support AVRO Schemas
 We Support AVRO Schemas (inline or inside a `$ref`):
-- as a standalone document or file 
-  - we encourage users to use the `.avsc` file type to indicate that's an avro file, for better suggestions and so on in the platform)
+- as a standalone document or file
+  - we encourage users to use the `.avsc` file type to indicate that's an avro file
   - must use the specific `AvroConfiguration`
 - inside a message payload in an AsyncAPI
   - the key `schemaFormat` MUST be declared and specify it's an AVRO payload
-  - we only support avro schema version 1.9.0
+  - **we only support avro schema version 1.9.0**
 - the avro specific document `AvroSchemaDocument` can only be parsed with the specific `AvroConfiguration`
 
 We don't support AVRO Schemas:
@@ -71,16 +71,16 @@ We'll use the Apache official libraries for JVM and JS, in the version 1.11.3, d
 
 ## Consequences / Constraints
 
-The validation plugins differ in interfaces and implementations, and each has some constraints:
+The validation libraries differ in interfaces and implementations, and each has some constraints:
 
-### JVM avro validation plugin
+### JVM avro validation library
 - validation per se is not supported, we try to parse an avro schema and throw parsing results if there are any
   - this means it's difficult to have location of where the error is thrown, we may give an approximate location from our end post-validation
 - when a validation is thrown, the rest of the file is not being searched for more validations
   - this is particularly important in large avro schemas, where many errors can be found but only one is shown
 
-### Both JVM & JS validation plugins
+### Both JVM & JS validation libraries
 - `"default"` values are not being validated when the type is `bytes`, `map`, or `array`
 - the validator treats as invalid an empty array as the default value for arrays (`"default": []`) even though the [Avro Schema Specification](https://avro.apache.org/docs/1.12.0/specification) has some examples with it
-- if an avro record has a field that is a union that includes the root record itself (recursive reference) we fail to validate payloads (default value or payload validation) against that 'recursive union field' correctly. The root record works correctly. In the future we'll try to ignore the cases that we are now failing and/or show a warning instead.
+- avro schemas of type union are not valid at the root level of the schema, but they are accepted as field types in a record or items in an array. For this reason, it is not possible to generate a `PayloadValidator` for an avro union shape.
 - the avro libraries are very restrictives with the allowed characters in naming definition (names of records for example). They only allow letters, numbers and `_` chars. We are not modifying this behavior.  
