@@ -3,7 +3,7 @@ package amf.testing
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.core.client.scala.AMFResult
-import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.scala.model.domain.{Annotation, DomainElement, Shape}
 import amf.core.internal.annotations.SourceYPart
 import amf.core.internal.parser.domain.Annotations
@@ -17,7 +17,7 @@ object BaseUnitUtils {
     if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
 
-  def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[Document].declares
+  def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[DeclaresModel].declares
 
   def getReferences(bu: BaseUnit): Seq[BaseUnit] = bu.asInstanceOf[Document].references
 
