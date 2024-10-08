@@ -79,7 +79,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind"),
     ),
     libraryDependencies += "org.apache.avro"    % "avro"                 % "1.11.4",
-    libraryDependencies += "org.json"           % "json"                 % "20231013",
+    libraryDependencies += "org.json"           % "json"                 % "20240303",
     libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.4",
     Compile / packageDoc / artifactPath        := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
