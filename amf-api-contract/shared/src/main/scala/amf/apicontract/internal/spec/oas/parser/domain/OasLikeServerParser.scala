@@ -63,6 +63,7 @@ class OasLikeServerVariableParser(entry: YMapEntryLike, parent: String)(implicit
     variable.setWithoutId(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
 
     val map = entry.value.as[YMap]
+    map.key("description", ParameterModel.Description in variable)
     parseMap(variable, map)
 
     variable
@@ -83,8 +84,6 @@ class OasLikeServerVariableParser(entry: YMapEntryLike, parent: String)(implicit
         schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry))
       }
     )
-    map.key("description", ShapeModel.Description in schema)
-
     AnnotationParser(schema, map).parse()
   }
 }
