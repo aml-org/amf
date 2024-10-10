@@ -280,7 +280,7 @@ case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)
     val shape  = variable.schema
     val fs     = shape.fields
 
-    fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
+    variable.fields.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
     fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
