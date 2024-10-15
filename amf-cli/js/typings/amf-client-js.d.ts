@@ -4677,6 +4677,9 @@ declare module "amf-client-js" {
 
     constructor();
   }
+  export class AvroSchemaDocument extends Document {
+    constructor();
+  }
   export class JsonSchemaDraft201909 implements JSONSchemaVersion {}
   export class JsonSchemaDraft4 implements JSONSchemaVersion {}
   export class JsonSchemaDraft7 implements JSONSchemaVersion {}

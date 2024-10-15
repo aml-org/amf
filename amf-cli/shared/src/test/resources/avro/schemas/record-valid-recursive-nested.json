@@ -8,20 +8,23 @@
   "doc": "this is a documentation for the record type",
   "fields": [
     {
-      "type": "record",
       "name": "LongListChild",
-      "fields": [
-        {
-          "name": "next",
-          "doc": "this is a documentation for the union type with recursive element",
-          "type": [
-            "null",
-            "LongListChild"
-          ],
-          "order": "descending",
-          "default": null
-        }
-      ]
+      "type": {
+        "name": "LongListChildField",
+        "type": "record",
+        "fields": [
+          {
+            "name": "next",
+            "doc": "this is a documentation for the union type with recursive element",
+            "type": [
+              "null",
+              "LongListChildField"
+            ]
+          }
+        ]
+      },
+      "order": "descending",
+      "default": {"next":  null}
     }
   ]
 }
