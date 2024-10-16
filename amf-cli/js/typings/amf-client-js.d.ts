@@ -6503,6 +6503,7 @@ declare module "amf-client-js" {
     getMaxYamlReferences: undefined | number;
     isAmfJsonLdSerialization: boolean;
     isTokens: boolean;
+    isExtensionsEverywhere: boolean;
 
     constructor();
 
@@ -6523,6 +6524,10 @@ declare module "amf-client-js" {
     withoutBaseUnitUrl(): ParsingOptions;
 
     withoutTokens(): ParsingOptions;
+
+    withExtensionsEverywhere(): ParsingOptions;
+
+    withoutExtensionsEverywhere(): ParsingOptions;
   }
   export class Path {
     static delimiter: string;

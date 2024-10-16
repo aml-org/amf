@@ -1,0 +1,9 @@
+#%RAML 1.0 Library
+usage: Schemas  for Flight ODS
+
+types:
+  updateFlight:
+    type: !include ./updateFlight.json
+    example:
+      cabinCounts: a string example
+      # flightId: this property is required if cabinCounts is present

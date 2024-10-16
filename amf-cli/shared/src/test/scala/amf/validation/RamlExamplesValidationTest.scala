@@ -338,4 +338,11 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/xml-like-example.raml")
   }
 
+  // W-16847560
+  test("Validate json schema with https $schema field against a conditional example") {
+    validate(
+      "raml/json-schema-validation/lib.raml",
+      Some("../raml/json-schema-validation.report")
+    )
+  }
 }

@@ -743,7 +743,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.9.0"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -770,7 +770,7 @@
             ],
             "http://a.ml/vocabularies/document#raw": [
               {
-                "@value": "{\n  \"type\": \"record\",\n  \"name\": \"Person\",\n  \"fields\": [\n    {\"name\": \"name\", \"type\": \"string\", \"example\": \"Donkey\"},\n    {\"name\": \"age\", \"type\": [\"null\", \"int\"], \"default\": null},\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\"name\": \"ProgrammingLanguage\", \"type\": \"enum\", \"symbols\": [\"JS\", \"Java\", \"Go\", \"Rust\", \"C\"]}\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [{\"name\": \"zipcode\", \"type\": \"int\"}]\n      }\n    }\n  ],\n}\n"
+                "@value": "{\n  \"type\": \"record\",\n  \"name\": \"Person\",\n  \"fields\": [\n    {\"name\": \"name\", \"type\": \"string\", \"example\": \"Donkey\"},\n    {\"name\": \"age\", \"type\": [\"null\", \"int\"], \"default\": null},\n    {\n      \"name\": \"favoriteProgrammingLanguage\",\n      \"type\": {\"name\": \"ProgrammingLanguage\", \"type\": \"enum\", \"symbols\": [\"JS\", \"Java\", \"Go\", \"Rust\", \"C\"]}\n    },\n    {\n      \"name\": \"address\",\n      \"type\": {\n        \"name\": \"Address\",\n        \"type\": \"record\",\n        \"fields\": [{\"name\": \"zipcode\", \"type\": \"int\"}]\n      }\n    }\n  ]\n}\n"
               }
             ],
             "http://a.ml/vocabularies/core#mediaType": [

@@ -1,0 +1,43 @@
+asyncapi: 2.6.0
+info:
+  title: Market Data API
+  version: 1.0.0
+  description: This API provides real-time market data updates.
+components:
+  messages:
+    m1:
+      payload:
+        type: record
+        name: Person
+        fields:
+          -
+            name: name
+            type: string
+          -
+            name: age
+            type:
+              - "null"
+              - int
+            default: null
+          -
+            name: favoriteProgrammingLanguage
+            type:
+              type: enum
+              name: ProgrammingLanguage
+              symbols:
+                - JS
+                - Java
+                - Go
+                - Rust
+                - C
+          -
+            name: address
+            type:
+              type: record
+              name: Address
+              fields:
+                -
+                  name: zipcode
+                  type: int
+      schemaFormat: application/vnd.apache.avro;version=1.9.0
+channels: {}

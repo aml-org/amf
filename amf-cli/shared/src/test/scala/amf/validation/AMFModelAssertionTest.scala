@@ -780,4 +780,16 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       recordFieldSchema.annotations.lexical() should not be null
     }
   }
+
+  // W-16888404
+  test("async solace server parameter should have description at parameter level") {
+    val api = s"$basePath/async20/validations/solace-server.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      parseResult.results.isEmpty shouldBe true
+      val solaceServer  = getServers(parseResult.baseUnit, isWebApi = false).head
+      val portParameter = solaceServer.variables.head
+      portParameter.description.nonNull shouldBe true
+      portParameter.schema.description.isNullOrEmpty shouldBe true
+    }
+  }
 }
