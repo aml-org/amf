@@ -52,15 +52,17 @@ class AvroRecordParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroC
         }
       )
     super.parseDefault(map, p.range)
+    // the validator treats all record fields as required
+    p.setWithoutId(PropertyShapeModel.MinCount, AmfScalar(1), Annotations.synthesized())
     p
   }
 }
 
 object AvroFieldOrder extends Enumeration {
-  type SortOrder = Value
-  val Ascending: Value  = Value(1, "ascending")
-  val Ignore: Value     = Value(0, "ignore")
-  val Descending: Value = Value(-1, "descending")
+  private type SortOrder = Value
+  private val Ascending: Value  = Value(1, "ascending")
+  private val Ignore: Value     = Value(0, "ignore")
+  private val Descending: Value = Value(-1, "descending")
 
   val default: SortOrder = Ascending
 
