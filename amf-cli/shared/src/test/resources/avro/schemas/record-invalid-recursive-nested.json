@@ -10,21 +10,20 @@
     {
       "name": "LongListChild",
       "type": {
-        "type": "record",
         "name": "LongListChildField",
+        "type": "record",
         "fields": [
           {
             "name": "next",
             "doc": "this is a documentation for the union type with recursive element",
             "type": [
-              "null",
-              "LongListParent"
+              "LongListParent",
+              "LongListChildField"
             ]
           }
         ]
       },
-      "order": "descending",
-      "default": {"next":  null}
+      "order": "descending"
     }
   ]
 }

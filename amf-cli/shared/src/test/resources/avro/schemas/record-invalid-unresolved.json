@@ -9,13 +9,9 @@
   "fields": [
     {
       "name": "next",
-      "doc": "this is a documentation for the union type with recursive element",
-      "type": {
-        "type": "map",
-        "values": "LongList"
-      },
-      "order": "descending",
-      "default": {}
+      "doc": "this field points to an undefined type",
+      "type": "undefinedType",
+      "order": "descending"
     }
   ]
 }

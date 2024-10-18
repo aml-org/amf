@@ -4,12 +4,13 @@ import amf.apicontract.client.scala.AvroConfiguration
 import amf.core.client.scala.model.domain.RecursiveShape
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.document.AvroSchemaDocument
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, UnionShape}
+import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape, UnresolvedShape}
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
+// TODO warning: recursive schemas fail in validation if key "type" not enclosed in {} apart from parameter fields
 class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAssertionTest {
   private val base   = "file://amf-cli/shared/src/test/resources/avro/schemas/"
   private val client = AvroConfiguration.Avro().baseUnitClient()
@@ -54,7 +55,8 @@ class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAsse
       parsed <- client.parse(base + "record-invalid-recursive.json")
       resolved = client.transform(parsed.baseUnit.cloneUnit())
     } yield {
-//      parsed.conforms shouldBe true this fails in parsing because of the validateSchema() method
+      parsed.conforms shouldBe true
+      resolved.conforms shouldBe true
       parsed.baseUnit shouldBe a[AvroSchemaDocument]
       resolved.baseUnit shouldBe a[AvroSchemaDocument]
       val parsedDoc   = parsed.baseUnit.asInstanceOf[AvroSchemaDocument]
@@ -70,8 +72,46 @@ class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAsse
       val parsedRange   = parsedEncoded.properties.head.range
       val resolvedRange = resolvedEncoded.properties.head.range
       // it inserts an empty AnyShape
-      parsedRange shouldBe a[AnyShape]
-      resolvedRange shouldBe a[AnyShape]
+      parsedRange shouldBe a[UnresolvedShape]
+      resolvedRange shouldBe a[UnresolvedShape]
+    }
+  }
+
+  test("Avro Schema with invalid recursive union with parent and grandparent") {
+    for {
+      parsed <- client.parse(base + "record-invalid-recursive-nested.json")
+      resolved = client.transform(parsed.baseUnit.cloneUnit())
+    } yield {
+      parsed.conforms shouldBe true
+      resolved.conforms shouldBe false
+      resolved.results.size shouldBe 1 // Invalid cyclic references in shapes: LongListChild -> next
+    }
+  }
+
+  test("Avro Schema with invalid unresolved record field") {
+    for {
+      parsed <- client.parse(base + "record-invalid-unresolved.json")
+      resolved = client.transform(parsed.baseUnit.cloneUnit())
+    } yield {
+      parsed.results.size shouldBe 1 // unresolved type 'undefinedType'
+      resolved.conforms shouldBe true
+      parsed.baseUnit shouldBe a[AvroSchemaDocument]
+      resolved.baseUnit shouldBe a[AvroSchemaDocument]
+      val parsedDoc   = parsed.baseUnit.asInstanceOf[AvroSchemaDocument]
+      val resolvedDoc = resolved.baseUnit.asInstanceOf[AvroSchemaDocument]
+      parsedDoc.encodes shouldBe a[NodeShape]
+      resolvedDoc.encodes shouldBe a[NodeShape]
+      // LongList
+      val parsedEncoded   = parsedDoc.encodes.asInstanceOf[NodeShape]
+      val resolvedEncoded = resolvedDoc.encodes.asInstanceOf[NodeShape]
+      parsedEncoded.properties.nonEmpty shouldBe true
+      resolvedEncoded.properties.nonEmpty shouldBe true
+      // next (field with recursive union to LongList WITHOUT a null union (that makes it valid))
+      val parsedRange   = parsedEncoded.properties.head.range
+      val resolvedRange = resolvedEncoded.properties.head.range
+      // undefined type should be an UnresolvedShape
+      parsedRange shouldBe a[UnresolvedShape]
+      resolvedRange shouldBe a[UnresolvedShape]
     }
   }
 
@@ -80,7 +120,7 @@ class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAsse
       parsed <- client.parse(base + "record-valid-recursive-nested.json")
       resolved = client.transform(parsed.baseUnit.cloneUnit())
     } yield {
-//      parsed.conforms shouldBe true this fails in parsing because of the validateSchema() method
+      parsed.conforms shouldBe true
       resolved.conforms shouldBe true
       parsed.baseUnit shouldBe a[AvroSchemaDocument]
       resolved.baseUnit shouldBe a[AvroSchemaDocument]
@@ -118,7 +158,7 @@ class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAsse
       parsed <- client.parse(base + "record-valid-recursive-nested-2.json")
       resolved = client.transform(parsed.baseUnit.cloneUnit())
     } yield {
-//      parsed.conforms shouldBe true this fails in parsing because of the validateSchema() method
+      parsed.conforms shouldBe true
       resolved.conforms shouldBe true
       parsed.baseUnit shouldBe a[AvroSchemaDocument]
       resolved.baseUnit shouldBe a[AvroSchemaDocument]
@@ -156,7 +196,7 @@ class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAsse
       parsed <- client.parse(base + "record-valid-recursive-array-items.json")
       resolved = client.transform(parsed.baseUnit.cloneUnit())
     } yield {
-//      parsed.conforms shouldBe true this fails in parsing because of the validateSchema() method
+      parsed.conforms shouldBe true
       resolved.conforms shouldBe true
       parsed.baseUnit shouldBe a[AvroSchemaDocument]
       resolved.baseUnit shouldBe a[AvroSchemaDocument]
@@ -189,7 +229,7 @@ class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAsse
       parsed <- client.parse(base + "record-valid-recursive-map-values.json")
       resolved = client.transform(parsed.baseUnit.cloneUnit())
     } yield {
-//      parsed.conforms shouldBe true this fails in parsing because of the validateSchema() method
+      parsed.conforms shouldBe true
       resolved.conforms shouldBe true
       parsed.baseUnit shouldBe a[AvroSchemaDocument]
       resolved.baseUnit shouldBe a[AvroSchemaDocument]

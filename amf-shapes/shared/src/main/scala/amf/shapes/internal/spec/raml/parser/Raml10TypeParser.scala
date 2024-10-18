@@ -1462,10 +1462,8 @@ sealed abstract class RamlTypeParser(
       entry.value.tagType match {
 
         case YType.Seq =>
-          val superTypes            = entry.value.as[Seq[YNode]]
-          val isMultipleInheritance = superTypes.size > 1
-          val inherits: Seq[AmfElement] = superTypes.zipWithIndex.map { case (node, i) =>
-            val id = if (isMultipleInheritance) shape.id + i else shape.id
+          val superTypes = entry.value.as[Seq[YNode]]
+          val inherits: Seq[AmfElement] = superTypes.zipWithIndex.map { case (node, _) =>
             node.as[YScalar].text match {
               case RamlTypeDefMatcher.TypeExpression(s) =>
                 RamlExpressionParser.parse(adopt, s, node).get

@@ -128,7 +128,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/any/default-any",
+                "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/unresolved",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -137,16 +137,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/any/default-any/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/unresolved/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/any/default-any/source-map/avro-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/unresolved/source-map/avro-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/any/default-any"
+                            "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/unresolved"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -158,10 +158,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#avro-raw-schema": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/any/default-any/source-map/avro-raw-schema/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/unresolved/source-map/avro-raw-schema/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/any/default-any"
+                            "@value": "file://amf-cli/shared/src/test/resources/avro/tck/apis/invalid/avro-invalid.yaml#/declares/msg/testMessage/payload/default/unresolved"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
