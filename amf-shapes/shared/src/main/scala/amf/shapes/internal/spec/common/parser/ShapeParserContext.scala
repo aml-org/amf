@@ -306,6 +306,4 @@ class ShapeParserContext(
       )
     }
   }
-
-  def shouldParseExtensionsEverywhere: Boolean = options.extensionsEverywhere
 }
