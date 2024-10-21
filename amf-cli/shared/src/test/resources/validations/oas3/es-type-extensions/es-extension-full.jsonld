@@ -1,0 +1,867 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
+      "http://a.ml/vocabularies/document#sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "Test API",
+      "http://a.ml/vocabularies/core#version": "1.0",
+      "http://a.ml/vocabularies/apiContract#endpoint": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D"
+        }
+      ],
+      "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/sfdc": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/sfdc"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#endpoint": "[(14,0)-(50,35)]",
+          "http://a.ml/vocabularies/core#name": "[(3,2)-(4,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api": "[(1,0)-(50,35)]",
+          "http://a.ml/vocabularies/core#version": "[(4,2)-(5,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/thing/{id}",
+      "http://a.ml/vocabularies/apiContract#supportedOperation": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#parameter": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#parameter": "[(16,4)-(26,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D": "[(15,2)-(50,35)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "sfdc",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#genai": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#genai": "[(6,2)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1": "[(6,0)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "get",
+      "http://a.ml/vocabularies/core#name": "get-a-thing",
+      "http://a.ml/vocabularies/core#description": "AI-friendly description",
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#operationId": "get-a-thing",
+      "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/sfdc": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/sfdc"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#operationId": "[(30,6)-(31,0)]",
+          "http://a.ml/vocabularies/core#description": "[(31,6)-(32,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing": "[(26,4)-(50,35)]",
+          "http://a.ml/vocabularies/core#name": "[(30,6)-(31,0)]",
+          "http://a.ml/vocabularies/apiContract#returns": "[(32,6)-(50,35)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "id",
+      "http://a.ml/vocabularies/apiContract#paramName": "id",
+      "http://a.ml/vocabularies/core#description": "AI-friendly description",
+      "http://a.ml/vocabularies/apiContract#required": true,
+      "http://a.ml/vocabularies/apiContract#style": "simple",
+      "http://a.ml/vocabularies/apiContract#explode": false,
+      "http://a.ml/vocabularies/apiContract#binding": "path",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/scalar/id"
+      },
+      "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/sfdc": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/sfdc"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/apiContract#explode": "true",
+          "http://a.ml/vocabularies/apiContract#style": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/shapes#schema": "[(24,8)-(26,0)]",
+          "http://a.ml/vocabularies/apiContract#required": "[(19,8)-(20,0)]",
+          "http://a.ml/vocabularies/apiContract#paramName": "[(17,8)-(18,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id": "[(17,8)-(26,0)]",
+          "http://a.ml/vocabularies/core#name": "[(17,8)-(18,0)]",
+          "http://a.ml/vocabularies/core#description": "[(20,8)-(21,0)]",
+          "http://a.ml/vocabularies/apiContract#binding": "[(18,8)-(19,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#topic": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic"
+      },
+      "http://a.ml/vocabularies/core#name": "genai",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#topic": "[(7,4)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai": "[(7,0)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "AI-friendly description",
+      "http://a.ml/vocabularies/apiContract#payload": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#payload": "[(35,10)-(50,35)]",
+          "http://a.ml/vocabularies/core#name": "[(33,8)-(33,13)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200": "[(33,8)-(50,35)]",
+          "http://a.ml/vocabularies/core#description": "[(34,10)-(35,0)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "sfdc",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#genai": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1/genai"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#genai": "[(28,8)-(30,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1": "[(28,0)-(30,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/scalar/id",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "id",
+      "smaps": {
+        "lexical": {
+          "http://www.w3.org/ns/shacl#name": "[(17,8)-(18,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/scalar/id": "[(24,8)-(26,0)]",
+          "http://www.w3.org/ns/shacl#datatype": "[(25,10)-(26,0)]"
+        },
+        "auto-generated-name": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/scalar/id": ""
+        },
+        "type-property-lexical-info": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/scalar/id": "[(25,10)-(25,14)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "sfdc",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#genai": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1/genai"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#genai": "[(22,10)-(24,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1": "[(22,0)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#description": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/description"
+      },
+      "http://a.ml/vocabularies/data#instructions": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions"
+      },
+      "http://a.ml/vocabularies/core#name": "topic",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#instructions": "[(9,6)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic": "[(8,0)-(14,0)]",
+          "http://a.ml/vocabularies/data#description": "[(8,6)-(9,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#mediaType": "application/json",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema"
+      },
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/shapes#schema": "[(37,14)-(50,35)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson": "[(36,12)-(50,35)]",
+          "http://a.ml/vocabularies/core#mediaType": "[(36,12)-(36,28)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1/genai",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#isAction": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1/genai/isAction"
+      },
+      "http://a.ml/vocabularies/core#name": "genai",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#isAction": "[(29,10)-(30,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1/genai": "[(29,0)-(30,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1/genai",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#isUserInput": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1/genai/isUserInput"
+      },
+      "http://a.ml/vocabularies/core#name": "genai",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#isUserInput": "[(23,12)-(24,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1/genai": "[(23,0)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/description",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "...",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/description": "[(8,19)-(8,22)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions",
+      "@type": [
+        "http://a.ml/vocabularies/data#Array",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#member": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "instructions",
+      "smaps": {
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions": "[(9,19)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#closed": false,
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema",
+      "http://a.ml/vocabularies/core#name": "Thing",
+      "http://a.ml/vocabularies/core#description": "AI-friendly description",
+      "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/sfdc": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/sfdc"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "http://www.w3.org/ns/shacl#closed": "true"
+        },
+        "type-property-lexical-info": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema": "[(42,16)-(42,20)]"
+        },
+        "auto-generated-name": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema": ""
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/core#description": "[(43,16)-(44,0)]",
+          "http://www.w3.org/ns/shacl#property": "[(44,16)-(50,35)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema": "[(37,14)-(50,35)]",
+          "http://a.ml/vocabularies/core#name": "[(41,16)-(42,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1/genai/isAction",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "isAction",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/customDomainProperties/sfdc/object_1/genai/isAction": "[(29,20)-(29,24)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1/genai/isUserInput",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "isUserInput",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/parameter/parameter/path/id/customDomainProperties/sfdc/object_1/genai/isUserInput": "[(23,25)-(23,29)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/name_1"
+      },
+      "http://a.ml/vocabularies/data#description": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/description"
+      },
+      "http://a.ml/vocabularies/core#name": "object_6",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#description": "[(11,10)-(12,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6": "[(10,10)-(12,0)]",
+          "http://a.ml/vocabularies/data#name": "[(10,10)-(11,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/name_2"
+      },
+      "http://a.ml/vocabularies/data#description": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/description"
+      },
+      "http://a.ml/vocabularies/core#name": "object_9",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#description": "[(13,10)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9": "[(12,10)-(14,0)]",
+          "http://a.ml/vocabularies/data#name": "[(12,10)-(13,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#a"
+        }
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a"
+      },
+      "http://www.w3.org/ns/shacl#minCount": 0,
+      "http://www.w3.org/ns/shacl#name": "a",
+      "smaps": {
+        "synthesized-field": {
+          "http://www.w3.org/ns/shacl#minCount": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a": "[(45,18)-(50,35)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "sfdc",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#genai": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1/genai"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#genai": "[(39,18)-(41,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1": "[(39,0)-(41,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/name_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "...",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/name_1": "[(10,16)-(10,19)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/description",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "...",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/description": "[(11,23)-(11,26)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/name_2",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "...",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/name_2": "[(12,16)-(12,19)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/description",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "...",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/description": "[(13,23)-(13,26)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "a",
+      "http://a.ml/vocabularies/core#description": "AI-friendly description",
+      "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/sfdc": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/sfdc"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/core#description": "[(47,20)-(48,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a": "[(45,18)-(50,35)]",
+          "http://www.w3.org/ns/shacl#datatype": "[(46,20)-(47,0)]"
+        },
+        "type-property-lexical-info": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a": "[(46,20)-(46,24)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1/genai",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#isDisplayable": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1/genai/isDisplayable"
+      },
+      "http://a.ml/vocabularies/core#name": "genai",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#isDisplayable": "[(40,20)-(41,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1/genai": "[(40,0)-(41,0)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "sfdc",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#lightning": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1/lightning"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#lightning": "[(49,22)-(50,35)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1": "[(49,0)-(50,35)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1/genai/isDisplayable",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "isDisplayable",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/customDomainProperties/sfdc/object_1/genai/isDisplayable": "[(40,35)-(40,39)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1/lightning",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#isPII": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1/lightning/isPII"
+      },
+      "http://a.ml/vocabularies/core#name": "lightning",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#isPII": "[(50,24)-(50,35)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1/lightning": "[(50,0)-(50,35)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1/lightning/isPII",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "isPII",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api/endpoint/%2Fthing%2F%7Bid%7D/supportedOperation/get/get-a-thing/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a/customDomainProperties/sfdc/object_1/lightning/isPII": "[(50,31)-(50,35)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/web-api"
+      },
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-full.yaml#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

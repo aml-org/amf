@@ -1,4 +1,4 @@
-package amf.validation
+package amf.extensions
 
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, Oas30JsonHint, Oas30YamlHint}
