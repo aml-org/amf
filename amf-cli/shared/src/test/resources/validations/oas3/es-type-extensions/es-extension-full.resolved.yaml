@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: "1.0"
+x-sfdc:
+  genai:
+    topic:
+      description: ...
+      instructions:
+        -
+          name: ...
+          description: ...
+        -
+          name: ...
+          description: ...
+paths:
+  /thing/{id}:
+    parameters:
+      -
+        name: id
+        in: path
+        required: true
+        description: AI-friendly description
+        x-sfdc:
+          genai:
+            isUserInput: true
+        schema:
+          type: string
+    get:
+      x-sfdc:
+        genai:
+          isAction: true
+      operationId: get-a-thing
+      description: AI-friendly description
+      responses:
+        "200":
+          description: AI-friendly description
+          content:
+            application/json:
+              schema:
+                x-sfdc:
+                  genai:
+                    isDisplayable: true
+                title: Thing
+                type: object
+                description: AI-friendly description
+                properties:
+                  a:
+                    type: string
+                    description: AI-friendly description
+                    x-sfdc:
+                      lightning:
+                        isPII: true

@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: '1.0'
+paths:
+  /thing/id:
+    get:
+      x-sfdc:
+        genai:
+          isAction: true
+      operationId: get-a-thing
+      description: AI-friendly description
+      responses:
+        '200':
+          description: AI-friendly description
+          content:
+            application/json:
+              schema:
+                type: string

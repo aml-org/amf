@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.{Payload, Request}
 import amf.apicontract.internal.metamodel.domain.{RequestModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorRequest
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.RequestBodyContentRequired

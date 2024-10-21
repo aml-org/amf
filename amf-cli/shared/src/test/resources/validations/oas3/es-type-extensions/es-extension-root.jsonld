@@ -1,0 +1,317 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
+      "http://a.ml/vocabularies/document#sourceSpec": "OAS 3.0"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "Test API",
+      "http://a.ml/vocabularies/core#version": "1.0",
+      "http://a.ml/vocabularies/apiContract#endpoint": [],
+      "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/sfdc": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/sfdc"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "http://a.ml/vocabularies/apiContract#endpoint": "[(14,0)-(14,9)]",
+          "http://a.ml/vocabularies/core#name": "[(3,2)-(4,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api": "[(1,0)-(14,9)]",
+          "http://a.ml/vocabularies/core#version": "[(4,2)-(5,0)]"
+        }
+      }
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "sfdc",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#genai": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#genai": "[(6,2)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1": "[(6,0)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#topic": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic"
+      },
+      "http://a.ml/vocabularies/core#name": "genai",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#topic": "[(7,4)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai": "[(7,0)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#description": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/description"
+      },
+      "http://a.ml/vocabularies/data#instructions": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions"
+      },
+      "http://a.ml/vocabularies/core#name": "topic",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#instructions": "[(9,6)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic": "[(8,0)-(14,0)]",
+          "http://a.ml/vocabularies/data#description": "[(8,6)-(9,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/description",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "some description",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/description": "[(8,19)-(8,35)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions",
+      "@type": [
+        "http://a.ml/vocabularies/data#Array",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#member": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "instructions",
+      "smaps": {
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions": "[(9,19)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/name_1"
+      },
+      "http://a.ml/vocabularies/data#description": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/description"
+      },
+      "http://a.ml/vocabularies/core#name": "object_6",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#description": "[(11,10)-(12,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6": "[(10,10)-(12,0)]",
+          "http://a.ml/vocabularies/data#name": "[(10,10)-(11,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/name_2"
+      },
+      "http://a.ml/vocabularies/data#description": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/description"
+      },
+      "http://a.ml/vocabularies/core#name": "object_9",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true"
+        },
+        "lexical": {
+          "http://a.ml/vocabularies/data#description": "[(13,10)-(14,0)]",
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9": "[(12,10)-(14,0)]",
+          "http://a.ml/vocabularies/data#name": "[(12,10)-(13,0)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/name_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "instruction 1",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/name_1": "[(10,16)-(10,29)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/description",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "do something 1",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_6/description": "[(11,23)-(11,37)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/name_2",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "instruction 2",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/name_2": "[(12,16)-(12,29)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/description",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "do something 2",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "smaps": {
+        "synthesized-field": {
+          "http://a.ml/vocabularies/core#name": "true",
+          "http://www.w3.org/ns/shacl#datatype": "true"
+        },
+        "lexical": {
+          "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api/customDomainProperties/sfdc/object_1/genai/topic/instructions/member/object_9/description": "[(13,23)-(13,37)]"
+        }
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/web-api"
+      },
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas3/es-type-extensions/es-extension-root.yaml#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

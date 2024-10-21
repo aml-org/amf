@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser.{
@@ -18,7 +18,6 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
