@@ -20,7 +20,7 @@ class AvroSchemaEditingPipeline private (urlShortening: Boolean = true, val name
 
 object AvroSchemaEditingPipeline {
   def apply()                    = new AvroSchemaEditingPipeline(true, name)
-  private[amf] def cachePipeline = new AvroSchemaEditingPipeline(false, PipelineId.Editing)
+  private[amf] def cachePipeline = new AvroSchemaEditingPipeline(false, AvroSchemaCachePipeline.name)
   val name: String               = PipelineId.Editing
 }
 

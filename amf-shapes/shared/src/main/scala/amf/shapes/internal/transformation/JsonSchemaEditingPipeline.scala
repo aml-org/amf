@@ -20,7 +20,7 @@ class JsonSchemaEditingPipeline private (urlShortening: Boolean = true, val name
 
 object JsonSchemaEditingPipeline {
   def apply()                    = new JsonSchemaEditingPipeline(true, name)
-  private[amf] def cachePipeline = new JsonSchemaEditingPipeline(false, PipelineId.Editing)
+  private[amf] def cachePipeline = new JsonSchemaEditingPipeline(false, JsonSchemaCachePipeline.name)
   val name: String               = PipelineId.Editing
 }
 
