@@ -327,8 +327,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test OAS API ReferenceTarget annotations - range should be substring") {
-    val uri    = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/oas3"
-    val config = OASConfiguration.OAS30()
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/oas3"
     for {
       unit <- build(s"$uri/api.yaml", Oas30YamlHint)
     } yield {
