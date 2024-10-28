@@ -11,10 +11,9 @@ import amf.core.internal.parser.domain.Value
 import amf.core.internal.remote.{AwsOas30, Spec}
 import org.yaml.model.YMap
 
-class AwsOas3DocumentParser(override val root: Root)(implicit override val ctx: AwsOas3WebApiContext)
-    extends Oas3DocumentParser(root) {
+class AwsOas3DocumentParser(root: Root)(implicit override val ctx: AwsOas3WebApiContext)
+    extends Oas3DocumentParser(root, AwsOas30) {
 
-  override val spec: Spec        = AwsOas30
   private val integrationsIri    = "http://a.ml/vocabularies/aws#integrations"
   private val integrationNameIri = "http://a.ml/vocabularies/aws#name"
 

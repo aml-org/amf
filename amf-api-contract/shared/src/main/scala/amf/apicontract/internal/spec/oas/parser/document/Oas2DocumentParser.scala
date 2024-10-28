@@ -7,8 +7,8 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
 import org.yaml.model.YMap
 
-case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
-    extends OasDocumentParser(root, Spec.OAS20) {
+class Oas2DocumentParser(root: Root, spec: Spec = Spec.OAS20)(implicit override val ctx: OasWebApiContext)
+    extends OasDocumentParser(root, spec) {
 
   override def parseWebApi(map: YMap): WebApi = {
     val api = super.parseWebApi(map)
@@ -22,4 +22,9 @@ case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
 
   override protected val definitionsKey: String = "definitions"
   override protected val securityKey: String    = "securityDefinitions"
+}
+
+object Oas2DocumentParser {
+  def apply(root: Root, spec: Spec = Spec.OAS20)(implicit ctx: OasWebApiContext): Oas2DocumentParser =
+    new Oas2DocumentParser(root, spec)
 }
