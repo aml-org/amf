@@ -14,7 +14,7 @@ object ApiValidationProfiles {
 
   val Oas20ValidationProfile: ValidationProfile = buildProfileFrom(Oas20Profile, Oas20Validations)
   val Oas30ValidationProfile: ValidationProfile = buildProfileFrom(Oas30Profile, Oas30Validations)
-  val Oas31ValidationProfile: ValidationProfile = buildProfileFrom(Oas31Profile, Oas30Validations)
+  val Oas31ValidationProfile: ValidationProfile = buildProfileFrom(Oas31Profile, Oas31Validations)
 
   val Async20ValidationProfile: ValidationProfile = buildProfileFrom(Async20Profile, Async20Validations)
 
