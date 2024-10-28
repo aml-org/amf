@@ -241,6 +241,27 @@ object OASConfiguration extends APIConfigurationBuilder {
         )
       )
 
+  def OAS31(): AMFConfiguration =
+    common()
+      .withPlugins(
+        List(
+          Oas31ParsePlugin,
+          Oas31RenderPlugin,
+          Oas31ElementRenderPlugin,
+          APIShaclModelValidationPlugin(ProfileNames.OAS31),
+          APIPayloadValidationPlugin(ProfileNames.OAS31)
+        )
+      )
+      .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
+      .withTransformationPipelines(
+        List(
+          Oas30TransformationPipeline(),
+          Oas3EditingPipeline(),
+          Oas3CompatibilityPipeline(),
+          Oas3CachePipeline()
+        )
+      )
+
   def OAS30Component(): AMFConfiguration =
     common()
       .withPlugins(
@@ -274,9 +295,10 @@ object OASConfiguration extends APIConfigurationBuilder {
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
     case Spec.OAS20 => OASConfiguration.OAS20()
     case Spec.OAS30 => OASConfiguration.OAS30()
+    case Spec.OAS31 => OASConfiguration.OAS31()
     case _ =>
       throw UnrecognizedSpecException(
-        s"Spec ${spec.id} not supported by OASConfiguration. Supported specs are ${Spec.OAS20.id}, ${Spec.OAS30.id}"
+        s"Spec ${spec.id} not supported by OASConfiguration. Supported specs are ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.OAS31.id}"
       )
   }
 }
@@ -293,6 +315,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
       .withFallback(ApiContractFallbackPlugin(false))
       .withPlugins(
         List(
+          Oas31ParsePlugin,
           Oas30ParsePlugin,
           Oas20ParsePlugin,
           Raml10ParsePlugin,
@@ -307,6 +330,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
     case Spec.RAML10 => RAMLConfiguration.RAML10()
     case Spec.OAS20  => OASConfiguration.OAS20()
     case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS31  => OASConfiguration.OAS31()
     case _ =>
       throw UnrecognizedSpecException(
         s"Spec ${spec.id} not supported by WebApiConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}"
@@ -361,6 +385,7 @@ object APIConfiguration extends APIConfigurationBuilder {
     case Spec.RAML10 => RAMLConfiguration.RAML10()
     case Spec.OAS20  => OASConfiguration.OAS20()
     case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS31  => OASConfiguration.OAS31()
     case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
       AsyncAPIConfiguration.Async20()
     case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())

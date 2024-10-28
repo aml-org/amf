@@ -65,6 +65,7 @@ object SchemaPosition extends Enumeration {
 class OASSchemaVersion(override val name: String, val position: Position) extends SchemaVersion(name)
 case class OAS20SchemaVersion(override val position: Position)            extends OASSchemaVersion("oas2.0", position)
 case class OAS30SchemaVersion(override val position: Position)            extends OASSchemaVersion("oas3.0.0", position)
+case class OAS31SchemaVersion(override val position: Position)            extends OASSchemaVersion("oas3.1.0", position)
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~ JSON Schema ~~~~~~~~~~~~~~~~~~~~~~~~
 

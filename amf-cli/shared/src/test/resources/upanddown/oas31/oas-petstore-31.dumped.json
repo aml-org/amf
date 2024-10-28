@@ -1,0 +1,80 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.1 (by Ariel Mirra)",
+    "description": "took the 3.0 version and updated examples and other facets to make it comply with OAS 3.1 spec, and validate it with https://editor-next.swagger.io/",
+    "version": "1.0.11",
+    "license": {
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+      "name": "Apache 2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://petstore3.swagger.io/api/v31"
+    }
+  ],
+  "paths": {
+    "/pet": {
+      "put": {
+        "operationId": "updatePet",
+        "description": "Update an existing pet by Id",
+        "summary": "Update an existing pet",
+        "requestBody": {
+          "description": "Update an existent pet in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "required": [
+          "name",
+          "photoUrls"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "photoUrls": {
+            "xml": {
+              "wrapped": true
+            },
+            "type": "array",
+            "items": {
+              "xml": {
+                "name": "photoUrl"
+              },
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
