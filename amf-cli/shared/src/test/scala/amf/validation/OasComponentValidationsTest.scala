@@ -66,4 +66,12 @@ class OasComponentValidationsTest extends UniquePlatformReportGenTest {
       configOverride = Some(componentConfig)
     )
   }
+
+  // W-16993090
+  test("OAS components should not throw unresolved error in valid schemas referencing") {
+    validate(
+      "oas3-component-schemas-ref.yaml",
+      configOverride = Some(componentConfig)
+    )
+  }
 }
