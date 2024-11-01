@@ -7,12 +7,12 @@ import amf.core.internal.parser.domain._
 import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.SchemaPosition.Schema
-import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.common._
+import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, ShapeParserContext, YMapEntryLike}
 import amf.shapes.internal.spec.oas.parser
 import amf.shapes.internal.spec.oas.parser.TypeDetector.LinkCriteria
 import org.mulesoft.common.client.lexical.SourceLocation
-import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YPart, YScalar, YType}
+import org.yaml.model._
 
 /** OpenAPI Type Parser.
   */
@@ -56,12 +56,16 @@ object OasTypeParser {
   private def key(entry: YMapEntry)(implicit errorHandler: IllegalTypeHandler) = entry.key.as[YScalar].text
 
   private def getSchemaVersion(ctx: ShapeParserContext) = {
-    if (ctx.spec == Spec.OAS30) OAS30SchemaVersion(Schema)
-    else if (
-      ctx.spec == Spec.ASYNC20 || ctx.spec == Spec.ASYNC21 || ctx.spec == Spec.ASYNC22 || ctx.spec == Spec.ASYNC23 || ctx.spec == Spec.ASYNC24 || ctx.spec == Spec.ASYNC25 || ctx.spec == Spec.ASYNC26
-    ) JSONSchemaDraft7SchemaVersion
-    else OAS20SchemaVersion(Schema)
+    ctx.spec match {
+      case Spec.OAS31              => OAS31SchemaVersion(Schema)
+      case Spec.OAS30              => OAS30SchemaVersion(Schema)
+      case async if isAsync(async) => JSONSchemaDraft7SchemaVersion
+      case _                       => OAS20SchemaVersion(Schema)
+    }
   }
+
+  private def isAsync(spec: Spec) =
+    Seq(Spec.ASYNC20, Spec.ASYNC21, Spec.ASYNC22, Spec.ASYNC23, Spec.ASYNC24, Spec.ASYNC25, Spec.ASYNC26).contains(spec)
 }
 
 case class OasTypeParser(

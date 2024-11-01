@@ -252,7 +252,7 @@ object OASConfiguration extends APIConfigurationBuilder {
           APIPayloadValidationPlugin(ProfileNames.OAS31)
         )
       )
-      .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
+      .withValidationProfile(Oas31ValidationProfile, Oas31EffectiveValidations)
       .withTransformationPipelines(
         List(
           Oas30TransformationPipeline(),
@@ -333,7 +333,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
     case Spec.OAS31  => OASConfiguration.OAS31()
     case _ =>
       throw UnrecognizedSpecException(
-        s"Spec ${spec.id} not supported by WebApiConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}"
+        s"Spec ${spec.id} not supported by WebApiConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.OAS31.id}"
       )
   }
 }
@@ -391,7 +391,7 @@ object APIConfiguration extends APIConfigurationBuilder {
     case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
     case _ =>
       throw UnrecognizedSpecException(
-        s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.ASYNC20.id}"
+        s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.OAS31.id}, ${Spec.ASYNC20.id}"
       )
   }
 }

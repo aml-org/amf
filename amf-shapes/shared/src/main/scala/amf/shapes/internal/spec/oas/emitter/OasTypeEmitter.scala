@@ -67,7 +67,7 @@ case class OasTypeEmitter(
         OasNodeShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case union: UnionShape if nilUnion(union) =>
         OasTypeEmitter(union.anyOf.head, ordering, ignored, references).emitters()
-      case union: UnionShape if oas30WithNull(union) =>
+      case union: UnionShape if oas3WithNull(union) =>
         // null type is not valid in OAS 3.0.x. We will reformat the union with nil in a nullable like type
         val nullableType = processNullableLikeUnion(union)
         OasTypeEmitter(nullableType, ordering, ignored, references).emitters()
@@ -118,8 +118,8 @@ case class OasTypeEmitter(
   def nilUnion(union: UnionShape): Boolean =
     union.anyOf.size == 1 && union.anyOf.head.annotations.contains(classOf[NilUnion])
 
-  private def oas30WithNull(union: UnionShape): Boolean =
-    spec.spec == Spec.OAS30 && union.anyOf.exists(_.isInstanceOf[NilShape])
+  private def oas3WithNull(union: UnionShape): Boolean =
+    (spec.spec == Spec.OAS30 || spec.spec == Spec.OAS31) && union.anyOf.exists(_.isInstanceOf[NilShape])
 
   private def processNullableLikeUnion(union: UnionShape): Shape = {
     val (nilShape, nonNullElements) = union.anyOf.partition(_.isInstanceOf[NilShape])

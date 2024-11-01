@@ -47,7 +47,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parameter
     }
 
-    val header: Parameter = if (ctx.spec == Spec.OAS30) {
+    val header: Parameter = if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31) {
       ctx.link(map) match {
         case Left(fullRef) =>
           val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "headers")

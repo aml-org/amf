@@ -122,8 +122,8 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
           ctx.closedShape(res, map, "response")
         }
 
-        // OAS 3.0.0
-        if (ctx.spec == Spec.OAS30) {
+        // OAS 3.0 & 3.1
+        if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31) {
           map.key(
             "content",
             { entry =>

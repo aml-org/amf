@@ -1,5 +1,7 @@
 package amf.shapes.internal.spec.oas.parser
 
+import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
+import amf.aml.internal.parse.vocabularies.VocabularyContext
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
@@ -97,8 +99,9 @@ case class InlineOasTypeParser(
         map.key("type").get.location
       )
 
-  protected def isOas: Boolean  = version.isInstanceOf[OASSchemaVersion]
-  protected def isOas3: Boolean = version.isInstanceOf[OAS30SchemaVersion]
+  protected def isOas: Boolean   = version.isInstanceOf[OASSchemaVersion]
+  protected def isOas3: Boolean  = version.isInstanceOf[OAS30SchemaVersion]
+  protected def isOas31: Boolean = version.isInstanceOf[OAS31SchemaVersion]
 
   protected def moveExamplesToUnion(parsed: AnyShape, union: UnionShape): Unit = {
     val AmfArray(values, annotations) = parsed.fields.get(ExamplesField.Examples)
@@ -291,9 +294,9 @@ case class InlineOasTypeParser(
     }
 
     def buildLocalRef(name: String) = ctx match {
-      case _ if ctx.isOas3Context  => s"#/components/schemas/$name"
-      case _ if ctx.isAsyncContext => s"#/components/schemas/$name"
-      case _                       => s"#/definitions/$name"
+      case _ if ctx.isOas3Context || ctx.isOas31Context => s"#/components/schemas/$name"
+      case _ if ctx.isAsyncContext                      => s"#/components/schemas/$name"
+      case _                                            => s"#/definitions/$name"
     }
   }
 
@@ -728,7 +731,7 @@ case class InlineOasTypeParser(
         new UnevaluatedParser(version, UnevaluatedParser.unevaluatedPropertiesInfo).parse(map, shape)
       }
 
-      if (isOas3) {
+      if (isOas3 || isOas31) {
         map.key("discriminator", DiscriminatorParser(shape, _).parse())
       } else {
         map.key("discriminator", NodeShapeModel.Discriminator in shape)

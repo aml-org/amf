@@ -54,7 +54,7 @@ trait ConfigurationSetupTest extends AsyncFunSuite with Matchers {
     jsonSchema
   )
 
-  protected val vendors: List[Spec] = List(ASYNC20, RAML10, RAML08, OAS20, OAS30)
+  protected val vendors: List[Spec] = List(ASYNC20, RAML10, RAML08, OAS20, OAS30, OAS31)
   protected val configNames = Map(
     apiConfig         -> "API",
     webApiConfig      -> "WebAPI",

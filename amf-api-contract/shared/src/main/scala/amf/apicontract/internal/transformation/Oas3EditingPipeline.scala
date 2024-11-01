@@ -9,7 +9,6 @@ import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionS
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.internal.remote.Oas30
 
 class Oas3EditingPipeline private (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {

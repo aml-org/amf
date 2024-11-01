@@ -13,8 +13,8 @@ class Oas31WebApiContext(
     private val wrapped: ParserContext,
     private val ds: Option[OasWebApiDeclarations] = None,
     options: ParsingOptions = ParsingOptions(),
-    syntax: SpecSyntax = Oas3Syntax
-) extends OasWebApiContext(loc, refs, options, wrapped, ds, parser.Oas3Settings(syntax)) {
+    syntax: SpecSyntax = Oas31Syntax
+) extends OasWebApiContext(loc, refs, options, wrapped, ds, parser.Oas31Settings(syntax)) {
   override val factory: Oas31VersionFactory = Oas31VersionFactory()(this)
 
   override val defaultSchemaVersion: SchemaVersion = OAS31SchemaVersion.apply(SchemaPosition.Other)

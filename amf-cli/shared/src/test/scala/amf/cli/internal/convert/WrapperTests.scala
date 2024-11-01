@@ -2299,6 +2299,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     case Spec.RAML08 => RAMLConfiguration.RAML08()
     case Spec.OAS20  => OASConfiguration.OAS20()
     case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS31  => OASConfiguration.OAS31()
     case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
       AsyncAPIConfiguration.Async20()
   }
