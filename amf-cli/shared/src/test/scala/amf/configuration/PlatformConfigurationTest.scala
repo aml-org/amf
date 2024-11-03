@@ -22,9 +22,9 @@ trait PlatformConfigurationTest extends ConfigurationSetupTest {
     Spec.AMF,
     Spec.GRPC
   )
-  protected val acceptedWebApiSpecs: Set[Spec] = Set(Spec.RAML08, Spec.RAML10, Spec.OAS20, Spec.OAS30)
+  protected val acceptedWebApiSpecs: Set[Spec] = Set(Spec.RAML08, Spec.RAML10, Spec.OAS20, Spec.OAS30, Spec.OAS31)
   protected val acceptedApiSpecs: Set[Spec]  = acceptedWebApiSpecs + Spec.ASYNC20 + Spec.JSONSCHEMA // Necessary for APB
-  protected val acceptedOasSpecs: Set[Spec]  = Set(Spec.OAS20, Spec.OAS30)
+  protected val acceptedOasSpecs: Set[Spec]  = Set(Spec.OAS20, Spec.OAS30, Spec.OAS31)
   protected val acceptedRamlSpecs: Set[Spec] = Set(Spec.RAML08, Spec.RAML10)
 
   acceptedWebApiSpecs.foreach { spec =>

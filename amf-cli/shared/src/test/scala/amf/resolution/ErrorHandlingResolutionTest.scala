@@ -92,7 +92,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests with Matchers {
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     config.renderTarget.spec match {
-      case Raml08 | Raml10 | Oas20 | Oas30 =>
+      case Raml08 | Raml10 | Oas20 | Oas30 | Oas31 =>
         amfConfig.baseUnitClient().transform(unit, PipelineId.Default).baseUnit
       case Amf =>
         TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler(), amfConfig)

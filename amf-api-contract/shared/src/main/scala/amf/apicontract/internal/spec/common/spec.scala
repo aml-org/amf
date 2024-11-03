@@ -1,11 +1,16 @@
 package amf.apicontract.internal.spec
 
-import amf.apicontract.internal.spec.common.{OasWebApiDeclarations, RamlWebApiDeclarations, WebApiDeclarations}
 import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
 import amf.apicontract.internal.spec.common.parser.WebApiContext
+import amf.apicontract.internal.spec.common.{OasWebApiDeclarations, RamlWebApiDeclarations, WebApiDeclarations}
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterContext, OasSpecEmitterContext}
-import amf.apicontract.internal.spec.oas.parser.context.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{
+  Oas2WebApiContext,
+  Oas31WebApiContext,
+  Oas3WebApiContext,
+  OasWebApiContext
+}
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml10WebApiContext, RamlWebApiContext}
 import amf.core.client.scala.parse.document.ParsedReference
@@ -24,14 +29,14 @@ package object spec {
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.spec == Spec.OAS30)
+      if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31)
         stripOas3ComponentsPrefix(url, "parameters")
       else
         url.stripPrefix(parameterDefinitionsPrefix)
     }
 
     def stripResponsesDefinitionsPrefix(url: String)(implicit ctx: OasWebApiContext): String = {
-      if (ctx.spec == Spec.OAS30)
+      if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31)
         stripOas3ComponentsPrefix(url, "responses")
       else
         url.stripPrefix(responsesDefinitionsPrefix)
@@ -57,6 +62,14 @@ package object spec {
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
     val result = ctx.spec match {
+      case Spec.OAS31 =>
+        new Oas31WebApiContext(
+          ctx.rootContextDocument,
+          ctx.refs,
+          ctx,
+          Some(toOasDeclarations(ctx.declarations)),
+          ctx.options
+        )
       case Spec.OAS30 =>
         new Oas3WebApiContext(
           ctx.rootContextDocument,
