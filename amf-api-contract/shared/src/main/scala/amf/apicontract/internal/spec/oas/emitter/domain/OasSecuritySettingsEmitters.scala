@@ -4,7 +4,6 @@ import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.domain.{RamlApiKeySettingsEmitters, RamlOAuth1SettingsEmitters}
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.DataNode
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.datanode.DataNodeEmitter
@@ -18,6 +17,7 @@ import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
@@ -29,11 +29,12 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
     val settings = f.value.value.asInstanceOf[Settings]
 
     settings match {
-      case o1: OAuth1Settings                            => OasOAuth1SettingsEmitters(o1, ordering).emitters()
-      case o2: OAuth2Settings if spec.spec == Spec.OAS30 => Oas3OAuth2SettingsEmitters(o2, ordering).emitters()
-      case o2: OAuth2Settings                            => OasOAuth2SettingsEmitters(o2, ordering).emitters()
-      case apiKey: ApiKeySettings                        => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
-      case http: HttpSettings                            => OasHttpSettingsEmitters(http, ordering).emitters()
+      case o1: OAuth1Settings => OasOAuth1SettingsEmitters(o1, ordering).emitters()
+      case o2: OAuth2Settings if spec.spec == Spec.OAS30 | spec.spec == Spec.OAS31 =>
+        Oas3OAuth2SettingsEmitters(o2, ordering).emitters()
+      case o2: OAuth2Settings            => OasOAuth2SettingsEmitters(o2, ordering).emitters()
+      case apiKey: ApiKeySettings        => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
+      case http: HttpSettings            => OasHttpSettingsEmitters(http, ordering).emitters()
       case openId: OpenIdConnectSettings => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
       case _ =>
         val internals = ListBuffer[EntryEmitter]()

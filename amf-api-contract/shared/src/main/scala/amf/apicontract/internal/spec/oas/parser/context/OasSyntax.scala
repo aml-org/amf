@@ -3,6 +3,10 @@ package amf.apicontract.internal.spec.oas.parser.context
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.oas.parser.{Oas2ShapeSyntax, Oas3ShapeSyntax}
 
+object Oas31Syntax extends SpecSyntax {
+  override val nodes: Map[String, Set[String]] = Oas3Syntax.nodes
+}
+
 object Oas3Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] = Oas3ShapeSyntax.nodes ++ Map(
     "paths" -> Set.empty[String],

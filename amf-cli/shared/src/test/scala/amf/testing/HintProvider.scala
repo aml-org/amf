@@ -10,6 +10,7 @@ object HintProvider {
     case Raml10     => Raml10YamlHint
     case Oas20      => Oas20JsonHint
     case Oas30      => Oas30JsonHint
+    case Oas31      => Oas31JsonHint
     case AsyncApi20 => Async20YamlHint
   }
 }

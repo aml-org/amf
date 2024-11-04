@@ -3,6 +3,7 @@ package amf.emit
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
+// TODO: it's not rendering new 'examples' facet
 class Oas31CycleTest extends FunSuiteCycleTests {
   override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/oas31/"
 
@@ -22,7 +23,6 @@ class Oas31CycleTest extends FunSuiteCycleTests {
     }
   }
 
-  // TODO: it's not rendering new 'examples' facet
   val cyclesOas31Yaml: Seq[FixtureData] = Seq(
     FixtureData(
       "OAS 3.1 PetStore API in YAML",

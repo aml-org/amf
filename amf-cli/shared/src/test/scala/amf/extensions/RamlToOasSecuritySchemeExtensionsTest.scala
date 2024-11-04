@@ -131,6 +131,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
     case Spec.RAML08 => Raml08YamlHint
     case Spec.OAS20  => Oas20YamlHint
     case Spec.OAS30  => Oas30YamlHint
+    case Spec.OAS31  => Oas31YamlHint
     case _           => throw new IllegalArgumentException("Vendor is not recognized")
   }
 }

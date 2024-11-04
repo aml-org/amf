@@ -9,8 +9,8 @@ import amf.core.internal.remote.JsonSchema
 import amf.core.internal.utils.UriUtils
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.annotations.{ExternalJsonSchemaShape, TargetName}
-import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.ShapeParserContext
+import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.jsonschema.parser.{JsonSchemaParsingHelper, RemoteJsonSchemaParser}
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
 import org.yaml.model.{YMap, YMapEntry, YPart, YType}
@@ -171,9 +171,10 @@ class OasRefParser(
 
   private def isDeclaration(ref: String): Boolean =
     ctx match {
-      case _ if ctx.isOas2Context && ref.matches(oas2DeclarationRegex)                         => true
-      case _ if (ctx.isOas3Context || ctx.isAsyncContext) && ref.matches(oas3DeclarationRegex) => true
-      case _                                                                                   => false
+      case _ if ctx.isOas2Context && ref.matches(oas2DeclarationRegex) => true
+      case _ if (ctx.isOas31Context || ctx.isOas3Context || ctx.isAsyncContext) && ref.matches(oas3DeclarationRegex) =>
+        true
+      case _ => false
     }
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {

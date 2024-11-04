@@ -215,7 +215,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
     extends OasServersParser(map, elem, field) {
 
-  override def parse(): Unit = if (ctx.spec == Spec.OAS30) parseServers("servers")
+  override def parse(): Unit = if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31) parseServers("servers")
 }
 
 case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: OasWebApiContext)
