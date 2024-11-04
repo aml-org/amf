@@ -268,9 +268,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
         )
 
       fs.entry(WebApiModel.Webhooks)
-        .fold(result += EntryPartEmitter("webhooks", EmptyMapEmitter()))(f =>
-          result += EndpointsEmitter("webhooks", f, ordering, references, orphanAnnotationsFromPaths)
-        )
+        .foreach(f => result += EndpointsEmitter("webhooks", f, ordering, references, orphanAnnotationsFromPaths))
 
       fs.entry(WebApiModel.Security)
         .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
