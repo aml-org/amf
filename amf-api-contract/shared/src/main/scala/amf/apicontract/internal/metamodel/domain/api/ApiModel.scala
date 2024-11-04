@@ -113,6 +113,7 @@ trait ApiModel
       License,
       Documentations,
       EndPoints,
+      Webhooks,
       Security,
       Tags
     ) ++ DomainElementModel.fields

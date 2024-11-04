@@ -1701,6 +1701,8 @@ declare module "amf-client-js" {
 
     withEndPoints(endPoints: Array<EndPoint>): this;
 
+    withWebhooks(webhooks: Array<EndPoint>): this;
+
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
 
     withId(id: string): this;
@@ -9197,6 +9199,8 @@ declare module "amf-client-js" {
     withEndPoint(path: string): EndPoint;
 
     withEndPoints(endPoints: Array<EndPoint>): this;
+
+    withWebhooks(webhooks: Array<EndPoint>): this;
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
 

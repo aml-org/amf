@@ -350,9 +350,39 @@ trait WebApiMakerTest
           )
         )
     )
+
+    val webhooks = List(
+      EndPoint()
+        .withPath("newPet")
+        .withOperations(
+          List(
+            Operation()
+              .withRequest(
+                Request()
+                  .withDescription("Information about a new pet in the system")
+                  .withPayloads(
+                    List(
+                      Payload()
+                        .withSchema(ScalarShape().withName("schema"))
+                        .withMediaType(`application/json`)
+                    )
+                  )
+              )
+              .withResponses(
+                List(
+                  Response()
+                    .withStatusCode("200")
+                    .withDescription("Return a 200 status to indicate that the data was received successfully")
+                )
+              )
+          )
+        )
+    )
+
     val api = WebApi()
       .withName("API")
       .withEndPoints(endpoints)
+      .withWebhooks(webhooks)
 
     api.withServer("/some/base/uri")
 
