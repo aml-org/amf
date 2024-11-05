@@ -9,7 +9,7 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.metamodel.Field
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Oas31JsonHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, CreativeWork, ScalarShape, XMLSerializer}
 import org.mulesoft.common.test.ListAssertions
@@ -350,6 +350,16 @@ trait WebApiMakerTest
           )
         )
     )
+    val api = WebApi()
+      .withName("API")
+      .withEndPoints(endpoints)
+
+    api.withServer("/some/base/uri")
+
+    assertFixture(api, "operation-request.json", Oas20JsonHint)
+  }
+
+  test("Parameters - OAS 3.1.") {
 
     val webhooks = List(
       EndPoint()
@@ -357,6 +367,7 @@ trait WebApiMakerTest
         .withOperations(
           List(
             Operation()
+              .withMethod("post")
               .withRequest(
                 Request()
                   .withDescription("Information about a new pet in the system")
@@ -380,13 +391,11 @@ trait WebApiMakerTest
     )
 
     val api = WebApi()
-      .withName("API")
-      .withEndPoints(endpoints)
+      .withName("Webhook Example")
+      .withVersion("1.0.0")
       .withWebhooks(webhooks)
 
-    api.withServer("/some/base/uri")
-
-    assertFixture(api, "operation-request.json", Oas20JsonHint)
+    assertFixture(api, "webhook-example.json", Oas31JsonHint)
   }
 
   test("Responses - RAML.") {

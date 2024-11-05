@@ -85,8 +85,8 @@ trait ApiModel
 
   val Webhooks = Field(
     Array(EndPointModel),
-    ApiContract + "webhook",
-    ModelDoc(ModelVocabularies.ApiContract, "webhook", "Webhooks defined in the API")
+    ApiContract + "webhooks",
+    ModelDoc(ModelVocabularies.ApiContract, "webhooks", "Webhooks defined in the API")
   )
 
   val Security = Field(
