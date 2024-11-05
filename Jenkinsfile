@@ -8,6 +8,7 @@ def PRODUCT_NAME = "AMF"
 def lastStage = ""
 def color = '#FF8C00'
 def headerFlavour = "WARNING"
+def sonarqubeUrl = 'https://sonarqube.sfcq.buildndeliver-s.aws-esvc1-useast2.aws.sfdc.cl/'
 @Field TCKUTOR_JOB = "application/AMF/amfTCKutor/master"
 @Field INTERFACES_JOB = "application/AMF/amf-interface-tests/master"
 @Field METADATA_JOB = "application/AMF/amf-metadata/develop"
@@ -53,13 +54,14 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'W-17016391'
                 }
             }
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sf-sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: sonarqubeUrl]]) {
                     script {
                         lastStage = env.STAGE_NAME
-                        sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} -Dsonar.login=${SONAR_SERVER_TOKEN} sonarScan'
+                        sh 'sbt -Dsonar.host.url=${sonarqubeUrl} -Dsonar.login=${SONAR_SERVER_TOKEN} sonarScan'
                     }
                 }
             }
