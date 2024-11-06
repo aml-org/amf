@@ -370,11 +370,11 @@ trait WebApiMakerTest
               .withMethod("post")
               .withRequest(
                 Request()
+                  .withName("requestBody")
                   .withDescription("Information about a new pet in the system")
                   .withPayloads(
                     List(
                       Payload()
-                        .withSchema(ScalarShape().withName("schema"))
                         .withMediaType(`application/json`)
                     )
                   )
@@ -382,6 +382,7 @@ trait WebApiMakerTest
               .withResponses(
                 List(
                   Response()
+                    .withName("200")
                     .withStatusCode("200")
                     .withDescription("Return a 200 status to indicate that the data was received successfully")
                 )

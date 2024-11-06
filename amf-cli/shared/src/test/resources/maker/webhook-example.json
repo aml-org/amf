@@ -10,11 +10,7 @@
         "requestBody": {
           "description": "Information about a new pet in the system",
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
+            "application/json": {}
           }
         },
         "responses": {
