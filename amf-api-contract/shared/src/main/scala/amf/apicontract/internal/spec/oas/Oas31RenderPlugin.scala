@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas
 
-import amf.apicontract.internal.spec.oas.emitter.context.Oas3SpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.context.{Oas31SpecEmitterContext, Oas3SpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.document.{Oas31DocumentEmitter, Oas3DocumentEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -32,6 +32,6 @@ object Oas31RenderPlugin extends OasRenderPlugin {
       case _                          => None
     }
 
-  private def specContext(renderConfig: RenderConfiguration, errorHandler: AMFErrorHandler): Oas3SpecEmitterContext =
-    new Oas3SpecEmitterContext(errorHandler, config = renderConfig)
+  private def specContext(renderConfig: RenderConfiguration, errorHandler: AMFErrorHandler): Oas31SpecEmitterContext =
+    new Oas31SpecEmitterContext(errorHandler, config = renderConfig)
 }

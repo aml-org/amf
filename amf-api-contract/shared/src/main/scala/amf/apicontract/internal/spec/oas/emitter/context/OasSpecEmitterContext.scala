@@ -10,7 +10,6 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain._
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
@@ -18,17 +17,12 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.plugins.render.RenderConfiguration
-import amf.core.internal.remote.{Oas20, Oas30, Spec}
+import amf.core.internal.remote.{Oas20, Oas30, Oas31, Spec}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters._
-import amf.shapes.internal.spec.common.emitter.annotations.{
-  AnnotationEmitter,
-  FacetsInstanceEmitter,
-  OasAnnotationEmitter,
-  OasFacetsInstanceEmitter
-}
+import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.emitter._
-import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition, SchemaVersion}
+import amf.shapes.internal.spec.common.emitter.annotations.{FacetsInstanceEmitter, OasFacetsInstanceEmitter}
 import amf.shapes.internal.spec.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
 import amf.shapes.internal.spec.oas.emitter.OasTypeEmitter
 
@@ -129,7 +123,9 @@ case class InlinedJsonSchemaEmitterFactory()(override implicit val spec: JsonSch
 
 }
 
-case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
+case class Oas31SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends Oas3SpecEmitterFactory(spec) {}
+
+class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
   override def serversEmitter(
       api: Api,
       f: FieldEntry,
@@ -174,6 +170,17 @@ abstract class OasSpecEmitterContext(
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: OasSpecEmitterFactory
+}
+
+object Oas3SpecEmitterFactory {
+  def apply(spec: OasSpecEmitterContext) = new Oas3SpecEmitterFactory(spec)
+}
+
+class Oas31SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)
+    extends Oas3SpecEmitterContext(eh, refEmitter, config) {
+  override val schemaVersion: SchemaVersion   = OAS31SchemaVersion(SchemaPosition.Schema)
+  override val factory: OasSpecEmitterFactory = Oas31SpecEmitterFactory(this)
+  override val spec: Spec                     = Oas31
 }
 
 class Oas3SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)

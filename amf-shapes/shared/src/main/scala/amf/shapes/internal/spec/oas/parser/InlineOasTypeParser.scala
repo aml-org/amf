@@ -1,7 +1,6 @@
 package amf.shapes.internal.spec.oas.parser
 
-import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
-import amf.aml.internal.parse.vocabularies.VocabularyContext
+import amf.aml.internal.annotations.DiscriminatorExtension
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
@@ -10,6 +9,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.{ExplicitField, InferredProperty, NilUnion}
 import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.internal.parser._
@@ -81,7 +81,7 @@ case class InlineOasTypeParser(
               ctx.closedShape(shape, map, oas.position.toString)
             case _ => // Nothing to do
           }
-          if (isOas3) Some(checkOas3Nullable(shape))
+          if (isOas3 || isOas31) Some(checkOas3Nullable(shape))
           else Some(shape)
         case None => None
       }
@@ -902,6 +902,13 @@ case class InlineOasTypeParser(
           )
       }
       map.key("mapping", parseMappings)
+      if (isOas31) {
+        val extensions = AnnotationParser.parseExtensions(None, map)
+        extensions.foreach { ex =>
+          ex.extension.annotations += DiscriminatorExtension()
+          shape.add(CustomDomainProperties, ex)
+        }
+      }
       ctx.closedShape(shape, map, "discriminator")
     }
 

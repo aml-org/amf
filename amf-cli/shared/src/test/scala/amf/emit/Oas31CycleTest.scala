@@ -28,6 +28,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 PetStore API in YAML",
       "oas-petstore-31.yaml",
       "oas-petstore-31.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 annotation in discriminator field",
+      "oas-31-discriminator-ann.yaml",
+      "oas-31-discriminator-ann.dumped.yaml"
     )
   )
 
