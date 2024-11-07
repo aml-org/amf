@@ -43,6 +43,12 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends A
     this
   }
 
+  /** Set webhooks property of this WebApi. */
+  def withWebhooks(webhooks: ClientList[EndPoint]): this.type = {
+    _internal.withWebhooks(webhooks.asInternal)
+    this
+  }
+
   /** Set accepts property of this WebApi. */
   override def withAccepts(accepts: ClientList[String]): this.type = {
     _internal.withAccepts(accepts.asInternal)

@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Swagger Petstore - OpenAPI 3.1 (by Ariel Mirra)",
-    "version": "1.0.11"
+    "title": "Webhook Example",
+    "version": "1.0.0"
   },
   "webhooks": {
     "newPet": {
@@ -10,11 +10,7 @@
         "requestBody": {
           "description": "Information about a new pet in the system",
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
+            "application/json": {}
           }
         },
         "responses": {
