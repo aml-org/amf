@@ -18,12 +18,14 @@ class Example private[amf] (override val fields: Fields, override val annotation
     with Key {
 
   def displayName: StrField     = fields.field(DisplayName)
+  def summary: StrField         = fields.field(Summary)
   def description: StrField     = fields.field(Description)
   def structuredValue: DataNode = fields.field(StructuredValue)
   def strict: BoolField         = fields.field(Strict)
   def mediaType: StrField       = fields.field(MediaType)
 
   def withDisplayName(displayName: String): this.type = set(DisplayName, displayName)
+  def withSummary(summary: String): this.type         = set(Summary, summary)
   def withDescription(description: String): this.type = set(Description, description)
   def withValue(value: String): this.type             = set(ExternalSourceElementModel.Raw, value)
   def withStructuredValue(value: DataNode): this.type = set(StructuredValue, value)
