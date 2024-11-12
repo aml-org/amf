@@ -9,6 +9,7 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution
 import amf.core.internal.transform.stages.selectors.{LinkSelector, Selector}
 
+/** Resolve links in request parameters (OAS 3.0, 3.1) */
 object RequestParamsLinkStage extends TransformationStep {
   override def transform(
       model: BaseUnit,

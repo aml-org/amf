@@ -20,6 +20,7 @@ import amf.core.client.common.validation.{
   GraphQLProfile,
   Oas20Profile,
   Oas30Profile,
+  Oas31Profile,
   ProfileName,
   Raml08Profile,
   Raml10Profile
@@ -55,9 +56,10 @@ class ValidationTransformationPipeline private[amf] (
 
   private def parameterNormalizationStageFor(profile: ProfileName): ParametersNormalizationStage = {
     profile match {
-      case Raml10Profile                                                => new Raml10ParametersNormalizationStage
-      case Oas30Profile | Oas20Profile | Raml08Profile | Async20Profile => new OpenApiParametersNormalizationStage
-      case _                                                            => new AmfParametersNormalizationStage
+      case Raml10Profile => new Raml10ParametersNormalizationStage
+      case Oas30Profile | Oas31Profile | Oas20Profile | Raml08Profile | Async20Profile =>
+        new OpenApiParametersNormalizationStage
+      case _ => new AmfParametersNormalizationStage
     }
   }
 }
@@ -66,6 +68,7 @@ object ValidationTransformationPipeline {
   def apply(profile: ProfileName, unit: BaseUnit, configuration: ValidationConfiguration): BaseUnit = {
     val pipeline = profile match {
       case Oas30Profile                              => Oas30ValidationTransformationPipeline()
+      case Oas31Profile                              => Oas31ValidationTransformationPipeline()
       case Async20Profile                            => Async20CachePipeline()
       case GraphQLProfile | GraphQLFederationProfile => GraphQLCachePipeline()
       case _                                         => new ValidationTransformationPipeline(profile)

@@ -4,13 +4,13 @@ import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Server, ServerContainer}
 import amf.apicontract.internal.metamodel.domain.api.{AsyncApiModel, WebApiModel}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
-import amf.core.client.common.validation.{Oas30Profile, ProfileName}
+import amf.core.client.common.validation.{Oas30Profile, Oas31Profile, ProfileName}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
 
-/** Place server models in the right locations according to OAS 3.0 and our own criterium for AMF
+/** Place server models in the right locations according to OAS 3.0 and our own criteria for AMF
   *
   * @param profile
   *   target profile
@@ -25,8 +25,8 @@ class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boole
   ): BaseUnit = {
     profile match {
       // TODO should run for Amf too
-      case Oas30Profile => normalizeServers(model)
-      case _            => model
+      case Oas30Profile | Oas31Profile => normalizeServers(model)
+      case _                           => model
     }
   }
 
