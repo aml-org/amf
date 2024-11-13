@@ -13,8 +13,6 @@ import scala.concurrent.ExecutionContext
 
 class AvroSchemaLinkerModelTest extends AsyncFunSuite with Matchers with AvroSchemaDocumentTest {
 
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
   protected val basePath = "file://amf-cli/shared/src/test/resources/avro/doc/"
 
   test("Async API with AVRO Schema Fragment reference (JSON)") {
