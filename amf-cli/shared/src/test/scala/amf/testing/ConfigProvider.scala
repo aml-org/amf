@@ -13,6 +13,7 @@ object ConfigProvider {
     case Raml10            => RAMLConfiguration.RAML10()
     case Oas20             => OASConfiguration.OAS20()
     case Oas30             => OASConfiguration.OAS30()
+    case Oas31             => OASConfiguration.OAS31()
     case AsyncApi20        => AsyncAPIConfiguration.Async20()
     case AsyncApi21        => AsyncAPIConfiguration.Async20()
     case AsyncApi22        => AsyncAPIConfiguration.Async20()

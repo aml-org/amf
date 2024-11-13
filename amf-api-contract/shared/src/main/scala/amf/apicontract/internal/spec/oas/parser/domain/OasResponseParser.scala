@@ -6,14 +6,16 @@ import amf.apicontract.internal.metamodel.domain.ResponseModel.Headers
 import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorResponse
 import amf.apicontract.internal.spec.common.parser.SpecParserOps
-import amf.apicontract.internal.spec.oas.parser.context.{Oas2Syntax, Oas3Syntax, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{Oas2Syntax, OasWebApiContext}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.TrackedElement
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.remote.Spec
+import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.parser.AnnotationParser
@@ -21,8 +23,6 @@ import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.YMap
 
 import scala.collection.mutable
-import amf.core.internal.utils._
-import amf.shapes.client.scala.model.domain.AnyShape
 
 case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
@@ -122,8 +122,8 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
           ctx.closedShape(res, map, "response")
         }
 
-        // OAS 3.0.0
-        if (ctx.spec == Spec.OAS30) {
+        // OAS 3.0 & 3.1
+        if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31) {
           map.key(
             "content",
             { entry =>

@@ -179,8 +179,10 @@ object RAMLConfiguration {
 @JSExportAll
 @JSExportTopLevel("OASConfiguration")
 object OASConfiguration {
-  def OAS20(): AMFConfiguration          = InternalOASConfiguration.OAS20()
-  def OAS30(): AMFConfiguration          = InternalOASConfiguration.OAS30()
+  def OAS20(): AMFConfiguration = InternalOASConfiguration.OAS20()
+  def OAS30(): AMFConfiguration = InternalOASConfiguration.OAS30()
+  // WIP - Work in Progress
+  def OAS31(): AMFConfiguration          = InternalOASConfiguration.OAS31()
   def OAS30Component(): AMFConfiguration = InternalOASConfiguration.OAS30Component()
 
   /** common configuration to parse OAS20 and OAS30 APIs

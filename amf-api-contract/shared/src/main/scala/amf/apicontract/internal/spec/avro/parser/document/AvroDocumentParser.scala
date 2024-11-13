@@ -25,6 +25,9 @@ class AvroDocumentParser(root: Root)(implicit ctx: AvroSchemaContext) extends Qu
 
     val parsedShape = parseType(map)
     parsedShape.foreach(shape => doc.setWithoutId(FragmentModel.Encodes, shape, Annotations.inferred()))
+
+    // resolve unresolved references
+    ctx.futureDeclarations.resolve()
     doc
   }
 

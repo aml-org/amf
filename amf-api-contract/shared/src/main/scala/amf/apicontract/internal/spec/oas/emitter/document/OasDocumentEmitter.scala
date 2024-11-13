@@ -6,9 +6,18 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, RequestModel}
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, OasParametersEmitter, OasWithExtensionsSecurityRequirementsEmitter, SecurityRequirementsEmitter}
+import amf.apicontract.internal.spec.common.emitter.{
+  AgnosticShapeEmitterContextAdapter,
+  OasParametersEmitter,
+  OasWithExtensionsSecurityRequirementsEmitter,
+  SecurityRequirementsEmitter
+}
 import amf.apicontract.internal.spec.oas.OasHeader.{Oas20Extension, Oas20Overlay}
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterContext, Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas3SpecEmitterContext,
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
 import amf.apicontract.internal.spec.oas.emitter.domain._
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
 import amf.apicontract.internal.spec.spec.OasDefinitions
@@ -183,8 +192,9 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
     val references = ReferencesEmitter(document, ordering)
     val api        = emitWebApi(ordering, document.references)
 
-    val customDomainProperties          = doc.fields(CustomDomainProperties).asInstanceOf[Seq[DomainExtension]]
-    val orphanAnnotationsFromComponents = customDomainProperties.filter(customProp => hasOrphanAnnotationFrom("components", customProp))
+    val customDomainProperties = doc.fields(CustomDomainProperties).asInstanceOf[Seq[DomainExtension]]
+    val orphanAnnotationsFromComponents =
+      customDomainProperties.filter(customProp => hasOrphanAnnotationFrom("components", customProp))
 
     def declares: Seq[EntryEmitter] =
       wrapDeclarations(
@@ -226,7 +236,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      val orphanAnnotationsFromInfo = api.customDomainProperties.filter(customProp => hasOrphanAnnotationFrom("info", customProp))
+      val orphanAnnotationsFromInfo =
+        api.customDomainProperties.filter(customProp => hasOrphanAnnotationFrom("info", customProp))
       result += InfoEmitter(fs, ordering, orphanAnnotationsFromInfo)
 
       fs.entry(WebApiModel.Servers)
@@ -255,6 +266,9 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
           result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotationsFromPaths)
         )
+
+      fs.entry(WebApiModel.Webhooks)
+        .foreach(f => result += EndpointsEmitter("webhooks", f, ordering, references, orphanAnnotationsFromPaths))
 
       fs.entry(WebApiModel.Security)
         .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))

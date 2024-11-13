@@ -1,7 +1,8 @@
 package amf.apicontract.internal.spec.avro.parser.domain
 
 import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.core.internal.parser.domain.Annotations
+import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.domain.apicontract.unsafe.AvroSchemaValidatorBuilder.validateSchema
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAvroSchema
 import org.yaml.model.{YMap, YNode, YScalar, YType}
@@ -19,7 +20,9 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case YType.Str =>
         val specificType = value.as[YScalar].text
         (Some(parseType(specificType)), specificType)
-      case _ => (None, "invalid")
+      case _ =>
+        val unresolvedShape = UnresolvedShape("", Annotations(map))
+        (Some(unresolvedShape), "invalid")
     }
 
     postProcessShape(maybeShape, avroType, map, isRoot)
@@ -45,8 +48,7 @@ class AvroShapeParser(map: YMap)(implicit ctx: AvroSchemaContext) extends AvroKe
       case "enum"                => parseEnum()
       case "fixed"               => parseFixed()
       case _ if name.isPrimitive => parsePrimitiveType(name)
-      // todo: should validate invalid type here? already validating with validator
-      case _ => AnyShape(map)
+      case _                     => UnresolvedShape(name, Annotations(map))
     }
   }
 

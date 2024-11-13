@@ -1,8 +1,9 @@
 package amf.shapes.internal.spec.common.emitter.annotations
 
+import amf.aml.internal.annotations.DiscriminatorExtension
 import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.model.domain.{CustomizableElement, DataNode}
+import amf.core.client.scala.model.domain.{ArrayNode, CustomizableElement, DataNode, LinkNode, ObjectNode, ScalarNode}
 import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
@@ -13,17 +14,26 @@ import amf.shapes.internal.spec.common.emitter.annotations.AnnotationEmitter.Com
 import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
-/** */
+/** AnnotationsEmitter emits normal Annotations and Semantic Extensions, see also
+  * [[amf.shapes.internal.spec.common.parser.AnnotationParser]]
+  */
 case class AnnotationsEmitter(element: CustomizableElement, ordering: SpecOrdering)(implicit
     spec: ShapeEmitterContext
 ) {
-  def emitters: Seq[EntryEmitter] =
+  def emitters: Seq[EntryEmitter] = {
     element.customDomainProperties
-      .filter(!isOrphanOasExtension(_))
+      .filter(shouldEmit)
       .map(spec.annotationEmitter(element, _, ordering))
+  }
 
-  private def isOrphanOasExtension(customProperty: DomainExtension) = {
-    Option(customProperty.extension).map(_.annotations.contains(classOf[OrphanOasExtension])).getOrElse(false)
+  private def shouldEmit(customProperty: DomainExtension): Boolean = {
+    val filterAnnotations = Seq(classOf[OrphanOasExtension], classOf[DiscriminatorExtension])
+    !filterAnnotations.exists { c =>
+      customProperty.extension match {
+        case node: DataNode => node.annotations.contains(c)
+        case _              => false
+      }
+    }
   }
 }
 
@@ -103,11 +113,11 @@ object OasAstAnnotationEmitter {
 
 object OasAnnotationEmitter {
 
-  private val computeName: ComputeName = ext => s"x-${ext.name.value()}"
+  val computeName: ComputeName = ext => s"x-${ext.name.value()}"
 
   def apply(element: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering)(implicit
       spec: ShapeEmitterContext
-  ) = {
+  ): AnnotationEmitter = {
     AnnotationEmitter(element, domainExtension, ordering, computeName)
   }
 }
@@ -118,7 +128,7 @@ object RamlAnnotationEmitter {
 
   def apply(element: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering)(implicit
       spec: ShapeEmitterContext
-  ) = {
+  ): AnnotationEmitter = {
     AnnotationEmitter(element, domainExtension, ordering, computeName)
   }
 }

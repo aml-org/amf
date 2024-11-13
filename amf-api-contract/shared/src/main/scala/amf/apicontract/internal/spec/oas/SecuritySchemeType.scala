@@ -16,7 +16,8 @@ object OasLikeSecuritySchemeTypeMappings {
 
   val mappings = Map(
     Spec.OAS20 -> Oas2SchemeMappings,
-    Spec.OAS30 -> Oas3SchemeMappings
+    Spec.OAS30 -> Oas3SchemeMappings,
+    Spec.OAS31 -> Oas3SchemeMappings
   )
 
   def mapsTo(spec: Spec, text: String): SecuritySchemeType = mappings(spec).mapsTo(text)

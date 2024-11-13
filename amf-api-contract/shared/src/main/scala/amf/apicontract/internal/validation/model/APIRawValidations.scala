@@ -673,6 +673,12 @@ object APIRawValidations extends CommonValidationDefinitions {
     override def validations(): Seq[AMFValidation] = result
   }
 
+  object Oas31Validations extends OasValidations {
+    private lazy val result = super.validations() ++ Oas30Validations.validations()
+
+    override def validations(): Seq[AMFValidation] = result
+  }
+
   object Oas30Validations extends OasValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
@@ -1673,6 +1679,7 @@ object APIRawValidations extends CommonValidationDefinitions {
     Raml08Profile     -> forProfile(Raml08Profile),
     Oas20Profile      -> forProfile(Oas20Profile),
     Oas30Profile      -> forProfile(Oas30Profile),
+    Oas31Profile      -> forProfile(Oas31Profile),
     Async20Profile    -> forProfile(Async20Profile),
     JsonSchemaProfile -> forProfile(JsonSchemaProfile),
     AvroSchemaProfile -> forProfile(AvroSchemaProfile)
@@ -1684,6 +1691,7 @@ object APIRawValidations extends CommonValidationDefinitions {
       case Raml08Profile     => Raml08Validations
       case Oas20Profile      => Oas20Validations
       case Oas30Profile      => Oas30Validations
+      case Oas31Profile      => Oas31Validations
       case Async20Profile    => Async20Validations
       case JsonSchemaProfile => ShapeValidations
       case AvroSchemaProfile => ShapeValidations // todo: should we do ShapeValidations?

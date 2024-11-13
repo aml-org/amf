@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.internal.metamodel.domain.PayloadModel
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.annotations.TrackedElement

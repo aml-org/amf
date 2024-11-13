@@ -1,0 +1,16 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: "1.0"
+x-sfdc:
+  genai:
+    topic:
+      description: some description
+      instructions:
+        -
+          name: instruction 1
+          description: do something 1
+        -
+          name: instruction 2
+          description: do something 2
+paths: {}

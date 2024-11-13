@@ -17,6 +17,7 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
     generateConstraintExistenceFixtures(oasConfig, Seq()),
     generateConstraintExistenceFixtures(oas20Config, Seq(OAS20)),
     generateConstraintExistenceFixtures(oas30Config, Seq(OAS30)),
+    generateConstraintExistenceFixtures(oas31Config, Seq(OAS31)),
     generateConstraintExistenceFixtures(ramlConfig, Seq()),
     generateConstraintExistenceFixtures(raml10Config, Seq(RAML10)),
     generateConstraintExistenceFixtures(raml08Config, Seq(RAML08))

@@ -111,6 +111,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     case Raml08     => Raml08Profile
     case Oas20      => Oas20Profile
     case Oas30      => Oas30Profile
+    case Oas31      => Oas31Profile
     case AsyncApi20 => Async20Profile
     case _          => AmfProfile
   }

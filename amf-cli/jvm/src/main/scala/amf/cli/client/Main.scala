@@ -1,30 +1,13 @@
 package amf.cli.client
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.apicontract.client.scala.{
-  AMFConfiguration,
-  APIConfiguration,
-  AsyncAPIConfiguration,
-  OASConfiguration,
-  RAMLConfiguration,
-  WebAPIConfiguration
-}
+import amf.apicontract.client.scala.{APIConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.cli.internal.commands._
 import amf.core.client.common.remote.Content
-import amf.core.client.common.validation.{
-  AmfProfile,
-  AmlProfile,
-  GrpcProfile,
-  Oas20Profile,
-  Oas30Profile,
-  Raml08Profile,
-  Raml10Profile
-}
+import amf.core.client.common.validation._
 import amf.core.client.platform.resource.FileResourceLoader
-import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.internal.remote.Grpc
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.grpc.client.scala.GRPCConfiguration
@@ -48,6 +31,7 @@ object Main extends PlatformSecrets {
       case Some(s) if s == Raml08Profile.profile => RAMLConfiguration.RAML08()
       case Some(s) if s == Oas20Profile.profile  => OASConfiguration.OAS20()
       case Some(s) if s == Oas30Profile.profile  => OASConfiguration.OAS30()
+      case Some(s) if s == Oas31Profile.profile  => OASConfiguration.OAS31()
       case Some(s) if s == AmfProfile.profile    => APIConfiguration.API()
       case Some(s) if s == GrpcProfile.profile   => GRPCConfiguration.GRPC()
       case Some(s) if s == "GRAPHQL"             => GraphQLConfiguration.GraphQL()

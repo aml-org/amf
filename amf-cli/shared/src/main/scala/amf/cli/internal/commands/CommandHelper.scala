@@ -123,6 +123,7 @@ trait CommandHelper {
     case Spec.RAML08 => Some(RAMLConfiguration.RAML08())
     case Spec.OAS20  => Some(OASConfiguration.OAS20())
     case Spec.OAS30  => Some(OASConfiguration.OAS30())
+    case Spec.OAS31  => Some(OASConfiguration.OAS31())
     case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
       Some(AsyncAPIConfiguration.Async20())
     case _ => None

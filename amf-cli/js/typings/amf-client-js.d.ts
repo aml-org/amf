@@ -1701,6 +1701,8 @@ declare module "amf-client-js" {
 
     withEndPoints(endPoints: Array<EndPoint>): this;
 
+    withWebhooks(webhooks: Array<EndPoint>): this;
+
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
 
     withId(id: string): this;
@@ -4677,6 +4679,9 @@ declare module "amf-client-js" {
 
     constructor();
   }
+  export class AvroSchemaDocument extends Document {
+    constructor();
+  }
   export class JsonSchemaDraft201909 implements JSONSchemaVersion {}
   export class JsonSchemaDraft4 implements JSONSchemaVersion {}
   export class JsonSchemaDraft7 implements JSONSchemaVersion {}
@@ -6035,6 +6040,8 @@ declare module "amf-client-js" {
 
     static OAS30(): AMFConfiguration;
 
+    static OAS31(): AMFConfiguration;
+
     static OAS30Component(): AMFConfiguration;
 
     static OASComponent(): AMFConfiguration;
@@ -6503,7 +6510,6 @@ declare module "amf-client-js" {
     getMaxYamlReferences: undefined | number;
     isAmfJsonLdSerialization: boolean;
     isTokens: boolean;
-    isExtensionsEverywhere: boolean;
 
     constructor();
 
@@ -6524,10 +6530,6 @@ declare module "amf-client-js" {
     withoutBaseUnitUrl(): ParsingOptions;
 
     withoutTokens(): ParsingOptions;
-
-    withExtensionsEverywhere(): ParsingOptions;
-
-    withoutExtensionsEverywhere(): ParsingOptions;
   }
   export class Path {
     static delimiter: string;
@@ -6654,6 +6656,7 @@ declare module "amf-client-js" {
     static readonly AVROSCHEMA: ProfileName;
     static readonly OAS20: ProfileName;
     static readonly OAS30: ProfileName;
+    static readonly OAS31: ProfileName;
     static readonly PAYLOAD: ProfileName;
     static readonly RAML08: ProfileName;
     static readonly RAML10: ProfileName;
@@ -8707,6 +8710,7 @@ declare module "amf-client-js" {
     static readonly JSONSCHEMADIALECT: Spec;
     static readonly OAS20: Spec;
     static readonly OAS30: Spec;
+    static readonly OAS31: Spec;
     static readonly PAYLOAD: Spec;
     static readonly RAML08: Spec;
     static readonly RAML10: Spec;
@@ -9195,6 +9199,8 @@ declare module "amf-client-js" {
     withEndPoint(path: string): EndPoint;
 
     withEndPoints(endPoints: Array<EndPoint>): this;
+
+    withWebhooks(webhooks: Array<EndPoint>): this;
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
 

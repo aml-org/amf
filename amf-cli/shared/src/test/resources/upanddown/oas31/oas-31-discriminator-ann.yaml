@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: test api
+  version: 1.0.1
+paths: {}
+components:
+  schemas:
+    oneOfSchema:
+      discriminator:
+        x-custom-ann-test: custom ann value
+        x-custom-ann: custom ann value
+        propertyName: a
+      oneOf:
+        -
+          type: object
+          properties:
+            a:
+              type: string
+        -
+          type: object
+          properties:
+            b:
+              type: string
