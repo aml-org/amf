@@ -40,14 +40,14 @@ pipeline {
         CURRENT_VERSION = sh(script: "cat dependencies.properties | grep \"version\" | cut -d '=' -f 2", returnStdout: true)
     }
     stages {
-//         stage('Test') {
-//             steps {
-//                 script {
-//                     lastStage = env.STAGE_NAME
-//                     sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
-//                 }
-//             }
-//         }
+        stage('Test') {
+            steps {
+                script {
+                    lastStage = env.STAGE_NAME
+                    sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
+                }
+            }
+        }
         stage('Coverage') {
             when {
                 anyOf {
