@@ -384,8 +384,7 @@ sonarProperties ++= Map(
   "sonar.branch.name"       -> branch,
   "sonar.sources" -> "amf-api-contract/shared/src/main/scala, amf-cli/shared/src/main/scala, amf-grpc/shared/src/main/scala",
   "sonar.tests" -> "amf-api-contract/shared/src/test/scala, amf-cli/shared/src/test/scala, amf-grpc/shared/src/test/scala",
-  "sonar.userHome" -> "${buildDir}/.sonar",
-  "sonar.scala.coverage.reportPaths" -> "build/reports/scoverageTest/scoverage.xml"
+  "sonar.userHome" -> "${buildDir}/.sonar"
 )
 
 Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
