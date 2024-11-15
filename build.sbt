@@ -142,6 +142,7 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
 lazy val apiContractJVM =
   apiContract.jvm
     .in(file("./amf-api-contract/jvm"))
+    .disablePlugins(SonarPlugin)
 
 lazy val apiContractJS =
   apiContract.js
@@ -310,7 +311,9 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(AutomaticModuleName.settings("amf.cli"))
 //  .jsSettings(TypingGenerationSettings.settings: _*)
 
-lazy val cliJVM = cli.jvm.in(file("./amf-cli/jvm")).sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
+lazy val cliJVM = cli.jvm.in(file("./amf-cli/jvm"))
+  .sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
+  .disablePlugins(SonarPlugin)
 
 lazy val cliJS = cli.js
   .in(file("./amf-cli/js"))
