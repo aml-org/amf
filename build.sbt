@@ -390,7 +390,9 @@ sonarProperties ++= Map(
     "amf-api-contract/shared/src/main/scala, " +
       "amf-cli/shared/src/main/scala, " +
       "amf-grpc/shared/src/main/scala, " +
-      "amf-shapes/shared/src/main/scala"
+      "amf-shapes/shared/src/main/scala, " +
+     "amf-antlr-syntax/shared/src/main/scala, " +
+    "amf-graphql/shared/src/main/scala"
   ),
   "sonar.tests" -> (
     "amf-api-contract/shared/src/test/scala, " +
