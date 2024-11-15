@@ -311,7 +311,8 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(AutomaticModuleName.settings("amf.cli"))
 //  .jsSettings(TypingGenerationSettings.settings: _*)
 
-lazy val cliJVM = cli.jvm.in(file("./amf-cli/jvm"))
+lazy val cliJVM = cli.jvm
+  .in(file("./amf-cli/jvm"))
   .sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
   .disablePlugins(SonarPlugin)
 
@@ -385,9 +386,20 @@ sonarProperties ++= Map(
   "sonar.sourceEncoding"    -> "UTF-8",
   "sonar.github.repository" -> "aml-org/amf",
   "sonar.branch.name"       -> branch,
-  "sonar.sources" -> "amf-api-contract/shared/src/main/scala, amf-cli/shared/src/main/scala, amf-grpc/shared/src/main/scala",
-  "sonar.tests" -> "amf-api-contract/shared/src/test/scala, amf-cli/shared/src/test/scala, amf-grpc/shared/src/test/scala",
-  "sonar.userHome" -> "${buildDir}/.sonar"
+  "sonar.sources" -> (
+    "amf-api-contract/shared/src/main/scala, " +
+      "amf-cli/shared/src/main/scala, " +
+      "amf-grpc/shared/src/main/scala, " +
+      "amf-shapes/shared/src/main/scala"
+  ),
+  "sonar.tests" -> (
+    "amf-api-contract/shared/src/test/scala, " +
+      "amf-cli/shared/src/test/scala, " +
+      "amf-grpc/shared/src/test/scala, " +
+      "amf-shapes/shared/src/test/scala"
+  ),
+  "sonar.userHome"                   -> "${buildDir}/.sonar",
+  "sonar.scala.coverage.reportPaths" -> "target/scala-2.12/scoverage-report/scoverage.xml"
 )
 
 Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
