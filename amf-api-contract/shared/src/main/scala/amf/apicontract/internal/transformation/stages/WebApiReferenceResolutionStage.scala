@@ -1,17 +1,19 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Message, Parameter, Request, Response, Server}
+import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.metamodel.domain.MessageModel
+import amf.apicontract.internal.transformation.ReferenceDocumentationResolver.updateSummaryAndDescription
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.annotations.DeclaredServerVariable
-import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 
 class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
     extends ReferenceResolutionStage(keepEditingInfo) {
 
   override protected def customDomainElementTransformation: (DomainElement, Linkable) => DomainElement =
     (domain: DomainElement, source: Linkable) => {
+      updateSummaryAndDescription(domain, source)
       source match {
         case sourceResp: Response =>
           domain match {
@@ -46,7 +48,8 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
               copy.withId(sourceServer.id).withName(sourceServer.name.value())
             case _ => domain
           }
-        case sourceServerVariable: Parameter if sourceServerVariable.annotations.contains(classOf[DeclaredServerVariable]) =>
+        case sourceServerVariable: Parameter
+            if sourceServerVariable.annotations.contains(classOf[DeclaredServerVariable]) =>
           domain match {
             case serverVariable: Parameter =>
               val copy = serverVariable.copyElement().asInstanceOf[Parameter]

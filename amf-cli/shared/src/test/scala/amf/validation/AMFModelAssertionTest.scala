@@ -771,4 +771,42 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       portParameter.schema.description.isNullOrEmpty shouldBe true
     }
   }
+
+  // W-10548463
+  test("OAS 3.1 summary and description facet") {
+    val api = s"file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-ref-fields.yaml"
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val request            = getFirstRequest(bu)
+      val requestDescription = request.description.value()
+
+      val parameter            = request.queryParameters.head
+      val parameterDescription = parameter.description.value()
+
+      val response            = getFirstResponse(bu)
+      val responseDescription = response.description.value()
+
+      val responseLink            = response.links.head
+      val responseLinkDescription = responseLink.description.value()
+
+      val responseHeader            = response.headers.head
+      val responseHeaderDescription = responseHeader.description.value()
+
+      val responseSchema                   = response.payloads.head.schema
+      val responseSchemaExample            = responseSchema.asInstanceOf[AnyShape].examples.head
+      val responseSchemaExampleDescription = responseSchemaExample.description.value()
+      val responseSchemaExampleSummary     = responseSchemaExample.summary.value()
+
+      val allAreBeingOverridden = Seq(
+        requestDescription,
+        parameterDescription,
+        responseDescription,
+        responseLinkDescription,
+        responseHeaderDescription,
+        responseSchemaExampleSummary,
+        responseSchemaExampleDescription
+      ).forall(_.contains("should override the referenced one"))
+
+      allAreBeingOverridden shouldBe true
+    }
+  }
 }

@@ -8,7 +8,7 @@ class Oas31CompatibilityPipeline private[amf] (override val name: String) extend
 
   override val baseSteps: Seq[TransformationStep] = filterOutSemanticStage(Oas31TransformationPipeline().steps)
 
-  override def steps: Seq[TransformationStep] = baseSteps ++ super.steps
+  override def steps: Seq[TransformationStep] = super.steps
 }
 
 object Oas31CompatibilityPipeline {

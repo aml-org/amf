@@ -5257,6 +5257,8 @@ declare module "amf-client-js" {
   export interface Linkable {
     isLink: boolean;
     linkLabel: StrField;
+    refSummary: StrField;
+    refDescription: StrField;
     linkTarget: undefined | DomainElement;
 
     link<T>(): T;
