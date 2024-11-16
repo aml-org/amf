@@ -3,8 +3,8 @@ package amf.shapes.internal.spec.common.emitter
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.client.scala.model.domain.{CustomizableElement, DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.plugins.render.RenderConfiguration
@@ -23,7 +23,7 @@ import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSON
 import amf.shapes.internal.spec.contexts.DeclarationEmissionDecorator
 import amf.shapes.internal.spec.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
 import amf.shapes.internal.spec.oas.emitter.compact.CompactOasRecursiveShapeEmitter
-import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlTypePartEmitter}
+import amf.shapes.internal.spec.raml.emitter.RamlTypePartEmitter
 import org.yaml.model.{YDocument, YNode}
 
 import scala.util.matching.Regex
@@ -116,7 +116,7 @@ class JsonSchemaShapeEmitterContext(
 
   override def spec: Spec = Spec.JSONSCHEMA
 
-  override def ref(b: YDocument.PartBuilder, url: String): Unit = OasRefEmitter.ref(url, b)
+  override def ref(b: YDocument.PartBuilder, url: String, l: Linkable): Unit = OasRefEmitter.ref(url, b, l)
 
   override protected implicit val shapeCtx: OasLikeShapeEmitterContext = this
 
@@ -172,7 +172,7 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def spec: Spec
 
-  def ref(b: YDocument.PartBuilder, url: String): Unit
+  def ref(b: YDocument.PartBuilder, url: String, l: Linkable = AnyShape()): Unit
 
   def schemaVersion: SchemaVersion
 

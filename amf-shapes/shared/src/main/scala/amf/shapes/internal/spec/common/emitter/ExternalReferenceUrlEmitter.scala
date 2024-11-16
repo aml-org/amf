@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.annotations.ExternalReferenceUrl
@@ -30,7 +30,12 @@ case class RamlExternalReferenceUrlEmitter(element: DomainElement)(fallback: => 
 case class OasExternalReferenceUrlEmitter(element: DomainElement)(fallback: => Unit = Unit)(implicit
     val spec: ShapeEmitterContext
 ) extends ExternalReferenceUrlEmitter(element, fallback) {
-  override def emitRef(b: PartBuilder, url: String): Unit = spec.ref(b, url)
+  override def emitRef(b: PartBuilder, url: String): Unit = {
+    element match {
+      case l: Linkable => spec.ref(b, url, l)
+      case _           => spec.ref(b, url)
+    }
+  }
 }
 
 object ExternalReferenceUrlEmitter {

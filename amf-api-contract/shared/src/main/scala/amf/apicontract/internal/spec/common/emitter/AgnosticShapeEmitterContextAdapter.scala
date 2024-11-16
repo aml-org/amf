@@ -50,7 +50,7 @@ class AgnosticShapeEmitterContextAdapter(private val specCtx: SpecEmitterContext
 
   override def spec: Spec = specCtx.spec
 
-  override def ref(b: YDocument.PartBuilder, url: String): Unit = specCtx.ref(b, url)
+  override def ref(b: YDocument.PartBuilder, url: String, l: Linkable): Unit = specCtx.ref(b, url, l)
 
   override def schemaVersion: SchemaVersion = specCtx match {
     case oasCtx: OasLikeSpecEmitterContext => oasCtx.schemaVersion

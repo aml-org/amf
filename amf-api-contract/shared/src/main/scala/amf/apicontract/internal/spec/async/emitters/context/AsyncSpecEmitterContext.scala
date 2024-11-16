@@ -10,7 +10,6 @@ import amf.apicontract.internal.spec.common.emitter.{
 }
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.apicontract.internal.spec.oas.emitter.domain.OasSecurityRequirementEmitter
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
@@ -19,14 +18,12 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{AsyncApi20, Spec}
-import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.emitter.{OasRecursiveShapeEmitter, OasTypeEmitter}
-import org.yaml.model.YDocument.PartBuilder
 
 import scala.util.matching.Regex
 
@@ -103,7 +100,4 @@ class Async20SpecEmitterContext(
   override def schemasDeclarationsPath: String  = "/definitions/"
 }
 
-object AsyncRefEmitter extends RefEmitter {
-
-  override def ref(url: String, b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
-}
+object AsyncRefEmitter extends RefEmitter {}

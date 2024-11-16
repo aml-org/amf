@@ -6,7 +6,7 @@ import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.parser.domain.{FieldEntry, Fields}
-import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, NullEmitter, pos, traverse}
+import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.utils.{IdCounter, _}
@@ -68,7 +68,7 @@ case class Oas3ExampleValuesPartEmitter(example: Example, ordering: SpecOrdering
     handleInlinedRefOr(p, example) {
       if (example.isLink) {
         val refUrl = OasShapeDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
-        p.obj(_.entry("$ref", refUrl))
+        spec.ref(p, refUrl, example)
       } else {
         p.obj(traverse(ordering.sorted(emitters), _))
       }
