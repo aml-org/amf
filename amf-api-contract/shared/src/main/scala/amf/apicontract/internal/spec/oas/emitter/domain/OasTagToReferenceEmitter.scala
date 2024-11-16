@@ -29,7 +29,7 @@ case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContex
 
   override protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel)(implicit
       spec: ShapeEmitterContext
-  ) = element match {
+  ): String = element match {
     case p: Parameter if p.annotations.contains(classOf[DeclaredServerVariable]) =>
       appendOas3ComponentsPrefix(referenceLabel, "serverVariables")
     case _: Parameter                        => appendParameterDefinitionsPrefix(referenceLabel)
