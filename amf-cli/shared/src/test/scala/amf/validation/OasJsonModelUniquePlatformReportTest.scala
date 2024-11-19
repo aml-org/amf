@@ -1,8 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Oas30Profile
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
-
 class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"

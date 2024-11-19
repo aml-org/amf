@@ -13,9 +13,10 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.ArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationEmitter, FacetsInstanceEmitter}
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.contexts.DeclarationEmissionDecorator
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
@@ -28,7 +29,7 @@ abstract class SpecEmitterContext(
 
   val options: RenderOptions = renderConfig.renderOptions
 
-  def ref(b: PartBuilder, url: String): Unit = refEmitter.ref(url, b)
+  def ref(b: PartBuilder, url: String, l: Linkable = AnyShape()): Unit = refEmitter.ref(url, b, l)
 
   def schemaVersion: SchemaVersion
 

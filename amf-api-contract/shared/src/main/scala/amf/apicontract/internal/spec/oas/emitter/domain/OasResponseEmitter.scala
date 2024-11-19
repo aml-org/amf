@@ -6,6 +6,7 @@ import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, Re
 import amf.apicontract.internal.spec.common.emitter.RamlParametersEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.{
   Oas2SpecEmitterFactory,
+  Oas31SpecEmitterFactory,
   Oas3SpecEmitterFactory,
   OasLikeShapeEmitterContextAdapter,
   OasSpecEmitterContext
@@ -15,7 +16,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
@@ -81,7 +81,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
             .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(spec))
 
           // OAS 3.0.0
-          if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+          if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[Oas31SpecEmitterFactory]) {
             response.fields.fields().find(_.field == ResponseModel.Payloads) foreach { f: FieldEntry =>
               val payloads: Seq[Payload] = f.arrayValues
               val annotations            = f.value.annotations

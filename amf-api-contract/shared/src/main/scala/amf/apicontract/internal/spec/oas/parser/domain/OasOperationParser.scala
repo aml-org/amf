@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.domain.{Operation, Response}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{OperationModel, ResponseModel}
 import amf.apicontract.internal.spec.common.parser.OasLikeSecurityRequirementParser
-import amf.apicontract.internal.spec.oas.parser.context.{Oas3WebApiContext, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{Oas31WebApiContext, Oas3WebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidStatusCode
 import amf.core.client.scala.model.domain.AmfArray
@@ -51,9 +51,9 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
       }
     )
 
-    map.key("security".asOasExtension, entry => { parseSecurity(operation, entry) })
+    map.key("security".asOasExtension, entry => parseSecurity(operation, entry))
 
-    map.key("security", entry => { parseSecurity(operation, entry) })
+    map.key("security", entry => parseSecurity(operation, entry))
 
     map.key(
       "responses",
@@ -73,8 +73,11 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
                   .setWithoutId(ResponseModel.StatusCode, node.text(), Annotations.inferred())
                 if (!r.annotations.contains(classOf[SourceAST]))
                   r.annotations ++= Annotations(entry)
-                // Validation for OAS 3
-                if (ctx.isInstanceOf[Oas3WebApiContext] && entry.key.tagType != YType.Str)
+                // Validation for OAS 3.0 & 3.1
+                if (
+                  (ctx.isInstanceOf[Oas3WebApiContext] || ctx
+                    .isInstanceOf[Oas31WebApiContext]) && entry.key.tagType != YType.Str
+                )
                   ctx.eh.violation(
                     InvalidStatusCode,
                     r,

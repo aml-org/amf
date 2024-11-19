@@ -10,17 +10,14 @@ import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
 import amf.core.client.scala.transform.TransformationStep
 
-class Oas3EditingPipeline private (urlShortening: Boolean, override val name: String)
+class Oas3EditingPipeline private[amf] (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {
   override def profileName: ProfileName = Oas30Profile
   override def references               = new WebApiReferenceResolutionStage(true)
 
   override def parameterNormalizationStage: ParametersNormalizationStage = new OpenApiParametersNormalizationStage()
 
-  override def steps: Seq[TransformationStep] =
-    Seq(
-      RequestParamsLinkStage
-    ) ++ super.steps
+  override def steps: Seq[TransformationStep] = RequestParamsLinkStage +: super.steps
 }
 
 object Oas3EditingPipeline {

@@ -7,11 +7,11 @@ import amf.apicontract.internal.transformation.compatibility.oas3._
 import amf.core.client.common.transform._
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 
-class Oas3CompatibilityPipeline private (override val name: String)
+class Oas3CompatibilityPipeline private[amf] (override val name: String)
     extends TransformationPipeline()
     with SemanticFlattenFilter {
 
-  private val baseSteps: Seq[TransformationStep] = filterOutSemanticStage(Oas30TransformationPipeline().steps)
+  val baseSteps: Seq[TransformationStep] = filterOutSemanticStage(Oas30TransformationPipeline().steps)
 
   override def steps: Seq[TransformationStep] =
     baseSteps ++ Seq(

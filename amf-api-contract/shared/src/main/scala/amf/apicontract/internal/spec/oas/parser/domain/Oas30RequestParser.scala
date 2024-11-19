@@ -62,7 +62,10 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
     ctx.declarations
       .findRequestBody(name, SearchScope.Named)
-      .map(req => adopt(req.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
+      .map { req =>
+        val link = ctx.link(req, map, AmfScalar(name), Annotations(map), Annotations.synthesized())
+        adopt(link)
+      }
       .getOrElse {
         ctx.navigateToRemoteYNode(fullRef) match {
           case Some(navigation) =>

@@ -21,7 +21,6 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
 import amf.apicontract.internal.spec.oas.emitter.domain._
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
 import amf.apicontract.internal.spec.spec.OasDefinitions
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.DomainExtension
@@ -40,8 +39,10 @@ import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handl
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.oas.emitter.{OasOrphanAnnotationsEmitter, OasSpecEmitter}
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -317,7 +318,7 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
   override def emit(b: EntryBuilder): Unit = {
     if (request.isLink) {
       val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
-      b.entry("requestBody", _.obj(_.entry("$ref", refUrl)))
+      b.entry("requestBody", specCtx.ref(_, refUrl, request))
     } else {
       val partEmitter: Oas3RequestBodyPartEmitter = Oas3RequestBodyPartEmitter(request, ordering, references)
       if (partEmitter.emitters.nonEmpty)

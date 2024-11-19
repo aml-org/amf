@@ -1,7 +1,5 @@
 package amf.validation
 
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
-
 class OasExamplesValidationTest extends MultiPlatformReportGenTest {
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
