@@ -756,7 +756,8 @@ object Oas3ParameterParser {
       ctx.eh.violation(
         InvalidParameterStyleBindingCombination,
         param,
-        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'"
+        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'",
+        param.annotations.sourceLocation
       )
   }
 
