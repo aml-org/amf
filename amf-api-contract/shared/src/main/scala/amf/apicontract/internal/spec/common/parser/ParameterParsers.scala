@@ -27,6 +27,7 @@ import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesPars
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser._
+import org.mulesoft.common.client.lexical
 import org.mulesoft.common.client.lexical.PositionRange
 import org.mulesoft.common.collections._
 import org.yaml.model._
@@ -754,12 +755,30 @@ object Oas3ParameterParser {
 
   private def validateStyle(param: Parameter, style: String, ctx: WebApiContext): Unit = {
     val paramBinding = param.binding.value()
-    if (!isStyleValid(paramBinding, style))
-      ctx.eh.violation(
-        InvalidParameterStyleBindingCombination,
-        param,
-        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'"
-      )
+    if (!isStyleValid(paramBinding, style)) {
+
+      val sourceLocationOption = for {
+        location <- param.location()
+        position <- param.position()
+      } yield lexical.SourceLocation(location, position.range)
+
+      sourceLocationOption match {
+        case Some(sourceLocation) =>
+          ctx.eh.violation(
+            InvalidParameterStyleBindingCombination,
+            param,
+            s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'",
+            sourceLocation
+          )
+        case None =>
+          ctx.eh.violation(
+            InvalidParameterStyleBindingCombination,
+            param,
+            s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'"
+          )
+      }
+
+    }
   }
 
   def validateSchemaOrContent(map: YMap, param: Parameter)(implicit ctx: WebApiContext): Unit = {
