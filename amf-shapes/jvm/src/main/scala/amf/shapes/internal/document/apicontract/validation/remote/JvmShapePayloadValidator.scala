@@ -3,8 +3,8 @@ package amf.shapes.internal.document.apicontract.validation.remote
 import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.document.apicontract.validation.json.{
@@ -175,13 +175,9 @@ case class JvmJsonSchemaReportValidationProcessor(
         Seq(invalidSchemaValidation("Regex defined in schema could not be processed", element, e))
 
       case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
-        Seq(
-          invalidJsonValidation(
-            s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
-            element,
-            e
-          )
-        )
+        val expectedValue = formattedDatatype(shape.asInstanceOf[ScalarShape])
+        val foundValue    = if (e.getMessage.contains("Unquoted string value")) "Object" else "String"
+        Seq(invalidJsonValidation(s"expected type: $expectedValue, found: $foundValue", element, e))
 
       case e: InvalidJsonValue =>
         Seq(invalidJsonValidation("Invalid json value was provided", element, e))

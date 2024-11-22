@@ -105,7 +105,7 @@ abstract class BaseJsonSchemaPayloadValidator(
         case e: InvalidJsonObject => validationProcessor.processException(e, None)
         // if the shape is of type any, any scalar payload should validate against it so the validation is skipped
         // We don't skip completely the validation because if the payload is an object with an error we want the error
-        case e: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
+        case _: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
         case e: InvalidJsonValue              => validationProcessor.processException(e, None)
         case e: MaxNestingValueReached        => validationProcessor.processException(e, None)
       }
