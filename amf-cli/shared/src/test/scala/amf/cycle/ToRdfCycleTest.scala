@@ -2,7 +2,7 @@ package amf.cycle
 
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Spec
@@ -35,15 +35,31 @@ class ToRdfCycleTest
     }
   }
 
+  // W-14887298
+  test("n3 emission should not have spaces in nodes, jena should load fine") {
+    val api            = "apis/domain-extension.raml"
+    val parsingOptions = ParsingOptions().withoutAmfJsonLdSerialization.withBaseUnitUrl(api)
+    rdfFromApi(api, Spec.RAML10, PipelineId.Cache, parsingOptions).map { n3: String =>
+      n3.nonEmpty shouldBe true
+    }
+  }
+
   private def build(path: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val fullPath = basePath + path
     config.baseUnitClient().parse(fullPath).map(_.baseUnit)
   }
 
-  private def rdfFromApi(path: String, spec: Spec): Future[String] = {
-    val config = configFor(spec).withErrorHandlerProvider(() => UnhandledErrorHandler)
+  private def rdfFromApi(
+      path: String,
+      spec: Spec,
+      pipeline: String = PipelineId.Editing,
+      parsingOptions: ParsingOptions = ParsingOptions()
+  ): Future[String] = {
+    val config = configFor(spec)
+      .withErrorHandlerProvider(() => UnhandledErrorHandler)
+      .withParsingOptions(parsingOptions)
     build(path, config)
-      .map(transform(_, PipelineId.Editing, spec, config))
+      .map(transform(_, pipeline, spec, config))
       .map(bu => RdfUnitConverter.toNativeRdfModel(bu, RenderOptions().withSourceMaps))
       .map(_.toN3())
   }
