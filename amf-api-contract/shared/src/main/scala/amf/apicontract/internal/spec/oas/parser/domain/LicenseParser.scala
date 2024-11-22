@@ -23,6 +23,7 @@ class LicenseParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParser
     val map = node.as[YMap]
     map.key("url", LicenseModel.Url in license)
     map.key("name", LicenseModel.Name in license)
+    map.key("identifier", LicenseModel.Identifier in license)
 
     AnnotationParser(license, map).parse()
 

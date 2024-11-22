@@ -14,6 +14,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 webhooks field in JSON",
       "oas-petstore-31.json",
       "oas-petstore-31.dumped.json"
+    ),
+    FixtureData(
+      "OAS 3.1 license identifier field in JSON",
+      "oas-31-license-identifier.json",
+      "oas-31-license-identifier.dumped.json"
     )
   )
 
@@ -38,6 +43,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 $ref object summary and description",
       "oas-31-ref-fields.yaml",
       "oas-31-ref-fields.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 license identifier field in YAML",
+      "oas-31-license-identifier.yaml",
+      "oas-31-license-identifier.dumped.yaml"
     )
   )
 

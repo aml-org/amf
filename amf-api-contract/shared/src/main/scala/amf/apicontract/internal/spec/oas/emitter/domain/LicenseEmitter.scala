@@ -40,6 +40,7 @@ case class LicensePartEmitter(license: License, ordering: SpecOrdering)(implicit
 
       fs.entry(LicenseModel.Url).map(f => result += ValueEmitter("url", f))
       fs.entry(LicenseModel.Name).map(f => result += ValueEmitter("name", f))
+      fs.entry(LicenseModel.Identifier).map(f => result += ValueEmitter("identifier", f))
 
       result ++= AnnotationsEmitter(license, ordering).emitters
 
