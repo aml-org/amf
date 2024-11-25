@@ -21,6 +21,11 @@ object ParserSideValidations extends Validations {
     "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
   )
 
+  val ExclusiveLicenseIdentifierError = validation(
+    "exclusive-license-identifier-error",
+    "identifier and url are mutually exclusive in a OAS 3.1 License Object"
+  )
+
   val MandatoryObjectNodeType = validation(
     "mandatory-object-node-type",
     "Mandatory object node type"
@@ -443,7 +448,8 @@ object ParserSideValidations extends Validations {
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-    ExclusiveLinkTargetError.id -> all(VIOLATION),
+    ExclusiveLinkTargetError.id        -> all(VIOLATION),
+    ExclusiveLicenseIdentifierError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
       Oas20Profile -> VIOLATION
     ),
