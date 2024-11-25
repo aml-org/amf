@@ -2334,6 +2334,7 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | url | url | - | URL identifying the organization | `http://a.ml/vocabularies/core#url` |
  | name | string | - | Name of the shape | `http://a.ml/vocabularies/core#name` |
+ | identifier | string | - | SPDX license expression for the API | `http://a.ml/vocabularies/core#identifier` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## LinkNode
