@@ -15,8 +15,9 @@ case class License(override private[amf] val _internal: InternalLicense) extends
   @JSExportTopLevel("License")
   def this() = this(InternalLicense())
 
-  def url: StrField  = _internal.url
-  def name: StrField = _internal.name
+  def url: StrField        = _internal.url
+  def name: StrField       = _internal.name
+  def identifier: StrField = _internal.identifier
 
   /** Set url property of this License. */
   def withUrl(url: String): this.type = {
@@ -27,6 +28,12 @@ case class License(override private[amf] val _internal: InternalLicense) extends
   /** Set name property of this License. */
   def withName(name: String): this.type = {
     _internal.withName(name)
+    this
+  }
+
+  /** Set identifier property of this License. */
+  def withIdentifier(identifier: String): this.type = {
+    _internal.withIdentifier(identifier)
     this
   }
 }
