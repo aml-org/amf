@@ -46,7 +46,8 @@ object Oas3Syntax extends SpecSyntax {
     ),
     "license" -> Set(
       "name",
-      "url"
+      "url",
+      "identifier"
     ),
     "pathItem" -> Set(
       "get",

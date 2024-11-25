@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.License
 import amf.apicontract.internal.metamodel.domain.LicenseModel
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext}
 import amf.apicontract.internal.spec.spec.toOas
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.ExclusiveLicenseIdentifierError
 import amf.core.internal.parser.YMapOps
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YNode}
@@ -24,6 +25,15 @@ class LicenseParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParser
     map.key("url", LicenseModel.Url in license)
     map.key("name", LicenseModel.Name in license)
     map.key("identifier", LicenseModel.Identifier in license)
+
+    if (license.identifier.option().isDefined && license.url.option().isDefined) {
+      ctx.eh.violation(
+        ExclusiveLicenseIdentifierError,
+        license.id,
+        ExclusiveLicenseIdentifierError.message,
+        license.annotations
+      )
+    }
 
     AnnotationParser(license, map).parse()
 
