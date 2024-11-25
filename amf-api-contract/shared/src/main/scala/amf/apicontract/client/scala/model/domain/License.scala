@@ -16,6 +16,8 @@ case class License(fields: Fields, annotations: Annotations) extends NamedDomain
 
   def identifier: StrField = fields.field(Identifier)
 
+  def withIdentifier(identifier: String): this.type = set(Identifier, identifier)
+
   def withUrl(url: String): this.type = set(Url, url)
 
   override def meta = LicenseModel
