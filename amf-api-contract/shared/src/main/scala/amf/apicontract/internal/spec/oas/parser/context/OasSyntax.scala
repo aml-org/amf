@@ -4,7 +4,13 @@ import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.oas.parser.{Oas2ShapeSyntax, Oas3ShapeSyntax}
 
 object Oas31Syntax extends SpecSyntax {
-  override val nodes: Map[String, Set[String]] = Oas3Syntax.nodes
+  override val nodes: Map[String, Set[String]] =
+    Oas3Syntax.nodes +
+      ("license" -> Set(
+        "name",
+        "url",
+        "identifier"
+      ))
 }
 
 object Oas3Syntax extends SpecSyntax {
@@ -46,8 +52,7 @@ object Oas3Syntax extends SpecSyntax {
     ),
     "license" -> Set(
       "name",
-      "url",
-      "identifier"
+      "url"
     ),
     "pathItem" -> Set(
       "get",
