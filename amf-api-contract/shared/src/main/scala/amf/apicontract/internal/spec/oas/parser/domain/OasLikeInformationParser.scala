@@ -5,6 +5,7 @@ import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.common.parser.WebApiBaseSpecParser
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.core.internal.parser.YMapOps
+import amf.core.internal.remote.Spec
 import org.yaml.model.{YMap, YMapEntry}
 
 case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implicit val ctx: OasLikeWebApiContext)
@@ -21,6 +22,10 @@ case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implici
     info.key("version", WebApiModel.Version in api)
     info.key("contact", WebApiModel.Provider in api using OrganizationParser.parse)
     info.key("license", WebApiModel.License in api using LicenseParser.parse)
+
+    if (ctx.spec == Spec.OAS31) {
+      info.key("summary", WebApiModel.Summary in api)
+    }
   }
 
 }

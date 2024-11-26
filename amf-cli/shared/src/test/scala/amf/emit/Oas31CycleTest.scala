@@ -19,6 +19,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 license identifier field in JSON",
       "oas-31-license-identifier.json",
       "oas-31-license-identifier.dumped.json"
+    ),
+    FixtureData(
+      "OAS 3.1 info summary field in JSON",
+      "oas-31-info-summary.json",
+      "oas-31-info-summary.dumped.json"
     )
   )
 
@@ -48,6 +53,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 license identifier field in YAML",
       "oas-31-license-identifier.yaml",
       "oas-31-license-identifier.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 info summary field in YAML",
+      "oas-31-info-summary.yaml",
+      "oas-31-info-summary.dumped.yaml"
     )
   )
 

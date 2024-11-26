@@ -10,6 +10,15 @@ object Oas31Syntax extends SpecSyntax {
         "name",
         "url",
         "identifier"
+      )) +
+      ("info" -> Set(
+        "title",
+        "summary",
+        "description",
+        "termsOfService",
+        "contact",
+        "license",
+        "version"
       ))
 }
 
