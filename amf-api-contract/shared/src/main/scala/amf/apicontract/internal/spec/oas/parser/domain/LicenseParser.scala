@@ -26,7 +26,7 @@ class LicenseParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParser
     map.key("url", LicenseModel.Url in license)
     map.key("name", LicenseModel.Name in license)
 
-    if (ctx.spec == Spec.OAS31) {
+    if (ctx.isOas31Context) {
       map.key("identifier", LicenseModel.Identifier in license)
 
       if (license.identifier.option().isDefined && license.url.option().isDefined) {

@@ -62,6 +62,12 @@ trait ApiModel
     ModelDoc(ModelVocabularies.Core, "termsOfService", "Terms and conditions when using the API")
   )
 
+  val Summary = Field(
+    Str,
+    Core + "summary",
+    ModelDoc(ModelVocabularies.Core, "summary", "A short summary of the API")
+  )
+
   val Provider = Field(
     OrganizationModel,
     Core + "provider",

@@ -244,6 +244,13 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     )
   }
 
+  test("OAS 3.1 fields not supported in OAS 3.0") {
+    validate(
+      "oas3/oas31-fields-not-supported-in-oas30.json",
+      Some("oas31-fields-not-supported-in-oas30.report")
+    )
+  }
+
   test("Json Ref - Invalid path in valid external fragment") {
     validate("oas2/invalid-ref-valid-fragment/api.json", Some("invalid-ref-valid-fragment.report"))
   }

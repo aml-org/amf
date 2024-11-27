@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/oas31-fields-not-supported-in-oas30.json
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'summary' not supported in a OAS 3.0 info node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/oas31-fields-not-supported-in-oas30.json#/web-api
+  Property: 
+  Range: [(6,4)-(6,35)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/oas31-fields-not-supported-in-oas30.json
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'identifier' not supported in a OAS 3.0 license node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/oas31-fields-not-supported-in-oas30.json#/web-api/license
+  Property: 
+  Range: [(9,6)-(9,32)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/oas31-fields-not-supported-in-oas30.json
