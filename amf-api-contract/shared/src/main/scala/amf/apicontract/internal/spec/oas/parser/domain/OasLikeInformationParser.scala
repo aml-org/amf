@@ -23,7 +23,7 @@ case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implici
     info.key("contact", WebApiModel.Provider in api using OrganizationParser.parse)
     info.key("license", WebApiModel.License in api using LicenseParser.parse)
 
-    if (ctx.spec == Spec.OAS31) {
+    if (ctx.isOas31Context) {
       info.key("summary", WebApiModel.Summary in api)
     }
   }
