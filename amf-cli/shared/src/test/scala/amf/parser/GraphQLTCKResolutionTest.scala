@@ -1,13 +1,14 @@
 package amf.parser
 
 import amf.apicontract.client.scala.AMFConfiguration
-import amf.core.client.common.transform.{PipelineId, PipelineName}
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{AmfJsonHint, GraphQLHint, Spec}
 import amf.cycle.GraphQLFunSuiteCycleTests
 
 class GraphQLTCKResolutionTest extends GraphQLFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql/tck/apis/valid/"
 
   /** We should not resolve inheritance in GraphQL, only validate it We should detect recursions

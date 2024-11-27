@@ -1,13 +1,10 @@
 package amf.validation
 
 import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class SingleConfigurationTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SingleConfigurationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   test("valid and invalid parsing errors with single instance") {
     val invalidApi = "file://amf-cli/shared/src/test/resources/parser-results/raml/error/map-key.raml"

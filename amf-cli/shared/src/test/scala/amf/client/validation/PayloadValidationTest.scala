@@ -9,16 +9,14 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.document.AvroSchemaDocument
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.plugin.FailFastJsonSchemaPayloadValidationPlugin
 import amf.shapes.internal.annotations.{AVRORawSchema, AVROSchemaType}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.ExecutionContext
 
 trait PayloadValidationUtils {
   protected def defaultConfig: ShapesConfiguration = ShapesConfiguration.predefined()
@@ -46,7 +44,11 @@ trait PayloadValidationUtils {
     defaultConfig.withPlugin(plugin).elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
-trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
+trait PayloadValidationTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with NativeOps
+    with Matchers
+    with PayloadValidationUtils {
 
   test("Test parameter validator int payload") {
     val test = ScalarShape().withDataType(DataTypes.String).withName("test")
@@ -365,8 +367,6 @@ trait PayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers w
   protected def reportContainError(report: AMFValidationReport, message: String): Boolean = {
     report.results.exists(result => result.message.contains(message))
   }
-
-  override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
 
 object AvroTestSchemas {

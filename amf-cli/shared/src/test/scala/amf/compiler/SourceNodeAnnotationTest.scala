@@ -7,20 +7,19 @@ import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode, SourceYPart}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SourceNodeAnnotationTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with CompilerTestBuilder
+    with Matchers {
 
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)

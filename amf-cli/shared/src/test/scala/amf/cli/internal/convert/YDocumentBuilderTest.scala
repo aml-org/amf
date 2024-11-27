@@ -13,13 +13,11 @@ import org.yaml.builder.YDocumentBuilder
 import org.yaml.model.{YDocument, YPart}
 import org.yaml.render.JsonRender
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 // TODO add more test cases
 abstract class DocBuilderTest extends FunSuiteCycleTests {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override def basePath: String                            = "amf-cli/shared/src/test/resources/render/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/render/"
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
@@ -52,8 +50,8 @@ class YDocumentBuilderTest extends DocBuilderTest {
 
   override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     val builder: YDocumentBuilder = new YDocumentBuilder()
-    val result: YPart             = amfConfig.baseUnitClient().renderGraphToBuilder(unit, builder)
-    val document                  = result.asInstanceOf[YDocument]
+    val result: YPart = amfConfig.baseUnitClient().renderGraphToBuilder(unit, builder)
+    val document = result.asInstanceOf[YDocument]
     JsonRender.render(document)
   }
 }

@@ -8,19 +8,19 @@ import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.{Document, Fragment}
 import amf.core.client.scala.model.domain.AmfObject
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.remote._
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.{Assertion, Succeeded}
 
-import scala.concurrent.{ExecutionContext, Future}
-
+import scala.concurrent.Future
 /** */
-class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with AmfObjectTestMatcher {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ReferencesMakerTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with CompilerTestBuilder
+    with AmfObjectTestMatcher {
 
   test("Data type fragment test raml") {
     val rootDocument = "file://amf-cli/shared/src/test/resources/references/data-type-fragment.reference.raml"

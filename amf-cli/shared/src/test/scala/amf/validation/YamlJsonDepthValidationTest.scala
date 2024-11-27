@@ -6,20 +6,22 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode.StrictValidationMode
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.model.domain.ScalarShape
 import org.mulesoft.lexer.BaseLexer
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-trait YamlJsonDepthValidationTest extends AsyncFunSuite with Matchers with PayloadValidationUtils {
+trait YamlJsonDepthValidationTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers
+    with PayloadValidationUtils {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  protected val limit                                        = 500
-  protected val ramlConfigDefault                            = RAMLConfiguration.RAML10()
+  protected val limit             = 500
+  protected val ramlConfigDefault = RAMLConfiguration.RAML10()
   protected val ramlConfig = RAMLConfiguration.RAML10().withParsingOptions(ParsingOptions().setMaxJsonYamlDepth(limit))
   protected val oasConfig  = OASConfiguration.OAS20().withParsingOptions(ParsingOptions().setMaxJsonYamlDepth(limit))
 

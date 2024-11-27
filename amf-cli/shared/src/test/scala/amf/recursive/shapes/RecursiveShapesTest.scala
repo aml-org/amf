@@ -2,18 +2,16 @@ package amf.recursive.shapes
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
-import amf.core.client.common.validation.{ProfileName, Raml10Profile}
+import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{Oas20JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGenTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/recursives/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/recursives/"

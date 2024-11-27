@@ -2,7 +2,7 @@ package amf.avro
 
 import amf.apicontract.client.scala.AvroConfiguration
 import amf.core.client.scala.model.domain.RecursiveShape
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.document.AvroSchemaDocument
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape, UnresolvedShape}
 import org.scalatest.funsuite.AsyncFunSuite
@@ -12,10 +12,9 @@ import scala.concurrent.ExecutionContext
 
 // TODO warning: recursive schemas fail in validation if key "type" not enclosed in {} apart from parameter fields
 class AvroSchemaResolutionTest extends AsyncFunSuite with Matchers with FileAssertionTest {
+
   private val base   = "file://amf-cli/shared/src/test/resources/avro/schemas/"
   private val client = AvroConfiguration.Avro().baseUnitClient()
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Avro Schema with valid recursive record field") {
     for {

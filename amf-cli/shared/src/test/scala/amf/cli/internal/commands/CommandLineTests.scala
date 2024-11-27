@@ -1,16 +1,11 @@
 package amf.cli.internal.commands
 
 import amf.apicontract.client.scala.{APIConfiguration, RAMLConfiguration, WebAPIConfiguration}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{Aml, Oas20, Raml10}
-import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
-
-class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class CommandLineTests extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   class TestWriter extends ProcWriter {
     var acc = ""

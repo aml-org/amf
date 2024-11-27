@@ -10,6 +10,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
@@ -22,15 +23,12 @@ import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YNodePlain, YScalar}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
   val ro: RenderOptions                      = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps

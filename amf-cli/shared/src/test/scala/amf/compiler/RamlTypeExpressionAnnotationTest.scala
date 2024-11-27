@@ -3,23 +3,22 @@ package amf.compiler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Annotation
 import amf.core.client.scala.traversal.iterator.AmfElementStrategy
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Raml10YamlHint
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
-import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with CompilerTestBuilder {
-
-  override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.global
+class RamlTypeExpressionAnnotationTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers
+    with CompilerTestBuilder {
 
   val rootPath = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/raml-type-expressions"
-
-  behavior of "RAML type expression annotations"
 
   private val aArray       = LexicalInformation(PositionRange((7, 10), (7, 15)))
   private val aUnionA      = LexicalInformation(PositionRange((8, 10), (8, 16)))
@@ -34,32 +33,32 @@ class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with 
 
   private val fBu: Future[BaseUnit] = build(s"$rootPath/many-expressions-01.raml", Raml10YamlHint)
 
-  it should "annotate range for simple array" in {
-    test(aArray)
+  test("annotate range for simple array") {
+    assertAnnotation(aArray)
   }
 
-  it should "annotate range for simple union" in {
-    test(aUnionA)
-    test(aUnionB)
+  test("annotate range for simple union") {
+    assertAnnotation(aUnionA)
+    assertAnnotation(aUnionB)
   }
 
-  it should "annotate range for union with array element" in {
-    test(aUnion2A)
-    test(aUnion2B)
+  test("annotate range for union with array element") {
+    assertAnnotation(aUnion2A)
+    assertAnnotation(aUnion2B)
   }
 
-  it should "annotate range for union with three elements" in {
-    test(tripleUnionA)
-    test(tripleUnionB)
-    test(tripleUnionC)
+  test("annotate range for union with three elements") {
+    assertAnnotation(tripleUnionA)
+    assertAnnotation(tripleUnionB)
+    assertAnnotation(tripleUnionC)
   }
 
-  it should "annotate ranges in an array of unions" in {
-    test(unionArrayA)
-    test(unionArrayB)
+  test("annotate ranges in an array of unions") {
+    assertAnnotation(unionArrayA)
+    assertAnnotation(unionArrayB)
   }
 
-  private def test(a: Annotation): Future[Assertion] =
+  private def assertAnnotation(a: Annotation): Future[Assertion] =
     for {
       bu <- fBu
     } yield {

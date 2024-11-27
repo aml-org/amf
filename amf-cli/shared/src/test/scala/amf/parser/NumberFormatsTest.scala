@@ -2,8 +2,8 @@ package amf.parser
 
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.scala.model.document.Fragment
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
@@ -11,15 +11,11 @@ import amf.shapes.internal.spec.common.TypeDef._
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class NumberFormatsTest extends AsyncFunSuite with Matchers with PlatformSecrets {
-
-  implicit override def executionContext: ExecutionContext =
-    scala.concurrent.ExecutionContext.Implicits.global
+class NumberFormatsTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val cases: Seq[FormatCases] = Seq(
     FormatCases("number", IntType, "int"),

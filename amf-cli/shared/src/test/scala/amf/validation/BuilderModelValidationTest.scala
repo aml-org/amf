@@ -9,19 +9,14 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.AMFSerializer
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.internal.spec.payload.PayloadRenderPlugin
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class BuilderModelValidationTest extends FileAssertionTest with Matchers {
 
   private val payloadRenderConfig = AMFGraphConfiguration.predefined().withPlugin(PayloadRenderPlugin)
 

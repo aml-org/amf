@@ -4,17 +4,15 @@ import amf.apicontract.client.scala.OASConfiguration
 import amf.apicontract.client.scala.model.document.ComponentModule
 import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Spec
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class OasComponentPluginSetupTest extends AsyncFunSuite with Matchers {
+class OasComponentPluginSetupTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val base = "file://amf-api-contract/shared/src/test/resources/oas-component/"
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("OAS 3.0 Component valid parsing YAML") {
     for {

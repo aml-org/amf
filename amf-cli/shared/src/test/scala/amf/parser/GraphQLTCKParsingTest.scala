@@ -5,6 +5,7 @@ import amf.core.internal.remote.{AmfJsonHint, GraphQLHint}
 import amf.cycle.GraphQLFunSuiteCycleTests
 
 class GraphQLTCKParsingTest extends GraphQLFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql/tck/apis/valid/"
 
   // Test valid APIs

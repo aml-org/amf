@@ -3,7 +3,6 @@ package amf.apicontract.client.platform.model.domain
 import amf.apicontract.client.scala.model.domain.{Payload => InternalPayload}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.Linkable
 import amf.core.client.scala.model.BoolField
 import amf.shapes.client.platform.model.domain.Example
 import amf.shapes.client.platform.model.domain.operations.AbstractPayload
@@ -52,9 +51,9 @@ case class Payload(override private[amf] val _internal: InternalPayload) extends
 
   def withEncoding(name: String): Encoding = _internal.withEncoding(name)
 
-  @deprecated(message = "Use method 'encodings'", "4.1.3")
+//  @deprecated(message = "Use method 'encodings'", "4.1.3")
   def encoding: ClientList[Encoding] = _internal.encodings.asClient
-  @deprecated(message = "Use method 'withEncodings'", "4.1.3")
+//  @deprecated(message = "Use method 'withEncodings'", "4.1.3")
   def withEncoding(encoding: ClientList[Encoding]): this.type = {
     _internal.withEncodings(encoding.asInternal)
     this

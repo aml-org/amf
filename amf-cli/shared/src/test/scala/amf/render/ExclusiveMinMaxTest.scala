@@ -6,13 +6,11 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.JsonSchemaHint
 import amf.resolution.ResolutionTest
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import scala.concurrent.ExecutionContext
 
 class ExclusiveMinMaxTest extends ResolutionTest {
 
-  override val defaultPipeline: String                     = PipelineId.Editing
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override val basePath: String                            = "amf-cli/shared/src/test/resources/render/exclusive-minimum-maximum/"
+  override val defaultPipeline: String   = PipelineId.Editing
+  override val basePath: String          = "amf-cli/shared/src/test/resources/render/exclusive-minimum-maximum/"
   val config: AMFConfiguration           = ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
   val draft4RenderOptions: RenderOptions = RenderOptions().withSchemaVersion(JsonSchemaDraft4)
   val draft7RenderOptions: RenderOptions = RenderOptions().withSchemaVersion(JsonSchemaDraft7)

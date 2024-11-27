@@ -1,10 +1,11 @@
 package amf.jsonschema
 
-import amf.apicontract.client.scala.OASConfiguration.{OAS20, OAS30}
+import amf.apicontract.client.scala.OASConfiguration.OAS20
 import amf.apicontract.client.scala.RAMLConfiguration.RAML10
 import amf.validation.UniquePlatformReportGenTest
 
 class JsonSchemaLinkerReportTest extends UniquePlatformReportGenTest with JsonSchemaDocumentTest {
+
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/jsonschema/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/jsonschema/reports/"
 

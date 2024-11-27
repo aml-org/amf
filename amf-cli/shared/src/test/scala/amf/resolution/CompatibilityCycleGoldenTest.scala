@@ -3,12 +3,9 @@ package amf.resolution
 import amf.core.client.common.transform._
 import amf.core.internal.remote._
 
-import scala.concurrent.ExecutionContext
-
 class CompatibilityCycleGoldenTest extends ResolutionTest {
 
   override val defaultPipeline: String                     = PipelineId.Compatibility
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def basePath: String = "amf-cli/shared/src/test/resources/compatibility/"
 

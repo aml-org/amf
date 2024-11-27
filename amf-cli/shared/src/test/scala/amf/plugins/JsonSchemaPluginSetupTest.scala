@@ -5,22 +5,19 @@ import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.remote.Spec
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape}
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class JsonSchemaPluginSetupTest extends AsyncFunSuite with Matchers with FileAssertionTest {
+class JsonSchemaPluginSetupTest extends FileAssertionTest with Matchers {
 
   private val base   = "file://amf-api-contract/shared/src/test/resources/json-schema/"
   private val client = JsonSchemaConfiguration.JsonSchema().baseUnitClient()
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("JsonSchemaParsePlugin plugin is called with a json document and a $schema entry") {
     for {

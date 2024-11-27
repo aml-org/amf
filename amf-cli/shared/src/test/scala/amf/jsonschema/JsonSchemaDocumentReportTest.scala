@@ -4,11 +4,7 @@ import amf.apicontract.client.scala.ConfigurationAdapter
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.validation.UniquePlatformReportGenTest
 
-import scala.concurrent.ExecutionContext
-
 class JsonSchemaDocumentReportTest extends UniquePlatformReportGenTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/jsonschema/doc/"
   override val reportsPath: String = "file://amf-cli/shared/src/test/resources/jsonschema/reports/"
