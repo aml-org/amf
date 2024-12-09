@@ -127,20 +127,20 @@ pipeline {
                 }
             }
         }
-        stage('Nexus IQ') {
-            when {
-                anyOf {
-                    branch 'master'
-                    branch 'develop'
-                }
-            }
-            steps {
-                script {
-                    lastStage = env.STAGE_NAME
-                    sh './gradlew nexusIq'
-                }
-            }
-        }
+        // stage('Nexus IQ') {
+        //     when {
+        //         anyOf {
+        //             branch 'master'
+        //             branch 'develop'
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             lastStage = env.STAGE_NAME
+        //             sh './gradlew nexusIq'
+        //         }
+        //     }
+        // }
         stage('Trigger amf projects') {
             when {
                 anyOf {
