@@ -1,13 +1,11 @@
 package amf.shapes.client.platform.model.domain
 
-import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}
 import amf.shapes.client.scala.model.domain.{Example => InternalExample}
-import amf.shapes.internal.convert.ShapeClientConverters.ClientOption
+import amf.shapes.internal.convert.ShapeClientConverters.{ClientOption, _}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.shapes.internal.convert.ShapeClientConverters._
 
 /** Example model class
   */
@@ -22,6 +20,7 @@ case class Example(override private[amf] val _internal: InternalExample)
 
   def name: StrField                 = _internal.name
   def displayName: StrField          = _internal.displayName
+  def summary: StrField              = _internal.summary
   def description: StrField          = _internal.description
   def value: StrField                = _internal.raw
   def structuredValue: DataNode      = _internal.structuredValue
@@ -36,6 +35,11 @@ case class Example(override private[amf] val _internal: InternalExample)
 
   def withDisplayName(displayName: String): this.type = {
     _internal.withDisplayName(displayName)
+    this
+  }
+
+  def withSummary(summary: String): this.type = {
+    _internal.withSummary(summary)
     this
   }
 

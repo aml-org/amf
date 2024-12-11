@@ -6,14 +6,9 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain._
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml10}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class SemanticExtensionTest extends AsyncFunSuite with SemanticExtensionParseTest with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SemanticExtensionTest extends SemanticExtensionParseTest with Matchers {
 
   override protected val basePath = "file://amf-cli/shared/src/test/resources/semantic/"
 

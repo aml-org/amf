@@ -40,7 +40,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         ctx.declarations
           .findResponse(name, SearchScope.Named)
           .map { res =>
-            val resLink: Response = res.link(AmfScalar(name), annotations, Annotations.synthesized())
+            val resLink: Response = ctx.link(res, map, AmfScalar(name), annotations, Annotations.synthesized())
             adopted(resLink)
             resLink
           }

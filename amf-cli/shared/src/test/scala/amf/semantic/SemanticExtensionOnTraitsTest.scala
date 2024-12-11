@@ -5,14 +5,12 @@ import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, RAMLCon
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class SemanticExtensionOnTraitsTest extends AsyncFunSuite with Matchers {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SemanticExtensionOnTraitsTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath: String = "file://amf-cli/shared/src/test/resources/semantic/traits_and_rt/"
 

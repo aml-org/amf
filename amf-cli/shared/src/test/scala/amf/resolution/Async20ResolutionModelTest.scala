@@ -4,14 +4,12 @@ import amf.apicontract.client.scala.AsyncAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.Document
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class Async20ResolutionModelTest extends AsyncFunSuite {
-  override val executionContext: ExecutionContext = global
+class Async20ResolutionModelTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   private val basePath: String = "amf-cli/shared/src/test/resources/references/async/"
 

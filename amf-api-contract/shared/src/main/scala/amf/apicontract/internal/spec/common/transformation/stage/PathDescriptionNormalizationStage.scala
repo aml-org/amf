@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.common.transformation.stage
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
-import amf.core.client.common.validation.{Async20Profile, Oas30Profile, ProfileName}
+import amf.core.client.common.validation.{Async20Profile, Oas30Profile, Oas31Profile, ProfileName}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -26,8 +26,8 @@ class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInf
   ): BaseUnit = {
     profile match {
       // TODO should run for Amf too
-      case Oas30Profile | Async20Profile => normalizeDescriptions(model)
-      case _                             => model
+      case Oas30Profile | Oas31Profile | Async20Profile => normalizeDescriptions(model)
+      case _                                            => model
     }
   }
 

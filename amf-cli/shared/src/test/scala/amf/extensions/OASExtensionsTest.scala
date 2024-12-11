@@ -5,6 +5,7 @@ import amf.core.internal.remote.{AmfJsonHint, Oas30JsonHint, Oas30YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class OASExtensionsTest extends FunSuiteCycleTests {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/validations/oas3/spec-extensions/"
   override def renderOptions(): RenderOptions = RenderOptions().withPrettyPrint.withSourceMaps.withRawSourceMaps
 

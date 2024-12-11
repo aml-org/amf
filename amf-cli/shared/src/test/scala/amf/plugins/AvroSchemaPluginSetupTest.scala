@@ -4,21 +4,19 @@ import amf.apicontract.client.scala.AvroConfiguration
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFParseResult
 import amf.core.internal.remote.Spec
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.document.AvroSchemaDocument
 import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class AvroSchemaPluginSetupTest extends AsyncFunSuite with Matchers with FileAssertionTest {
 
   private val base   = "file://amf-api-contract/shared/src/test/resources/avro/"
   private val client = AvroConfiguration.Avro().baseUnitClient()
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   // test with .json and .avsc
   test("AvroSchemaParsePlugin plugin is called with a json document") {

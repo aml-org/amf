@@ -28,6 +28,8 @@ case class InfoEmitter(fs: Fields, ordering: SpecOrdering, orphanAnnotations: Se
     fs.entry(WebApiModel.Name)
       .fold(result += MapEntryEmitter("title", "API"))(f => result += ValueEmitter("title", f))
 
+    fs.entry(WebApiModel.Summary).map(f => result += ValueEmitter("summary", f))
+
     fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
 
     fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService", f))

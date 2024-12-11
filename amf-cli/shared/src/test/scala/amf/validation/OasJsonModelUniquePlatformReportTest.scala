@@ -1,8 +1,5 @@
 package amf.validation
 
-import amf.core.client.common.validation.Oas30Profile
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
-
 class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
@@ -244,6 +241,13 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate(
       "oas3/oas3-closed-shapes.json",
       Some("oas3-closed-shapes.report")
+    )
+  }
+
+  test("OAS 3.1 fields not supported in OAS 3.0") {
+    validate(
+      "oas3/oas31-fields-not-supported-in-oas30.json",
+      Some("oas31-fields-not-supported-in-oas30.report")
     )
   }
 

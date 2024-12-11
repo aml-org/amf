@@ -18,12 +18,7 @@ import amf.apicontract.internal.spec.avro.{AvroParsePlugin, AvroRenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.transformation.compatibility.{
-  Oas20CompatibilityPipeline,
-  Oas3CompatibilityPipeline,
-  Raml08CompatibilityPipeline,
-  Raml10CompatibilityPipeline
-}
+import amf.apicontract.internal.transformation.compatibility._
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.APIPayloadValidationPlugin
@@ -256,10 +251,10 @@ object OASConfiguration extends APIConfigurationBuilder {
       .withValidationProfile(Oas31ValidationProfile, Oas31EffectiveValidations)
       .withTransformationPipelines(
         List(
-          Oas30TransformationPipeline(),
-          Oas3EditingPipeline(),
-          Oas3CompatibilityPipeline(),
-          Oas3CachePipeline()
+          Oas31TransformationPipeline(),
+          Oas31EditingPipeline(),
+          Oas31CompatibilityPipeline(),
+          Oas31CachePipeline()
         )
       )
 

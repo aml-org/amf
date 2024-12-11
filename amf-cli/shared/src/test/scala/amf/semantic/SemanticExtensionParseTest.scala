@@ -1,24 +1,24 @@
 package amf.semantic
 
-import amf.aml.client.scala.{AMLConfiguration, AMLDialectResult}
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.{AMLConfiguration, AMLDialectResult}
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.{AMFConfiguration, AMFLibraryResult, APIConfiguration}
 import amf.core.client.scala.config.{CachedReference, UnitCache}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Value
 import amf.core.internal.remote.Spec
-import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-trait SemanticExtensionParseTest extends PlatformSecrets with Matchers {
-  implicit val executionContext: ExecutionContext
+trait SemanticExtensionParseTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
+
   protected val basePath: String
 
   case class CompanionLibUnitCache(library: Module) extends UnitCache {

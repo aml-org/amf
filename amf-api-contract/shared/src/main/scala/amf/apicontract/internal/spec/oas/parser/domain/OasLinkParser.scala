@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.TemplatedLink
 import amf.apicontract.internal.metamodel.domain.TemplatedLinkModel
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorLink
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.ExclusiveLinkTargetError
@@ -11,8 +11,8 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.client.scala.model.domain.IriTemplateMapping
+import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
@@ -38,9 +38,11 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
           .getOrElse(Annotations.synthesized())
         ctx.declarations
           .findTemplatedLink(label, SearchScope.Named)
-          .map(templatedLink =>
-            nameAndAdopt(templatedLink.link(AmfScalar(label), annotations, Annotations.synthesized()))
-          )
+          .map(templatedLink => {
+            val linkedElement =
+              ctx.link(templatedLink, map, AmfScalar(label), annotations, Annotations.synthesized())
+            nameAndAdopt(linkedElement)
+          })
           .getOrElse(remote(fullRef, map))
 
       case Right(_) => buildAndPopulate(map)
@@ -54,7 +56,6 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map.location)
         nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef))
-
     }
   }
 

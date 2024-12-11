@@ -6,15 +6,13 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Response}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.DomainElement
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ApiSemanticTransformationStageTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ApiSemanticTransformationStageTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath = "file://amf-cli/shared/src/test/resources/semantic/"
 

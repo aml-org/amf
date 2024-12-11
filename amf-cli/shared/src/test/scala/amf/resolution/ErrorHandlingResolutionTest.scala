@@ -19,6 +19,7 @@ import org.scalatest.matchers.should.Matchers
 import scala.concurrent.Future
 
 class ErrorHandlingResolutionTest extends FunSuiteCycleTests with Matchers {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/resolution/error-apis/"
 
   test("Unexisting include for resource type") {

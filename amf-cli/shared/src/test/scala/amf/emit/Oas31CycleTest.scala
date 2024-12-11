@@ -3,7 +3,7 @@ package amf.emit
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
-// TODO: it's not rendering new 'examples' facet
+// TODO: should support and render new 'examples', 'pathItems' facets in oas 3.1
 class Oas31CycleTest extends FunSuiteCycleTests {
   override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/oas31/"
 
@@ -11,9 +11,19 @@ class Oas31CycleTest extends FunSuiteCycleTests {
 
   val cyclesOas31Json: Seq[FixtureData] = Seq(
     FixtureData(
-      "OAS 3.1 PetStore API in JSON",
+      "OAS 3.1 webhooks field in JSON",
       "oas-petstore-31.json",
       "oas-petstore-31.dumped.json"
+    ),
+    FixtureData(
+      "OAS 3.1 license identifier field in JSON",
+      "oas-31-license-identifier.json",
+      "oas-31-license-identifier.dumped.json"
+    ),
+    FixtureData(
+      "OAS 3.1 info summary field in JSON",
+      "oas-31-info-summary.json",
+      "oas-31-info-summary.dumped.json"
     )
   )
 
@@ -25,7 +35,7 @@ class Oas31CycleTest extends FunSuiteCycleTests {
 
   val cyclesOas31Yaml: Seq[FixtureData] = Seq(
     FixtureData(
-      "OAS 3.1 PetStore API in YAML",
+      "OAS 3.1 webhooks field in YAML",
       "oas-petstore-31.yaml",
       "oas-petstore-31.dumped.yaml"
     ),
@@ -33,6 +43,21 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 annotation in discriminator field",
       "oas-31-discriminator-ann.yaml",
       "oas-31-discriminator-ann.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 $ref object summary and description",
+      "oas-31-ref-fields.yaml",
+      "oas-31-ref-fields.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 license identifier field in YAML",
+      "oas-31-license-identifier.yaml",
+      "oas-31-license-identifier.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 info summary field in YAML",
+      "oas-31-info-summary.yaml",
+      "oas-31-info-summary.dumped.yaml"
     )
   )
 

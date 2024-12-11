@@ -5,13 +5,13 @@ import amf.cache.CustomUnitCache
 import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.CachedReference
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.model.document.AvroSchemaDocument
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait AvroSchemaDocumentTest {
+trait AvroSchemaDocumentTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
-  protected implicit def executionContext: ExecutionContext
   protected val basePath: String
 
   protected def parse(

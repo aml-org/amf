@@ -5,13 +5,9 @@ import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Mimes._
-import amf.io.FileAssertionTest
-
-import scala.concurrent.ExecutionContext
+import amf.core.io.FileAssertionTest
 
 class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAssertionTest {
-
-  implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val usedMediaTypes = Seq(`application/ld+json`, `application/yaml`, `application/json`)
 

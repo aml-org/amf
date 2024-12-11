@@ -18,13 +18,11 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{AvroSchema, Spec}
-import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.common.{SchemaVersion, AVROSchema => AVROSchemaVersion}
-import org.yaml.model.YDocument.PartBuilder
 
 import scala.util.matching.Regex
 
@@ -82,6 +80,4 @@ class AvroSpecEmitterFactory(implicit override val spec: AvroSpecEmitterContext)
   override def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
 }
 
-object AvroRefEmitter extends RefEmitter {
-  override def ref(url: String, b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
-}
+object AvroRefEmitter extends RefEmitter {}

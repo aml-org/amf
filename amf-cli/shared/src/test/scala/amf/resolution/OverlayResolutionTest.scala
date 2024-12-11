@@ -4,11 +4,7 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Raml10YamlHint
 
-import scala.concurrent.ExecutionContext
-
 class OverlayResolutionTest extends ResolutionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-cli/shared/src/test/resources/resolution/overlay/"
 

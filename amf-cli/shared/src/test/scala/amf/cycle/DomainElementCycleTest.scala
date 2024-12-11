@@ -9,20 +9,16 @@ import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.remote.{Hint, Mimes, Spec}
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
 import amf.testing.ConfigProvider
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.model.{YDocument, YNode}
 
 import java.io.StringWriter
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+trait DomainElementCycleTest extends FileAssertionTest {
 
   case class EmissionConfig(source: String, golden: String, hint: Hint, directory: String) {
     def goldenPath: String = directory + golden

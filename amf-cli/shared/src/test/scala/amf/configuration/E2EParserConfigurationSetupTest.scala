@@ -10,8 +10,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
 
-  implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
   type Expectation = (BaseUnit, Spec) => Assertion
 
   case class ExpectedParseCase(config: AMFConfiguration, apiPath: String, expectation: Expectation)

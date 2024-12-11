@@ -7,7 +7,7 @@ import amf.core.internal.remote._
 import amf.resolution.ResolutionTest
 import amf.testing.ConfigProvider.configFor
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 /** This test class tests a URI mismanagement case that is only reproducible with certain Resource Loaders (like the one
   * in AMFS).
@@ -26,10 +26,9 @@ import scala.concurrent.{ExecutionContext, Future}
   * applied).
   */
 class EditingResolutionWithRLTest extends ResolutionTest {
-  override val defaultPipeline: String                     = PipelineId.Editing
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val extendsPath                                          = "amf-cli/shared/src/test/resources/resolution/extends"
-  override val basePath: String                            = ""
+  override val defaultPipeline: String = PipelineId.Editing
+  val extendsPath                      = "amf-cli/shared/src/test/resources/resolution/extends"
+  override val basePath: String        = ""
 
   override def build(sourcePath: String, goldenPath: String, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig

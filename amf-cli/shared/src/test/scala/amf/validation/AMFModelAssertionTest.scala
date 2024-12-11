@@ -10,6 +10,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
@@ -22,15 +23,12 @@ import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YNodePlain, YScalar}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
   val ro: RenderOptions                      = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
@@ -41,6 +39,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val raml08Client: AMFBaseUnitClient        = raml08Config.baseUnitClient()
   val oasConfig: AMFConfiguration            = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient           = oasConfig.baseUnitClient()
+  val oas31Config: AMFConfiguration          = OASConfiguration.OAS31().withRenderOptions(ro)
+  val oas31Client: AMFBaseUnitClient         = oas31Config.baseUnitClient()
   val oasComponentsConfig: AMFConfiguration  = OASConfiguration.OAS30Component().withRenderOptions(ro)
   val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
   val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
@@ -542,10 +542,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-13595824
   test("transforming raml with 3+ unions should flatten union members") {
     val api = "file://amf-cli/shared/src/test/resources/upanddown/raml10/unions/triple-unions.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val parseBU      = parseResult.baseUnit
-      val transformBU  = ramlClient.transform(parseBU, pipeline = PipelineId.Editing).baseUnit
-      val declarations = getDeclarations(transformBU)
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val declarations = getDeclarations(bu)
 
       val unionInArray      = declarations(1).asInstanceOf[ArrayShape]
       val unionInArrayUnion = unionInArray.items.asInstanceOf[UnionShape]
@@ -569,9 +567,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-13595824
   test("transforming raml with nested UnionShapes should NOT flatten union members") {
     val api = "file://amf-cli/shared/src/test/resources/union/inner-union.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val transformBU  = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
-      val declarations = getDeclarations(transformBU)
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val declarations = getDeclarations(bu)
 
       // in parsing they are an union that inherits an union with anyOf of a ScalarShape and an UnionShape with link-target to the next Union (SomeType, OtherType)
       val unionType = declarations.head.asInstanceOf[UnionShape]
@@ -590,9 +587,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-13595824
   test("transforming raml with 3+ unions should NOT duplicate IDs when flattening members") {
     val api = s"$basePath/raml/triple-union.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val transformBU          = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
-      val declarations         = getDeclarations(transformBU)
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val declarations         = getDeclarations(bu)
       val unionInArrayProperty = declarations.last.asInstanceOf[NodeShape]
       val complexArrayProperty = unionInArrayProperty.properties.head
       val complexArrayRange    = complexArrayProperty.range
@@ -618,15 +614,13 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-12689955
   test("async2.0 should not emit server channels if not specified") {
     val api = s"$basePath/async20/validations/channel-servers-async20.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      val transformBU     = transformResult.baseUnit
-      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+    modelAssertion(api) { bu =>
+      val endpoint        = getFirstEndpoint(bu, isWebApi = false)
       val endpointServers = endpoint.servers
       // channel should have all servers linked
       endpointServers.size shouldBe 3
 
-      val render          = asyncClient.render(transformBU)
+      val render          = asyncClient.render(bu)
       val serversInRender = render.linesIterator.filter(_.contains("servers:")).toArray
       // but only the declared root servers should be present in the rendered API
       serversInRender.length shouldBe 1
@@ -636,10 +630,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-12689962
   test("async2.4+ explicit operation security facet") {
     val api = s"$basePath/async20/validations/operation-security-explicit.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      val transformBU     = transformResult.baseUnit
-      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+    modelAssertion(api) { bu =>
+      val endpoint = getFirstEndpoint(bu, isWebApi = false)
 
       val serverSecurity    = endpoint.servers.head.security.head.schemes.head
       val operationSecurity = endpoint.operations.head.security.head.schemes.head
@@ -655,10 +647,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-12689962
   test("async2.4+ resolve implicit operation security facet") {
     val api = s"$basePath/async20/validations/operation-security-implicit.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      val transformBU     = transformResult.baseUnit
-      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+    modelAssertion(api) { bu =>
+      val endpoint = getFirstEndpoint(bu, isWebApi = false)
 
       val serverSecurity    = endpoint.servers.head.security.head.schemes.head
       val operationSecurity = endpoint.operations.head.security.head.schemes.head
@@ -684,11 +674,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-15633176
   test("parse AVRO Schema in an Async API") {
     val api = s"$basePath/avro/valid-avro-schema.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      val transformBU     = transformResult.baseUnit
-
-      val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
+    modelAssertion(api) { bu =>
+      val schema = getFirstRequestPayload(bu, isWebApi = false).schema
       schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
   }
@@ -696,11 +683,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-16540082
   test("test all primitive avro types XSD mappings") {
     val api = s"$basePath/avro/all-primitive-types.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      val transformBU     = transformResult.baseUnit
-
-      val schema = getFirstRequestPayload(transformBU, isWebApi = false).schema
+    modelAssertion(api) { bu =>
+      val schema = getFirstRequestPayload(bu, isWebApi = false).schema
       asyncConfig.elementClient().buildJsonSchema(schema.asInstanceOf[NodeShape])
       schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
     }
@@ -709,8 +693,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-16609870
   test("async avro message payloads should be virtual by default unless explicitly declared") {
     val api = s"$basePath/async20/virtual-payload-async.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val response      = getFirstResponse(parseResult.baseUnit, isWebApi = false)
+    modelAssertion(api) { bu =>
+      val response      = getFirstResponse(bu, isWebApi = false)
       val payload       = response.payloads.head
       val payloadSchema = payload.schema
       payloadSchema should not be null
@@ -731,11 +715,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-16701643
   test("async avro payload validation") {
     val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      parseResult.results.isEmpty shouldBe true
-      transformResult.results.isEmpty shouldBe true
-      val avroPayload = getFirstResponsePayload(transformResult.baseUnit, isWebApi = false)
+    modelAssertion(api) { bu =>
+      val avroPayload = getFirstResponsePayload(bu, isWebApi = false)
       val avroShape   = avroPayload.schema
       val payloadValidator = asyncConfig
         .elementClient()
@@ -752,11 +733,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-16701643
   test("async avro payload validation with avro payload in external file") {
     val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example-refs.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      val transformResult = asyncClient.transform(parseResult.baseUnit)
-      parseResult.results.isEmpty shouldBe true
-      transformResult.results.isEmpty shouldBe true
-      val avroPayload = getFirstResponsePayload(transformResult.baseUnit, isWebApi = false)
+    modelAssertion(api) { bu =>
+      val avroPayload = getFirstResponsePayload(bu, isWebApi = false)
       val avroShape   = avroPayload.schema
       val payloadValidator = asyncConfig
         .elementClient()
@@ -784,12 +762,49 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-16888404
   test("async solace server parameter should have description at parameter level") {
     val api = s"$basePath/async20/validations/solace-server.yaml"
-    asyncClient.parse(api) flatMap { parseResult =>
-      parseResult.results.isEmpty shouldBe true
-      val solaceServer  = getServers(parseResult.baseUnit, isWebApi = false).head
+    modelAssertion(api) { bu =>
+      val solaceServer  = getServers(bu, isWebApi = false).head
       val portParameter = solaceServer.variables.head
       portParameter.description.nonNull shouldBe true
       portParameter.schema.description.isNullOrEmpty shouldBe true
+    }
+  }
+
+  // W-10548463
+  test("OAS 3.1 summary and description facet") {
+    val api = s"file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-ref-fields.yaml"
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val request            = getFirstRequest(bu)
+      val requestDescription = request.description.value()
+
+      val parameter            = request.queryParameters.head
+      val parameterDescription = parameter.description.value()
+
+      val response            = getFirstResponse(bu)
+      val responseDescription = response.description.value()
+
+      val responseLink            = response.links.head
+      val responseLinkDescription = responseLink.description.value()
+
+      val responseHeader            = response.headers.head
+      val responseHeaderDescription = responseHeader.description.value()
+
+      val responseSchema                   = response.payloads.head.schema
+      val responseSchemaExample            = responseSchema.asInstanceOf[AnyShape].examples.head
+      val responseSchemaExampleDescription = responseSchemaExample.description.value()
+      val responseSchemaExampleSummary     = responseSchemaExample.summary.value()
+
+      val allAreBeingOverridden = Seq(
+        requestDescription,
+        parameterDescription,
+        responseDescription,
+        responseLinkDescription,
+        responseHeaderDescription,
+        responseSchemaExampleSummary,
+        responseSchemaExampleDescription
+      ).forall(_.contains("should override the referenced one"))
+
+      allAreBeingOverridden shouldBe true
     }
   }
 }

@@ -7,19 +7,15 @@ import amf.core.client.common.validation.StrictValidationMode
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module}
 import amf.core.client.scala.transform.TransformationPipelineRunner
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.AnyShape
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class PlatformPayloadValidationPluginsHandlerTest
-    extends AsyncFunSuite
-    with PlatformSecrets
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
     with PayloadValidationUtils {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath          = "file://amf-cli/shared/src/test/resources/validations/"
   val APPLICATION_WADUS = "application/wadus"

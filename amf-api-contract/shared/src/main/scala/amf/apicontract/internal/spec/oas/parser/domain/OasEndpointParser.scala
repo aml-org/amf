@@ -31,7 +31,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
 
     var parameters = Parameters()
     val entries    = ListBuffer[YMapEntry]()
-    // This are the rest of the parameters, this must be simple to be supported by OAS.
+    // These are the rest of the parameters, this must be simple to be supported by OAS.
     map
       .key("parameters")
       .foreach { entry =>

@@ -4,6 +4,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, GraphQLHint}
 
 class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/"
 
   test("Can parse a simple GraphQL API") {

@@ -20,6 +20,12 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends A
     this
   }
 
+  /** Set summary property of this WebApi. */
+  def withSummary(summary: String): this.type = {
+    _internal.withSummary(summary)
+    this
+  }
+
   override def withDescription(description: String): this.type = {
     _internal.withDescription(description)
     this

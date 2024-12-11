@@ -1,14 +1,10 @@
 package amf.resolution
 
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.common.transform._
+import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
 
-import scala.concurrent.ExecutionContext
-
 trait ExtendsResolutionTest extends ResolutionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-cli/shared/src/test/resources/resolution/extends/"
 

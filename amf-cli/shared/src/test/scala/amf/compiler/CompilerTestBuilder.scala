@@ -3,14 +3,13 @@ package amf.compiler
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.parser.AMFCompiler
 import amf.core.internal.remote.{Cache, Context, Hint}
-import amf.core.internal.unsafe.PlatformSecrets
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-trait CompilerTestBuilder extends PlatformSecrets {
+trait CompilerTestBuilder extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   protected def defaultConfig: AMFConfiguration =
     APIConfiguration

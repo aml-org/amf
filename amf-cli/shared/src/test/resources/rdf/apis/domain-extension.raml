@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Ophelos API
+version: v2.0.0-alpha.6
+
+annotationTypes:
+  Catalyst File Format V1:
+    description: "This annotation is used to describe the Catalyst File Format V1."
+    allowedTargets: TypeDeclaration
+    type: string
+
+types:
+  CollectionAgency:
+    (Catalyst File Format V1): |
+      This document represents a Collection Agency, this is equivilant to the [Production Systems](https://confluence.intrum.net/display/CAT/Production+System+Identifiers).
+    type: string
+    example: a string example

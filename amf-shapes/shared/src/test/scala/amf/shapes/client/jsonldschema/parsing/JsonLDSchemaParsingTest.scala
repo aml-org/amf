@@ -1,18 +1,16 @@
 package amf.shapes.client.jsonldschema.parsing
 
 import amf.core.client.scala.config.RenderOptions
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.config.{JsonLDSchemaConfiguration, JsonLDSchemaConfigurationClient}
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDObject}
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class JsonLDSchemaParsingTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath: String = "amf-shapes/shared/src/test/resources/jsonld-schema/parsing"
 
@@ -21,7 +19,7 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
 
   private def run(testName: String, assertions: (JsonLDInstanceDocument) => Assertion): Future[Assertion] = {
     for {
-      jsonDocument   <- client.parseJsonLDSchema(s"file://$basePath/$testName/schema.json").map(_.jsonDocument)
+      jsonDocument <- client.parseJsonLDSchema(s"file://$basePath/$testName/schema.json").map(_.jsonDocument)
       instanceResult <- client.parseJsonLDInstance(s"file://$basePath/$testName/instance.json", jsonDocument)
     } yield {
       instanceResult.conforms shouldBe true
@@ -42,6 +40,7 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
       propByMetadata.nonEmpty shouldBe true
       propByMetadata.get.value.toString shouldBe "something"
     }
+
     run("characteristics-in-property", assertions)
   }
 
@@ -67,7 +66,7 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
     def assertions(instance: JsonLDInstanceDocument): Assertion = {
       instance.encodes.headOption.nonEmpty shouldBe true
       instance.encodes.head.isInstanceOf[JsonLDObject] shouldBe true
-      val encoded               = instance.encodes.head.asInstanceOf[JsonLDObject]
+      val encoded = instance.encodes.head.asInstanceOf[JsonLDObject]
       val propByMetadataLiteral = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#sensitive")
       val propByMetadataPattern = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#pattern")
       propByMetadataLiteral.nonEmpty shouldBe true
@@ -82,7 +81,7 @@ class JsonLDSchemaParsingTest extends AsyncFunSuite with Matchers {
     def assertions(instance: JsonLDInstanceDocument): Assertion = {
       instance.encodes.nonEmpty shouldBe true
       instance.encodes.head.isInstanceOf[JsonLDObject] shouldBe true
-      val encoded               = instance.encodes.head.asInstanceOf[JsonLDObject]
+      val encoded = instance.encodes.head.asInstanceOf[JsonLDObject]
       val propByMetadataLiteral = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#sensitive")
       val propByMetadataPattern = encoded.fields.getValueAsOption("anypoint://vocabulary/policy.yaml#pattern")
       propByMetadataPattern.nonEmpty shouldBe true

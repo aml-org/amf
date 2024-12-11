@@ -4,6 +4,7 @@ import amf.core.internal.remote.AmfJsonHint
 import amf.io.FunSuiteCycleTests
 
 class GraphParsingTest extends FunSuiteCycleTests {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/graphs/"
 
   test("Parse api with context with expanded term definitions") {

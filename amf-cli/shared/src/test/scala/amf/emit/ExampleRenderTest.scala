@@ -6,20 +6,17 @@ import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.{SourceAST, SourceYPart}
+import amf.core.internal.annotations.SourceYPart
 import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Mimes._
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.spec.common.parser.{DefaultExampleOptions, RamlExamplesParser}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.model.{YDocument, YMap}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ExampleRenderTest extends FileAssertionTest {
 
   test("Simple yaml scalar example") {
     cycle("simple-yaml-scalar.raml", "simple-yaml-scalar.yaml", mediaType = `application/yaml`)

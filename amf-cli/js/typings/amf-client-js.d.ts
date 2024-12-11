@@ -3335,6 +3335,7 @@ declare module "amf-client-js" {
   }
   export class Example implements DomainElement, Linkable {
     customDomainProperties: Array<DomainExtension>;
+    summary: StrField;
     description: StrField;
     displayName: StrField;
     extendsNode: Array<DomainElement>;
@@ -3364,6 +3365,8 @@ declare module "amf-client-js" {
     linkCopy(): Example;
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withSummary(summary: string): this;
 
     withDescription(description: string): this;
 
@@ -5254,6 +5257,8 @@ declare module "amf-client-js" {
   export interface Linkable {
     isLink: boolean;
     linkLabel: StrField;
+    refSummary: StrField;
+    refDescription: StrField;
     linkTarget: undefined | DomainElement;
 
     link<T>(): T;

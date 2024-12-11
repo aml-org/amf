@@ -3,22 +3,17 @@ package amf.parser
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Succeeded
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.ExecutionContext
 
 /** Created by pedro.colunga on 10/10/17.
   */
-class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSecrets {
+class ForwardReferencesTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val referencesPath = "file://amf-cli/shared/src/test/resources/references/"
   private val basePath       = "file://amf-cli/shared/src/test/resources/upanddown/"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test reference not found exception on property shape") {
     validate(
