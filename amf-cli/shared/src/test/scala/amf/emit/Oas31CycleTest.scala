@@ -66,4 +66,8 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       cycle(f.apiFrom, f.apiTo, Oas31YamlHint, Oas31YamlHint)
     }
   }
+
+  test(s"OAS 3.1 full to jsonLD") {
+    cycle("oas-31-full.yaml", "oas-31-full.jsonld", Oas31YamlHint, AmfJsonHint)
+  }
 }
