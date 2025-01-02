@@ -1,0 +1,12 @@
+openapi: 3.0.1
+info:
+  title: FR_atmNetworkOperations
+  version: 1.0.0
+paths:
+  /test:
+    get:
+      description: "Indicator if current logged branchId is Delta branch. It is\
+                  \ who can change ATM status combinations."
+      responses:
+        '200':
+          description: OK

@@ -748,6 +748,15 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
     }
   }
 
+  // W-17128842
+  test("test oas multiline text with escape character") {
+    val api = s"$basePath/oas3/fr_atmnetworkoperations-summarized.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      parseResult.results.size shouldBe 0
+      parseResult.conforms shouldBe true
+    }
+  }
+
   // bug ALS
   test("avro record empty `type` field should have lexical information") {
     val api = s"$basePath/avro/record-empty-type.avsc"
