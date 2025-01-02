@@ -24,10 +24,9 @@ import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import org.yaml.model.{YNodePlain, YScalar}
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
 class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
