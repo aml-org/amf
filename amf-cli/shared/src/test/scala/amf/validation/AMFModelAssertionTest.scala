@@ -24,9 +24,10 @@ import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import org.yaml.model.{YNodePlain, YScalar}
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
@@ -745,6 +746,15 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       val validResult    = payloadValidator.syncValidate(validPayload)
       invalidResult.conforms shouldBe false
       validResult.conforms shouldBe true
+    }
+  }
+
+  // bug - Leo test
+  test("test bug - syntax error") {
+    val api = s"$basePath/oas3/fr_atmnetworkoperations-summarized.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      parseResult.results.size shouldBe 0
+      parseResult.conforms shouldBe true
     }
   }
 
