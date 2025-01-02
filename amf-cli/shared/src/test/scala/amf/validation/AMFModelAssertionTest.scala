@@ -748,7 +748,7 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
     }
   }
 
-  // bug - Leo test
+  // W-17128842
   test("test bug - syntax error") {
     val api = s"$basePath/oas3/fr_atmnetworkoperations-summarized.yaml"
     oasClient.parse(api) flatMap { parseResult =>
