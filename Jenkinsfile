@@ -137,7 +137,7 @@ pipeline {
                 script {
                     lastStage = env.STAGE_NAME
 
-                    installJDK("OPEN-JDK11")
+                    jdkInstaller("OPEN-JDK11")
 
                     sh '''
                     echo "Listing contents of /opt/java:"
