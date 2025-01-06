@@ -160,6 +160,11 @@ pipeline {
                     ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
                     '''
 
+                    sh '''
+                    echo "Listing contents of  /Library/Java/JavaVirtualMachines:"
+                    ls -la  /Library/Java/JavaVirtualMachines || echo " /Library/Java/JavaVirtualMachines does not exist or cannot be accessed."
+                    '''
+
 //                     sh './gradlew nexusIq'
 
                     sh '''
