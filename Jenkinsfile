@@ -137,17 +137,24 @@ pipeline {
                 script {
                     lastStage = env.STAGE_NAME
 
-                    sh '''
-                    echo "Listing contents of /opt/java:"
-                    ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
-                    '''
+//                     sh '''
+//                     echo "Listing contents of /opt/java:"
+//                     ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
+//                     '''
+//
+//                     sh '''
+//                     echo "Listing contents of /opt/java/openjdk17:"
+//                     ls -la /opt/java/openjdk17 || echo "/opt/java/openjdk17 does not exist or cannot be accessed."
+//                     '''
 
                     sh '''
-                    echo "Listing contents of /opt/java/openjdk17:"
-                    ls -la /opt/java/openjdk17 || echo "/opt/java/openjdk17 does not exist or cannot be accessed."
+                        export JAVA_HOME=/opt/java/openjdk17
+                        echo "Using JAVA_HOME: \$JAVA_HOME"
+                        java -version
+                        ./gradlew nexusIq
                     '''
 
-                    sh './gradlew nexusIq'
+//                     sh './gradlew nexusIq'
                 }
             }
         }
