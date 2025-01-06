@@ -136,6 +136,7 @@ pipeline {
             steps {
                 script {
                     lastStage = env.STAGE_NAME
+                    sh 'update-alternatives --list java || echo "update-alternatives not found"'
                     env.JAVA_HOME = "java17"
                     sh './gradlew nexusIq'
                 }
