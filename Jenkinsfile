@@ -136,42 +136,15 @@ pipeline {
             steps {
                 script {
                     lastStage = env.STAGE_NAME
-//                     installJDK("OPEN-JDK11")
-                    env.JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
-                    sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
-                    sh 'java -version'
 
-//                     env.JAVA_HOME='/opt/java/openjdk'
-//                     sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
-//                     sh 'java -version'
-
-                    sh '''
-                    echo "Listing contents of /usr/lib/jvm:"
-                    ls -la /usr/lib/jvm || echo "/usr/lib/jvm does not exist or cannot be accessed."
-                    '''
-
-                    sh '''
-                    echo "Listing contents of /opt/java/openjdk:"
-                    ls -la /opt/java/openjdk || echo "/opt/java/openjdk does not exist or cannot be accessed."
-                    '''
+                    installJDK("OPEN-JDK11")
 
                     sh '''
                     echo "Listing contents of /opt/java:"
                     ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
                     '''
 
-                    sh '''
-                    echo "Listing contents of  /Library/Java/JavaVirtualMachines:"
-                    ls -la  /Library/Java/JavaVirtualMachines || echo " /Library/Java/JavaVirtualMachines does not exist or cannot be accessed."
-                    '''
-
-//                     sh './gradlew nexusIq'
-
-                    sh '''
-                    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-                    $JAVA_HOME/bin/java -version
-                    ./gradlew nexusIq
-                    '''
+                    sh './gradlew nexusIq'
                 }
             }
         }
