@@ -136,8 +136,14 @@ pipeline {
             steps {
                 script {
                     lastStage = env.STAGE_NAME
+//                     installJDK("OPEN-JDK11")
                     sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
                     sh 'java -version'
+
+                    sh '''
+                    echo "Listing contents of /usr/lib/jvm:"
+                    ls -la /usr/lib/jvm || echo "/usr/lib/jvm does not exist or cannot be accessed."
+                    '''
 
                     sh '''
                     echo "Listing contents of /opt/java/openjdk:"
