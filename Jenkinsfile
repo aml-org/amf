@@ -137,6 +137,7 @@ pipeline {
                 script {
                     lastStage = env.STAGE_NAME
                     sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
+                    sh 'java -version'
 
                     sh '''
                     echo "Listing contents of /opt/java/openjdk:"
