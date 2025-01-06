@@ -40,30 +40,30 @@ pipeline {
         CURRENT_VERSION = sh(script: "cat dependencies.properties | grep \"version\" | cut -d '=' -f 2", returnStdout: true)
     }
     stages {
-//         stage('Test') {
-//             steps {
-//                 script {
-//                     lastStage = env.STAGE_NAME
-//                     sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
-//                 }
-//             }
-//         }
-//         stage('Coverage') {
-//             when {
-//                 anyOf {
-//                     branch 'master'
-//                     branch 'develop'
-//                 }
-//             }
-//             steps {
-//                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sf-sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
-//                     script {
-//                         lastStage = env.STAGE_NAME
-//                         sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} -Dsonar.login=${SONAR_SERVER_TOKEN} sonarScan'
-//                     }
-//                 }
-//             }
-//         }
+        stage('Test') {
+            steps {
+                script {
+                    lastStage = env.STAGE_NAME
+                    sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
+                }
+            }
+        }
+        stage('Coverage') {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'develop'
+                }
+            }
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sf-sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
+                    script {
+                        lastStage = env.STAGE_NAME
+                        sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} -Dsonar.login=${SONAR_SERVER_TOKEN} sonarScan'
+                    }
+                }
+            }
+        }
         stage('Build JS Package') {
             when {
                 anyOf {
@@ -79,112 +79,99 @@ pipeline {
                 }
             }
         }
-//         stage('Publish JVM Artifact') {
-//             when {
-//                 anyOf {
-//                     branch 'master'
-//                     branch 'develop'
-//                 }
-//             }
-//             steps {
-//                 script {
-//                     lastStage = env.STAGE_NAME
-//                     sh 'sbt publish'
-//                 }
-//             }
-//         }
-//         stage("Publish JS Package") {
-//             when {
-//                 anyOf {
-//                     branch 'master'
-//                     branch 'develop'
-//                 }
-//             }
-//             steps {
-//                 script {
-//                     lastStage = env.STAGE_NAME
-//                     // They are separate commands because we want an earlyExit in case one of them doesnt end with exit code 0
-//                     sh 'chmod +x ./scripts/setup-npmrc.sh'
-//                     sh './scripts/setup-npmrc.sh'
-//                     sh 'chmod +x ./js-publish.sh'
-//                     sh './js-publish.sh'
-//                 }
-//             }
-//         }
-//         stage('Tag version') {
-//             when {
-//                 anyOf {
-//                     branch 'master'
-//                 }
-//             }
-//             steps {
-//                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-salt', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
-//                     script {
-//                         lastStage = env.STAGE_NAME
-//                         def version = sbtArtifactVersion("apiContractJVM")
-//                         tagCommitToGithub(version)
-//                     }
-//                 }
-//             }
-//         }
+        stage('Publish JVM Artifact') {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    lastStage = env.STAGE_NAME
+                    sh 'sbt publish'
+                }
+            }
+        }
+        stage("Publish JS Package") {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    lastStage = env.STAGE_NAME
+                    // They are separate commands because we want an earlyExit in case one of them doesnt end with exit code 0
+                    sh 'chmod +x ./scripts/setup-npmrc.sh'
+                    sh './scripts/setup-npmrc.sh'
+                    sh 'chmod +x ./js-publish.sh'
+                    sh './js-publish.sh'
+                }
+            }
+        }
+        stage('Tag version') {
+            when {
+                anyOf {
+                    branch 'master'
+                }
+            }
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-salt', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
+                    script {
+                        lastStage = env.STAGE_NAME
+                        def version = sbtArtifactVersion("apiContractJVM")
+                        tagCommitToGithub(version)
+                    }
+                }
+            }
+        }
         stage('Nexus IQ') {
             when {
                 anyOf {
+                    branch 'master'
+                    branch 'develop'
                     branch 'nexus-iq-test-1'
                 }
             }
             steps {
                 script {
                     lastStage = env.STAGE_NAME
-
-//                     sh '''
-//                     echo "Listing contents of /opt/java:"
-//                     ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
-//                     '''
-//
-//                     sh '''
-//                     echo "Listing contents of /opt/java/openjdk17:"
-//                     ls -la /opt/java/openjdk17 || echo "/opt/java/openjdk17 does not exist or cannot be accessed."
-//                     '''
-
-                    sh '''
-                        export JAVA_HOME=/opt/java/openjdk17
-                        echo "Using JAVA_HOME: \$JAVA_HOME"
-                        java -version
-                        ./gradlew nexusIq
-                    '''
-
-//                     sh './gradlew nexusIq'
+                   sh '''
+                       export JAVA_HOME=/opt/java/openjdk17
+                       ./gradlew nexusIq
+                   '''
                 }
             }
         }
-//         stage('Trigger amf projects') {
-//             when {
-//                 anyOf {
-//                     branch 'develop'
-//                 }
-//             }
-//             steps {
-//                 script {
-//                     lastStage = env.STAGE_NAME
-//
-//                     echo "Starting TCKutor $TCKUTOR_JOB"
-//                     build job: TCKUTOR_JOB, wait: false
-//
-//                     echo "Starting Amf Interface Tests $INTERFACES_JOB"
-//                     build job: INTERFACES_JOB, wait: false
-//
-//                     echo "Starting $METADATA_JOB"
-//                     build job: METADATA_JOB, wait: false
-//
-//                     echo "Starting $APB_JOB"
-//                     build job: APB_JOB, wait: false
-//
-//                     echo "Starting $EXAMPLES_JOB"
-//                     build job: EXAMPLES_JOB, wait: false
-//                 }
-//             }
-//         }
+        stage('Trigger amf projects') {
+            when {
+                anyOf {
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    lastStage = env.STAGE_NAME
+
+                    echo "Starting TCKutor $TCKUTOR_JOB"
+                    build job: TCKUTOR_JOB, wait: false
+
+                    echo "Starting Amf Interface Tests $INTERFACES_JOB"
+                    build job: INTERFACES_JOB, wait: false
+
+                    echo "Starting $METADATA_JOB"
+                    build job: METADATA_JOB, wait: false
+
+                    echo "Starting $APB_JOB"
+                    build job: APB_JOB, wait: false
+
+                    echo "Starting $EXAMPLES_JOB"
+                    build job: EXAMPLES_JOB, wait: false
+                }
+            }
+        }
     }
     post {
         unsuccessful {
