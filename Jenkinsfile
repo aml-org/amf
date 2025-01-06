@@ -143,8 +143,8 @@ pipeline {
                     '''
 
                     sh '''
-                    echo "Listing contents of /opt/java/openjdk17/:"
-                    ls -la /opt/java/openjdk17/ || echo "/opt/java/openjdk17/ does not exist or cannot be accessed."
+                    echo "Listing contents of /opt/java/openjdk17:"
+                    ls -la /opt/java/openjdk17 || echo "/opt/java/openjdk17 does not exist or cannot be accessed."
                     '''
 
                     sh './gradlew nexusIq'
