@@ -137,6 +137,11 @@ pipeline {
                 script {
                     lastStage = env.STAGE_NAME
 //                     installJDK("OPEN-JDK11")
+                    env.JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
+                    sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
+                    sh 'java -version'
+
+                    env.JAVA_HOME='/opt/java/openjdk'
                     sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
                     sh 'java -version'
 
