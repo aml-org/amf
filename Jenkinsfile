@@ -137,8 +137,6 @@ pipeline {
                 script {
                     lastStage = env.STAGE_NAME
 
-                    jdkInstaller("OPEN-JDK11")
-
                     sh '''
                     echo "Listing contents of /opt/java:"
                     ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
