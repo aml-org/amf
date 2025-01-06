@@ -137,6 +137,17 @@ pipeline {
                 script {
                     lastStage = env.STAGE_NAME
                     sh 'echo "JAVA_HOME is set to: $JAVA_HOME"'
+
+                    sh '''
+                    echo "Listing contents of /opt/java/openjdk:"
+                    ls -la /opt/java/openjdk || echo "/opt/java/openjdk does not exist or cannot be accessed."
+                    '''
+
+                    sh '''
+                    echo "Listing contents of /opt/java:"
+                    ls -la /opt/java || echo "/opt/java does not exist or cannot be accessed."
+                    '''
+
                     sh 'update-alternatives --list java || echo "update-alternatives not found"'
                     env.JAVA_HOME = "java17"
                     sh './gradlew nexusIq'
