@@ -144,7 +144,8 @@ pipeline {
                     lastStage = env.STAGE_NAME
                    sh '''
                        export JAVA_HOME=/opt/java/openjdk17
-                       ./gradlew nexusIq -PiqUrl=https://nexusiq.build.msap.io/
+                       export NEXUS_IQ_SERVER_URL=https://nexusiq.build.msap.io/
+                       ./gradlew nexusIq
                    '''
                 }
             }
