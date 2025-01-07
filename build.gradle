@@ -23,6 +23,7 @@ def name = 'amf'
 nexusIq.user = "${System.env.NEXUSIQ_USR}"
 nexusIq.password = "${System.env.NEXUSIQ_PSW}"
 nexusIq.applicationId = "${name}"
+nexusIq.url = "https://nexusiq.build.msap.io/"
 
 apply plugin: 'application'
 apply plugin: 'distribution'
