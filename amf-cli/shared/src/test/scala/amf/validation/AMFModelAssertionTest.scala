@@ -816,4 +816,22 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       allAreBeingOverridden shouldBe true
     }
   }
+
+  // ruleset test W-16070725 W-17562799
+  test("test query and header parameters in OAS3") {
+    val api = s"$basePath/oas3/parameters.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      val transformBu  = oasClient.transform(parseResult.baseUnit).baseUnit
+      val request      = getFirstRequest(transformBu)
+      val queryParam   = request.queryParameters.head
+      val header       = request.headers.head
+      val queryParamEx = queryParam.examples
+      val headerEx     = header.examples
+      (queryParamEx.isEmpty && headerEx.isEmpty) shouldBe true
+      // both should have the example in the schema, not the parameter
+      val queryParamSchemaEx = queryParam.schema.asInstanceOf[ScalarShape].examples
+      val headerSchemaEx     = header.schema.asInstanceOf[ScalarShape].examples
+      (queryParamSchemaEx.nonEmpty && headerSchemaEx.nonEmpty) shouldBe true
+    }
+  }
 }

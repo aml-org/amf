@@ -70,7 +70,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
   }
 
   private def reqSchemas(req: Request): Seq[SchemaContainerWithId] = {
-    val reqParams = req.uriParameters ++ req.queryParameters ++ req.cookieParameters
+    val reqParams = req.uriParameters ++ req.queryParameters ++ req.cookieParameters ++ req.headers
     req.payloads ++ reqParams.flatMap(_.payloads) ++ reqParams
   }
 
