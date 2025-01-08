@@ -127,20 +127,23 @@ pipeline {
                 }
             }
         }
-        // stage('Nexus IQ') {
-        //     when {
-        //         anyOf {
-        //             branch 'master'
-        //             branch 'develop'
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             lastStage = env.STAGE_NAME
-        //             sh './gradlew nexusIq'
-        //         }
-        //     }
-        // }
+        stage('Nexus IQ') {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    lastStage = env.STAGE_NAME
+                   sh '''
+                       export JAVA_HOME=/opt/java/openjdk17
+                       ./gradlew nexusIq
+                   '''
+                }
+            }
+        }
         stage('Trigger amf projects') {
             when {
                 anyOf {
