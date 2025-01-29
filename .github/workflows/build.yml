@@ -22,6 +22,15 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
+      - name: Install SBT
+        run: |
+          echo "Installing SBT..."
+          curl -L https://scala.jfrog.io/artifactory/debian/sbt-1.9.8.deb -o sbt.deb
+          sudo dpkg -i sbt.deb
+          sudo apt-get update
+          sudo apt-get install -f
+          sbt sbtVersion    
+
       - name: Cache SBT dependencies
         uses: actions/cache@v3
         with:
