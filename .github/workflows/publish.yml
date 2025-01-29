@@ -1,0 +1,73 @@
+name: Publish AMF Artifacts
+
+on:
+  push:
+    branches:
+      - W-17683749
+#      - master
+#      - develop
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install SBT
+        run: |
+          echo "Installing SBT..."
+          curl -L https://scala.jfrog.io/artifactory/debian/sbt-1.9.8.deb -o sbt.deb
+          sudo dpkg -i sbt.deb
+          sudo apt-get update
+          sudo apt-get install -f
+          sbt sbtVersion
+
+      - name: Cache SBT dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.cache/coursier
+          key: sbt-${{ runner.os }}-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            sbt-${{ runner.os }}-
+
+      - name: Build Project
+        run: sbt compile
+
+
+      - name: Build JS Package (Placeholder)
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: |
+          echo "Building JS package..."
+          # chmod +x js-build.sh
+          # ./js-build.sh
+
+      - name: Publish JVM Artifact (Placeholder)
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: |
+          echo "Publishing JVM artifact..."
+          # sbt publish
+
+      - name: Set Up NPM for JS Publishing (Placeholder)
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: |
+          echo "Setting up NPM for JS publish..."
+          # chmod +x ./scripts/setup-npmrc.sh
+          # ./scripts/setup-npmrc.sh
+
+      - name: Publish JS Package (Placeholder)
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: |
+          echo "Publishing JS package..."
+          # chmod +x ./js-publish.sh
+          # ./js-publish.sh
