@@ -1,0 +1,59 @@
+name: Code Coverage
+
+on:
+  push:
+    branches:
+      - W-17683749
+  pull_request:
+    branches:
+      - W-17683749
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install SBT
+        run: |
+          echo "Installing SBT..."
+          curl -L https://scala.jfrog.io/artifactory/debian/sbt-1.9.8.deb -o sbt.deb
+          sudo dpkg -i sbt.deb
+          sudo apt-get update
+          sudo apt-get install -f
+          sbt sbtVersion
+
+      - name: Cache SBT dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.cache/coursier
+          key: sbt-${{ runner.os }}-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            sbt-${{ runner.os }}-
+
+      - name: Run Tests with Coverage
+        run: sbt clean coverage test coverageAggregate
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: target/scala-*/scoverage-report/
+
+      - name: Run SonarQube Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "https://sonarcloud.io"
+        run: |
+          sbt -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN sonarScan
