@@ -40,3 +40,6 @@ jobs:
 
       - name: Run SBT build
         run: sbt compile
+
+      - name: Run Tests
+        run: sbt clean coverage test coverageAggregate
