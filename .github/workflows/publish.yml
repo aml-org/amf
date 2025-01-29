@@ -46,27 +46,27 @@ jobs:
 
 
       - name: Build JS Package (Placeholder)
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+#        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
         run: |
           echo "Building JS package..."
           # chmod +x js-build.sh
           # ./js-build.sh
 
       - name: Publish JVM Artifact (Placeholder)
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+#        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
         run: |
           echo "Publishing JVM artifact..."
           # sbt publish
 
       - name: Set Up NPM for JS Publishing (Placeholder)
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+#        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
         run: |
           echo "Setting up NPM for JS publish..."
           # chmod +x ./scripts/setup-npmrc.sh
           # ./scripts/setup-npmrc.sh
 
       - name: Publish JS Package (Placeholder)
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+#        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
         run: |
           echo "Publishing JS package..."
           # chmod +x ./js-publish.sh
