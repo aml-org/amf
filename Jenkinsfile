@@ -144,34 +144,34 @@ pipeline {
                 }
             }
         }
-        stage('Trigger amf projects') {
-            when {
-                anyOf {
-                    branch 'develop'
-                }
-            }
-            steps {
-                script {
-                    lastStage = env.STAGE_NAME
+    //     stage('Trigger amf projects') {
+    //         when {
+    //             anyOf {
+    //                 branch 'develop'
+    //             }
+    //         }
+    //         steps {
+    //             script {
+    //                 lastStage = env.STAGE_NAME
 
-                    echo "Starting TCKutor $TCKUTOR_JOB"
-                    build job: TCKUTOR_JOB, wait: false
+    //                 echo "Starting TCKutor $TCKUTOR_JOB"
+    //                 build job: TCKUTOR_JOB, wait: false
 
-                    echo "Starting Amf Interface Tests $INTERFACES_JOB"
-                    build job: INTERFACES_JOB, wait: false
+    //                 echo "Starting Amf Interface Tests $INTERFACES_JOB"
+    //                 build job: INTERFACES_JOB, wait: false
 
-                    echo "Starting $METADATA_JOB"
-                    build job: METADATA_JOB, wait: false
+    //                 echo "Starting $METADATA_JOB"
+    //                 build job: METADATA_JOB, wait: false
 
-                    echo "Starting $APB_JOB"
-                    build job: APB_JOB, wait: false
+    //                 echo "Starting $APB_JOB"
+    //                 build job: APB_JOB, wait: false
 
-                    echo "Starting $EXAMPLES_JOB"
-                    build job: EXAMPLES_JOB, wait: false
-                }
-            }
-        }
-    }
+    //                 echo "Starting $EXAMPLES_JOB"
+    //                 build job: EXAMPLES_JOB, wait: false
+    //             }
+    //         }
+    //     }
+    // }
     post {
         unsuccessful {
             failureSlackNotify(lastStage, SLACK_CHANNEL, PRODUCT_NAME)
