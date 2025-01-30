@@ -321,7 +321,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [
@@ -434,21 +434,6 @@
                                 ]
                               }
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/recursive/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/recursive"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(9,2)-(15,0)]"
-                                  }
-                                ]
-                              }
-                            ],
                             "http://a.ml/vocabularies/document-source-maps#declared-element": [
                               {
                                 "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/recursive/source-map/declared-element/element_0",
@@ -460,6 +445,21 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": ""
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/recursive/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/recursive"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(9,2)-(15,0)]"
                                   }
                                 ]
                               }
@@ -655,6 +655,21 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/source-map/lexical/element_1",
@@ -682,21 +697,6 @@
                       }
                     ]
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/shape/C"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
                 ]
               }
             ]
@@ -713,21 +713,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/source-map/lexical/element_0",
@@ -739,6 +724,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(15,2)-(19,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default/array/E"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

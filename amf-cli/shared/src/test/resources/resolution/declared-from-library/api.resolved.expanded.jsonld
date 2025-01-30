@@ -42,7 +42,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [
@@ -157,12 +157,12 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
+              "declared-element": {
+                "#2": ""
+              },
               "lexical": {
                 "shacl:name": "[(3,2)-(3,3)]",
                 "#2": "[(3,2)-(5,15)]"
-              },
-              "declared-element": {
-                "#2": ""
               }
             }
           }
@@ -180,7 +180,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.8.2"
+                "@value": "3.10.0"
               }
             ],
             "doc:sourceSpec": [
@@ -288,17 +288,17 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
-          "resolved-link": {
-            "#6": "amf://id#6"
-          },
-          "lexical": {
-            "#6": "[(3,2)-(5,15)]"
-          },
           "declared-element": {
             "#6": ""
           },
           "resolved-link-target": {
             "#6": "amf://id#2"
+          },
+          "resolved-link": {
+            "#6": "amf://id#6"
+          },
+          "lexical": {
+            "#6": "[(3,2)-(5,15)]"
           }
         }
       }

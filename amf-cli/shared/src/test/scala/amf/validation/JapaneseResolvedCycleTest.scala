@@ -14,6 +14,7 @@ import amf.core.internal.remote.{
   Oas20YamlHint,
   Oas30,
   Oas30YamlHint,
+  Oas31,
   Raml08,
   Raml10,
   Raml10YamlHint
@@ -71,7 +72,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit =
     config.renderTarget.spec match {
-      case Raml08 | Raml10 | Oas20 | Oas30 =>
+      case Raml08 | Raml10 | Oas20 | Oas30 | Oas31 =>
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .baseUnitClient()

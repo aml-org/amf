@@ -3,21 +3,19 @@ package amf.validation
 import amf.aml.client.scala.AMLElementClient
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.domain.Shape
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes.`application/xml`
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.ExecutionContext.Implicits.global
-
-class SchemaPayloadValidationTest extends AsyncFunSuite with Matchers with ShapesFixture {
-
-  override val executionContext: ExecutionContext = global
+class SchemaPayloadValidationTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers
+    with ShapesFixture {
 
   private val config                   = ShapesConfiguration.predefined()
   private val client: AMLElementClient = config.elementClient()

@@ -72,11 +72,11 @@ components:
   messageBindings:
     s#omeName:
       mqtt:
-        bindingVersion: 31.07.92
+        bindingVersion: 0.2.0
 
     externalMessageBinding:
       mqtt:
-        bindingVersion: 31.07.92
+        bindingVersion: 0.2.0
 
   serverBindings:
     some#ServerBinding:
@@ -84,18 +84,16 @@ components:
         clientId: someid
         cleanSession: true
         keepAlive: 12
-        bindingVersion: 3.4.3
     externalServerBinding:
       mqtt:
         clientId: someid
         cleanSession: true
         keepAlive: 12
-        bindingVersion: 3.4.3
 
   operationBindings:
     some#OperationBinding:
       http:
-        bindingVersion: 31.07.92
+        bindingVersion: 0.1.0
         type: request
         query:
           type: object
@@ -104,7 +102,7 @@ components:
               type: string
     externalOperationBinding:
       http:
-        bindingVersion: 31.07.92
+        bindingVersion: 0.1.0
         type: request
         query:
           type: object

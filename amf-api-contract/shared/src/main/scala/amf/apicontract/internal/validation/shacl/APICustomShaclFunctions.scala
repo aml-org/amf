@@ -1,11 +1,14 @@
 package amf.apicontract.internal.validation.shacl
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
-import amf.apicontract.client.scala.model.domain.api.Api
+import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
+import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
+import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQChannelBinding, IBMMQMessageBinding}
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{HasTopicConfiguration, KafkaChannelBinding040}
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
-import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
+import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.metamodel.domain.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel,
@@ -88,28 +91,31 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       new CustomShaclFunction {
         override val name: String = "reservedEndpoints"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val reserved = Set("_service", "_entities")
-          val endpoint = element.asInstanceOf[EndPoint]
-          endpoint.path
-            .option()
-            .map(_.stripPrefix("/query/").stripPrefix("/mutation/").stripPrefix("/subscription/"))
-            .flatMap {
-              case path if reserved.contains(path) =>
-                val rootKind = {
-                  val name = endpoint.name.value()
-                  val end  = name.indexOf(".")
-                  name.substring(0, end)
-                }
-                Some(
-                  ValidationInfo(
-                    EndPointModel.Path,
-                    Some(s"Cannot declare field '$path' in type $rootKind since it is reserved by Federation"),
-                    Some(element.annotations)
+          val reserved  = Set("_service", "_entities")
+          val api       = element.asInstanceOf[WebApi]
+          val endpoints = api.endPoints
+          endpoints.foreach { endpoint =>
+            endpoint.path
+              .option()
+              .map(_.stripPrefix("/query/").stripPrefix("/mutation/").stripPrefix("/subscription/"))
+              .flatMap {
+                case path if reserved.contains(path) =>
+                  val rootKind = {
+                    val name = endpoint.name.value()
+                    val end  = name.indexOf(".")
+                    name.substring(0, end)
+                  }
+                  Some(
+                    ValidationInfo(
+                      EndPointModel.Path,
+                      Some(s"Cannot declare field '$path' in type $rootKind since it is reserved by Federation"),
+                      Some(element.annotations)
+                    )
                   )
-                )
-              case _ => None
-            }
-            .foreach(res => validate(Some(res)))
+                case _ => None
+              }
+              .foreach(res => validate(Some(res)))
+          }
         }
       },
       new CustomShaclFunction {
@@ -265,6 +271,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             val invalidMembers = members.filter {
               case n: NodeShape if n.isAbstract.value()  => true // interfaces
               case n: NodeShape if n.isInputOnly.value() => true // input objects
+              case r: RecursiveShape => r.fixpointTarget.exists(_.isInstanceOf[NodeShape]) // input objects
               case _: UnresolvedShape => false // unresolved shapes are already validated when resolving references
               case any if !any.isInstanceOf[NodeShape] => true  // not an Object
               case _                                   => false // an Object
@@ -467,9 +474,12 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case d: CustomDomainProperty =>
               if (hasIntrospectionName(d)) validate(Some(ValidationInfo(CustomDomainPropertyModel.Name)))
-            case t: Shape => if (hasIntrospectionName(t)) validate(Some(ValidationInfo(AnyShapeModel.Name)))
+            case t: Shape =>
+              if (hasIntrospectionName(t)) validate(Some(ValidationInfo(AnyShapeModel.Name)))
             case n: NamedDomainElement =>
-              if (hasIntrospectionName(n)) validate(Some(ValidationInfo(NameFieldSchema.Name)))
+              if (hasIntrospectionName(n)) {
+                validate(Some(ValidationInfo(NameFieldSchema.Name)))
+              }
             case _ => // ignore
           }
         }
@@ -734,6 +744,131 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             case _ => // ignore
           }
         }
+      },
+      new CustomShaclFunction {
+        override val name: String = "anypointMQHeadersValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+
+          element.asInstanceOf[AnypointMQMessageBinding].headers match {
+            case node: NodeShape =>
+              node.fields.?[AmfArray](NodeShapeModel.Properties) match {
+                case Some(_) => // ignore
+                case None =>
+                  validate(
+                    validationInfo(
+                      AnypointMQMessageBindingModel.Headers,
+                      "AnypointMQ Message Binding 'headers' field must have a 'properties' field",
+                      element.annotations
+                    )
+                  )
+              }
+
+            case elem if elem != null =>
+              validate(
+                validationInfo(
+                  AnypointMQMessageBindingModel.Headers,
+                  "AnypointMQ Message Binding 'headers' field must be an object",
+                  elem.annotations
+                )
+              )
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "IBMMQDestinationValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val binding = element.asInstanceOf[IBMMQChannelBinding]
+          if (binding.topic != null && binding.queue != null) {
+            validate(
+              validationInfo(
+                IBMMQChannelBindingModel.Queue,
+                "'queue' and 'topic' fields MUST NOT coexist within an IBMMQ channel binding",
+                element.annotations
+              )
+            )
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "IBMMQHeadersValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val binding = element.asInstanceOf[IBMMQMessageBinding]
+          if (Seq("string", "jms").contains(binding.messageType.value()) && binding.headers.nonEmpty) {
+            validate(
+              validationInfo(
+                IBMMQMessageBindingModel.Headers,
+                "IBMMQ message Binding 'headers' MUST NOT be specified if 'type' field is 'string' or 'jms'",
+                element.annotations
+              )
+            )
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "IBMMQMaxMsgLengthValidation"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val binding             = element.asInstanceOf[IBMMQChannelBinding]
+          val length              = binding.maxMsgLength.value()
+          val isMaxMsgLengthValid = 0 <= length && length <= 104857600
+          if (!isMaxMsgLengthValid) {
+            validate(
+              validationInfo(
+                IBMMQChannelBindingModel.MaxMsgLength,
+                "IBMMQ channel Binding 'maxMsgLength' field must be a number between 0-104857600 (100MB)",
+                element.annotations
+              )
+            )
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "KafkaTopicConfigurationValidations"
+
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case hasTopic: HasTopicConfiguration =>
+              val topicConfiguration = hasTopic.topicConfiguration
+              val cleanupPolicy      = topicConfiguration.cleanupPolicy.map(_.value())
+              if (cleanupPolicy.nonEmpty && cleanupPolicy.intersect(Seq("delete", "compact")).isEmpty)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.CleanupPolicy,
+                    "Kafka Topic Configuration 'cleanup.policy' field can only contain 'delete' and/or 'compact'.",
+                    topicConfiguration.annotations
+                  )
+                )
+              if (topicConfiguration.retentionMs.value() < -1)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.RetentionMs,
+                    "Kafka Topic Configuration 'retention.ms' field valid values are [-1,...]",
+                    topicConfiguration.annotations
+                  )
+                )
+              if (topicConfiguration.deleteRetentionMs.value() < 0)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.DeleteRetentionMs,
+                    "Kafka topic configuration 'delete.retention.ms' field must be a positive number",
+                    topicConfiguration.annotations
+                  )
+                )
+              if (topicConfiguration.maxMessageBytes.value() < 0)
+                validate(
+                  validationInfo(
+                    KafkaTopicConfigurationModel.MaxMessageBytes,
+                    "Kafka topic configuration 'max.message.bytes' field must be a positive number",
+                    topicConfiguration.annotations
+                  )
+                )
+            case _ => // ignore
+          }
+        }
       }
     )
 
@@ -763,7 +898,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   // Obtained from the BNF in: https://tools.ietf.org/html/rfc7230#section-3.2
   private def isInvalidHttpHeaderName(name: String): Boolean =
-    !name.matches("^[!#$%&'*\\+\\-\\.^\\_\\`\\|\\~0-9a-zA-Z]+$")
+    !name.matches("^[!#$%&'*+\\-.^_`|~0-9a-zA-Z]+$")
 
   private def hasIntrospectionName(element: NamedDomainElement): Boolean =
     element.name.nonNull && element.name.value().startsWith("__")

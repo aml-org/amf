@@ -72,6 +72,11 @@ object ResolutionSideValidations extends Validations {
     "An operation's parameter with the same name and binding as one from the endpoint was found"
   )
 
+  val UndeclaredChannelServer = validation(
+    "undeclared-channel-server",
+    "A channel has a server in it's list that is not declared in the servers object"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidTypeInheritanceWarningSpecification.id -> all(WARNING),
     InvalidConsumesWithFileParameter.id           -> all(WARNING),
@@ -88,6 +93,7 @@ object ResolutionSideValidations extends Validations {
     ExamplesWithInvalidMimeType,
     ExamplesWithNoSchemaDefined,
     DuplicatedParameterWarning,
-    RecursiveInheritance
+    RecursiveInheritance,
+    UndeclaredChannelServer
   )
 }

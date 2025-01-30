@@ -2169,21 +2169,6 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/virtual-element/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/lexical/element_0",
@@ -2198,6 +2183,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/virtual-element/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -2208,21 +2208,6 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/source-map/parent-end-point/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -2248,6 +2233,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(19,2)-(19,16)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/source-map/parent-end-point/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores"
                       }
                     ]
                   }
@@ -3304,21 +3304,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/source-map/parent-end-point/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/source-map/lexical/element_2",
@@ -3356,6 +3341,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(28,2)-(43,28)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/source-map/parent-end-point/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores"
                       }
                     ]
                   }
@@ -3495,7 +3495,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -45,10 +45,16 @@
           "@id": "#8"
         }
       ],
+      "apiContract:server": [],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:server": "true"
+        },
         "lexical": {
-          "apiContract:supportedOperation": "[(13,0)-(18,0)]",
           "#7": "[(12,2)-(18,0)]"
+        },
+        "virtual-element": {
+          "apiContract:supportedOperation": "true"
         }
       }
     },
@@ -189,13 +195,13 @@
       ],
       "shacl:name": "User",
       "smaps": {
-        "declared-element": {
-          "#4": ""
-        },
         "lexical": {
           "shacl:name": "[(8,4)-(8,8)]",
           "#4": "[(8,4)-(11,0)]",
           "shacl:datatype": "[(9,6)-(11,0)]"
+        },
+        "declared-element": {
+          "#4": ""
         },
         "type-property-lexical-info": {
           "#4": "[(9,6)-(9,10)]"
@@ -207,7 +213,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:sourceSpec": "RAML 1.0"
     }
   ],

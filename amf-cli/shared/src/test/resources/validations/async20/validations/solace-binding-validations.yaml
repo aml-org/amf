@@ -1,0 +1,30 @@
+asyncapi: 2.3.0
+info:
+  title: test solace binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: solace
+    bindings:
+      solace:
+        msgVpn: test
+        bindingVersion: 0.1.0
+channels:
+  some-channel:
+    publish:
+      bindings:
+        solace:
+          bindingVersion: 0.2.0
+          destinations:
+            - destinationType: wrong destinationType # 'queue' or 'topic'
+              deliveryMode: wrong deliveryMode # 'direct' or 'persistent'
+              queue:
+                name: CreatedHREvents
+                accessType: wrong accessType # 'exclusive' or 'nonexclusive'
+                topicSubscriptions:
+                  - person/*/created
+            - destinationType: topic
+              topic:
+                topicSubscriptions:
+                  - person/*/updated

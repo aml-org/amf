@@ -30,15 +30,15 @@
             ],
             "http://a.ml/vocabularies/apiBinding#bindings": [
               {
-                "@id": "target/message-bindings/kafka-message",
+                "@id": "target/message-bindings/kafka-message-010",
                 "@type": [
-                  "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding",
+                  "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding010",
                   "http://a.ml/vocabularies/apiBinding#MessageBinding",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiBinding#messageKey": [
                   {
-                    "@id": "target/message-bindings/bindings/kafka-message/scalar/schema",
+                    "@id": "target/message-bindings/bindings/kafka-message-010/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -115,7 +115,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ]
       }

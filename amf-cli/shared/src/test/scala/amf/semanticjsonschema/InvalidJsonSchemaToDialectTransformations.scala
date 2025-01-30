@@ -1,24 +1,16 @@
 package amf.semanticjsonschema
 
 import amf.aml.client.scala.AMLDialectResult
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.UnsupportedConstraint
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class InvalidJsonSchemaToDialectTransformations
-    extends AsyncFunSuite
-    with PlatformSecrets
-    with FileAssertionTest
-    with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class InvalidJsonSchemaToDialectTransformations extends FileAssertionTest with Matchers {
 
   private val jsonSchemaPath = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/"
 

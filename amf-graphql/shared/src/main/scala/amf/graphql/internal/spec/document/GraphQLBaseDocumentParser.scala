@@ -20,7 +20,7 @@ import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain._
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, UnionShape}
 import org.mulesoft.antlrast.ast.{AST, ASTNode, Node, Terminal}
 
 case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWebApiContext)
@@ -89,8 +89,13 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     doc set root.location as BaseUnitModel.Location
   }
 
-  private def parseNestedType(objTypeDef: Node): Unit = {
+  private def makeVirtual(shape: NodeShape): Unit = {
+    val i = 5
+  }
+
+  private def parseNestedType(objTypeDef: Node, isVirtualRoot: Boolean = false): Unit = {
     val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = false).parse()
+    if (isVirtualRoot) makeVirtual(shape)
     addToDeclarations(shape)
   }
 
@@ -164,8 +169,11 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
       searchName(objTypeDef) match {
         case Some(typeName) =>
           getRootType(typeName) match {
-            case Some(rootType) => parseTopLevelType(objTypeDef, rootType)
-            case None           => parseNestedType(objTypeDef)
+            case Some(rootType) =>
+              parseTopLevelType(objTypeDef, rootType)
+              // W-14608042: also parse root types as nested types for cyclic references inside root types
+              parseNestedType(objTypeDef, isVirtualRoot = true)
+            case None => parseNestedType(objTypeDef)
           }
         case _ => parseNestedType(objTypeDef)
       }

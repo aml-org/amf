@@ -14,17 +14,13 @@ import amf.core.client.scala.traversal.iterator.{
   IdCollector,
   InstanceCollector
 }
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.DomainExtensionAnnotation
 import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Raml10YamlHint
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
-
-class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class IteratorTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with CompilerTestBuilder {
 
   private val api = buildApi()
 

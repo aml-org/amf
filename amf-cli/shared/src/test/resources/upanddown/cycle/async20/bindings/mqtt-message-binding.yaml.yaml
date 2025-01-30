@@ -1,0 +1,71 @@
+asyncapi: 2.0.0
+info:
+  title: Mqtt message binding
+  version: 1.0.0
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            bindingVersion: 0.1.0
+  string-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 1
+            correlationData:
+              type: object
+              properties:
+                a:
+                  type: string
+            contentType: application/json
+            bindingVersion: latest
+            responseTopic: this is a string
+  inline-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 1
+            correlationData:
+              type: object
+              properties:
+                a:
+                  type: string
+            contentType: application/json
+            responseTopic:
+              type: object
+              properties:
+                a:
+                  type: string
+            bindingVersion: latest
+  ref-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 1
+            contentType: application/json
+            bindingVersion: 0.2.0
+            correlationData:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+            responseTopic:
+              type: object
+              properties:
+                eventID:
+                  type: string
+                  description: Unique identifier for the event.
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

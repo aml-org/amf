@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "ASYNC 2.0"
     },
@@ -36,6 +36,11 @@
         {
           "@id": "amf://id#7"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "amf://id#6/source-map"
+        }
       ]
     },
     {
@@ -52,6 +57,17 @@
         }
       ],
       "http://a.ml/vocabularies/apiContract#operationId": "subscribe operation"
+    },
+    {
+      "@id": "amf://id#6/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "amf://id#6/source-map/virtual-element/element_0"
+        }
+      ]
     },
     {
       "@id": "amf://id#8",
@@ -71,6 +87,11 @@
           "@id": "amf://id#8/source-map"
         }
       ]
+    },
+    {
+      "@id": "amf://id#6/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "amf://id#9",

@@ -2,13 +2,13 @@ package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter, Server}
-import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
+import amf.apicontract.internal.metamodel.domain.{ParameterModel, ServerModel}
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
 import amf.apicontract.internal.spec.oas.parser.domain.BaseUriSplitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.spec.toRaml
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, VirtualElement}
@@ -24,8 +24,10 @@ import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.common.emitter.{EnumValuesEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+
 import scala.collection.mutable.ListBuffer
 
 case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
@@ -214,7 +216,7 @@ case class OasServerEmitter(server: Server, ordering: SpecOrdering)(implicit spe
 
     fs.entry(ServerModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ServerModel.Variables).map(f => result += OasServerVariablesEmitter(f, ordering))
+    fs.entry(ServerModel.Variables).map(f => result += OasServerVariablesEmitter("variables", f, ordering))
 
     result ++= AnnotationsEmitter(server, ordering).emitters
 
@@ -224,8 +226,9 @@ case class OasServerEmitter(server: Server, ordering: SpecOrdering)(implicit spe
   override def position(): Position = pos(server.annotations)
 }
 
-case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class OasServerVariablesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val all                 = f.arrayValues(classOf[Parameter])
     val hasNonOas3Variables = all.exists(!Servers.isVariable(_))
@@ -247,7 +250,7 @@ case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
 }
 
 /** This emitter reduces the parameter to the fields that the oas3 variables support. */
-private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)(implicit
+case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)(implicit
     spec: SpecEmitterContext
 ) extends EntryEmitter {
 
@@ -256,8 +259,20 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       variable.name.value(),
-      _.obj(traverse(entries(variable), _))
+      emitEntries _
     )
+  }
+
+  private def emitEntries(p: PartBuilder): Unit = {
+    if (variable.isLink) {
+      emitLink(p)
+    } else {
+      p.obj(traverse(ordering.sorted(entries(variable)), _))
+    }
+  }
+
+  def emitLink(b: PartBuilder): Unit = {
+    OasTagToReferenceEmitter(variable).emit(b)
   }
 
   private def entries(variable: Parameter): Seq[EntryEmitter] = {
@@ -265,7 +280,7 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
     val shape  = variable.schema
     val fs     = shape.fields
 
-    fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
+    variable.fields.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
     fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
@@ -299,21 +314,26 @@ private object Servers {
     }
   }
 
-  def isVariable(parameter: Parameter): Boolean = parameter.schema match {
-    case s: ScalarShape =>
-      val variableFields = Seq(
-        ShapeModel.Name,
-        ShapeModel.Default,
-        ShapeModel.DefaultValueString,
-        ShapeModel.Values,
-        ScalarShapeModel.DataType,
-        ShapeModel.Description,
-        DomainElementModel.CustomDomainProperties
-      )
-      s.fields.foreach { case (field, _) =>
-        if (!variableFields.contains(field)) return false
-      }
-      true
-    case _ => false
+  def isVariable(parameter: Parameter): Boolean = {
+    if (parameter.isLink)
+      return true
+
+    parameter.schema match {
+      case s: ScalarShape =>
+        val variableFields = Seq(
+          ShapeModel.Name,
+          ShapeModel.Default,
+          ShapeModel.DefaultValueString,
+          ShapeModel.Values,
+          ScalarShapeModel.DataType,
+          ShapeModel.Description,
+          DomainElementModel.CustomDomainProperties
+        )
+        s.fields.foreach { case (field, _) =>
+          if (!variableFields.contains(field)) return false
+        }
+        true
+      case _ => false
+    }
   }
 }

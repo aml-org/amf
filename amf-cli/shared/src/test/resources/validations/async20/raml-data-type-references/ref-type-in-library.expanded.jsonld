@@ -121,10 +121,16 @@
                 }
               }
             ],
+            "apiContract:server": [],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:server": "true"
+              },
               "lexical": {
-                "apiContract:supportedOperation": "[(7,0)-(12,0)]",
                 "#14": "[(6,2)-(12,0)]"
+              },
+              "virtual-element": {
+                "apiContract:supportedOperation": "true"
               }
             }
           }
@@ -152,7 +158,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [
@@ -237,15 +243,6 @@
                   }
                 ],
                 "smaps": {
-                  "inherited-shapes": {
-                    "#3": "amf://id#7"
-                  },
-                  "resolved-link": {
-                    "#3": "amf://id#6"
-                  },
-                  "type-property-lexical-info": {
-                    "#3": "[(8,4)-(8,8)]"
-                  },
                   "lexical": {
                     "shacl:name": "[(7,2)-(7,7)]",
                     "#3": "[(7,8)-(9,0)]"
@@ -255,6 +252,15 @@
                   },
                   "resolved-link-target": {
                     "#3": "amf://id#3"
+                  },
+                  "inherited-shapes": {
+                    "#3": "amf://id#6"
+                  },
+                  "resolved-link": {
+                    "#3": "amf://id#7"
+                  },
+                  "type-property-lexical-info": {
+                    "#3": "[(8,4)-(8,8)]"
                   }
                 }
               },
@@ -285,15 +291,6 @@
               }
             ],
             "smaps": {
-              "inherited-shapes": {
-                "#2": "amf://id#10"
-              },
-              "resolved-link": {
-                "#2": "amf://id#9"
-              },
-              "type-property-lexical-info": {
-                "#2": "[(5,4)-(5,8)]"
-              },
               "lexical": {
                 "shacl:name": "[(4,2)-(4,6)]",
                 "#2": "[(4,7)-(7,0)]"
@@ -303,6 +300,15 @@
               },
               "resolved-link-target": {
                 "#2": "amf://id#2"
+              },
+              "inherited-shapes": {
+                "#2": "amf://id#9"
+              },
+              "resolved-link": {
+                "#2": "amf://id#10"
+              },
+              "type-property-lexical-info": {
+                "#2": "[(5,4)-(5,8)]"
               }
             }
           },
@@ -358,15 +364,6 @@
               }
             ],
             "smaps": {
-              "inherited-shapes": {
-                "#3": "amf://id#7"
-              },
-              "resolved-link": {
-                "#3": "amf://id#6"
-              },
-              "type-property-lexical-info": {
-                "#3": "[(8,4)-(8,8)]"
-              },
               "lexical": {
                 "shacl:name": "[(7,2)-(7,7)]",
                 "#3": "[(7,8)-(9,0)]"
@@ -376,6 +373,15 @@
               },
               "resolved-link-target": {
                 "#3": "amf://id#3"
+              },
+              "inherited-shapes": {
+                "#3": "amf://id#6"
+              },
+              "resolved-link": {
+                "#3": "amf://id#7"
+              },
+              "type-property-lexical-info": {
+                "#3": "[(8,4)-(8,8)]"
               }
             }
           }
@@ -393,7 +399,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.8.2"
+                "@value": "3.10.0"
               }
             ],
             "doc:sourceSpec": [

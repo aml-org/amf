@@ -410,7 +410,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -596,6 +596,333 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Product"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#supportedOperation": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#Operation",
+              "http://a.ml/vocabularies/core#Operation",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "customers"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#expects": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/expects/request",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#Request",
+                  "http://a.ml/vocabularies/core#Request",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#parameter": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/expects/request/parameter/parameter/count",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#Parameter",
+                      "http://a.ml/vocabularies/core#Parameter",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "count"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#binding": [
+                      {
+                        "@value": "query"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#required": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/expects/request/parameter/parameter/count/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#returns": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/returns/response",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#Response",
+                  "http://a.ml/vocabularies/core#Response",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "default"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#payload": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/returns/response/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#Payload",
+                      "http://a.ml/vocabularies/core#Payload",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/returns/response/default/union/default-union",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#UnionShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#anyOf": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/returns/response/default/union/default-union/anyOf/nil/default-nil",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#NilShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/returns/response/default/union/default-union/anyOf/array/default-array",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#items": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/customers/returns/response/default/union/default-union/anyOf/array/default-array/shape/Customer",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Customer"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "Customer"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "Customer"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#Operation",
+              "http://a.ml/vocabularies/core#Operation",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "products"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#expects": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/expects/request",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#Request",
+                  "http://a.ml/vocabularies/core#Request",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#parameter": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/expects/request/parameter/parameter/count",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#Parameter",
+                      "http://a.ml/vocabularies/core#Parameter",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "count"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#binding": [
+                      {
+                        "@value": "query"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#required": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/expects/request/parameter/parameter/count/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#returns": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/returns/response",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#Response",
+                  "http://a.ml/vocabularies/core#Response",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "default"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#payload": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/returns/response/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#Payload",
+                      "http://a.ml/vocabularies/core#Payload",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schema": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/returns/response/default/union/default-union",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#UnionShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#anyOf": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/returns/response/default/union/default-union/anyOf/nil/default-nil",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#NilShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/returns/response/default/union/default-union/anyOf/array/default-array",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#items": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Query/supportedOperation/products/returns/response/default/union/default-union/anyOf/array/default-array/shape/Product",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/non-root-optional-array/api.graphql#/declares/shape/Product"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "Product"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "Product"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Query"
           }
         ]
       }

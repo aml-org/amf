@@ -2,14 +2,15 @@ package amf.shapes.internal.spec.jsonldschema.parser.builder
 
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.internal.metamodel.Type
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDElement}
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
 import amf.shapes.internal.spec.jsonldschema.parser.builder.ArrayTypeComputation.computeType
 import amf.shapes.internal.spec.jsonldschema.parser.{JsonLDParserContext, JsonPath}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleItemNodes
-import org.mulesoft.common.client.lexical.SourceLocation
 
-class JsonLDArrayElementBuilder(location: SourceLocation, path: JsonPath) extends JsonLDElementBuilder(location, path) {
+
+class JsonLDArrayElementBuilder(annotation: Annotations, path: JsonPath) extends JsonLDElementBuilder(annotation, path) {
   private var items: Seq[JsonLDElementBuilder] = Seq.empty
   override type THIS = JsonLDArrayElementBuilder
 
@@ -32,7 +33,7 @@ class JsonLDArrayElementBuilder(location: SourceLocation, path: JsonPath) extend
         .map({
           case (current, other) if (current.canEquals(other)) => mergeItem(current, other)
           case (_, other) =>
-            ctx.violation(IncompatibleItemNodes, "", IncompatibleItemNodes.message, other.location)
+            ctx.violation(IncompatibleItemNodes, "", IncompatibleItemNodes.message, other.annotation.sourceLocation)
             other
         })
     }
@@ -53,7 +54,7 @@ class JsonLDArrayElementBuilder(location: SourceLocation, path: JsonPath) extend
   }
 
   override def build(ctxBuilder: EntityContextBuilder): (JsonLDElement, Type) = {
-    val starter = (new JsonLDArray, JsonLDElementModel)
+    val starter = (new JsonLDArray(annotation), JsonLDElementModel)
     val (result, meta) = items.foldLeft[(JsonLDArray, Type)](starter) { (tuple, builder) =>
       val (array, meta) = tuple
       build(builder, array, meta, ctxBuilder)

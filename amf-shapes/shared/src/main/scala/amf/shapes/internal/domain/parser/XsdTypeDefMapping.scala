@@ -1,8 +1,8 @@
 package amf.shapes.internal.domain.parser
 
 import amf.core.client.scala.model.DataType
-import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.common.TypeDef._
 import org.yaml.model.YType
 
 /** XSD TypeDef mapping
@@ -28,7 +28,7 @@ object XsdTypeDefMapping {
       case _                => throw new RuntimeException("Unknown mapping")
     }
 
-  /** for 0.8 */
+  /** for RAML 0.8 */
   def xsdFromString(text: String): (Option[String], Option[String]) =
     text match {
       case "string"                      => (Some(DataType.String), Some(""))
@@ -56,47 +56,48 @@ object TypeDefXsdMapping {
 
   def typeDef08(iri: String): String =
     iri match {
-      case s if s == DataType.String   => "string"
-      case s if s == DataType.Integer  => "integer"
-      case s if s == DataType.Number   => "number"
-      case s if s == DataType.Float    => "number"
-      case s if s == DataType.Double   => "number"
-      case s if s == DataType.Boolean  => "boolean"
-      case s if s == DataType.DateTime => "date"
-      case s if s == DataType.File     => "file"
-      case s                           => throw new RuntimeException(s"Unknown mapping: $s")
+      case DataType.String   => "string"
+      case DataType.Integer  => "integer"
+      case DataType.Number   => "number"
+      case DataType.Float    => "number"
+      case DataType.Double   => "number"
+      case DataType.Boolean  => "boolean"
+      case DataType.DateTime => "date"
+      case DataType.File     => "file"
+      case s                 => throw new RuntimeException(s"Unknown mapping: $s")
     }
 
   def type08Def(iri: String): TypeDef =
     iri match {
-      case s if s == DataType.String   => StrType
-      case s if s == DataType.Integer  => IntType
-      case s if s == DataType.Float    => FloatType
-      case s if s == DataType.Number   => NumberType
-      case s if s == DataType.Boolean  => BoolType
-      case s if s == DataType.DateTime => DateTimeType
-      case s if s == DataType.File     => FileType
-      case s                           => throw new RuntimeException(s"Unknown mapping: $s")
+      case DataType.String   => StrType
+      case DataType.Integer  => IntType
+      case DataType.Float    => FloatType
+      case DataType.Number   => NumberType
+      case DataType.Boolean  => BoolType
+      case DataType.DateTime => DateTimeType
+      case DataType.File     => FileType
+      case s                 => throw new RuntimeException(s"Unknown mapping: $s")
     }
 
   def typeDef(iri: String): TypeDef =
     iri match {
-      case s if s == DataType.String       => StrType
-      case s if s == DataType.Integer      => IntType
-      case s if s == DataType.Long         => LongType
-      case s if s == DataType.Float        => FloatType
-      case s if s == DataType.Double       => DoubleType
-      case s if s == DataType.Number       => NumberType
-      case s if s == DataType.Boolean      => BoolType
-      case s if s == DataType.DateTime     => DateTimeType
-      case s if s == DataType.DateTimeOnly => DateTimeOnlyType
-      case s if s == DataType.Time         => TimeOnlyType
-      case s if s == DataType.Date         => DateOnlyType
-      case s if s == DataType.Byte         => ByteType
-      case s if s == DataType.Binary       => BinaryType
-      case s if s == DataType.Password     => PasswordType
-      case s if s == DataType.Nil          => NilType
-      case _                               => UndefinedType
+      case DataType.String       => StrType
+      case DataType.Integer      => IntType
+      case DataType.Long         => LongType
+      case DataType.Float        => FloatType
+      case DataType.Double       => DoubleType
+      case DataType.Number       => NumberType
+      case DataType.Boolean      => BoolType
+      case DataType.DateTime     => DateTimeType
+      case DataType.DateTimeOnly => DateTimeOnlyType
+      case DataType.Time         => TimeOnlyType
+      case DataType.Date         => DateOnlyType
+      case DataType.Byte         => ByteType
+      case DataType.Bytes        => BytesType
+      case DataType.Binary       => BinaryType
+      case DataType.Password     => PasswordType
+      case DataType.Nil          => NilType
+      case _                     => UndefinedType
     }
 
   def typeDef(iri: String, format: String): TypeDef = typeDef(iri) match {

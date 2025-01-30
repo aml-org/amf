@@ -74,10 +74,16 @@
                 }
               }
             ],
+            "apiContract:server": [],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:server": "true"
+              },
               "lexical": {
-                "apiContract:supportedOperation": "[(7,0)-(14,0)]",
                 "#/async-api/endpoint/someChannel": "[(6,2)-(14,0)]"
+              },
+              "virtual-element": {
+                "apiContract:supportedOperation": "true"
               }
             }
           }
@@ -105,7 +111,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [

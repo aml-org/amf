@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -91,16 +91,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
-        {
-          "@id": "amf://id#1/source-map/resolved-link-target/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "amf://id#1/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "amf://id#1/source-map/lexical/element_2"
@@ -112,14 +102,24 @@
           "@id": "amf://id#1/source-map/lexical/element_1"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "amf://id#1/source-map/type-property-lexical-info/element_0"
+          "@id": "amf://id#1/source-map/declared-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+        {
+          "@id": "amf://id#1/source-map/resolved-link-target/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link": [
         {
           "@id": "amf://id#1/source-map/resolved-link/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "amf://id#1/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -157,14 +157,24 @@
           "@id": "amf://id#2/source-map/synthesized-field/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "amf://id#2/source-map/type-property-lexical-info/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#resolved-link": [
         {
           "@id": "amf://id#2/source-map/resolved-link/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
         {
-          "@id": "amf://id#2/source-map/type-property-lexical-info/element_0"
+          "@id": "amf://id#2/source-map/resolved-link-target/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "amf://id#2/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -174,32 +184,12 @@
         {
           "@id": "amf://id#2/source-map/lexical/element_0"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "amf://id#2/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
-        {
-          "@id": "amf://id#2/source-map/resolved-link-target/element_0"
-        }
       ]
     },
     {
       "@id": "amf://id#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(11,10)]"
-    },
-    {
-      "@id": "amf://id#1/source-map/resolved-link-target/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#1"
-    },
-    {
-      "@id": "amf://id#1/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "amf://id#1/source-map/lexical/element_2",
@@ -217,14 +207,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(8,0)]"
     },
     {
-      "@id": "amf://id#1/source-map/type-property-lexical-info/element_0",
+      "@id": "amf://id#1/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,8)]"
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "amf://id#1/source-map/resolved-link-target/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
+      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#1"
     },
     {
       "@id": "amf://id#1/source-map/resolved-link/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
       "http://a.ml/vocabularies/document-source-maps#value": "amf://id#5"
+    },
+    {
+      "@id": "amf://id#1/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#1",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,8)]"
     },
     {
       "@id": "amf://id#4",
@@ -275,14 +275,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
+      "@id": "amf://id#2/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(9,8)]"
+    },
+    {
       "@id": "amf://id#2/source-map/resolved-link/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
       "http://a.ml/vocabularies/document-source-maps#value": "amf://id#6"
     },
     {
-      "@id": "amf://id#2/source-map/type-property-lexical-info/element_0",
+      "@id": "amf://id#2/source-map/resolved-link-target/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(9,8)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#2"
+    },
+    {
+      "@id": "amf://id#2/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "amf://id#2/source-map/lexical/element_1",
@@ -295,16 +305,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(8,3)]"
     },
     {
-      "@id": "amf://id#2/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "amf://id#2/source-map/resolved-link-target/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#2",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#2"
-    },
-    {
       "@id": "amf://id#4/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -314,19 +314,19 @@
           "@id": "amf://id#4/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#resolved-link": [
-        {
-          "@id": "amf://id#4/source-map/resolved-link/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
           "@id": "amf://id#4/source-map/type-property-lexical-info/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document-source-maps#resolved-link": [
         {
-          "@id": "amf://id#4/source-map/lexical/element_0"
+          "@id": "amf://id#4/source-map/resolved-link/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+        {
+          "@id": "amf://id#4/source-map/resolved-link-target/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
@@ -334,9 +334,9 @@
           "@id": "amf://id#4/source-map/declared-element/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#resolved-link-target": [
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#4/source-map/resolved-link-target/element_0"
+          "@id": "amf://id#4/source-map/lexical/element_0"
         }
       ]
     },
@@ -366,19 +366,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "amf://id#4/source-map/resolved-link/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#5"
-    },
-    {
       "@id": "amf://id#4/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,8)]"
     },
     {
-      "@id": "amf://id#4/source-map/lexical/element_0",
+      "@id": "amf://id#4/source-map/resolved-link/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#5"
+    },
+    {
+      "@id": "amf://id#4/source-map/resolved-link-target/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
+      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#1"
     },
     {
       "@id": "amf://id#4/source-map/declared-element/element_0",
@@ -386,9 +386,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "amf://id#4/source-map/resolved-link-target/element_0",
+      "@id": "amf://id#4/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#4",
-      "http://a.ml/vocabularies/document-source-maps#value": "amf://id#1"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(8,0)]"
     }
   ]
 }

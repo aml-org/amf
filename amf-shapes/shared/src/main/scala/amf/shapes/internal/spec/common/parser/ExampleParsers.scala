@@ -116,10 +116,9 @@ case class RamlMultipleExampleParser(
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          examples += ctx
-            .findNamedExampleOrError(entry.value)(s)
-            .link(s)
-
+          val example     = ctx.findNamedExampleOrError(entry.value)(s)
+          val exampleLink = ctx.link(example, map, AmfScalar(s))
+          examples += exampleLink
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
@@ -266,11 +265,14 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
   private def newExample(ast: YPart): Example =
     setName(Example(entry))
 
-  private def parseLink(fullRef: String, map: YMap) = {
+  private def parseLink(fullRef: String, map: YMap): Example = {
     val name = OasShapeDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
     ctx
       .findExample(name, SearchScope.All)
-      .map(found => setName(found.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
+      .map { found =>
+        val link = ctx.link(found, map, AmfScalar(name), Annotations(map), Annotations.synthesized())
+        setName(link)
+      }
       .getOrElse {
         ctx.obtainRemoteYNode(fullRef) match {
           case Some(exampleNode) =>

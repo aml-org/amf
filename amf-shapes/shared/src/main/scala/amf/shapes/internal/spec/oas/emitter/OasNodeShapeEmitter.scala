@@ -7,6 +7,8 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.{
   AdditionalPropertiesSchema,
@@ -17,12 +19,11 @@ import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.shapes.internal.spec.common.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaDraft7SchemaVersion,
-  OAS30SchemaVersion
+  OAS30SchemaVersion,
+  OAS31SchemaVersion
 }
 import amf.shapes.internal.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
 import amf.shapes.internal.spec.jsonschema.emitter._
-import amf.core.internal.utils._
-import amf.shapes.client.scala.model.domain.NodeShape
 
 import scala.collection.mutable.ListBuffer
 
@@ -36,7 +37,8 @@ case class OasNodeShapeEmitter(
 )(implicit spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
-    val isOas3 = spec.schemaVersion.isInstanceOf[OAS30SchemaVersion]
+    val isOas3  = spec.schemaVersion.isInstanceOf[OAS30SchemaVersion]
+    val isOas31 = spec.schemaVersion.isInstanceOf[OAS31SchemaVersion]
 
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
@@ -74,10 +76,10 @@ case class OasNodeShapeEmitter(
       result += new UnevaluatedEmitter(node, unevaluatedPropertiesInfo, ordering, references, pointer, schemaPath)
     }
 
-    if (isOas3) {
+    if (isOas3 || isOas31) {
       fs.entry(NodeShapeModel.Discriminator)
         .orElse(fs.entry(NodeShapeModel.DiscriminatorMapping))
-        .map(f => result += Oas3DiscriminatorEmitter(f, fs, ordering))
+        .map(f => result += Oas3DiscriminatorEmitter(f, fs, ordering, node.customDomainProperties))
     } else {
       fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
     }

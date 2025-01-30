@@ -50,9 +50,9 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = spec match {
-          case Raml10.id           => Some("extends")
-          case Oas20.id | Oas30.id => Some("x-extends")
-          case _                   => None
+          case Raml10.id                      => Some("extends")
+          case Oas20.id | Oas30.id | Oas31.id => Some("x-extends")
+          case _                              => None
         }
 
         ext.foreach { u =>
@@ -82,12 +82,13 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
   private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     spec match {
-      case Raml10.id | Raml08.id             => ramlLinks(part)
-      case Oas20.id | Oas30.id | AwsOas30.id => oasLinks(part)
-      case JsonSchema.id                     => oasLinks(part)
+      case Raml10.id | Raml08.id                        => ramlLinks(part)
+      case Oas20.id | Oas30.id | Oas31.id | AwsOas30.id => oasLinks(part)
+      case JsonSchema.id                                => oasLinks(part)
       case AsyncApi20.id =>
         oasLinks(part)
         ramlLinks(part)
+      case _ => // ignore
     }
   }
 
@@ -95,9 +96,9 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
     document.to[YMap] match {
       case Right(map) =>
         val uses = spec match {
-          case Raml10.id           => Some("uses")
-          case Oas20.id | Oas30.id => Some("x-amf-uses")
-          case _                   => None
+          case Raml10.id                      => Some("uses")
+          case Oas20.id | Oas30.id | Oas31.id => Some("x-amf-uses")
+          case _                              => None
         }
         uses.foreach(u => {
           map

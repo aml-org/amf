@@ -20,6 +20,12 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends A
     this
   }
 
+  /** Set summary property of this WebApi. */
+  def withSummary(summary: String): this.type = {
+    _internal.withSummary(summary)
+    this
+  }
+
   override def withDescription(description: String): this.type = {
     _internal.withDescription(description)
     this
@@ -40,6 +46,12 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends A
   /** Set endPoints property of this WebApi. */
   override def withEndPoints(endPoints: ClientList[EndPoint]): this.type = {
     _internal.withEndPoints(endPoints.asInternal)
+    this
+  }
+
+  /** Set webhooks property of this WebApi. */
+  def withWebhooks(webhooks: ClientList[EndPoint]): this.type = {
+    _internal.withWebhooks(webhooks.asInternal)
     this
   }
 

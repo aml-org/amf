@@ -8,15 +8,17 @@ import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
 import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
 import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
+import amf.apicontract.internal.spec.avro.transformation.{
+  AvroSchemaCachePipeline,
+  AvroSchemaEditingPipeline,
+  AvroSchemaTransformationPipeline
+}
+import amf.apicontract.internal.spec.avro.validation.AvroSchemaPayloadValidationPlugin
+import amf.apicontract.internal.spec.avro.{AvroParsePlugin, AvroRenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.transformation.compatibility.{
-  Oas20CompatibilityPipeline,
-  Oas3CompatibilityPipeline,
-  Raml08CompatibilityPipeline,
-  Raml10CompatibilityPipeline
-}
+import amf.apicontract.internal.transformation.compatibility._
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.APIPayloadValidationPlugin
@@ -43,10 +45,12 @@ import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
-import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
+import amf.shapes.client.scala.plugin.{AvroSchemaShapePayloadValidationPlugin, JsonSchemaShapePayloadValidationPlugin}
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 import amf.shapes.internal.spec.jsonschema.JsonSchemaParsePlugin
+import amf.shapes.internal.validation.model.ShapeEffectiveValidations.AvroSchemaEffectiveValidations
+import amf.shapes.internal.validation.model.ShapeValidationProfiles.AvroSchemaValidationProfile
 
 import scala.concurrent.Future
 
@@ -76,7 +80,8 @@ trait APIConfigurationBuilder {
       configuration.idAdopterProvider
     ).withPlugins(
       List(
-        JsonSchemaShapePayloadValidationPlugin
+        JsonSchemaShapePayloadValidationPlugin,
+        AvroSchemaShapePayloadValidationPlugin
       )
     ).withFallback(ApiContractFallbackPlugin())
     result
@@ -156,6 +161,28 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   }
 }
 
+// AVRO is in alpha support mode
+object AvroConfiguration extends APIConfigurationBuilder {
+  def Avro(): AMFConfiguration = {
+    common()
+      .withPlugins(
+        List(
+          AvroParsePlugin,
+          AvroRenderPlugin,
+          AvroSchemaPayloadValidationPlugin()
+        )
+      )
+      .withTransformationPipelines(
+        List(
+          AvroSchemaTransformationPipeline(),
+          AvroSchemaEditingPipeline(),
+          AvroSchemaCachePipeline()
+        )
+      )
+      .withValidationProfile(AvroSchemaValidationProfile, AvroSchemaEffectiveValidations)
+  }
+}
+
 /** [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for OAS like:
   *   - Validation rules
   *   - Parse and emit plugins
@@ -209,6 +236,28 @@ object OASConfiguration extends APIConfigurationBuilder {
         )
       )
 
+  // WIP - Work in Progress
+  def OAS31(): AMFConfiguration =
+    common()
+      .withPlugins(
+        List(
+          Oas31ParsePlugin,
+          Oas31RenderPlugin,
+          Oas31ElementRenderPlugin,
+          APIShaclModelValidationPlugin(ProfileNames.OAS31),
+          APIPayloadValidationPlugin(ProfileNames.OAS31)
+        )
+      )
+      .withValidationProfile(Oas31ValidationProfile, Oas31EffectiveValidations)
+      .withTransformationPipelines(
+        List(
+          Oas31TransformationPipeline(),
+          Oas31EditingPipeline(),
+          Oas31CompatibilityPipeline(),
+          Oas31CachePipeline()
+        )
+      )
+
   def OAS30Component(): AMFConfiguration =
     common()
       .withPlugins(
@@ -242,9 +291,10 @@ object OASConfiguration extends APIConfigurationBuilder {
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
     case Spec.OAS20 => OASConfiguration.OAS20()
     case Spec.OAS30 => OASConfiguration.OAS30()
+    case Spec.OAS31 => OASConfiguration.OAS31()
     case _ =>
       throw UnrecognizedSpecException(
-        s"Spec ${spec.id} not supported by OASConfiguration. Supported specs are ${Spec.OAS20.id}, ${Spec.OAS30.id}"
+        s"Spec ${spec.id} not supported by OASConfiguration. Supported specs are ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.OAS31.id}"
       )
   }
 }
@@ -261,6 +311,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
       .withFallback(ApiContractFallbackPlugin(false))
       .withPlugins(
         List(
+          Oas31ParsePlugin,
           Oas30ParsePlugin,
           Oas20ParsePlugin,
           Raml10ParsePlugin,
@@ -275,9 +326,10 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
     case Spec.RAML10 => RAMLConfiguration.RAML10()
     case Spec.OAS20  => OASConfiguration.OAS20()
     case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS31  => OASConfiguration.OAS31()
     case _ =>
       throw UnrecognizedSpecException(
-        s"Spec ${spec.id} not supported by WebApiConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}"
+        s"Spec ${spec.id} not supported by WebApiConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.OAS31.id}"
       )
   }
 }
@@ -325,15 +377,17 @@ object APIConfiguration extends APIConfigurationBuilder {
       .withTransformationPipelines(unsupportedTransformationsSet(name))
 
   def fromSpec(spec: Spec): AMFConfiguration = spec match {
-    case Spec.RAML08     => RAMLConfiguration.RAML08()
-    case Spec.RAML10     => RAMLConfiguration.RAML10()
-    case Spec.OAS20      => OASConfiguration.OAS20()
-    case Spec.OAS30      => OASConfiguration.OAS30()
-    case Spec.ASYNC20    => AsyncAPIConfiguration.Async20()
+    case Spec.RAML08 => RAMLConfiguration.RAML08()
+    case Spec.RAML10 => RAMLConfiguration.RAML10()
+    case Spec.OAS20  => OASConfiguration.OAS20()
+    case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS31  => OASConfiguration.OAS31()
+    case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
+      AsyncAPIConfiguration.Async20()
     case Spec.JSONSCHEMA => ConfigurationAdapter.adapt(JsonSchemaConfiguration.JsonSchema())
     case _ =>
       throw UnrecognizedSpecException(
-        s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.ASYNC20.id}"
+        s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.OAS31.id}, ${Spec.ASYNC20.id}"
       )
   }
 }
@@ -536,7 +590,7 @@ class AMFConfiguration private[amf] (
 }
 
 object ConfigurationAdapter extends APIConfigurationBuilder {
-  def adapt(baseConfiguration: ShapesConfiguration): AMFConfiguration = {
+  def adapt(baseConfiguration: AMLConfiguration): AMFConfiguration = {
     val pluginsRegistry: PluginsRegistry = baseConfiguration.registry.getPluginsRegistry
     val configuration = common()
       .withPlugins(

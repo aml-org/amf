@@ -1,0 +1,40 @@
+{
+  "type": "record",
+  "name": "ConnectionRequested",
+  "namespace": "com.foo.connections",
+  "doc": "An example schema to illustrate the issue",
+  "fields": [
+    {
+      "name": "metadata",
+      "type": {
+        "type": "record",
+        "name": "EventMetadata",
+        "namespace": "com.foo",
+        "fields": [
+          {
+            "name": "id",
+            "type": "string",
+            "doc": "Unique identifier for this specific event"
+          },
+          {
+            "name": "timestamp",
+            "type": "string",
+            "doc": "Instant the event took place"
+          }
+        ],
+        "doc": "Metadata associated with every published event"
+      },
+      "doc": "Metadata about the event."
+    },
+    {
+      "name": "auth_code",
+      "type": "string",
+      "doc": "Encrypted auth_code received when user authorizes the app."
+    },
+    {
+      "name": "triggered_by",
+      "type": "string",
+      "doc": "ID of the user who triggered this event."
+    }
+  ]
+}

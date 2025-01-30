@@ -6,7 +6,6 @@ import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.common.{OAS30SchemaVersion, SchemaPosition, SchemaVersion}
 import amf.shapes.internal.spec.oas.parser
-import amf.shapes.internal.spec.oas.parser.Oas3Settings
 
 class Oas3WebApiContext(
     loc: String,

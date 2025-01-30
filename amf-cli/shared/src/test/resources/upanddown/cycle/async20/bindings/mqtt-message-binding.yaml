@@ -8,4 +8,57 @@ channels:
       message:
         bindings:
           mqtt:
-            bindingVersion: 31.07.92
+            bindingVersion: 0.1.0
+  string-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 1
+            correlationData:
+              type: object
+              properties:
+                a:
+                  type: string
+            contentType: application/json
+            bindingVersion: latest
+            responseTopic: this is a string
+  inline-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 1
+            correlationData:
+              type: object
+              properties:
+                a:
+                  type: string
+            contentType: application/json
+            responseTopic:
+              type: object
+              properties:
+                a:
+                  type: string
+            bindingVersion: latest
+  ref-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            payloadFormatIndicator: 1
+            correlationData:
+              $ref: '#/components/schemas/testSchema'
+            contentType: application/json
+            responseTopic:
+              $ref: '#/components/schemas/testSchema'
+            bindingVersion: 0.2.0
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

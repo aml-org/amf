@@ -5,12 +5,11 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.validation.CoreValidations
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 case class ExpectedReport(
     conforms: Boolean,
@@ -19,9 +18,7 @@ case class ExpectedReport(
     jsNumErrors: Option[Integer] = None
 ) // todo: we should remove this, both platforms should validate the same
 
-class ValidationTest extends AsyncFunSuite with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   val basePath         = "file://amf-cli/shared/src/test/resources/vocabularies2/production/validation/"
   val vocabulariesPath = "file://amf-cli/shared/src/test/resources/vocabularies2/production/validation/"

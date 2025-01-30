@@ -1,0 +1,20 @@
+asyncapi: 2.0.0
+info:
+  title: Amqp channel binding
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      amqp:
+        bindingVersion: 0.1.0
+        is: queue
+        exchange:
+          name: some name
+          type: topic
+          durable: false
+          autoDelete: true
+        queue:
+          name: somename
+          durable: true
+          exclusive: false
+          autoDelete: true

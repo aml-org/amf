@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
-import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, RemoteNodeNavigation}
@@ -10,6 +10,8 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model._
+
+import scala.collection.mutable
 
 abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(implicit
     val ctx: OasLikeWebApiContext
@@ -31,7 +33,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     parseEndpoint(endpoint)
   }
 
-  private def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
+  protected def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
     ctx.link(entry.value) match {
       case Left(value) =>
         ctx.navigateToRemoteYNode(value) match {
@@ -85,5 +87,14 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
 
     endpoint
 
+  }
+
+  protected def parseOperations(entries: Iterable[YMapEntry]): Seq[Operation] = {
+    val operations = mutable.ListBuffer[Operation]()
+    entries.foreach { entry =>
+      val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
+      operations += operationParser.parse()
+    }
+    operations
   }
 }

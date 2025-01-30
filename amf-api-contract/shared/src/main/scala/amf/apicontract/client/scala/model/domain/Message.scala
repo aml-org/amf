@@ -29,6 +29,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def headerExamples: Seq[Example] = fields.field(HeaderExamples)
   def headers: Seq[Parameter]      = fields.field(Headers)
   def headerSchema: NodeShape      = fields.field(HeaderSchema)
+  def messageId: StrField          = fields.field(MessageId)
 
   def withDescription(description: String): this.type            = set(Description, description)
   def isAbstract(isAbstract: Boolean): this.type                 = set(IsAbstract, isAbstract)
@@ -43,6 +44,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
   def withHeaderExamples(examples: Seq[Example]): this.type      = setArray(HeaderExamples, examples)
   def withHeaderSchema(obj: NodeShape): this.type                = set(HeaderSchema, obj)
+  def withMessageId(messageId: String): this.type                = set(MessageId, messageId)
 
   def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()

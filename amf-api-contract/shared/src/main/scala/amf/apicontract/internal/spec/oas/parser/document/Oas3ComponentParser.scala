@@ -25,6 +25,7 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
+      ctx.setJsonSchemaAST(rootMap)
       val references =
         Oas3ReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
@@ -36,6 +37,7 @@ case class Oas3ComponentParser(root: Root)(implicit val ctx: OasWebApiContext) e
       assertPaths(rootMap, module)
       ctx.closedShape(module, rootMap, "root")
     }
+    ctx.futureDeclarations.resolve()
     module
   }
 

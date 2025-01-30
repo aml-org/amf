@@ -104,7 +104,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -199,21 +199,6 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp1/scalar/objProp1/source-map/type-property-lexical-info/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp1/scalar/objProp1"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(8,10)-(8,16)]"
-                              }
-                            ]
-                          }
-                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp1/scalar/objProp1/source-map/lexical/element_1",
@@ -238,6 +223,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(8,10)-(8,26)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp1/scalar/objProp1/source-map/type-property-lexical-info/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp1/scalar/objProp1"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(8,10)-(8,16)]"
                               }
                             ]
                           }
@@ -334,21 +334,6 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                          {
-                            "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp2/scalar/objProp2/source-map/type-property-lexical-info/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp2/scalar/objProp2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(11,10)-(11,16)]"
-                              }
-                            ]
-                          }
-                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp2/scalar/objProp2/source-map/lexical/element_1",
@@ -373,6 +358,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(11,10)-(11,26)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp2/scalar/objProp2/source-map/type-property-lexical-info/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/property/property/objProp2/scalar/objProp2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,10)-(11,16)]"
                               }
                             ]
                           }
@@ -472,6 +472,21 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/source-map/lexical/element_2",
@@ -512,21 +527,6 @@
                       }
                     ]
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/references/libraries.json#/references/0/declares/shape/ObjectType"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
                 ]
               }
             ]
@@ -550,7 +550,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#modelVersion": [
               {
-                "@value": "3.8.2"
+                "@value": "3.10.0"
               }
             ],
             "http://a.ml/vocabularies/document#sourceSpec": [

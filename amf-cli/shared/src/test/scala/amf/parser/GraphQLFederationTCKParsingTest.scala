@@ -4,6 +4,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, GraphQLFederationHint}
 
 class GraphQLFederationTCKParsingTest extends GraphQLFederationFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql-federation/tck/apis/valid/"
 
   // Test valid APIs
@@ -18,6 +19,4 @@ class GraphQLFederationTCKParsingTest extends GraphQLFederationFunSuiteCycleTest
       }
     }
   }
-
-  override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }

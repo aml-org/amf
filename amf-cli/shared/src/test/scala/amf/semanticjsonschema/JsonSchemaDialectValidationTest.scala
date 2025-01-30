@@ -1,16 +1,13 @@
 package amf.semanticjsonschema
 
 import amf.core.client.scala.config.ParsingOptions
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
+class JsonSchemaDialectValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-class JsonSchemaDialectValidationTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  private val config: SemanticJsonSchemaConfiguration      = SemanticJsonSchemaConfiguration.predefined()
+  private val config: SemanticJsonSchemaConfiguration = SemanticJsonSchemaConfiguration.predefined()
   private val basePath: String = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/validation/"
 
   test("Simple allOf schema should pass with maxJSONComplexity option") {

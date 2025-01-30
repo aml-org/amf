@@ -2,43 +2,51 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{BaseVirtualNode, TargetName}
+import amf.shapes.internal.annotations.{AVROSchemaType, BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.BaseUnitUtils._
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YNodePlain, YScalar}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
+class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  val basePath                        = "file://amf-cli/shared/src/test/resources/validations"
-  val ro: RenderOptions               = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
-  val graphqlConfig: AMFConfiguration = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
-  val ramlConfig: AMFConfiguration    = RAMLConfiguration.RAML10().withRenderOptions(ro)
-  val ramlClient: AMFBaseUnitClient   = ramlConfig.baseUnitClient()
-  val raml08Config: AMFConfiguration  = RAMLConfiguration.RAML08().withRenderOptions(ro)
-  val raml08Client: AMFBaseUnitClient = raml08Config.baseUnitClient()
-  val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
-  val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
+  val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
+  val ro: RenderOptions                      = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
+  val graphqlConfig: AMFConfiguration        = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
+  val ramlConfig: AMFConfiguration           = RAMLConfiguration.RAML10().withRenderOptions(ro)
+  val ramlClient: AMFBaseUnitClient          = ramlConfig.baseUnitClient()
+  val raml08Config: AMFConfiguration         = RAMLConfiguration.RAML08().withRenderOptions(ro)
+  val raml08Client: AMFBaseUnitClient        = raml08Config.baseUnitClient()
+  val oasConfig: AMFConfiguration            = OASConfiguration.OAS30().withRenderOptions(ro)
+  val oasClient: AMFBaseUnitClient           = oasConfig.baseUnitClient()
+  val oas31Config: AMFConfiguration          = OASConfiguration.OAS31().withRenderOptions(ro)
+  val oas31Client: AMFBaseUnitClient         = oas31Config.baseUnitClient()
+  val oasComponentsConfig: AMFConfiguration  = OASConfiguration.OAS30Component().withRenderOptions(ro)
+  val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
+  val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
+  val asyncClient: AMFBaseUnitClient         = asyncConfig.baseUnitClient()
+  val avroConfig: AMFConfiguration           = AvroConfiguration.Avro().withRenderOptions(ro)
+  val avroClient: AMFBaseUnitClient          = avroConfig.baseUnitClient()
 
   def modelAssertion(
       path: String,
@@ -534,10 +542,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-13595824
   test("transforming raml with 3+ unions should flatten union members") {
     val api = "file://amf-cli/shared/src/test/resources/upanddown/raml10/unions/triple-unions.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val parseBU      = parseResult.baseUnit
-      val transformBU  = ramlClient.transform(parseBU, pipeline = PipelineId.Editing).baseUnit
-      val declarations = getDeclarations(transformBU)
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val declarations = getDeclarations(bu)
 
       val unionInArray      = declarations(1).asInstanceOf[ArrayShape]
       val unionInArrayUnion = unionInArray.items.asInstanceOf[UnionShape]
@@ -561,9 +567,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-13595824
   test("transforming raml with nested UnionShapes should NOT flatten union members") {
     val api = "file://amf-cli/shared/src/test/resources/union/inner-union.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val transformBU  = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
-      val declarations = getDeclarations(transformBU)
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val declarations = getDeclarations(bu)
 
       // in parsing they are an union that inherits an union with anyOf of a ScalarShape and an UnionShape with link-target to the next Union (SomeType, OtherType)
       val unionType = declarations.head.asInstanceOf[UnionShape]
@@ -582,15 +587,251 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // W-13595824
   test("transforming raml with 3+ unions should NOT duplicate IDs when flattening members") {
     val api = s"$basePath/raml/triple-union.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val transformBU          = ramlClient.transform(parseResult.baseUnit, pipeline = PipelineId.Editing).baseUnit
-      val declarations         = getDeclarations(transformBU)
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val declarations         = getDeclarations(bu)
       val unionInArrayProperty = declarations.last.asInstanceOf[NodeShape]
       val complexArrayProperty = unionInArrayProperty.properties.head
       val complexArrayRange    = complexArrayProperty.range
       val complexArrayUnion    = complexArrayRange.asInstanceOf[ArrayShape].items.asInstanceOf[UnionShape]
 
       complexArrayUnion.anyOf.map(_.id).distinct.length shouldBe 3
+    }
+  }
+
+  // W-12689955
+  test("async 2.2+ add channel servers transformation") {
+    val api = s"$basePath/async20/validations/channel-servers.yaml"
+    asyncClient.parse(api) flatMap { parseResult =>
+      val transformResult = asyncClient.transform(parseResult.baseUnit)
+      val transformBU     = transformResult.baseUnit
+      val endpoint        = getFirstEndpoint(transformBU, isWebApi = false)
+      val endpointServers = endpoint.servers
+      getApi(transformBU, isWebApi = false).servers.intersect(endpointServers).size shouldBe 3
+      transformResult.results.size shouldBe 1
+    }
+  }
+
+  // W-12689955
+  test("async2.0 should not emit server channels if not specified") {
+    val api = s"$basePath/async20/validations/channel-servers-async20.yaml"
+    modelAssertion(api) { bu =>
+      val endpoint        = getFirstEndpoint(bu, isWebApi = false)
+      val endpointServers = endpoint.servers
+      // channel should have all servers linked
+      endpointServers.size shouldBe 3
+
+      val render          = asyncClient.render(bu)
+      val serversInRender = render.linesIterator.filter(_.contains("servers:")).toArray
+      // but only the declared root servers should be present in the rendered API
+      serversInRender.length shouldBe 1
+    }
+  }
+
+  // W-12689962
+  test("async2.4+ explicit operation security facet") {
+    val api = s"$basePath/async20/validations/operation-security-explicit.yaml"
+    modelAssertion(api) { bu =>
+      val endpoint = getFirstEndpoint(bu, isWebApi = false)
+
+      val serverSecurity    = endpoint.servers.head.security.head.schemes.head
+      val operationSecurity = endpoint.operations.head.security.head.schemes.head
+
+      val serverSecurityScopes    = serverSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+      val operationSecurityScopes = operationSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+
+      serverSecurityScopes.size shouldBe 2
+      operationSecurityScopes.size shouldBe 1
+    }
+  }
+
+  // W-12689962
+  test("async2.4+ resolve implicit operation security facet") {
+    val api = s"$basePath/async20/validations/operation-security-implicit.yaml"
+    modelAssertion(api) { bu =>
+      val endpoint = getFirstEndpoint(bu, isWebApi = false)
+
+      val serverSecurity    = endpoint.servers.head.security.head.schemes.head
+      val operationSecurity = endpoint.operations.head.security.head.schemes.head
+
+      val serverSecurityScopes    = serverSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+      val operationSecurityScopes = operationSecurity.settings.asInstanceOf[OAuth2Settings].flows.head.scopes
+
+      serverSecurityScopes.size shouldBe 2
+      operationSecurityScopes.size shouldBe 2
+    }
+  }
+
+  // W-13014769
+  test("OAS components parsing should throw unresolved references like OAS 3") {
+    val api = s"$basePath/oas3/oas-components-unresolved-ref.yaml"
+    oasComponentsClient.parse(api).flatMap { parseResultComponents =>
+      oasClient.parse(api).map { parseResultOas =>
+        parseResultOas.toString() shouldEqual parseResultComponents.toString()
+      }
+    }
+  }
+
+  // W-15633176
+  test("parse AVRO Schema in an Async API") {
+    val api = s"$basePath/avro/valid-avro-schema.yaml"
+    modelAssertion(api) { bu =>
+      val schema = getFirstRequestPayload(bu, isWebApi = false).schema
+      schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
+    }
+  }
+
+  // W-16540082
+  test("test all primitive avro types XSD mappings") {
+    val api = s"$basePath/avro/all-primitive-types.yaml"
+    modelAssertion(api) { bu =>
+      val schema = getFirstRequestPayload(bu, isWebApi = false).schema
+      asyncConfig.elementClient().buildJsonSchema(schema.asInstanceOf[NodeShape])
+      schema.annotations.contains(classOf[AVROSchemaType]) shouldBe true
+    }
+  }
+
+  // W-16609870
+  test("async avro message payloads should be virtual by default unless explicitly declared") {
+    val api = s"$basePath/async20/virtual-payload-async.yaml"
+    modelAssertion(api) { bu =>
+      val response      = getFirstResponse(bu, isWebApi = false)
+      val payload       = response.payloads.head
+      val payloadSchema = payload.schema
+      payloadSchema should not be null
+    }
+  }
+
+  // W-16596042
+  test("avro map empty values field should have lexical information") {
+    val api = s"$basePath/avro/map-empty-values.avsc"
+    avroClient.parse(api) flatMap { parseResult =>
+      val transformResult = avroClient.transform(parseResult.baseUnit)
+      val mapShape        = getAvroShape(transformResult).asInstanceOf[NodeShape]
+      val values          = mapShape.additionalPropertiesSchema
+      values.annotations.lexical() should not be null
+    }
+  }
+
+  // W-16701643
+  test("async avro payload validation") {
+    val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example.yaml"
+    modelAssertion(api) { bu =>
+      val avroPayload = getFirstResponsePayload(bu, isWebApi = false)
+      val avroShape   = avroPayload.schema
+      val payloadValidator = asyncConfig
+        .elementClient()
+        .payloadValidatorFor(avroShape, Mimes.`application/json`, ValidationMode.StrictValidationMode)
+      val invalidPayload = """{"simpleIntField": "invalid string value"}""".trim
+      val validPayload   = """{"simpleIntField": 123}""".trim
+      val invalidResult  = payloadValidator.syncValidate(invalidPayload)
+      val validResult    = payloadValidator.syncValidate(validPayload)
+      invalidResult.conforms shouldBe false
+      validResult.conforms shouldBe true
+    }
+  }
+
+  // W-16701643
+  test("async avro payload validation with avro payload in external file") {
+    val api = s"$basePath/async20/validations/async-avro-payload-validation/invalid-payload-example-refs.yaml"
+    modelAssertion(api) { bu =>
+      val avroPayload = getFirstResponsePayload(bu, isWebApi = false)
+      val avroShape   = avroPayload.schema
+      val payloadValidator = asyncConfig
+        .elementClient()
+        .payloadValidatorFor(avroShape, Mimes.`application/json`, ValidationMode.StrictValidationMode)
+      val invalidPayload = """{"simpleIntField": "invalid string value"}""".trim
+      val validPayload   = """{"simpleIntField": 123}""".trim
+      val invalidResult  = payloadValidator.syncValidate(invalidPayload)
+      val validResult    = payloadValidator.syncValidate(validPayload)
+      invalidResult.conforms shouldBe false
+      validResult.conforms shouldBe true
+    }
+  }
+
+  // W-17128842
+  test("test oas multiline text with escape character") {
+    val api = s"$basePath/oas3/fr_atmnetworkoperations-summarized.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      parseResult.results.size shouldBe 0
+      parseResult.conforms shouldBe true
+    }
+  }
+
+  // bug ALS
+  test("avro record empty `type` field should have lexical information") {
+    val api = s"$basePath/avro/record-empty-type.avsc"
+    avroClient.parse(api) flatMap { parseResult =>
+      val transformResult   = avroClient.transform(parseResult.baseUnit)
+      val record            = getAvroShape(transformResult).asInstanceOf[NodeShape]
+      val recordFieldSchema = record.properties.head.range
+      recordFieldSchema.annotations.lexical() should not be null
+    }
+  }
+
+  // W-16888404
+  test("async solace server parameter should have description at parameter level") {
+    val api = s"$basePath/async20/validations/solace-server.yaml"
+    modelAssertion(api) { bu =>
+      val solaceServer  = getServers(bu, isWebApi = false).head
+      val portParameter = solaceServer.variables.head
+      portParameter.description.nonNull shouldBe true
+      portParameter.schema.description.isNullOrEmpty shouldBe true
+    }
+  }
+
+  // W-10548463
+  test("OAS 3.1 summary and description facet") {
+    val api = s"file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-ref-fields.yaml"
+    modelAssertion(api, pipelineId = PipelineId.Editing) { bu =>
+      val request            = getFirstRequest(bu)
+      val requestDescription = request.description.value()
+
+      val parameter            = request.queryParameters.head
+      val parameterDescription = parameter.description.value()
+
+      val response            = getFirstResponse(bu)
+      val responseDescription = response.description.value()
+
+      val responseLink            = response.links.head
+      val responseLinkDescription = responseLink.description.value()
+
+      val responseHeader            = response.headers.head
+      val responseHeaderDescription = responseHeader.description.value()
+
+      val responseSchema                   = response.payloads.head.schema
+      val responseSchemaExample            = responseSchema.asInstanceOf[AnyShape].examples.head
+      val responseSchemaExampleDescription = responseSchemaExample.description.value()
+      val responseSchemaExampleSummary     = responseSchemaExample.summary.value()
+
+      val allAreBeingOverridden = Seq(
+        requestDescription,
+        parameterDescription,
+        responseDescription,
+        responseLinkDescription,
+        responseHeaderDescription,
+        responseSchemaExampleSummary,
+        responseSchemaExampleDescription
+      ).forall(_.contains("should override the referenced one"))
+
+      allAreBeingOverridden shouldBe true
+    }
+  }
+
+  // ruleset test W-16070725 W-17562799
+  test("test query and header parameters in OAS3") {
+    val api = s"$basePath/oas3/parameters.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      val transformBu  = oasClient.transform(parseResult.baseUnit).baseUnit
+      val request      = getFirstRequest(transformBu)
+      val queryParam   = request.queryParameters.head
+      val header       = request.headers.head
+      val queryParamEx = queryParam.examples
+      val headerEx     = header.examples
+      (queryParamEx.isEmpty && headerEx.isEmpty) shouldBe true
+      // both should have the example in the schema, not the parameter
+      val queryParamSchemaEx = queryParam.schema.asInstanceOf[ScalarShape].examples
+      val headerSchemaEx     = header.schema.asInstanceOf[ScalarShape].examples
+      (queryParamSchemaEx.nonEmpty && headerSchemaEx.nonEmpty) shouldBe true
     }
   }
 }

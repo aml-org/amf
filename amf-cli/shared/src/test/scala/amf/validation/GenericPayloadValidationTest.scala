@@ -1,26 +1,22 @@
 package amf.validation
+
 import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.apicontract.internal.spec.payload.PayloadParsePlugin
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, Module, PayloadFragment}
+import amf.core.client.scala.model.document.{Module, PayloadFragment}
 import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.remote.{PayloadJsonHint, PayloadYamlHint}
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.shapes.internal.validation.payload.CandidateValidator
-import org.scalatest.funsuite.AsyncFunSuite
-import org.yaml.builder.JsonOutputBuilder
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class GenericPayloadValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   val payloadsPath = "file://amf-cli/shared/src/test/resources/payloads/"
 
@@ -105,31 +101,5 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         }
       }
     }
-  }
-
-//  test("payload parsing test") {
-//    val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-//    for {
-//      content    <- platform.fetchContent(payloadsPath + "b_valid.yaml", config)
-//      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, config = config)
-//        .build()
-//      validationPayload <- Validation(platform)
-//      textPayload <- AMFCompiler(
-//        payloadsPath + "b_valid.yaml",
-//        TrunkPlatform(content.stream.toString, forcedMediaType = Some("application/yaml")),
-//        PayloadYamlHint,
-//        config = config
-//      ).build()
-//    } yield {
-//      val fileJson = render(filePayload)
-//      val textJson = render(textPayload)
-//      assert(fileJson == textJson)
-//    }
-//
-//  }
-  private def render(filePayload: BaseUnit) = {
-    val builder = JsonOutputBuilder()
-    EmbeddedJsonLdEmitter.emit(filePayload, builder)
-    builder.result.toString
   }
 }

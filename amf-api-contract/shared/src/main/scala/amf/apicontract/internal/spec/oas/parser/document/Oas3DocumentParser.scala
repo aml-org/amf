@@ -4,7 +4,6 @@ import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
 import amf.apicontract.internal.spec.common.parser.{
   AbstractDeclarationsParser,
@@ -13,7 +12,6 @@ import amf.apicontract.internal.spec.common.parser.{
 }
 import amf.apicontract.internal.spec.oas.parser.Oas3ReferencesParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.core.internal.utils._
 import amf.apicontract.internal.spec.oas.parser.domain.{
   Oas30CallbackParser,
   Oas30RequestParser,
@@ -25,11 +23,17 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
+import amf.core.internal.utils._
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, Oas3NamedExamplesParser}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
-    extends OasDocumentParser(root, Spec.OAS30) {
+object Oas3DocumentParser {
+  def apply(root: Root, spec: Spec = Spec.OAS30)(implicit ctx: OasWebApiContext): Oas3DocumentParser =
+    new Oas3DocumentParser(root, spec)
+}
+
+class Oas3DocumentParser(root: Root, spec: Spec = Spec.OAS30)(implicit override val ctx: OasWebApiContext)
+    extends Oas2DocumentParser(root, spec) {
 
   override protected def buildReferencesParser(document: Document, map: YMap): WebApiLikeReferencesParser =
     Oas3ReferencesParser(document, root)
@@ -38,11 +42,6 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     YamlTagValidator.validate(root)
     val api = super.parseWebApi(map)
     AnnotationParser(api, map).parseOrphanNode("components")
-
-    map.key("consumes".asOasExtension, WebApiModel.Accepts in api)
-    map.key("produces".asOasExtension, WebApiModel.ContentType in api)
-    map.key("schemes".asOasExtension, WebApiModel.Schemes in api)
-
     api
   }
 

@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
@@ -181,14 +181,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#host-lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/host-lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#host-lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/host-lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#virtual-element": [
@@ -451,14 +451,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(7,48)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/host-lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(18,31)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/host-lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(18,31)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/server/petstore.swagger.io%2Fapi/source-map/virtual-element/element_0",
@@ -1668,14 +1668,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#body-parameter": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/body-parameter/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#body-parameter": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/body-parameter/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
@@ -2028,11 +2028,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/lexical/element_2"
@@ -2042,6 +2037,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -2085,11 +2085,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/lexical/element_3"
@@ -2102,6 +2097,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -2145,14 +2145,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/auto-generated-name/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/auto-generated-name/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
@@ -2232,14 +2232,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/auto-generated-name/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/lexical/element_0"
         }
       ]
     },
@@ -2286,6 +2286,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/synthesized-field/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/type-property-lexical-info/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/lexical/element_1"
@@ -2293,22 +2298,17 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/lexical/element_0"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/type-property-lexical-info/element_0"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/body-parameter/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson",
       "http://a.ml/vocabularies/document-source-maps#value": "[(64,10)-(72,11)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/body-parameter/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/application%2Fjson/source-map/required-param-payload/element_0",
@@ -2405,14 +2405,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/type-property-lexical-info/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/auto-generated-name/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/lexical/element_0"
         }
       ]
     },
@@ -2431,11 +2431,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/lexical/element_3"
@@ -2448,6 +2443,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -2501,11 +2501,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/lexical/element_3"
@@ -2518,6 +2513,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -2566,11 +2566,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/lexical/element_1"
@@ -2578,12 +2573,12 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/lexical/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/type-property-lexical-info/element_0"
+        }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(7,10)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/lexical/element_2",
@@ -2601,9 +2596,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,15)-(12,3)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(18,10)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(7,10)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/lexical/element_3",
@@ -2626,14 +2621,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,17)-(20,3)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/limit/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(18,10)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default",
       "http://a.ml/vocabularies/document-source-maps#value": "[(45,12)-(50,13)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/returns/resp/200/payload/default/array/default/source-map/type-property-lexical-info/element_0",
@@ -2727,14 +2727,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(2,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(16,1)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/auto-generated-name/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(16,1)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description",
@@ -2811,6 +2811,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(2,8)]"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(19,1)]"
@@ -2819,11 +2824,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#and",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(18,3)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(2,8)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id",
@@ -2949,19 +2949,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(2,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(19,1)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/auto-generated-name/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(100,12)-(100,18)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(19,1)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/lexical/element_3",
@@ -2984,9 +2979,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(95,10)-(102,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(128,12)-(128,18)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/expects/request/uri%20parameter/parameter/path/id/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(100,12)-(100,18)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/lexical/element_3",
@@ -3009,9 +3004,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(123,10)-(130,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(10,12)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/delete/deletePet/expects/request/uri%20parameter/parameter/path/id/scalar/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(128,12)-(128,18)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/lexical/element_1",
@@ -3024,14 +3019,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(10,22)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/get/findPets/expects/request/parameter/parameter/query/tags/array/schema/scalar/items",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(10,12)]"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map/type-property-lexical-info/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -3042,6 +3037,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3060,17 +3060,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3170,11 +3170,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/lexical/element_2"
@@ -3184,6 +3179,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3202,17 +3202,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3231,17 +3231,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3254,11 +3254,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(17,5)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map/lexical/element_2",
@@ -3276,9 +3271,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(11,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(13,12)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/code/scalar/code",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/lexical/element_1",
@@ -3291,14 +3286,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(13,22)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/default/payload/default/shape/schema/property/property/message/scalar/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(13,12)]"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/type-property-lexical-info/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -3309,6 +3304,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3343,11 +3343,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,12)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,23)]"
@@ -3363,9 +3358,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(11,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(13,12)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/id/scalar/id",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/lexical/element_1",
@@ -3378,9 +3373,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(13,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(16,12)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/name/scalar/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(13,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/lexical/element_1",
@@ -3393,9 +3388,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(16,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(13,16)]"
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/find%20pet%20by%20id/returns/resp/200/payload/default/shape/item0/property/property/tag/scalar/tag",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(16,12)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/lexical/element_2",
@@ -3411,6 +3406,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(15,9)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/endpoint/%2Fpets/supportedOperation/post/addPet/expects/request/payload/pet/shape/pet/and/shape/item1/property/property/description/scalar/description",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(13,16)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/oas-complex-example/spec/swagger.json",

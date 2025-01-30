@@ -246,7 +246,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [
@@ -752,6 +752,102 @@
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/Query",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/Query/property/property/rootField",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/Query/property/property/rootField/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "rootField"
+              }
+            ],
+            "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example": {
+              "http://a.ml/vocabularies/core#extensionName": [
+                {
+                  "@value": "example"
+                }
+              ],
+              "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/Query/property/property/rootField/customDomainProperties/example/data-node",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object",
+                "http://a.ml/vocabularies/data#Node",
+                "http://a.ml/vocabularies/document#DomainElement"
+              ],
+              "http://a.ml/vocabularies/data#text": [
+                {
+                  "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/shape/Query/property/property/rootField/customDomainProperties/example/data-node/text",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar",
+                    "http://a.ml/vocabularies/data#Node",
+                    "http://a.ml/vocabularies/document#DomainElement"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "Jorge"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/directive-applications.api.graphql#/declares/example"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Query"
           }
         ]
       },

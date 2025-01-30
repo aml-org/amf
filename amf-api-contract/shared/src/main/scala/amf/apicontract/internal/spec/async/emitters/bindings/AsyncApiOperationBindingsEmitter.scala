@@ -5,19 +5,17 @@ import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationB
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  Amqp091OperationBindingModel,
-  HttpOperationBindingModel,
-  KafkaOperationBindingModel,
-  MqttOperationBindingModel
-}
+import amf.apicontract.client.scala.model.domain.bindings.solace._
+import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.spec.async.emitters.domain
+import amf.apicontract.internal.spec.async.emitters.domain.AsyncApiDestinationsEmitter
+import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Solace
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
@@ -35,6 +33,7 @@ class AsyncApiOperationBindingsEmitter(binding: OperationBinding, ordering: Spec
     case binding: HttpOperationBinding    => Some(new HttpOperationBindingEmitter(binding, ordering))
     case binding: KafkaOperationBinding   => Some(new KafkaOperationBindingEmitter(binding, ordering))
     case binding: MqttOperationBinding    => Some(new MqttOperationBindingEmitter(binding, ordering))
+    case binding: SolaceOperationBinding  => Some(new SolaceOperationBindingEmitter(binding, ordering))
     case _                                => None
   }
 
@@ -51,7 +50,7 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
         val fs     = binding.fields
         val result = ListBuffer[EntryEmitter]()
 
-        fs.entry(HttpOperationBindingModel.OperationType).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(HttpOperationBinding010Model.OperationType).foreach(f => result += ValueEmitter("type", f))
         fs.entry(HttpOperationBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(HttpOperationBindingModel.Query)
           .foreach(f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
@@ -101,6 +100,12 @@ class MqttOperationBindingEmitter(binding: MqttOperationBinding, ordering: SpecO
 
         fs.entry(MqttOperationBindingModel.Qos).foreach(f => result += ValueEmitter("qos", f))
         fs.entry(MqttOperationBindingModel.Retain).foreach(f => result += ValueEmitter("retain", f))
+        fs.entry(MqttOperationBinding020Model.MessageExpiryInterval)
+          .foreach(f => result += ValueEmitter("messageExpiryInterval", f))
+        fs.entry(MqttOperationBinding020Model.MessageExpiryIntervalSchema)
+          .foreach(f =>
+            result += domain.AsyncSchemaEmitter("messageExpiryInterval", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -128,9 +133,40 @@ class Amqp091OperationBindingEmitter(binding: Amqp091OperationBinding, ordering:
         fs.entry(Amqp091OperationBindingModel.DeliveryMode).foreach(f => result += ValueEmitter("deliveryMode", f))
         fs.entry(Amqp091OperationBindingModel.Mandatory).foreach(f => result += ValueEmitter("mandatory", f))
         fs.entry(Amqp091OperationBindingModel.BCC).foreach(f => result += spec.arrayEmitter("bcc", f, ordering))
-        fs.entry(Amqp091OperationBindingModel.ReplyTo).foreach(f => result += ValueEmitter("replyTo", f))
+        fs.entry(Amqp091OperationBinding010Model.ReplyTo).foreach(f => result += ValueEmitter("replyTo", f))
         fs.entry(Amqp091OperationBindingModel.Timestamp).foreach(f => result += ValueEmitter("timestamp", f))
         fs.entry(Amqp091OperationBindingModel.Ack).foreach(f => result += ValueEmitter("ack", f))
+        emitBindingVersion(fs, result)
+
+        traverse(ordering.sorted(result), emitter)
+      }
+    )
+  }
+
+  override def position(): Position = pos(binding.annotations)
+}
+
+class SolaceOperationBindingEmitter(binding: SolaceOperationBinding, ordering: SpecOrdering)(implicit
+    val spec: OasLikeSpecEmitterContext
+) extends AsyncApiCommonBindingEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      YNode(Solace),
+      _.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        val fs     = binding.fields
+
+        fs.entry(SolaceOperationBindingModel.Destinations)
+          .foreach(f => result += AsyncApiDestinationsEmitter(f, ordering))
+        binding match {
+          case binding040: SolaceOperationBinding040 =>
+            fs.entry(SolaceOperationBinding040Model.TimeToLive).foreach(f => result += ValueEmitter("timeToLive", f))
+            fs.entry(SolaceOperationBinding040Model.Priority).foreach(f => result += ValueEmitter("priority", f))
+            fs.entry(SolaceOperationBinding040Model.DmqEligible).foreach(f => result += ValueEmitter("dmqEligible", f))
+          case _ =>
+        }
+
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

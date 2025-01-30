@@ -1,0 +1,98 @@
+asyncapi: 2.1.0
+info:
+  title: Market Data API
+  version: 1.0.0
+  description: This API provides real-time market data updates.
+servers:
+  theName:
+    url: some.com
+    protocol: ibmmq
+    bindings:
+      ibmmq:
+        groupId: test
+        ccdtQueueManagerName: test
+        cipherSpec: test
+        multiEndpointServer: true
+        heartBeatInterval: 123
+channels:
+  user/sarasa:
+    subscribe:
+      summary: Subscribe to market updates
+      message:
+        name: errorMessage
+        summary: Message with market data information.
+        description: |
+          test
+        payload:
+          type: object
+          properties:
+            prop1:
+              type: string
+        examples:
+          -
+            name: error
+            summary: example
+            headers:
+              exampleHeader: InlineHeader
+            payload:
+              userId: user345
+              status: offline
+  some-channel:
+    bindings:
+      ibmmq:
+        destinationType: queue
+        queue:
+          objectName: test
+          isPartitioned: true
+          exclusive: false
+        maxMsgLength: 123
+        bindingVersion: test
+  some-other-channel:
+    bindings:
+      ibmmq:
+        destinationType: topic
+        topic:
+          string: test
+          objectName: test
+          durablePermitted: true
+          lastMsgRetained: false
+        maxMsgLength: 123
+        bindingVersion: test
+    description: some channel
+    publish:
+      bindings:
+        ibmmq: {}
+      message:
+        bindings:
+          ibmmq:
+            type: binary
+            description: test
+            expiry: 123
+            bindingVersion: test
+            headers: test1, test2, test3
+        payload:
+          type: string
+components:
+  messages:
+    marketData:
+      name: messageName
+      summary: Message with market data information.
+      description: |
+        test
+      payload:
+        $ref: "#/components/schemas/market"
+      examples:
+        -
+          name: updatemessage
+          summary: explain
+          payload:
+            userId: user123
+            status: online
+          headers:
+            exampleHeader: HeaderValue
+  schemas:
+    market:
+      type: object
+      properties:
+        type:
+          type: string

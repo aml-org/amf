@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "type": "object",
+  "@context": {
+    "alias": "http://a.ml/vocabularies/core#",
+    "prop1": "alias:prop2"
+  },
+  "properties": {
+    "prop1": {
+      "type": "boolean"
+    },
+    "prop2": {
+      "type": "string"
+    }
+  }
+}

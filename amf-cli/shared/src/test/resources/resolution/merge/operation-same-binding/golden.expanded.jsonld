@@ -29,9 +29,9 @@
             ],
             "http://a.ml/vocabularies/apiBinding#bindings": [
               {
-                "@id": "target/operation-bindings/http-operation",
+                "@id": "target/operation-bindings/http-operation-010",
                 "@type": [
-                  "http://a.ml/vocabularies/apiBinding#HttpOperationBinding",
+                  "http://a.ml/vocabularies/apiBinding#HttpOperationBinding010",
                   "http://a.ml/vocabularies/apiBinding#OperationBinding",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -42,7 +42,7 @@
                 ],
                 "http://a.ml/vocabularies/apiBinding#query": [
                   {
-                    "@id": "target/operation-bindings/bindings/http-operation#/shape/schema",
+                    "@id": "target/operation-bindings/bindings/http-operation-010#/shape/schema",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -57,7 +57,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#property": [
                       {
-                        "@id": "target/operation-bindings/bindings/http-operation#/shape/schema/property/some",
+                        "@id": "target/operation-bindings/bindings/http-operation-010#/shape/schema/property/some",
                         "@type": [
                           "http://www.w3.org/ns/shacl#PropertyShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -71,7 +71,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#range": [
                           {
-                            "@id": "target/operation-bindings/bindings/http-operation#/shape/schema/property/some/scalar/some",
+                            "@id": "target/operation-bindings/bindings/http-operation-010#/shape/schema/property/some/scalar/some",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -144,7 +144,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ]
       }

@@ -1,0 +1,17 @@
+asyncapi: 2.6.0
+info:
+  title: test pulsar binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: pulsar
+    bindings:
+      pulsar: {}
+channels:
+  some-channel:
+    bindings:
+      pulsar:
+        namespace: test
+        persistence: test
+    description: some channel

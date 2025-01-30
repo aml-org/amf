@@ -5,6 +5,7 @@ import amf.core.internal.remote.{AmfJsonHint, GraphQLHint}
 import amf.cycle.GraphQLFunSuiteCycleTests
 
 class GraphQLTCKParsingTest extends GraphQLFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql/tck/apis/valid/"
 
   // Test valid APIs
@@ -31,8 +32,12 @@ class GraphQLTCKParsingTest extends GraphQLFunSuiteCycleTests {
   }
 
   test("GraphQL TCK > Apis > Valid > directive-repeatable.graphql: dumped Flattened JSON matches golden") {
-    cycle("directive-repeatable.graphql", "directive-repeatable.flattened.jsonld", GraphQLHint, AmfJsonHint, renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint))
+    cycle(
+      "directive-repeatable.graphql",
+      "directive-repeatable.flattened.jsonld",
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint)
+    )
   }
-
-  override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }

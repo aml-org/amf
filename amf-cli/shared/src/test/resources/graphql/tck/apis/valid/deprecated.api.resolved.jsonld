@@ -165,7 +165,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [
@@ -181,6 +181,176 @@
       }
     ],
     "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Query",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Query/property/property/person",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#property": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person/property/property/name",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person/property/property/name/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "name"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person/property/property/firstName",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person/property/property/firstName/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "firstName"
+                      }
+                    ],
+                    "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/deprecated": {
+                      "http://a.ml/vocabularies/core#extensionName": [
+                        {
+                          "@value": "deprecated"
+                        }
+                      ],
+                      "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person/property/property/firstName/customDomainProperties/deprecated/data-node",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Object",
+                        "http://a.ml/vocabularies/data#Node",
+                        "http://a.ml/vocabularies/document#DomainElement"
+                      ],
+                      "http://a.ml/vocabularies/data#reason": [
+                        {
+                          "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person/property/property/firstName/customDomainProperties/deprecated/data-node/reason",
+                          "@type": [
+                            "http://a.ml/vocabularies/data#Scalar",
+                            "http://a.ml/vocabularies/data#Node",
+                            "http://a.ml/vocabularies/document#DomainElement"
+                          ],
+                          "http://a.ml/vocabularies/data#value": [
+                            {
+                              "@value": "Use `name` instead"
+                            }
+                          ],
+                          "http://www.w3.org/ns/shacl#datatype": [
+                            {
+                              "@id": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/core#name": [
+                            {
+                              "@value": "reason"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "http://a.ml/vocabularies/document#customDomainProperties": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/deprecated"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "Person"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "person"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Query"
+          }
+        ]
+      },
       {
         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/deprecated.api.graphql#/declares/shape/Person",
         "@type": [

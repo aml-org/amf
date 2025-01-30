@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-missing-key.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#required-field
+  Message: field 'namespace' is required in a Pulsar Channel Binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-missing-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/pulsar-channel
+  Property: 
+  Range: 
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-missing-key.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#required-field
+  Message: field 'persistence' is required in a Pulsar Channel Binding
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-missing-key.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/pulsar-channel
+  Property: 
+  Range: 
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/pulsar-binding-missing-key.yaml

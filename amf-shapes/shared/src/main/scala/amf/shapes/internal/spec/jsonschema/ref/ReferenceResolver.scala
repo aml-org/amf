@@ -6,15 +6,16 @@ import org.yaml.model.{YMap, YNode, YSequence, YType}
 
 import java.net.URI
 import scala.annotation.tailrec
+import scala.collection.mutable
 import scala.util.Try
 
 trait ReferenceResolver {
-  def resolve(reference: String, index: Map[String, YMapEntryLike]): Option[YMapEntryLike]
+  def resolve(reference: String, index: mutable.Map[String, YMapEntryLike]): Option[YMapEntryLike]
 }
 
 object FragmentTraversingResolver extends ReferenceResolver {
 
-  override def resolve(reference: String, index: Map[String, YMapEntryLike]): Option[YMapEntryLike] =
+  override def resolve(reference: String, index: mutable.Map[String, YMapEntryLike]): Option[YMapEntryLike] =
     Try(new URI(reference)).toOption.flatMap { uri =>
       val fragment = uri.getRawFragment
       val baseUri  = reference.stripSuffix(s"#$fragment")

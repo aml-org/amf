@@ -9,6 +9,7 @@ import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, AsyncApi20, Spec}
 class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-cli/shared/src/test/resources/resolution/async20/"
   private val validationsPath: String = "amf-cli/shared/src/test/resources/validations/async20/"
+  private val referencePath: String   = "amf-cli/shared/src/test/resources/references/async/"
 
   multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
     config =>
@@ -197,6 +198,135 @@ class Async20ResolutionTest extends ResolutionTest {
       target = AmfJsonHint,
       directory = validationsPath + "validations/external-reference/",
       renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Referencing declared servers and channels in 2.3", "async-2.3-components.%s") { config =>
+    cycle(
+      "async-2.3-components.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // W-12689955
+  multiGoldenTest("Should add specified servers to channels", "channel-servers.%s") { config =>
+    cycle(
+      "channel-servers.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.3", "channel-servers-23.%s") { config =>
+    cycle(
+      "channel-servers-23.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.4", "channel-servers-2.4.%s") { config =>
+    cycle(
+      "channel-server-2.4.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.5", "channel-servers-2.5.%s") { config =>
+    cycle(
+      "channel-server-2.5.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+  multiGoldenTest("Should add specified servers to channels in 2.6", "channel-servers-2.6.%s") { config =>
+    cycle(
+      "channel-server-2.6.yaml",
+      config.golden,
+      Async20YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // W-12689955
+  multiGoldenTest("Should add all servers to channels when servers isn't specified", "channel-servers-implicit.%s") {
+    config =>
+      cycle(
+        "channel-servers-implicit.yaml",
+        config.golden,
+        Async20YamlHint,
+        target = AmfJsonHint,
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  // W-12689955
+  test("async2.0 should not emit server channels if not specified") {
+    cycle(
+      "channel-servers-implicit.yaml",
+      "channel-servers-implicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+  // W-12689955
+  test("async2.0 should emit empty server channels keyword") {
+    cycle(
+      "channel-servers-empty.yaml",
+      "channel-servers-empty.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+  // W-12689962
+  test("async should not emit operation security if not specified") {
+    cycle(
+      "operation-security-implicit.yaml",
+      "operation-security-implicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+//   W-12689962
+  test("async should emit operation security keyword") {
+    cycle(
+      "operation-security-explicit.yaml",
+      "operation-security-explicit.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint
+    )
+  }
+
+  test("async 2.0 should resolve inner references correctly") {
+    cycle(
+      "async20.yaml",
+      "async20.yaml.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint,
+      directory = referencePath
+    )
+  }
+
+  test("async 2.6 should resolve inner references correctly") {
+    cycle(
+      "async26.yaml",
+      "async26.yaml.yaml",
+      Async20YamlHint,
+      target = Async20YamlHint,
+      directory = referencePath
     )
   }
 

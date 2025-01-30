@@ -78,6 +78,7 @@ trait ModelValidationTest extends DirectoryTest {
       case Some(Raml08)     => Raml08Profile
       case Some(Oas20)      => Oas20Profile
       case Some(Oas30)      => Oas30Profile
+      case Some(Oas31)      => Oas31Profile
       case Some(AsyncApi20) => Async20Profile
       case _                => Raml10Profile
     }
@@ -95,7 +96,7 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.renderTarget.spec match {
-      case Raml08 | Raml10 | Oas20 | Oas30 =>
+      case Raml08 | Raml10 | Oas20 | Oas30 | Oas31 =>
         configFor(config.renderTarget.spec).baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")

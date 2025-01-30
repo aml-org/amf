@@ -14,7 +14,7 @@ type Query {
 }
 
 type Mutation {
-    changeUserStatus(input_: InputType!): OutputType
+    changeUserStatus: OutputType
 }
 
 """
@@ -67,3 +67,7 @@ extend enum Planet {
 }
 
 scalar Date
+
+type OutputType {
+    success(input_: InputType!): Boolean
+}

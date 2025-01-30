@@ -297,7 +297,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:sourceSpec": [
@@ -308,6 +308,167 @@
       }
     ],
     "doc:declares": [
+      {
+        "@id": "#/declares/shape/Query",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declares/shape/Query/property/property/name",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declares/shape/Query/property/property/name/scalar/default-scalar",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "name"
+              }
+            ]
+          }
+        ],
+        "raml-shapes:supportedOperation": [
+          {
+            "@id": "#/declares/shape/Query/supportedOperation/type",
+            "@type": [
+              "raml-shapes:Operation",
+              "core:Operation",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "type"
+              }
+            ],
+            "raml-shapes:expects": [
+              {
+                "@id": "#/declares/shape/Query/supportedOperation/type/expects/request",
+                "@type": [
+                  "raml-shapes:Request",
+                  "core:Request",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:parameter": [
+                  {
+                    "@id": "#/declares/shape/Query/supportedOperation/type/expects/request/parameter/parameter/param",
+                    "@type": [
+                      "raml-shapes:Parameter",
+                      "core:Parameter",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "param"
+                      }
+                    ],
+                    "raml-shapes:binding": [
+                      {
+                        "@value": "query"
+                      }
+                    ],
+                    "raml-shapes:required": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "raml-shapes:schema": [
+                      {
+                        "@id": "#/declares/shape/Query/supportedOperation/type/expects/request/parameter/parameter/param/scalar/default-scalar",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "raml-shapes:returns": [
+              {
+                "@id": "#/declares/shape/Query/supportedOperation/type/returns/response",
+                "@type": [
+                  "raml-shapes:Response",
+                  "core:Response",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "default"
+                  }
+                ],
+                "raml-shapes:payload": [
+                  {
+                    "@id": "#/declares/shape/Query/supportedOperation/type/returns/response/default",
+                    "@type": [
+                      "raml-shapes:Payload",
+                      "core:Payload",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "raml-shapes:schema": [
+                      {
+                        "@id": "#/declares/shape/Query/supportedOperation/type/returns/response/default/any/default-any",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Query"
+          }
+        ]
+      },
       {
         "@id": "#/declares/shape/Person",
         "@type": [

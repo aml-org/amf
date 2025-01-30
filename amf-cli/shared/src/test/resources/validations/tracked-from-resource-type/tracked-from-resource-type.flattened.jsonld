@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -137,14 +137,14 @@
         "examp"
       ],
       "smaps": {
-        "declared-element": {
-          "#15": ""
-        },
         "lexical": {
           "doc:variable": "[(10,18)-(22,0)]",
           "core:name": "[(10,2)-(10,17)]",
           "#15": "[(10,2)-(22,0)]",
           "doc:dataNode": "[(11,4)-(22,0)]"
+        },
+        "declared-element": {
+          "#15": ""
         }
       }
     },
@@ -266,18 +266,18 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "declared-element": {
+          "#4": ""
+        },
+        "resolved-link-target": {
+          "#4": "amf://id#12"
+        },
         "resolved-link": {
           "#4": "amf://id#14"
         },
         "lexical": {
           "shacl:name": "[(5,2)-(5,9)]",
           "#4": "[(5,2)-(9,0)]"
-        },
-        "declared-element": {
-          "#4": ""
-        },
-        "resolved-link-target": {
-          "#4": "amf://id#13"
         }
       }
     },
@@ -744,7 +744,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:sourceSpec": "RAML 1.0"
     }
   ],

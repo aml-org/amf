@@ -1,0 +1,1083 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "OAS 3.1 with all new fields"
+          }
+        ],
+        "http://a.ml/vocabularies/core#version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/core#license": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/license",
+            "@type": [
+              "http://a.ml/vocabularies/core#License",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Apache 2.0"
+              }
+            ],
+            "http://a.ml/vocabularies/core#identifier": [
+              {
+                "@value": "Apache-2.0"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/endpoint/%2Fusers",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/users"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/endpoint/%2Fusers/supportedOperation/post/getUsers",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "getUsers"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/endpoint/%2Fusers/supportedOperation/post/getUsers/expects/request%2FrequestBody",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "requestBody"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/request%2FcreateUserRequest"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "createUserRequest"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/endpoint/%2Fusers/supportedOperation/post/getUsers/returns/resp/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "usersListResponse"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "getUsers"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#webhooks": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/webhooks/%2FnewPet",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/newPet"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/webhooks/%2FnewPet/supportedOperation/post",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/webhooks/%2FnewPet/supportedOperation/post/expects/request%2FrequestBody",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "requestBody"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "Information about a new pet in the system"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/webhooks/%2FnewPet/supportedOperation/post/expects/request%2FrequestBody/payload/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/webhooks/%2FnewPet/supportedOperation/post/expects/request%2FrequestBody/payload/application%2Fjson/any/schema",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/webhooks/%2FnewPet/supportedOperation/post/returns/resp/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "Return a 200 status to indicate that the data was received successfully"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.10.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "OAS 3.1"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#discriminator": [
+          {
+            "@value": "a"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "oneOfSchema"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#xone": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/exclusiveOr/shape/item0",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#closed": [
+              {
+                "@value": false
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/exclusiveOr/shape/item0/property/property/a",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#a"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/exclusiveOr/shape/item0/property/property/a/scalar/a",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "a"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "a"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "item0"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/exclusiveOr/shape/item1",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#closed": [
+              {
+                "@value": false
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/exclusiveOr/shape/item1/property/property/b",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#b"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/exclusiveOr/shape/item1/property/property/b/scalar/b",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "b"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "b"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "item1"
+              }
+            ]
+          }
+        ],
+        "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann/custom-ann": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "custom-ann"
+            }
+          ],
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann/scalar_1",
+          "@type": [
+            "http://a.ml/vocabularies/data#Scalar",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ],
+          "http://a.ml/vocabularies/data#value": [
+            {
+              "@value": "custom ann value"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/core#name": [
+            {
+              "@value": "scalar_1"
+            }
+          ]
+        },
+        "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann-test/custom-ann-test": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "custom-ann-test"
+            }
+          ],
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann-test/scalar_1",
+          "@type": [
+            "http://a.ml/vocabularies/data#Scalar",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ],
+          "http://a.ml/vocabularies/data#value": [
+            {
+              "@value": "custom ann value"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/core#name": [
+            {
+              "@value": "scalar_1"
+            }
+          ]
+        },
+        "http://a.ml/vocabularies/document#customDomainProperties": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann/custom-ann"
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann-test/custom-ann-test"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/id",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#id"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/id/scalar/id",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "id"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "id"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/name/scalar/name",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "name"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/email",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#email"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/email/scalar/email",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "email"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "email"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "User"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/core#Response",
+          "http://a.ml/vocabularies/apiContract#Message",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "usersListResponse"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "this response description should be overridden"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#payload": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/core#Payload",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson/array/schema",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#items": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson/array/schema/shape/items",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "User"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "items"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "schema"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#examples": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson/examples/example/usersExample",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Example",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "usersExample"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#mediaType": [
+                  {
+                    "@value": "application/json"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "usersList"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson/examples/example/usersExample/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson/examples/example/usersExample/source-map/tracked-element/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson/examples/example/usersExample"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/resp/usersListResponse/payload/application%2Fjson"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Example",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "usersList"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#guiSummary": [
+          {
+            "@value": "this example summary should be overridden"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "this example description should be overridden"
+          }
+        ],
+        "http://a.ml/vocabularies/document#strict": [
+          {
+            "@value": true
+          }
+        ],
+        "http://a.ml/vocabularies/document#structuredValue": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1",
+            "@type": [
+              "http://a.ml/vocabularies/data#Array",
+              "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+              "http://a.ml/vocabularies/data#Node",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#member": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_2",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#id": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_2/id",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "1"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "id"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#name": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_2/name_1",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "Alice"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "name"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#email": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_2/email",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "alice@example.com"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "email"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_2"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_6",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#id": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_6/id",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "2"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "id"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#name": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_6/name_2",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "Bob"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "name"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#email": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/example/usersList/array_1/member/object_6/email",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "bob@example.com"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "email"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_6"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "array_1"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#raw": [
+          {
+            "@value": "-\n  id: \"1\"\n  name: Alice\n  email: alice@example.com\n-\n  id: \"2\"\n  name: Bob\n  email: bob@example.com"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/request%2FcreateUserRequest",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Request",
+          "http://a.ml/vocabularies/core#Request",
+          "http://a.ml/vocabularies/apiContract#Message",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "createUserRequest"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "this request description should be overridden"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#payload": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/request%2FcreateUserRequest/payload/application%2Fjson",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/core#Payload",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#schema": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/request%2FcreateUserRequest/payload/application%2Fjson/scalar/schema",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "schema"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

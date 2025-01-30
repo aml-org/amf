@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: API with Inline Summary and Description for $ref
+  description: Demonstrates how to include summary and description alongside $ref.
+  version: 1.0.0
+paths:
+  /users:
+    post:
+      operationId: getUsers
+      parameters:
+        -
+          $ref: "#/components/parameters/userId"
+          description: this parameter description should override the referenced one
+      responses:
+        "200":
+          $ref: "#/components/responses/usersListResponse"
+          description: this response description should override the referenced one
+      requestBody:
+        $ref: "#/components/requestBodies/createUserRequest"
+        description: this request description should override the referenced one
+      security:
+        -
+          apiKeyAuth: []
+components:
+  parameters:
+    userId:
+      description: this parameter description should be overridden
+      name: userId
+      in: query
+      required: true
+      schema:
+        type: string
+  responses:
+    usersListResponse:
+      description: this response description should be overridden
+      headers:
+        aHeader:
+          $ref: "#/components/headers/xRateLimit"
+          description: this header description should override the referenced one
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/User"
+          examples:
+            usersExample:
+              $ref: "#/components/examples/usersList"
+              summary: this example summary should override the referenced one
+              description: this example description should override the referenced one
+      links:
+        aLink:
+          $ref: "#/components/links/userProfile"
+          description: this link description should override the referenced one
+  requestBodies:
+    createUserRequest:
+      description: this request description should be overridden
+      content:
+        application/json:
+          schema:
+            type: string
+  examples:
+    usersList:
+      summary: this example summary should be overridden
+      description: this example description should be overridden
+      value:
+        -
+          id: "1"
+          name: Alice
+          email: alice@example.com
+        -
+          id: "2"
+          name: Bob
+          email: bob@example.com
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+  securitySchemes:
+    apiKeyAuth:
+      description: this security scheme description should be overridden
+      type: apiKey
+      in: header
+      name: X-API-Key
+  x-amf-securitySchemes:
+    refToApiKeyAuth: {}
+  headers:
+    xRateLimit:
+      schema:
+        type: integer
+      description: this header description should be overridden
+  links:
+    userProfile:
+      description: this link description should be overridden
+      operationId: getUserById

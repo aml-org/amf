@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.domain.Shape
-import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.{IntField, StrField}
 import amf.core.internal.unsafe.PlatformSecrets
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
@@ -21,6 +21,12 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   def examples: ClientList[Example] = _internal.examples.asClient
   @JSExport
   def comment: StrField = _internal.comment
+  @JSExport
+  def namespace: StrField = _internal.namespace
+  @JSExport
+  def aliases: ClientList[StrField] = _internal.aliases.asClient
+  @JSExport
+  def size: IntField = _internal.size
 
   @JSExport
   def withDocumentation(documentation: CreativeWork): this.type = {
@@ -70,4 +76,28 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   // Aux method to know if the shape has the annotation of [[InlineDefinition]]
   @JSExport
   def inlined(): Boolean = _internal.inlined
+
+  @JSExport
+  def withNamespace(namespace: String): this.type = {
+    _internal.withNamespace(namespace)
+    this
+  }
+
+  @JSExport
+  def withAliases(aliases: Seq[String]): this.type = {
+    _internal.withAliases(aliases)
+    this
+  }
+
+  @JSExport
+  def withSize(size: Int): this.type = {
+    _internal.withSize(size)
+    this
+  }
+
+  @JSExport
+  def avroSchemaType(): ClientOption[String] = _internal.avroSchemaType.asClient
+
+  @JSExport
+  def isAvroSchema(): Boolean = _internal.isAvroSchema
 }

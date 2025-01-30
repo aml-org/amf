@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/components/oas3/oas-component-unresolved-ref.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference '#/components/responses/PageResponse'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/components/oas3/oas-component-unresolved-ref.yaml#/declares/shape/RequestTypeTOPaged/and/unresolved
+  Property: 
+  Range: [(14,10)-(15,0)]
+  Location: file://amf-cli/shared/src/test/resources/components/oas3/oas-component-unresolved-ref.yaml

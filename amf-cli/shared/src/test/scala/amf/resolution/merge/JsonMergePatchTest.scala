@@ -4,12 +4,12 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.{Message, Operation}
 import amf.apicontract.internal.spec.async.Subscribe
-import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
-import amf.apicontract.internal.spec.async.parser.domain.{AsyncMessageParser, AsyncOperationParser}
+import amf.apicontract.internal.spec.async.parser.context.{Async2WebApiContext, AsyncWebApiContext}
+import amf.apicontract.internal.spec.async.parser.domain.{Async20MessageParser, Async20OperationParser}
 import amf.apicontract.internal.spec.async.transformation.AsyncJsonMergePatch
 import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
 import amf.core.client.scala.adoption.IdAdopter
-import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DataNode, ScalarNode}
@@ -17,11 +17,12 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.convert.BaseUnitConverter
 import amf.core.internal.datanode.{DataNodeEmitter, DataNodeParser}
 import amf.core.internal.parser._
-import amf.core.internal.remote.AmfJsonHint
+import amf.core.internal.remote.{AmfJsonHint, AsyncApi20}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
+import amf.core.io.FileAssertionTest
 import amf.emit.AMFRenderer
-import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.io.MultiJsonldAsyncFunSuite
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.mulesoft.common.io.Fs
 import org.scalatest.Assertion
@@ -30,15 +31,14 @@ import org.yaml.model.{YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with FileAssertionTest {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val basePath                                             = "amf-cli/shared/src/test/resources/resolution/merge"
-  val operationBuilder: OperationDocumentHandler           = OperationDocumentHandler()
-  val messageBuilder: MessageDocumentHandler               = MessageDocumentHandler()
-  val dataNodeBuilder: DataNodeDocumentHandler             = DataNodeDocumentHandler()
+  val basePath                                   = "amf-cli/shared/src/test/resources/resolution/merge"
+  val operationBuilder: OperationDocumentHandler = OperationDocumentHandler()
+  val messageBuilder: MessageDocumentHandler     = MessageDocumentHandler()
+  val dataNodeBuilder: DataNodeDocumentHandler   = DataNodeDocumentHandler()
 
   class Fixture(
       val testName: String,
@@ -142,10 +142,13 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     }
 
     def getBogusParserCtx: AsyncWebApiContext =
-      new Async20WebApiContext(
+      Async2WebApiContext(
         "loc",
         Seq(),
-        ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty))
+        ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty)),
+        None,
+        ParsingOptions(),
+        spec = AsyncApi20
       )
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
@@ -172,7 +175,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       document
         .as[YMap]
         .key("subscribe")
-        .map(entry => AsyncOperationParser(entry, (o: Operation) => o.withId(id))(getBogusParserCtx).parse())
+        .map(entry => Async20OperationParser(entry, (o: Operation) => o.withId(id))(getBogusParserCtx).parse())
         .get
     }
   }
@@ -194,7 +197,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       document
         .as[YMap]
         .key("message")
-        .map(entry => AsyncMessageParser(YMapEntryLike(entry), id, Option(Subscribe))(getBogusParserCtx).parse())
+        .map(entry => Async20MessageParser(YMapEntryLike(entry), id, Option(Subscribe))(getBogusParserCtx).parse())
         .get
     }
   }

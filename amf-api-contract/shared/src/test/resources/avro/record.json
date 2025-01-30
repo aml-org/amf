@@ -1,0 +1,22 @@
+{
+  "type": "record",
+  "name": "Person",
+  "namespace": "root",
+  "doc": "this is a documentation for the record type",
+  "fields": [
+    {
+      "name": "name",
+      "doc": "Person name",
+      "type": "string",
+      "order": "ascending",
+      "default": "Jorge"
+    },
+    {
+      "name": "age",
+      "doc": "Person age",
+      "type": "int",
+      "order": "descending",
+      "default": 30
+    }
+  ]
+}

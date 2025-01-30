@@ -647,6 +647,21 @@
                                             ]
                                           }
                                         ],
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/application%2Fjson/examples/example/default-example/object_1/source-map/parsed-json-example/element_0",
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/application%2Fjson/examples/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "{\n    \"name\": \"Bobby\",\n    \"food\": \"Ice Cream\"\n}"
+                                              }
+                                            ]
+                                          }
+                                        ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
                                             "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/application%2Fjson/examples/example/default-example/object_1/source-map/lexical/element_2",
@@ -684,21 +699,6 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(18,32)-(21,33)]"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
-                                          {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/application%2Fjson/examples/example/default-example/object_1/source-map/parsed-json-example/element_0",
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/endpoint/%2Fpet/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/application%2Fjson/examples/example/default-example/object_1"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "{\n    \"name\": \"Bobby\",\n    \"food\": \"Ice Cream\"\n}"
                                               }
                                             ]
                                           }
@@ -1047,7 +1047,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

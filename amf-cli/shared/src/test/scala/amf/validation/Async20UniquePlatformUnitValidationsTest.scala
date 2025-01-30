@@ -1,6 +1,5 @@
 package amf.validation
 
-import amf.core.internal.remote.{Async20JsonHint, Async20YamlHint, Hint}
 import org.scalatest.matchers.should.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
@@ -8,6 +7,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   val asyncPath: String            = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
+  private val cyclePath: String    = "file://amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
 
   test("Required channel object") {
     validate("required-channels.yaml", Some("required-channels.report"))
@@ -103,6 +103,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Required httpOperationBinding type") {
     validate("required-httpOperationBinding-type.yaml", Some("required-httpOperationBinding-type.report"))
+  }
+
+  test("Invalid httpOperationBinding type") {
+    validate("invalid-httpOperationBinding-type.yaml", Some("invalid-httpOperationBinding-type.report"))
   }
 
   test("HttpOperationBinding type must be request or response") {
@@ -329,4 +333,217 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
       hideValidationResultsIfParseNotConforms = false
     )
   }
+
+  test("Mercure binding should be empty") {
+    validate("mercure-binding-nonempty.yaml", Some("mercure-binding-nonempty.report"))
+  }
+
+  test("IBMMQ Closed Shape validation") {
+    validate("ibmmq-binding-extra-key.yaml", Some("ibmmq-binding-extra-key.report"))
+  }
+
+  test("MessageIds NOT duplicated") {
+    validate("messageIds-not-duplicated.yaml", Some("messageIds-not-duplicated.report"))
+  }
+
+  test("MessageIds cant be duplicate") {
+    validate("messageIds-duplicated.yaml", Some("messageIds-duplicated.report"))
+  }
+
+  test("MessageIds inline duplicate") {
+    validate("duplicate-messageId-inline.yaml", Some("duplicate-messageId-inline.report"))
+  }
+
+  test("invalid key in async 2.0") {
+    validate("messageId-invalid.yaml", Some("messageId-invalid.report"))
+  }
+
+  test("Async 2.2+ channel servers property") {
+    validate("channel-servers.yaml", Some("channel-servers.report"))
+  }
+
+  test("Async 2.4+ operation security property with undefined security scheme") {
+    validate("operation-security.yaml", Some("operation-security.report"))
+  }
+
+  test("Async 2.2+ AnypointMQ Closed Shape validation") {
+    validate("anypoint-binding-extra-key.yaml", Some("anypoint-binding-extra-key.report"))
+  }
+
+  test("Async 2.5 tags in servers") {
+    validate("server-tags.yaml", Some("server-tags.report"))
+  }
+
+  test("Async 2.5 google pub sub closed shape") {
+    validate("google-binding-wrong-key.yaml", Some("google-binding-wrong-key.report"))
+  }
+
+  test("Async 2.5 google pub sub wrong version") {
+    validate("google-binding-wrong-version.yaml", Some("google-binding-wrong-version.report"))
+  }
+
+  test("Async 2.4 Server Variables") {
+    validate("server-variable.yaml", Some("server-variable.report"))
+  }
+
+  test("Async 2.3+ Solace Closed Shape validation") {
+    validate("solace-binding-extra-key.yaml", Some("solace-binding-extra-key.report"))
+  }
+
+  test("Async 2.6+ Pulsar Closed Shape validation") {
+    validate("pulsar-binding-extra-key.yaml", Some("pulsar-binding-extra-key.report"))
+  }
+
+  test("Async 2.6+ Pulsar missing fields validation") {
+    validate("pulsar-binding-missing-key.yaml", Some("pulsar-binding-missing-key.report"))
+  }
+
+  test("Async 2.3+ Solace validations") {
+    validate("solace-binding-validations.yaml", Some("solace-binding-validations.report"))
+  }
+
+  test("Async 2.2+ AnypointMQ validations") {
+    validate("anypoint-binding-validations.yaml", Some("anypoint-binding-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ parsing validations") {
+    validate("ibmmq-binding-parsing-validations.yaml", Some("ibmmq-binding-parsing-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ validations") {
+    validate("ibmmq-binding-validations.yaml", Some("ibmmq-binding-validations.report"))
+  }
+
+  test("Async 2.1+ IBMMQ validations all valid") {
+    validate("ibmmq-binding-validations-valid.yaml", Some("ibmmq-binding-validations-valid.report"))
+  }
+
+  test("Async 2.3+ Components") {
+    validate("async-2.3-components.yaml")
+  }
+
+  test("Async 2.4+ Components") {
+    validate("async-2.4-components.yaml")
+  }
+
+  test("Async inter components references") {
+    validate("message-references.yaml")
+  }
+
+  test("Async Amqp 0.1.0 Closed Shape validation") {
+    validate("amqp-binding-010.yaml", Some("amqp-binding-010.report"))
+  }
+
+  test("Async Amqp 0.2.0 Closed Shape validation") {
+    validate("amqp-channel-binding-020-invalid.yaml", Some("amqp-binding-020-invalid.report"))
+  }
+
+  test("Async Amqp wrong binding version") {
+    validate("amqp-binding-wrong-binding-version.yaml", Some("amqp-binding-wrong-binding-version.report"))
+  }
+
+  test("Async Amqp operation binding version 0.3.0") {
+    validate("amqp-operation-binding-030.yaml", Some("amqp-operation-binding-030.report"))
+  }
+
+  test("Async asyncApi-2.1-all should be valid") {
+    validate(api = "asyncApi-2.1-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.2-all should be valid") {
+    validate(api = "asyncApi-2.2-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.3-all should be valid") {
+    validate(api = "asyncApi-2.3-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.4-all should be valid") {
+    validate(api = "asyncApi-2.4-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.5-all should be valid") {
+    validate(api = "asyncApi-2.5-all.yaml", directory = cyclePath)
+  }
+
+  test("Async asyncApi-2.6-all should be valid") {
+    validate(api = "asyncApi-2.6-all.yaml", directory = cyclePath)
+  }
+
+  test("AnypointMQ headers ref") {
+    validate("anypoint-headers-ref.yaml", Some("anypoint-headers-ref.report"))
+  }
+
+  test("AnypointMQ invalid version") {
+    validate("anypointmq-invalid-version.yaml", Some("anypointmq-invalid-version.report"))
+  }
+
+  test("Async Kafka wrong binding version") {
+    validate("kafka-binding-wrong-binding-version.yaml", Some("kafka-binding-wrong-binding-version.report"))
+  }
+
+  test("Async Kafka message key ref") {
+    validate("kafka-binding-message-key-ref.yaml", Some("kafka-binding-message-key-ref.report"))
+  }
+
+  test("Async Kafka binding closed shape validations") {
+    validate("kafka-binding-closed-shape.yaml", Some("kafka-binding-closed-shape.report"))
+  }
+
+  test("Async Kafka channel binding validations") {
+    validate("kafka-channel-binding-validations.yaml", Some("kafka-channel-binding-validations.report"))
+  }
+
+  test("Async server invalid map") {
+    validate("async-server-map.yaml", Some("async-server-map.report"))
+  }
+
+  test("Async Kafka operation binding reference objects") {
+    validate("kafka-operation-binding-refs.yaml", Some("kafka-operation-binding-refs.report"))
+  }
+
+  test("Async Kafka topic configuration validations") {
+    validate("kafka-topic-configuration-validations.yaml", Some("kafka-topic-configuration-validations.report"))
+  }
+
+  test("Async http wrong binding version") {
+    validate("http-binding-wrong-binding-version.yaml", Some("http-binding-wrong-binding-version.report"))
+  }
+
+  test("Async http query and headers refs") {
+    validate("http-binding-references.yaml", Some("http-binding-references.report"))
+  }
+
+  test("Async http message binding valid status code") {
+    validate("http-message-binding.yaml", Some("http-message-binding.report"))
+  }
+
+  test("Async mqtt message binding should warn invalid references") {
+    validate("mqtt-message-binding-refs.yaml", Some("mqtt-message-binding-refs.report"))
+  }
+
+  test("Async mqtt message binding payloadFormatIndicator") {
+    validate("mqtt-message-binding-format.yaml", Some("mqtt-message-binding-format.report"))
+  }
+
+  test("Async mqtt server binding should warn invalid references") {
+    validate("mqtt-server-binding-schemas.yaml", Some("mqtt-server-binding-schemas.report"))
+  }
+
+  test("Async Solace wrong binding Version") {
+    validate("solace-wrong-binding-version.yaml", Some("solace-wrong-binding-version.report"))
+  }
+
+  test("Async Solace Queue wrong binding Version") {
+    validate("solace-wrong-queue-version.yaml", Some("solace-wrong-queue-version.report"))
+  }
+
+  test("Async Solace Queue Invalid binding Version") {
+    validate("solace-invalid-queue-version.yaml", Some("solace-invalid-queue-version.report"))
+  }
+
+  test("Async Solace 0.4.0 invalid version") {
+    validate("solace-0.4.0-invalid.yaml", Some("solace-0.4.0-invalid.report"))
+  }
+
 }

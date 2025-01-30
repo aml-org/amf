@@ -1,0 +1,155 @@
+{
+  "@graph": [
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.10.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "ASYNC 2.3"
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:AsyncAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "API",
+      "apiContract:server": [
+        {
+          "@id": "#4"
+        },
+        {
+          "@id": "#5"
+        },
+        {
+          "@id": "#6"
+        }
+      ],
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#3"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:endpoint": "[(6,0)-(12,0)]",
+          "apiContract:server": "[(12,0)-(28,0)]",
+          "#2": "[(1,0)-(28,0)]",
+          "core:name": "[(3,2)-(4,0)]",
+          "core:version": "[(4,2)-(6,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:Server",
+        "doc:DomainElement"
+      ],
+      "core:name": "development",
+      "core:urlTemplate": "development.gigantic-server.com",
+      "core:description": "Development server",
+      "apiContract:protocol": "amqp",
+      "apiContract:protocolVersion": "0.9.1",
+      "smaps": {
+        "lexical": {
+          "apiContract:protocolVersion": "[(16,4)-(17,0)]",
+          "core:description": "[(17,4)-(18,0)]",
+          "#4": "[(13,2)-(18,0)]",
+          "core:urlTemplate": "[(14,4)-(15,0)]",
+          "apiContract:protocol": "[(15,4)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Server",
+        "doc:DomainElement"
+      ],
+      "core:name": "staging",
+      "core:urlTemplate": "staging.gigantic-server.com",
+      "core:description": "Staging server",
+      "apiContract:protocol": "amqp",
+      "apiContract:protocolVersion": "0.9.1",
+      "smaps": {
+        "lexical": {
+          "apiContract:protocolVersion": "[(21,4)-(22,0)]",
+          "core:description": "[(22,4)-(23,0)]",
+          "#5": "[(18,2)-(23,0)]",
+          "core:urlTemplate": "[(19,4)-(20,0)]",
+          "apiContract:protocol": "[(20,4)-(21,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "apiContract:Server",
+        "doc:DomainElement"
+      ],
+      "core:name": "production",
+      "core:urlTemplate": "api.gigantic-server.com",
+      "core:description": "Production server",
+      "apiContract:protocol": "amqp",
+      "apiContract:protocolVersion": "0.9.1",
+      "smaps": {
+        "lexical": {
+          "apiContract:protocolVersion": "[(26,4)-(27,0)]",
+          "core:description": "[(27,4)-(28,0)]",
+          "#6": "[(23,2)-(28,0)]",
+          "core:urlTemplate": "[(24,4)-(25,0)]",
+          "apiContract:protocol": "[(25,4)-(26,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "users/signup",
+      "apiContract:server": [
+        {
+          "@id": "#4"
+        },
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#3": "[(7,2)-(12,0)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#1"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

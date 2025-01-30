@@ -7,14 +7,15 @@ import amf.apicontract.internal.spec.oas.parser.context.{
   OasLikeWebApiContext
 }
 import amf.core.internal.parser.YMapOps
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YPart}
 
 object Oas2SecuritySchemeParser {
-  def apply(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit ctx: OasLikeWebApiContext) =
+  def apply(part: YMapEntryLike, adopt: SecurityScheme => SecurityScheme)(implicit ctx: OasLikeWebApiContext) =
     new Oas2SecuritySchemeParser(part, adopt)(new CustomClosedShapeContextDecorator(ctx, OasCustomSyntax))
 }
 
-case class Oas2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+case class Oas2SecuritySchemeParser(part: YMapEntryLike, adopt: SecurityScheme => SecurityScheme)(implicit
     ctx: OasLikeWebApiContext
 ) extends OasLikeSecuritySchemeParser(part, adopt) {
   override def closedShape(scheme: SecurityScheme, map: YMap, shape: String): Unit = {
@@ -35,6 +36,6 @@ case class Oas2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
   }
 }
 
-case class Oas3SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit
+case class Oas3SecuritySchemeParser(part: YMapEntryLike, adopt: SecurityScheme => SecurityScheme)(implicit
     ctx: OasLikeWebApiContext
 ) extends OasLikeSecuritySchemeParser(part, adopt) {}

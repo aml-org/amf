@@ -1,0 +1,18 @@
+asyncapi: 2.6.0
+info:
+  title: async-json
+  version: 1.0.0
+channels:
+  CANCELLATIONS:
+    subscribe:
+      message:
+        payload:
+          type: object
+          required:
+            - orderid
+          properties:
+            orderid:
+              description: id of the order that was cancelled
+              type: string
+              format: uuid
+        contentType: application/json

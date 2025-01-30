@@ -502,14 +502,14 @@
                       }
                     ],
                     "smaps": {
-                      "declared-element": {
-                        "#15": ""
-                      },
                       "lexical": {
                         "doc:variable": "[(10,18)-(22,0)]",
                         "core:name": "[(10,2)-(10,17)]",
                         "#15": "[(10,2)-(22,0)]",
                         "doc:dataNode": "[(11,4)-(22,0)]"
+                      },
+                      "declared-element": {
+                        "#15": ""
                       }
                     }
                   }
@@ -653,7 +653,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [
@@ -708,7 +708,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.8.2"
+                "@value": "3.10.0"
               }
             ],
             "doc:sourceSpec": [
@@ -907,18 +907,18 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
+          "declared-element": {
+            "#4": ""
+          },
+          "resolved-link-target": {
+            "#4": "amf://id#12"
+          },
           "resolved-link": {
             "#4": "amf://id#14"
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,9)]",
             "#4": "[(5,2)-(9,0)]"
-          },
-          "declared-element": {
-            "#4": ""
-          },
-          "resolved-link-target": {
-            "#4": "amf://id#13"
           }
         }
       },
@@ -1247,14 +1247,14 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#15": ""
-          },
           "lexical": {
             "doc:variable": "[(10,18)-(22,0)]",
             "core:name": "[(10,2)-(10,17)]",
             "#15": "[(10,2)-(22,0)]",
             "doc:dataNode": "[(11,4)-(22,0)]"
+          },
+          "declared-element": {
+            "#15": ""
           }
         }
       }

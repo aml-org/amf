@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.common.transformation.stage
 
 import amf.apicontract.client.scala.model.domain.Request
+import amf.apicontract.internal.transformation.ReferenceDocumentationResolver.updateSummaryAndDescription
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -9,6 +10,7 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution
 import amf.core.internal.transform.stages.selectors.{LinkSelector, Selector}
 
+/** Resolve links in request parameters (OAS 3.0, 3.1) */
 object RequestParamsLinkStage extends TransformationStep {
   override def transform(
       model: BaseUnit,
@@ -36,6 +38,7 @@ private class RequestParamsLinkStage(val errorHandler: AMFErrorHandler) {
   }
 
   private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): DomainElement = {
+    updateSummaryAndDescription(resolved, link)
     (resolved, link) match {
       case (resolvedReq: Request, link: Request) =>
         val copied = Request(resolvedReq.fields.copy(), resolvedReq.annotations.copy())

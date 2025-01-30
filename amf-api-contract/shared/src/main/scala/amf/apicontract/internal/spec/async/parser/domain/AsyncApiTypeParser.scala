@@ -1,6 +1,9 @@
 package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
+import amf.apicontract.internal.spec.avro.AvroSettings
+import amf.apicontract.internal.spec.avro.parser.context.AvroSchemaContext
+import amf.apicontract.internal.spec.avro.parser.domain.AvroShapeParser
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.spec.toRaml
@@ -8,7 +11,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.DefinedBySpec
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.core.internal.remote.Raml10
+import amf.core.internal.remote.{Raml10, AvroSchema}
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
@@ -46,8 +49,8 @@ object AsyncSchemaFormats {
     value match {
       case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(SchemaPosition.Schema)
       case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion
-      // async20 schemas are handled with draft 7. Avro schema is not supported
-      case _ => JSONSchemaDraft7SchemaVersion
+      case Some(format) if avroSchema.contains(format)  => AVROSchema()
+      case _ => JSONSchemaDraft7SchemaVersion // async20 schemas are handled with draft 7 by default
     }
 }
 
@@ -56,22 +59,9 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
 ) {
 
   def parse(): Option[Shape] = version match {
-    case RAML10SchemaVersion => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
+    case RAML10SchemaVersion => CustomReferenceParser(YMapEntryLike(entry), parseRamlType, adopt).parse()
+    case AVROSchema(_)       => CustomReferenceParser(YMapEntryLike(entry), parseAvroSchema, adopt).parse()
     case _                   => OasTypeParser(entry, adopt, version).parse()
-  }
-}
-
-case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)(implicit
-    val ctx: OasLikeWebApiContext
-) {
-
-  def parse(): Option[Shape] = {
-    val shape = ctx.link(entry.value) match {
-      case Left(refValue) => handleRef(refValue)
-      case Right(_)       => parseRamlType(entry)
-    }
-    shape.foreach(_.annotations += DefinedBySpec(Raml10))
-    shape
   }
 
   private def parseRamlType(entry: YMapEntryLike): Option[Shape] = {
@@ -80,12 +70,32 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
     val result =
       Raml10TypeParser(entry, "schema", adopt, TypeInfo(), AnyDefaultType)(context).parse()
     context.futureDeclarations.resolve()
+    result.foreach(_.annotations += DefinedBySpec(Raml10))
     result
+  }
+
+  private def parseAvroSchema(entry: YMapEntryLike): Option[Shape] = {
+    val result = new AvroShapeParser(entry.asMap)(new AvroSchemaContext(ctx, AvroSettings)).parse()
+    result.foreach(_.annotations += DefinedBySpec(AvroSchema))
+    result
+  }
+}
+
+case class CustomReferenceParser(entry: YMapEntryLike, parser: YMapEntryLike => Option[Shape], adopt: Shape => Unit)(
+    implicit val ctx: OasLikeWebApiContext
+) {
+
+  def parse(): Option[Shape] = {
+    ctx.link(entry.value) match {
+      case Left(refValue) => handleRef(refValue)
+      case Right(_)       => parser(entry)
+    }
   }
 
   private def handleRef(refValue: String): Option[Shape] = {
     val link = dataTypeFragmentRef(refValue)
       .orElse(typeDefinedInLibraryRef(refValue))
+      .orElse(avroSchemaDocRef(refValue))
       .orElse(externalFragmentRef(refValue))
 
     if (link.isEmpty)
@@ -104,6 +114,12 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
     result
   }
 
+  private def avroSchemaDocRef(refValue: String): Option[Shape] = {
+    val result = ctx.declarations.findEncodedTypeInDocFragment(refValue)
+    result.foreach(_.annotations += DefinedBySpec(AvroSchema))
+    result.map(linkAndAdopt(_, refValue))
+  }
+
   private def typeDefinedInLibraryRef(refValue: String): Option[Shape] = {
     val values = refValue.split("#/types/").toList
     values match {
@@ -117,7 +133,7 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
 
   private def externalFragmentRef(refValue: String): Option[Shape] = {
     ctx.obtainRemoteYNode(refValue).flatMap { node =>
-      parseRamlType(YMapEntryLike(node))
+      parser(YMapEntryLike(node))
     }
   }
 

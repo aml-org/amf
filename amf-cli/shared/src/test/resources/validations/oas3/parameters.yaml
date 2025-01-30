@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: test-api
+  version: v1.0
+paths:
+  /test-endpoint:
+    get:
+      parameters:
+        - name: query-param
+          in: query
+          schema:
+            type: string
+          example: "query param example"
+        - name: header-param
+          in: header
+          schema:
+            type: string
+          example: "header param example"
+
+      responses:
+        '200':
+          description: a description

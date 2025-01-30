@@ -6,16 +6,15 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.document.FieldsFilter.All
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, InstanceCollector}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Spec
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.Assertion
 import org.scalatest.Assertions.{fail, succeed}
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ParsingDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ParsingDuplicateIdsTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with DuplicateIdsTest {
 
   val apiPaths = Seq(
     "file://amf-cli/shared/src/test/resources/validations/reference-jsonschema-property/bad-link.raml",
@@ -36,8 +35,7 @@ class ParsingDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest {
   }
 }
 
-class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class ResolvedModelDuplicateIdsTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with DuplicateIdsTest {
 
   val apiPaths = Seq(
     "file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml",
@@ -61,12 +59,14 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
   }
 
   private def amfConfigFrom(spec: Spec): AMFConfiguration = spec match {
-    case Spec.OAS30   => OASConfiguration.OAS30()
-    case Spec.OAS20   => OASConfiguration.OAS20()
-    case Spec.RAML10  => RAMLConfiguration.RAML10()
-    case Spec.RAML08  => RAMLConfiguration.RAML08()
-    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
-    case _            => throw new IllegalArgumentException
+    case Spec.OAS31  => OASConfiguration.OAS31()
+    case Spec.OAS30  => OASConfiguration.OAS30()
+    case Spec.OAS20  => OASConfiguration.OAS20()
+    case Spec.RAML10 => RAMLConfiguration.RAML10()
+    case Spec.RAML08 => RAMLConfiguration.RAML08()
+    case Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 | Spec.ASYNC25 | Spec.ASYNC26 =>
+      AsyncAPIConfiguration.Async20()
+    case _ => throw new IllegalArgumentException
   }
 }
 

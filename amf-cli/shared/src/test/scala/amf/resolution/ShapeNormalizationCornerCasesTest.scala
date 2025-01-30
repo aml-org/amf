@@ -3,13 +3,10 @@ package amf.resolution
 import amf.core.client.common.transform._
 import amf.core.internal.remote._
 
-import scala.concurrent.ExecutionContext
-
 class ShapeNormalizationCornerCasesTest extends ResolutionTest {
 
-  override val defaultPipeline: String                     = PipelineId.Editing
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override val basePath: String = "amf-cli/shared/src/test/resources/resolution/shape-normalization/"
+  override val defaultPipeline: String = PipelineId.Editing
+  override val basePath: String        = "amf-cli/shared/src/test/resources/resolution/shape-normalization/"
 
   multiGoldenTest("Resolve cyclic inheritance", "api.%s") { config =>
     cycle(

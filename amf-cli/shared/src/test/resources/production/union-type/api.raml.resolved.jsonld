@@ -290,7 +290,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#transformed": [
@@ -519,6 +519,21 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/a/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/a"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/a/source-map/lexical/element_1",
@@ -543,21 +558,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(4,2)-(4,3)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/a/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/a"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
                       }
                     ]
                   }
@@ -768,6 +768,21 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/b/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/b"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/b/source-map/lexical/element_1",
@@ -795,21 +810,6 @@
                       }
                     ]
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/b/source-map/declared-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/inherits/union/default-union/anyOf/shape/b"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
                 ]
               }
             ]
@@ -825,21 +825,6 @@
             "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/source-map/declared-element/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
@@ -880,6 +865,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(13,4)-(13,8)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/production/union-type/api.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/c"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

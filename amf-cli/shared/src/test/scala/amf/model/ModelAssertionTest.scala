@@ -5,20 +5,18 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.InferredProperty
 import amf.core.internal.remote.{Mimes, Spec}
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class ModelAssertionTest extends AsyncFunSuite with Matchers {
+class ModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val base = "file://amf-cli/shared/src/test/resources/model/"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Inferred property annotation survived transformation") {
     parse(Spec.RAML10, base + "raml-with-inferred-json-schema-property.raml", PipelineId.Editing).map { unit =>

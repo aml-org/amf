@@ -1,23 +1,20 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
+sealed trait AMFValidationReportGenTest extends FileAssertionTest {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath: String
   val reportsPath: String
 
@@ -91,7 +88,9 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
       profile: ProfileName = defaultProfile
   ): Future[Assertion] = {
     val errorHandler = DefaultErrorHandler()
-    val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
+    val config = APIConfiguration
+      .API()
+      .withErrorHandlerProvider(() => errorHandler)
     for {
       model <- config.baseUnitClient().parse(basePath + api).map(_.baseUnit)
       report <- {
@@ -106,11 +105,13 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
   }
 
   protected def defaultProfile: ProfileName = hint.spec match {
-    case Raml10 => Raml10Profile
-    case Raml08 => Raml08Profile
-    case Oas20  => Oas20Profile
-    case Oas30  => Oas30Profile
-    case _      => AmfProfile
+    case Raml10     => Raml10Profile
+    case Raml08     => Raml08Profile
+    case Oas20      => Oas20Profile
+    case Oas30      => Oas30Profile
+    case Oas31      => Oas31Profile
+    case AsyncApi20 => Async20Profile
+    case _          => AmfProfile
   }
 }
 

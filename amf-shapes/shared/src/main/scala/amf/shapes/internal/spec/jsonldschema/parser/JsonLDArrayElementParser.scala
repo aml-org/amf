@@ -1,8 +1,8 @@
 package amf.shapes.internal.spec.jsonldschema.parser
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{Annotation, Shape}
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, MatrixShape, SemanticContext, TupleShape}
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.jsonldschema.parser.builder.{JsonLDArrayElementBuilder, JsonLDElementBuilder}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.UnsupportedShape
 import org.yaml.model.{YSequence, YType}
@@ -35,7 +35,8 @@ case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val
   }
 
   private def parseItems(items: Shape): JsonLDArrayElementBuilder = {
-    val builder = new JsonLDArrayElementBuilder(seq.location, path)
+    val annotation = Annotations(seq)
+    val builder = new JsonLDArrayElementBuilder(annotation, path)
 
     builder.withItems(seq.nodes.zipWithIndex.map({ case (node, index) =>
       JsonLDSchemaNodeParser(items, node, index.toString, path.concat(index.toString)).parse()

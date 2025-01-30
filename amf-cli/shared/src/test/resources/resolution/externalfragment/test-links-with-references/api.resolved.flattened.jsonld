@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -201,21 +201,21 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#4": "amf://id#14"
-        },
         "type-property-lexical-info": {
           "#4": "[(3,2)-(3,8)]"
         },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,7)]",
-          "#4": "[(4,2)-(28,1)]"
+        "resolved-link": {
+          "#4": "amf://id#4"
+        },
+        "resolved-link-target": {
+          "#4": "amf://id#13"
         },
         "declared-element": {
           "#4": ""
         },
-        "resolved-link-target": {
-          "#4": "amf://id#13"
+        "lexical": {
+          "shacl:name": "[(4,2)-(4,7)]",
+          "#4": "[(4,2)-(28,1)]"
         },
         "parsed-json-schema": {
           "#4": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ]\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\",\n    \"details\"\n  ]\n}"
@@ -313,12 +313,12 @@
       ],
       "shacl:name": "status",
       "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(6,6)-(6,12)]"
-        },
         "lexical": {
           "shacl:datatype": "[(6,6)-(6,22)]",
           "#6": "[(5,4)-(7,5)]"
+        },
+        "type-property-lexical-info": {
+          "#6": "[(6,6)-(6,12)]"
         }
       }
     },
@@ -338,12 +338,12 @@
       ],
       "shacl:name": "message",
       "smaps": {
-        "type-property-lexical-info": {
-          "#8": "[(9,6)-(9,12)]"
-        },
         "lexical": {
           "shacl:datatype": "[(9,6)-(9,22)]",
           "#8": "[(8,4)-(10,5)]"
+        },
+        "type-property-lexical-info": {
+          "#8": "[(9,6)-(9,12)]"
         }
       }
     },
@@ -367,11 +367,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#10": "[(11,4)-(21,5)]"
-        },
         "type-property-lexical-info": {
           "#10": "[(12,6)-(12,12)]"
+        },
+        "lexical": {
+          "#10": "[(11,4)-(21,5)]"
         }
       }
     },
@@ -416,12 +416,12 @@
       ],
       "shacl:name": "message",
       "smaps": {
-        "type-property-lexical-info": {
-          "#12": "[(15,10)-(15,16)]"
-        },
         "lexical": {
           "shacl:datatype": "[(15,10)-(15,26)]",
           "#12": "[(14,8)-(16,9)]"
+        },
+        "type-property-lexical-info": {
+          "#12": "[(15,10)-(15,16)]"
         }
       }
     },

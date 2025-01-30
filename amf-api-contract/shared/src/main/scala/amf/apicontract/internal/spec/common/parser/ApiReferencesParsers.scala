@@ -9,7 +9,7 @@ import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.validation.CoreValidations.ExpectedModule
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.document.{AvroSchemaDocument, JsonSchemaDocument}
 import amf.shapes.internal.spec.common.parser.{CommonReferencesParser, ReferencesRegister}
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
@@ -24,6 +24,8 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends ReferencesRegis
           module.declares.foreach(declarations += _)
         }
       case fragment: Fragment => ctx.declarations += (alias, fragment)
+      case avroDoc: AvroSchemaDocument =>
+        ctx.declarations.documentFragments += (alias -> (avroDoc.encodes -> Map())) // AVRO Document has no declarations, so it is always an empty Map
       case jsonDoc: JsonSchemaDocument =>
         ctx.declarations.documentFragments += (alias -> (jsonDoc.encodes -> buildDeclarationMap(jsonDoc)))
       case _ => // ignore

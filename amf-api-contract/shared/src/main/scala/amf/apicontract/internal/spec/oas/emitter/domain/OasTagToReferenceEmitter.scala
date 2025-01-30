@@ -7,7 +7,7 @@ import amf.apicontract.client.scala.model.domain.bindings.{
   ServerBindings
 }
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.spec.OasDefinitions.{
   appendParameterDefinitionsPrefix,
@@ -15,12 +15,13 @@ import amf.apicontract.internal.spec.spec.OasDefinitions.{
 }
 import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.annotations.DeclaredServerVariable
 import amf.core.internal.render.BaseEmitters.pos
 import amf.shapes.internal.spec.common.emitter.{ShapeEmitterContext, ShapeReferenceEmitter}
 import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendOas3ComponentsPrefix
 import amf.shapes.internal.spec.oas.emitter.OasSpecEmitter
 
-case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContext: OasLikeSpecEmitterContext)
+case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContext: SpecEmitterContext)
     extends OasSpecEmitter
     with ShapeReferenceEmitter {
 
@@ -28,7 +29,9 @@ case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContex
 
   override protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel)(implicit
       spec: ShapeEmitterContext
-  ) = element match {
+  ): String = element match {
+    case p: Parameter if p.annotations.contains(classOf[DeclaredServerVariable]) =>
+      appendOas3ComponentsPrefix(referenceLabel, "serverVariables")
     case _: Parameter                        => appendParameterDefinitionsPrefix(referenceLabel)
     case _: Payload                          => appendParameterDefinitionsPrefix(referenceLabel)
     case _: Response                         => appendResponsesDefinitionsPrefix(referenceLabel)
@@ -41,6 +44,8 @@ case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContex
     case _: OperationBindings                => appendOas3ComponentsPrefix(referenceLabel, "operationBindings")
     case _: ChannelBindings                  => appendOas3ComponentsPrefix(referenceLabel, "channelBindings")
     case _: MessageBindings                  => appendOas3ComponentsPrefix(referenceLabel, "messageBindings")
+    case _: Server                           => appendOas3ComponentsPrefix(referenceLabel, "servers")
+    case _: EndPoint                         => appendOas3ComponentsPrefix(referenceLabel, "channels")
     case _                                   => super.getRefUrlFor(element, default)
   }
 

@@ -6,6 +6,7 @@ import amf.cycle.GraphQLFunSuiteCycleTests
 
 // make this trait a class to run this tests (do it locally, don't push to CI)
 trait GraphQLDatagraphSetParsingTest extends GraphQLFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql/datagraph-set/"
 
   // Test valid APIs
@@ -21,6 +22,4 @@ trait GraphQLDatagraphSetParsingTest extends GraphQLFunSuiteCycleTests {
       cycle(api, dumpedGraphQL, GraphQLHint, GraphQLHint)
     }
   }
-
-  override def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd.withPrettyPrint
 }

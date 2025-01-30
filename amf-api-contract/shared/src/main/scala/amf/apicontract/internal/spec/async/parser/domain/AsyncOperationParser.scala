@@ -17,12 +17,20 @@ import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model._
 
-object AsyncOperationParser {
+object Async20OperationParser {
   def apply(entry: YMapEntry, adopt: Operation => Operation, isTrait: Boolean = false)(implicit
       ctx: AsyncWebApiContext
   ): AsyncOperationParser =
-    if (isTrait) new AsyncOperationTraitParser(entry, adopt)
-    else new AsyncConcreteOperationParser(entry, adopt)
+    if (isTrait) new Async20OperationTraitParser(entry, adopt)
+    else new Async20ConcreteOperationParser(entry, adopt)
+}
+
+object Async24OperationParser {
+  def apply(entry: YMapEntry, adopt: Operation => Operation, isTrait: Boolean = false)(implicit
+      ctx: AsyncWebApiContext
+  ): AsyncOperationParser =
+    if (isTrait) Async24OperationTraitParser(entry, adopt)
+    else Async24ConcreteOperationParser(entry, adopt)
 }
 
 abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
@@ -52,6 +60,8 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
 
     parseTraits(map, operation)
 
+    map.key("security").foreach(entry => parseSecuritySchemas(entry, operation))
+
     operation
   }
 
@@ -59,19 +69,21 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
     map.key("operationId", OperationModel.OperationId in operation)
   }
 
-  protected def parseMessages(map: YMap, operation: Operation)
+  protected def parseMessages(map: YMap, operation: Operation): Unit = {}
 
-  protected def parseTraits(map: YMap, operation: Operation)
+  protected def parseTraits(map: YMap, operation: Operation): Unit = {}
+
+  protected def parseSecuritySchemas(entry: YMapEntry, operation: Operation): Unit = {}
 }
 
-private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(implicit
+class Async20ConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(implicit
     ctx: AsyncWebApiContext
 ) extends AsyncOperationParser(entry, adopt) {
 
   override protected def parseMessages(map: YMap, operation: Operation): Unit = map.key(
     "message",
     messageEntry =>
-      AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
+      AsyncHelper.messageType(entry.key.as[YScalar].text) foreach { msgType =>
         val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
         operation.fields
           .setWithoutId(msgType.field, AmfArray(messages, Annotations(messageEntry.value)), Annotations(messageEntry))
@@ -92,9 +104,11 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation =>
         )
       }
     )
+
+  override protected def parseSecuritySchemas(entry: YMapEntry, operation: Operation): Unit = {}
 }
 
-private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Operation)(
+class Async20OperationTraitParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: AsyncWebApiContext
 ) extends AsyncOperationParser(entry, adopt) {
 
@@ -113,9 +127,11 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
     }
   }
 
-  override protected def parseMessages(map: YMap, operation: Operation): Unit = Unit
+  override protected def parseMessages(map: YMap, operation: Operation): Unit = {}
 
-  override protected def parseTraits(map: YMap, operation: Operation): Unit = Unit
+  override protected def parseTraits(map: YMap, operation: Operation): Unit = {}
+
+  override protected def parseSecuritySchemas(entry: YMapEntry, operation: Operation): Unit = {}
 }
 
 case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operation, name: Option[String] = None)(
@@ -162,9 +178,43 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
     ctx.navigateToRemoteYNode(url) match {
       case Some(result) =>
         val operationNode = result.remoteNode
-        AsyncOperationParser(YMapEntry(name.getOrElse(url), operationNode), adopt, isTrait = true)(result.context)
+        Async20OperationParser(YMapEntry(name.getOrElse(url), operationNode), adopt, isTrait = true)(result.context)
           .parse()
       case None => linkError(url, node)
     }
+  }
+}
+
+case class Async24ConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    override implicit val ctx: AsyncWebApiContext
+) extends Async20ConcreteOperationParser(entry, adopt)
+    with SecuritySchemeParser {
+
+  override protected def parseMessages(map: YMap, operation: Operation): Unit =
+    super.parseMessages(map: YMap, operation: Operation)
+
+  override protected def parseTraits(map: YMap, operation: Operation): Unit =
+    super.parseTraits(map: YMap, operation: Operation)
+
+  override protected def parseSecuritySchemas(entry: YMapEntry, operation: Operation): Unit = {
+    super.parseSecuritySchemas(entry, operation)
+    parseSecurityScheme(entry, OperationModel.Security, operation)
+  }
+}
+
+case class Async24OperationTraitParser(entry: YMapEntry, adopt: Operation => Operation)(
+    override implicit val ctx: AsyncWebApiContext
+) extends Async20OperationTraitParser(entry, adopt)
+    with SecuritySchemeParser {
+
+  override protected def parseMessages(map: YMap, operation: Operation): Unit =
+    super.parseMessages(map: YMap, operation: Operation)
+
+  override protected def parseTraits(map: YMap, operation: Operation): Unit =
+    super.parseTraits(map: YMap, operation: Operation)
+
+  override protected def parseSecuritySchemas(entry: YMapEntry, operation: Operation): Unit = {
+    super.parseSecuritySchemas(entry, operation)
+    parseSecurityScheme(entry, OperationModel.Security, operation)
   }
 }

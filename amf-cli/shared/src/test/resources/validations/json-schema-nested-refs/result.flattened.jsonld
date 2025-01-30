@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -170,14 +170,14 @@
         "declared-element": {
           "#10": ""
         },
+        "inherited-shapes": {
+          "#10": "amf://id#11"
+        },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
           "shacl:closed": "[(4,2)-(4,31)]",
           "#10": "[(10,11)-(16,0)]",
           "shacl:name": "[(10,2)-(10,10)]"
-        },
-        "inherited-shapes": {
-          "#10": "amf://id#11"
         }
       }
     },
@@ -260,11 +260,11 @@
         "synthesized-field": {
           "shacl:minCount": "true"
         },
-        "lexical": {
-          "#21": "[(13,4)-(15,5)]"
-        },
         "inheritance-provenance": {
           "#21": "amf://id#11"
+        },
+        "lexical": {
+          "#21": "[(13,4)-(15,5)]"
         }
       }
     },
@@ -290,11 +290,11 @@
         "synthesized-field": {
           "shacl:minCount": "true"
         },
-        "lexical": {
-          "#30": "[(16,4)-(18,5)]"
-        },
         "inheritance-provenance": {
           "#30": "amf://id#11"
+        },
+        "lexical": {
+          "#30": "[(16,4)-(18,5)]"
         }
       }
     },
@@ -317,12 +317,12 @@
       "shacl:minCount": 1,
       "shacl:name": "merchant",
       "smaps": {
-        "inheritance-provenance": {
-          "#31": "amf://id#11"
-        },
         "lexical": {
           "shacl:minCount": "[(21,4)-(21,14)]",
           "#31": "[(6,4)-(8,5)]"
+        },
+        "inheritance-provenance": {
+          "#31": "amf://id#11"
         }
       }
     },
@@ -345,12 +345,12 @@
       "shacl:minCount": 1,
       "shacl:name": "operator",
       "smaps": {
-        "inheritance-provenance": {
-          "#33": "amf://id#11"
-        },
         "lexical": {
           "shacl:minCount": "[(22,4)-(22,14)]",
           "#33": "[(9,4)-(11,5)]"
+        },
+        "inheritance-provenance": {
+          "#33": "amf://id#11"
         }
       }
     },
@@ -425,17 +425,17 @@
           "doc:recursive": "true",
           "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#22": "amf://id#29"
-        },
-        "lexical": {
-          "#22": "[(10,2)-(28,3)]"
-        },
         "type-property-lexical-info": {
           "#22": "[(11,4)-(11,10)]"
         },
         "resolved-link-target": {
           "#22": "amf://id#22"
+        },
+        "resolved-link": {
+          "#22": "amf://id#29"
+        },
+        "lexical": {
+          "#22": "[(10,2)-(28,3)]"
         }
       }
     },
@@ -455,12 +455,12 @@
       ],
       "shacl:name": "merchant",
       "smaps": {
-        "type-property-lexical-info": {
-          "#32": "[(7,6)-(7,12)]"
-        },
         "lexical": {
           "shacl:datatype": "[(7,6)-(7,22)]",
           "#32": "[(6,4)-(8,5)]"
+        },
+        "type-property-lexical-info": {
+          "#32": "[(7,6)-(7,12)]"
         }
       }
     },
@@ -480,12 +480,12 @@
       ],
       "shacl:name": "operator",
       "smaps": {
-        "type-property-lexical-info": {
-          "#34": "[(10,6)-(10,12)]"
-        },
         "lexical": {
           "shacl:datatype": "[(10,6)-(10,22)]",
           "#34": "[(9,4)-(11,5)]"
+        },
+        "type-property-lexical-info": {
+          "#34": "[(10,6)-(10,12)]"
         }
       }
     },
@@ -510,14 +510,14 @@
         "synthesized-field": {
           "core:name": "true"
         },
+        "parsed-json-example": {
+          "#13": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+        },
         "lexical": {
           "data:operator": "[(11,2)-(11,31)]",
           "data:additionalApplicants": "[(2,2)-(9,3)]",
           "#13": "[(1,0)-(12,1)]",
           "data:merchant": "[(10,2)-(10,30)]"
-        },
-        "parsed-json-example": {
-          "#13": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
         }
       }
     },
@@ -747,11 +747,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#25": "[(7,2)-(9,3)]"
-        },
         "type-property-lexical-info": {
           "#25": "[(8,4)-(8,10)]"
+        },
+        "lexical": {
+          "#25": "[(7,2)-(9,3)]"
         }
       }
     },
@@ -770,11 +770,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#28": "[(4,2)-(6,3)]"
-        },
         "type-property-lexical-info": {
           "#28": "[(5,4)-(5,10)]"
+        },
+        "lexical": {
+          "#28": "[(4,2)-(6,3)]"
         }
       }
     },

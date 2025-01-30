@@ -15,8 +15,6 @@ import amf.apicontract.internal.spec.raml
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
 import amf.apicontract.internal.spec.spec.OasDefinitions
-import amf.core.client.scala.model.BoolField
-import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
@@ -38,6 +36,7 @@ import amf.shapes.internal.spec.common.emitter.{CommentEmitter, OasResponseExamp
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import amf.shapes.internal.spec.oas.emitter.{OasSchemaEmitter, OasTypeEmitter}
 import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypeEmitter}
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}
@@ -278,7 +277,7 @@ case class OasParametersEmitter(
 
   private def isValidOasParam(p: Parameter): Boolean = {
     spec.spec match {
-      case Spec.OAS30 => p.isQuery || p.isHeader || p.isPath || p.isCookie
+      case Spec.OAS30 | Spec.OAS31 => p.isQuery || p.isHeader || p.isPath || p.isCookie
       case _ =>
         Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
           .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape]
@@ -368,10 +367,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         if (asHeader) OasDefinitions.appendOas3ComponentsPrefix(parameter.linkLabel.value(), "headers")
         else OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.value())
     }
-    spec.ref(
-      b,
-      label
-    )
+    spec.ref(b, label, parameter)
   }
 
   override def emit(b: PartBuilder): Unit =
@@ -417,7 +413,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
                 .entries()
             }
           }
-        if (spec.spec == Spec.OAS30) result ++= oas3Emitters(fs)
+        if (spec.spec == Spec.OAS30 || spec.spec == Spec.OAS31) result ++= oas3Emitters(fs)
         b.obj(traverse(ordering.sorted(result), _))
       }
     }
@@ -550,7 +546,8 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
   override def emit(b: PartBuilder): Unit =
     handleInlinedRefOr(b, payload) {
       if (payload.isLink) {
-        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(payload.linkLabel.value()))
+        val url = OasDefinitions.appendParameterDefinitionsPrefix(payload.linkLabel.value())
+        spec.ref(b, url, payload)
       } else {
         payload.schema match {
           case file: FileShape => fileShape(file, b)

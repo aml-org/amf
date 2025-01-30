@@ -1,14 +1,14 @@
 package amf.apicontract.client.platform
 
-import amf.aml.client.platform.model.document.Dialect
-import amf.aml.client.platform.model.document.DialectInstance
+import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.apicontract.client.scala.{
   APIConfiguration => InternalAPIConfiguration,
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
   OASConfiguration => InternalOASConfiguration,
   RAMLConfiguration => InternalRAMLConfiguration,
-  WebAPIConfiguration => InternalWebAPIConfiguration
+  WebAPIConfiguration => InternalWebAPIConfiguration,
+  AvroConfiguration => InternalAvroConfiguration
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
@@ -21,8 +21,7 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
-import amf.core.client.platform.AMFGraphConfiguration
-import amf.core.client.platform.adoption.{IdAdopter, IdAdopterProvider}
+import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.execution.BaseExecutionEnvironment
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
@@ -180,8 +179,10 @@ object RAMLConfiguration {
 @JSExportAll
 @JSExportTopLevel("OASConfiguration")
 object OASConfiguration {
-  def OAS20(): AMFConfiguration          = InternalOASConfiguration.OAS20()
-  def OAS30(): AMFConfiguration          = InternalOASConfiguration.OAS30()
+  def OAS20(): AMFConfiguration = InternalOASConfiguration.OAS20()
+  def OAS30(): AMFConfiguration = InternalOASConfiguration.OAS30()
+  // WIP - Work in Progress
+  def OAS31(): AMFConfiguration          = InternalOASConfiguration.OAS31()
   def OAS30Component(): AMFConfiguration = InternalOASConfiguration.OAS30Component()
 
   /** common configuration to parse OAS20 and OAS30 APIs
@@ -219,4 +220,11 @@ object AsyncAPIConfiguration {
 object APIConfiguration {
   def API(): AMFConfiguration                = InternalAPIConfiguration.API()
   def fromSpec(spec: Spec): AMFConfiguration = InternalAPIConfiguration.fromSpec(spec)
+}
+
+// AVRO is in alpha support mode
+@JSExportAll
+@JSExportTopLevel("AvroConfiguration")
+object AvroConfiguration {
+  def Avro(): AMFConfiguration = InternalAvroConfiguration.Avro()
 }

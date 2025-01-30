@@ -1,0 +1,60 @@
+asyncapi: 2.5.0
+info:
+  title: GooglePubSub Binding test
+  version: 1.0.0
+servers: {}
+channels:
+  some-channel:
+    bindings:
+      googlepubsub:
+        labels:
+          label1: label1
+          label2: label2
+        topic: projects/your-project/topics/topic-proto-schema
+        messageRetentionDuration: 86400s
+        messageStoragePolicy:
+          allowedPersistenceRegions:
+            - us-central1
+            - us-west
+        schemaSettings:
+          encoding: binary
+          name: projects/your-project/schemas/messageAvro
+          firstRevisionId: 1.0.0
+          lastRevisionId: 2.0.0
+  other-channel:
+    bindings:
+      googlepubsub:
+        labels:
+          label1: label1
+          label2: label2
+        messageRetentionDuration: 86400s
+        messageStoragePolicy:
+          allowedPersistenceRegions:
+            - us-central1
+            - us-west
+        schemaSettings:
+          encoding: binary
+          name: projects/your-project/schemas/messageAvro
+          firstRevisionId: 1.0.0
+          lastRevisionId: 2.0.0
+        bindingVersion: 0.2.0
+components:
+  messages:
+    some-message:
+      bindings:
+        googlepubsub:
+          attributes:
+            exampleAttribute: exampleValue
+          orderingKey: userEventOrder
+          schema:
+            name: test name
+            type: avro
+    other-message:
+      bindings:
+        googlepubsub:
+          bindingVersion: 0.2.0
+          attributes:
+            exampleAttribute: exampleValue
+          orderingKey: userEventOrder
+          schema:
+            name: test name

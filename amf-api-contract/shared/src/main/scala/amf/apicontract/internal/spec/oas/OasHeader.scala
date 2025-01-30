@@ -24,6 +24,8 @@ object OasHeader {
 
   object Oas30Header extends OasHeader(openapi, "3\\.0\\.[0-9]+")
 
+  object Oas31Header extends OasHeader(openapi, "3\\.1\\.[0-9]+")
+
   object Oas20DocumentationItem extends OasHeader(extensionName, "2.0 DocumentationItem")
 
   object Oas20DataType extends OasHeader(extensionName, "2.0 DataType")
@@ -60,9 +62,11 @@ object OasHeader {
 
   def apply(text: String): Option[OasHeader] = {
     val oas30 = Oas30Header.value.r
+    val oas31 = Oas31Header.value.r
     text match {
       case Oas20Header.value                    => Some(Oas20Header)
       case oas30()                              => Some(Oas30Header)
+      case oas31()                              => Some(Oas31Header)
       case Oas20DocumentationItem.value         => Some(Oas20DocumentationItem)
       case Oas20DataType.value                  => Some(Oas20DataType)
       case Oas20NamedExample.value              => Some(Oas20NamedExample)

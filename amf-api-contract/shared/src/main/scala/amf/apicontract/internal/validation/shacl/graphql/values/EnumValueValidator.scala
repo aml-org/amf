@@ -16,6 +16,7 @@ object EnumValueValidator extends ValueValidator[ScalarShape] {
       case o: ObjectNode => Seq(typeError("scalar", "object", o.annotations))
     }
   }
+
   private def validateDataType(value: ScalarNode)(implicit targetField: Field): Seq[ValidationInfo] = {
     value.dataType.value() match {
       case DataTypes.Any => Nil // enum values are 'Any' explicitly
@@ -23,7 +24,9 @@ object EnumValueValidator extends ValueValidator[ScalarShape] {
     }
   }
 
-  private def validateValueIsMember(shape: ScalarShape, value: ScalarNode)(implicit targetField: Field): Seq[ValidationInfo] = {
+  private def validateValueIsMember(shape: ScalarShape, value: ScalarNode)(implicit
+      targetField: Field
+  ): Seq[ValidationInfo] = {
     val acceptedValues = shape.values
     val actualValue    = value.value.value()
 

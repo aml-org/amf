@@ -18,10 +18,7 @@ import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.funsuite.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
-
 class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
@@ -327,8 +324,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test OAS API ReferenceTarget annotations - range should be substring") {
-    val uri    = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/oas3"
-    val config = OASConfiguration.OAS30()
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/oas3"
     for {
       unit <- build(s"$uri/api.yaml", Oas30YamlHint)
     } yield {

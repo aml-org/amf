@@ -1,0 +1,21 @@
+openapi: 3.0.1
+info:
+  title: test API
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    UserItem:
+      type: object
+      properties:
+        contractProp1:
+          $ref: '#/components/schemas/Contract'
+    ContractItem:
+      type: object
+      properties:
+        contractProp2:
+          $ref: '#/components/schemas/Contract'
+    Contract:
+      properties:
+        contractType:
+          type: string

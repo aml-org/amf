@@ -1,0 +1,47 @@
+{
+  "type": "record",
+  "name": "test",
+  "fields": [
+    {
+      "name": "booleanPrimitiveType",
+      "type": "boolean",
+      "default": "wrong default type"
+    },
+    {
+      "name": "intPrimitiveType",
+      "doc": "this is a documentation for the int primitive type",
+      "type": "int",
+      "default": "wrong default type"
+    },
+    {
+      "name": "longPrimitiveType",
+      "doc": "this is a documentation for the long primitive type",
+      "type": "long",
+      "default": "wrong default type"
+    },
+    {
+      "name": "floatPrimitiveType",
+      "doc": "this is a documentation for the float primitive type",
+      "type": "float",
+      "default": "wrong default type"
+    },
+    {
+      "name": "doublePrimitiveType",
+      "doc": "this is a documentation for the double primitive type",
+      "type": "double",
+      "default": "wrong default type"
+    },
+    {
+      "name": "bytesPrimitiveType",
+      "doc": "this is a documentation for the bytes primitive type",
+      "type": "bytes",
+      "default": "wrong default type"
+    },
+    {
+      "name": "stringPrimitiveType",
+      "doc": "this is a documentation for the string primitive type",
+      "type": "string",
+      "default": 123
+    }
+  ]
+}

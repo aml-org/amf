@@ -6,14 +6,14 @@ import amf.apicontract.client.scala.{APIConfiguration, OASConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class FixConsumesAndProducesTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class FixConsumesAndProducesTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
+
   val basePath = "file://amf-cli/shared/src/test/resources/resolution/fix-consumes-and-produces/"
 
   test("accepts should include mediaTypes defined at request body") {

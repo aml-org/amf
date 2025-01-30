@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.OASConfiguration
 import amf.core.internal.remote.{AmfJsonHint, Oas30YamlHint}
 
 class OasComponentCycle extends GraphQLFunSuiteCycleTests {
+
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/oas-component/"
 
   test("OAS 3.0 component cycle to JSON-LD") {

@@ -1,20 +1,22 @@
 import Common.snapshots
-import NpmOpsPlugin.autoImport._
+import NpmOpsPlugin.autoImport.*
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
 import sbtsonar.SonarPlugin.autoImport.sonarProperties
 
 import scala.language.postfixOps
 import Versions.versions
+import sbt.ExclusionRule
 import sbtassembly.AssemblyPlugin.autoImport.assembly
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
-ThisBuild / version      := versions("amf.apicontract")
 ThisBuild / organization := "com.github.amlorg"
-ThisBuild / scalaVersion := "2.12.15"
+ThisBuild / version      := versions("amf.apicontract")
+ThisBuild / scalaVersion := "2.12.20"
+
 ThisBuild / resolvers ++= List(
   ivyLocal,
   Common.releases,
@@ -25,7 +27,8 @@ ThisBuild / resolvers ++= List(
 )
 ThisBuild / credentials ++= Common.credentials()
 
-val npmDeps = List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")))
+val npmDeps =
+  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.11.3")))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -36,7 +39,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
-    "org.mule.common" %%% "scala-common-test" % "0.1.13" % Test,
+    "org.mule.common" %%% "scala-common-test" % versions("scala-common-test") % Test,
     "org.slf4j"         % "slf4j-nop"         % "1.7.36" % Test
   ),
   Test / logBuffered := false
@@ -46,11 +49,11 @@ val amlVersion = versions("amf.aml")
 
 lazy val amlJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amlJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJS")
-lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml"        % amlVersion
+lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml"      % amlVersion
 lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs1" % amlVersion
 
 lazy val rdfJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJVM")
-lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf"        % amlVersion
+lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf"      % amlVersion
 lazy val rdfJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJS")
 lazy val rdfLibJS  = "com.github.amlorg" %% "amf-rdf_sjs1" % amlVersion
 
@@ -71,9 +74,15 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                     %% "scalajs-stubs"          % "1.1.0" % "provided",
-    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
-    libraryDependencies += "org.json"                          % "json"                   % "20231013",
-    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2" excludeAll (
+      ExclusionRule(organization = "org.json", name = "json"),
+      ExclusionRule(organization = "commons-collections", name = "commons-collections"),
+      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind"),
+    ),
+    libraryDependencies += "org.apache.avro"    % "avro"                 % "1.11.4",
+    libraryDependencies += "org.json"           % "json"                 % "20240303",
+    libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.4",
+    Compile / packageDoc / artifactPath        := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
@@ -93,6 +102,11 @@ lazy val shapesJS =
     .in(file("./amf-shapes/js"))
     .sourceDependency(amlJSRef, amlLibJS)
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+    .settings(
+      scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+      Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
+      npmDependencies ++= npmDeps
+    )
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-Api-contract *********************************************
@@ -114,8 +128,8 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
   )
   .dependsOn(shapes)
   .jvmSettings(
-    libraryDependencies += "org.scala-js"   %% "scalajs-stubs" % "1.1.0" % "provided",
-    libraryDependencies += "org.reflections" % "reflections"   % "0.10.2"       % Test,
+    libraryDependencies += "org.scala-js"   %% "scalajs-stubs" % "1.1.0"  % "provided",
+    libraryDependencies += "org.reflections" % "reflections"   % "0.10.2" % Test,
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
@@ -142,7 +156,7 @@ lazy val apiContractJS =
 lazy val antlrv4JVMRef = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJVM")
 lazy val antlrv4JSRef  = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJS")
 val antlr4Version      = versions("antlr4Version")
-lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast"        % antlr4Version
+lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast"      % antlr4Version
 lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs1" % antlr4Version
 
 lazy val antlr = crossProject(JSPlatform, JVMPlatform)
@@ -201,7 +215,6 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-grpc.js",
-
     npmDependencies ++= npmDeps
   )
   .settings(AutomaticModuleName.settings("amf.grpc"))
@@ -313,10 +326,14 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .settings(
     version                                    := "0.1-SNAPSHOT",
     publishTo                                  := Some(snapshots),
-    libraryDependencies += "com.github.amlorg" %% "amf-validation-profile-dialect" % versions("amf.validation.profile.dialect"),
-    libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect"  % versions("amf.validation.report.dialect"),
-    libraryDependencies += "commons-io"         % "commons-io"                     % "2.11.0",
-    libraryDependencies += "org.mule.common"  %%% "scala-common-test"              % "0.1.13" % Test
+    libraryDependencies += "com.github.amlorg" %% "amf-validation-profile-dialect" % versions(
+      "amf.validation.profile.dialect"
+    ),
+    libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect" % versions(
+      "amf.validation.report.dialect"
+    ),
+    libraryDependencies += "commons-io"        % "commons-io"        % "2.11.0",
+    libraryDependencies += "org.mule.common" %%% "scala-common-test" % "0.1.13" % Test
   )
   .settings(
     assembly / aggregate          := true,
@@ -350,8 +367,8 @@ addCommandAlias(
 )
 
 ThisBuild / libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.6" cross CrossVersion.constant("2.12.15")),
-  "com.github.ghik" % "silencer-lib" % "1.7.6" % Provided cross CrossVersion.constant("2.12.15")
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.19" cross CrossVersion.constant("2.12.20")),
+  "com.github.ghik" % "silencer-lib" % "1.7.19" % Provided cross CrossVersion.constant("2.12.20")
 )
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
@@ -360,7 +377,7 @@ lazy val branch     = sys.env.getOrElse("BRANCH_NAME", "develop")
 
 sonarProperties ++= Map(
   "sonar.login"             -> sonarToken,
-  "sonar.projectKey"        -> "mulesoft.amf",
+  "sonar.projectKey"        -> "mulesoft.amf.gec",
   "sonar.projectName"       -> "AMF",
   "sonar.projectVersion"    -> versions("amf.apicontract"),
   "sonar.sourceEncoding"    -> "UTF-8",

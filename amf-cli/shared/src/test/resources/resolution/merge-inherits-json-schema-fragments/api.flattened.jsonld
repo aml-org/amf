@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -216,19 +216,19 @@
         "@id": "#5"
       },
       "smaps": {
-        "resolved-link-target": {
-          "#4": "amf://id#13"
-        },
-        "declared-element": {
-          "#4": ""
-        },
         "lexical": {
           "doc:dataNode": "[(15,4)-(23,0)]",
           "#4": "[(14,2)-(23,0)]",
           "core:name": "[(14,2)-(14,6)]"
         },
         "resolved-link": {
+          "#4": "amf://id#13"
+        },
+        "resolved-link-target": {
           "#4": "amf://id#12"
+        },
+        "declared-element": {
+          "#4": ""
         }
       }
     },
@@ -261,19 +261,19 @@
         "@id": "#15"
       },
       "smaps": {
-        "resolved-link-target": {
-          "#14": "amf://id#22"
-        },
-        "declared-element": {
-          "#14": ""
-        },
         "lexical": {
           "doc:dataNode": "[(7,4)-(13,0)]",
           "#14": "[(6,2)-(13,0)]",
           "core:name": "[(6,2)-(6,9)]"
         },
         "resolved-link": {
+          "#14": "amf://id#22"
+        },
+        "resolved-link-target": {
           "#14": "amf://id#21"
+        },
+        "declared-element": {
+          "#14": ""
         }
       }
     },
@@ -343,17 +343,17 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "declared-element": {
-          "#30": ""
-        },
-        "lexical": {
-          "#30": "[(13,4)-(20,5)]"
-        },
         "type-property-lexical-info": {
           "#30": "[(14,6)-(14,12)]"
         },
         "external-fragment-ref": {
           "#30": "Animal"
+        },
+        "declared-element": {
+          "#30": ""
+        },
+        "lexical": {
+          "#30": "[(13,4)-(20,5)]"
         }
       }
     },
@@ -409,11 +409,11 @@
         "type-property-lexical-info": {
           "#41": "[(14,6)-(14,12)]"
         },
-        "lexical": {
-          "#41": "[(13,4)-(20,5)]"
-        },
         "declared-element": {
           "#41": ""
+        },
+        "lexical": {
+          "#41": "[(13,4)-(20,5)]"
         }
       }
     },
@@ -577,12 +577,12 @@
       ],
       "shacl:name": "animalName",
       "smaps": {
-        "type-property-lexical-info": {
-          "#33": "[(17,10)-(17,16)]"
-        },
         "lexical": {
           "shacl:datatype": "[(17,10)-(17,26)]",
           "#33": "[(16,8)-(18,9)]"
+        },
+        "type-property-lexical-info": {
+          "#33": "[(17,10)-(17,16)]"
         }
       }
     },
@@ -602,12 +602,12 @@
       ],
       "shacl:name": "personName",
       "smaps": {
-        "type-property-lexical-info": {
-          "#35": "[(9,10)-(9,16)]"
-        },
         "lexical": {
           "shacl:datatype": "[(9,10)-(9,26)]",
           "#35": "[(8,8)-(10,9)]"
+        },
+        "type-property-lexical-info": {
+          "#35": "[(9,10)-(9,16)]"
         }
       }
     },
@@ -648,12 +648,12 @@
       ],
       "shacl:name": "personName",
       "smaps": {
-        "type-property-lexical-info": {
-          "#43": "[(9,10)-(9,16)]"
-        },
         "lexical": {
           "shacl:datatype": "[(9,10)-(9,26)]",
           "#43": "[(8,8)-(10,9)]"
+        },
+        "type-property-lexical-info": {
+          "#43": "[(9,10)-(9,16)]"
         }
       }
     },

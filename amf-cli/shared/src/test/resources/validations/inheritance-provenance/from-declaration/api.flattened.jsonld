@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -82,12 +82,12 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#9": "true"
+        },
         "lexical": {
           "apiContract:payload": "[(9,4)-(14,0)]",
           "#9": "[(9,9)-(14,0)]"
-        },
-        "virtual-element": {
-          "#9": "true"
         }
       }
     },
@@ -131,11 +131,11 @@
         "inheritance-provenance": {
           "shacl:name": "amf://id#1"
         },
-        "inherited-shapes": {
-          "#11": "amf://id#1"
-        },
         "lexical": {
           "#11": "[(10,6)-(14,0)]"
+        },
+        "inherited-shapes": {
+          "#11": "amf://id#1"
         },
         "type-property-lexical-info": {
           "#11": "[(11,8)-(11,12)]"
@@ -168,12 +168,12 @@
           "shacl:minCount": "true",
           "shacl:path": "true"
         },
+        "inheritance-provenance": {
+          "#2": "amf://id#1"
+        },
         "lexical": {
           "raml-shapes:range": "[(6,12)-(6,18)]",
           "#2": "[(6,6)-(7,0)]"
-        },
-        "inheritance-provenance": {
-          "#2": "amf://id#1"
         }
       }
     },
@@ -291,18 +291,18 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "declared-element": {
+          "#1": ""
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#4"
+        },
         "resolved-link": {
           "#1": "amf://id#1"
         },
         "lexical": {
           "shacl:name": "[(4,2)-(4,8)]",
           "#1": "[(4,2)-(7,0)]"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "resolved-link-target": {
-          "#1": "amf://id#4"
         }
       }
     }

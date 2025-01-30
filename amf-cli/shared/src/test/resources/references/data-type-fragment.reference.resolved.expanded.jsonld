@@ -48,7 +48,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [
@@ -121,12 +121,12 @@
                       }
                     ],
                     "smaps": {
-                      "type-property-lexical-info": {
-                        "#5": "[(4,4)-(4,8)]"
-                      },
                       "lexical": {
                         "shacl:datatype": "[(4,4)-(5,0)]",
                         "#5": "[(3,2)-(5,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#5": "[(4,4)-(4,8)]"
                       }
                     }
                   }
@@ -181,7 +181,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.8.2"
+                "@value": "3.10.0"
               }
             ],
             "doc:sourceSpec": [
@@ -248,12 +248,12 @@
                   }
                 ],
                 "smaps": {
-                  "type-property-lexical-info": {
-                    "#5": "[(4,4)-(4,8)]"
-                  },
                   "lexical": {
                     "shacl:datatype": "[(4,4)-(5,0)]",
                     "#5": "[(3,2)-(5,0)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#5": "[(4,4)-(4,8)]"
                   }
                 }
               }
@@ -289,17 +289,17 @@
           "synthesized-field": {
             "shacl:closed": "true"
           },
-          "resolved-link-target": {
-            "#6": "amf://id#3"
-          },
-          "lexical": {
-            "#6": "[(2,0)-(5,0)]"
-          },
           "resolved-link": {
             "#6": "amf://id#6"
           },
           "declared-element": {
             "#6": ""
+          },
+          "resolved-link-target": {
+            "#6": "amf://id#3"
+          },
+          "lexical": {
+            "#6": "[(2,0)-(5,0)]"
           }
         }
       }

@@ -18,7 +18,9 @@ abstract class AsyncWebApiContext(
     private val wrapped: ParserContext,
     private val ds: Option[AsyncWebApiDeclarations] = None,
     private val operationIds: mutable.Set[String] = mutable.HashSet(),
-    specSettings: SpecSettings
+    private val messageIds: mutable.Set[String] = mutable.HashSet(),
+    specSettings: SpecSettings,
+    protected val bindings: AsyncValidBindingSet
 ) extends OasLikeWebApiContext(loc, refs, options, wrapped, ds, operationIds, specSettings = specSettings) {
 
   override val factory: AsyncSpecVersionFactory
@@ -47,4 +49,15 @@ abstract class AsyncWebApiContext(
         futureDeclarations = futureDeclarations
       )
     )
+
+  def validBindingSet(): AsyncValidBindingSet = bindings
+
+  def registerMessageId(messageId: String): Boolean = {
+    if (messageIds.contains(messageId)) {
+      false
+    } else {
+      messageIds.add(messageId)
+      true
+    }
+  }
 }

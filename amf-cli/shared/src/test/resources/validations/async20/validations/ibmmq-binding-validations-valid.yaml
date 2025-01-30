@@ -1,0 +1,34 @@
+asyncapi: 2.1.0
+info:
+  title: test binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: ibmmq
+    bindings:
+      ibmmq:
+        heartBeatInterval: 123 # 1. MUST be 0-999999
+channels:
+  some-channel:
+    bindings:
+      # 2. queue and topic fields MUST NOT coexist within an ibmmq channel binding
+      ibmmq:
+        destinationType: topic # 3. MUST be either topic or queue
+        topic:
+          string: normal value # 5. MUST NOT exceed 10240 characters in length
+          objectName: normal value # 6. MUST NOT exceed 48 characters in length
+        maxMsgLength: 123 # 7. MUST be 0-104,857,600 bytes (100 MB)
+    publish:
+      message:
+        bindings:
+          ibmmq:
+            type: string # 8. MUST be either string, jms or binary
+            expiry: 1 # 9. MUST be 0 or greater
+
+  other-channel:
+    publish:
+      message:
+        bindings:
+          ibmmq:
+            type: jms

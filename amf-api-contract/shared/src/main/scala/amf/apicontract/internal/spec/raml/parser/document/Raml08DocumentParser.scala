@@ -16,6 +16,7 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AmfStrings, UriUtils}
 import amf.shapes.internal.spec.RamlTypeDefMatcher
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.raml.parser.{Raml08TypeParser, StringDefaultType}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidTypeDefinition
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
@@ -106,7 +107,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
   private def parseEntries(entries: Seq[YMapEntry], parent: String): Unit = entries.foreach { entry =>
     ctx.declarations += ctx.factory
       .securitySchemeParser(
-        entry,
+        YMapEntryLike(entry),
         scheme => {
           val name = entry.key.as[String]
           scheme.withName(name)

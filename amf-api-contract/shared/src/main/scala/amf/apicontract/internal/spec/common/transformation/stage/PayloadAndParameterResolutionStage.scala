@@ -13,7 +13,7 @@ import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.resolution.ExampleTracking
 
 /** Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated in the
-  * examples validation phase Only necessary for OAS 3.0 spec
+  * examples validation phase (Only necessary for OAS 3.0/3.1 spec)
   */
 class PayloadAndParameterResolutionStage(profile: ProfileName) extends TransformationStep() {
 
@@ -27,12 +27,12 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
     if (appliesTo(profile)) resolveExamples(model)
     else model
 
-  protected def appliesTo(profile: ProfileName) = profile match {
-    case Oas30Profile | AmfProfile => true
-    case _                         => false
+  protected def appliesTo(profile: ProfileName): Boolean = profile match {
+    case Oas30Profile | Oas31Profile | AmfProfile => true
+    case _                                        => false
   }
 
-  def resolveExamples(model: BaseUnit): BaseUnit = {
+  private def resolveExamples(model: BaseUnit): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         val webApiContainers   = searchPayloadAndParams(doc.encodes.asInstanceOf[Api])
@@ -50,7 +50,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
       case res: Response    => res.payloads
     }.flatten
 
-  def searchPayloadAndParams(baseApi: Api): Seq[SchemaContainerWithId] = {
+  private def searchPayloadAndParams(baseApi: Api): Seq[SchemaContainerWithId] = {
     baseApi.endPoints.flatMap { endpoint =>
       val paramSchemas    = endpoint.parameters.flatMap(_.payloads)
       val endpointSchemas = traverseEndpoint(endpoint)
@@ -70,7 +70,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
   }
 
   private def reqSchemas(req: Request): Seq[SchemaContainerWithId] = {
-    val reqParams = req.uriParameters ++ req.queryParameters ++ req.cookieParameters
+    val reqParams = req.uriParameters ++ req.queryParameters ++ req.cookieParameters ++ req.headers
     req.payloads ++ reqParams.flatMap(_.payloads) ++ reqParams
   }
 

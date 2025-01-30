@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2"
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0"
     },
     {
       "@id": "testId/subscribe/traitOperationId",
@@ -28,17 +28,17 @@
       ],
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "target/operation-bindings/amqp091-operation"
+          "@id": "target/operation-bindings/amqp091-operation-010"
         },
         {
-          "@id": "target/operation-bindings/http-operation"
+          "@id": "target/operation-bindings/http-operation-010"
         }
       ]
     },
     {
-      "@id": "target/operation-bindings/amqp091-operation",
+      "@id": "target/operation-bindings/amqp091-operation-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding",
+        "http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding010",
         "http://a.ml/vocabularies/apiBinding#OperationBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -59,21 +59,21 @@
       "http://a.ml/vocabularies/apiBinding#type": "amqp"
     },
     {
-      "@id": "target/operation-bindings/http-operation",
+      "@id": "target/operation-bindings/http-operation-010",
       "@type": [
-        "http://a.ml/vocabularies/apiBinding#HttpOperationBinding",
+        "http://a.ml/vocabularies/apiBinding#HttpOperationBinding010",
         "http://a.ml/vocabularies/apiBinding#OperationBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiBinding#operationType": "traitType",
       "http://a.ml/vocabularies/apiBinding#query": {
-        "@id": "patch/operation-bindings/bindings/http-operation/shape/schema"
+        "@id": "patch/operation-bindings/bindings/http-operation-010/shape/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
       "http://a.ml/vocabularies/apiBinding#type": "http"
     },
     {
-      "@id": "patch/operation-bindings/bindings/http-operation/shape/schema",
+      "@id": "patch/operation-bindings/bindings/http-operation-010/shape/schema",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -84,13 +84,13 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some"
+          "@id": "patch/operation-bindings/bindings/http-operation-010/shape/schema/property/property/some"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
-      "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some",
+      "@id": "patch/operation-bindings/bindings/http-operation-010/shape/schema/property/property/some",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -103,13 +103,13 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some/scalar/some"
+        "@id": "patch/operation-bindings/bindings/http-operation-010/shape/schema/property/property/some/scalar/some"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "some"
     },
     {
-      "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some/scalar/some",
+      "@id": "patch/operation-bindings/bindings/http-operation-010/shape/schema/property/property/some/scalar/some",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",

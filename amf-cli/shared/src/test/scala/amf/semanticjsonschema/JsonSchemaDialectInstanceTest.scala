@@ -5,17 +5,13 @@ import amf.aml.client.scala.{AMLConfiguration, AMLDialectResult}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Mimes
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.io.FileAssertionTest
+import amf.core.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.{Assertion, Succeeded}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class JsonSchemaDialectInstanceTest extends FileAssertionTest {
 
   private val jsonSchemaPath = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/"
   private val instancePath   = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/"

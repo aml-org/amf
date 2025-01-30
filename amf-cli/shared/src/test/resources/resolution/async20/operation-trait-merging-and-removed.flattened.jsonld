@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -45,10 +45,16 @@
           "@id": "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId"
         }
       ],
+      "apiContract:server": [],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:server": "true"
+        },
         "lexical": {
-          "apiContract:supportedOperation": "[(7,0)-(14,0)]",
           "#/async-api/endpoint/someChannel": "[(6,2)-(14,0)]"
+        },
+        "virtual-element": {
+          "apiContract:supportedOperation": "true"
         }
       }
     },

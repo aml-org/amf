@@ -1,0 +1,35 @@
+{
+  "type": "record",
+  "name": "TestRecordWithMapsAndArrays",
+  "namespace": "org.apache.avro.specific",
+  "fields": [
+    {
+      "name": "arr",
+      "type": "array",
+      "items": "string",
+      "default": []
+    },
+    {
+      "name": "map",
+      "type": "map",
+      "values": "long",
+      "default": {}
+    },
+    {
+      "name": "nested_arr",
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "nested_map",
+      "type": "map",
+      "values": {
+        "type": "map",
+        "values": "long"
+      }
+    }
+  ]
+}

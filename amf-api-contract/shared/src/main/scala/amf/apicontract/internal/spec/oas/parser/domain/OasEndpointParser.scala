@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser.{
@@ -18,7 +18,6 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
@@ -32,7 +31,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
 
     var parameters = Parameters()
     val entries    = ListBuffer[YMapEntry]()
-    // This are the rest of the parameters, this must be simple to be supported by OAS.
+    // These are the rest of the parameters, this must be simple to be supported by OAS.
     map
       .key("parameters")
       .foreach { entry =>
@@ -106,11 +105,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
     map.regex(
       operationsRegex,
       entries => {
-        val operations = mutable.ListBuffer[Operation]()
-        entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
-          operations += operationParser.parse()
-        }
+        val operations = parseOperations(entries)
         endpoint.setWithoutId(
           EndPointModel.Operations,
           AmfArray(operations, Annotations.inferred()),

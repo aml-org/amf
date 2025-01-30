@@ -4,18 +4,18 @@ import amf.apicontract.client.scala.model.domain.{Parameter, Payload}
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
 import amf.apicontract.internal.spec.common.parser.{Oas3ParameterParser, SpecParserOps}
-import amf.apicontract.internal.spec.oas.parser.context.{Oas3Syntax, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
-import amf.shapes.client.scala.model.domain.Example
-import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesParser, YMapEntryLike}
+import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
@@ -47,16 +47,17 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parameter
     }
 
-    val header: Parameter = if (ctx.spec == Spec.OAS30) {
+    val header: Parameter = if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31) {
       ctx.link(map) match {
         case Left(fullRef) =>
           val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "headers")
           ctx.declarations
             .findHeader(label, SearchScope.Named)
             .map(header => {
-              val ref: Option[YScalar]  = map.key("$ref").flatMap(v => v.value.asOption[YScalar])
-              val annotations           = ref.map(Annotations(_)).getOrElse(Annotations.synthesized())
-              val linkHeader: Parameter = header.link(AmfScalar(label), annotations, Annotations.synthesized())
+              val ref: Option[YScalar] = map.key("$ref").flatMap(v => v.value.asOption[YScalar])
+              val annotations          = ref.map(Annotations(_)).getOrElse(Annotations.synthesized())
+              val linkHeader: Parameter =
+                ctx.link(header, map, AmfScalar(label), annotations, Annotations.synthesized())
               adopt(linkHeader)
               linkHeader
             })

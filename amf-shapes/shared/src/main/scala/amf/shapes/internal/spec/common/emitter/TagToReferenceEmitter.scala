@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.common.emitter
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.annotations.DeclaredElement
-import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos}
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos, raw}
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.JSONSchemaVersion
 import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendSchemasPrefix
@@ -31,12 +31,15 @@ trait ShapeReferenceEmitter extends TagToReferenceEmitter {
     val lastElementInLinkChain = follow()
     val urlToEmit =
       if (isDeclaredElement(lastElementInLinkChain)) getRefUrlFor(lastElementInLinkChain)(shapeSpec) else referenceLabel
-    shapeSpec.ref(b, urlToEmit)
+    link match {
+      case l: Linkable => shapeSpec.ref(b, urlToEmit, l)
+      case _           => shapeSpec.ref(b, urlToEmit)
+    }
   }
 
   protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel)(implicit
       spec: ShapeEmitterContext
-  ) = {
+  ): String = {
     val jsonSchemaVersion = Some(spec.schemaVersion).collect { case version: JSONSchemaVersion => version }
     element match {
       case _: Shape => appendSchemasPrefix(referenceLabel, Some(shapeSpec.spec), jsonSchemaVersion)
@@ -84,14 +87,21 @@ object ReferenceEmitterHelper {
 }
 
 trait RefEmitter {
-  def ref(url: String, b: PartBuilder): Unit
+  def ref(url: String, b: PartBuilder, l: Linkable): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
 }
 
 object RamlRefEmitter extends RefEmitter {
-  override def ref(url: String, b: PartBuilder): Unit = b += YNode.include(url)
+  override def ref(url: String, b: PartBuilder, l: Linkable): Unit = b += YNode.include(url)
 }
 
 object OasRefEmitter extends RefEmitter {
-
-  override def ref(url: String, b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
+  override def ref(url: String, b: PartBuilder, l: Linkable): Unit = {
+    val summary     = if (l.refSummary.nonEmpty) Some(l.refSummary.value()) else None
+    val description = if (l.refDescription.nonEmpty) Some(l.refDescription.value()) else None
+    b.obj(entryBuilder => {
+      entryBuilder.entry("$ref", raw(_, url))
+      summary.foreach(s => entryBuilder.entry("summary", raw(_, s)))
+      description.foreach(d => entryBuilder.entry("description", raw(_, d)))
+    })
+  }
 }

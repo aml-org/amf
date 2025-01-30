@@ -1,0 +1,15 @@
+asyncapi: 2.6.0
+info:
+  title: test mercure binding
+  version: 1.0.0
+servers:
+  theName:
+    url: some.com
+    protocol: mercure
+    bindings:
+      pulsar: {}
+channels:
+  some-channel:
+    bindings:
+      pulsar: {}
+    description: some channel

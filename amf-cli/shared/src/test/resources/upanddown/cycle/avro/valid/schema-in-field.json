@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "AllTypes",
+  "namespace": "root",
+  "aliases": [
+    "EveryTypeInTheSameSchema"
+  ],
+  "doc": "this schema contains every possible type you can declare in avro inside it's fields",
+  "fields": [
+    {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    }
+  ]
+}

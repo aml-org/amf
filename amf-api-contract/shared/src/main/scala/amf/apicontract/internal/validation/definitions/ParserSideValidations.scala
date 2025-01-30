@@ -21,6 +21,11 @@ object ParserSideValidations extends Validations {
     "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
   )
 
+  val ExclusiveLicenseIdentifierError = validation(
+    "exclusive-license-identifier-error",
+    "identifier and url are mutually exclusive in a OAS 3.1 License Object"
+  )
+
   val MandatoryObjectNodeType = validation(
     "mandatory-object-node-type",
     "Mandatory object node type"
@@ -149,6 +154,11 @@ object ParserSideValidations extends Validations {
   val DuplicatedOperationId = validation(
     "duplicated-operation-id",
     "Duplicated operation id"
+  )
+
+  val DuplicatedMessageId = validation(
+    "duplicated-message-id",
+    "duplicated messageId"
   )
 
   val SchemasDeprecated = validation(
@@ -427,8 +437,19 @@ object ParserSideValidations extends Validations {
     "Syntax error"
   )
 
+  val UnsupportedBindingVersionWarning: ValidationSpecification = validation(
+    id = "unsupported-binding-version-warning",
+    message = "The provided binding version is not supported"
+  )
+
+  val UnsupportedBindingVersion: ValidationSpecification = validation(
+    id = "unsupported-binding-version",
+    message = "The provided binding version is not supported"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-    ExclusiveLinkTargetError.id -> all(VIOLATION),
+    ExclusiveLinkTargetError.id        -> all(VIOLATION),
+    ExclusiveLicenseIdentifierError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
       Oas20Profile -> VIOLATION
     ),
@@ -450,7 +471,8 @@ object ParserSideValidations extends Validations {
     InvalidPayload.id                            -> all(VIOLATION),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
-    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION)
+    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
+    UnsupportedBindingVersionWarning.id          -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -507,6 +529,8 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,
-    DuplicatedDeclaration
+    DuplicatedDeclaration,
+    UnsupportedBindingVersionWarning,
+    UnsupportedBindingVersion
   )
 }

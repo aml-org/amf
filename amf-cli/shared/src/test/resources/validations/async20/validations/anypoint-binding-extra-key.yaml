@@ -1,0 +1,25 @@
+asyncapi: 2.2.0
+info:
+  title: test anypoint binding
+  version: 1.0.0
+channels:
+  some-channel:
+    bindings:
+      anypointmq:
+        destination: user-signup-exchg
+        destinationType: exchange
+        bindingVersion: '0.1.0'
+        thisKeyIsNotAllowed: should throw validation error
+    publish:
+      message:
+        bindings:
+          anypointmq:
+            headers:
+              type: object
+              properties:
+                messageId:
+                  type: string
+            bindingVersion: '0.1.0'
+            thisKeyIsNotAllowed: should throw validation error
+        payload:
+          type: string

@@ -1,0 +1,86 @@
+asyncapi: 2.0.0
+info:
+  title: Test API
+  version: 1.0.0
+
+servers:
+  production:
+    url: kafka-server-binding
+    protocol: kafka
+    bindings:
+      kafka:
+        schemaRegistryUrl: https://my-schema-registry.com
+        schemaRegistryVendor: confluent
+        bindingVersion: 0.3.0
+        invalidKey: should throw error
+
+channels:
+  some-channel:
+    bindings:
+      kafka:
+        topic: my-specific-topic-name
+        partitions: 20
+        replicas: 3
+        bindingVersion: 0.4.0
+        invalidKey: should throw error
+        topicConfiguration:
+          cleanup.policy: [ "delete", "compact" ]
+          retention.ms: 604800000
+          retention.bytes: 1000000000
+          delete.retention.ms: 86400000
+          max.message.bytes: 1048588
+          invalidKey: should throw error
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.1.0
+            invalidKey: should throw error
+            key:
+              type: string
+              enum:
+                - someKey
+      bindings:
+        kafka:
+          bindingVersion: 0.3.0
+          invalidKey: should throw error
+          groupId:
+            type: string
+            enum:
+              - myGroupId
+          clientId:
+            type: string
+            enum:
+              - myClientId
+
+  other-channel:
+    bindings:
+      kafka:
+        topic: my-specific-topic-name
+        partitions: 20
+        replicas: 3
+        bindingVersion: 0.5.0
+        topicConfiguration:
+          cleanup.policy: [ "delete", "compact" ]
+          retention.ms: 604800000
+          retention.bytes: 1000000000
+          delete.retention.ms: 86400000
+          max.message.bytes: 1048588
+          confluent.key.schema.validation: true
+          confluent.key.subject.name.strategy: test string
+          confluent.value.schema.validation: false
+          confluent.value.subject.name.strategy: test string
+          invalidKey: should throw error
+    publish:
+      message:
+        bindings:
+          kafka:
+            bindingVersion: 0.3.0
+            key:
+              type: string
+              enum:
+                - someKey
+            schemaIdLocation: test string
+            schemaIdPayloadEncoding: test string
+            schemaLookupStrategy: test string
+            invalidKey: should throw error

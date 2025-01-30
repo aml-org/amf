@@ -51,7 +51,9 @@ abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
 
   // TODO: THIS SHOULD BE PART OF A SpecSettings object or something of the sort that the context has and we could access.
   val key: String = spec.spec match {
-    case Spec.OAS30 | Spec.ASYNC20 => "schemas"
+    case Spec.OAS31 | Spec.OAS30 | Spec.ASYNC20 | Spec.ASYNC21 | Spec.ASYNC22 | Spec.ASYNC23 | Spec.ASYNC24 |
+        Spec.ASYNC25 | Spec.ASYNC26 =>
+      "schemas"
     case Spec.JSONSCHEMA if spec.isJsonSchema =>
       spec.asInstanceOf[OasLikeShapeEmitterContext].schemasDeclarationsPath.replace("/", "")
     case _ => "definitions"

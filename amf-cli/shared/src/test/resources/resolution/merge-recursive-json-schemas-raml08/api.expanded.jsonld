@@ -150,17 +150,17 @@
                                           "synthesized-field": {
                                             "doc:recursive": "true"
                                           },
-                                          "resolved-link": {
-                                            "#33": "amf://id#34"
-                                          },
                                           "type-property-lexical-info": {
                                             "#33": "[(6,9)-(6,15)]"
                                           },
+                                          "resolved-link-target": {
+                                            "#33": "amf://id#34"
+                                          },
+                                          "resolved-link": {
+                                            "#33": "amf://id#35"
+                                          },
                                           "lexical": {
                                             "#33": "[(29,10)-(32,0)]"
-                                          },
-                                          "resolved-link-target": {
-                                            "#33": "amf://id#35"
                                           },
                                           "parsed-json-schema": {
                                             "#33": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -174,11 +174,11 @@
                                       }
                                     ],
                                     "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#32": "[(12,15)-(12,21)]"
-                                      },
                                       "lexical": {
                                         "#32": "[(11,12)-(16,13)]"
+                                      },
+                                      "type-property-lexical-info": {
+                                        "#32": "[(12,15)-(12,21)]"
                                       }
                                     }
                                   }
@@ -236,12 +236,12 @@
                                       }
                                     ],
                                     "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#37": "[(18,15)-(18,21)]"
-                                      },
                                       "lexical": {
                                         "shacl:datatype": "[(18,15)-(18,31)]",
                                         "#37": "[(17,12)-(19,13)]"
+                                      },
+                                      "type-property-lexical-info": {
+                                        "#37": "[(18,15)-(18,21)]"
                                       }
                                     }
                                   }
@@ -284,17 +284,17 @@
                                 "doc:recursive": "true",
                                 "shacl:closed": "true"
                               },
-                              "resolved-link": {
-                                "#30": "amf://id#34"
-                              },
                               "type-property-lexical-info": {
                                 "#30": "[(6,9)-(6,15)]"
                               },
+                              "resolved-link-target": {
+                                "#30": "amf://id#34"
+                              },
+                              "resolved-link": {
+                                "#30": "amf://id#35"
+                              },
                               "lexical": {
                                 "#30": "[(29,10)-(32,0)]"
-                              },
-                              "resolved-link-target": {
-                                "#30": "amf://id#35"
                               },
                               "parsed-json-schema": {
                                 "#30": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -498,16 +498,16 @@
                           }
                         ],
                         "smaps": {
-                          "resolved-link-target": {
-                            "#14": "amf://id#22"
-                          },
                           "lexical": {
                             "doc:dataNode": "[(7,6)-(13,0)]",
                             "#14": "[(6,4)-(13,0)]",
                             "core:name": "[(6,4)-(6,11)]"
                           },
-                          "resolved-link": {
+                          "resolved-link-target": {
                             "#14": "amf://id#21"
+                          },
+                          "resolved-link": {
+                            "#14": "amf://id#22"
                           }
                         }
                       }
@@ -659,17 +659,17 @@
                                           "synthesized-field": {
                                             "doc:recursive": "true"
                                           },
-                                          "resolved-link": {
-                                            "#33": "amf://id#34"
-                                          },
                                           "type-property-lexical-info": {
                                             "#33": "[(6,9)-(6,15)]"
                                           },
+                                          "resolved-link-target": {
+                                            "#33": "amf://id#34"
+                                          },
+                                          "resolved-link": {
+                                            "#33": "amf://id#35"
+                                          },
                                           "lexical": {
                                             "#33": "[(29,10)-(32,0)]"
-                                          },
-                                          "resolved-link-target": {
-                                            "#33": "amf://id#35"
                                           },
                                           "parsed-json-schema": {
                                             "#33": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -683,11 +683,11 @@
                                       }
                                     ],
                                     "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#32": "[(12,15)-(12,21)]"
-                                      },
                                       "lexical": {
                                         "#32": "[(11,12)-(16,13)]"
+                                      },
+                                      "type-property-lexical-info": {
+                                        "#32": "[(12,15)-(12,21)]"
                                       }
                                     }
                                   }
@@ -745,12 +745,12 @@
                                       }
                                     ],
                                     "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#37": "[(18,15)-(18,21)]"
-                                      },
                                       "lexical": {
                                         "shacl:datatype": "[(18,15)-(18,31)]",
                                         "#37": "[(17,12)-(19,13)]"
+                                      },
+                                      "type-property-lexical-info": {
+                                        "#37": "[(18,15)-(18,21)]"
                                       }
                                     }
                                   }
@@ -1027,16 +1027,16 @@
                       }
                     ],
                     "smaps": {
-                      "resolved-link-target": {
-                        "#4": "amf://id#13"
-                      },
                       "lexical": {
                         "doc:dataNode": "[(15,6)-(23,0)]",
                         "#4": "[(14,4)-(23,0)]",
                         "core:name": "[(14,4)-(14,8)]"
                       },
-                      "resolved-link": {
+                      "resolved-link-target": {
                         "#4": "amf://id#12"
+                      },
+                      "resolved-link": {
+                        "#4": "amf://id#13"
                       }
                     }
                   }
@@ -1079,7 +1079,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [
@@ -1338,16 +1338,16 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#4": "amf://id#13"
-          },
           "lexical": {
             "doc:dataNode": "[(15,6)-(23,0)]",
             "#4": "[(14,4)-(23,0)]",
             "core:name": "[(14,4)-(14,8)]"
           },
-          "resolved-link": {
+          "resolved-link-target": {
             "#4": "amf://id#12"
+          },
+          "resolved-link": {
+            "#4": "amf://id#13"
           }
         }
       },
@@ -1518,16 +1518,16 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#14": "amf://id#22"
-          },
           "lexical": {
             "doc:dataNode": "[(7,6)-(13,0)]",
             "#14": "[(6,4)-(13,0)]",
             "core:name": "[(6,4)-(6,11)]"
           },
-          "resolved-link": {
+          "resolved-link-target": {
             "#14": "amf://id#21"
+          },
+          "resolved-link": {
+            "#14": "amf://id#22"
           }
         }
       }

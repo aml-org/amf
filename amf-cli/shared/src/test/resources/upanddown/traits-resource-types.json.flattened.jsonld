@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
       "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
@@ -509,11 +509,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/lexical/element_3"
@@ -526,6 +521,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/declared-element/element_0"
         }
       ]
     },
@@ -629,11 +629,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/lexical/element_3"
@@ -646,6 +641,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/declared-element/element_0"
         }
       ]
     },
@@ -715,11 +715,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/lexical/element_3"
@@ -732,6 +727,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/declared-element/element_0"
         }
       ]
     },
@@ -826,11 +826,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#dataNode",
       "http://a.ml/vocabularies/document-source-maps#value": "[(37,6)-(46,7)]"
@@ -849,6 +844,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,4)-(47,5)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/resourceType/searchableCollection",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map",
@@ -945,11 +945,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#dataNode",
       "http://a.ml/vocabularies/document-source-maps#value": "[(51,6)-(55,7)]"
@@ -968,6 +963,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured",
       "http://a.ml/vocabularies/document-source-maps#value": "[(50,4)-(56,5)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/secured",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map",
@@ -1035,11 +1035,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#dataNode",
       "http://a.ml/vocabularies/document-source-maps#value": "[(58,6)-(62,7)]"
@@ -1058,6 +1053,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged",
       "http://a.ml/vocabularies/document-source-maps#value": "[(57,4)-(63,5)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/paged",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map",
@@ -1846,11 +1846,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/declared-element/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/lexical/element_2"
@@ -1860,6 +1855,11 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/declared-element/element_0"
         }
       ]
     },
@@ -1903,11 +1903,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(64,4)-(64,11)]"
@@ -1921,6 +1916,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr",
       "http://a.ml/vocabularies/document-source-maps#value": "[(64,4)-(66,5)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/declares/trait/descr/object_1/description/source-map",

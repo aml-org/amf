@@ -204,11 +204,11 @@
                                       }
                                     ],
                                     "smaps": {
-                                      "parsed-json-example": {
-                                        "#12": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
-                                      },
                                       "lexical": {
                                         "#12": "[(1,0)-(5,1)]"
+                                      },
+                                      "parsed-json-example": {
+                                        "#12": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
                                       }
                                     }
                                   }
@@ -237,12 +237,12 @@
                               }
                             ],
                             "smaps": {
-                              "auto-generated-name": {
-                                "#10": ""
-                              },
                               "lexical": {
                                 "apiContract:examples": "[(11,12)-(11,51)]",
                                 "#10": "[(10,10)-(11,51)]"
+                              },
+                              "auto-generated-name": {
+                                "#10": ""
                               }
                             }
                           }
@@ -301,7 +301,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [

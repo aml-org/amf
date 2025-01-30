@@ -4,7 +4,7 @@ import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFa
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Fragment}
-import amf.core.client.scala.model.domain.{AmfObject, Shape}
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar, Linkable, Shape}
 import amf.core.client.scala.parse.document.{
   EmptyFutureDeclarations,
   ErrorHandlingContext,
@@ -12,9 +12,9 @@ import amf.core.client.scala.parse.document.{
   ParserContext
 }
 import amf.core.internal.parser.Root
-import amf.core.internal.parser.domain.{Declarations, SearchScope}
+import amf.core.internal.parser.domain.{Annotations, Declarations, SearchScope}
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
-import amf.core.internal.remote.{Oas30, Spec}
+import amf.core.internal.remote.{Oas30, Oas31, Spec}
 import amf.core.internal.utils.{AliasCounter, QName}
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example, SemanticContext}
 import amf.shapes.internal.spec.common.SchemaVersion
@@ -22,7 +22,7 @@ import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.jsonschema.parser
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
 import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder, JsonSchemaInference}
-import amf.shapes.internal.spec.oas.parser.{Oas2Settings, Oas2ShapeSyntax, Oas3Settings, Oas3ShapeSyntax}
+import amf.shapes.internal.spec.oas.parser._
 import amf.shapes.internal.spec.raml.parser.RamlWebApiContextType.{DEFAULT, RamlWebApiContextType}
 import amf.shapes.internal.spec.raml.parser.{Raml08Settings, Raml08ShapeSyntax, Raml10Settings, Raml10ShapeSyntax}
 import org.mulesoft.common.client.lexical.SourceLocation
@@ -139,11 +139,15 @@ class ShapeParserContext(
 
   def isOas3Context: Boolean = settings.isOas3Context
 
+  def isOas31Context: Boolean = settings.isOas31Context
+
   def isAsyncContext: Boolean = settings.isAsyncContext
 
   def isRamlContext: Boolean = settings.isRamlContext
 
   def isOas3Syntax: Boolean = settings.isOas3Context
+
+  def isOas31Syntax: Boolean = settings.isOas31Context
 
   def isOas2Syntax: Boolean = settings.isOas2Context
 
@@ -188,6 +192,7 @@ class ShapeParserContext(
 
   def toOas: ShapeParserContext = {
     val settings = spec match {
+      case Oas31 => Oas31Settings(Oas31ShapeSyntax)
       case Oas30 => Oas3Settings(Oas3ShapeSyntax)
       case _     => Oas2Settings(Oas2ShapeSyntax)
     }
@@ -254,6 +259,20 @@ class ShapeParserContext(
 
   def copyForBase(unit: BaseUnit): ShapeParserContext = {
     makeCopyWithJsonPointerContext().moveToReference(unit.location().get)
+  }
+
+  private[amf] def link[T <: Linkable](
+      linkable: T,
+      map: YMap,
+      label: AmfScalar,
+      annotations: Annotations = Annotations(),
+      fieldAnn: Annotations = Annotations()
+  ): T = {
+    if (settings.isOas31Context) {
+      linkable.link(map, label, annotations, fieldAnn)
+    } else {
+      linkable.link(label, annotations, fieldAnn)
+    }
   }
 
   protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/")) url.dropRight(1) else url

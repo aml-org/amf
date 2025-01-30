@@ -63,6 +63,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
   }
 
   private def amfConfigFrom(spec: Spec): AMFConfiguration = spec match {
+    case Spec.OAS31   => OASConfiguration.OAS31()
     case Spec.OAS30   => OASConfiguration.OAS30()
     case Spec.OAS20   => OASConfiguration.OAS20()
     case Spec.RAML10  => RAMLConfiguration.RAML10()
@@ -76,6 +77,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     case Raml08 => Raml08YamlHint
     case Oas20  => Oas20YamlHint
     case Oas30  => Oas30YamlHint
+    case Oas31  => Oas31YamlHint
     case _      => throw new IllegalArgumentException
   }
 
@@ -103,6 +105,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     case Raml08 => Raml08Profile
     case Oas20  => Oas20Profile
     case Oas30  => Oas30Profile
+    case Oas31  => Oas31Profile
     case _      => throw new IllegalArgumentException
   }
 }

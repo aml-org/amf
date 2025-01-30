@@ -9,6 +9,7 @@ import org.scalatest.Assertion
 import scala.concurrent.{ExecutionContext, Future}
 
 class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleTests {
+
   override def basePath: String = s"amf-cli/shared/src/test/resources/graphql-federation/tck/apis/"
 
   val graphqlTckPath: String  = "amf-cli/shared/src/test/resources/graphql/tck"
@@ -20,8 +21,6 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   private val validFederationApisInvalidInGraphQL = Set(
     "amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/mandatory-schema-node.api.graphql"
   )
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   // Test valid APIs
   runValidGraphqlTck()

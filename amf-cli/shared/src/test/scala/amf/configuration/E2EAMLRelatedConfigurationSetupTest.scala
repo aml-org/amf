@@ -2,20 +2,18 @@ package amf.configuration
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.scala.APIConfiguration
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Spec.AML
 import amf.core.internal.remote.{AmlDialectSpec, Spec}
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class E2EAMLRelatedConfigurationSetupTest extends AsyncFunSuite with Matchers {
+class E2EAMLRelatedConfigurationSetupTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val baseConfig = AMLConfiguration.predefined()
   private val base       = "file://amf-cli/shared/src/test/resources/configuration/"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("AML Dialect Instance belongs to spec defined by Dialect name and version") {
     baseConfig.withDialect(s"${base}dialect.yaml").flatMap { config =>

@@ -171,21 +171,6 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                                      {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/header/parameter/header/arrayOfFileHeader/array/arrayOfFileHeader/file-shape/items/source-map/type-property-lexical-info/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/header/parameter/header/arrayOfFileHeader/array/arrayOfFileHeader/file-shape/items"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(11,12)-(11,16)]"
-                                          }
-                                        ]
-                                      }
-                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/header/parameter/header/arrayOfFileHeader/array/arrayOfFileHeader/file-shape/items/source-map/lexical/element_0",
@@ -197,6 +182,21 @@
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(11,18)-(11,22)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/header/parameter/header/arrayOfFileHeader/array/arrayOfFileHeader/file-shape/items/source-map/type-property-lexical-info/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/file-array/api.raml#/web-api/endpoint/%2Fheaders%2Farray/supportedOperation/get/expects/request/header/parameter/header/arrayOfFileHeader/array/arrayOfFileHeader/file-shape/items"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(11,12)-(11,16)]"
                                           }
                                         ]
                                       }
@@ -481,7 +481,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

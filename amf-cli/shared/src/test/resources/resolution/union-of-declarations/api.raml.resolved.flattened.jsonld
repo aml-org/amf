@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "RAML 1.0"
     },
@@ -135,12 +135,12 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#24": "true"
+        },
         "lexical": {
           "apiContract:payload": "[(22,2)-(25,0)]",
           "#24": "[(22,7)-(25,0)]"
-        },
-        "virtual-element": {
-          "#24": "true"
         }
       }
     },
@@ -174,12 +174,12 @@
         }
       ],
       "smaps": {
+        "virtual-element": {
+          "#30": "true"
+        },
         "lexical": {
           "apiContract:payload": "[(29,2)-(32,0)]",
           "#30": "[(29,7)-(32,0)]"
-        },
-        "virtual-element": {
-          "#30": "true"
         }
       }
     },
@@ -252,14 +252,14 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "auto-generated-name": {
-          "#26": ""
-        },
         "lexical": {
           "#26": "[(23,4)-(25,0)]"
         },
         "type-property-lexical-info": {
           "#26": "[(24,6)-(24,10)]"
+        },
+        "auto-generated-name": {
+          "#26": ""
         }
       }
     },
@@ -282,15 +282,15 @@
       ],
       "shacl:name": "UnionType",
       "smaps": {
-        "declared-element": {
-          "#1": ""
-        },
         "lexical": {
           "shacl:name": "[(4,1)-(4,10)]",
           "#1": "[(4,1)-(6,0)]"
         },
         "type-property-lexical-info": {
           "#1": "[(5,2)-(5,6)]"
+        },
+        "declared-element": {
+          "#1": ""
         }
       }
     },
@@ -319,22 +319,22 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "type-property-lexical-info": {
+          "#2": "[(7,2)-(7,6)]"
+        },
         "resolved-link": {
           "#2": "amf://id#10"
         },
-        "type-property-lexical-info": {
-          "#2": "[(7,2)-(7,6)]"
+        "resolved-link-target": {
+          "#2": "amf://id#8"
+        },
+        "declared-element": {
+          "#2": ""
         },
         "lexical": {
           "apiContract:examples": "[(11,2)-(13,0)]",
           "#2": "[(6,1)-(13,0)]",
           "shacl:name": "[(6,1)-(6,4)]"
-        },
-        "declared-element": {
-          "#2": ""
-        },
-        "resolved-link-target": {
-          "#2": "amf://id#9"
         }
       }
     },
@@ -363,22 +363,22 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
+        "type-property-lexical-info": {
+          "#11": "[(14,2)-(14,6)]"
+        },
         "resolved-link": {
           "#11": "amf://id#19"
         },
-        "type-property-lexical-info": {
-          "#11": "[(14,2)-(14,6)]"
+        "resolved-link-target": {
+          "#11": "amf://id#17"
+        },
+        "declared-element": {
+          "#11": ""
         },
         "lexical": {
           "apiContract:examples": "[(18,2)-(20,0)]",
           "#11": "[(13,1)-(20,0)]",
           "shacl:name": "[(13,1)-(13,4)]"
-        },
-        "declared-element": {
-          "#11": ""
-        },
-        "resolved-link-target": {
-          "#11": "amf://id#18"
         }
       }
     },
@@ -498,12 +498,12 @@
       ],
       "shacl:name": "name",
       "smaps": {
-        "type-property-lexical-info": {
-          "#7": "[(10,6)-(10,10)]"
-        },
         "lexical": {
           "shacl:datatype": "[(10,6)-(11,0)]",
           "#7": "[(9,4)-(11,0)]"
+        },
+        "type-property-lexical-info": {
+          "#7": "[(10,6)-(10,10)]"
         }
       }
     },
@@ -544,12 +544,12 @@
       ],
       "shacl:name": "age",
       "smaps": {
-        "type-property-lexical-info": {
-          "#16": "[(17,6)-(17,10)]"
-        },
         "lexical": {
           "shacl:datatype": "[(17,6)-(18,0)]",
           "#16": "[(16,4)-(18,0)]"
+        },
+        "type-property-lexical-info": {
+          "#16": "[(17,6)-(17,10)]"
         }
       }
     },

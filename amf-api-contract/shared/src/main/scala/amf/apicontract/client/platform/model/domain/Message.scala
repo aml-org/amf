@@ -34,6 +34,7 @@ class Message(override private[amf] val _internal: InternalMessage)
   def summary: StrField                   = _internal.summary
   def bindings: MessageBindings           = _internal.bindings
   def headerSchema: NodeShape             = _internal.headerSchema
+  def messageId: StrField                 = _internal.messageId
 
   /** Set name property of this Response. */
   override def withName(name: String): this.type = {
@@ -93,6 +94,10 @@ class Message(override private[amf] val _internal: InternalMessage)
 
   def withHeaderSchema(schema: NodeShape): this.type = {
     _internal.withHeaderSchema(schema)
+    this
+  }
+  def withMessageId(messageId: String): this.type = {
+    _internal.withMessageId(messageId)
     this
   }
 

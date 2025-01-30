@@ -313,21 +313,6 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/server/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/variable/parameter/path/year/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/server/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/variable/parameter/path/year"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(5,48)-(5,54)]"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#virtual-element": [
                       {
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/server/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/variable/parameter/path/year/source-map/virtual-element/element_0",
@@ -339,6 +324,21 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/server/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/variable/parameter/path/year/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/server/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/variable/parameter/path/year"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(5,48)-(5,54)]"
                           }
                         ]
                       }
@@ -776,7 +776,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "http://a.ml/vocabularies/document#sourceSpec": [

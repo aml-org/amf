@@ -1,5 +1,6 @@
 package amf.shapes.internal.spec.jsonldschema.parser.builder
 
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.SemanticContext
 import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 import org.mulesoft.common.client.lexical.SourceLocation
@@ -10,7 +11,7 @@ case class JsonLDPropertyBuilder(
     father: Option[String],
     element: JsonLDElementBuilder,
     path: JsonPath,
-    location: SourceLocation
+    annotation: Annotations
 ) {
   def hasTermWithDefaultBase: Boolean = term.startsWith(SemanticContext.baseIri)
   def term: String                    = element.getOverriddenTerm.getOrElse(keyTerm)

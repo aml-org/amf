@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "unionSimpleRecord",
+  "namespace": "root",
+  "fields": [
+    {
+      "name": "simpleUnion",
+      "type": [ "string", "int"],
+      "default": true
+    }
+  ]
+}

@@ -501,7 +501,7 @@ case class Oas2ParameterParser(
       entry => {
         val req: Boolean = entry.value.as[Boolean]
         payload.annotations += RequiredParamPayload(req, entry.range)
-        payload.set(PayloadModel.Required, AmfScalar(req, Annotations(entry.value)), Annotations(entry) )
+        payload.set(PayloadModel.Required, AmfScalar(req, Annotations(entry.value)), Annotations(entry))
       }
     )
     map.key("description", PayloadModel.Description in payload)
@@ -579,7 +579,7 @@ case class Oas2ParameterParser(
     ctx.declarations.findParameter(refUrl, SearchScope.All) match {
       case Some(param) =>
         val parameterName        = refUrl.split("/").last
-        val parameter: Parameter = param.link(AmfScalar(refUrl), Annotations(map), Annotations.synthesized())
+        val parameter: Parameter = ctx.link(param, map, AmfScalar(refUrl), Annotations(map), Annotations.synthesized())
         // TODO: Could also delete link name
         parameter.withName(parameterName)
         OasParameter(parameter, Some(ref))
@@ -587,7 +587,9 @@ case class Oas2ParameterParser(
         ctx.declarations.findPayload(refUrl, SearchScope.All) match {
           case Some(payload) =>
             OasParameter(
-              payload.link(AmfScalar(refUrl), Annotations(map), Annotations.synthesized()).asInstanceOf[Payload],
+              ctx
+                .link(payload, map, AmfScalar(refUrl), Annotations(map), Annotations.synthesized())
+                .asInstanceOf[Payload],
               Some(ref)
             )
           case None =>
@@ -756,7 +758,8 @@ object Oas3ParameterParser {
       ctx.eh.violation(
         InvalidParameterStyleBindingCombination,
         param,
-        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'"
+        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'",
+        param.annotations.sourceLocation
       )
   }
 
@@ -799,8 +802,6 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
               AmfScalar(1, Annotations() += LexicalInformation(a.range) += ExplicitField())
             )
         }
-
-
 
         Option(payload.schema).foreach(property.withRange)
       }

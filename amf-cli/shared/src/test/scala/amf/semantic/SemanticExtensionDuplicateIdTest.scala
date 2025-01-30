@@ -6,12 +6,12 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.traversal.iterator.InstanceCollector
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait DuplicateIdTest extends Matchers {
 
@@ -40,9 +40,10 @@ trait DuplicateIdTest extends Matchers {
   }
 }
 
-class SemanticExtensionDuplicateIdTest extends AsyncFunSuite with Matchers with DuplicateIdTest {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SemanticExtensionDuplicateIdTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers
+    with DuplicateIdTest {
 
   val basePath: String = "amf-cli/shared/src/test/resources/semantic/"
 

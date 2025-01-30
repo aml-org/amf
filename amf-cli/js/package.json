@@ -1,6 +1,6 @@
 {
   "name": "amf-client-js",
-  "version": "5.4.0-SNAPSHOT",
+  "version": "5.7.0-SNAPSHOT",
   "description": "AMF Library",
   "main": "amf.js",
   "author": "amf team",
@@ -16,7 +16,8 @@
   "types": "./typings/amf-client-js.d.ts",
   "typings": "./typings/amf-client-js.d.ts",
   "dependencies": {
-    "@aml-org/amf-antlr-parsers": "0.7.25",
-    "ajv": "6.12.6"
+    "@aml-org/amf-antlr-parsers": "0.8.28",
+    "ajv": "6.12.6",
+    "avro-js": "1.11.3"
   }
 }

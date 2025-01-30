@@ -1,0 +1,38 @@
+asyncapi: 2.0.0
+info:
+  title: Mqtt binding
+  version: 1.0.0
+
+channels: {}
+
+servers:
+  valid-reference-server:
+    protocol: mqtt
+    url: http://some.com
+    bindings:
+      mqtt:
+        bindingVersion: 0.2.0
+        sessionExpiryInterval:
+          $ref: '#/components/schemas/testSchema'
+        maximumPacketSize:
+          $ref: '#/components/schemas/testSchema'
+
+  invalid-reference-server:
+    protocol: mqtt
+    url: http://some.com
+    bindings:
+      mqtt:
+        bindingVersion: 0.2.0
+        sessionExpiryInterval:
+          $ref: '#/components/schemas/invalidRef'
+        maximumPacketSize:
+          $ref: '#/components/schemas/invalidRef'
+
+components:
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        eventID:
+          type: string
+          description: Unique identifier for the event.

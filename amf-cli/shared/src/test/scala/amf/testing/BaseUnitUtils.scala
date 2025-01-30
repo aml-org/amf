@@ -1,12 +1,13 @@
 package amf.testing
 
-import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
-import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
+import amf.core.client.scala.AMFResult
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.scala.model.domain.{Annotation, DomainElement, Shape}
 import amf.core.internal.annotations.SourceYPart
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.client.scala.model.document.{AvroSchemaDocument, JsonSchemaDocument}
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -16,7 +17,7 @@ object BaseUnitUtils {
     if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
 
-  def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[Document].declares
+  def getDeclarations(bu: BaseUnit): Seq[DomainElement] = bu.asInstanceOf[DeclaresModel].declares
 
   def getReferences(bu: BaseUnit): Seq[BaseUnit] = bu.asInstanceOf[Document].references
 
@@ -60,4 +61,6 @@ object BaseUnitUtils {
   def hasAnnotation[T <: Annotation](annotation: Class[T], annotations: Annotations): Boolean = {
     annotations.find(annotation).isDefined
   }
+
+  def getAvroShape(result: AMFResult): Shape = result.baseUnit.asInstanceOf[AvroSchemaDocument].encodes
 }

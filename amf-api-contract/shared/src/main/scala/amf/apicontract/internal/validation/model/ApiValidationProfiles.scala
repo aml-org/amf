@@ -14,6 +14,7 @@ object ApiValidationProfiles {
 
   val Oas20ValidationProfile: ValidationProfile = buildProfileFrom(Oas20Profile, Oas20Validations)
   val Oas30ValidationProfile: ValidationProfile = buildProfileFrom(Oas30Profile, Oas30Validations)
+  val Oas31ValidationProfile: ValidationProfile = buildProfileFrom(Oas31Profile, Oas31Validations)
 
   val Async20ValidationProfile: ValidationProfile = buildProfileFrom(Async20Profile, Async20Validations)
 
@@ -30,6 +31,7 @@ object ApiValidationProfiles {
     Raml10ValidationProfile.name  -> Raml10ValidationProfile,
     Oas20ValidationProfile.name   -> Oas20ValidationProfile,
     Oas30ValidationProfile.name   -> Oas30ValidationProfile,
+    Oas31ValidationProfile.name   -> Oas31ValidationProfile,
     Async20ValidationProfile.name -> Async20ValidationProfile,
     GraphQLValidationProfile.name -> GraphQLValidationProfile,
     AmfValidationProfile.name     -> AmfValidationProfile
@@ -44,6 +46,7 @@ object ApiEffectiveValidations {
 
   val Oas20EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Oas20ValidationProfile)
   val Oas30EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Oas30ValidationProfile)
+  val Oas31EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Oas31ValidationProfile)
 
   val Async20EffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(Async20ValidationProfile)
 

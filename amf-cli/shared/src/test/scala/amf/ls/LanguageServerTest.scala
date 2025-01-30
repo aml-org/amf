@@ -8,16 +8,15 @@ import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.templates.ParametrizedDeclaration
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Raml10YamlHint
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class LanguageServerTest extends AsyncFunSuite with Matchers with CompilerTestBuilder {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class LanguageServerTest
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers
+    with CompilerTestBuilder {
 
   private val file = "file://amf-cli/shared/src/test/resources/ls/resource-type-trait.raml"
 

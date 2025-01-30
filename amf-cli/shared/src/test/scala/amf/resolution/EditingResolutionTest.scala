@@ -7,13 +7,9 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
 
-import scala.concurrent.ExecutionContext
-
 class EditingResolutionTest extends ResolutionTest {
 
   override val defaultPipeline: String = PipelineId.Editing
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val extendsPath     = "amf-cli/shared/src/test/resources/resolution/extends/"
   val productionPath  = "amf-cli/shared/src/test/resources/production/"

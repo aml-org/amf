@@ -52,6 +52,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
         case s if s.startsWith(":application/raml08 ") => Some((Raml08, s.stripPrefix(":application/raml08 ")))
         case s if s.startsWith(":application/oas20 ")  => Some((Oas20, s.stripPrefix(":application/oas20 ")))
         case s if s.startsWith(":application/oas30 ")  => Some((Oas30, s.stripPrefix(":application/oas30 ")))
+        case s if s.startsWith(":application/oas31 ")  => Some((Oas31, s.stripPrefix(":application/oas31 ")))
         case s if s.startsWith(":application/async ")  => Some((AsyncApi, s.stripPrefix(":application/async ")))
         case s if s.startsWith(":application/amf ")    => Some((Amf, s.stripPrefix(":application/amf ")))
         case _                                         => None

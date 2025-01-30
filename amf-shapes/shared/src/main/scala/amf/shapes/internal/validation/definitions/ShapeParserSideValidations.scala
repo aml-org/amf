@@ -403,6 +403,16 @@ object ShapeParserSideValidations extends Validations {
     "Empty type expression array"
   )
 
+  val RequiredField = validation(
+    "required-field",
+    "Field is required in this schema"
+  )
+
+  val InvalidAvroSchema = validation(
+    "invalid-avro-schema",
+    "Provided AVRO Schema doesn't conform to the AVRO Specification"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
@@ -460,6 +470,7 @@ object ShapeParserSideValidations extends Validations {
     InvalidJsonSchemaReference,
     MultipleDefinitionKey,
     IncorrectDefinitionKey,
-    EmptyTypeExpressionArray
+    EmptyTypeExpressionArray,
+    RequiredField
   )
 }

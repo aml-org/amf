@@ -673,6 +673,12 @@ object APIRawValidations extends CommonValidationDefinitions {
     override def validations(): Seq[AMFValidation] = result
   }
 
+  object Oas31Validations extends OasValidations {
+    private lazy val result = super.validations() ++ Oas30Validations.validations()
+
+    override def validations(): Seq[AMFValidation] = result
+  }
+
   object Oas30Validations extends OasValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
@@ -792,12 +798,19 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Info object 'version' is mandatory"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpMessageBinding"),
+        owlClass = apiBinding("HttpMessageBinding020"),
         owlProperty = apiBinding("headers"),
         uri = amfParser("mandatory-header-name-pattern"),
         constraint = shape("mandatoryHeaderBindingNamePattern"),
-        ramlErrorMessage = "Header name must comply RFC-7230",
-        openApiErrorMessage = "Header name must comply RFC-7230",
+        message = "Header name must comply RFC-7230",
+        severity = SeverityLevels.WARNING
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("headers"),
+        uri = amfParser("mandatory-header-name-pattern"),
+        constraint = shape("mandatoryHeaderBindingNamePattern"),
+        message = "Header name must comply RFC-7230",
         severity = SeverityLevels.WARNING
       ),
       AMFValidation(
@@ -892,14 +905,28 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'method' for channel binding object must be one of 'GET' or 'POST'"
       ),
       AMFValidation(
-        owlClass = apiBinding("MqttOperationBinding"),
+        owlClass = apiBinding("MqttOperationBinding010"),
         owlProperty = apiBinding("qos"),
         constraint = sh("pattern"),
         value = "^[0-2]$",
         openApiErrorMessage = "'qos' for mqtt operation binding object must be one of 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091ChannelBinding"),
+        owlClass = apiBinding("MqttOperationBinding020"),
+        owlProperty = apiBinding("qos"),
+        constraint = sh("pattern"),
+        value = "^[0-2]$",
+        openApiErrorMessage = "'qos' for mqtt operation binding object must be one of 0, 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091ChannelBinding010"),
+        owlProperty = apiBinding("is"),
+        constraint = sh("in"),
+        value = "routingKey,queue",
+        openApiErrorMessage = "'is' for amqp 0.9.1 channel binding object must be one of 'queue' or 'routingKey'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091ChannelBinding020"),
         owlProperty = apiBinding("is"),
         constraint = sh("in"),
         value = "routingKey,queue",
@@ -914,7 +941,7 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'type' for amqp 0.9.1 channel exchange object must be one of 'topic', 'direct', 'fanout', 'default' or 'headers'"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("method"),
         constraint = sh("in"),
         value = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
@@ -922,7 +949,15 @@ object APIRawValidations extends CommonValidationDefinitions {
           "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpOperationBinding020"),
+        owlProperty = apiBinding("method"),
+        constraint = sh("in"),
+        value = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
+        openApiErrorMessage =
+          "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding010"),
         owlProperty = apiBinding("operationType"),
         constraint = minCount,
         value = "1",
@@ -933,24 +968,45 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiBinding("name"),
         constraint = sh("maxLength"),
         value = "255",
-        openApiErrorMessage = "'type' for http operation binding is required"
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091ChannelExchange"),
+        owlClass = apiBinding("Amqp091ChannelExchange010"),
         owlProperty = core("name"),
         constraint = sh("maxLength"),
         value = "255",
         openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091ChannelQueue"),
+        owlClass = apiBinding("Amqp091ChannelExchange020"),
         owlProperty = core("name"),
         constraint = sh("maxLength"),
         value = "255",
         openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
       ),
       AMFValidation(
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("Amqp091ChannelQueue010"),
+        owlProperty = core("name"),
+        constraint = sh("maxLength"),
+        value = "255",
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091ChannelQueue020"),
+        owlProperty = core("name"),
+        constraint = sh("maxLength"),
+        value = "255",
+        openApiErrorMessage = "Amqp channel binding name can't be longer than 255 characters"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding010"),
+        owlProperty = apiBinding("operationType"),
+        constraint = sh("pattern"),
+        value = """^(request|response)$""".stripMargin,
+        openApiErrorMessage = "Http operation binding must be either 'request' or 'response'"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpOperationBinding020"),
         owlProperty = apiBinding("operationType"),
         constraint = sh("pattern"),
         value = """^(request|response)$""".stripMargin,
@@ -964,7 +1020,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Http operation binding must be either 'request' or 'response'"
       ),
       AMFValidation(
-        owlClass = apiBinding("MqttServerBinding"),
+        owlClass = apiBinding("MqttServerBinding010"),
+        owlProperty = apiBinding("keepAlive"),
+        constraint = sh("minInclusive"),
+        openApiErrorMessage = "'keepAlive' must be greater than 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("MqttServerBinding020"),
         owlProperty = apiBinding("keepAlive"),
         constraint = sh("minInclusive"),
         openApiErrorMessage = "'keepAlive' must be greater than 0"
@@ -977,11 +1039,39 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt server binding last will object must be one of 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("Amqp091OperationBinding"),
+        owlClass = apiBinding("MqttMessageBinding020"),
+        owlProperty = apiBinding("payloadFormatIndicator"),
+        constraint = sh("pattern"),
+        value = "^[0-1]$",
+        message = "'payloadFormatIndicator' for mqtt message binding must be 0 or 1"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding010"),
         owlProperty = apiBinding("deliveryMode"),
         constraint = sh("pattern"),
         value = "^[1-2]$",
         openApiErrorMessage = "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding030"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("pattern"),
+        value = "^[1-2]$",
+        openApiErrorMessage = "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding010"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("pattern"),
+        value = "^[0-9]+(.[0-9]+)?$",
+        openApiErrorMessage = "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("Amqp091OperationBinding030"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("pattern"),
+        value = "^[0-9]+(.[0-9]+)?$",
+        openApiErrorMessage = "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0"
       ),
       AMFValidation(
         owlClass = apiBinding("Amqp091OperationBinding"),
@@ -998,7 +1088,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'qos' for mqtt server last will binding object must be one 0, 1 or 2"
       ),
       AMFValidation(
-        owlClass = apiBinding("MqttServerBinding"),
+        owlClass = apiBinding("MqttServerBinding010"),
+        owlProperty = apiBinding("expiration"),
+        constraint = sh("minInclusive"),
+        openApiErrorMessage = "'expiration' must be greater than 0"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("MqttServerBinding020"),
         owlProperty = apiBinding("expiration"),
         constraint = sh("minInclusive"),
         openApiErrorMessage = "'expiration' must be greater than 0"
@@ -1029,13 +1125,25 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
-        owlClass = apiBinding("HttpMessageBinding"),
+        owlClass = apiBinding("HttpMessageBinding020"),
         owlProperty = apiBinding("headers"),
         constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
-        owlClass = apiBinding("HttpOperationBinding"),
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
+      ),
+      AMFValidation(
+        message = "'headers' property of ws channel binding must be of type object and have properties",
+        owlClass = apiBinding("HttpOperationBinding010"),
+        owlProperty = apiBinding("query"),
+        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
+      ),
+      AMFValidation(
+        message = "'headers' property of ws channel binding must be of type object and have properties",
+        owlClass = apiBinding("HttpOperationBinding020"),
         owlProperty = apiBinding("query"),
         constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
       ),
@@ -1087,7 +1195,246 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = security("type"),
         constraint = sh("pattern"),
         value =
-          "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+)$"
+          "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|plain|scramSha256|scramSha512|gssapi|x-.+)$"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination010"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination020"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination010"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination020"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      AMFValidation(
+        message =
+          "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxMsgSpoolSize"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      AMFValidation(
+        message =
+          "Invalid 'maxMsgSpoolSize' value. It should be a string representing the maximum size of the message spool.",
+        owlClass = apiBinding("SolaceOperationQueue040"),
+        owlProperty = apiBinding("maxMsgSpoolSize"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxTtl' value. It should be a string representing the maximum time-to-live for messages.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxTtl"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      AMFValidation(
+        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
+        owlClass = apiBinding("SolaceOperationQueue010"),
+        owlProperty = apiBinding("accessType"),
+        constraint = sh("in"),
+        value = "exclusive,nonexclusive"
+      ),
+      AMFValidation(
+        message = "Invalid 'accessType' value. The options are: 'exclusive' or 'nonexclusive'.",
+        owlClass = apiBinding("SolaceOperationQueue040"),
+        owlProperty = apiBinding("accessType"),
+        constraint = sh("in"),
+        value = "exclusive,nonexclusive"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxTtl' value. It should be a string representing the maximum time-to-live for messages.",
+        owlClass = apiBinding("SolaceOperationQueue040"),
+        owlProperty = apiBinding("maxTtl"),
+        constraint = sh("datatype"),
+        value = "xsd:string"
+      ),
+      // Validation for SolaceOperationDestination040
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'queue' or 'topic'.",
+        owlClass = apiBinding("SolaceOperationDestination040"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "queue,topic"
+      ),
+      AMFValidation(
+        message = "Invalid 'deliveryMode' value. The options are: 'direct' or 'persistent'.",
+        owlClass = apiBinding("SolaceOperationDestination040"),
+        owlProperty = apiBinding("deliveryMode"),
+        constraint = sh("in"),
+        value = "direct,persistent"
+      ),
+      // Validation for SolaceOperationBinding040
+      AMFValidation(
+        message = "Invalid 'timeToLive' value. It should be a positive integer or a valid schema reference.",
+        owlClass = apiBinding("SolaceOperationBinding040"),
+        owlProperty = apiBinding("timeToLive"),
+        constraint = sh("datatype"),
+        value = "xsd:integer"
+      ),
+      AMFValidation(
+        message = "Invalid 'priority' value. The valid range is 0-255.",
+        owlClass = apiBinding("SolaceOperationBinding040"),
+        owlProperty = apiBinding("priority"),
+        constraint = sh("in"),
+        value = (0 to 255).mkString(",")
+      ),
+      AMFValidation(
+        message = "Invalid 'dmqEligible' value. The options are: 'true' or 'false'.",
+        owlClass = apiBinding("SolaceOperationBinding040"),
+        owlProperty = apiBinding("dmqEligible"),
+        constraint = sh("in"),
+        value = "true,false"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxMsgSpoolSize' value. Must be a non-negative integer.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxMsgSpoolSize"),
+        constraint = sh("datatype"),
+        value = "xsd:integer"
+      ),
+      AMFValidation(
+        message = "Invalid 'maxTtl' value. Must be a non-negative integer.",
+        owlClass = apiBinding("SolaceOperationQueue030"),
+        owlProperty = apiBinding("maxTtl"),
+        constraint = sh("datatype"),
+        value = "xsd:integer"
+      ),
+      AMFValidation(
+        message = "Invalid 'destinationType' value. The options are: 'exchange', 'queue' or 'fifo-queue'.",
+        owlClass = apiBinding("AnypointMQChannelBinding"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "exchange,queue,fifo-queue"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("AnypointMQMessageBinding"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("anypointMQHeadersValidation")
+      ),
+      AMFValidation(
+        message = "IBMMQ Server Binding 'heartBeatInterval' field must be a number between 0-999999",
+        owlClass = apiBinding("IBMMQServerBinding"),
+        owlProperty = apiBinding("heartBeatInterval"),
+        constraint = sh("pattern"),
+        value = "^\\d{1,6}$"
+      ),
+      AMFValidation(
+        message = "IBMMQ Channel Binding 'destinationType' field must be either 'topic' or 'queue'",
+        owlClass = apiBinding("IBMMQChannelBinding"),
+        owlProperty = apiBinding("destinationType"),
+        constraint = sh("in"),
+        value = "topic,queue"
+      ),
+      AMFValidation(
+        message = "IBMMQ queue 'objectName' field MUST NOT exceed 48 characters in length",
+        owlClass = apiBinding("IBMMQChannelQueue"),
+        owlProperty = apiBinding("objectName"),
+        constraint = sh("maxLength"),
+        value = "48"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("IBMMQChannelBinding"),
+        owlProperty = apiBinding("queue"),
+        constraint = shape("IBMMQDestinationValidation")
+      ),
+      AMFValidation(
+        message = "IBMMQ topic 'string' field MUST NOT exceed 10240 characters in length",
+        owlClass = apiBinding("IBMMQChannelTopic"),
+        owlProperty = apiBinding("string"),
+        constraint = sh("maxLength"),
+        value = "10240"
+      ),
+      AMFValidation(
+        message = "IBMMQ topic 'objectName' field MUST NOT exceed 48 characters in length",
+        owlClass = apiBinding("IBMMQChannelTopic"),
+        owlProperty = apiBinding("objectName"),
+        constraint = sh("maxLength"),
+        value = "48"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("IBMMQChannelBinding"),
+        owlProperty = apiBinding("maxMsgLength"),
+        constraint = shape("IBMMQMaxMsgLengthValidation")
+      ),
+      AMFValidation(
+        message = "IBMMQ message Binding 'type' field must be either 'string', 'jms' or 'binary'",
+        owlClass = apiBinding("IBMMQMessageBinding"),
+        owlProperty = apiBinding("messageType"),
+        constraint = sh("in"),
+        value = "string,jms,binary"
+      ),
+      AMFValidation(
+        message = "IBMMQ message Binding 'expiry' field must be 0 or greater",
+        owlClass = apiBinding("IBMMQMessageBinding"),
+        owlProperty = apiBinding("expiry"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        owlClass = apiBinding("IBMMQMessageBinding"),
+        owlProperty = apiBinding("headers"),
+        constraint = shape("IBMMQHeadersValidation")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'partitions' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding030"),
+        owlProperty = apiBinding("partitions"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'partitions' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding040"),
+        owlProperty = apiBinding("partitions"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'replicas' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding030"),
+        owlProperty = apiBinding("replicas"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "Kafka channel Binding 'replicas' field must be a positive number",
+        owlClass = apiBinding("KafkaChannelBinding040"),
+        owlProperty = apiBinding("replicas"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        owlClass = apiBinding("KafkaChannelBinding040"),
+        owlProperty = apiBinding("replicas"),
+        constraint = shape("KafkaTopicConfigurationValidations")
+      ),
+      AMFValidation(
+        owlClass = apiBinding("KafkaChannelBinding050"),
+        owlProperty = apiBinding("replicas"),
+        constraint = shape("KafkaTopicConfigurationValidations")
+      ),
+      AMFValidation(
+        message = "Status code for a Response must be a value between 100 and 599",
+        owlClass = apiBinding("HttpMessageBinding030"),
+        owlProperty = apiBinding("statusCode"),
+        constraint = sh("pattern"),
+        value = "^([1-5]{1}[0-9]{2})$"
       )
     ) ++ baseApiValidations("AsyncAPI")
 
@@ -1285,8 +1632,8 @@ object APIRawValidations extends CommonValidationDefinitions {
       ),
       AMFValidation(
         uri = amfParser("reserved-endpoints"),
-        owlClass = apiContract("EndPoint"),
-        owlProperty = apiContract("path"),
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("EndPoints"),
         constraint = shape("reservedEndpoints"),
         message = "Endpoint is reserved by Federation"
       )
@@ -1332,8 +1679,10 @@ object APIRawValidations extends CommonValidationDefinitions {
     Raml08Profile     -> forProfile(Raml08Profile),
     Oas20Profile      -> forProfile(Oas20Profile),
     Oas30Profile      -> forProfile(Oas30Profile),
+    Oas31Profile      -> forProfile(Oas31Profile),
     Async20Profile    -> forProfile(Async20Profile),
-    JsonSchemaProfile -> forProfile(JsonSchemaProfile)
+    JsonSchemaProfile -> forProfile(JsonSchemaProfile),
+    AvroSchemaProfile -> forProfile(AvroSchemaProfile)
   )
 
   override def forProfile(p: ProfileName): ProfileValidations = {
@@ -1342,8 +1691,10 @@ object APIRawValidations extends CommonValidationDefinitions {
       case Raml08Profile     => Raml08Validations
       case Oas20Profile      => Oas20Validations
       case Oas30Profile      => Oas30Validations
+      case Oas31Profile      => Oas31Validations
       case Async20Profile    => Async20Validations
       case JsonSchemaProfile => ShapeValidations
+      case AvroSchemaProfile => ShapeValidations // todo: should we do ShapeValidations?
       case AmfProfile        => AmfValidations
       case _ =>
         () => Seq.empty

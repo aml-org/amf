@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.{Payload, Request}
 import amf.apicontract.internal.metamodel.domain.{RequestModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorRequest
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps}
+import amf.apicontract.internal.spec.common.parser.SpecParserOps
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.RequestBodyContentRequired
@@ -62,7 +62,10 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
     ctx.declarations
       .findRequestBody(name, SearchScope.Named)
-      .map(req => adopt(req.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
+      .map { req =>
+        val link = ctx.link(req, map, AmfScalar(name), Annotations(map), Annotations.synthesized())
+        adopt(link)
+      }
       .getOrElse {
         ctx.navigateToRemoteYNode(fullRef) match {
           case Some(navigation) =>

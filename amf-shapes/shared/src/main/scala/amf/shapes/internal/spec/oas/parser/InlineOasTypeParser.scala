@@ -1,5 +1,6 @@
 package amf.shapes.internal.spec.oas.parser
 
+import amf.aml.internal.annotations.DiscriminatorExtension
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain._
@@ -8,6 +9,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.{ExplicitField, InferredProperty, NilUnion}
 import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.internal.parser._
@@ -79,7 +81,7 @@ case class InlineOasTypeParser(
               ctx.closedShape(shape, map, oas.position.toString)
             case _ => // Nothing to do
           }
-          if (isOas3) Some(checkOas3Nullable(shape))
+          if (isOas3 || isOas31) Some(checkOas3Nullable(shape))
           else Some(shape)
         case None => None
       }
@@ -97,8 +99,9 @@ case class InlineOasTypeParser(
         map.key("type").get.location
       )
 
-  protected def isOas: Boolean  = version.isInstanceOf[OASSchemaVersion]
-  protected def isOas3: Boolean = version.isInstanceOf[OAS30SchemaVersion]
+  protected def isOas: Boolean   = version.isInstanceOf[OASSchemaVersion]
+  protected def isOas3: Boolean  = version.isInstanceOf[OAS30SchemaVersion]
+  protected def isOas31: Boolean = version.isInstanceOf[OAS31SchemaVersion]
 
   protected def moveExamplesToUnion(parsed: AnyShape, union: UnionShape): Unit = {
     val AmfArray(values, annotations) = parsed.fields.get(ExamplesField.Examples)
@@ -291,9 +294,9 @@ case class InlineOasTypeParser(
     }
 
     def buildLocalRef(name: String) = ctx match {
-      case _ if ctx.isOas3Context  => s"#/components/schemas/$name"
-      case _ if ctx.isAsyncContext => s"#/components/schemas/$name"
-      case _                       => s"#/definitions/$name"
+      case _ if ctx.isOas3Context || ctx.isOas31Context => s"#/components/schemas/$name"
+      case _ if ctx.isAsyncContext                      => s"#/components/schemas/$name"
+      case _                                            => s"#/definitions/$name"
     }
   }
 
@@ -728,7 +731,7 @@ case class InlineOasTypeParser(
         new UnevaluatedParser(version, UnevaluatedParser.unevaluatedPropertiesInfo).parse(map, shape)
       }
 
-      if (isOas3) {
+      if (isOas3 || isOas31) {
         map.key("discriminator", DiscriminatorParser(shape, _).parse())
       } else {
         map.key("discriminator", NodeShapeModel.Discriminator in shape)
@@ -899,6 +902,13 @@ case class InlineOasTypeParser(
           )
       }
       map.key("mapping", parseMappings)
+      if (isOas31) {
+        val extensions = AnnotationParser.parseExtensions(None, map)
+        extensions.foreach { ex =>
+          ex.extension.annotations += DiscriminatorExtension()
+          shape.add(CustomDomainProperties, ex)
+        }
+      }
       ctx.closedShape(shape, map, "discriminator")
     }
 

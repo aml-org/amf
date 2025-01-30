@@ -4,19 +4,19 @@ import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.FieldsFilter.All
 import amf.core.client.scala.model.domain.{AmfObject, RecursiveShape}
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.ConfigProvider
 import org.mulesoft.common.collections.FilterType
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class RecursiveFixpointTest() extends AsyncFunSuite with Matchers with PlatformSecrets with ResolutionCapabilities {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class RecursiveFixpointTest()
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
+    with Matchers
+    with ResolutionCapabilities {
 
   val basePath = "amf-cli/shared/src/test/resources/resolution/"
 

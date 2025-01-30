@@ -3,11 +3,10 @@ package amf.apicontract.client.platform.model.domain
 import amf.apicontract.client.platform.model.domain.bindings.ChannelBindings
 import amf.apicontract.client.platform.model.domain.federation.EndPointFederationMetadata
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
+import amf.apicontract.client.scala.model.domain.{EndPoint => InternalEndPoint}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
-import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
-import amf.apicontract.client.scala.model.domain.{EndPoint => InternalEndPoint}
-import amf.core.client.platform.model.domain.federation.ShapeFederationMetadata
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -16,7 +15,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     extends DomainElement
-    with NamedDomainElement {
+    with NamedDomainElement
+    with Linkable {
 
   @JSExportTopLevel("EndPoint")
   def this() = this(InternalEndPoint())
@@ -117,4 +117,6 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     _internal.withBindings(bindings)
     this
   }
+
+  override def linkCopy(): EndPoint = _internal.linkCopy()
 }

@@ -121,10 +121,16 @@
                 }
               }
             ],
+            "apiContract:server": [],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:server": "true"
+              },
               "lexical": {
-                "apiContract:supportedOperation": "[(7,0)-(12,0)]",
                 "#8": "[(6,2)-(12,0)]"
+              },
+              "virtual-element": {
+                "apiContract:supportedOperation": "true"
               }
             }
           }
@@ -152,7 +158,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.8.2"
+            "@value": "3.10.0"
           }
         ],
         "doc:transformed": [
@@ -242,7 +248,7 @@
             ],
             "apiContract:modelVersion": [
               {
-                "@value": "3.8.2"
+                "@value": "3.10.0"
               }
             ],
             "doc:sourceSpec": [

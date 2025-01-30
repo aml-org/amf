@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.8.2",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
     {
@@ -154,6 +154,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/type-property-lexical-info/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/lexical/element_2"
@@ -163,11 +168,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/lexical/element_1"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/declared-element/element_0"
         }
       ]
     },
@@ -208,6 +208,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/type-property-lexical-info/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/declared-element/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/lexical/element_2"
@@ -217,11 +222,6 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/lexical/element_1"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/declared-element/element_0"
         }
       ]
     },
@@ -282,6 +282,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,8)]"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,15)-(9,0)]"
@@ -297,23 +302,18 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(9,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map/auto-generated-name/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map/auto-generated-name/element_0"
         }
       ]
     },
@@ -326,6 +326,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(10,8)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/lexical/element_2",
@@ -341,11 +346,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(11,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/list",
@@ -370,17 +370,17 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/synthesized-field/element_0"
         }
       ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/default-node/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#default-node": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/default-node/element_0"
         }
       ]
     },
@@ -405,14 +405,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,21)-(9,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(11,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/AlertableAdmin/inherits/shape/Admin",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/in/scalar_1",
@@ -480,6 +480,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,6)-(9,0)]"
@@ -488,11 +493,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(9,0)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/source-map/default-node/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/enum-inheritance/api.raml#/declares/shape/Admin/property/property/clearanceLevel/scalar/clearanceLevel/in/scalar_1/source-map",

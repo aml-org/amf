@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.8.2",
+      "apiContract:modelVersion": "3.10.0",
       "doc:transformed": true,
       "doc:sourceSpec": "ASYNC 2.0"
     },
@@ -45,10 +45,16 @@
           "@id": "#14"
         }
       ],
+      "apiContract:server": [],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:server": "true"
+        },
         "lexical": {
-          "apiContract:supportedOperation": "[(9,0)-(18,0)]",
           "#13": "[(8,2)-(18,0)]"
+        },
+        "virtual-element": {
+          "apiContract:supportedOperation": "true"
         }
       }
     },
@@ -131,11 +137,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#17": "[(11,8)-(18,0)]"
-        },
         "type-property-lexical-info": {
           "#17": "[(12,10)-(12,14)]"
+        },
+        "lexical": {
+          "#17": "[(11,8)-(18,0)]"
         }
       }
     },
@@ -183,13 +189,13 @@
       "raml-shapes:format": "email",
       "shacl:name": "email",
       "smaps": {
-        "type-property-lexical-info": {
-          "#19": "[(15,14)-(15,18)]"
-        },
         "lexical": {
           "raml-shapes:format": "[(16,14)-(18,0)]",
           "#19": "[(14,12)-(18,0)]",
           "shacl:datatype": "[(15,14)-(16,0)]"
+        },
+        "type-property-lexical-info": {
+          "#19": "[(15,14)-(15,18)]"
         }
       }
     },
@@ -261,12 +267,6 @@
         "synthesized-field": {
           "apiContract:isAbstract": "true"
         },
-        "declared-element": {
-          "#4": ""
-        },
-        "resolved-link": {
-          "#4": "amf://id#4"
-        },
         "lexical": {
           "apiContract:headerSchema": "[(14,2)-(20,0)]",
           "core:title": "[(6,2)-(7,0)]",
@@ -278,6 +278,12 @@
         },
         "resolved-link-target": {
           "#4": "amf://id#10"
+        },
+        "declared-element": {
+          "#4": ""
+        },
+        "resolved-link": {
+          "#4": "amf://id#4"
         },
         "virtual-element": {
           "apiContract:payload": "true"
@@ -358,11 +364,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "lexical": {
-          "#6": "[(14,2)-(20,0)]"
-        },
         "type-property-lexical-info": {
           "#6": "[(15,4)-(15,8)]"
+        },
+        "lexical": {
+          "#6": "[(14,2)-(20,0)]"
         }
       }
     },
@@ -410,13 +416,13 @@
       "shacl:name": "applicationInstanceId",
       "core:description": "Unique identifier",
       "smaps": {
-        "type-property-lexical-info": {
-          "#8": "[(19,8)-(19,12)]"
-        },
         "lexical": {
           "core:description": "[(18,8)-(19,0)]",
           "#8": "[(17,6)-(20,0)]",
           "shacl:datatype": "[(19,8)-(20,0)]"
+        },
+        "type-property-lexical-info": {
+          "#8": "[(19,8)-(19,12)]"
         }
       }
     }

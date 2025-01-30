@@ -13,7 +13,12 @@ import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 
 /** Web Api metamodel
   */
-trait ApiModel extends DomainElementModel with NameFieldSchema with DescribedElementModel with TagsModel with VersionField {
+trait ApiModel
+    extends DomainElementModel
+    with NameFieldSchema
+    with DescribedElementModel
+    with TagsModel
+    with VersionField {
 
   val Servers =
     Field(
@@ -57,6 +62,12 @@ trait ApiModel extends DomainElementModel with NameFieldSchema with DescribedEle
     ModelDoc(ModelVocabularies.Core, "termsOfService", "Terms and conditions when using the API")
   )
 
+  val Summary = Field(
+    Str,
+    Core + "summary",
+    ModelDoc(ModelVocabularies.Core, "summary", "A short summary of the API")
+  )
+
   val Provider = Field(
     OrganizationModel,
     Core + "provider",
@@ -76,6 +87,12 @@ trait ApiModel extends DomainElementModel with NameFieldSchema with DescribedEle
     Array(EndPointModel),
     ApiContract + "endpoint",
     ModelDoc(ModelVocabularies.ApiContract, "endpoint", "End points defined in the API")
+  )
+
+  val Webhooks = Field(
+    Array(EndPointModel),
+    ApiContract + "webhooks",
+    ModelDoc(ModelVocabularies.ApiContract, "webhooks", "Webhooks defined in the API")
   )
 
   val Security = Field(
@@ -102,6 +119,7 @@ trait ApiModel extends DomainElementModel with NameFieldSchema with DescribedEle
       License,
       Documentations,
       EndPoints,
+      Webhooks,
       Security,
       Tags
     ) ++ DomainElementModel.fields

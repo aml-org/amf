@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-010.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'vhost' not supported in a ASYNC 2.0 amqpExchangeChannelBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-010.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-010/amqp091-exchange-010
+  Property: 
+  Range: [(16,10)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-010.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'vhost' not supported in a ASYNC 2.0 amqpQueueChannelBinding010 node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-010.yaml#/async-api/endpoint/some-channel/channel-bindings/bindings/amqp091-channel-010/amqp091-queue-010
+  Property: 
+  Range: [(22,10)-(23,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-binding-010.yaml
