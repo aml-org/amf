@@ -40,7 +40,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
     "org.mule.common" %%% "scala-common-test" % versions("scala-common-test") % Test,
-    "org.slf4j"         % "slf4j-nop"         % "1.7.36" % Test
+    "org.slf4j"         % "slf4j-nop"         % "1.7.36"                      % Test
   ),
   Test / logBuffered := false
 )
@@ -77,12 +77,17 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2" excludeAll (
       ExclusionRule(organization = "org.json", name = "json"),
       ExclusionRule(organization = "commons-collections", name = "commons-collections"),
-      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind"),
+      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind")
     ),
-    libraryDependencies += "org.apache.avro"    % "avro"                 % "1.11.4",
-    libraryDependencies += "org.json"           % "json"                 % "20240303",
-    libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.4",
-    Compile / packageDoc / artifactPath        := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
+    libraryDependencies += "org.apache.avro" % "avro" % "1.11.4" excludeAll (
+      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-core"),
+      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind")
+    ),
+    libraryDependencies += "org.json"                   % "json"                 % "20250107",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.18.2",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.18.2",
+    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.4",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
@@ -332,7 +337,7 @@ lazy val adhocCli = (project in file("adhoc-cli"))
     libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect" % versions(
       "amf.validation.report.dialect"
     ),
-    libraryDependencies += "commons-io"        % "commons-io"        % "2.11.0",
+    libraryDependencies += "commons-io"        % "commons-io"        % "2.18.0",
     libraryDependencies += "org.mule.common" %%% "scala-common-test" % "0.1.13" % Test
   )
   .settings(
