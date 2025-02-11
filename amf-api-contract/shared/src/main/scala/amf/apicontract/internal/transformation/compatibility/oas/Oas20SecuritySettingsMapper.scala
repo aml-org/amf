@@ -7,15 +7,19 @@ import amf.apicontract.internal.transformation.compatibility.common.SecuritySett
 class Oas20SecuritySettingsMapper() extends SecuritySettingsMapper {
 
   def fixOauth2(oauth2: OAuth2Settings): Unit = {
-    if (oauth2.flows.isEmpty) {
-      val flow = oauth2.authorizationGrants.head.option().getOrElse("implicit") match {
-        case "authorization_code" => "accessCode"
-        case "password"           => "password"
-        case "implicit"           => "implicit"
-        case "client_credentials" => "application"
-        case _                    => "implicit"
-      }
-      oauth2.withFlow().withFlow(flow)
+    val flowString = oauth2.authorizationGrants.head.option().getOrElse("implicit") match {
+      case "authorization_code" => "accessCode"
+      case "password"           => "password"
+      case "implicit"           => "implicit"
+      case "client_credentials" => "application"
+      case _                    => "implicit"
+    }
+    oauth2.flows match {
+      case flows if flows.isEmpty => oauth2.withFlow().withFlow(flowString)
+      case flows =>
+        flows.foreach { f =>
+          if (f.flow.isNullOrEmpty) f.withFlow(flowString)
+        }
     }
     val flow = oauth2.flows.head
 

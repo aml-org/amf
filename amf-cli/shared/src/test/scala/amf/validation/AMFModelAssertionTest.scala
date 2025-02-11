@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
+import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, SecurityScheme}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
@@ -41,6 +41,8 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
   val oasClient: AMFBaseUnitClient           = oasConfig.baseUnitClient()
   val oas31Config: AMFConfiguration          = OASConfiguration.OAS31().withRenderOptions(ro)
   val oas31Client: AMFBaseUnitClient         = oas31Config.baseUnitClient()
+  val oas2Config: AMFConfiguration           = OASConfiguration.OAS20().withRenderOptions(ro)
+  val oas2Client: AMFBaseUnitClient          = oas2Config.baseUnitClient()
   val oasComponentsConfig: AMFConfiguration  = OASConfiguration.OAS30Component().withRenderOptions(ro)
   val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
   val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
@@ -832,6 +834,33 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       val queryParamSchemaEx = queryParam.schema.asInstanceOf[ScalarShape].examples
       val headerSchemaEx     = header.schema.asInstanceOf[ScalarShape].examples
       (queryParamSchemaEx.nonEmpty && headerSchemaEx.nonEmpty) shouldBe true
+    }
+  }
+
+  // W-16530856
+  test("RAML with oauth_2_0 security should correctly transform to OAS 2.0") {
+    val api = s"$basePath/raml/oauth2.raml"
+    ramlClient.parse(api) flatMap { parseResult =>
+      val transformResult = oas2Client.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val oas2Oauth2 = getDeclarations(transformResult.baseUnit).head
+        .asInstanceOf[SecurityScheme]
+        .settings
+        .asInstanceOf[OAuth2Settings]
+      val oas2Flow = oas2Oauth2.flows.head
+      oas2Flow.flow.value() shouldBe "implicit"
+      oas2Flow.scopes.nonEmpty shouldBe true
+
+      val oas3transformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val oas3Oauth2 = getDeclarations(oas3transformResult.baseUnit).head
+        .asInstanceOf[SecurityScheme]
+        .settings
+        .asInstanceOf[OAuth2Settings]
+      val oas3Flow = oas3Oauth2.flows.head
+      oas3Flow.flow.value() shouldBe "implicit"
+      oas3Flow.scopes.nonEmpty shouldBe true
+
+      val render = oasClient.render(oas3transformResult.baseUnit, "application/yaml")
+      render.nonEmpty shouldBe true
     }
   }
 }
