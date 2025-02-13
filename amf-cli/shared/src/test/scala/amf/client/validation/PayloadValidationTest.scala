@@ -256,6 +256,32 @@ trait PayloadValidationTest
     fullReport.results should have length 2
   }
 
+  test("Fail fast plugin should have less results than complete 2") {
+    val node = NodeShape()
+    node.withProperty("name").withRange(ScalarShape().withDataType(DataTypes.String))
+    val payloadWithExtraChar =
+      """
+        |{
+        |  "name": ""
+        |}a
+        |""".stripMargin
+
+    val payloadWith2ExtraChars =
+      """
+        |{
+        |  "name": ""
+        |}aa
+        |""".stripMargin
+
+    val validator =
+      payloadValidator(node, `application/json`, defaultConfig.withPlugin(FailFastJsonSchemaPayloadValidationPlugin))
+    val report1 = validator.syncValidate(payloadWithExtraChar)
+    report1.conforms shouldBe false
+
+    val report2 = validator.syncValidate(payloadWith2ExtraChars)
+    report2.conforms shouldBe false
+  }
+
   test("Leap year DateTimeOnly") {
     val shape     = ScalarShape().withDataType(DataTypes.DateTimeOnly)
     val validator = payloadValidator(shape, `application/json`)
@@ -329,13 +355,13 @@ trait PayloadValidationTest
   }
 
   test("avro union validation should return a warning") {
-    val schema     = "file://amf-cli/shared/src/test/resources/avro/schemas/union-simple-record-valid.json"
-    val payload    = "{}"
+    val schema  = "file://amf-cli/shared/src/test/resources/avro/schemas/union-simple-record-valid.json"
+    val payload = "{}"
 
     val client = AvroConfiguration.Avro().baseUnitClient()
 
     for {
-      parseResult <- client.parse(schema)
+      parseResult      <- client.parse(schema)
       validationResult <- client.validate(parseResult.baseUnit)
     } yield {
       // Warning in the unit validation report are filtered by UnitPayloadsValidation, so no warning here
@@ -344,13 +370,13 @@ trait PayloadValidationTest
       assert(validationResult.conforms)
       assert(parseResult.results.isEmpty)
 
-      val doc = parseResult.baseUnit.asInstanceOf[AvroSchemaDocument]
+      val doc    = parseResult.baseUnit.asInstanceOf[AvroSchemaDocument]
       val record = doc.encodes.asInstanceOf[NodeShape]
-      val union = record.properties.head.range
+      val union  = record.properties.head.range
       assert(union.isInstanceOf[UnionShape] && union.asInstanceOf[AnyShape].avroSchemaType.contains("union"))
 
       val validator = payloadValidator(union, `application/json`)
-      val report = validator.syncValidate(payload)
+      val report    = validator.syncValidate(payload)
       assert(report.conforms)
       assert(report.results.size == 1)
       assert(report.results.head.severityLevel == SeverityLevels.WARNING)
