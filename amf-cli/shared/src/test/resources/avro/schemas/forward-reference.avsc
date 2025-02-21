@@ -1,0 +1,92 @@
+{
+  "name": "OrderDeltaDTO",
+  "namespace": "com.test.v5",
+  "type": "record",
+  "fields": [
+    {
+      "name": "order",
+      "type": {
+        "name": "OrderDTO",
+        "type": "record",
+        "fields": [
+          {
+            "default": null,
+            "name": "cancellations",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": {
+                  "default": null,
+                  "name": "CancellationDTO",
+                  "type": "record",
+                  "fields": [
+                    {
+                      "name": "items",
+                      "type": [
+                        "null",
+                        {
+                          "items": {
+                            "fields": [
+                              {
+                                "default": null,
+                                "name": "id",
+                                "type": ["null", "string"]
+                              }
+                            ],
+                            "name": "ItemFullCancellationDTO",
+                            "type": "record"
+                          },
+                          "type": "array"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "changes",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "ChangeSetDTO",
+          "type": "record",
+          "fields": [
+            {
+              "default": null,
+              "name": "items",
+              "type": [
+                "null",
+                {
+                  "type": "array",
+                  "items": {
+                    "name": "ItemChangesDTO",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "default": null,
+                        "name": "cancellations",
+                        "type": [
+                          "null",
+                          {
+                            "type": "array",
+                            "items": "CancellationDTO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

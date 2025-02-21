@@ -55,7 +55,12 @@ abstract class BaseAvroSchemaPayloadValidator(
   // we don't need to JSON-parse the raw as in JSON Schema because the validation plugin uses the raw string
   override def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] =
     literalRepresentation(payload) map { payloadText =>
-      loadAvro(payloadText)
+      payloadText match {
+        case null =>
+          val raw = getAvroRaw(payload)
+          loadAvro(raw.getOrElse(""))
+        case _ => loadAvro(payloadText)
+      }
     }
 
   protected def loadAvro(text: String): LoadedObj
@@ -64,7 +69,7 @@ abstract class BaseAvroSchemaPayloadValidator(
 
   def validateAvroSchema(): Seq[AMFValidationResult]
 
-  def getAvroRaw(shape: Shape): Option[String] = shape.annotations.find(classOf[AVRORawSchema]).map(_.avroRawSchema)
+  def getAvroRaw(obj: AmfObject): Option[String] = obj.annotations.find(classOf[AVRORawSchema]).map(_.avroRawSchema)
 
   protected def validateForFragment(
       fragment: PayloadFragment,

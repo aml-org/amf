@@ -85,7 +85,7 @@ case class AvroRecordFieldParser(map: YMap)(implicit ctx: AvroSchemaContext) ext
   override def parseTypeEntry(value: YNode, isRoot: Boolean = false): Option[AnyShape] = {
     value.asOption[YMap] match {
       case Some(map) => AvroRecordFieldParser(map).parse()
-      case _         => super.parseTypeEntry(value)
+      case _         => super.parseTypeEntry(value, isRoot)
     }
   }
 }

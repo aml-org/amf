@@ -34,7 +34,10 @@ class JvmAvroShapePayloadValidator(
   override protected type LoadedObj    = SchemaShape // The Raw is the original payload to validate
   override protected type LoadedSchema = Schema
 
-  override protected def loadAvro(text: String): LoadedObj = SchemaShape(shape.annotations).withRaw(text)
+  override protected def loadAvro(text: String): LoadedObj = text match {
+    case null | "null" => SchemaShape(shape.annotations).withRaw(getAvroRaw(shape).getOrElse(""))
+    case raw           => SchemaShape(shape.annotations).withRaw(raw)
+  }
 
   override protected def loadAvroSchema(text: String): LoadedSchema = try {
     parser.parse(text)
@@ -63,9 +66,11 @@ class JvmAvroShapePayloadValidator(
   ): AMFValidationReport = {
     try {
       // Create a DatumReader for GenericRecord
-      val reader = new GenericDatumReader[GenericRecord](schema)
+      val reader   = new GenericDatumReader[GenericRecord](schema)
+      val raw      = obj.raw.value()
+      val toDecode = if (raw == null || raw.equals("null")) getAvroRaw(obj).getOrElse("") else raw
       // Create a Decoder from the JSON string
-      val decoder = DecoderFactory.get.jsonDecoder(schema, obj.raw.value())
+      val decoder = DecoderFactory.get.jsonDecoder(schema, toDecode)
       // Attempt to read the JSON into a GenericRecord
       reader.read(null, decoder)
       validationProcessor.processResults(Nil)

@@ -221,6 +221,13 @@ class AvroSchemaValidationTest extends MultiPlatformReportGenTest {
     )
   }
 
+  test("validate forward reference in between fields from a record") {
+    validate(
+      "forward-reference.avsc",
+      None,
+      configOverride = Some(config)
+    )
+  }
 
 // TODO We need to see how implement this in with AVRO 1.11.3
 
