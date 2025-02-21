@@ -119,18 +119,22 @@ class OasRefParser(
           .map { shape =>
             ctx.futureDeclarations.resolveRef(declarationNameOrResolvedRef, shape)
             ctx.registerJsonSchema(rawOrResolvedRef, shape)
-            if (ctx.linkTypes || rawOrResolvedRef.equals("#")) {
-              val link = shape
-                .link(AmfScalar(declarationNameOrResolvedRef), Annotations(ast), Annotations.synthesized())
-                .asInstanceOf[AnyShape]
-              val (nextName, annotations) = entryLike.key match {
-                case Some(keyNode) =>
-                  val key = keyNode.asScalar.map(_.text).getOrElse(name)
-                  (key, Annotations(keyNode))
-                case None => (name, Annotations())
-              }
-              link.withName(nextName, annotations)
-            } else shape
+// If we create a link here it won't be correctly solved in resolution stage because this declarations only
+// live in this context
+//
+//            if (ctx.linkTypes || rawOrResolvedRef.equals("#")) {
+//              val link = shape
+//                .link(AmfScalar(declarationNameOrResolvedRef), Annotations(ast), Annotations.synthesized())
+//                .asInstanceOf[AnyShape]
+//              val (nextName, annotations) = entryLike.key match {
+//                case Some(keyNode) =>
+//                  val key = keyNode.asScalar.map(_.text).getOrElse(name)
+//                  (key, Annotations(keyNode))
+//                case None => (name, Annotations())
+//              }
+//              link.withName(nextName, annotations)
+//            } else
+            shape
           } orElse { Some(tmpShape) }
 
       case None => Some(tmpShape)
