@@ -319,7 +319,7 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
     if (request.isLink) {
       val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
       b.entry("requestBody", specCtx.ref(_, refUrl, request))
-    } else {
+    } else if (request.payloads.nonEmpty) {
       val partEmitter: Oas3RequestBodyPartEmitter = Oas3RequestBodyPartEmitter(request, ordering, references)
       if (partEmitter.emitters.nonEmpty)
         b.entry("requestBody", partEmitter.emit(_))
