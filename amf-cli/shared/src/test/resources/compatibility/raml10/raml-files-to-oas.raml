@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: sample raml
+version: v1
+
+/depot:
+  post:
+    body:
+      multipart/form-data:
+        properties:
+          aFile:
+            type: file
+            fileTypes: [ 'application/xml' ]
