@@ -15,9 +15,7 @@ types:
     type: object
     properties:
       downloadableFile:
-        type: file
-        description: pdf file property
-        fileTypes: [ 'application/pdf' ]
+        type: FileType
 
   ArrayWithFile:
     type: array
@@ -26,6 +24,9 @@ types:
       type: file
       fileTypes: [ 'application/pdf', 'application/xml', 'image/jpeg' ]
 
+  FileType:
+    type: file
+    description: A generic file type that can be reused across the API
 
 /file-in-request-and-response:
   post:
@@ -41,6 +42,15 @@ types:
 /file-array:
   post:
     body:
-      multipart/form-data:
+      application/x-www-form-urlencoded:
         type: ArrayWithFile
 
+/just-a-file:
+  get:
+    body:
+      application/json:
+        type: file
+  post:
+    body:
+      multipart/form-data:
+        type: FileType
