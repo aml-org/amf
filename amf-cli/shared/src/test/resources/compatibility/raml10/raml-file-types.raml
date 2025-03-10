@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: Extended File Type Examples
+version: v1
+
+types:
+  FileUpload:
+    type: object
+    properties:
+      documentFile:
+        type: file
+        description: pdf or word file
+        fileTypes: [ 'application/pdf', 'application/msword' ]
+
+  DocumentResponse:
+    type: object
+    properties:
+      downloadableFile:
+        type: file
+        description: pdf file property
+        fileTypes: [ 'application/pdf' ]
+
+  ArrayWithFile:
+    type: array
+    description: an array with multiple kind of files
+    items:
+      type: file
+      fileTypes: [ 'application/pdf', 'application/xml', 'image/jpeg' ]
+
+
+/file-in-request-and-response:
+  post:
+    body:
+      multipart/form-data:
+        type: FileUpload
+      responses:
+        200:
+          body:
+            application/pdf:
+              type: DocumentResponse
+
+/file-array:
+  post:
+    body:
+      multipart/form-data:
+        type: ArrayWithFile
+
