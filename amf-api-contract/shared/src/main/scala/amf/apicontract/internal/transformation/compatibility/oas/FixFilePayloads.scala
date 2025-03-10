@@ -7,7 +7,6 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
-import amf.shapes.client.scala.model.domain.{FileShape, NodeShape}
 
 /** To represent a method with file upload:
   *
@@ -36,24 +35,14 @@ case class FixFilePayloads() extends TransformationStep() {
         val requestPayloads  = operation.requests.flatMap(_.payloads)
         val responsePayloads = operation.responses.flatMap(_.payloads)
         val payloads         = requestPayloads ++ responsePayloads
-        payloads.foreach {
-          case p if hasFileUpload(p) => checkFormData(p)
-          case _                     => // ignore
-        }
+        payloads.foreach(checkFormData)
       }
     }
   }
 
-  private def hasFileUpload(payload: Payload): Boolean = {
-    payload.schema match {
-      case obj: NodeShape => obj.properties.exists(prop => prop.range.isInstanceOf[FileShape])
-      case _              => false
-    }
-  }
-
   private def checkFormData(payload: Payload): Unit = {
-    val formData = "multipart/form-data"
-    if (payload.mediaType.value().equals(formData)) {
+    val fileTypes = Seq("multipart/form-data", "application/x-www-form-urlencoded")
+    if (fileTypes.contains(payload.mediaType.value())) {
       payload.withInferredName("formData")
       payload.add(FormBodyParameter())
     }
