@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: sample raml
+version: v1
+
+/test:
+  post:
+    body:
+      multipart/form-data:
+        type: object
+        properties:
+          aFile:
+            type: file
+            fileTypes: [ 'application/xml' ]
+
+/another-test:
+  post:
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          anotherFile:
+            type: file
+            fileTypes: [ 'application/pdf' ]
+
+/just-file-test:
+  post:
+    body:
+      multipart/form-data:
+        type: file
+        fileTypes: [ 'application/xml' ]
