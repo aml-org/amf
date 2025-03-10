@@ -3,7 +3,7 @@ info:
   title: sample raml
   version: v1
 paths:
-  /depot:
+  /test:
     post:
       requestBody:
         content:
@@ -16,6 +16,33 @@ paths:
                 aFile:
                   type: string
                   format: binary
+      responses:
+        "200":
+          description: ""
+  /another-test:
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - anotherFile
+              properties:
+                anotherFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: ""
+  /just-file-test:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+              format: binary
       responses:
         "200":
           description: ""

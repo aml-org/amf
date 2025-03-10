@@ -17,9 +17,29 @@ paths:
     post:
       requestBody:
         content:
-          multipart/form-data:
+          application/x-www-form-urlencoded:
             schema:
               $ref: "#/components/schemas/ArrayWithFile"
+      responses:
+        "200":
+          description: ""
+  /just-a-file:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: ""
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/FileType"
       responses:
         "200":
           description: ""
@@ -40,3 +60,7 @@ components:
       items:
         type: string
         format: binary
+    FileType:
+      description: A generic file type that can be reused across the API
+      type: string
+      format: binary
