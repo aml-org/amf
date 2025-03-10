@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Extended File Type Examples
+  version: v1
+paths:
+  /file-in-request-and-response:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/FileUpload"
+      responses:
+        "200":
+          description: ""
+  /file-array:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ArrayWithFile"
+      responses:
+        "200":
+          description: ""
+components:
+  schemas:
+    FileUpload:
+      type: object
+      required:
+        - documentFile
+      properties:
+        documentFile:
+          description: pdf or word file
+          type: string
+          format: binary
+    ArrayWithFile:
+      description: an array with multiple kind of files
+      type: array
+      items:
+        type: string
+        format: binary

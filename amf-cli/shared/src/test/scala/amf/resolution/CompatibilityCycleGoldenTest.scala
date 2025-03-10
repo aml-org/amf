@@ -269,4 +269,25 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       transformWith = Some(Oas20)
     )
   }
+
+  // W-17759271
+  test("Raml with file upload parameter to OAS 3.0") {
+    cycle(
+      "raml10/raml-files-to-oas.raml",
+      "cycled-apis/oas30/oas3-file-param.yaml",
+      Raml10YamlHint,
+      Oas30YamlHint,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Raml with file types in various places to OAS 3.0") {
+    cycle(
+      "raml10/raml-file-types.raml",
+      "cycled-apis/oas30/oas3-file-types.yaml",
+      Raml10YamlHint,
+      Oas30YamlHint,
+      transformWith = Some(Oas30)
+    )
+  }
 }
