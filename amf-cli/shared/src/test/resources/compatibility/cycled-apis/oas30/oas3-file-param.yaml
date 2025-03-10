@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: sample raml
+  version: v1
+paths:
+  /depot:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - aFile
+              properties:
+                aFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: ""

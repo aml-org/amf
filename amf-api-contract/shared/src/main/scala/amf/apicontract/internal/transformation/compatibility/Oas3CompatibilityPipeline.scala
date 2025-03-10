@@ -23,7 +23,8 @@ class Oas3CompatibilityPipeline private (override val name: String)
       new MandatoryPathParameters(),
       new AddItemsToArrayType(),
       new CleanRepeatedOperationIds(),
-      new DeclareUndeclaredSecuritySchemes()
+      new DeclareUndeclaredSecuritySchemes(),
+      FixFileTypes()
     )
 }
 
