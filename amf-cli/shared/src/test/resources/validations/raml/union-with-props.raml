@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: test union inherit
+
+types:
+  A:
+    type: object
+    properties:
+      a1: string
+      a2: number
+  B:
+    type: object
+    properties:
+      b1: string
+      b2: number
+  unionType:
+    type: A | B
+    maxProperties: 2
+
+/messages:
+  post:
+    body:
+      application/json:
+        type: unionType
+        example:
+          a1: a string
+          a2: 123
+          b1: this is an extra prop > 2

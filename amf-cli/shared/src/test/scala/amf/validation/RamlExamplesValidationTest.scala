@@ -345,4 +345,12 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
       Some("../raml/json-schema-validation.report")
     )
   }
+
+  // W-17369296
+  test("Validate a RAML union maxProperties propagation to union members") {
+    validate(
+      "raml/union-with-props.raml",
+      Some("../raml/union-with-props.report")
+    )
+  }
 }
