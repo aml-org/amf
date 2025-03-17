@@ -33,6 +33,7 @@ abstract class Api[A](override private[amf] val _internal: InternalApi)
   def servers: ClientList[Server]               = _internal.servers.asClient
   def security: ClientList[SecurityRequirement] = _internal.security.asClient
   def tags: ClientList[Tag]                     = _internal.tags.asClient
+  def defaultSchema: StrField                   = _internal.defaultSchema
 
   /** Adds one CreativeWork to the documentations property of this WebApi and returns it for population. Path property
     * of the CreativeWork is required.
@@ -80,4 +81,5 @@ trait ApiFieldSetter[T] {
   def withServers(servers: ClientList[Server]): T
   def withSecurity(security: ClientList[SecurityRequirement]): T
   def withTags(servers: ClientList[Tag]): T
+  def withDefaultSchema(schema: String): T
 }

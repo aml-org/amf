@@ -1586,6 +1586,7 @@ declare module "amf-client-js" {
     tags: Array<Tag>;
     termsOfService: StrField;
     version: StrField;
+    defaultSchema: StrField;
 
     annotations(): Annotations;
 
@@ -1608,6 +1609,8 @@ declare module "amf-client-js" {
     withIsExternalLink(isExternalLink: boolean): DomainElement;
 
     withServer(url: string): Server;
+
+    withDefaultSchema(schema: string): this;
   }
   export class ApiKeySettings extends Settings {
     in: StrField;
@@ -1694,6 +1697,7 @@ declare module "amf-client-js" {
     tags: Array<Tag>;
     termsOfService: StrField;
     version: StrField;
+    defaultSchema: StrField;
 
     constructor();
 
@@ -1750,6 +1754,8 @@ declare module "amf-client-js" {
     withTermsOfService(terms: string): this;
 
     withVersion(version: string): this;
+
+    withDefaultSchema(schema: string): this;
   }
   export class AvroConfiguration {
     static Avro(): AMFConfiguration;
@@ -9286,6 +9292,7 @@ declare module "amf-client-js" {
     tags: Array<Tag>;
     termsOfService: StrField;
     version: StrField;
+    defaultSchema: StrField;
 
     constructor();
 
@@ -9342,6 +9349,8 @@ declare module "amf-client-js" {
     withTermsOfService(terms: string): this;
 
     withVersion(version: string): this;
+
+    withDefaultSchema(schema: string): this;
   }
   export class WebSocketsChannelBinding implements ChannelBinding {
     customDomainProperties: Array<DomainExtension>;
