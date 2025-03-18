@@ -122,11 +122,13 @@ object OAuth2Settings {
 case class ApiKeySettings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
 
-  def name: StrField = fields.field(Name)
-  def in: StrField   = fields.field(In)
+  def name: StrField     = fields.field(Name)
+  def in: StrField       = fields.field(In)
+  def scopes: Seq[Scope] = fields.field(ApiKeySettingsModel.Scopes)
 
-  def withName(name: String): this.type = set(Name, name)
-  def withIn(in: String): this.type     = set(In, in)
+  def withName(name: String): this.type         = set(Name, name)
+  def withIn(in: String): this.type             = set(In, in)
+  def withScopes(scopes: Seq[Scope]): this.type = setArray(ApiKeySettingsModel.Scopes, scopes)
 
   override def meta: ApiKeySettingsModel.type = ApiKeySettingsModel
 
@@ -168,9 +170,11 @@ case class HttpSettings(override val fields: Fields, override val annotations: A
 
   def scheme: StrField       = fields.field(Scheme)
   def bearerFormat: StrField = fields.field(BearerFormat)
+  def scopes: Seq[Scope]     = fields.field(HttpSettingsModel.Scopes)
 
   def withScheme(scheme: String): this.type             = set(Scheme, scheme)
   def withBearerFormat(bearerFormat: String): this.type = set(BearerFormat, bearerFormat)
+  def withScopes(scopes: Seq[Scope]): this.type         = setArray(HttpSettingsModel.Scopes, scopes)
 
   override def meta: HttpSettingsModel.type = HttpSettingsModel
 
@@ -192,7 +196,7 @@ case class OpenIdConnectSettings(override val fields: Fields, override val annot
   def scopes: Seq[Scope] = fields.field(OpenIdConnectSettingsModel.Scopes)
 
   def withUrl(url: String): this.type           = set(Url, url)
-  def withScopes(scopes: Seq[Scope]): this.type = setArray(Scopes, scopes)
+  def withScopes(scopes: Seq[Scope]): this.type = setArray(OpenIdConnectSettingsModel.Scopes, scopes)
 
   override def meta: OpenIdConnectSettingsModel.type = OpenIdConnectSettingsModel
 

@@ -10,6 +10,10 @@ import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, Mo
 
 trait SettingsModel extends DomainElementModel
 
+trait WithScopesField {
+  val Scopes: Field = Field(Array(ScopeModel), Security + "scope", ModelDoc(ModelVocabularies.Security, "scope", ""))
+}
+
 object SettingsModel extends SettingsModel {
   val AdditionalProperties: Field = Field(
     DataNodeModel,
@@ -80,7 +84,7 @@ object OAuth2SettingsModel extends SettingsModel {
   )
 }
 
-object ApiKeySettingsModel extends SettingsModel {
+object ApiKeySettingsModel extends SettingsModel with WithScopesField {
 
   val Name: Field = Field(Str, Core + "name", ModelDoc(ModelVocabularies.Security, "name", ""))
 
@@ -88,7 +92,7 @@ object ApiKeySettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "ApiKeySettings") ++ SettingsModel.`type`
 
-  override val fields: List[Field] = List(Name, In) ++ SettingsModel.fields
+  override val fields: List[Field] = List(Name, In, Scopes) ++ SettingsModel.fields
 
   override def modelInstance: AmfObject = ApiKeySettings()
 
@@ -118,7 +122,7 @@ object HttpApiKeySettingsModel extends SettingsModel {
   )
 }
 
-object HttpSettingsModel extends SettingsModel {
+object HttpSettingsModel extends SettingsModel with WithScopesField {
 
   val Scheme: Field = Field(Str, Security + "scheme", ModelDoc(ModelVocabularies.Security, "scheme", ""))
 
@@ -127,7 +131,7 @@ object HttpSettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "HttpSettings") ++ SettingsModel.`type`
 
-  override val fields: List[Field] = List(Scheme, BearerFormat) ++ SettingsModel.fields
+  override val fields: List[Field] = List(Scheme, BearerFormat, Scopes) ++ SettingsModel.fields
 
   override def modelInstance: AmfObject = HttpSettings()
 
@@ -138,12 +142,10 @@ object HttpSettingsModel extends SettingsModel {
   )
 }
 
-object OpenIdConnectSettingsModel extends SettingsModel {
+object OpenIdConnectSettingsModel extends SettingsModel with WithScopesField {
 
   val Url: Field =
     Field(Str, Security + "openIdConnectUrl", ModelDoc(ModelVocabularies.Security, "openIdConnectUrl", ""))
-
-  val Scopes: Field = Field(Array(ScopeModel), Security + "scope", ModelDoc(ModelVocabularies.Security, "scope", ""))
 
   override val `type`: List[ValueType] = List(Security + "OpenIdConnectSettings") ++ SettingsModel.`type`
 
@@ -157,3 +159,6 @@ object OpenIdConnectSettingsModel extends SettingsModel {
     "Settings for an OpenID security scheme"
   )
 }
+
+// Reminder for W-10548360: add Scopes field (WithScopesField trait) to new mutualTLS setting model. Also add to interface classes.
+// Uncomment parsing of scopes in OasLikeSecurityRequirementParser.

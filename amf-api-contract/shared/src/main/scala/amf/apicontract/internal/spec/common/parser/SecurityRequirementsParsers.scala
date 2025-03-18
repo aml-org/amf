@@ -10,7 +10,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   ScopeNamesMustBeEmpty,
   UnknownScopeErrorSpecification
 }
-import amf.core.client.scala.model.domain.AmfArray
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
@@ -66,21 +66,22 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
         case None    => declaration
       }
 
-      parseScopes(scheme, declaration, schemeEntry)
+      parseScopes(scheme, declaration)
 
       Some(scheme)
     }
 
-    private def parseScopes(
-        scheme: ParametrizedSecurityScheme,
-        declaration: SecurityScheme,
-        schemeEntry: YMapEntry
-    ): Unit = {
+    private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme): Unit = {
       declaration.`type`.option() match {
-        case Some("OAuth 2.0")                              => parseOAuth2Scopes(scheme)
-        case Some("openIdConnect")                          => parseOpenIdConnectScopes(scheme)
-        case _ if schemeEntry.value.as[Seq[YNode]].nonEmpty => scopesError(scheme, declaration)
-        case _                                              => // No scopes, so nothing to do
+        case Some("OAuth 2.0")     => parseOAuth2Scopes(scheme)
+        case Some("openIdConnect") => parseOpenIdConnectScopes(scheme)
+        // OAS 3.1 added optional scopes for any security type
+        case Some("Api Key") if nonEmptyScopes() && ctx.isOas31Context => parseApiKeyScopes(scheme)
+        case Some("http") if nonEmptyScopes() && ctx.isOas31Context   => parseHttpScopes(scheme)
+        // Reminder for W-10548360: uncomment this
+//        case Some("mutualTLS") if nonEmptyScopes() && ctx.isOas31Context => parseMutualTLSScopes(scheme)
+        case _ if nonEmptyScopes() => scopesError(scheme, declaration)
+        case _                     => // No scopes, so nothing to do
       }
     }
 
@@ -120,7 +121,26 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
 
     private def parseOpenIdConnectScopes(scheme: ParametrizedSecurityScheme): Unit = {
       val settings = OpenIdConnectSettings()
-      val scopes   = getScopes(schemeEntry)
+      setScopes(scheme, settings)
+    }
+
+    private def parseApiKeyScopes(scheme: ParametrizedSecurityScheme): Unit = {
+      val settings = ApiKeySettings()
+      setScopes(scheme, settings)
+    }
+
+    private def parseHttpScopes(scheme: ParametrizedSecurityScheme): Unit = {
+      val settings = HttpSettings()
+      setScopes(scheme, settings)
+    }
+
+//    private def parseMutualTLSScopes(scheme: ParametrizedSecurityScheme): Unit = {
+//      val settings = MutualTLSSettings()
+//      setScopes(scheme, settings)
+//    }
+
+    private def setScopes(scheme: ParametrizedSecurityScheme, settings: AmfObject): Unit = {
+      val scopes = getScopes(schemeEntry)
       scheme.setWithoutId(
         ParametrizedSecuritySchemeModel.Settings,
         settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)),
@@ -135,6 +155,8 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       }
       ctx.eh.violation(ScopeNamesMustBeEmpty, scheme, msg, node.location)
     }
+
+    private def nonEmptyScopes(): Boolean = schemeEntry.value.as[Seq[YNode]].nonEmpty
 
     private def isValidScope(flows: Seq[OAuth2Flow], scope: Scope): Boolean =
       flows.exists(flow => flow.scopes.nonEmpty && flow.scopes.map(_.name.value()).contains(scope.name.value()))

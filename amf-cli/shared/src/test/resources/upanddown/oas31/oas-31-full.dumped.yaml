@@ -7,13 +7,13 @@ info:
     name: Apache 2.0
     identifier: Apache-2.0
 webhooks:
-  /newPet: ## THIS SHOULD ALLOW NOT TO START WITH '/' BUT IT IS THROWING `PathItem path must start with a '/'` IF NOT
+  /newPet:
     post:
       requestBody:
         description: Information about a new pet in the system
         content:
           application/json:
-            schema: { }
+            schema: {}
       responses:
         "200":
           description: Return a 200 status to indicate that the data was received successfully
@@ -22,22 +22,23 @@ paths:
     post:
       operationId: getUsers
       responses:
-        '200':
+        "200":
+          $ref: "#/components/responses/usersListResponse"
           description: this response description should override the referenced one
-          $ref: '#/components/responses/usersListResponse'
       requestBody:
+        $ref: "#/components/requestBodies/createUserRequest"
         description: this request description should override the referenced one
-        $ref: '#/components/requestBodies/createUserRequest'
-
 security:
-  - openIdConnect:
+  -
+    openIdConnect:
       - some
-  - apikey:
+  -
+    apikey:
       - something
       - other thing
-  - http:
+  -
+    http:
       - something else
-
 components:
   schemas:
     oneOfSchema:
@@ -46,14 +47,17 @@ components:
         x-custom-ann: custom ann value
         propertyName: a
       oneOf:
-        - type: object
+        -
+          type: object
           properties:
             a:
               type: string
-        - type: object
+        -
+          type: object
           properties:
             b:
               type: string
+      type: object
     User:
       type: object
       properties:
@@ -63,7 +67,6 @@ components:
           type: string
         email:
           type: string
-
   responses:
     usersListResponse:
       description: this response description should be overridden
@@ -72,13 +75,12 @@ components:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           examples:
             usersExample:
+              $ref: "#/components/examples/usersList"
               summary: this example summary should override the referenced one
               description: this example description should override the referenced one
-              $ref: '#/components/examples/usersList'
-
   requestBodies:
     createUserRequest:
       description: this request description should be overridden
@@ -86,19 +88,19 @@ components:
         application/json:
           schema:
             type: string
-
   examples:
     usersList:
       summary: this example summary should be overridden
       description: this example description should be overridden
       value:
-        - id: "1"
+        -
+          id: "1"
           name: Alice
           email: alice@example.com
-        - id: "2"
+        -
+          id: "2"
           name: Bob
           email: bob@example.com
-
   securitySchemes:
     apikey:
       type: apiKey

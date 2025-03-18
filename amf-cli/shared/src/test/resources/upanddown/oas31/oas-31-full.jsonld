@@ -247,6 +247,272 @@
               }
             ]
           }
+        ],
+        "http://a.ml/vocabularies/security#security": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_1",
+            "@type": [
+              "http://a.ml/vocabularies/security#SecurityRequirement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#schemes": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_1/schemes/openIdConnect",
+                "@type": [
+                  "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "openIdConnect"
+                  }
+                ],
+                "http://a.ml/vocabularies/security#scheme": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/openIdConnect",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "openIdConnect"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#type": [
+                      {
+                        "@value": "openIdConnect"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "openIdConnect security scheme"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#settings": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/openIdConnect/settings/open-id-connect",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#OpenIdConnectSettings",
+                          "http://a.ml/vocabularies/security#Settings",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/security#openIdConnectUrl": [
+                          {
+                            "@value": "https://a.ml/"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/security#settings": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_1/schemes/openIdConnect/settings/open-id-connect",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#OpenIdConnectSettings",
+                      "http://a.ml/vocabularies/security#Settings",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/security#scope": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_1/schemes/openIdConnect/settings/open-id-connect/scope/some",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#Scope",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "some"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_2",
+            "@type": [
+              "http://a.ml/vocabularies/security#SecurityRequirement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#schemes": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_2/schemes/apikey",
+                "@type": [
+                  "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "apikey"
+                  }
+                ],
+                "http://a.ml/vocabularies/security#scheme": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/apikey",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "apikey"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#type": [
+                      {
+                        "@value": "Api Key"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#settings": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/apikey/settings/api-key",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#ApiKeySettings",
+                          "http://a.ml/vocabularies/security#Settings",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "someApiKeyName"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/security#in": [
+                          {
+                            "@value": "header"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/security#settings": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_2/schemes/apikey/settings/api-key",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#ApiKeySettings",
+                      "http://a.ml/vocabularies/security#Settings",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/security#scope": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_2/schemes/apikey/settings/api-key/scope/something",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#Scope",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "something"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_2/schemes/apikey/settings/api-key/scope/other%20thing",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#Scope",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "other thing"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_3",
+            "@type": [
+              "http://a.ml/vocabularies/security#SecurityRequirement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#schemes": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_3/schemes/http",
+                "@type": [
+                  "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "http"
+                  }
+                ],
+                "http://a.ml/vocabularies/security#scheme": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/http",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "http"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#type": [
+                      {
+                        "@value": "http"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#settings": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/http/settings/http",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#HttpSettings",
+                          "http://a.ml/vocabularies/security#Settings",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/security#scheme": [
+                          {
+                            "@value": "bearer"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/security#bearerFormat": [
+                          {
+                            "@value": "JWT"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/security#settings": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_3/schemes/http/settings/http",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#HttpSettings",
+                      "http://a.ml/vocabularies/security#Settings",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/security#scope": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_3/schemes/http/settings/http/scope/something%20else",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#Scope",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "something else"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ],
@@ -658,6 +924,117 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "User"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/apikey",
+        "@type": [
+          "http://a.ml/vocabularies/security#SecurityScheme",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "apikey"
+          }
+        ],
+        "http://a.ml/vocabularies/security#type": [
+          {
+            "@value": "Api Key"
+          }
+        ],
+        "http://a.ml/vocabularies/security#settings": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/apikey/settings/api-key",
+            "@type": [
+              "http://a.ml/vocabularies/security#ApiKeySettings",
+              "http://a.ml/vocabularies/security#Settings",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "someApiKeyName"
+              }
+            ],
+            "http://a.ml/vocabularies/security#in": [
+              {
+                "@value": "header"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/http",
+        "@type": [
+          "http://a.ml/vocabularies/security#SecurityScheme",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "http"
+          }
+        ],
+        "http://a.ml/vocabularies/security#type": [
+          {
+            "@value": "http"
+          }
+        ],
+        "http://a.ml/vocabularies/security#settings": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/http/settings/http",
+            "@type": [
+              "http://a.ml/vocabularies/security#HttpSettings",
+              "http://a.ml/vocabularies/security#Settings",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#scheme": [
+              {
+                "@value": "bearer"
+              }
+            ],
+            "http://a.ml/vocabularies/security#bearerFormat": [
+              {
+                "@value": "JWT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/openIdConnect",
+        "@type": [
+          "http://a.ml/vocabularies/security#SecurityScheme",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "openIdConnect"
+          }
+        ],
+        "http://a.ml/vocabularies/security#type": [
+          {
+            "@value": "openIdConnect"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "openIdConnect security scheme"
+          }
+        ],
+        "http://a.ml/vocabularies/security#settings": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/openIdConnect/settings/open-id-connect",
+            "@type": [
+              "http://a.ml/vocabularies/security#OpenIdConnectSettings",
+              "http://a.ml/vocabularies/security#Settings",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#openIdConnectUrl": [
+              {
+                "@value": "https://a.ml/"
+              }
+            ]
           }
         ]
       },
