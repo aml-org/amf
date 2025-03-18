@@ -29,6 +29,7 @@ class Oas31DocumentParser(root: Root, spec: Spec = Spec.OAS31)(implicit override
           Annotations(webhooksEntry)
         )
       })
+    map.key("jsonSchemaDialect", WebApiModel.DefaultSchema in api)
     api
   }
 }
