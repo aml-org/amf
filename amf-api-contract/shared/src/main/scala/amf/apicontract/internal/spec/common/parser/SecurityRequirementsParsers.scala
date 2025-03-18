@@ -71,54 +71,69 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       Some(scheme)
     }
 
-    private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
-      if (declaration.`type`.is("OAuth 2.0")) {
-        val settings         = OAuth2Settings(Annotations(schemeEntry))
-        val scopes           = getScopes(schemeEntry)
-        val flow: OAuth2Flow = OAuth2Flow(Annotations.virtual())
-
-        flow.fields.setWithoutId(
-          OAuth2FlowModel.Scopes,
-          AmfArray(scopes, Annotations(schemeEntry.value)),
-          Annotations(schemeEntry)
-        )
-        val flows = Seq(flow)
-
-        scheme.scheme.settings match {
-          case se: OAuth2Settings =>
-            scopes.foreach(s => {
-              if (!isValidScope(se.flows, s)) {
-                ctx.eh.violation(
-                  UnknownScopeErrorSpecification,
-                  s,
-                  Some(OAuth2FlowModel.Scopes.value.toString),
-                  s"Scope '${s.name.value()}' not found in settings of declared secured by ${scheme.scheme.name.value()}.",
-                  s.position(),
-                  s.location()
-                )
-              }
-            })
-          case _ => // Nothing to do
-        }
-
-        scheme
-          .setWithoutId(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows), Annotations.inferred())
-          .add(Annotations(schemeEntry))
-      } else if (declaration.`type`.is("openIdConnect")) {
-        val settings = OpenIdConnectSettings()
-        val scopes   = getScopes(schemeEntry)
-        scheme.setWithoutId(
-          ParametrizedSecuritySchemeModel.Settings,
-          settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)),
-          Annotations.inferred()
-        )
-      } else if (schemeEntry.value.as[Seq[YNode]].nonEmpty) {
-        val msg = declaration.`type`.option() match {
-          case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
-          case None             => "Scopes array must be empty for given security scheme"
-        }
-        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme, msg, node.location)
+    private def parseScopes(
+        scheme: ParametrizedSecurityScheme,
+        declaration: SecurityScheme,
+        schemeEntry: YMapEntry
+    ): Unit = {
+      declaration.`type`.option() match {
+        case Some("OAuth 2.0")                              => parseOAuth2Scopes(scheme)
+        case Some("openIdConnect")                          => parseOpenIdConnectScopes(scheme)
+        case _ if schemeEntry.value.as[Seq[YNode]].nonEmpty => scopesError(scheme, declaration)
+        case _                                              => // No scopes, so nothing to do
       }
+    }
+
+    private def parseOAuth2Scopes(scheme: ParametrizedSecurityScheme): Unit = {
+      val settings         = OAuth2Settings(Annotations(schemeEntry))
+      val scopes           = getScopes(schemeEntry)
+      val flow: OAuth2Flow = OAuth2Flow(Annotations.virtual())
+
+      flow.fields.setWithoutId(
+        OAuth2FlowModel.Scopes,
+        AmfArray(scopes, Annotations(schemeEntry.value)),
+        Annotations(schemeEntry)
+      )
+      val flows = Seq(flow)
+
+      scheme.scheme.settings match {
+        case se: OAuth2Settings =>
+          scopes.foreach(s => {
+            if (!isValidScope(se.flows, s)) {
+              ctx.eh.violation(
+                UnknownScopeErrorSpecification,
+                s,
+                Some(OAuth2FlowModel.Scopes.value.toString),
+                s"Scope '${s.name.value()}' not found in settings of declared secured by ${scheme.scheme.name.value()}.",
+                s.position(),
+                s.location()
+              )
+            }
+          })
+        case _ => // Nothing to do
+      }
+
+      scheme
+        .setWithoutId(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows), Annotations.inferred())
+        .add(Annotations(schemeEntry))
+    }
+
+    private def parseOpenIdConnectScopes(scheme: ParametrizedSecurityScheme): Unit = {
+      val settings = OpenIdConnectSettings()
+      val scopes   = getScopes(schemeEntry)
+      scheme.setWithoutId(
+        ParametrizedSecuritySchemeModel.Settings,
+        settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)),
+        Annotations.inferred()
+      )
+    }
+
+    private def scopesError(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme): Unit = {
+      val msg = declaration.`type`.option() match {
+        case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
+        case None             => "Scopes array must be empty for given security scheme"
+      }
+      ctx.eh.violation(ScopeNamesMustBeEmpty, scheme, msg, node.location)
     }
 
     private def isValidScope(flows: Seq[OAuth2Flow], scope: Scope): Boolean =
