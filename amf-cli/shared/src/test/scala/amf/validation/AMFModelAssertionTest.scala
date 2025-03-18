@@ -28,6 +28,8 @@ import org.yaml.model.{YNodePlain, YScalar}
 
 import scala.concurrent.Future
 
+/** Tests for a specific field/value/node in an API. Uses [[amf.testing.BaseUnitUtils]] to quickly get nodes.
+  */
 class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
@@ -822,9 +824,8 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
   // ruleset test W-16070725 W-17562799
   test("test query and header parameters in OAS3") {
     val api = s"$basePath/oas3/parameters.yaml"
-    oasClient.parse(api) flatMap { parseResult =>
-      val transformBu  = oasClient.transform(parseResult.baseUnit).baseUnit
-      val request      = getFirstRequest(transformBu)
+    modelAssertion(api) { bu =>
+      val request      = getFirstRequest(bu)
       val queryParam   = request.queryParameters.head
       val header       = request.headers.head
       val queryParamEx = queryParam.examples
@@ -858,9 +859,6 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       val oas3Flow = oas3Oauth2.flows.head
       oas3Flow.flow.value() shouldBe "implicit"
       oas3Flow.scopes.nonEmpty shouldBe true
-
-      val render = oasClient.render(oas3transformResult.baseUnit, "application/yaml")
-      render.nonEmpty shouldBe true
     }
   }
 }

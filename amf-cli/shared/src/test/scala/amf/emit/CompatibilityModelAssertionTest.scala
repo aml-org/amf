@@ -1,61 +1,44 @@
 package amf.emit
 
-import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.parse.AMFParser
-import amf.core.client.scala.transform.AMFTransformer
-import amf.core.internal.remote.{Hint, Oas30YamlHint, Raml10YamlHint}
-import amf.core.internal.resource.StringResourceLoader
+import amf.core.internal.remote.Spec._
+import amf.core.internal.remote.{Mimes, Spec}
 import amf.core.io.FileAssertionTest
+import amf.testing.ConfigProvider.configFor
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.Future
 
-class CompatibilityModelAssertionTest extends FileAssertionTest {
+class CompatibilityModelAssertionTest extends FileAssertionTest with Matchers {
 
-  private val basePath = "amf-cli/shared/src/test/resources/compatibility/"
+  private val basePath = "file://amf-cli/shared/src/test/resources/compatibility/"
+
+  def compatibility(
+      path: String,
+      fromSpec: Spec,
+      toSpec: Spec,
+      pipelineId: String = PipelineId.Compatibility,
+      outputMime: String = Mimes.`application/yaml`
+  ): Future[String] = {
+    val clientFrom = configFor(fromSpec).baseUnitClient()
+    clientFrom.parse(basePath + path) map { parseResult =>
+      val clientTo        = configFor(toSpec).baseUnitClient()
+      val transformResult = clientTo.transform(parseResult.baseUnit, pipelineId)
+      clientTo.render(transformResult.baseUnit, outputMime)
+    }
+  }
 
   test("Test no empty request in RAML to OAS conversion 1") {
-    compatibility("raml10/empty-body-1.raml", Raml10YamlHint, Oas30YamlHint) map {
-      output =>
-        assert(output.nonEmpty)
-        assert(!output.contains("content: {}"))
+    compatibility("raml10/empty-body-1.raml", RAML10, OAS30) map { output =>
+      assert(output.nonEmpty)
+      assert(!output.contains("content: {}"))
     }
   }
 
   test("Test no empty request in RAML to OAS conversion 2") {
-    compatibility("raml10/empty-body-2.raml", Raml10YamlHint, Oas30YamlHint) map {
-      output =>
-        assert(output.nonEmpty)
-        assert(!output.contains("content: {}"))
+    compatibility("raml10/empty-body-2.raml", RAML10, OAS30) map { output =>
+      assert(output.nonEmpty)
+      assert(!output.contains("content: {}"))
     }
-  }
-
-  /** Compile source with specified hint. Return render of target. */
-  private def compatibility(source: String, from: Hint, to: Hint): Future[String] = {
-    for {
-      input     <- fs.asyncFile(basePath + source).read()
-      processed <- processInput(input.toString, from, to)
-      output    <- Future.successful(new AMFRenderer(processed, to, RenderOptions()).renderToString)
-    } yield {
-      output
-    }
-  }
-
-  private def processInput(content: String, from: Hint, to: Hint): Future[BaseUnit] = {
-    val eh = UnhandledErrorHandler
-    val fromConfig = APIConfiguration
-      .fromSpec(from.spec)
-      .withErrorHandlerProvider(() => eh)
-      .withResourceLoader(StringResourceLoader("amf://id#", content, Some(from.spec.mediaType)))
-    val toConfig = APIConfiguration
-      .fromSpec(to.spec)
-      .withErrorHandlerProvider(() => eh)
-    for {
-      unit     <- AMFParser.parse("amf://id#", fromConfig)
-      resolved <- Future.successful(AMFTransformer.transform(unit.baseUnit, PipelineId.Compatibility, toConfig))
-    } yield resolved.baseUnit
   }
 }
