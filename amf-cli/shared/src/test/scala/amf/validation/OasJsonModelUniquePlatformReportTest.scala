@@ -1,9 +1,12 @@
 package amf.validation
 
+import amf.apicontract.client.scala.OASConfiguration
+
 class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/model/"
+  val cyclePath: String    = "file://amf-cli/shared/src/test/resources/upanddown/oas31/"
 
   test("Tags in oas") {
     validate("/webapi/tags.json", Some("webapi-tags.report"))
@@ -253,5 +256,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Json Ref - Invalid path in valid external fragment") {
     validate("oas2/invalid-ref-valid-fragment/api.json", Some("invalid-ref-valid-fragment.report"))
+  }
+
+  test("OAS 3.1 full API should be valid") {
+    validate("oas-31-full.json", None, configOverride = Some(OASConfiguration.OAS31()), directory = cyclePath)
   }
 }

@@ -13,28 +13,28 @@ Level: Violation
   Range: [(9,6)-(11,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
-- Constraint: http://a.ml/vocabularies/amf/parser#HttpSettings-scheme-minCount
+- Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredHttpScheme
   Message: 'scheme' field is mandatory in http security scheme
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declares/scheme/invalid-httpType/settings/http
-  Property: http://a.ml/vocabularies/security#scheme
-  Range: [(12,26)-(15,7)]
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declares/scheme/invalid-httpType
+  Property: 
+  Range: [(12,6)-(15,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
-- Constraint: http://a.ml/vocabularies/amf/parser#ApiKeySettings-name-minCount
-  Message: 'name' field is mandatory in apiKey security scheme
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declares/scheme/invalid-apiKeyType/settings/api-key
-  Property: http://a.ml/vocabularies/core#name
-  Range: [(16,28)-(18,7)]
-  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
-
-- Constraint: http://a.ml/vocabularies/amf/parser#ApiKeySettings-in-minCount
+- Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredApiKeyIn
   Message: 'in' field is mandatory in apiKey security scheme
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declares/scheme/invalid-apiKeyType/settings/api-key
-  Property: http://a.ml/vocabularies/security#in
-  Range: [(16,28)-(18,7)]
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declares/scheme/invalid-apiKeyType
+  Property: 
+  Range: [(16,6)-(18,7)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+
+- Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredApiKeyName
+  Message: 'name' field is mandatory in apiKey security scheme
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declares/scheme/invalid-apiKeyType
+  Property: 
+  Range: [(16,6)-(18,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
 - Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredOpenIdConnectUrl

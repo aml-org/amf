@@ -705,6 +705,7 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | name | string | - |  | `http://a.ml/vocabularies/core#name` |
  | in | string | - |  | `http://a.ml/vocabularies/security#in` |
+ | scope | [[Scope](#scope)] | false |  | `http://a.ml/vocabularies/security#scope` |
  | additionalProperties | [DataNode](#datanode) | - |  | `http://a.ml/vocabularies/security#additionalProperties` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
@@ -1978,6 +1979,7 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | scheme | string | - |  | `http://a.ml/vocabularies/security#scheme` |
  | bearerFormat | string | - |  | `http://a.ml/vocabularies/security#bearerFormat` |
+ | scope | [[Scope](#scope)] | false |  | `http://a.ml/vocabularies/security#scope` |
  | additionalProperties | [DataNode](#datanode) | - |  | `http://a.ml/vocabularies/security#additionalProperties` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 

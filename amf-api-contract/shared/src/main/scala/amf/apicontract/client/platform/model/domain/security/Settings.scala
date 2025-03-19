@@ -96,8 +96,9 @@ case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySet
   @JSExportTopLevel("ApiKeySettings")
   def this() = this(InternalApiKeySettings())
 
-  def name: StrField = _internal.name
-  def in: StrField   = _internal.in
+  def name: StrField            = _internal.name
+  def in: StrField              = _internal.in
+  def scopes: ClientList[Scope] = _internal.scopes.asClient
 
   /** Set authorizationUri property of this ApiKeySettings. */
   def withName(name: String): this.type = {
@@ -108,6 +109,12 @@ case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySet
   /** Set in property of this ApiKeySettings] */
   def withIn(inVal: String): this.type = {
     _internal.withIn(inVal)
+    this
+  }
+
+  /** Set scopes property of this ApiKeySettings. */
+  def withScopes(scopes: ClientList[Scope]): this.type = {
+    _internal.withScopes(scopes.asInternal)
     this
   }
 }
@@ -141,8 +148,9 @@ case class HttpSettings(override private[amf] val _internal: InternalHttpSetting
   @JSExportTopLevel("HttpSettings")
   def this() = this(InternalHttpSettings())
 
-  def scheme: StrField       = _internal.scheme
-  def bearerFormat: StrField = _internal.bearerFormat
+  def scheme: StrField          = _internal.scheme
+  def bearerFormat: StrField    = _internal.bearerFormat
+  def scopes: ClientList[Scope] = _internal.scopes.asClient
 
   /** Set scheme property of this HttpSettings. */
   def withScheme(scheme: String): this.type = {
@@ -153,6 +161,12 @@ case class HttpSettings(override private[amf] val _internal: InternalHttpSetting
   /** Set bearerFormat property of this HttpSettings] */
   def withBearerFormat(bearerFormat: String): this.type = {
     _internal.withBearerFormat(bearerFormat)
+    this
+  }
+
+  /** Set scopes property of this HttpSettings. */
+  def withScopes(scopes: ClientList[Scope]): this.type = {
+    _internal.withScopes(scopes.asInternal)
     this
   }
 }

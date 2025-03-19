@@ -123,7 +123,10 @@ case class InlinedJsonSchemaEmitterFactory()(override implicit val spec: JsonSch
 
 }
 
-case class Oas31SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends Oas3SpecEmitterFactory(spec) {}
+case class Oas31SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends Oas3SpecEmitterFactory(spec) {
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
+    Oas31SecurityRequirementEmitter.apply
+}
 
 class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
   override def serversEmitter(

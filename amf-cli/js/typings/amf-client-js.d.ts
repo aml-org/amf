@@ -1615,12 +1615,15 @@ declare module "amf-client-js" {
   export class ApiKeySettings extends Settings {
     in: StrField;
     name: StrField;
+    scopes: Array<Scope>;
 
     constructor();
 
     withIn(inVal: string): this;
 
     withName(name: string): this;
+
+    withScopes(scopes: Array<Scope>): this;
   }
   export class ArrayNode implements DataNode {
     customDomainProperties: Array<DomainExtension>;
@@ -4259,12 +4262,15 @@ declare module "amf-client-js" {
   export class HttpSettings extends Settings {
     bearerFormat: StrField;
     scheme: StrField;
+    scopes: Array<Scope>;
 
     constructor();
 
     withBearerFormat(bearerFormat: string): this;
 
     withScheme(scheme: string): this;
+
+    withScopes(scopes: Array<Scope>): this;
   }
   export class IBMMQChannelBinding implements ChannelBinding {
     destinationType: StrField;
