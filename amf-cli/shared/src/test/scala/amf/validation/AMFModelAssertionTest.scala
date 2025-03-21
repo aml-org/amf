@@ -861,4 +861,14 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       oas3Flow.scopes.nonEmpty shouldBe true
     }
   }
+
+  // sandra test
+  test("sandra test in OAS3") {
+    val api = s"$basePath/oas3/sandra-test.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      val request        = getFirstRequest(parseResult.baseUnit)
+      val requestLexical = request.annotations.lexical()
+      requestLexical.equals(PositionRange.NONE) shouldBe false
+    }
+  }
 }
