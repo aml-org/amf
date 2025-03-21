@@ -1,11 +1,12 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
-import amf.apicontract.client.scala.model.domain.Request
-import amf.apicontract.internal.metamodel.domain.RequestModel
+import amf.apicontract.client.scala.model.domain.{Parameter, Request}
+import amf.apicontract.internal.metamodel.domain.RequestModel._
 import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser.OasParametersParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.Lazy
@@ -18,36 +19,22 @@ case class Oas30ParametersParser(map: YMap, producer: () => Request)(implicit ct
     map
       .key("parameters")
       .foreach { entry =>
+        val req = request.getOrCreate
         val parameters =
-          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequestOrEndpoint = true)
-        parameters match {
-          case Parameters(query, path, header, cookie, baseUri08, _) =>
-            if (query.nonEmpty)
-              request.getOrCreate.setWithoutId(
-                RequestModel.QueryParameters,
-                AmfArray(query, Annotations(entry)),
-                Annotations(entry)
-              )
-            if (header.nonEmpty)
-              request.getOrCreate.setWithoutId(
-                RequestModel.Headers,
-                AmfArray(header, Annotations(entry)),
-                Annotations(entry)
-              )
-            if (path.nonEmpty || baseUri08.nonEmpty)
-              request.getOrCreate.setWithoutId(
-                RequestModel.UriParameters,
-                AmfArray(path ++ baseUri08, Annotations(entry)),
-                Annotations(entry)
-              )
-            if (cookie.nonEmpty)
-              request.getOrCreate.setWithoutId(
-                RequestModel.CookieParameters,
-                AmfArray(cookie, Annotations(entry)),
-                Annotations(entry)
-              )
+          OasParametersParser(entry.value.as[Seq[YNode]], req.id).parse(inRequestOrEndpoint = true)
+        if (parameters.nonEmpty) {
+          val ann = Annotations(entry)
+          if (req.annotations.size == 0) req.annotations.overrideWith(ann)
+          parameters match {
+            case Parameters(query, path, header, cookie, baseUri08, _) =>
+              def setParameters(params: Seq[Parameter], field: Field): Unit =
+                req.setWithoutId(field, AmfArray(params, ann), ann)
+              if (query.nonEmpty) setParameters(query, QueryParameters)
+              if (header.nonEmpty) setParameters(header, Headers)
+              if (path.nonEmpty || baseUri08.nonEmpty) setParameters(path ++ baseUri08, UriParameters)
+              if (cookie.nonEmpty) setParameters(cookie, CookieParameters)
+          }
         }
       }
-
   }
 }

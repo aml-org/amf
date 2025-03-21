@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: CaseManager
+  version: 1.0.0
+
+x-sfdc:
+  agent:
+    topic:
+      name: test
+      classificationDescription: test
+      scope: test
+      instructions:
+        - test
+
+paths:
+  /apex-rest-examples/v1/Cases/{caseId}:
+    get:
+      x-sfdc:
+        agent:
+          action:
+            publishAsAgentAction: true
+      parameters:
+        - name: caseId
+          in: path
+          required: true
+          schema:
+            type: string
+          x-sfdc:
+            agent:
+              action:
+                isUserInput: true
+#      requestBody:  # if added, the lexical works
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              type: string
+      responses:
+        '200':
+          description: 200 ok
