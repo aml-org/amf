@@ -1,0 +1,22 @@
+asyncapi: 2.6.0
+defaultContentType: application/json
+
+info:
+  title: picklistTest
+  version: 1.0.0
+
+components:
+  messages:
+    messageString:
+      $ref: "message-string.yaml#/messageString"
+    messageInteger:
+      $ref: "message-integer.yaml#/messageInteger"
+
+channels:
+  issueEvent:
+    description: Receive new and retry issue event messages
+    subscribe:
+      message:
+        oneOf:
+          - $ref: "#/components/messages/messageString"
+          - $ref: "#/components/messages/messageInteger"
