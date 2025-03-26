@@ -6,7 +6,10 @@ import amf.apicontract.internal.annotations.FormBodyParameter
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.parser.domain.Annotations
 
 /** To represent a method with file upload:
   *
@@ -43,7 +46,7 @@ case class FixFilePayloads() extends TransformationStep() {
   private def checkFormData(payload: Payload): Unit = {
     val fileTypes = Seq("multipart/form-data", "application/x-www-form-urlencoded")
     if (fileTypes.contains(payload.mediaType.value())) {
-      payload.withInferredName("formData")
+      payload.set(NameFieldSchema.Name, AmfScalar("formData"), Annotations.inferred())
       payload.add(FormBodyParameter())
     }
   }

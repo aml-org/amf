@@ -47,6 +47,7 @@ components:
   schemas:
     FileUpload:
       type: object
+      additionalProperties: true
       required:
         - documentFile
       properties:
