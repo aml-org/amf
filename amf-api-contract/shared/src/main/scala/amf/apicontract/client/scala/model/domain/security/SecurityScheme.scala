@@ -130,6 +130,12 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
     settings
   }
 
+  def withMutualTLSSettings(): MutualTLSSettings = {
+    val settings = MutualTLSSettings()
+    set(SettingsField, settings)
+    settings
+  }
+
   def withObject(): ApiKeySettings = {
     val settings = ApiKeySettings()
     set(SettingsField, settings)

@@ -10,7 +10,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   ScopeNamesMustBeEmpty,
   UnknownScopeErrorSpecification
 }
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
@@ -49,7 +49,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       Some(requirement)
   }
 
-  case class OasLikeParametrizedSecuritySchemeParser(
+  private case class OasLikeParametrizedSecuritySchemeParser(
       schemeEntry: YMapEntry,
       adopted: ParametrizedSecurityScheme => Unit
   ) {
@@ -76,12 +76,11 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
         case Some("OAuth 2.0")     => parseOAuth2Scopes(scheme)
         case Some("openIdConnect") => parseOpenIdConnectScopes(scheme)
         // OAS 3.1 added optional scopes for any security type
-        case Some("Api Key") if nonEmptyScopes() && ctx.isOas31Context => parseApiKeyScopes(scheme)
-        case Some("http") if nonEmptyScopes() && ctx.isOas31Context   => parseHttpScopes(scheme)
-        // Reminder for W-10548360: uncomment this
-//        case Some("mutualTLS") if nonEmptyScopes() && ctx.isOas31Context => parseMutualTLSScopes(scheme)
-        case _ if nonEmptyScopes() => scopesError(scheme, declaration)
-        case _                     => // No scopes, so nothing to do
+        case Some("Api Key") if nonEmptyScopes() && ctx.isOas31Context   => parseApiKeyScopes(scheme)
+        case Some("http") if nonEmptyScopes() && ctx.isOas31Context      => parseHttpScopes(scheme)
+        case Some("mutualTLS") if nonEmptyScopes() && ctx.isOas31Context => parseMutualTLSScopes(scheme)
+        case _ if nonEmptyScopes()                                       => scopesError(scheme, declaration)
+        case _                                                           => // No scopes, so nothing to do
       }
     }
 
@@ -134,10 +133,10 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       setScopes(scheme, settings)
     }
 
-//    private def parseMutualTLSScopes(scheme: ParametrizedSecurityScheme): Unit = {
-//      val settings = MutualTLSSettings()
-//      setScopes(scheme, settings)
-//    }
+    private def parseMutualTLSScopes(scheme: ParametrizedSecurityScheme): Unit = {
+      val settings = MutualTLSSettings()
+      setScopes(scheme, settings)
+    }
 
     private def setScopes(scheme: ParametrizedSecurityScheme, settings: AmfObject): Unit = {
       val scopes = getScopes(schemeEntry)

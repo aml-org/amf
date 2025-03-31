@@ -143,6 +143,7 @@ AMF Model Documentation
 * [MqttServerBinding010](#mqttserverbinding010)
 * [MqttServerBinding020](#mqttserverbinding020)
 * [MqttServerLastWill](#mqttserverlastwill)
+* [MutualTLSSettings](#mutualtlssettings)
 * [NamedExampleFragment](#namedexamplefragment)
 * [NilShape](#nilshape)
 * [NodeMapping](#nodemapping)
@@ -2667,6 +2668,19 @@ Types:
  | qos | int | - | Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received | `http://a.ml/vocabularies/apiBinding#qos` |
  | retain | boolean | - | Whether the broker should retain the Last Will and Testament message or not | `http://a.ml/vocabularies/apiBinding#retain` |
  | message | string | - | Message used to notify other clients about an ungracefully disconnected client. | `http://a.ml/vocabularies/apiBinding#message` |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+
+## MutualTLSSettings
+Settings for an Mutual TLS security scheme
+Types:
+* `http://a.ml/vocabularies/security#MutualTLSSettings`
+* `http://a.ml/vocabularies/security#Settings`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | scope | [[Scope](#scope)] | false |  | `http://a.ml/vocabularies/security#scope` |
+ | additionalProperties | [DataNode](#datanode) | - |  | `http://a.ml/vocabularies/security#additionalProperties` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## NamedExampleFragment

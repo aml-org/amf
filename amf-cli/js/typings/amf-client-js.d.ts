@@ -6253,6 +6253,13 @@ declare module "amf-client-js" {
 
     withUrl(url: string): this;
   }
+  export class MutualTLSSettings extends Settings {
+    scopes: Array<Scope>;
+
+    constructor();
+
+    withScopes(scopes: Array<Scope>): this;
+  }
   export class Operation extends AbstractOperation implements Linkable {
     accepts: Array<StrField>;
     bindings: OperationBindings;
@@ -6569,6 +6576,8 @@ declare module "amf-client-js" {
     withScheme(scheme: SecurityScheme): this;
 
     withSettings(settings: Settings): this;
+
+    withMutualTLSSettings(): MutualTLSSettings;
   }
   export class ParametrizedTrait implements ParametrizedDeclaration {
     customDomainProperties: Array<DomainExtension>;
@@ -7797,6 +7806,8 @@ declare module "amf-client-js" {
     withSettings(settings: Settings): this;
 
     withType(type: string): this;
+
+    withMutualTLSSettings(): MutualTLSSettings;
   }
   export class SecuritySchemeFragment extends Fragment {
     constructor();

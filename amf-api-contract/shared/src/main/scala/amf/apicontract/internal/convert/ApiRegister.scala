@@ -186,6 +186,9 @@ private[amf] object ApiRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(OpenIdConnectSettingsModel) {
       case s: amf.apicontract.client.scala.model.domain.security.OpenIdConnectSettings => OpenIdConnectSettings(s)
     }
+    platform.registerWrapper(MutualTLSSettingsModel) {
+      case s: amf.apicontract.client.scala.model.domain.security.MutualTLSSettings => MutualTLSSettings(s)
+    }
     platform.registerWrapper(ApiKeySettingsModel) {
       case s: amf.apicontract.client.scala.model.domain.security.ApiKeySettings => ApiKeySettings(s)
     }

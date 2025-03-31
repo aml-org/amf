@@ -211,6 +211,26 @@ object OpenIdConnectSettings {
   def apply(annotations: Annotations): OpenIdConnectSettings = new OpenIdConnectSettings(Fields(), annotations)
 }
 
+case class MutualTLSSettings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+
+  def scopes: Seq[Scope] = fields.field(MutualTLSSettingsModel.Scopes)
+
+  def withScopes(scopes: Seq[Scope]): this.type = setArray(MutualTLSSettingsModel.Scopes, scopes)
+
+  override def meta: MutualTLSSettingsModel.type = MutualTLSSettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/mutual-tls"
+}
+
+object MutualTLSSettings {
+
+  def apply(): MutualTLSSettings = apply(Annotations())
+
+  def apply(annotations: Annotations): MutualTLSSettings = new MutualTLSSettings(Fields(), annotations)
+}
+
 trait WithSettings {
   def withDefaultSettings(): Settings
   def withOAuth1Settings(): OAuth1Settings
@@ -219,6 +239,7 @@ trait WithSettings {
   def withHttpSettings(): HttpSettings
   def withHttpApiKeySettings(): HttpApiKeySettings
   def withOpenIdConnectSettings(): OpenIdConnectSettings
+  def withMutualTLSSettings(): MutualTLSSettings
 
   def id: String
 }

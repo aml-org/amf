@@ -160,5 +160,17 @@ object OpenIdConnectSettingsModel extends SettingsModel with WithScopesField {
   )
 }
 
-// Reminder for W-10548360: add Scopes field (WithScopesField trait) to new mutualTLS setting model. Also add to interface classes.
-// Uncomment parsing of scopes in OasLikeSecurityRequirementParser.
+object MutualTLSSettingsModel extends SettingsModel with WithScopesField {
+
+  override val `type`: List[ValueType] = List(Security + "MutualTLSSettings") ++ SettingsModel.`type`
+
+  override val fields: List[Field] = List(Scopes) ++ SettingsModel.fields
+
+  override def modelInstance: AmfObject = MutualTLSSettings()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Security,
+    "MutualTLSSettings",
+    "Settings for an Mutual TLS security scheme"
+  )
+}

@@ -49,6 +49,7 @@ private[amf] object APIEntities extends Entities {
     OAuth2SettingsModel,
     OAuth2FlowModel,
     ApiKeySettingsModel,
+    MutualTLSSettingsModel,
     TraitModel,
     ResourceTypeModel,
     ParametrizedResourceTypeModel,

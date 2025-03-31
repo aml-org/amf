@@ -347,7 +347,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = sh("pattern"),
         // Includes all types due to compatibility reasons.
         value =
-          "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+$"
+          "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|mutualTLS|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+$"
       )
     ) ++ baseApiValidations("WebAPI")
 
