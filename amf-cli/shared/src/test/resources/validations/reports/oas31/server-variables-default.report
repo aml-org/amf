@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas31/server-variables-default.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#server-variable-missing-default
+  Message: Server variable must define a 'default' field
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas31/server-variables-default.yaml#/web-api/server/https%3A%2F%2F%7Benvironment%7D.example.com%2Fv1/variable/parameter/path/environment
+  Property: 
+  Range: [(14,0)-(14,55)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas31/server-variables-default.yaml

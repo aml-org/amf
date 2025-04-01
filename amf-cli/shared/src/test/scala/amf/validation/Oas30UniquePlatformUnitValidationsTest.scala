@@ -166,9 +166,4 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Resources paths") {
     validate("resources-paths/resources-paths.yaml", Some("resources-paths.report"))
   }
-
-  test("License identifier-url mutually exclusive fields validation") {
-    validate("oas-31-license-identifier-url-validation.json", Some("oas-31-license-identifier-url-validation.report"))
-  }
-
 }
