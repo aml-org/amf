@@ -3,8 +3,10 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 import amf.apicontract.client.scala.model.domain.security.{
   ApiKeySettings,
   HttpSettings,
+  MutualTLSSettings,
   OAuth2Settings,
   OpenIdConnectSettings,
+  Scope,
   SecurityRequirement
 }
 import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel
@@ -63,13 +65,15 @@ case class Oas31SecurityRequirementEmitter(requirement: SecurityRequirement, ord
 
   override protected def emitAdditionalScopes(scopesEntry: FieldEntry): Seq[ScalarEmitter] = {
     scopesEntry.element match {
-      case httpSettings: HttpSettings =>
-        httpSettings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
-      case apiKeySettings: ApiKeySettings =>
-        apiKeySettings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
-      // Reminder for W-10548360: add MutualTLSSettings here
-      case _ => Nil
+      case httpSettings: HttpSettings           => emitScopes(httpSettings.scopes)
+      case apiKeySettings: ApiKeySettings       => emitScopes(apiKeySettings.scopes)
+      case mutualTLSSettings: MutualTLSSettings => emitScopes(mutualTLSSettings.scopes)
+      case _                                    => Nil
     }
+  }
+
+  private def emitScopes(scopes: Seq[Scope]): Seq[ScalarEmitter] = {
+    scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
   }
 }
 

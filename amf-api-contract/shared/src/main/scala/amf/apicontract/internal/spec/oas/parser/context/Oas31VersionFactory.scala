@@ -30,7 +30,7 @@ case class Oas31VersionFactory()(implicit override val ctx: OasWebApiContext) ex
     Oas3SecuritySchemeParser.apply
 
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
-    new Oas3SecuritySettingsParser(map, scheme)(ctx)
+    new Oas31SecuritySettingsParser(map, scheme)(ctx)
 
   override def parameterParser(
       entryOrNode: YMapEntryLike,

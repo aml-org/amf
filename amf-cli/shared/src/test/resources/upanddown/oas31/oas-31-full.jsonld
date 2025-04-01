@@ -512,6 +512,85 @@
                 ]
               }
             ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_4",
+            "@type": [
+              "http://a.ml/vocabularies/security#SecurityRequirement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#schemes": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_4/schemes/mutualTLS",
+                "@type": [
+                  "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "mutualTLS"
+                  }
+                ],
+                "http://a.ml/vocabularies/security#scheme": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/mutualTLS",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "mutualTLS"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#type": [
+                      {
+                        "@value": "mutualTLS"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "mutualTLS security scheme"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#settings": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/mutualTLS/settings/mutual-tls",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#MutualTLSSettings",
+                          "http://a.ml/vocabularies/security#Settings",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/security#settings": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_4/schemes/mutualTLS/settings/mutual-tls",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#MutualTLSSettings",
+                      "http://a.ml/vocabularies/security#Settings",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/security#scope": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/web-api/security/requirement_4/schemes/mutualTLS/settings/mutual-tls/scope/other%20something",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#Scope",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "other something"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -1034,6 +1113,38 @@
               {
                 "@value": "https://a.ml/"
               }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/mutualTLS",
+        "@type": [
+          "http://a.ml/vocabularies/security#SecurityScheme",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "mutualTLS"
+          }
+        ],
+        "http://a.ml/vocabularies/security#type": [
+          {
+            "@value": "mutualTLS"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "mutualTLS security scheme"
+          }
+        ],
+        "http://a.ml/vocabularies/security#settings": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/scheme/mutualTLS/settings/mutual-tls",
+            "@type": [
+              "http://a.ml/vocabularies/security#MutualTLSSettings",
+              "http://a.ml/vocabularies/security#Settings",
+              "http://a.ml/vocabularies/document#DomainElement"
             ]
           }
         ]

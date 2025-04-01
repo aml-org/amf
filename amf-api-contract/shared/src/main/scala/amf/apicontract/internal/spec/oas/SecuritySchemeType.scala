@@ -13,11 +13,12 @@ object OasLikeSecuritySchemeTypeMappings {
   private val Http          = OasSecuritySchemeType("http")
   private val OpenIdConnect = OasSecuritySchemeType("openIdConnect")
   private val BasicAuth     = OasSecuritySchemeType("basic")
+  private val mutualTLS     = OasSecuritySchemeType("mutualTLS")
 
   val mappings = Map(
     Spec.OAS20 -> Oas2SchemeMappings,
     Spec.OAS30 -> Oas3SchemeMappings,
-    Spec.OAS31 -> Oas3SchemeMappings
+    Spec.OAS31 -> Oas31SchemeMappings
   )
 
   def mapsTo(spec: Spec, text: String): SecuritySchemeType = mappings(spec).mapsTo(text)
@@ -30,20 +31,22 @@ object OasLikeSecuritySchemeTypeMappings {
     def types: Map[String, OasSecuritySchemeType]
   }
 
-  private object Oas2SchemeMappings extends SchemeMappings(Spec.OAS20) {
+  abstract class OasSchemeMappings(override val spec: Spec) extends SchemeMappings(spec) {
+    override def mapsTo(text: String): SecuritySchemeType = types.getOrElse(text, UnknownSecuritySchemeType(text))
+  }
 
-    lazy val types = Map(
+  private object Oas2SchemeMappings extends OasSchemeMappings(Spec.OAS20) {
+
+    lazy val types: Map[String, OasSecuritySchemeType] = Map(
       "OAuth 2.0"            -> OAuth20,
       "Basic Authentication" -> BasicAuth,
       "Api Key"              -> ApiKeyOas
     )
-
-    override def mapsTo(text: String): SecuritySchemeType = types.getOrElse(text, UnknownSecuritySchemeType(text))
   }
 
-  private object Oas3SchemeMappings extends SchemeMappings(Spec.OAS30) {
+  private object Oas3SchemeMappings extends OasSchemeMappings(Spec.OAS30) {
 
-    lazy val types = Map(
+    lazy val types: Map[String, OasSecuritySchemeType] = Map(
       "OAuth 2.0"             -> OAuth20,
       "Basic Authentication"  -> Http,
       "Digest Authentication" -> Http,
@@ -51,7 +54,12 @@ object OasLikeSecuritySchemeTypeMappings {
       "openIdConnect"         -> OpenIdConnect,
       "Api Key"               -> ApiKeyOas
     )
+  }
 
-    override def mapsTo(text: String): SecuritySchemeType = types.getOrElse(text, UnknownSecuritySchemeType(text))
+  private object Oas31SchemeMappings extends OasSchemeMappings(Spec.OAS31) {
+
+    lazy val types: Map[String, OasSecuritySchemeType] = Oas3SchemeMappings.types ++ Map(
+      "mutualTLS" -> mutualTLS
+    )
   }
 }
