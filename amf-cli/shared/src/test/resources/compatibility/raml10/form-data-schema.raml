@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: Notes And Images - Reduced
+version: 1.0
+
+/v3/images:
+  /upload:
+    post:
+      body:
+        multipart/form-data:
+          description: Requires two parts; 'data' and 'metadata'.
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" }
+                  }
+                }
+              },
+              "required": ["data", "metadata"]
+            }
