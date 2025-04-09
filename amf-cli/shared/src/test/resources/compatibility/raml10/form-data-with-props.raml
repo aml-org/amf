@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: Claim Center System API
+version: v1
+
+types:
+  ImageFile:
+    type: file
+    fileTypes: ['image/jpeg', 'image/png']
+
+/upload:
+  post:
+    description: upload pictures from the policy holder
+    body:
+      multipart/form-data:
+        properties:
+          aFile1?: ImageFile
+          aFile2?: ImageFile
+    responses:
+      200:
+        description: upload completed
