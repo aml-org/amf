@@ -552,10 +552,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         payload.schema match {
           case file: FileShape => fileShape(file, b)
           case ns: NodeShape if payload.annotations.find(classOf[FormBodyParameter]).isDefined =>
-            if (ns.properties.nonEmpty)
-              ns.properties.foreach {
-                formDataParameter(_, b)
-              }
+            if (ns.properties.nonEmpty) ns.properties.foreach(formDataParameter(_, b))
             else emptyFormData(payload, b)
           case _ => defaultPayload(b)
         }
