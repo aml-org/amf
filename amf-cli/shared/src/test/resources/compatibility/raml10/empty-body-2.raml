@@ -14,6 +14,7 @@ mediaType:
         type: string
     responses:
       200:
+        description: 200 OK
         body:
           type: string
   /{orderId}:
@@ -21,6 +22,7 @@ mediaType:
       description: service that retrieves the sales order from SAP
       responses:
         200:
+          description: 200 OK
           body:
             application/json:
               type: string

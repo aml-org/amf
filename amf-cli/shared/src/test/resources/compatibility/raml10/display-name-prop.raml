@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: BDC Mobile API Gateway
+version: v1
+
+/tests:
+  /naicsFromFile/MP:
+    post:
+      body:
+        multipart/form-data:
+          properties:
+            name:
+              type: file
+              required: true
+              displayName: displayName
