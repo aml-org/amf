@@ -358,11 +358,9 @@ case class OasParametersEmitter(
   }
 }
 
-case class ParameterEmitter(parameter: Parameter,
-                            ordering: SpecOrdering,
-                            references: Seq[BaseUnit],
-                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
-    extends PartEmitter {
+case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
+    implicit val spec: OasSpecEmitterContext
+) extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
@@ -560,10 +558,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         payload.schema match {
           case file: FileShape => fileShape(file, b)
           case ns: NodeShape if payload.annotations.find(classOf[FormBodyParameter]).isDefined =>
-            if (ns.properties.nonEmpty)
-              ns.properties.foreach {
-                formDataParameter(_, b)
-              }
+            if (ns.properties.nonEmpty) ns.properties.foreach(formDataParameter(_, b))
             else emptyFormData(payload, b)
           case _ => defaultPayload(b)
         }
