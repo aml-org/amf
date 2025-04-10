@@ -271,6 +271,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
       fs.entry(WebApiModel.Webhooks)
         .foreach(f => result += EndpointsEmitter("webhooks", f, ordering, references, orphanAnnotationsFromPaths))
 
+      fs.entry(WebApiModel.DefaultSchema).map(f => result += ValueEmitter("jsonSchemaDialect", f))
+
       fs.entry(WebApiModel.Security)
         .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
 
@@ -319,7 +321,7 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
     if (request.isLink) {
       val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
       b.entry("requestBody", specCtx.ref(_, refUrl, request))
-    } else {
+    } else if (request.payloads.nonEmpty) {
       val partEmitter: Oas3RequestBodyPartEmitter = Oas3RequestBodyPartEmitter(request, ordering, references)
       if (partEmitter.emitters.nonEmpty)
         b.entry("requestBody", partEmitter.emit(_))

@@ -1,0 +1,48 @@
+swagger: "2.0"
+info:
+  title: sample raml
+  version: v1
+paths:
+  /test:
+    post:
+      consumes:
+        - multipart/form-data
+      parameters:
+        -
+          name: aFile
+          in: formData
+          type: file
+          x-amf-fileTypes:
+            - application/xml
+      responses:
+        "200":
+          description: ""
+  /another-test:
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        -
+          name: anotherFile
+          in: formData
+          type: file
+          x-amf-fileTypes:
+            - application/pdf
+      responses:
+        "200":
+          description: ""
+  /just-file-test:
+    post:
+      consumes:
+        - multipart/form-data
+        - application/x-www-form-urlencoded
+      parameters:
+        -
+          name: generated
+          in: formData
+          type: file
+          x-amf-fileTypes:
+            - application/xml
+      responses:
+        "200":
+          description: ""

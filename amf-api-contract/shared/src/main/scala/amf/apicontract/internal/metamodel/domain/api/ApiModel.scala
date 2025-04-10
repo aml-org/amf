@@ -101,6 +101,16 @@ trait ApiModel
     ModelDoc(ModelVocabularies.Security, "security", "Textual indication of the kind of security scheme used")
   )
 
+  val DefaultSchema = Field(
+    Str,
+    ApiContract + "defaultSchema",
+    ModelDoc(
+      ModelVocabularies.ApiContract,
+      "defaultSchema",
+      "The default value for the $schema keyword within Schema Objects"
+    )
+  )
+
   override val `type`: List[ValueType] =
     ApiContract + "API" :: Document + "RootDomainElement" :: DomainElementModel.`type`
 
@@ -121,7 +131,8 @@ trait ApiModel
       EndPoints,
       Webhooks,
       Security,
-      Tags
+      Tags,
+      DefaultSchema
     ) ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

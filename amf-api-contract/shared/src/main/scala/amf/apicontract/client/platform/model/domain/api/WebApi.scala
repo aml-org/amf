@@ -109,8 +109,15 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends A
     this
   }
 
+  /** Set tags of this WebApi. */
   override def withTags(tags: ClientList[Tag]): this.type = {
     _internal.withTags(tags.asInternal)
+    this
+  }
+
+  /** Set default schema of this WebApi. */
+  override def withDefaultSchema(schema: String): this.type = {
+    _internal.withDefaultSchema(schema)
     this
   }
 }

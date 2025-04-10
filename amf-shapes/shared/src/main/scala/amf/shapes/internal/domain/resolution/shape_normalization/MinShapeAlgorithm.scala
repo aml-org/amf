@@ -1113,10 +1113,8 @@ private[resolution] class MinShapeAlgorithm()(implicit val resolver: ShapeNormal
   }
 
   private def shouldComputeInheritanceForUnionNodeShapeMembers(child: Shape, parent: UnionShape): Boolean = {
-    lazy val childFields = Seq(
-      NodeShapeModel.Properties
-    )
-
+    lazy val excludedFields = Seq(NodeShapeModel.Closed)
+    lazy val childFields    = NodeShapeModel.specificFields.filterNot(excludedFields.contains)
     areAllOfType[NodeShape](parent.anyOf) && existsSome(child, childFields)
   }
 

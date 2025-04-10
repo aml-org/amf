@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: "test API"
+version: "1.0"
+
+/test:
+  post:
+    body:
+      multipart/form-data:
+        type: object
+        properties:
+          file:
+            type: file
+          digitalID:
+            type: object
+            properties:
+              aProp:
+                type: string

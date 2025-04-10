@@ -1,0 +1,19 @@
+#%RAML 1.0
+
+title: Test API
+version: 1.0.0
+
+mediaType:
+  - application/json
+
+/accounts/{accountId}:
+  get:
+    body: {}
+    responses:
+      200:
+        description: 200 OK
+        body:
+          type: string
+  uriParameters:
+    accountId?:
+      type: string

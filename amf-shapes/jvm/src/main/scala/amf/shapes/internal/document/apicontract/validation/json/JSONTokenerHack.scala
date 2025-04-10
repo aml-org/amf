@@ -13,14 +13,11 @@ class JSONTokenerHack(text: String, val nestingLimit: Long) extends JSONTokener(
 
   def parseAll(): Object = {
     val parsed = nextValueHack()
-    if (thereIsRemainingInput) throw syntaxError("There is invalid additional input  next to the last } or ]")
+    if (thereIsRemainingInput) throw syntaxError("There is invalid additional input next to the last } or ]")
     else parsed
   }
 
-  private def thereIsRemainingInput = {
-    nextClean() // dump last character
-    !end() && nextClean() != 0
-  }
+  protected def thereIsRemainingInput = !end() && nextClean() != 0
 
   override def nextValue(): Object = nextValueHack()
 
@@ -66,11 +63,11 @@ class JSONTokenerHack(text: String, val nestingLimit: Long) extends JSONTokener(
     }
   }
 
-  protected def shouldContinueParsing(newChar: Char) = newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0
+  protected def shouldContinueParsing(newChar: Char): Boolean = newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0
 
   /** numbers ending with .0 are converted to integer value. This is needed to maintain compatibility with js.
     */
-  private def hackDecimal(value: Object) =
+  private def hackDecimal(value: Object): Object =
     value match {
       case double: lang.Double      => removeRedundantDecimal(double.toString, double)
       case bd: java.math.BigDecimal => removeRedundantDecimal(bd.toString, bd)
@@ -93,4 +90,10 @@ class JSONTokenerHack(text: String, val nestingLimit: Long) extends JSONTokener(
 
 class ScalarTokenerHack(text: String, nestingLimit: Long) extends JSONTokenerHack(text, nestingLimit: Long) {
   override protected def shouldContinueParsing(newChar: Char): Boolean = newChar != 0
+
+  override protected def thereIsRemainingInput: Boolean = {
+    // don't know why but the last char is always 0 before the EOF in a scalar
+    nextClean() // dump last character
+    !end() && nextClean() != 0
+  }
 }

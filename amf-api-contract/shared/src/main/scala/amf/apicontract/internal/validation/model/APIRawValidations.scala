@@ -721,24 +721,21 @@ object APIRawValidations extends CommonValidationDefinitions {
       urlValidation(apiContract("WebAPI"), core("termsOfService")),
       AMFValidation(
         message = "'scheme' field is mandatory in http security scheme",
-        owlClass = security("HttpSettings"),
-        owlProperty = security("scheme"),
-        constraint = minCount,
-        value = "1"
+        owlClass = security("SecurityScheme"),
+        owlProperty = security("settings"),
+        constraint = shape("requiredHttpScheme")
       ),
       AMFValidation(
         message = "'name' field is mandatory in apiKey security scheme",
-        owlClass = security("ApiKeySettings"),
-        owlProperty = core("name"),
-        constraint = minCount,
-        value = "1"
+        owlClass = security("SecurityScheme"),
+        owlProperty = security("settings"),
+        constraint = shape("requiredApiKeyName")
       ),
       AMFValidation(
         message = "'in' field is mandatory in apiKey security scheme",
-        owlClass = security("ApiKeySettings"),
-        owlProperty = security("in"),
-        constraint = minCount,
-        value = "1"
+        owlClass = security("SecurityScheme"),
+        owlProperty = security("settings"),
+        constraint = shape("requiredApiKeyIn")
       ),
       AMFValidation(
         message = "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",

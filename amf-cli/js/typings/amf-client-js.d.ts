@@ -382,6 +382,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
     variables: Array<StrField>;
@@ -526,6 +528,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     mediaType: StrField;
     name: StrField;
     position: Range;
@@ -612,6 +616,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     queue: Amqp091Queue;
 
@@ -657,6 +663,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     queue: Amqp091Queue010;
 
@@ -702,6 +710,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     queue: Amqp091Queue020;
 
@@ -848,6 +858,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     messageType: StrField;
     position: Range;
 
@@ -894,6 +906,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     mandatory: BoolField;
     position: Range;
     priority: IntField;
@@ -957,6 +971,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     mandatory: BoolField;
     position: Range;
     priority: IntField;
@@ -1023,6 +1039,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     mandatory: BoolField;
     position: Range;
     priority: IntField;
@@ -1433,6 +1451,8 @@ declare module "amf-client-js" {
     isStub: BoolField;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     not: Shape;
     or: Array<Shape>;
@@ -1566,6 +1586,7 @@ declare module "amf-client-js" {
     tags: Array<Tag>;
     termsOfService: StrField;
     version: StrField;
+    defaultSchema: StrField;
 
     annotations(): Annotations;
 
@@ -1588,16 +1609,21 @@ declare module "amf-client-js" {
     withIsExternalLink(isExternalLink: boolean): DomainElement;
 
     withServer(url: string): Server;
+
+    withDefaultSchema(schema: string): this;
   }
   export class ApiKeySettings extends Settings {
     in: StrField;
     name: StrField;
+    scopes: Array<Scope>;
 
     constructor();
 
     withIn(inVal: string): this;
 
     withName(name: string): this;
+
+    withScopes(scopes: Array<Scope>): this;
   }
   export class ArrayNode implements DataNode {
     customDomainProperties: Array<DomainExtension>;
@@ -1674,6 +1700,7 @@ declare module "amf-client-js" {
     tags: Array<Tag>;
     termsOfService: StrField;
     version: StrField;
+    defaultSchema: StrField;
 
     constructor();
 
@@ -1730,6 +1757,8 @@ declare module "amf-client-js" {
     withTermsOfService(terms: string): this;
 
     withVersion(version: string): this;
+
+    withDefaultSchema(schema: string): this;
   }
   export class AvroConfiguration {
     static Avro(): AMFConfiguration;
@@ -1975,6 +2004,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
 
@@ -2128,6 +2159,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
 
@@ -2229,6 +2262,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
     repeatable: BoolField;
@@ -2444,6 +2479,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -3145,6 +3182,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     type: StrField;
 
@@ -3344,6 +3383,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     location: undefined | string;
     mediaType: StrField;
     name: StrField;
@@ -3966,6 +4007,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -4005,6 +4048,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -4044,6 +4089,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     statusCode: number;
 
@@ -4085,6 +4132,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     method: StrField;
     position: Range;
     query: Shape;
@@ -4127,6 +4176,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     method: StrField;
     operationType: StrField;
     position: Range;
@@ -4172,6 +4223,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     method: StrField;
     position: Range;
     query: Shape;
@@ -4209,12 +4262,15 @@ declare module "amf-client-js" {
   export class HttpSettings extends Settings {
     bearerFormat: StrField;
     scheme: StrField;
+    scopes: Array<Scope>;
 
     constructor();
 
     withBearerFormat(bearerFormat: string): this;
 
     withScheme(scheme: string): this;
+
+    withScopes(scopes: Array<Scope>): this;
   }
   export class IBMMQChannelBinding implements ChannelBinding {
     destinationType: StrField;
@@ -4707,6 +4763,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     messageKey: Shape;
     position: Range;
 
@@ -4746,6 +4804,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     messageKey: Shape;
     position: Range;
 
@@ -4785,6 +4845,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     messageKey: Shape;
     schemaIdLocation: string;
     schemaIdPayloadEncoding: string;
@@ -4835,6 +4897,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -4875,6 +4939,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     schemaRegistryUrl: string;
     schemaRegistryVendor: string;
@@ -4917,6 +4983,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     topic: string;
     partitions: number;
@@ -4962,6 +5030,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     topic: string;
     partitions: number;
@@ -5007,6 +5077,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     topic: string;
     partitions: number;
@@ -5307,6 +5379,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     payloads: Array<Payload>;
     position: Range;
@@ -5385,6 +5459,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
 
@@ -5486,6 +5562,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -5522,6 +5600,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -5558,6 +5638,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     payloadFormatIndicator: IntField;
     correlationData: Shape;
@@ -5609,6 +5691,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     qos: IntField;
     retain: BoolField;
@@ -5651,6 +5735,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     qos: IntField;
     retain: BoolField;
@@ -5693,6 +5779,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     qos: IntField;
     retain: BoolField;
@@ -5745,6 +5833,8 @@ declare module "amf-client-js" {
     lastWill: MqttServerLastWill;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -5793,6 +5883,8 @@ declare module "amf-client-js" {
     lastWill: MqttServerLastWill;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -5841,6 +5933,8 @@ declare module "amf-client-js" {
     lastWill: MqttServerLastWill;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     sessionExpiryInterval: number;
     sessionExpiryIntervalSchema: Shape;
@@ -5936,6 +6030,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     mergePolicy: StrField;
     name: StrField;
     nodetypeMapping: StrField;
@@ -6169,6 +6265,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     operationId: StrField;
     request: Request;
     requests: Array<Request>;
@@ -6246,6 +6344,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
 
@@ -6834,6 +6934,8 @@ declare module "amf-client-js" {
     isStub: BoolField;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     maxCount: IntField;
     minCount: IntField;
     name: StrField;
@@ -7164,6 +7266,8 @@ declare module "amf-client-js" {
     isStub: BoolField;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     not: Shape;
     or: Array<Shape>;
@@ -7369,6 +7473,8 @@ declare module "amf-client-js" {
   }
   export class ResourceType extends AbstractDeclaration {
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
 
     constructor();
 
@@ -7620,6 +7726,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
     queryParameters: Array<Parameter>;
@@ -7889,6 +7997,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
     position: Range;
 
@@ -8577,6 +8687,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     msgVpn: StrField;
     clientName: StrField;
     position: Range;
@@ -8620,6 +8732,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     constructor();
@@ -8657,6 +8771,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     clientName: StrField;
     position: Range;
 
@@ -8874,6 +8990,8 @@ declare module "amf-client-js" {
   }
   export class Trait extends AbstractDeclaration {
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
 
     constructor();
 
@@ -8933,6 +9051,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     name: StrField;
 
     constructor();
@@ -9178,6 +9298,7 @@ declare module "amf-client-js" {
     tags: Array<Tag>;
     termsOfService: StrField;
     version: StrField;
+    defaultSchema: StrField;
 
     constructor();
 
@@ -9234,6 +9355,8 @@ declare module "amf-client-js" {
     withTermsOfService(terms: string): this;
 
     withVersion(version: string): this;
+
+    withDefaultSchema(schema: string): this;
   }
   export class WebSocketsChannelBinding implements ChannelBinding {
     customDomainProperties: Array<DomainExtension>;
@@ -9244,6 +9367,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: undefined | DomainElement;
+    refSummary: StrField;
+    refDescription: StrField;
     method: StrField;
     position: Range;
     query: Shape;

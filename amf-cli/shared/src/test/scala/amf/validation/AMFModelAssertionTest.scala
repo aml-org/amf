@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.model.domain.security.OAuth2Settings
+import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, SecurityScheme}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
@@ -28,6 +28,8 @@ import org.yaml.model.{YNodePlain, YScalar}
 
 import scala.concurrent.Future
 
+/** Tests for a specific field/value/node in an API. Uses [[amf.testing.BaseUnitUtils]] to quickly get nodes.
+  */
 class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
@@ -41,6 +43,8 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
   val oasClient: AMFBaseUnitClient           = oasConfig.baseUnitClient()
   val oas31Config: AMFConfiguration          = OASConfiguration.OAS31().withRenderOptions(ro)
   val oas31Client: AMFBaseUnitClient         = oas31Config.baseUnitClient()
+  val oas2Config: AMFConfiguration           = OASConfiguration.OAS20().withRenderOptions(ro)
+  val oas2Client: AMFBaseUnitClient          = oas2Config.baseUnitClient()
   val oasComponentsConfig: AMFConfiguration  = OASConfiguration.OAS30Component().withRenderOptions(ro)
   val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
   val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
@@ -748,6 +752,15 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
     }
   }
 
+  // W-17128842
+  test("test oas multiline text with escape character") {
+    val api = s"$basePath/oas3/fr_atmnetworkoperations-summarized.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      parseResult.results.size shouldBe 0
+      parseResult.conforms shouldBe true
+    }
+  }
+
   // bug ALS
   test("avro record empty `type` field should have lexical information") {
     val api = s"$basePath/avro/record-empty-type.avsc"
@@ -805,6 +818,57 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       ).forall(_.contains("should override the referenced one"))
 
       allAreBeingOverridden shouldBe true
+    }
+  }
+
+  // ruleset test W-16070725 W-17562799
+  test("test query and header parameters in OAS3") {
+    val api = s"$basePath/oas3/parameters.yaml"
+    modelAssertion(api) { bu =>
+      val request      = getFirstRequest(bu)
+      val queryParam   = request.queryParameters.head
+      val header       = request.headers.head
+      val queryParamEx = queryParam.examples
+      val headerEx     = header.examples
+      (queryParamEx.isEmpty && headerEx.isEmpty) shouldBe true
+      // both should have the example in the schema, not the parameter
+      val queryParamSchemaEx = queryParam.schema.asInstanceOf[ScalarShape].examples
+      val headerSchemaEx     = header.schema.asInstanceOf[ScalarShape].examples
+      (queryParamSchemaEx.nonEmpty && headerSchemaEx.nonEmpty) shouldBe true
+    }
+  }
+
+  // W-16530856
+  test("RAML with oauth_2_0 security should correctly transform to OAS 2.0") {
+    val api = s"$basePath/raml/oauth2.raml"
+    ramlClient.parse(api) flatMap { parseResult =>
+      val transformResult = oas2Client.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val oas2Oauth2 = getDeclarations(transformResult.baseUnit).head
+        .asInstanceOf[SecurityScheme]
+        .settings
+        .asInstanceOf[OAuth2Settings]
+      val oas2Flow = oas2Oauth2.flows.head
+      oas2Flow.flow.value() shouldBe "implicit"
+      oas2Flow.scopes.nonEmpty shouldBe true
+
+      val oas3transformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val oas3Oauth2 = getDeclarations(oas3transformResult.baseUnit).head
+        .asInstanceOf[SecurityScheme]
+        .settings
+        .asInstanceOf[OAuth2Settings]
+      val oas3Flow = oas3Oauth2.flows.head
+      oas3Flow.flow.value() shouldBe "implicit"
+      oas3Flow.scopes.nonEmpty shouldBe true
+    }
+  }
+
+  // sandra test
+  test("sandra test in OAS3") {
+    val api = s"$basePath/oas3/sandra-test.yaml"
+    oasClient.parse(api) flatMap { parseResult =>
+      val request        = getFirstRequest(parseResult.baseUnit)
+      val requestLexical = request.annotations.lexical()
+      requestLexical.equals(PositionRange.NONE) shouldBe false
     }
   }
 }

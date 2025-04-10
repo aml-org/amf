@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: OAS 3.1 with all new fields
+  version: 1.0.0
+  summary: summary of the API
+  license:
+    name: Apache 2.0
+    identifier: Apache-2.0
+webhooks:
+  /newPet:
+    post:
+      requestBody:
+        description: Information about a new pet in the system
+        content:
+          application/json:
+            schema: {}
+      responses:
+        "200":
+          description: Return a 200 status to indicate that the data was received successfully
+paths:
+  /users:
+    post:
+      operationId: getUsers
+      responses:
+        "200":
+          $ref: "#/components/responses/usersListResponse"
+          description: this response description should override the referenced one
+      requestBody:
+        $ref: "#/components/requestBodies/createUserRequest"
+        description: this request description should override the referenced one
+security:
+  -
+    openIdConnect:
+      - some
+  -
+    apikey:
+      - something
+      - other thing
+  -
+    http:
+      - something else
+components:
+  schemas:
+    oneOfSchema:
+      discriminator:
+        x-custom-ann-test: custom ann value
+        x-custom-ann: custom ann value
+        propertyName: a
+      oneOf:
+        -
+          type: object
+          properties:
+            a:
+              type: string
+        -
+          type: object
+          properties:
+            b:
+              type: string
+      type: object
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+  responses:
+    usersListResponse:
+      description: this response description should be overridden
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/User"
+          examples:
+            usersExample:
+              $ref: "#/components/examples/usersList"
+              summary: this example summary should override the referenced one
+              description: this example description should override the referenced one
+  requestBodies:
+    createUserRequest:
+      description: this request description should be overridden
+      content:
+        application/json:
+          schema:
+            type: string
+  examples:
+    usersList:
+      summary: this example summary should be overridden
+      description: this example description should be overridden
+      value:
+        -
+          id: "1"
+          name: Alice
+          email: alice@example.com
+        -
+          id: "2"
+          name: Bob
+          email: bob@example.com
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: someApiKeyName
+      in: header
+    http:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    openIdConnect:
+      type: openIdConnect
+      description: openIdConnect security scheme
+      openIdConnectUrl: https://a.ml/

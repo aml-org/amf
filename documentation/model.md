@@ -705,6 +705,7 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | name | string | - |  | `http://a.ml/vocabularies/core#name` |
  | in | string | - |  | `http://a.ml/vocabularies/security#in` |
+ | scope | [[Scope](#scope)] | false |  | `http://a.ml/vocabularies/security#scope` |
  | additionalProperties | [DataNode](#datanode) | - |  | `http://a.ml/vocabularies/security#additionalProperties` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
@@ -808,6 +809,7 @@ Types:
  | webhooks | [[EndPoint](#endpoint)] | false | Webhooks defined in the API | `http://a.ml/vocabularies/apiContract#webhooks` |
  | security | [[SecurityRequirement](#securityrequirement)] | false | Textual indication of the kind of security scheme used | `http://a.ml/vocabularies/security#security` |
  | tag | [[Tag](#tag)] | false | Additionally custom tagged information | `http://a.ml/vocabularies/apiContract#tag` |
+ | defaultSchema | string | - | The default value for the $schema keyword within Schema Objects | `http://a.ml/vocabularies/apiContract#defaultSchema` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## AvroSchemaDocument
@@ -857,6 +859,7 @@ Types:
  | webhooks | [[EndPoint](#endpoint)] | false | Webhooks defined in the API | `http://a.ml/vocabularies/apiContract#webhooks` |
  | security | [[SecurityRequirement](#securityrequirement)] | false | Textual indication of the kind of security scheme used | `http://a.ml/vocabularies/security#security` |
  | tag | [[Tag](#tag)] | false | Additionally custom tagged information | `http://a.ml/vocabularies/apiContract#tag` |
+ | defaultSchema | string | - | The default value for the $schema keyword within Schema Objects | `http://a.ml/vocabularies/apiContract#defaultSchema` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## BaseIRI
@@ -1976,6 +1979,7 @@ Types:
  | ------ | ------ | ------ | ------ | ------ |
  | scheme | string | - |  | `http://a.ml/vocabularies/security#scheme` |
  | bearerFormat | string | - |  | `http://a.ml/vocabularies/security#bearerFormat` |
+ | scope | [[Scope](#scope)] | false |  | `http://a.ml/vocabularies/security#scope` |
  | additionalProperties | [DataNode](#datanode) | - |  | `http://a.ml/vocabularies/security#additionalProperties` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
@@ -4470,6 +4474,7 @@ Types:
  | webhooks | [[EndPoint](#endpoint)] | false | Webhooks defined in the API | `http://a.ml/vocabularies/apiContract#webhooks` |
  | security | [[SecurityRequirement](#securityrequirement)] | false | Textual indication of the kind of security scheme used | `http://a.ml/vocabularies/security#security` |
  | tag | [[Tag](#tag)] | false | Additionally custom tagged information | `http://a.ml/vocabularies/apiContract#tag` |
+ | defaultSchema | string | - | The default value for the $schema keyword within Schema Objects | `http://a.ml/vocabularies/apiContract#defaultSchema` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
 ## WebSocketsChannelBinding

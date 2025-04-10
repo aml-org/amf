@@ -92,156 +92,10 @@
                           {
                             "@id": "#10",
                             "@type": [
-                              "shacl:NodeShape",
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
-                            ],
-                            "shacl:closed": [
-                              {
-                                "@value": false
-                              }
-                            ],
-                            "shacl:property": [
-                              {
-                                "@id": "#11",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#status"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#12",
-                                    "@type": [
-                                      "raml-shapes:ScalarShape",
-                                      "raml-shapes:AnyShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                      }
-                                    ],
-                                    "shacl:pattern": [
-                                      {
-                                        "@value": "^[1-5][0-9][0-9]$"
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "status"
-                                      }
-                                    ],
-                                    "core:description": [
-                                      {
-                                        "@value": "HTTP Response code"
-                                      }
-                                    ],
-                                    "apiContract:examples": [
-                                      {
-                                        "@id": "#13",
-                                        "@type": [
-                                          "apiContract:Example",
-                                          "doc:DomainElement"
-                                        ],
-                                        "doc:strict": [
-                                          {
-                                            "@value": true
-                                          }
-                                        ],
-                                        "doc:structuredValue": [
-                                          {
-                                            "@id": "#14",
-                                            "@type": [
-                                              "data:Scalar",
-                                              "data:Node",
-                                              "doc:DomainElement"
-                                            ],
-                                            "data:value": [
-                                              {
-                                                "@value": "400"
-                                              }
-                                            ],
-                                            "shacl:datatype": [
-                                              {
-                                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                              }
-                                            ],
-                                            "core:name": [
-                                              {
-                                                "@value": "scalar_1"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "synthesized-field": {
-                                                "core:name": "true",
-                                                "shacl:datatype": "true"
-                                              },
-                                              "lexical": {
-                                                "#14": "[(9,17)-(9,22)]"
-                                              }
-                                            }
-                                          }
-                                        ],
-                                        "doc:raw": [
-                                          {
-                                            "@value": "400"
-                                          }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "doc:raw": "true",
-                                            "doc:strict": "true"
-                                          },
-                                          "lexical": {
-                                            "#13": "[(9,17)-(9,22)]"
-                                          }
-                                        }
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "apiContract:examples": "[(9,8)-(11,0)]",
-                                        "shacl:pattern": "[(8,8)-(9,0)]",
-                                        "#12": "[(5,6)-(11,0)]",
-                                        "shacl:datatype": "[(7,8)-(8,0)]",
-                                        "core:description": "[(6,8)-(7,0)]"
-                                      },
-                                      "type-property-lexical-info": {
-                                        "#12": "[(7,8)-(7,12)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 0
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "status"
-                                  }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:minCount": "true"
-                                  },
-                                  "lexical": {
-                                    "#11": "[(5,6)-(11,0)]"
-                                  }
-                                }
-                              }
                             ],
                             "shacl:name": [
                               {
@@ -253,22 +107,289 @@
                                 "@value": "The response schema"
                               }
                             ],
+                            "shacl:and": [
+                              {
+                                "@id": "#11",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:closed": [
+                                  {
+                                    "@value": false
+                                  }
+                                ],
+                                "shacl:property": [
+                                  {
+                                    "@id": "#12",
+                                    "@type": [
+                                      "shacl:PropertyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:path": [
+                                      {
+                                        "@id": "http://a.ml/vocabularies/data#message"
+                                      }
+                                    ],
+                                    "raml-shapes:range": [
+                                      {
+                                        "@id": "#13",
+                                        "@type": [
+                                          "raml-shapes:ScalarShape",
+                                          "raml-shapes:AnyShape",
+                                          "shacl:Shape",
+                                          "raml-shapes:Shape",
+                                          "doc:DomainElement"
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "shacl:name": [
+                                          {
+                                            "@value": "message"
+                                          }
+                                        ],
+                                        "core:description": [
+                                          {
+                                            "@value": "HTTP message"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "core:description": "[(6,8)-(7,0)]",
+                                            "#13": "[(5,6)-(9,0)]",
+                                            "shacl:datatype": "[(7,8)-(9,0)]"
+                                          },
+                                          "type-property-lexical-info": {
+                                            "#13": "[(7,8)-(7,12)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "shacl:minCount": [
+                                      {
+                                        "@value": 0
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "message"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "synthesized-field": {
+                                        "shacl:minCount": "true"
+                                      },
+                                      "lexical": {
+                                        "#12": "[(5,6)-(9,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "NestedResponseSchema"
+                                  }
+                                ],
+                                "core:description": [
+                                  {
+                                    "@value": "A nested response schema"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:closed": "true"
+                                  },
+                                  "lexical": {
+                                    "core:description": "[(3,4)-(4,0)]",
+                                    "#11": "[(2,2)-(9,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#14",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:closed": [
+                                  {
+                                    "@value": false
+                                  }
+                                ],
+                                "shacl:property": [
+                                  {
+                                    "@id": "#15",
+                                    "@type": [
+                                      "shacl:PropertyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:path": [
+                                      {
+                                        "@id": "http://a.ml/vocabularies/data#status"
+                                      }
+                                    ],
+                                    "raml-shapes:range": [
+                                      {
+                                        "@id": "#16",
+                                        "@type": [
+                                          "raml-shapes:ScalarShape",
+                                          "raml-shapes:AnyShape",
+                                          "shacl:Shape",
+                                          "raml-shapes:Shape",
+                                          "doc:DomainElement"
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "shacl:pattern": [
+                                          {
+                                            "@value": "^[1-5][0-9][0-9]$"
+                                          }
+                                        ],
+                                        "shacl:name": [
+                                          {
+                                            "@value": "status"
+                                          }
+                                        ],
+                                        "core:description": [
+                                          {
+                                            "@value": "HTTP Response code"
+                                          }
+                                        ],
+                                        "apiContract:examples": [
+                                          {
+                                            "@id": "#17",
+                                            "@type": [
+                                              "apiContract:Example",
+                                              "doc:DomainElement"
+                                            ],
+                                            "doc:strict": [
+                                              {
+                                                "@value": true
+                                              }
+                                            ],
+                                            "doc:structuredValue": [
+                                              {
+                                                "@id": "#18",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "400"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "scalar_1"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
+                                                  "lexical": {
+                                                    "#18": "[(18,21)-(18,26)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "doc:raw": [
+                                              {
+                                                "@value": "400"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "synthesized-field": {
+                                                "doc:raw": "true",
+                                                "doc:strict": "true"
+                                              },
+                                              "lexical": {
+                                                "#17": "[(18,21)-(18,26)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "apiContract:examples": "[(18,12)-(20,0)]",
+                                            "shacl:pattern": "[(17,12)-(18,0)]",
+                                            "#16": "[(14,10)-(20,0)]",
+                                            "shacl:datatype": "[(16,12)-(17,0)]",
+                                            "core:description": "[(15,12)-(16,0)]"
+                                          },
+                                          "type-property-lexical-info": {
+                                            "#16": "[(16,12)-(16,16)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "shacl:minCount": [
+                                      {
+                                        "@value": 0
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "status"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "synthesized-field": {
+                                        "shacl:minCount": "true"
+                                      },
+                                      "lexical": {
+                                        "#15": "[(14,10)-(20,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "item1"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:closed": "true"
+                                  },
+                                  "lexical": {
+                                    "#14": "[(13,8)-(20,0)]"
+                                  }
+                                }
+                              }
+                            ],
                             "smaps": {
-                              "synthesized-field": {
-                                "shacl:closed": "true"
+                              "lexical": {
+                                "shacl:and": "[(11,4)-(20,0)]",
+                                "#10": "[(9,2)-(20,0)]",
+                                "core:description": "[(10,4)-(11,0)]"
                               },
                               "auto-generated-name": {
                                 "#10": ""
-                              },
-                              "resolved-link-target": {
-                                "#10": "amf://id#15"
-                              },
-                              "resolved-link": {
-                                "#10": "amf://id#10"
-                              },
-                              "lexical": {
-                                "core:description": "[(3,4)-(4,0)]",
-                                "#10": "[(2,2)-(11,0)]"
                               }
                             }
                           }
@@ -278,15 +399,15 @@
                             "#9": "true"
                           },
                           "lexical": {
-                            "raml-shapes:schema": "[(14,4)-(15,42)]",
-                            "#9": "[(2,2)-(11,0)]"
+                            "raml-shapes:schema": "[(23,4)-(27,28)]",
+                            "#9": "[(9,2)-(20,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "core:description": "[(13,4)-(14,0)]",
+                        "core:description": "[(22,4)-(23,0)]",
                         "#8": "[(10,8)-(11,54)]",
                         "core:name": "[(10,8)-(10,13)]"
                       }
@@ -364,7 +485,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "definitions:\n  ResponseSchema:\n    description: The response schema\n    properties:\n      status:\n        description: 'HTTP Response code'\n        type: string\n        pattern: '^[1-5][0-9][0-9]$'\n        example: '400'\n\nresponses:\n  403Response:\n    description: a description\n    schema:\n      $ref: '#/definitions/ResponseSchema'"
+                "@value": "definitions:\n  NestedResponseSchema:\n    description: A nested response schema\n    properties:\n      message:\n        description: 'HTTP message'\n        type: string\n\n  ResponseSchema:\n    description: The response schema\n    allOf:\n      - \"$ref\": \"#/definitions/NestedResponseSchema\"\n      - properties:\n          status:\n            description: 'HTTP Response code'\n            type: string\n            pattern: '^[1-5][0-9][0-9]$'\n            example: '400'\n\nresponses:\n  403Response:\n    description: a description\n    schema:\n      $ref: '#/definitions/ResponseSchema'\n      example:\n        status: '400'\n        message: 'A message'"
               }
             ],
             "core:mediaType": [
@@ -374,7 +495,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#3": "[(1,0)-(15,42)]"
+                "#3": "[(1,0)-(27,28)]"
               }
             }
           }

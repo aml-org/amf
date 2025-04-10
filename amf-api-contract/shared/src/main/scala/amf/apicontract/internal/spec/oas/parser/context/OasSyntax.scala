@@ -8,6 +8,7 @@ object Oas31Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] =
     add(
       Oas3Syntax.nodes,
+      "webApi" -> Set("webhooks"),
       "license" -> Set("identifier"),
       "info"    -> Set("summary")
     )

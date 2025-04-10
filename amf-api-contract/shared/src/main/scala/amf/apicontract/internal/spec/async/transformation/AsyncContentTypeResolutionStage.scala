@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.async.transformation
 
+import amf.apicontract.client.scala.model.domain.Message
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -28,7 +29,14 @@ class AsyncContentTypeResolutionStage() extends TransformationStep() {
   }
 
   private def getPayloads(api: Api) = {
-    val operations = api.endPoints.flatMap(_.operations)
-    operations.flatMap(_.requests).flatMap(_.payloads) ++ operations.flatMap(_.responses).flatMap(_.payloads)
+    val operations      = api.endPoints.flatMap(_.operations)
+    val requestPayloads = operations.flatMap(_.requests).flatMap(_.payloads)
+    // added types to flatMap to avoid casting a Message to a Response to get .payloads()
+    val responsePayloads = operations.flatMap { op =>
+      op.responses.flatMap { m: Message =>
+        m.payloads
+      }
+    }
+    requestPayloads ++ responsePayloads
   }
 }

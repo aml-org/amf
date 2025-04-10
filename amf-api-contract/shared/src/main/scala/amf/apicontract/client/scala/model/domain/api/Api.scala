@@ -33,6 +33,7 @@ abstract class Api(fields: Fields, annotations: Annotations)
   def endPoints: Seq[EndPoint]                   = fields.field(EndPoints)
   def servers: Seq[Server]                       = fields.field(Servers)
   def tags: Seq[Tag]                             = fields(Tags)
+  def defaultSchema: StrField                    = fields(DefaultSchema)
 
   def withDescription(description: String): this.type                  = set(Description, description)
   def withIdentifier(identifier: String): this.type                    = set(Identifier, identifier)
@@ -47,6 +48,7 @@ abstract class Api(fields: Fields, annotations: Annotations)
   def withLicense(license: License): this.type                         = set(WebApiLicense, license)
   def withDocumentations(documentations: Seq[CreativeWork]): this.type = setArray(Documentations, documentations)
   def withServers(servers: Seq[Server]): this.type                     = setArray(Servers, servers)
+  def withDefaultSchema(schema: String): this.type                     = set(DefaultSchema, schema)
 
   def withTags(tags: Seq[Tag]): this.type = setArray(Tags, tags)
 

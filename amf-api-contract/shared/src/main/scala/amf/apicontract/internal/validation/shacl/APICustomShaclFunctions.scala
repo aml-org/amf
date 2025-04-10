@@ -4,24 +4,16 @@ import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQChannelBinding, IBMMQMessageBinding}
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{HasTopicConfiguration, KafkaChannelBinding040}
-import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, HttpSettings, OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.metamodel.domain.security.{
-  OAuth2SettingsModel,
-  OpenIdConnectSettingsModel,
-  ParametrizedSecuritySchemeModel,
-  SecuritySchemeModel
-}
+import amf.apicontract.internal.metamodel.domain.security.{ApiKeySettingsModel, HttpSettingsModel, OAuth2SettingsModel, OpenIdConnectSettingsModel, ParametrizedSecuritySchemeModel, SecuritySchemeModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.apicontract.internal.validation.shacl.graphql._
 import amf.apicontract.internal.validation.shacl.graphql.values.ValueValidator
-import amf.apicontract.internal.validation.shacl.oas.{
-  DuplicatedCommonEndpointPathValidation,
-  DuplicatedOas3EndpointPathValidation
-}
+import amf.apicontract.internal.validation.shacl.oas.{DuplicatedCommonEndpointPathValidation, DuplicatedOas3EndpointPathValidation}
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.{LexicalInformation, SynthesizedField}
@@ -344,6 +336,36 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             _ <- element.fields.getValueAsOption(ExampleModel.ExternalValue)
           } yield {
             validate(None)
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "requiredHttpScheme"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+            case HttpSettings(fields, _) =>
+              if (!fields.exists(HttpSettingsModel.Scheme)) validate(None)
+            case _ =>
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "requiredApiKeyName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+            case ApiKeySettings(fields, _) =>
+              if (!fields.exists(ApiKeySettingsModel.Name)) validate(None)
+            case _ =>
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "requiredApiKeyIn"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+            case ApiKeySettings(fields, _) =>
+              if (!fields.exists(ApiKeySettingsModel.In)) validate(None)
+            case _ =>
           }
         }
       },

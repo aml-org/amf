@@ -5,7 +5,7 @@ import amf.apicontract.internal.annotations.EmptyPayload
 import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel}
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.core.client.scala.model.domain.{AmfArray, AmfObject, DomainElement}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, Lazy}

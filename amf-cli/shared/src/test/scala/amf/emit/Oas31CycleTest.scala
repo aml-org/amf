@@ -24,6 +24,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 info summary field in JSON",
       "oas-31-info-summary.json",
       "oas-31-info-summary.dumped.json"
+    ),
+    FixtureData(
+      "OAS 3.1 full in JSON",
+      "oas-31-full.json",
+      "oas-31-full.dumped.json"
     )
   )
 
@@ -58,6 +63,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "OAS 3.1 info summary field in YAML",
       "oas-31-info-summary.yaml",
       "oas-31-info-summary.dumped.yaml"
+    ),
+    FixtureData(
+      "OAS 3.1 full in YAML",
+      "oas-31-full.yaml",
+      "oas-31-full.dumped.yaml"
     )
   )
 
@@ -65,5 +75,9 @@ class Oas31CycleTest extends FunSuiteCycleTests {
     test(s"${f.name} - oas31 to oas31") {
       cycle(f.apiFrom, f.apiTo, Oas31YamlHint, Oas31YamlHint)
     }
+  }
+
+  test(s"OAS 3.1 full to jsonLD") {
+    cycle("oas-31-full.yaml", "oas-31-full.jsonld", Oas31YamlHint, AmfJsonHint)
   }
 }

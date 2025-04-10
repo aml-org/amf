@@ -1,15 +1,27 @@
 definitions:
+  NestedResponseSchema:
+    description: A nested response schema
+    properties:
+      message:
+        description: 'HTTP message'
+        type: string
+
   ResponseSchema:
     description: The response schema
-    properties:
-      status:
-        description: 'HTTP Response code'
-        type: string
-        pattern: '^[1-5][0-9][0-9]$'
-        example: '400'
+    allOf:
+      - "$ref": "#/definitions/NestedResponseSchema"
+      - properties:
+          status:
+            description: 'HTTP Response code'
+            type: string
+            pattern: '^[1-5][0-9][0-9]$'
+            example: '400'
 
 responses:
   403Response:
     description: a description
     schema:
       $ref: '#/definitions/ResponseSchema'
+      example:
+        status: '400'
+        message: 'A message'

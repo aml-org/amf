@@ -1,13 +1,12 @@
-package amf.apicontract.internal.transformation.compatibility.oas3
+package amf.apicontract.internal.transformation.compatibility.oas
 
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
-import amf.shapes.client.scala.model.domain.ArrayShape
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape}
 
-class AddItemsToArrayType() extends TransformationStep {
+class AddItemsToArrayType extends TransformationStep {
   override def transform(
       model: BaseUnit,
       errorHandler: AMFErrorHandler,
