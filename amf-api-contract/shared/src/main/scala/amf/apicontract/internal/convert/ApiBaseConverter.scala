@@ -613,7 +613,7 @@ trait SolaceServerBindingConverter extends PlatformSecrets {
 }
 trait SolaceServerBinding010Converter extends PlatformSecrets {
   implicit object SolaceServerBinding010Matcher
-    extends BidirectionalMatcher[SolaceServerBinding010, domain.bindings.solace.SolaceServerBinding010] {
+      extends BidirectionalMatcher[SolaceServerBinding010, domain.bindings.solace.SolaceServerBinding010] {
     override def asClient(from: SolaceServerBinding010): domain.bindings.solace.SolaceServerBinding010 =
       platform.wrap[domain.bindings.solace.SolaceServerBinding010](from)
     override def asInternal(from: domain.bindings.solace.SolaceServerBinding010): SolaceServerBinding010 =
@@ -622,7 +622,7 @@ trait SolaceServerBinding010Converter extends PlatformSecrets {
 }
 trait SolaceServerBinding040Converter extends PlatformSecrets {
   implicit object SolaceServerBinding040Matcher
-    extends BidirectionalMatcher[SolaceServerBinding040, domain.bindings.solace.SolaceServerBinding040] {
+      extends BidirectionalMatcher[SolaceServerBinding040, domain.bindings.solace.SolaceServerBinding040] {
     override def asClient(from: SolaceServerBinding040): domain.bindings.solace.SolaceServerBinding040 =
       platform.wrap[domain.bindings.solace.SolaceServerBinding040](from)
     override def asInternal(from: domain.bindings.solace.SolaceServerBinding040): SolaceServerBinding040 =
@@ -679,10 +679,10 @@ trait SolaceOperationBinding030Converter extends PlatformSecrets {
 }
 trait SolaceOperationBinding040Converter extends PlatformSecrets {
   implicit object SolaceOperationBinding040Matcher
-    extends BidirectionalMatcher[
-      SolaceOperationBinding040,
-      domain.bindings.solace.SolaceOperationBinding040
-    ] {
+      extends BidirectionalMatcher[
+        SolaceOperationBinding040,
+        domain.bindings.solace.SolaceOperationBinding040
+      ] {
     override def asClient(from: SolaceOperationBinding040): domain.bindings.solace.SolaceOperationBinding040 =
       platform.wrap[domain.bindings.solace.SolaceOperationBinding040](from)
     override def asInternal(from: domain.bindings.solace.SolaceOperationBinding040): SolaceOperationBinding040 =
@@ -738,10 +738,10 @@ trait SolaceOperationDestination030Converter extends PlatformSecrets {
 }
 trait SolaceOperationDestination040Converter extends PlatformSecrets {
   implicit object SolaceOperationDestination040Matcher
-    extends BidirectionalMatcher[
-      SolaceOperationDestination040,
-      domain.bindings.solace.SolaceOperationDestination040
-    ] {
+      extends BidirectionalMatcher[
+        SolaceOperationDestination040,
+        domain.bindings.solace.SolaceOperationDestination040
+      ] {
     override def asClient(from: SolaceOperationDestination040): domain.bindings.solace.SolaceOperationDestination040 =
       platform.wrap[domain.bindings.solace.SolaceOperationDestination040](from)
     override def asInternal(from: domain.bindings.solace.SolaceOperationDestination040): SolaceOperationDestination040 =
@@ -1214,11 +1214,19 @@ trait SettingsConverter extends PlatformSecrets {
     override def asClient(from: HttpSettings): domain.security.HttpSettings   = domain.security.HttpSettings(from)
     override def asInternal(from: domain.security.HttpSettings): HttpSettings = from._internal
   }
+
   implicit object OpenIdConnectSettingsMatcher
       extends BidirectionalMatcher[OpenIdConnectSettings, domain.security.OpenIdConnectSettings] {
     override def asClient(from: OpenIdConnectSettings): domain.security.OpenIdConnectSettings =
       domain.security.OpenIdConnectSettings(from)
     override def asInternal(from: domain.security.OpenIdConnectSettings): OpenIdConnectSettings = from._internal
+  }
+
+  implicit object MutualTLSSettingsMatcher
+      extends BidirectionalMatcher[MutualTLSSettings, domain.security.MutualTLSSettings] {
+    override def asClient(from: MutualTLSSettings): domain.security.MutualTLSSettings =
+      domain.security.MutualTLSSettings(from)
+    override def asInternal(from: domain.security.MutualTLSSettings): MutualTLSSettings = from._internal
   }
 
   implicit object SettingsMatcher extends BidirectionalMatcher[Settings, domain.security.Settings] {

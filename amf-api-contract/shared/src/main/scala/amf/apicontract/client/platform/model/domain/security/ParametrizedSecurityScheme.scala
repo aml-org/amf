@@ -56,6 +56,8 @@ case class ParametrizedSecurityScheme(override private[amf] val _internal: Inter
 
   def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()
 
+  def withMutualTLSSettings(): MutualTLSSettings = _internal.withMutualTLSSettings()
+
   // If the security scheme is null and not "null" it returns true
   def hasNullSecurityScheme: Boolean = _internal.hasNullSecurityScheme
 }

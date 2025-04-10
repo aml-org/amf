@@ -39,6 +39,9 @@ security:
   -
     http:
       - something else
+  -
+    mutualTLS:
+      - other something
 components:
   schemas:
     oneOfSchema:
@@ -114,3 +117,6 @@ components:
       type: openIdConnect
       description: openIdConnect security scheme
       openIdConnectUrl: https://a.ml/
+    mutualTLS:
+      type: mutualTLS
+      description: mutualTLS security scheme

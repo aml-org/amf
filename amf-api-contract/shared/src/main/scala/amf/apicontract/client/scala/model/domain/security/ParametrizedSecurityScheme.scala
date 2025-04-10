@@ -65,6 +65,12 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     settings
   }
 
+  def withMutualTLSSettings(): MutualTLSSettings = {
+    val settings = MutualTLSSettings()
+    set(SettingsField, settings)
+    settings
+  }
+
   def hasNullSecurityScheme: Boolean = annotations.find(classOf[NullSecurity]).nonEmpty
 
   override def meta: ParametrizedSecuritySchemeModel.type = ParametrizedSecuritySchemeModel

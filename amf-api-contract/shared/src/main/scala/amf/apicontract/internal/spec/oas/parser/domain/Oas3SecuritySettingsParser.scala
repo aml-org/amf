@@ -7,7 +7,7 @@ import amf.apicontract.internal.metamodel.domain.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel
 }
-import amf.apicontract.internal.spec.common.parser.{Oas3SettingsProducers, SettingsProducers}
+import amf.apicontract.internal.spec.common.parser.{Oas31SettingsProducers, Oas3SettingsProducers, SettingsProducers}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
@@ -94,4 +94,9 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
   private def isExtensionField(field: YMapEntry) = field.key.startsWith("x-")
 
   override def vendorSpecificSettingsProducers(): SettingsProducers = Oas3SettingsProducers
+}
+
+class Oas31SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
+    extends Oas3SecuritySettingsParser(map, scheme) {
+  override def vendorSpecificSettingsProducers(): SettingsProducers = Oas31SettingsProducers
 }

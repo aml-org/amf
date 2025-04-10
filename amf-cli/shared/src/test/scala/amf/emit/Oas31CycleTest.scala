@@ -65,6 +65,11 @@ class Oas31CycleTest extends FunSuiteCycleTests {
       "oas-31-info-summary.dumped.yaml"
     ),
     FixtureData(
+      "OAS 3.1 security schemes in YAML",
+      "oas-31-security-schemes.yaml",
+      "oas-31-security-schemes.dumped.yaml"
+    ),
+    FixtureData(
       "OAS 3.1 full in YAML",
       "oas-31-full.yaml",
       "oas-31-full.dumped.yaml"
