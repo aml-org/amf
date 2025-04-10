@@ -8,10 +8,11 @@ import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class CompatibilityModelAssertionTest extends AsyncFunSuite with Matchers {
-  private val basePath = "file://amf-cli/shared/src/test/resources/compatibility/"
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  private val basePath                                     = "file://amf-cli/shared/src/test/resources/compatibility/"
 
   def validateCycle(
       path: String,
