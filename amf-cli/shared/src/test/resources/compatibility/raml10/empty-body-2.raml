@@ -1,0 +1,28 @@
+#%RAML 1.0
+
+title: Test API
+version: 1.0.0
+
+mediaType:
+  - application/json
+
+/order:
+  post:
+    description: service allows the client to create an order in SAP.
+    body:
+      application/json:
+        type: string
+    responses:
+      200:
+        description: 200 OK
+        body:
+          type: string
+  /{orderId}:
+    get:
+      description: service that retrieves the sales order from SAP
+      responses:
+        200:
+          description: 200 OK
+          body:
+            application/json:
+              type: string
