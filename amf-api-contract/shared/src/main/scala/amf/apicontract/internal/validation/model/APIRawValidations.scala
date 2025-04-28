@@ -673,12 +673,6 @@ object APIRawValidations extends CommonValidationDefinitions {
     override def validations(): Seq[AMFValidation] = result
   }
 
-  object Oas31Validations extends OasValidations {
-    private lazy val result = super.validations() ++ Oas30Validations.validations()
-
-    override def validations(): Seq[AMFValidation] = result
-  }
-
   object Oas30Validations extends OasValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
@@ -783,6 +777,20 @@ object APIRawValidations extends CommonValidationDefinitions {
 
     override def validations(): Seq[AMFValidation] = result
   }
+
+  object Oas31Validations extends OasValidations {
+    private lazy val result = super.validations() ++ Oas30Validations.validations() ++ Seq(
+      AMFValidation(
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("schemaVersion"),
+        constraint = shape("schemaVersionNotImplemented"),
+        severity = SeverityLevels.WARNING
+      ),
+    )
+
+    override def validations(): Seq[AMFValidation] = result
+  }
+
 
   object Async20Validations extends AmfProfileValidations with GenericValidations {
     private lazy val result = super.validations() ++ AsyncShapeValidations.validations() ++ Seq(

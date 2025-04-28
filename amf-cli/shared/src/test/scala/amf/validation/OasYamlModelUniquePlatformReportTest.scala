@@ -6,7 +6,7 @@ class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/model/"
-  val cyclePath: String = "file://amf-cli/shared/src/test/resources/upanddown/oas31/"
+  val cyclePath: String    = "file://amf-cli/shared/src/test/resources/upanddown/oas31/"
 
   test("Invalid recursion definition with self-reference") {
     validate("oas-definition-self-ref.yaml", Some("oas-definition-self-ref.report"))
@@ -25,7 +25,13 @@ class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("OAS 3.1 full API should be valid") {
-    validate("oas-31-full.yaml", None, configOverride = Some(OASConfiguration.OAS31()), directory = cyclePath)
+    validate(
+      "oas-31-full.yaml",
+      None,
+      configOverride = Some(OASConfiguration.OAS31()),
+      directory = cyclePath,
+      ignoreWarnings = true // It is a warning in a field which validation use is still not implemented
+    )
   }
 
 }

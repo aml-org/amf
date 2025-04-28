@@ -22,14 +22,18 @@ sealed trait AMFValidationReportGenTest extends FileAssertionTest {
     report.toString
   }
 
-  protected def handleReport(report: AMFValidationReport, golden: Option[String]): Future[Assertion] =
+  protected def handleReport(
+      report: AMFValidationReport,
+      golden: Option[String],
+      ignoreWarnings: Boolean
+  ): Future[Assertion] =
     golden match {
       case Some(_) =>
         writeTemporaryFile(golden.get)(generate(report)).flatMap(assertDifferences(_, reportsPath + golden.get))
       case None =>
         Future.successful({
           if (!report.conforms) fail("Report not conforms:\n" + report.toString)
-          if (report.results.nonEmpty)
+          if (report.results.nonEmpty && !ignoreWarnings)
             fail("Report conforms but there is results, probably some warnings\n:" + report.toString)
           succeed
         })
@@ -41,7 +45,8 @@ sealed trait AMFValidationReportGenTest extends FileAssertionTest {
       golden: Option[String] = None,
       directory: String = basePath,
       configOverride: Option[AMFConfiguration] = None,
-      hideValidationResultsIfParseNotConforms: Boolean = true
+      hideValidationResultsIfParseNotConforms: Boolean = true,
+      ignoreWarnings: Boolean = false
   ): Future[Assertion] = {
     val initialConfig = configOverride.getOrElse(APIConfiguration.API())
     for {
@@ -55,7 +60,7 @@ sealed trait AMFValidationReportGenTest extends FileAssertionTest {
         val finalReport =
           if (!parseResult.conforms && hideValidationResultsIfParseNotConforms) parseReport
           else parseReport.merge(report)
-        handleReport(finalReport, golden.map(processGolden))
+        handleReport(finalReport, golden.map(processGolden), ignoreWarnings)
       }
     } yield {
       r
@@ -85,7 +90,8 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
   protected def checkReport(
       api: String,
       golden: Option[String] = None,
-      profile: ProfileName = defaultProfile
+      profile: ProfileName = defaultProfile,
+      ignoreWarnings: Boolean = false
   ): Future[Assertion] = {
     val errorHandler = DefaultErrorHandler()
     val config = APIConfiguration
@@ -97,7 +103,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
         TransformationPipelineRunner(errorHandler, config).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults
         val report  = AMFValidationReport(model.id, profile, results)
-        handleReport(report, golden)
+        handleReport(report, golden, ignoreWarnings)
       }
     } yield {
       report
