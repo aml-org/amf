@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.context.syntax
 
+import amf.shapes.internal.spec.common.parser.SyntaxHelper._
 import amf.apicontract.internal.spec.async.parser.bindings.Bindings.Solace
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
