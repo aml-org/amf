@@ -27,6 +27,8 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   def aliases: ClientList[StrField] = _internal.aliases.asClient
   @JSExport
   def size: IntField = _internal.size
+  @JSExport
+  def schemaVersion: StrField = _internal.schemaVersion
 
   @JSExport
   def withDocumentation(documentation: CreativeWork): this.type = {
@@ -92,6 +94,12 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   @JSExport
   def withSize(size: Int): this.type = {
     _internal.withSize(size)
+    this
+  }
+
+  @JSExport
+  def withSchemaVersion(version: String): this.type = {
+    _internal.withSchemaVersion(version)
     this
   }
 

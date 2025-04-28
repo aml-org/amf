@@ -1,9 +1,14 @@
 package amf.shapes.internal.spec.oas.parser
 
+import amf.shapes.internal.spec.common.parser.SyntaxHelper._
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 object Oas31ShapeSyntax extends SpecSyntax {
-  override val nodes: Map[String, Set[String]] = Oas3ShapeSyntax.nodes
+  override val nodes: Map[String, Set[String]] =
+    add(
+      Oas3ShapeSyntax.nodes,
+      "schema" -> Set("$schema")
+    )
 }
 
 object Oas3ShapeSyntax extends SpecSyntax {

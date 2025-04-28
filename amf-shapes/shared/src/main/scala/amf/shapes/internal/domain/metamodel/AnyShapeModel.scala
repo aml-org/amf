@@ -34,6 +34,16 @@ trait AnyShapeModel
       )
     )
 
+  val SchemaVersion: Field = Field(
+    Str,
+    Shapes + "schemaVersion",
+    ModelDoc(
+      ModelVocabularies.Shapes,
+      "SchemaVersion",
+      "Determine which dialect should be used when processing the schema"
+    )
+  )
+
   override val `type`: List[ValueType] =
     List(Shapes + "AnyShape") ++ ShapeModel.`type`
 
@@ -54,6 +64,7 @@ object AnyShapeModel extends AnyShapeModel {
       Documentation,
       XMLSerialization,
       Comment,
+      SchemaVersion,
       Examples,
       AvroNamespace,
       Aliases,
