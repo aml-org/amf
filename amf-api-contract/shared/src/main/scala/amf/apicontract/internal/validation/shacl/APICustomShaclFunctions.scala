@@ -4,16 +4,32 @@ import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.bindings.anypointmq.AnypointMQMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.ibmmq.{IBMMQChannelBinding, IBMMQMessageBinding}
 import amf.apicontract.client.scala.model.domain.bindings.kafka.{HasTopicConfiguration, KafkaChannelBinding040}
-import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, HttpSettings, OAuth2Settings, OpenIdConnectSettings, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  ApiKeySettings,
+  HttpSettings,
+  OAuth2Settings,
+  OpenIdConnectSettings,
+  SecurityScheme
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.metamodel.domain.security.{ApiKeySettingsModel, HttpSettingsModel, OAuth2SettingsModel, OpenIdConnectSettingsModel, ParametrizedSecuritySchemeModel, SecuritySchemeModel}
+import amf.apicontract.internal.metamodel.domain.security.{
+  ApiKeySettingsModel,
+  HttpSettingsModel,
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  ParametrizedSecuritySchemeModel,
+  SecuritySchemeModel
+}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.apicontract.internal.validation.shacl.graphql._
 import amf.apicontract.internal.validation.shacl.graphql.values.ValueValidator
-import amf.apicontract.internal.validation.shacl.oas.{DuplicatedCommonEndpointPathValidation, DuplicatedOas3EndpointPathValidation}
+import amf.apicontract.internal.validation.shacl.oas.{
+  DuplicatedCommonEndpointPathValidation,
+  DuplicatedOas3EndpointPathValidation
+}
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.internal.annotations.{LexicalInformation, SynthesizedField}
@@ -296,6 +312,33 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             case (Some("path"), Some(false)) | (Some("path"), None) =>
               validate(None)
             case _ =>
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "pathParameterDefinitionCheck"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case webApi: WebApi =>
+              webApi.endPoints.foreach { endpoint =>
+                val path           = endpoint.path.value()
+                val pattern        = "\\{([^}]+)}".r
+                val maybePathParam = pattern.findFirstMatchIn(path).map(_.group(1))
+                maybePathParam.foreach { pathParam =>
+                  val operationsParams = endpoint.operations.flatMap(_.requests).flatMap(_.uriParameters)
+                  val allPathParams = (endpoint.parameters ++ operationsParams)
+                    .filter(_.binding.value().equals("path"))
+                    .map(_.name.value())
+                  if (!allPathParams.contains(pathParam))
+                    validate(
+                      validationInfo(
+                        RequestModel.UriParameters,
+                        s"Path parameter $pathParam must be defined in the parameters object",
+                        endpoint.annotations
+                      )
+                    )
+                }
+              }
           }
         }
       },
@@ -895,19 +938,18 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       new CustomShaclFunction {
         override val name: String = "schemaVersionNotImplemented"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          element.fields.getValueAsOption(AnyShapeModel.SchemaVersion) foreach {
-            value =>
-              if (!value.isInferred)
-                validate(
-                  validationInfo(
-                    AnyShapeModel.SchemaVersion,
-                    "$schema support in OAS 3.1 is still not implemented",
-                    element.annotations
-                  )
+          element.fields.getValueAsOption(AnyShapeModel.SchemaVersion) foreach { value =>
+            if (!value.isInferred)
+              validate(
+                validationInfo(
+                  AnyShapeModel.SchemaVersion,
+                  "$schema support in OAS 3.1 is still not implemented",
+                  element.annotations
                 )
+              )
           }
         }
-      },
+      }
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {
