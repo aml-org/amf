@@ -13,4 +13,18 @@ object SyntaxHelper {
       acc + (key -> nextSet)
     }
   }
+
+  def remove(syntax: Map[String, Set[String]], pairs: (String, Set[String])*): Map[String, Set[String]] = {
+    pairs.foldLeft(syntax) { case (acc, (key, valuesToRemove)) =>
+      acc.get(key) match {
+        case Some(existingValues) =>
+          val updatedSet = existingValues -- valuesToRemove
+          if (updatedSet.nonEmpty)
+            acc + (key -> updatedSet)
+          else
+            acc - key
+        case None => acc // key doesn't exist, nothing to remove
+      }
+    }
+  }
 }
