@@ -1466,6 +1466,7 @@ declare module "amf-client-js" {
     namespace: StrField;
     aliases: Array<StrField>;
     size: IntField;
+    schemaVersion: StrField;
 
     constructor();
 
@@ -1560,6 +1561,8 @@ declare module "amf-client-js" {
     withAliases(aliases: Array<string>): this;
 
     withSize(size: number): this;
+
+    withSchemaVersion(version: string): this;
 
     avroSchemaType(): undefined | string;
 

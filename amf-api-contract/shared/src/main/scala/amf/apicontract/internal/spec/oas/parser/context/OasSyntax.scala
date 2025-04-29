@@ -1,14 +1,14 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.apicontract.internal.spec.async.parser.context.syntax.add
 import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.SyntaxHelper._
 import amf.shapes.internal.spec.oas.parser.{Oas2ShapeSyntax, Oas3ShapeSyntax}
 
 object Oas31Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] =
     add(
       Oas3Syntax.nodes,
-      "webApi" -> Set("webhooks"),
+      "webApi"  -> Set("webhooks", "jsonSchemaDialect"),
       "license" -> Set("identifier"),
       "info"    -> Set("summary")
     )

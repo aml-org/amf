@@ -658,6 +658,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -775,6 +776,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -1680,6 +1682,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -2429,6 +2432,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -2740,6 +2744,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -2835,6 +2840,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -3591,6 +3597,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -3652,6 +3659,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -4331,6 +4339,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
@@ -4404,6 +4413,7 @@ Types:
  | documentation | [CreativeWork](#creativework) | - | Documentation for a particular part of the model | `http://a.ml/vocabularies/core#documentation` |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | - | Information about how to serialize | `http://a.ml/vocabularies/shapes#xmlSerialization` |
  | comment | string | - | A comment on an item. The comment's content is expressed via the text | `http://a.ml/vocabularies/core#comment` |
+ | schemaVersion | string | - | Determine which dialect should be used when processing the schema | `http://a.ml/vocabularies/shapes#schemaVersion` |
  | examples | [[Example](#example)] | false | Examples for a particular domain element | `http://a.ml/vocabularies/apiContract#examples` |
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |

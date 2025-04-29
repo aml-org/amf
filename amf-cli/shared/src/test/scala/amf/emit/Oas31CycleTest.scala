@@ -11,11 +11,6 @@ class Oas31CycleTest extends FunSuiteCycleTests {
 
   val cyclesOas31Json: Seq[FixtureData] = Seq(
     FixtureData(
-      "OAS 3.1 webhooks field in JSON",
-      "oas-petstore-31.json",
-      "oas-petstore-31.dumped.json"
-    ),
-    FixtureData(
       "OAS 3.1 license identifier field in JSON",
       "oas-31-license-identifier.json",
       "oas-31-license-identifier.dumped.json"
@@ -39,11 +34,6 @@ class Oas31CycleTest extends FunSuiteCycleTests {
   }
 
   val cyclesOas31Yaml: Seq[FixtureData] = Seq(
-    FixtureData(
-      "OAS 3.1 webhooks field in YAML",
-      "oas-petstore-31.yaml",
-      "oas-petstore-31.dumped.yaml"
-    ),
     FixtureData(
       "OAS 3.1 annotation in discriminator field",
       "oas-31-discriminator-ann.yaml",

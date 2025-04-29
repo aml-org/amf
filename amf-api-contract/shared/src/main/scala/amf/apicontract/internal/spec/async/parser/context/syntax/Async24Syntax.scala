@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.context.syntax
 
+import amf.shapes.internal.spec.common.parser.SyntaxHelper._
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 object Async24Syntax extends SpecSyntax {

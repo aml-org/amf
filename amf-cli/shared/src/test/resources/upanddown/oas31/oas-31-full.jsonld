@@ -211,6 +211,11 @@
                               {
                                 "@value": "schema"
                               }
+                            ],
+                            "http://a.ml/vocabularies/shapes#schemaVersion": [
+                              {
+                                "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                              }
                             ]
                           }
                         ]
@@ -592,6 +597,11 @@
               }
             ]
           }
+        ],
+        "http://a.ml/vocabularies/apiContract#defaultSchema": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+          }
         ]
       }
     ],
@@ -691,6 +701,11 @@
                       {
                         "@value": "a"
                       }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schemaVersion": [
+                      {
+                        "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                      }
                     ]
                   }
                 ],
@@ -709,6 +724,11 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "item0"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#schemaVersion": [
+              {
+                "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
               }
             ]
           },
@@ -759,6 +779,11 @@
                       {
                         "@value": "b"
                       }
+                    ],
+                    "http://a.ml/vocabularies/shapes#schemaVersion": [
+                      {
+                        "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                      }
                     ]
                   }
                 ],
@@ -778,7 +803,17 @@
               {
                 "@value": "item1"
               }
+            ],
+            "http://a.ml/vocabularies/shapes#schemaVersion": [
+              {
+                "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+              }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
           }
         ],
         "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann/custom-ann": {
@@ -893,6 +928,11 @@
                   {
                     "@value": "id"
                   }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
                 ]
               }
             ],
@@ -938,6 +978,11 @@
                 "http://www.w3.org/ns/shacl#name": [
                   {
                     "@value": "name"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
                   }
                 ]
               }
@@ -985,6 +1030,11 @@
                   {
                     "@value": "email"
                   }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
                 ]
               }
             ],
@@ -1003,6 +1053,89 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "User"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema/property/property/some",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#some"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema/property/property/some/scalar/some",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "some"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "some"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "OtherSchema"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
           }
         ]
       },
@@ -1225,6 +1358,11 @@
                 "http://www.w3.org/ns/shacl#name": [
                   {
                     "@value": "schema"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
                   }
                 ]
               }
@@ -1559,6 +1697,11 @@
                 "http://www.w3.org/ns/shacl#name": [
                   {
                     "@value": "schema"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
                   }
                 ]
               }

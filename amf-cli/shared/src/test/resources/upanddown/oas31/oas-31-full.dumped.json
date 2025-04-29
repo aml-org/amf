@@ -9,6 +9,7 @@
       "identifier": "Apache-2.0"
     }
   },
+  "jsonSchemaDialect": "https://spec.openapis.org/oas/3.1/dialect/base",
   "webhooks": {
     "/newPet": {
       "post": {
@@ -106,6 +107,15 @@
             "type": "string"
           },
           "email": {
+            "type": "string"
+          }
+        }
+      },
+      "OtherSchema": {
+        "$schema": "https://spec.openapis.org/oas/3.1/dialect/base",
+        "type": "object",
+        "properties": {
+          "some": {
             "type": "string"
           }
         }

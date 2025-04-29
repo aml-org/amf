@@ -30,6 +30,7 @@ import scala.util.matching.Regex
 
 trait SpecAwareEmitterContext {
   def isOas3: Boolean
+  def isOas31: Boolean
   def isOasLike: Boolean
   def isRaml: Boolean
   def isJsonSchema: Boolean
@@ -121,6 +122,8 @@ class JsonSchemaShapeEmitterContext(
   override protected implicit val shapeCtx: OasLikeShapeEmitterContext = this
 
   override def isOas3: Boolean = false
+
+  override def isOas31: Boolean = false
 
   override def isOasLike: Boolean = true
 

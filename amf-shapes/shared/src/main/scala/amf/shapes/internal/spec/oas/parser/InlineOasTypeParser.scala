@@ -672,6 +672,18 @@ case class InlineOasTypeParser(
       if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         map.key("$comment", AnyShapeModel.Comment in shape)
 
+      if (version.isInstanceOf[OAS31SchemaVersion]) {
+        map.key("$schema") match {
+          case Some(entry) => Some(entry).foreach(AnyShapeModel.SchemaVersion in shape)
+          case None =>
+            shape.setWithoutId(
+              AnyShapeModel.SchemaVersion,
+              AmfScalar("https://spec.openapis.org/oas/3.1/dialect/base"),
+              Annotations.inferred()
+            )
+        }
+      }
+
       shape
     }
 

@@ -891,7 +891,23 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             case _ => // ignore
           }
         }
-      }
+      },
+      new CustomShaclFunction {
+        override val name: String = "schemaVersionNotImplemented"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element.fields.getValueAsOption(AnyShapeModel.SchemaVersion) foreach {
+            value =>
+              if (!value.isInferred)
+                validate(
+                  validationInfo(
+                    AnyShapeModel.SchemaVersion,
+                    "$schema support in OAS 3.1 is still not implemented",
+                    element.annotations
+                  )
+                )
+          }
+        }
+      },
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {
