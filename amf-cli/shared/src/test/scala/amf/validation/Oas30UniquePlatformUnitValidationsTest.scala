@@ -166,4 +166,9 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Resources paths") {
     validate("resources-paths/resources-paths.yaml", Some("resources-paths.report"))
   }
+
+  // W-17778257
+  test("path parameter should be defined in the parameters object (warning)") {
+    validate("uri-parameters.yaml", Some("uri-parameters.report"))
+  }
 }
