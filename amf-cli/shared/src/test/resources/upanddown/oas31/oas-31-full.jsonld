@@ -630,6 +630,391 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/any/NullableSchema",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "NullableSchema"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#or": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/any/NullableSchema/or/scalar/item0",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "item0"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#schemaVersion": [
+              {
+                "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/any/NullableSchema/or/nil/item1",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#NilShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "item1"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema/property/property/some",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#some"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema/property/property/some/scalar/some",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "some"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "some"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "OtherSchema"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/NullPropSchema",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/NullPropSchema/property/property/nullProp",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#nullProp"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/NullPropSchema/property/property/nullProp/nil/nullProp",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#NilShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "nullProp"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "nullProp"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "NullPropSchema"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/id",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#id"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/id/scalar/id",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "id"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "id"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/name/scalar/name",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/email",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#email"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/email/scalar/email",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "email"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#schemaVersion": [
+                  {
+                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "email"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "User"
+          }
+        ],
+        "http://a.ml/vocabularies/shapes#schemaVersion": [
+          {
+            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
+          }
+        ]
+      },
+      {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
@@ -878,264 +1263,6 @@
           },
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/oneOfSchema/customDomainProperties/custom-ann-test/custom-ann-test"
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User",
-        "@type": [
-          "http://www.w3.org/ns/shacl#NodeShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#closed": [
-          {
-            "@value": false
-          }
-        ],
-        "http://www.w3.org/ns/shacl#property": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/id",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#id"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/id/scalar/id",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://a.ml/vocabularies/shapes#AnyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "id"
-                  }
-                ],
-                "http://a.ml/vocabularies/shapes#schemaVersion": [
-                  {
-                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "id"
-              }
-            ]
-          },
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/name",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#name"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/name/scalar/name",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://a.ml/vocabularies/shapes#AnyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "name"
-                  }
-                ],
-                "http://a.ml/vocabularies/shapes#schemaVersion": [
-                  {
-                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "name"
-              }
-            ]
-          },
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/email",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#email"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/User/property/property/email/scalar/email",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://a.ml/vocabularies/shapes#AnyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "email"
-                  }
-                ],
-                "http://a.ml/vocabularies/shapes#schemaVersion": [
-                  {
-                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "email"
-              }
-            ]
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "User"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#schemaVersion": [
-          {
-            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema",
-        "@type": [
-          "http://www.w3.org/ns/shacl#NodeShape",
-          "http://a.ml/vocabularies/shapes#AnyShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#closed": [
-          {
-            "@value": false
-          }
-        ],
-        "http://www.w3.org/ns/shacl#property": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema/property/property/some",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#some"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas31/oas-31-full.yaml#/declares/shape/OtherSchema/property/property/some/scalar/some",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://a.ml/vocabularies/shapes#AnyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "some"
-                  }
-                ],
-                "http://a.ml/vocabularies/shapes#schemaVersion": [
-                  {
-                    "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "some"
-              }
-            ]
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "OtherSchema"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#schemaVersion": [
-          {
-            "@value": "https://spec.openapis.org/oas/3.1/dialect/base"
           }
         ]
       },
