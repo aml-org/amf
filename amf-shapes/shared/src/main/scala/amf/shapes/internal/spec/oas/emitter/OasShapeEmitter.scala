@@ -65,7 +65,7 @@ abstract class OasShapeEmitter(
 
     fs.entry(AnyShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
-    emitNullable(result)
+    if (!spec.isOas31) emitNullable(result)
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
 
@@ -106,7 +106,7 @@ abstract class OasShapeEmitter(
     result
   }
 
-  def emitNullable(result: ListBuffer[EntryEmitter]): Unit = {
+  private def emitNullable(result: ListBuffer[EntryEmitter]): Unit = {
     shape.annotations.find(classOf[NilUnion]) match {
       case Some(NilUnion(rangeString)) =>
         result += ValueEmitter(

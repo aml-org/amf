@@ -49,7 +49,7 @@ class OasAnyShapeEmitter(
         }
       if (spec.schemaVersion isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         shape.fields.entry(AnyShapeModel.Comment).map(c => result += ValueEmitter("$comment", c))
-      if (spec.isOas3) {
+      if (spec.isOas31) {
         shape.fields
           .entry(AnyShapeModel.SchemaVersion)
           .map(sv => if (!sv.value.isInferred) result += ValueEmitter("$schema", sv))

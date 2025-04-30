@@ -5,9 +5,9 @@ import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 object Oas31ShapeSyntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] =
-    add(
+    remove(
       Oas3ShapeSyntax.nodes,
-      "schema" -> Set("$schema")
+      "schema" -> Set("nullable")
     )
 }
 

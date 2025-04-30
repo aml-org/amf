@@ -17,4 +17,8 @@ class Oas31UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Server Variable Object enum field can't be an empty array") {
     validate("server-variables-empty-enum.yaml", Some("server-variables-empty-enum.report"))
   }
+
+  test("nullable key should not be valid anymore") {
+    validate("nullable-key.yaml", Some("nullable-key.report"))
+  }
 }

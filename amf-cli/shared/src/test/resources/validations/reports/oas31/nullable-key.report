@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas31/nullable-key.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'nullable' not supported in a OAS 3.1 schema node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas31/nullable-key.yaml#/web-api/endpoint/%2Fcustomers/supportedOperation/get/expects/request/parameter/parameter/query/enterpriseCustomerNumber/union/schema/anyOf/scalar/enterpriseCustomerNumber
+  Property: 
+  Range: [(13,12)-(14,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas31/nullable-key.yaml
