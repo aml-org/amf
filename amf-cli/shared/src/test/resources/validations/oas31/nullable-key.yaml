@@ -1,0 +1,17 @@
+openapi: 3.1.0
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /customers:
+    get:
+      parameters:
+        - in: query
+          name: enterpriseCustomerNumber
+          schema:
+            nullable: true # not valid anymore in OAS 3.1
+            type: string
+      responses:
+        '200':
+          description: OK

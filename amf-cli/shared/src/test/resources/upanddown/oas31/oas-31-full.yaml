@@ -72,6 +72,15 @@ components:
       properties:
         some:
           type: string
+    NullPropSchema:
+      type: object
+      properties:
+        nullProp:
+          type: null
+    NullableSchema:
+      anyOf:
+        - type: "string"
+        - type: "null"
 
   responses:
     usersListResponse:

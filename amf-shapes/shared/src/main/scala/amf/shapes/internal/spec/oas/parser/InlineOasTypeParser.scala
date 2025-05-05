@@ -81,7 +81,7 @@ case class InlineOasTypeParser(
               ctx.closedShape(shape, map, oas.position.toString)
             case _ => // Nothing to do
           }
-          if (isOas3 || isOas31) Some(checkOas3Nullable(shape))
+          if (isOas3) Some(checkOas30Nullable(shape))
           else Some(shape)
         case None => None
       }
@@ -111,7 +111,7 @@ case class InlineOasTypeParser(
     }
   }
 
-  def checkOas3Nullable(parsed: AnyShape): AnyShape = {
+  private def checkOas30Nullable(parsed: AnyShape): AnyShape = {
     map.key("nullable") match {
       case Some(nullableEntry) if nullableEntry.value.toOption[Boolean].getOrElse(false) =>
         val union = UnionShape().withName(name, nameAnnotations).withId(parsed.id + "/nilUnion")
