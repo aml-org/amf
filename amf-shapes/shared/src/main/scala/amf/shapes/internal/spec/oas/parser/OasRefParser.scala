@@ -60,6 +60,10 @@ class OasRefParser(
         /** Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions
           * (#/components in OAS 3) node now we work with canonical JSON schema pointers, not local refs
           */
+        /** We have a problem here with the previous logic: the default behavior with external fragments is to inline
+          * them. That external fragment could have a ref inside, pointing to a components inside. Those links are never
+          * resolved. This case is handled in searchLocalJsonSchema.
+          */
         val referencedShape = ctx.findLocalJSONPath(rawRef) match {
           case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
           case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
@@ -95,11 +99,27 @@ class OasRefParser(
     ctx.findCachedJsonSchema(rawOrResolvedRef) match {
       case Some(s) =>
         Some(createLinkToDeclaration(rawOrResolvedRef, s))
-      case None if isOasLikeContext && isDeclaration(rawOrResolvedRef) && ctx.isMainFileContext =>
+      case None if isOasComponentLikeTarget(entry, rawOrResolvedRef) =>
         handleNotFoundOas(entry, rawOrResolvedRef, declarationNameOrResolvedRef)
       case None =>
         handleNotFoundJsonSchema(raw, entry, rawOrResolvedRef, declarationNameOrResolvedRef)
     }
+  }
+
+  private def isOasComponentLikeTarget(entry: YMapEntry, rawOrResolvedRef: String) = {
+    isOasLikeContext && isDeclaration(rawOrResolvedRef) && ctx.isMainFileContext && !isInlinedFragment(
+      ctx,
+      entry
+    )
+  }
+
+  private def isInlinedFragment(ctx: ShapeParserContext, entry: YMapEntry) = {
+
+    /** If location of the current file (ctx.loc) is not the same as the entry that contains the ref
+      * (entry.location.sourceName) we could assume that the entry is part of an ExternalFragment which was inlined in
+      * parsing time
+      */
+    ctx.loc != entry.location.sourceName
   }
 
   private def handleNotFoundJsonSchema(

@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: test-refs-investigations
+paths: {}
+components:
+  schemas:
+    aschema:
+      type: string
+  parameters:
+    aparameter:
+      in: header
+      name: test
+      schema:
+        $ref: "#/components/schemas/aschema"
