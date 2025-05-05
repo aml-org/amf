@@ -23,6 +23,7 @@ abstract class Api[A](override private[amf] val _internal: InternalApi)
   def identifier: StrField                      = _internal.identifier
   def schemes: ClientList[StrField]             = _internal.schemes.asClient
   def endPoints: ClientList[EndPoint]           = _internal.endPoints.asClient
+  def webhooks: ClientList[EndPoint]            = _internal.webhooks.asClient
   def accepts: ClientList[StrField]             = _internal.accepts.asClient
   def contentType: ClientList[StrField]         = _internal.contentType.asClient
   def version: StrField                         = _internal.version
@@ -71,6 +72,7 @@ trait ApiFieldSetter[T] {
   def withIdentifier(identifier: String): T
   def withSchemes(schemes: ClientList[String]): T
   def withEndPoints(endPoints: ClientList[EndPoint]): T
+  def withWebhooks(endPoints: ClientList[EndPoint]): T
   def withAccepts(accepts: ClientList[String]): T
   def withContentType(contentType: ClientList[String]): T
   def withVersion(version: String): T

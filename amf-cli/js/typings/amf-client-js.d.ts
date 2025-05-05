@@ -1575,6 +1575,7 @@ declare module "amf-client-js" {
     description: StrField;
     documentations: Array<CreativeWork>;
     endPoints: Array<EndPoint>;
+    webhooks: Array<EndPoint>;
     extendsNode: Array<DomainElement>;
     id: string;
     identifier: StrField;
@@ -1689,6 +1690,7 @@ declare module "amf-client-js" {
     description: StrField;
     documentations: Array<CreativeWork>;
     endPoints: Array<EndPoint>;
+    webhooks: Array<EndPoint>;
     extendsNode: Array<DomainElement>;
     id: string;
     identifier: StrField;
@@ -9298,6 +9300,7 @@ declare module "amf-client-js" {
     description: StrField;
     documentations: Array<CreativeWork>;
     endPoints: Array<EndPoint>;
+    webhooks: Array<EndPoint>;
     extendsNode: Array<DomainElement>;
     id: string;
     identifier: StrField;
