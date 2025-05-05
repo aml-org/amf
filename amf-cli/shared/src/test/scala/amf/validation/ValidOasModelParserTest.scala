@@ -91,4 +91,8 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("security-schemes/multiple-flows.yaml")
   }
 
+  test("Link to external fragment with component like path") {
+    checkValid("external-fragment-component-ref/api.yaml")
+  }
+
 }
