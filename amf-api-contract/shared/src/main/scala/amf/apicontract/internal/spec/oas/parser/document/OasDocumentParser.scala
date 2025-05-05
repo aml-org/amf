@@ -535,7 +535,10 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
       )
   }
 
+  // not mandatory anymore in OAS 3.1 onwards
   protected def mandatoryPathsError(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
-    ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
+    if (ctx.spec != Spec.OAS31) {
+      ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
+    }
   }
 }

@@ -21,4 +21,8 @@ class Oas31UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("nullable key should not be valid anymore") {
     validate("nullable-key.yaml", Some("nullable-key.report"))
   }
+
+  test("paths node is no longer required") {
+    validate("no-paths.yaml")
+  }
 }
