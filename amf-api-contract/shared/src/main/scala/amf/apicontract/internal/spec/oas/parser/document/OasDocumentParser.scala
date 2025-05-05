@@ -115,6 +115,13 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, Some(this))
     parseAnnotationTypeDeclarations(map, parent)
+    parseAbstractDeclarations(parent, map)
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
+    parseParameterDeclarations(map, parent + "/parameters")
+    parseResponsesDeclarations("responses", map, parent + "/responses")
+  }
+
+  def parseAbstractDeclarations(parent: String, map: YMap): Unit = {
     AbstractDeclarationsParser(
       "resourceTypes".asOasExtension,
       (entry: YMapEntry) => ResourceType(entry),
@@ -132,9 +139,6 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
       this
     )
       .parse()
-    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
-    parseParameterDeclarations(map, parent + "/parameters")
-    parseResponsesDeclarations("responses", map, parent + "/responses")
   }
 
   protected def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
