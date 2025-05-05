@@ -25,4 +25,8 @@ class Oas31UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("paths node is no longer required") {
     validate("no-paths.yaml")
   }
+
+  test("paths, components, or webhooks required") {
+    validate("nothing.yaml", Some("nothing.report"))
+  }
 }

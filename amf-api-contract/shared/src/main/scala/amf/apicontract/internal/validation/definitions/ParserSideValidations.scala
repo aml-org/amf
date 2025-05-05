@@ -11,6 +11,11 @@ object ParserSideValidations extends Validations {
   override val specification: String = PARSER_SIDE_VALIDATION
   override val namespace: Namespace  = AmfParser
 
+  val NonEmptyOasApi = validation(
+    "non-empty-oas-api",
+    "OAS API should have at least a 'components', 'paths', or 'webhooks' property"
+  )
+
   val NonEmptyBindingMap = validation(
     "non-empty-binding-map",
     "Reserved name binding must have an empty map"
