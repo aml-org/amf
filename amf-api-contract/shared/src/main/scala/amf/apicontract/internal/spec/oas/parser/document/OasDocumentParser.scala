@@ -115,6 +115,13 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, Some(this))
     parseAnnotationTypeDeclarations(map, parent)
+    parseAbstractDeclarations(parent, map)
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
+    parseParameterDeclarations(map, parent + "/parameters")
+    parseResponsesDeclarations("responses", map, parent + "/responses")
+  }
+
+  def parseAbstractDeclarations(parent: String, map: YMap): Unit = {
     AbstractDeclarationsParser(
       "resourceTypes".asOasExtension,
       (entry: YMapEntry) => ResourceType(entry),
@@ -132,9 +139,6 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
       this
     )
       .parse()
-    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
-    parseParameterDeclarations(map, parent + "/parameters")
-    parseResponsesDeclarations("responses", map, parent + "/responses")
   }
 
   protected def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
@@ -531,7 +535,10 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
       )
   }
 
+  // not mandatory anymore in OAS 3.1 onwards
   protected def mandatoryPathsError(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
-    ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
+    if (ctx.spec != Spec.OAS31) {
+      ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
+    }
   }
 }

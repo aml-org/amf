@@ -63,23 +63,7 @@ class Oas3DocumentParser(root: Root, spec: Spec = Spec.OAS30)(implicit override 
       parseCallbackDeclarations(map, parent + "/callbacks")
 
       super.parseAnnotationTypeDeclarations(map, parent)
-      AbstractDeclarationsParser(
-        "resourceTypes".asOasExtension,
-        (entry: YMapEntry) => ResourceType(entry),
-        map,
-        parent + "/resourceTypes",
-        ResourceTypeModel,
-        this
-      ).parse()
-      AbstractDeclarationsParser(
-        "traits".asOasExtension,
-        (entry: YMapEntry) => Trait(entry),
-        map,
-        parent + "/traits",
-        TraitModel,
-        this
-      )
-        .parse()
+      super.parseAbstractDeclarations(parent, map)
       ctx.closedShape(parentObj, map, "components")
       validateNames()
     }
