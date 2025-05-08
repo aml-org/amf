@@ -598,16 +598,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "Name is mandatory in License object"
       ),
       AMFValidation(
-        uri = amfParser("empty-responses"),
-        message = "No responses declared",
-        owlClass = apiContract("Operation"),
-        owlProperty = apiContract("returns"),
-        constraint = minCount,
-        value = "1",
-        ramlErrorMessage = "Responses array cannot be empty",
-        openApiErrorMessage = "Responses cannot be empty"
-      ),
-      AMFValidation(
         uri = amfParser("path-parameter-required"),
         message = "Path parameters must have the required property set to true",
         owlClass = apiContract(ParameterModel.doc.displayName),
@@ -642,11 +632,23 @@ object APIRawValidations extends CommonValidationDefinitions {
       urlValidation(core("CreativeWork"), core("url"))
     )
 
+    protected val emptyResponsesValidation: AMFValidation =
+      AMFValidation(
+        uri = amfParser("empty-responses"),
+        message = "No responses declared",
+        owlClass = apiContract("Operation"),
+        owlProperty = apiContract("returns"),
+        constraint = minCount,
+        value = "1",
+        ramlErrorMessage = "Responses array cannot be empty",
+        openApiErrorMessage = "Responses cannot be empty"
+      )
+
     override def validations(): Seq[AMFValidation] = result
   }
 
   object Oas20Validations extends OasValidations {
-    private lazy val result = super.validations() ++ Seq(
+    private lazy val result = super.validations() ++ Seq(emptyResponsesValidation) ++ Seq(
       AMFValidation(
         owlClass = apiContract("Response"),
         owlProperty = apiContract("statusCode"),
@@ -680,7 +682,9 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object Oas30Validations extends OasValidations {
-    private lazy val result = super.validations() ++ Seq(
+    private lazy val result = super.validations() ++ Seq(emptyResponsesValidation) ++ specSpecificValidations
+
+    val specSpecificValidations: Seq[AMFValidation] = Seq(
       AMFValidation(
         owlClass = apiContract("Response"),
         owlProperty = apiContract("statusCode"),
@@ -785,18 +789,17 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object Oas31Validations extends OasValidations {
-    private lazy val result = super.validations() ++ Oas30Validations.validations() ++ Seq(
+    private lazy val result = super.validations() ++ Oas30Validations.specSpecificValidations ++ Seq(
       AMFValidation(
         owlClass = shape("AnyShape"),
         owlProperty = shape("schemaVersion"),
         constraint = shape("schemaVersionNotImplemented"),
         severity = SeverityLevels.WARNING
-      ),
+      )
     )
 
     override def validations(): Seq[AMFValidation] = result
   }
-
 
   object Async20Validations extends AmfProfileValidations with GenericValidations {
     private lazy val result = super.validations() ++ AsyncShapeValidations.validations() ++ Seq(

@@ -1,0 +1,15 @@
+openapi: 3.1.0
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /something:
+    get:
+#      there is no response here
+      operationId: getSomething
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
