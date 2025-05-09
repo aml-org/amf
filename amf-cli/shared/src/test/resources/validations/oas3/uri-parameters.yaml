@@ -31,4 +31,15 @@ paths:
             type: string
       responses:
         "200":
-          description:
+          description: ""
+  /paramInRequest/{some}/{another}: # should show validation because the second param is missing
+    get:
+      parameters:
+        - name: some
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""

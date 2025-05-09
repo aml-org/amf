@@ -321,10 +321,10 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case webApi: WebApi =>
               webApi.endPoints.foreach { endpoint =>
-                val path           = endpoint.path.value()
-                val pattern        = "\\{([^}]+)}".r
-                val maybePathParam = pattern.findFirstMatchIn(path).map(_.group(1))
-                maybePathParam.foreach { pathParam =>
+                val path    = endpoint.path.value()
+                val pattern = """\{([^}]+)\}""".r
+                val pathParams = pattern.findAllMatchIn(path).map(_.group(1)).toList
+                pathParams.foreach { pathParam =>
                   val operationsParams = endpoint.operations.flatMap(_.requests).flatMap(_.uriParameters)
                   val allPathParams = (endpoint.parameters ++ operationsParams)
                     .filter(_.binding.value().equals("path"))
