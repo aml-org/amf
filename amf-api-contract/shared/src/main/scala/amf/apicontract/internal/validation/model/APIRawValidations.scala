@@ -605,12 +605,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("pathParameterRequiredProperty")
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
-        owlProperty = apiContract("endpoints"),
-        constraint = shape("pathParameterDefinitionCheck"),
-        severity = SeverityLevels.WARNING
-      ),
-      AMFValidation(
         uri = amfParser("file-parameter-in-form-data"),
         message = "Parameter of type file must set property 'in' to formData",
         owlClass = apiContract(ParameterModel.doc.displayName),
@@ -782,6 +776,12 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlClass = apiContract("WebAPI"),
         owlProperty = apiContract("endpoints"),
         constraint = shape("duplicatedOas3EndpointPath")
+      ),
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("pathParameterDefinitionCheck"),
+        severity = SeverityLevels.WARNING
       )
     )
 

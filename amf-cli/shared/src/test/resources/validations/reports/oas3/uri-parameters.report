@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/uri-parameters.yaml
 Profile: OAS 3.0
 Conforms: true
-Number of results: 2
+Number of results: 3
 
 Level: Warning
 
@@ -18,5 +18,13 @@ Level: Warning
   Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/oas3/uri-parameters.yaml#/web-api
   Property: http://a.ml/vocabularies/apiContract#uriParameter
-  Range: [(19,2)-(34,22)]
+  Range: [(19,2)-(35,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/uri-parameters.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#WebAPI-endpoints-pathParameterDefinitionCheck
+  Message: Path parameter another must be defined in the parameters object
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/uri-parameters.yaml#/web-api
+  Property: http://a.ml/vocabularies/apiContract#uriParameter
+  Range: [(35,2)-(46,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/uri-parameters.yaml

@@ -6,7 +6,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.apicontract.internal.spec.common.parser.{
-  Oas3ParameterParser,
+  Oas31ParameterParser,
   Oas3ServersParser,
   OasParameterParser,
   SecuritySchemeParser
@@ -38,7 +38,7 @@ case class Oas31VersionFactory()(implicit override val ctx: OasWebApiContext) ex
       nameNode: Option[YNode],
       nameGenerator: IdCounter
   ): OasParameterParser =
-    new Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
+    new Oas31ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
     OasServerVariableParser(entry, parent)(ctx)

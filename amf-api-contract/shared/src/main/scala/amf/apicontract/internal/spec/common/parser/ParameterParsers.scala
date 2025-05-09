@@ -641,7 +641,7 @@ class Oas3ParameterParser(
     Oas3ParameterParser.parseStyleField(map, result)
     Oas3ParameterParser.parseExplodeField(map, result)
     map.key("deprecated", ParameterModel.Deprecated in result)
-    Oas3ParameterParser.validateSchemaOrContent(map, result)
+    parameterValidations(result)
     OasParameter(result)
   }
 
@@ -695,6 +695,10 @@ class Oas3ParameterParser(
         param.setWithoutId(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
+  }
+
+  protected def parameterValidations(parameter: Parameter): Unit = {
+    Oas3ParameterParser.validateSchemaOrContent(map, parameter)
   }
 
 }
@@ -774,6 +778,64 @@ object Oas3ParameterParser {
         )
       case _ =>
     }
+  }
+}
+
+class Oas31ParameterParser(
+    entryOrNode: YMapEntryLike,
+    parentId: String,
+    nameNode: Option[YNode],
+    nameGenerator: IdCounter
+)(implicit ctx: OasWebApiContext)
+    extends Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator) {
+
+  override protected def parameterValidations(parameter: Parameter): Unit = {
+    super.parameterValidations(parameter)
+    validatePathParameterName(parameter)
+  }
+
+  private def validatePathParameterName(parameter: Parameter): Unit = {
+    val paramName = parameter.name.value()
+    Oas31ParameterParser
+      .isValidPathParameter(paramName)
+      .foreach(errorMessage =>
+        ctx.eh.violation(
+          InvalidPathParameterName,
+          parameter,
+          errorMessage,
+          parameter.annotations.sourceLocation
+        )
+      )
+  }
+}
+
+object Oas31ParameterParser {
+
+  def isValidPathParameter(parameterName: String): Option[String] = {
+    if (containsUnescapedSpecialChar(parameterName))
+      Some(s"Invalid path parameter name '$parameterName', cannot contains unescaped characters '/','?' or '#'")
+    else None
+  }
+
+  // Cannot use pattern to this because in need lookbehind feature, which is not supported in JS
+  private def containsUnescapedSpecialChar(s: String): Boolean = {
+    val specials = Set('/', '?', '#')
+    var i = 0
+    while (i < s.length) {
+      if (specials.contains(s(i))) {
+        // Count the number of consecutive backslashes before this character
+        var backslashCount = 0
+        var j = i - 1
+        while (j >= 0 && s(j) == '\\') {
+          backslashCount += 1
+          j -= 1
+        }
+        // If the number of backslashes is even, the char is unescaped
+        if (backslashCount % 2 == 0) return true
+      }
+      i += 1
+    }
+    false
   }
 }
 

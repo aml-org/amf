@@ -33,4 +33,16 @@ class Oas31UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("responses node is no longer required") {
     validate("no-responses.yaml")
   }
+
+  test("invalid path param name in path") {
+    validate("invalid-path-param-name-path.yaml", Some("invalid-path-param-name-path.report"))
+  }
+
+  test("invalid path param name in endpoint/operation") {
+    validate("invalid-path-param-name-end-ope.yaml", Some("invalid-path-param-name-end-ope.report"))
+  }
+
+  test("invalid path param name in path and endpoint/operation") {
+    validate("invalid-path-param-name-all.yaml", Some("invalid-path-param-name-all.report"))
+  }
 }
