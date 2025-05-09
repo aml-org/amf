@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /something/{invalid#param}:
+    parameters:
+      - in: path
+        name: invalid#param
+        schema:
+          type: string
+        required: true
+    get:
+      parameters:
+        - in: path
+          name: invalid#param
+          schema:
+            type: string
+          required: true
+
+  /somethingelse/{valid}/{other?invalid}: {}
+  /somethingelse/{another/invalid}: {}
