@@ -1,0 +1,13 @@
+Model: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/type-specialization-invalid/instance.json
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/data#unsupported-shape
+  Message: Invalid shape class for scalar node
+  Severity: Violation
+  Target: file://amf-shapes/shared/src/test/resources/jsonld-schema/parsing/type-specialization-invalid/schema.json#/shape/schema/property/property/b/shape/b
+  Property: 
+  Range: 
+  Location: 
