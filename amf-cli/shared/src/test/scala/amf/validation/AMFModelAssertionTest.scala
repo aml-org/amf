@@ -32,8 +32,8 @@ import scala.concurrent.Future
   */
 class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-  val basePath                               = "file://amf-cli/shared/src/test/resources/validations"
-  val ro: RenderOptions                      = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
+  val basePath          = "file://amf-cli/shared/src/test/resources/validations"
+  val ro: RenderOptions = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
   val graphqlConfig: AMFConfiguration        = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
   val ramlConfig: AMFConfiguration           = RAMLConfiguration.RAML10().withRenderOptions(ro)
   val ramlClient: AMFBaseUnitClient          = ramlConfig.baseUnitClient()
@@ -65,6 +65,29 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
         val transformResult = specificClient.transform(parseResult.baseUnit, pipelineId)
         assertion(transformResult.baseUnit)
       }
+    }
+  }
+
+  test("RAML propagated parameters should be virtual and undefined parameters should be virtual and default") {
+    modelAssertion(s"$basePath/raml/default-parameter.raml") { bu =>
+      val api          = getApi(bu)
+      val endpoints    = api.endPoints
+      val param        = endpoints.head.parameters.head
+      val anotherParam = endpoints.last.parameters.head
+
+      param.annotations.isVirtual shouldBe true
+      anotherParam.annotations.isVirtual shouldBe true
+
+      param.annotations.isDefault shouldBe true
+      anotherParam.annotations.isDefault shouldBe false
+    }
+  }
+
+  test("OAS endpoint with undefined parameter should not have parameters") {
+    modelAssertion(s"$basePath/oas3/default-parameter.yaml") { bu =>
+      val api        = getApi(bu)
+      val parameters = api.endPoints.head.parameters
+      parameters.isEmpty shouldBe true
     }
   }
 
@@ -841,8 +864,8 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
   // W-16530856
   test("RAML with oauth_2_0 security should correctly transform to OAS 2.0") {
     val api = s"$basePath/raml/oauth2.raml"
-    ramlClient.parse(api) flatMap { parseResult =>
-      val transformResult = oas2Client.transform(parseResult.baseUnit, PipelineId.Compatibility)
+    modelAssertion(api, transform = false) { bu =>
+      val transformResult = oas2Client.transform(bu.cloneUnit(), PipelineId.Compatibility)
       val oas2Oauth2 = getDeclarations(transformResult.baseUnit).head
         .asInstanceOf[SecurityScheme]
         .settings
@@ -851,7 +874,7 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
       oas2Flow.flow.value() shouldBe "implicit"
       oas2Flow.scopes.nonEmpty shouldBe true
 
-      val oas3transformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val oas3transformResult = oasClient.transform(bu.cloneUnit(), PipelineId.Compatibility)
       val oas3Oauth2 = getDeclarations(oas3transformResult.baseUnit).head
         .asInstanceOf[SecurityScheme]
         .settings
