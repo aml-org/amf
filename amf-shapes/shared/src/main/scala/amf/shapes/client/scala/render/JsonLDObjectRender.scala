@@ -43,7 +43,11 @@ class JsonLDObjectRender(obj: JsonLDObject, syntaxProvider: SyntaxProvider) exte
       case f: Float   => pb += f
       case d: Double  => pb += d
       case b: Boolean => pb += b
-      case _          => pb += YNode.Null
+      case o =>
+        Option(o.toString) match {
+          case Some(stringValue) => pb += stringValue
+          case None              => pb += YNode.Null
+        }
     }
   }
 
