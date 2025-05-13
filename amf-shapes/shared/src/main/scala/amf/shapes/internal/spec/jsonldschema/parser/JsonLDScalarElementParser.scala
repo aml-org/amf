@@ -3,10 +3,13 @@ package amf.shapes.internal.spec.jsonldschema.parser
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SemanticContext}
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape}
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDScalarElementBuilder
-import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{IncompatibleScalarDataType, UnsupportedScalarTagType, UnsupportedShape}
+import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.{
+  IncompatibleScalarDataType,
+  UnsupportedScalarTagType,
+  UnsupportedShape
+}
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.common.time.SimpleDateTime.parseDate
 import org.yaml.model.{YScalar, YType}
@@ -63,13 +66,20 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
     */
   private def checkDataTypeConsistence(scalarShape: ScalarShape): Unit = {
     scalarShape.dataType.option().foreach { shapeDataType =>
-      if (dataType != shapeDataType && !isNumericDifference(shapeDataType))
+      if (dataType != shapeDataType && !isValidSpecialization(shapeDataType))
         ctx.violation(IncompatibleScalarDataType, scalarShape.id, IncompatibleScalarDataType.message, scalar.location)
     }
   }
 
-  private def isNumericDifference(shapeDataType: String) = {
+  private def isValidSpecialization(shapeDataType: String) =
+    isNumericSpecialization(shapeDataType) || isStringSpecialization(shapeDataType)
+
+  private def isNumericSpecialization(shapeDataType: String) = {
     shapeDataType == DataTypes.Number && dataType == DataTypes.Integer
+  }
+
+  private def isStringSpecialization(shapeDataType: String) = {
+    (shapeDataType == DataTypes.Date || shapeDataType == DataTypes.DateTime) && dataType == DataTypes.String
   }
 
   /** @return

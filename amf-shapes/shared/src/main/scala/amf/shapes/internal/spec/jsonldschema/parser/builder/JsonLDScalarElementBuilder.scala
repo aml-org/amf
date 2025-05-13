@@ -30,7 +30,9 @@ class JsonLDScalarElementBuilder(
       case _ if other.dataType == dataType =>
         dataType =
           other.dataType // it's the same. Value could be different? using the specific one, value for a property of a node should be always the same
-      case DataTypes.Number if other.dataType == DataTypes.Integer =>
+      case DataTypes.Number if isNumberSpecialization(other.dataType) =>
+        dataType = other.dataType
+      case DataTypes.String if isStringSpecialization(other.dataType) =>
         dataType = other.dataType
       case _ =>
         ctx.violation(IncompatibleScalarDataType, "", IncompatibleScalarDataType.message)
@@ -54,6 +56,14 @@ class JsonLDScalarElementBuilder(
       case DataTypes.DateTime => Type.DateTime
       case _                  => Type.Str
     }
+  }
+
+  private def isStringSpecialization(dataType: String): Boolean = {
+    dataType == DataTypes.Date || dataType == DataTypes.DateTime
+  }
+
+  private def isNumberSpecialization(dataType: String): Boolean = {
+    dataType == DataTypes.Integer
   }
 }
 

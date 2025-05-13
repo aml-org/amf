@@ -33,4 +33,12 @@ class JsonLDSchemaParsingReportTest extends FileAssertionTest {
     run("invalid-container-list-instance")
   }
 
+  test("Valid type specialization") {
+    run("type-specialization-valid")
+  }
+
+  test("Invalid type specialization") {
+    run("type-specialization-invalid")
+  }
+
 }
