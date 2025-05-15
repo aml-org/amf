@@ -83,6 +83,26 @@ trait PayloadValidationTest
       .map(r => assert(!r.conforms))
   }
 
+  test("invalid URI should not conform with uri format") {
+    val validator = payloadValidator(UriTests.shape, `application/json`)
+    validator.validate(UriTests.invalidPayload).map(r => assert(!r.conforms))
+  }
+
+  test("empty URI should conform with uri format") {
+    val validator = payloadValidator(UriTests.shape, `application/json`)
+    validator.validate(UriTests.emptyPayload).map(r => assert(r.conforms))
+  }
+
+  test("valid URI should conform with uri format") {
+    val validator = payloadValidator(UriTests.shape, `application/json`)
+    validator.validate(UriTests.uriPayload).map(r => assert(r.conforms))
+  }
+
+  test("valid URL should conform with uri format") {
+    val validator = payloadValidator(UriTests.shape, `application/json`)
+    validator.validate(UriTests.urlPayload).map(r => assert(r.conforms))
+  }
+
   test("Invalid trailing coma in json array payload") {
     val s     = ScalarShape().withDataType(DataTypes.String)
     val array = ArrayShape().withName("person")
@@ -428,5 +448,35 @@ object AvroTestSchemas {
       |  "type": "int",
       |  "name": "this is an int"
       |}
+        """.stripMargin
+}
+
+object UriTests {
+  val s: ScalarShape   = ScalarShape().withDataType(DataTypes.String).withFormat("uri")
+  val shape: NodeShape = NodeShape().withName("user-schema")
+  shape.withProperty("profileUrl").withRange(s)
+
+  val invalidPayload: String = """
+                         |{
+                         |  "profileUrl": "not a an uri"
+                         |}
+        """.stripMargin
+
+  val emptyPayload: String = """
+                       |{
+                       |  "profileUrl": ""
+                       |}
+        """.stripMargin
+
+  val uriPayload: String = """
+                     |{
+                     |  "profileUrl": "mailto:user@example.com"
+                     |}
+        """.stripMargin
+
+  val urlPayload: String = """
+                     |{
+                     |  "profileUrl": "https://www.example.com/path"
+                     |}
         """.stripMargin
 }
