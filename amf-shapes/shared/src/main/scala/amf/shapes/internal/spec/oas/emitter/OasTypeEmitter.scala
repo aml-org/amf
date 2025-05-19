@@ -24,7 +24,12 @@ import amf.shapes.client.scala.model.domain.{
   TupleShape,
   UnionShape
 }
-import amf.shapes.internal.spec.common.emitter.{OasLikeShapeEmitterContext, OasShapeReferenceEmitter}
+import amf.shapes.internal.spec.common.{AVROSchema, JSONSchemaVersion, OASSchemaVersion, RAMLSchemaVersion}
+import amf.shapes.internal.spec.common.emitter.{
+  JsonSchemaShapeEmitterContext,
+  OasLikeShapeEmitterContext,
+  OasShapeReferenceEmitter
+}
 import amf.shapes.internal.spec.oas.emitter
 import org.yaml.model.{YDocument, YNode}
 
@@ -84,8 +89,19 @@ case class OasTypeEmitter(
           .OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader)
           .emitters()
       case array: TupleShape =>
-        val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
-        OasTupleShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
+        spec.schemaVersion match {
+          case _: OASSchemaVersion => // W-18193252: We've removed emitting tuples to avoid emitting invalid OAS specs
+            val scalarShape = ScalarShape(array.annotations)
+              .withDataType(DataType.String)
+              .withDescription(
+                "WARNING: this was a Tuple Shape in RAML and converted to OAS, but OAS doesn't support tuples."
+              )
+            emitter.OasScalarShapeEmitter(scalarShape, ordering, references, isHeader).emitters()
+          case _ =>
+            val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
+            OasTupleShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
+        }
+
       case nil: NilShape =>
         val copiedNil = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
         Seq(OasNilShapeEmitter(copiedNil, ordering))
