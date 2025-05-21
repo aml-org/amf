@@ -6,6 +6,10 @@ class Oas31UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/oas31/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas31/"
 
+  test("oas 31 items field must be an object") {
+    validate("items-property-array.yaml", Some("items-property-array.report"))
+  }
+
   test("License identifier-url mutually exclusive fields validation") {
     validate("oas-31-license-identifier-url-validation.json", Some("oas-31-license-identifier-url-validation.report"))
   }

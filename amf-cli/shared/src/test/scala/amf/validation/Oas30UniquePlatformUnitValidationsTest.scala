@@ -7,6 +7,10 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas3/"
   val resolutionPath               = "file://amf-cli/shared/src/test/resources/resolution/"
 
+  test("oas 30 items field must be an object (warning for backwards compatibility)") {
+    validate("items-property-array.yaml", Some("items-property-array.report"))
+  }
+
   test("'Paths' property is required") {
     validate("paths-property.json", Some("paths-property.report"))
   }

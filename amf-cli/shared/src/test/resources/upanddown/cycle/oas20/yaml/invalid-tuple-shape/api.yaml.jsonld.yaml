@@ -1,0 +1,15 @@
+swagger: "2.0"
+info:
+  title: test API
+  version: 1.0.0
+paths:
+  /resource:
+    get:
+      responses: {}
+definitions:
+  Pet:
+    properties:
+      id:
+        type: string
+        description: "WARNING: this was a Tuple Shape in RAML and converted to OAS, but OAS doesn't support tuples."
+    type: object

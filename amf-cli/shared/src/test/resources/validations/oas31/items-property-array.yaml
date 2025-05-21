@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: test oas
+  version: 1.0.0
+paths: { }
+components:
+  schemas:
+    arrayWithArray:
+      type: array
+      items:
+        - type: string

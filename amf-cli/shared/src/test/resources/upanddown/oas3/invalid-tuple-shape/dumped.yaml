@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: test API
+  version: 1.0.0
+paths:
+  /resource:
+    get:
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "WARNING: this was a Tuple Shape in RAML and converted to OAS, but OAS doesn't support tuples."

@@ -13,6 +13,11 @@ object ShapeParserSideValidations extends Validations {
   override val specification: String = PARSER_SIDE_VALIDATION
   override val namespace: Namespace  = AmfParser
 
+  val InvalidOasItemsField: ValidationSpecification = validation(
+    "invalid-oas-items-field",
+    "OAS Schemas 'items' field must be an object"
+  )
+
   val UserDefinedFacetMatchesBuiltInFacets = validation(
     "user-defined-facets-matches-built-in",
     "User defined facet name matches built in facet of type"
@@ -414,6 +419,11 @@ object ShapeParserSideValidations extends Validations {
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
+    InvalidOasItemsField.id -> Map(
+      Oas20Profile -> WARNING,
+      Oas30Profile -> WARNING,
+      Oas31Profile -> VIOLATION
+    ),
     InvalidShapeFormat.id            -> all(WARNING),
     JsonSchemaInheritanceWarning.id  -> all(WARNING),
     PossiblyIgnoredPatternWarning.id -> all(WARNING),
@@ -450,6 +460,7 @@ object ShapeParserSideValidations extends Validations {
   )
 
   override val validations: List[ValidationSpecification] = List(
+    InvalidOasItemsField,
     UserDefinedFacetMatchesBuiltInFacets,
     UserDefinedFacetMatchesAncestorsTypeFacets,
     MissingRequiredUserDefinedFacet,
