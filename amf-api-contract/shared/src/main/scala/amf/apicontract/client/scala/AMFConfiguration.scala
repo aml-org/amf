@@ -280,7 +280,7 @@ object OASConfiguration extends APIConfigurationBuilder {
 
   def OAS(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin, ViolationModelValidationPlugin(oas)))
+      .withPlugins(List(Oas31ParsePlugin, Oas30ParsePlugin, Oas20ParsePlugin, ViolationModelValidationPlugin(oas)))
       .withTransformationPipelines(unsupportedTransformationsSet(oas))
 
   def OASComponent(): AMFConfiguration =
