@@ -40,7 +40,7 @@ import amf.core.internal.resource.{ClientResourceLoaderAdapter, StringResourceLo
 import amf.core.io.FileAssertionTest
 import amf.io.MultiJsonldAsyncFunSuite
 import amf.shapes.client.platform.ShapesConfiguration
-import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
+import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
 import org.mulesoft.common.client.lexical.PositionRange
 import org.mulesoft.common.test.Diff
@@ -2287,6 +2287,29 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       declarations should have size 1
     }
 
+  }
+
+  test("Test W-18392161") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val path   = "file://amf-cli/shared/src/test/resources/discriminator-test.raml"
+    for {
+      parsingResult <- client.parse(path).asFuture
+      resolutionResult = client.transform(parsingResult.baseUnit, PipelineId.Editing)
+    } yield {
+      assert(parsingResult.conforms)
+      assert(resolutionResult.conforms)
+      val errorDiscriminatorType = resolutionResult.baseUnit
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .filter(_.asInstanceOf[Shape].name.value() == "ErrorDiscriminator")
+        .head
+      assert(errorDiscriminatorType.isInstanceOf[UnionShape])
+      // For some reason, the name of all the Shapes inside the anyOf of the Union is being replaced with the name of the type with the `discriminator` field
+      val nameOverridden =
+        errorDiscriminatorType.asInstanceOf[UnionShape].anyOf.asSeq.exists(_.name.value() == "ErrorDiscriminator")
+      assert(!nameOverridden)
+    }
   }
 
 //

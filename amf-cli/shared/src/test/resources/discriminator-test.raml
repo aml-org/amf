@@ -1,0 +1,27 @@
+#%RAML 1.0
+
+title: something
+
+types:
+
+  ErrorDiscriminator:
+    discriminator: peopleType # When `discriminator` is present, the name of the elements of the Union is overridden with the name of the type with the discriminator
+    type: Join
+
+  Join:
+    type: Person | Employee | User
+
+  Person:
+    type: object
+    properties:
+      name: string
+
+  Employee:
+    type: Person
+    properties:
+      employeeId: string
+
+  User:
+    type: Person
+    properties:
+      userId: string
