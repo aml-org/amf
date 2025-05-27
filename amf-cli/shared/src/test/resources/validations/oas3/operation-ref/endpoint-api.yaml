@@ -1,0 +1,15 @@
+openapi: 3.0.3
+info:
+  title: API being referenced to it's endpoint
+  version: "1.0"
+
+paths:
+  /health:
+    get:
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: string
