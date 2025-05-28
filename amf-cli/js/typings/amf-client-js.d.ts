@@ -1379,6 +1379,8 @@ declare module "amf-client-js" {
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
     position: Range;
+    refSummary: StrField;
+    refDescription: StrField;
 
     annotations(): Annotations;
     graph(): Graph;
@@ -1409,6 +1411,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3329,6 +3333,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
 
     link<T>(): T;
     link<T>(label: string): T;
@@ -3683,6 +3689,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3720,6 +3728,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3755,6 +3765,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3832,6 +3844,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3863,6 +3877,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3894,6 +3910,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -4297,6 +4315,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -4383,6 +4403,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -4420,6 +4442,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -7171,6 +7195,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -7996,6 +8022,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
 
     link<T>(): T;
     link<T>(label: string): T;
@@ -8334,6 +8362,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -8360,6 +8390,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination>;
 
@@ -8388,6 +8420,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination020>;
 
@@ -8416,6 +8450,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination030>;
 
@@ -8444,6 +8480,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination040>;
     timeToLive: IntField;
