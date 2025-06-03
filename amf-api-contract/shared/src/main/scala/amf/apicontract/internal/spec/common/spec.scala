@@ -5,12 +5,7 @@ import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.spec.common.{OasWebApiDeclarations, RamlWebApiDeclarations, WebApiDeclarations}
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterContext, OasSpecEmitterContext}
-import amf.apicontract.internal.spec.oas.parser.context.{
-  Oas2WebApiContext,
-  Oas31WebApiContext,
-  Oas3WebApiContext,
-  OasWebApiContext
-}
+import amf.apicontract.internal.spec.oas.parser.context.{Oas2WebApiContext, Oas31WebApiContext, Oas3WebApiContext, OasLikeWebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml10WebApiContext, RamlWebApiContext}
 import amf.core.client.scala.parse.document.ParsedReference
@@ -24,38 +19,40 @@ package object spec {
 
   object OasDefinitions extends OasShapeDefinitions {
 
-    val parameterDefinitionsPrefix = "#/parameters/"
+    private val parameterDefinitionsPrefix = "#/parameters/"
 
-    val responsesDefinitionsPrefix = "#/responses/"
+    private val responsesDefinitionsPrefix = "#/responses/"
+
+    private val endpointsDefinitionsPrefix = "#/pathItems/"
 
     def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31)
-        stripOas3ComponentsPrefix(url, "parameters")
-      else
-        url.stripPrefix(parameterDefinitionsPrefix)
+      if (ctx.isOas3Context || ctx.isOas31Context) stripOas3ComponentsPrefix(url, "parameters")
+      else url.stripPrefix(parameterDefinitionsPrefix)
     }
 
     def stripResponsesDefinitionsPrefix(url: String)(implicit ctx: OasWebApiContext): String = {
-      if (ctx.spec == Spec.OAS30 || ctx.spec == Spec.OAS31)
-        stripOas3ComponentsPrefix(url, "responses")
-      else
-        url.stripPrefix(responsesDefinitionsPrefix)
+      if (ctx.isOas3Context || ctx.isOas31Context) stripOas3ComponentsPrefix(url, "responses")
+      else url.stripPrefix(responsesDefinitionsPrefix)
     }
 
-    def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(implicit
-        spec: SpecAwareEmitterContext
-    ): String = {
-      if (spec.isOas3 || spec.isAsync)
-        appendOas3ComponentsPrefix(url, "parameters")
-      else
-        appendPrefix(parameterDefinitionsPrefix, url)
+    def stripEndpointsDefinitionsPrefix(url: String)(implicit ctx: OasLikeWebApiContext): String = {
+      if (ctx.isOas31Context) stripOas3ComponentsPrefix(url, "pathItems")
+      else url.stripPrefix(endpointsDefinitionsPrefix)
+    }
+
+    def appendParameterDefinitionsPrefix(url: String)(implicit spec: SpecAwareEmitterContext): String = {
+      if (spec.isOas3 || spec.isOas31 || spec.isAsync) appendOas3ComponentsPrefix(url, "parameters")
+      else appendPrefix(parameterDefinitionsPrefix, url)
     }
 
     def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecAwareEmitterContext): String = {
-      if (spec.isOas3)
-        appendOas3ComponentsPrefix(url, "responses")
-      else
-        appendPrefix(responsesDefinitionsPrefix, url)
+      if (spec.isOas3 || spec.isOas31) appendOas3ComponentsPrefix(url, "responses")
+      else appendPrefix(responsesDefinitionsPrefix, url)
+    }
+
+    def appendEndpointsDefinitionsPrefix(url: String)(implicit spec: SpecAwareEmitterContext): String = {
+      if (spec.isOas31) appendOas3ComponentsPrefix(url, "pathItems")
+      else appendPrefix(endpointsDefinitionsPrefix, url)
     }
   }
 
@@ -114,7 +111,7 @@ package object spec {
     }
   }
 
-  def toOasDeclarations(ds: WebApiDeclarations): OasWebApiDeclarations = {
+  private def toOasDeclarations(ds: WebApiDeclarations): OasWebApiDeclarations = {
     ds match {
       case oas: OasWebApiDeclarations => oas
       case other                      => OasWebApiDeclarations(other)
