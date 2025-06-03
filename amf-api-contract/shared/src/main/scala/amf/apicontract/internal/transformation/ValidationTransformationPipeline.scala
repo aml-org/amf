@@ -67,8 +67,9 @@ class ValidationTransformationPipeline private[amf] (
 object ValidationTransformationPipeline {
   def apply(profile: ProfileName, unit: BaseUnit, configuration: ValidationConfiguration): BaseUnit = {
     val pipeline = profile match {
-      case Oas30Profile                              => Oas30ValidationTransformationPipeline()
-      case Oas31Profile                              => Oas31ValidationTransformationPipeline()
+      // TODO: add RAML and other profiles
+      case Oas30Profile                              => Oas3CachePipeline()
+      case Oas31Profile                              => Oas31CachePipeline()
       case Async20Profile                            => Async20CachePipeline()
       case GraphQLProfile | GraphQLFederationProfile => GraphQLCachePipeline()
       case _                                         => new ValidationTransformationPipeline(profile)

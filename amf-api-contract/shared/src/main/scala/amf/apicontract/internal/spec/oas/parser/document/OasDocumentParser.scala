@@ -118,7 +118,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     parseAbstractDeclarations(parent, map)
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
-    parseResponsesDeclarations("responses", map, parent + "/responses")
+    parseResponsesDeclarations("responses", map)
   }
 
   def parseAbstractDeclarations(parent: String, map: YMap): Unit = {
@@ -251,7 +251,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     )
   }
 
-  protected def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+  protected def parseResponsesDeclarations(key: String, map: YMap): Unit = {
     map.key(
       key,
       entry => {
@@ -365,14 +365,24 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     )
   }
 
-  private def parseEndpoints(api: WebApi, entry: YMapEntry) = {
+  private def parseEndpoints(api: WebApi, entry: YMapEntry): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints =
       paths
         .regex("^/.*")
         .foldLeft(List[EndPoint]())((acc, curr) => acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
+
+    paths.entries.diff(paths.regex("^/.*").toSeq).foreach(invalidEndpoint => invalidEndpointValidation(invalidEndpoint))
+
     api.setWithoutId(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
+
     ctx.closedShape(api, paths, "paths")
+  }
+
+  private def invalidEndpointValidation(invalidEndpoint: YMapEntry): Unit = {
+    val name = invalidEndpoint.key.value.asInstanceOf[YScalar].text
+    if (!name.startsWith("x-") && !name.startsWith("$ref"))
+      ctx.eh.violation(InvalidEndpointPath, name, s"$name path must start with a '/'", invalidEndpoint.value.location)
   }
 }
 

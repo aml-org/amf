@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas.emitter.document
 
-import amf.apicontract.client.scala.model.domain.{Parameter, Payload, Response}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter, Payload, Response}
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
@@ -9,8 +9,6 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{
   OasResponseEmitter,
   OasTagToReferenceEmitter
 }
-import org.mulesoft.common.client.lexical.Position
-import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
@@ -25,6 +23,8 @@ import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.{OasResponseExamplesEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.oas.emitter.{OasDeclaredShapesEmitter, OasOrphanAnnotationsEmitter}
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
@@ -95,6 +95,10 @@ case class OasDeclarationsEmitter(
         position = pos(annotations)
       )
     }
+
+    if (declarations.channels.nonEmpty)
+      result += OasDeclaredEndpointsEmitter("pathItems", declarations.channels.values.toSeq, ordering, references)
+
     result ++= OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
   }
 }
@@ -199,9 +203,6 @@ case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ord
       }
     )
   }
-
-  def emitAnnotationFields(): Unit = {}
-
   override def position(): Position = pos(annotationType.annotations)
 }
 
@@ -227,4 +228,28 @@ case class OasDeclaredResponsesEmitter(
   }
 
   override def position(): Position = responses.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
+}
+
+case class OasDeclaredEndpointsEmitter(
+    key: String,
+    endpoints: Seq[EndPoint],
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit]
+)(implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      key,
+      _.obj(
+        traverse(
+          ordering.sorted(
+            endpoints.map(EndPointEmitter(_, ordering, references: Seq[BaseUnit]))
+          ),
+          _
+        )
+      )
+    )
+  }
+
+  override def position(): Position = endpoints.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 }

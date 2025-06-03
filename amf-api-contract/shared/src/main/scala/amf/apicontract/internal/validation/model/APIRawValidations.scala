@@ -325,14 +325,6 @@ object APIRawValidations extends CommonValidationDefinitions {
         openApiErrorMessage = "'in' property of a parameter with an invalid value"
       ),
       AMFValidation(
-        owlClass = apiContract("EndPoint"),
-        owlProperty = apiContract("path"),
-        constraint = sh("pattern"),
-        value = "^/",
-        ramlErrorMessage = "Resource path must start with a '/'",
-        openApiErrorMessage = "PathItem path must start with a '/'"
-      ),
-      AMFValidation(
         owlClass = apiContract("Operation"),
         owlProperty = apiContract("method"),
         constraint = sh("in"),
@@ -495,6 +487,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         value = "^([1-5]{1}[0-9]{2})$|^(default)$",
         ramlErrorMessage = "Status code for a Response must be a value between 100 and 599",
         openApiErrorMessage = "Status code for a Response must be a value between 100 and 599 or 'default'"
+      ),
+      AMFValidation(
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("path"),
+        constraint = sh("pattern"),
+        value = "^/",
+        message = "Resource path must start with a '/'"
       ),
       schemaRequiredInParameter
     )

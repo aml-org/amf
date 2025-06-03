@@ -3,7 +3,8 @@ package amf.apicontract.internal.spec.common.parser
 import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.PathTemplateUnbalancedParameters
 import amf.core.client.scala.model.domain.AmfObject
-import amf.core.internal.parser.domain.BaseSpecParser
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, BaseSpecParser}
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
 
@@ -29,5 +30,13 @@ trait SpecParserOps extends QuickFieldParserOps {
         value.location
       )
     }
+  }
+
+  protected def getAnnotationsFromMap(map: YMap, key: String): Annotations = {
+    map
+      .key(key)
+      .map(v => v.value)
+      .map(Annotations(_))
+      .getOrElse(Annotations.synthesized())
   }
 }

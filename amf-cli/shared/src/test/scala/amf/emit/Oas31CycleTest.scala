@@ -3,7 +3,6 @@ package amf.emit
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
-// TODO: should support and render new 'examples', 'pathItems' facets in oas 3.1
 class Oas31CycleTest extends FunSuiteCycleTests {
   override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/oas31/"
 
