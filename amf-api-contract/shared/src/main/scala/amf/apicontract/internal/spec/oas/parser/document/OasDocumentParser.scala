@@ -118,7 +118,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     parseAbstractDeclarations(parent, map)
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
-    parseResponsesDeclarations("responses", map, parent + "/responses")
+    parseResponsesDeclarations("responses", map)
   }
 
   def parseAbstractDeclarations(parent: String, map: YMap): Unit = {
@@ -251,7 +251,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     )
   }
 
-  protected def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+  protected def parseResponsesDeclarations(key: String, map: YMap): Unit = {
     map.key(
       key,
       entry => {
@@ -365,7 +365,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     )
   }
 
-  private def parseEndpoints(api: WebApi, entry: YMapEntry) = {
+  private def parseEndpoints(api: WebApi, entry: YMapEntry): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints =
       paths

@@ -116,9 +116,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
       }
     )
 
-    if (ctx.isOas31Context) {
-      validatePathParamName(endpoint)
-    }
+    if (ctx.isOas31Context) validatePathParamName(endpoint)
 
     endpoint
   }

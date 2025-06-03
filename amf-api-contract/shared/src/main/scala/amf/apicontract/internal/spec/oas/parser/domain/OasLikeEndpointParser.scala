@@ -4,7 +4,9 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, RemoteNodeNavigation}
+import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidEndpointPath, InvalidEndpointType}
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
@@ -36,19 +38,32 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
   protected def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
     ctx.link(entry.value) match {
       case Left(value) =>
-        ctx.navigateToRemoteYNode(value) match {
-          case Some(result) if isMap(result.remoteNode) =>
-            val node = result.remoteNode.as[YMap]
-            Some(buildNewParser(result).parseEndpointMap(endpoint, node))
-          case Some(n) =>
-            invalidNodeViolation(endpoint, n.remoteNode)
-            None
-          case None => getNodeFromDeclarations(endpoint, value)
+        val endpointName     = OasDefinitions.stripEndpointsDefinitionsPrefix(value)
+        val declaredEndpoint = ctx.declarations.channels.get(endpointName)
+        if (declaredEndpoint.isDefined) {
+          val map         = entry.value.as[YMap]
+          val annotations = getAnnotationsFromMap(map, "$ref")
+          declaredEndpoint.map { declaredEndpoint =>
+            val link: EndPoint =
+              ctx.link(declaredEndpoint, map, AmfScalar(endpointName), annotations, Annotations.synthesized())
+            link.withPath(endpoint.path.value())
+          }
+        } else {
+          ctx.navigateToRemoteYNode(value) match {
+            case Some(result) if isMap(result.remoteNode) =>
+              val node = result.remoteNode.as[YMap]
+              Some(buildNewParser(result).parseEndpointMap(endpoint, node))
+            case Some(n) =>
+              invalidNodeViolation(endpoint, n.remoteNode)
+              None
+            case None => getNodeFromDeclarations(endpoint, value)
+          }
         }
+
       case Right(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
     }
 
-  private def getNodeFromDeclarations(endpoint: EndPoint, value: String) = {
+  private def getNodeFromDeclarations(endpoint: EndPoint, value: String): Option[EndPoint] = {
     ctx.declarations.asts.get(value) match {
       case Some(node) if isMap(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
       case Some(notMapNode) =>
@@ -86,7 +101,6 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     AnnotationParser(endpoint, map).parse()
 
     endpoint
-
   }
 
   protected def parseOperations(entries: Iterable[YMapEntry]): Seq[Operation] = {

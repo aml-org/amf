@@ -18,6 +18,8 @@ webhooks:
       responses:
         "200":
           description: Return a 200 status to indicate that the data was received successfully
+  testWebhook:
+    $ref: "#/components/pathItems/testEndpoint"
 paths:
   /users:
     post:
@@ -29,6 +31,8 @@ paths:
       requestBody:
         $ref: "#/components/requestBodies/createUserRequest"
         description: this request description should override the referenced one
+  /test:
+    $ref: "#/components/pathItems/testEndpoint"
 security:
   -
     openIdConnect:
@@ -52,7 +56,6 @@ components:
         -
           type: "null"
     OtherSchema:
-      $schema: https://spec.openapis.org/oas/3.1/dialect/base
       type: object
       properties:
         some:
@@ -138,3 +141,13 @@ components:
     mutualTLS:
       type: mutualTLS
       description: mutualTLS security scheme
+  pathItems:
+    testEndpoint:
+      get:
+        responses:
+          "200":
+            description: A simple string response
+            content:
+              text/plain:
+                schema:
+                  type: string

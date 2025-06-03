@@ -43,6 +43,7 @@ import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -54,17 +55,22 @@ case class EndPointEmitter(
 )(implicit val specCtx: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
+    val path = getEndpointPath(endpoint, pathName)
+    b.complexEntry(ScalarEmitter(path).emit(_), EndPointPartEmitter(endpoint, ordering, references).emit(_))
+  }
+
+  @tailrec
+  private def getEndpointPath(endpoint: EndPoint, pathName: Option[String]): AmfScalar = {
     val fs = endpoint.fields
-    sourceOr(
-      endpoint.annotations,
-      b.complexEntry(
-        ScalarEmitter(
-          pathName.map(AmfScalar(_)).getOrElse(fs.entry(EndPointModel.Path).map(_.scalar).getOrElse(AmfScalar("")))
-        )
-          .emit(_),
-        EndPointPartEmitter(endpoint, ordering, references).emit(_)
-      )
-    )
+    pathName match {
+      case Some(path) => AmfScalar(path)
+      case None =>
+        fs.entry(EndPointModel.Path).map(_.scalar) match {
+          case Some(path)              => path
+          case None if endpoint.isLink => getEndpointPath(endpoint.linkTarget.get.asInstanceOf[EndPoint], pathName)
+          case None                    => AmfScalar("")
+        }
+    }
   }
 
   override def position(): Position = pos(endpoint.annotations)
@@ -77,6 +83,15 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
 
   override def emit(b: PartBuilder): Unit = {
+    if (endpoint.isLink) {
+      val refUrl = OasDefinitions.appendEndpointsDefinitionsPrefix(endpoint.linkLabel.value())
+      b.obj(_.entry("$ref", refUrl))
+    } else {
+      emitEndpoint(b)
+    }
+  }
+
+  private def emitEndpoint(b: PartBuilder): Unit = {
     val fs = endpoint.fields
     b.obj { b =>
       val result = mutable.ListBuffer[EntryEmitter]()
@@ -90,8 +105,7 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
       fs.entry(DomainElementModel.Extends)
         .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(specCtx.eh).emitters())
 
-      val parameters =
-        Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
+      val parameters = Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
 
       specCtx match {
         case _: Oas3SpecEmitterContext =>
@@ -104,7 +118,7 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
               .emitters()
           }
 
-        case _ => //
+        case _ => // ignore
       }
 
       if (parameters.nonEmpty)
@@ -127,7 +141,6 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
 
       traverse(ordering.sorted(result), b)
     }
-
   }
 
   private def operations(
