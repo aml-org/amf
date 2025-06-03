@@ -6,6 +6,10 @@ class Oas31UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/oas31/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas31/"
 
+  test("oas 31 endpoints should have '/' but webhooks and pathItems don't need to") {
+    validate("all-endpoint-locations.yaml", Some("all-endpoint-locations.report"))
+  }
+
   test("oas 31 items field must be an object") {
     validate("items-property-array.yaml", Some("items-property-array.report"))
   }

@@ -371,8 +371,18 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
       paths
         .regex("^/.*")
         .foldLeft(List[EndPoint]())((acc, curr) => acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
+
+    paths.entries.diff(paths.regex("^/.*").toSeq).foreach(invalidEndpoint => invalidEndpointValidation(invalidEndpoint))
+
     api.setWithoutId(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
+
     ctx.closedShape(api, paths, "paths")
+  }
+
+  private def invalidEndpointValidation(invalidEndpoint: YMapEntry): Unit = {
+    val name = invalidEndpoint.key.value.asInstanceOf[YScalar].text
+    if (!name.startsWith("x-") && !name.startsWith("$ref"))
+      ctx.eh.violation(InvalidEndpointPath, name, s"$name path must start with a '/'", invalidEndpoint.value.location)
   }
 }
 
