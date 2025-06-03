@@ -30,6 +30,8 @@ paths:
         description: this request description should override the referenced one
         $ref: '#/components/requestBodies/createUserRequest'
 
+  /test:
+    $ref: '#/components/pathItems/testEndpoint'
 security:
   - openIdConnect:
       - some
@@ -133,3 +135,14 @@ components:
     mutualTLS:
       type: mutualTLS
       description: mutualTLS security scheme
+
+  pathItems:
+    testEndpoint:
+      get:
+        responses:
+          '200':
+            description: A simple string response
+            content:
+              text/plain:
+                schema:
+                  type: string
