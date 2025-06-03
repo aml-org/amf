@@ -32,12 +32,12 @@ protected[amf] class Ajv(options: js.Object) extends js.Object {
 protected[amf] object AjvValidator {
   private lazy val options = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}"
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6, \"logger\": false}"
     )
     .asInstanceOf[js.Object]
   private lazy val fastOptions = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}"
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6, \"logger\": false}"
     )
     .asInstanceOf[js.Object]
 
