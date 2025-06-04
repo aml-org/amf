@@ -5305,6 +5305,7 @@ declare module "amf-client-js" {
     name: StrField;
     position: Range;
     url: StrField;
+    identifier: StrField;
 
     constructor();
 
@@ -5323,6 +5324,8 @@ declare module "amf-client-js" {
     withName(name: string): this;
 
     withUrl(url: string): this;
+
+    withIdentifier(identifier: string): this;
   }
   export class LinkNode implements DataNode {
     alias: StrField;
@@ -9354,6 +9357,7 @@ declare module "amf-client-js" {
     termsOfService: StrField;
     version: StrField;
     defaultSchema: StrField;
+    summary: StrField;
 
     constructor();
 
@@ -9412,6 +9416,8 @@ declare module "amf-client-js" {
     withVersion(version: string): this;
 
     withDefaultSchema(schema: string): this;
+
+    withSummary(summary: string): this;
   }
   export class WebSocketsChannelBinding implements ChannelBinding {
     customDomainProperties: Array<DomainExtension>;
