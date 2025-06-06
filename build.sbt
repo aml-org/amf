@@ -270,6 +270,42 @@ lazy val graphqlJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
+/** ********************************************** AMF-MCP *********************************************
+ */
+
+lazy val mcp = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-mcp"
+    )
+  )
+  .in(file("./amf-mcp"))
+  .settings(commonSettings)
+  .dependsOn(shapes)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-mcp-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-mcp.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.mcp"))
+
+lazy val mcpJVM =
+  mcp.jvm
+    .in(file("./amf-mcp/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val mcpJS =
+  mcp.js
+    .in(file("./amf-mcp/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+//    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
+
+
 /** ********************************************** AMF CLI *********************************************
   */
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
