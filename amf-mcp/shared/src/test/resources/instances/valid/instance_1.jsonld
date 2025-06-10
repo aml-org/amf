@@ -1,0 +1,212 @@
+{
+"@graph": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#BaseUnitProcessingData"
+],
+"http://a.ml/vocabularies/document#transformed": false,
+"http://a.ml/vocabularies/document#sourceSpec": "MCP"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/",
+"@type": [
+"http://a.ml/vocabularies/core#encodes",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#name": "test-mcp-server",
+"http://a.ml/vocabularies/core#protocolVersion": "2024-11-05",
+"http://a.ml/vocabularies/core#capabilities": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/capabilities"
+},
+"http://a.ml/vocabularies/core#tools": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1"
+}
+],
+"http://a.ml/vocabularies/core#resources": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/resources/0"
+}
+],
+"http://a.ml/vocabularies/core#prompts": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0"
+}
+],
+"http://a.ml/vocabularies/core#introspectedAt": "Thu Jun 05 09:38:22 PDT 2025",
+"http://a.ml/vocabularies/core#connectionStatus": "success"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/capabilities",
+"@type": [
+"http://a.ml/vocabularies/core#capabilities",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#tools": true,
+"http://a.ml/vocabularies/core#resources": true,
+"http://a.ml/vocabularies/core#prompts": true,
+"http://a.ml/vocabularies/core#logging": true
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0",
+"@type": [
+"http://a.ml/vocabularies/core#tools",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#name": "echo",
+"http://a.ml/vocabularies/core#description": "Echo back the provided text",
+"http://a.ml/vocabularies/core#inputSchema": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema"
+}
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1",
+"@type": [
+"http://a.ml/vocabularies/core#tools",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#name": "add",
+"http://a.ml/vocabularies/core#description": "Add two numbers together",
+"http://a.ml/vocabularies/core#inputSchema": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema"
+}
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/resources/0",
+"@type": [
+"http://a.ml/vocabularies/core#resources",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#uri": "test://example",
+"http://a.ml/vocabularies/core#name": "Example Resource",
+"http://a.ml/vocabularies/core#description": "A test resource",
+"http://a.ml/vocabularies/core#mimeType": "text/plain"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0",
+"@type": [
+"http://a.ml/vocabularies/core#prompts",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#name": "greeting",
+"http://a.ml/vocabularies/core#description": "A friendly greeting prompt",
+"http://a.ml/vocabularies/core#arguments": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0/arguments/0"
+}
+]
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema",
+"@type": [
+"http://a.ml/vocabularies/core#inputSchema",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#type": "object",
+"http://a.ml/vocabularies/core#properties": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties"
+},
+"http://a.ml/vocabularies/core#required": [
+"text"
+]
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema",
+"@type": [
+"http://a.ml/vocabularies/core#inputSchema",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#type": "object",
+"http://a.ml/vocabularies/core#properties": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties"
+},
+"http://a.ml/vocabularies/core#required": [
+"a",
+"b"
+]
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0/arguments/0",
+"@type": [
+"http://a.ml/vocabularies/core#arguments",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#name": "name",
+"http://a.ml/vocabularies/core#description": "Name to greet",
+"http://a.ml/vocabularies/core#required": true
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties",
+"@type": [
+"http://a.ml/vocabularies/core#properties",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#text": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties/text"
+}
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties",
+"@type": [
+"http://a.ml/vocabularies/core#properties",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#a": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/a"
+},
+"http://a.ml/vocabularies/core#b": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/b"
+}
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties/text",
+"@type": [
+"http://a.ml/vocabularies/core#text",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#type": "string",
+"http://a.ml/vocabularies/core#description": "The text to echo back"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/a",
+"@type": [
+"http://a.ml/vocabularies/core#a",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#type": "number",
+"http://a.ml/vocabularies/core#description": "First number"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/b",
+"@type": [
+"http://a.ml/vocabularies/core#b",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#type": "number",
+"http://a.ml/vocabularies/core#description": "Second number"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json",
+"@type": [
+"http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/document#encodes": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/"
+}
+],
+"http://a.ml/vocabularies/document#root": true,
+"http://a.ml/vocabularies/document#processingData": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/BaseUnitProcessingData"
+}
+}
+]
+}
