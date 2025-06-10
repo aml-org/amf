@@ -107,4 +107,10 @@ case class AsyncApi(override private[amf] val _internal: InternalAsyncApi) exten
     _internal.withDefaultSchema(schema)
     this
   }
+
+  /** Set webhooks property of this WebApi. */
+  def withWebhooks(webhooks: ClientList[EndPoint]): this.type = {
+    _internal.withWebhooks(webhooks.asInternal)
+    this
+  }
 }

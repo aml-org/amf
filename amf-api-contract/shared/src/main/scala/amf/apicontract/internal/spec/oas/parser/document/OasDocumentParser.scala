@@ -115,6 +115,13 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, Some(this))
     parseAnnotationTypeDeclarations(map, parent)
+    parseAbstractDeclarations(parent, map)
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
+    parseParameterDeclarations(map, parent + "/parameters")
+    parseResponsesDeclarations("responses", map)
+  }
+
+  def parseAbstractDeclarations(parent: String, map: YMap): Unit = {
     AbstractDeclarationsParser(
       "resourceTypes".asOasExtension,
       (entry: YMapEntry) => ResourceType(entry),
@@ -132,9 +139,6 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
       this
     )
       .parse()
-    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
-    parseParameterDeclarations(map, parent + "/parameters")
-    parseResponsesDeclarations("responses", map, parent + "/responses")
   }
 
   protected def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
@@ -247,7 +251,7 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     )
   }
 
-  protected def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+  protected def parseResponsesDeclarations(key: String, map: YMap): Unit = {
     map.key(
       key,
       entry => {
@@ -361,14 +365,24 @@ abstract class OasDocumentParser(root: Root, val spec: Spec)(implicit val ctx: O
     )
   }
 
-  private def parseEndpoints(api: WebApi, entry: YMapEntry) = {
+  private def parseEndpoints(api: WebApi, entry: YMapEntry): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints =
       paths
         .regex("^/.*")
         .foldLeft(List[EndPoint]())((acc, curr) => acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
+
+    paths.entries.diff(paths.regex("^/.*").toSeq).foreach(invalidEndpoint => invalidEndpointValidation(invalidEndpoint))
+
     api.setWithoutId(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
+
     ctx.closedShape(api, paths, "paths")
+  }
+
+  private def invalidEndpointValidation(invalidEndpoint: YMapEntry): Unit = {
+    val name = invalidEndpoint.key.value.asInstanceOf[YScalar].text
+    if (!name.startsWith("x-") && !name.startsWith("$ref"))
+      ctx.eh.violation(InvalidEndpointPath, name, s"$name path must start with a '/'", invalidEndpoint.value.location)
   }
 }
 
@@ -531,7 +545,10 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
       )
   }
 
+  // not mandatory anymore in OAS 3.1 onwards
   protected def mandatoryPathsError(element: AmfObject)(implicit ctx: WebApiContext): Unit = {
-    ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
+    if (ctx.spec != Spec.OAS31) {
+      ctx.eh.violation(MandatoryPathsProperty, element, "'paths' is mandatory in OAS spec")
+    }
   }
 }

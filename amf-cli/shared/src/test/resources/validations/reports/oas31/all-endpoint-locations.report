@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas31/all-endpoint-locations.yaml
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'invalidEndpoint' not supported in a OAS 3.1 paths node
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas31/all-endpoint-locations.yaml#/web-api
+  Property: 
+  Range: [(14,2)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas31/all-endpoint-locations.yaml
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-endpoint-path
+  Message: invalidEndpoint path must start with a '/'
+  Severity: Violation
+  Target: invalidEndpoint
+  Property: 
+  Range: [(14,18)-(17,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas31/all-endpoint-locations.yaml

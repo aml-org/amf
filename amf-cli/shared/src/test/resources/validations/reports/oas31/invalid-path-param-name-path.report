@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas31/invalid-path-param-name-path.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-path-parameter-name
+  Message: Invalid path parameter name 'invalid#param', cannot contains unescaped characters '/','?' or '#'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas31/invalid-path-param-name-path.yaml#/web-api/endpoint/%2Fsomething%2F%7Binvalid%23param%7D
+  Property: 
+  Range: [(7,2)-(8,0)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas31/invalid-path-param-name-path.yaml

@@ -283,7 +283,8 @@ class ShapeParserContext(
   private def normalizeJsonPath(path: String): String = {
     if (path == "#" || path == "" || path == "/") "/" // exception root cases
     else {
-      val s = if (path.startsWith("#/")) path.replace("#/", "") else path
+      var s = if (path.startsWith("#/")) path.replace("#/", "") else path
+      s = s.replace("~1", "/").replace("~0", "~")
       if (s.startsWith("/")) s.stripPrefix("/") else s
     }
   }

@@ -22,18 +22,19 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   private[amf] val isConcreteShape: Boolean = false
 
   // TODO: should return Option has field can be null
-  def documentation: CreativeWork     = fields.field(Documentation)
-  def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
-  def comment: StrField               = fields.field(Comment)
-
-  def withSemanticContext(context: SemanticContext): this.type = set(AnyShapeModel.Semantics, context)
-  def semanticContext: Option[SemanticContext]                 = Option(fields.field(AnyShapeModel.Semantics))
-
-  override def documentations: Seq[CreativeWork] = Seq(documentation)
+  def documentation: CreativeWork              = fields.field(Documentation)
+  def xmlSerialization: XMLSerializer          = fields.field(XMLSerialization)
+  def comment: StrField                        = fields.field(Comment)
+  def semanticContext: Option[SemanticContext] = Option(fields.field(AnyShapeModel.Semantics))
+  def schemaVersion: StrField                  = fields.field(SchemaVersion)
 
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
   def withComment(comment: String): this.type                          = set(Comment, comment)
+  def withSemanticContext(context: SemanticContext): this.type         = set(AnyShapeModel.Semantics, context)
+  def withSchemaVersion(version: String): this.type                    = set(SchemaVersion, version)
+
+  override def documentations: Seq[CreativeWork] = Seq(documentation)
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 

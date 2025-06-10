@@ -17,7 +17,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     }
   }
 
-  val cycleOas2ToOas3 = Seq(
+  val cycleOas2ToOas3: Seq[FixtureData] = Seq(
     FixtureData("Basic servers", "basic-servers-2.json", "basic-servers-2.json.json")
   )
 
@@ -27,7 +27,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     }
   }
 
-  val cyclesOas3 = Seq(
+  val cyclesOas3Json: Seq[FixtureData] = Seq(
     FixtureData("Basic servers", "basic-servers.json", "basic-servers.json"),
     FixtureData("Complex servers", "complex-servers.json", "complex-servers.json"),
     FixtureData("Basic content", "basic-content.json", "basic-content.json"),
@@ -74,9 +74,23 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     )
   )
 
-  cyclesOas3.foreach { f =>
-    test(s"${f.name} - oas3 to oas3") {
+  val cyclesOas3Yaml: Seq[FixtureData] = Seq(
+    FixtureData(
+      "invalid tuple shape in oas 3",
+      "invalid-tuple-shape/api.yaml",
+      "invalid-tuple-shape/dumped.yaml"
+    )
+  )
+
+  cyclesOas3Json.foreach { f =>
+    test(s"${f.name} - oas3 to oas3 json") {
       cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30JsonHint)
+    }
+  }
+
+  cyclesOas3Yaml.foreach { f =>
+    test(s"${f.name} - oas3 to oas3 yaml") {
+      cycle(f.apiFrom, f.apiTo, Oas30YamlHint, Oas30YamlHint)
     }
   }
 

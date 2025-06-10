@@ -2,7 +2,11 @@ package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterFactory
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaEmitterContext
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory, OasLikeSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas31SpecEmitterFactory,
+  Oas3SpecEmitterFactory,
+  OasLikeSpecEmitterContext
+}
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -60,6 +64,8 @@ class AgnosticShapeEmitterContextAdapter(private val specCtx: SpecEmitterContext
   override def options: RenderOptions = specCtx.options
 
   override def isOas3: Boolean = specCtx.factory.isInstanceOf[Oas3SpecEmitterFactory]
+
+  override def isOas31: Boolean = specCtx.factory.isInstanceOf[Oas31SpecEmitterFactory]
 
   override def isOasLike: Boolean = specCtx.isInstanceOf[OasLikeSpecEmitterContext]
 

@@ -38,6 +38,16 @@ object Oas3SettingsProducers extends SettingsProducers {
   }
 }
 
+object Oas31SettingsProducers extends SettingsProducers {
+  override def `for`(scheme: WithSettings): Map[SettingsType, Option[SettingsProducer]] = {
+    val common = Oas3SettingsProducers.`for`(scheme)
+    val specific: Map[SettingsType, Option[SettingsProducer]] = Map(
+      "mutualTLS" -> Some(scheme.withMutualTLSSettings)
+    )
+    common ++ specific
+  }
+}
+
 object Async2SettingsProducers extends SettingsProducers {
   override def `for`(scheme: WithSettings): Map[SettingsType, Option[SettingsProducer]] = {
     val common = OasLikeCommonSettingsProducers.`for`(scheme)

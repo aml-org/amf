@@ -1,0 +1,9 @@
+openapi: 3.0.3
+info:
+  title: Inscription & Mutation management API
+  version: 1.0.0
+
+paths:
+  /health:
+    $ref: "./endpoint-api.yaml#/paths/~1health"  #this should work
+#    $ref: "./endpoint-api.yaml#/paths//health"  #this is the workaround

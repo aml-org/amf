@@ -32,11 +32,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
       case Left(url) =>
         val name = OasDefinitions.stripResponsesDefinitionsPrefix(url)
 
-        val annotations = map
-          .key("$ref")
-          .map(v => v.value)
-          .map(Annotations(_))
-          .getOrElse(Annotations.synthesized())
+        val annotations = getAnnotationsFromMap(map, "$ref")
         ctx.declarations
           .findResponse(name, SearchScope.Named)
           .map { res =>

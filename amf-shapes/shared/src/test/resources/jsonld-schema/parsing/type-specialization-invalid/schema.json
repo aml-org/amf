@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "@context": {
+    "@base": "http://a.ml/vocabularies/data#",
+    "core": "http://a.ml/vocabularies/core#",
+    "anypoint": "http://anypoint.com/vocabs/anypoint#",
+    "a": "core:a",
+    "b": "core:b"
+  },
+  "type": "object",
+  "properties": {
+    "a": {
+      "type": "string"
+    },
+    "b" : {
+      "@context": {
+        "a": "anypoint:a"
+      },
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

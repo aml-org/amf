@@ -32,12 +32,12 @@ protected[amf] class Ajv(options: js.Object) extends js.Object {
 protected[amf] object AjvValidator {
   private lazy val options = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}"
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6, \"logger\": false}"
     )
     .asInstanceOf[js.Object]
   private lazy val fastOptions = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}"
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6, \"logger\": false}"
     )
     .asInstanceOf[js.Object]
 
@@ -72,6 +72,10 @@ protected[amf] object AjvValidator {
       .addFormat(
         "date-time",
         "^(?:\\d{4}-(?:(?:(?:(?:0[13578]|1[02])-(?:0[1-9]|[1-2][0-9]|3[01]))|(?:(?:0[469]|11)-(?:0[1-9]|[1-2][0-9]|30))|(?:02-(?:0[1-9]|1[0-9]|2[0-8]))))|(?:(?:\\d{2}(?:0[48]|[2468][048]|[13579][26]))|(?:(?:[02468][048])|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d{1,9})?(?:Z|[+-][01]\\d:[0-5]\\d)$"
+      )
+      .addFormat(
+        "uri",
+        "^(?:[a-z][a-z0-9+\\-.]*:)(?:\\/?\\/)?[^\\s]*$|^$"
       )
   }
 }

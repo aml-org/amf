@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  title: test API
+  version: 1.0.0
+paths:
+  /resource:
+    get:
+
+definitions:
+  Pet:
+    properties:
+      id:
+        type: array
+        items:
+          - type: integer
+          - type: string

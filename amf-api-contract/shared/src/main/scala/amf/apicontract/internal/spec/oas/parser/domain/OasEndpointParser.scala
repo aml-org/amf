@@ -5,6 +5,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser.{
+  Oas31ParameterParser,
   OasLikeSecurityRequirementParser,
   OasParametersParser,
   RamlParametersParser
@@ -12,6 +13,7 @@ import amf.apicontract.internal.spec.common.parser.{
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
 import amf.apicontract.internal.spec.spec.toRaml
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidPathParameterName
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
@@ -114,6 +116,31 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
       }
     )
 
+    if (ctx.isOas31Context) validatePathParamName(endpoint)
+
     endpoint
+  }
+
+  private def validatePathParamName(endPoint: EndPoint): Unit = {
+    val pattern = """\{([^}]+)\}""".r
+    val path    = endPoint.path.value()
+    pattern.findAllMatchIn(path).map(_.group(1)).toList
+    pattern
+      .findAllMatchIn(path) // Collects path params from the endpoint path
+      .map(_.group(1))
+      .toList
+      .foreach(paramName =>
+        Oas31ParameterParser
+          .isValidPathParameter(paramName)
+          .foreach(errorMessage =>
+            ctx.eh.violation(
+              InvalidPathParameterName,
+              endPoint,
+              errorMessage,
+              endPoint.annotations.sourceLocation
+            )
+          )
+      )
+
   }
 }

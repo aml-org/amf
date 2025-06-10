@@ -1,11 +1,9 @@
 package amf.validation
 
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
-
 class ValidOasModelParserTest extends ValidModelTest {
 
   test("Shape with items in oas") {
-    checkValid("/shapes/shape-with-items.json")
+    checkValid("/shapes/shape-with-items.yaml")
   }
 
   test("Test validate headers in request") {
@@ -91,6 +89,10 @@ class ValidOasModelParserTest extends ValidModelTest {
 
   test("Parse multiple flows") {
     checkValid("security-schemes/multiple-flows.yaml")
+  }
+
+  test("Link to external fragment with component like path") {
+    checkValid("external-fragment-component-ref/api.yaml")
   }
 
 }

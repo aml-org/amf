@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: example api
+version: 1.0.0
+
+/test/{param}:
+  get:
+
+  /child:
+    get:
+
+
+/another-test/{another-param}:
+  uriParameters:
+    another-param:
+      type: string
+  get:
+
+  /child: # this should also work because the parent defined it already
+    get:

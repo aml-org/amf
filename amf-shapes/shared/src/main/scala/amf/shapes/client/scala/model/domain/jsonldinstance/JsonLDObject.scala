@@ -29,22 +29,28 @@ case class JsonLDObject(
   implicit class FieldBuilder(property: String) {
 
     def toObjField(meta: Obj): Field = Field(meta, ValueType(property))
+    def toObjListField: Field        = Field(Type.Array(Type.ObjType), ValueType(property))
 
-    def toObjListField: Field = Field(Type.Array(Type.ObjType), ValueType(property))
     def toStrField: Field     = Field(Type.Str, ValueType(property))
-
     def toStrListField: Field = Field(Type.Array(Type.Str), ValueType(property))
 
-    def toIntField: Field = Field(Type.Int, ValueType(property))
-
+    def toIntField: Field     = Field(Type.Int, ValueType(property))
     def toIntListField: Field = Field(Type.Array(Type.Int), ValueType(property))
-    def toBoolField: Field    = Field(Type.Bool, ValueType(property))
 
+    def toBoolField: Field     = Field(Type.Bool, ValueType(property))
     def toBoolListField: Field = Field(Type.Array(Type.Bool), ValueType(property))
-    def toFloatField: Field    = Field(Type.Float, ValueType(property))
-    def toDoubleField: Field   = Field(Type.Double, ValueType(property))
 
+    def toFloatField: Field     = Field(Type.Float, ValueType(property))
     def toFloatListField: Field = Field(Type.Array(Type.Float), ValueType(property))
+
+    def toDoubleField: Field     = Field(Type.Double, ValueType(property))
+    def toDoubleListField: Field = Field(Type.Array(Type.Double), ValueType(property))
+
+    def toDateField: Field     = Field(Type.Date, ValueType(property))
+    def toDateListField: Field = Field(Type.Array(Type.Date), ValueType(property))
+
+    def toDateTimeField: Field     = Field(Type.DateTime, ValueType(property))
+    def toDateTimeListField: Field = Field(Type.Array(Type.DateTime), ValueType(property))
   }
 
   private def buildString(value: String) = new JsonLDScalar(value, DataTypes.String, annotations)
@@ -72,11 +78,6 @@ case class JsonLDObject(
   def withProperty(property: String, value: String): JsonLDObject =
     updateModelAndSet(property.toStrField, buildString(value))
 
-  def withDateOnlyProperty(property: String, value: SimpleDateTime): JsonLDObject =
-    updateModelAndSet(property.toStrField, buildDate(value))
-  def withDateTimeProperty(property: String, value: SimpleDateTime): JsonLDObject =
-    updateModelAndSet(property.toStrField, buildDateTime(value))
-
   def withProperty(property: String, value: Int): JsonLDObject =
     updateModelAndSet(property.toIntField, buildInteger(value))
 
@@ -91,6 +92,12 @@ case class JsonLDObject(
 
   def withProperty(property: String, value: JsonLDObject): JsonLDObject =
     updateModelAndSet(property.toObjField(value.meta), value)
+
+  def withDateOnlyProperty(property: String, value: SimpleDateTime): JsonLDObject =
+    updateModelAndSet(property.toDateField, buildDate(value))
+
+  def withDateTimeProperty(property: String, value: SimpleDateTime): JsonLDObject =
+    updateModelAndSet(property.toDateTimeField, buildDateTime(value))
 
   def withStringPropertyCollection(property: String, values: Seq[String]): JsonLDObject =
     updateModelAndSet(property.toStrListField, buildArray(values.map(buildString)))

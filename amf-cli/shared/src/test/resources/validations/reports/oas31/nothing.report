@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas31/nothing.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-oas-api
+  Message: OAS API should have at least a 'components', 'paths', or 'webhooks' property
+  Severity: Violation
+  Target: null
+  Property: 
+  Range: [(1,0)-(4,16)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas31/nothing.yaml

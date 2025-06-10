@@ -93,5 +93,7 @@ case class SecurityScheme(override private[amf] val _internal: InternalSecurityS
 
   def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()
 
+  def withMutualTLSSettings(): MutualTLSSettings = _internal.withMutualTLSSettings()
+
   override def linkCopy(): SecurityScheme = _internal.linkCopy()
 }

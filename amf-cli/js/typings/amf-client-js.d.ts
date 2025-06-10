@@ -1379,6 +1379,8 @@ declare module "amf-client-js" {
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
     position: Range;
+    refSummary: StrField;
+    refDescription: StrField;
 
     annotations(): Annotations;
     graph(): Graph;
@@ -1409,6 +1411,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -1466,6 +1470,7 @@ declare module "amf-client-js" {
     namespace: StrField;
     aliases: Array<StrField>;
     size: IntField;
+    schemaVersion: StrField;
 
     constructor();
 
@@ -1561,6 +1566,8 @@ declare module "amf-client-js" {
 
     withSize(size: number): this;
 
+    withSchemaVersion(version: string): this;
+
     avroSchemaType(): undefined | string;
 
     isAvroSchema(): boolean;
@@ -1572,6 +1579,7 @@ declare module "amf-client-js" {
     description: StrField;
     documentations: Array<CreativeWork>;
     endPoints: Array<EndPoint>;
+    webhooks: Array<EndPoint>;
     extendsNode: Array<DomainElement>;
     id: string;
     identifier: StrField;
@@ -1686,6 +1694,7 @@ declare module "amf-client-js" {
     description: StrField;
     documentations: Array<CreativeWork>;
     endPoints: Array<EndPoint>;
+    webhooks: Array<EndPoint>;
     extendsNode: Array<DomainElement>;
     id: string;
     identifier: StrField;
@@ -3324,6 +3333,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
 
     link<T>(): T;
     link<T>(label: string): T;
@@ -3678,6 +3689,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3715,6 +3728,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3750,6 +3765,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3827,6 +3844,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3858,6 +3877,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -3889,6 +3910,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -4292,6 +4315,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -4378,6 +4403,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -4415,6 +4442,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -5276,6 +5305,7 @@ declare module "amf-client-js" {
     name: StrField;
     position: Range;
     url: StrField;
+    identifier: StrField;
 
     constructor();
 
@@ -5294,6 +5324,8 @@ declare module "amf-client-js" {
     withName(name: string): this;
 
     withUrl(url: string): this;
+
+    withIdentifier(identifier: string): this;
   }
   export class LinkNode implements DataNode {
     alias: StrField;
@@ -6253,6 +6285,13 @@ declare module "amf-client-js" {
 
     withUrl(url: string): this;
   }
+  export class MutualTLSSettings extends Settings {
+    scopes: Array<Scope>;
+
+    constructor();
+
+    withScopes(scopes: Array<Scope>): this;
+  }
   export class Operation extends AbstractOperation implements Linkable {
     accepts: Array<StrField>;
     bindings: OperationBindings;
@@ -6569,6 +6608,8 @@ declare module "amf-client-js" {
     withScheme(scheme: SecurityScheme): this;
 
     withSettings(settings: Settings): this;
+
+    withMutualTLSSettings(): MutualTLSSettings;
   }
   export class ParametrizedTrait implements ParametrizedDeclaration {
     customDomainProperties: Array<DomainExtension>;
@@ -7157,6 +7198,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -7797,6 +7840,8 @@ declare module "amf-client-js" {
     withSettings(settings: Settings): this;
 
     withType(type: string): this;
+
+    withMutualTLSSettings(): MutualTLSSettings;
   }
   export class SecuritySchemeFragment extends Fragment {
     constructor();
@@ -7980,6 +8025,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
 
     link<T>(): T;
     link<T>(label: string): T;
@@ -8318,6 +8365,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
 
     annotations(): Annotations;
@@ -8344,6 +8393,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination>;
 
@@ -8372,6 +8423,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination020>;
 
@@ -8400,6 +8453,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination030>;
 
@@ -8428,6 +8483,8 @@ declare module "amf-client-js" {
     isLink: boolean;
     linkLabel: StrField;
     linkTarget: DomainElement | undefined;
+    refSummary: StrField;
+    refDescription: StrField;
     position: Range;
     destinations: Array<SolaceOperationDestination040>;
     timeToLive: IntField;
@@ -9284,6 +9341,7 @@ declare module "amf-client-js" {
     description: StrField;
     documentations: Array<CreativeWork>;
     endPoints: Array<EndPoint>;
+    webhooks: Array<EndPoint>;
     extendsNode: Array<DomainElement>;
     id: string;
     identifier: StrField;
@@ -9299,6 +9357,7 @@ declare module "amf-client-js" {
     termsOfService: StrField;
     version: StrField;
     defaultSchema: StrField;
+    summary: StrField;
 
     constructor();
 
@@ -9357,6 +9416,8 @@ declare module "amf-client-js" {
     withVersion(version: string): this;
 
     withDefaultSchema(schema: string): this;
+
+    withSummary(summary: string): this;
   }
   export class WebSocketsChannelBinding implements ChannelBinding {
     customDomainProperties: Array<DomainExtension>;

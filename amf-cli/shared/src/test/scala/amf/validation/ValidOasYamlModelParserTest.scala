@@ -1,8 +1,11 @@
 package amf.validation
 
-import amf.core.internal.remote.{Hint, Oas20YamlHint}
-
 class ValidOasYamlModelParserTest extends ValidModelTest {
+
+  // W-18551455
+  test("OAS $ref should support json-pointers to external file") {
+    checkValid("oas3/operation-ref/api-external.yaml")
+  }
 
   test("Test multiple formData parameters") {
     checkValid("/parameters/multiple-formdata.yaml")

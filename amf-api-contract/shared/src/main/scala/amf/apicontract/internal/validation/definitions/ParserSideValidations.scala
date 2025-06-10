@@ -11,6 +11,11 @@ object ParserSideValidations extends Validations {
   override val specification: String = PARSER_SIDE_VALIDATION
   override val namespace: Namespace  = AmfParser
 
+  val NonEmptyOasApi = validation(
+    "non-empty-oas-api",
+    "OAS API should have at least a 'components', 'paths', or 'webhooks' property"
+  )
+
   val NonEmptyBindingMap = validation(
     "non-empty-binding-map",
     "Reserved name binding must have an empty map"
@@ -291,6 +296,11 @@ object ParserSideValidations extends Validations {
     "Invalid parameter style binding combination"
   )
 
+  val InvalidPathParameterName = validation(
+    "invalid-path-parameter-name",
+    "invalid-path-parameter-name"
+  )
+
   val InvalidTypesType = validation(
     "invalid-types-type",
     "Invalid types type"
@@ -468,6 +478,7 @@ object ParserSideValidations extends Validations {
     OasInvalidParameterSchema.id                 -> all(WARNING), // TODO: should be violation
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
     InvalidDirectiveLocation.id                  -> all(VIOLATION),
+    InvalidPathParameterName.id                  -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
@@ -526,6 +537,7 @@ object ParserSideValidations extends Validations {
     InvalidTagType,
     InvalidIdentifier,
     InvalidComponents,
+    InvalidPathParameterName,
     InvalidStatusCode,
     HeaderMustBeObject,
     InvalidModuleType,

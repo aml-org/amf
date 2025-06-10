@@ -36,6 +36,8 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
       case apiKey: ApiKeySettings        => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
       case http: HttpSettings            => OasHttpSettingsEmitters(http, ordering).emitters()
       case openId: OpenIdConnectSettings => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
+      case mutualTLS: MutualTLSSettings if spec.spec == Spec.OAS31 =>
+        OasMutualTLSSettingsEmitters(mutualTLS, ordering).emitters()
       case _ =>
         val internals = ListBuffer[EntryEmitter]()
         settings.fields
@@ -47,6 +49,16 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
           Seq(OasSettingsTypeEmitter(internals, settings, ordering))
         else Nil
     }
+  }
+}
+
+case class OasMutualTLSSettingsEmitters(settings: Settings, ordering: SpecOrdering)(implicit
+    spec: SpecEmitterContext
+) {
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+  def emitters(): Seq[EntryEmitter] = {
+    val externals = ListBuffer[EntryEmitter]()
+    externals ++= AnnotationsEmitter(settings, ordering).emitters
   }
 }
 

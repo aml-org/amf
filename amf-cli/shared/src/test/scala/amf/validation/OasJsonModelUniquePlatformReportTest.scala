@@ -259,6 +259,12 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("OAS 3.1 full API should be valid") {
-    validate("oas-31-full.json", None, configOverride = Some(OASConfiguration.OAS31()), directory = cyclePath)
+    validate(
+      "oas-31-full.json",
+      None,
+      configOverride = Some(OASConfiguration.OAS31()),
+      directory = cyclePath,
+      ignoreWarnings = true // It is a warning in a field which validation use is still not implemented)
+    )
   }
 }

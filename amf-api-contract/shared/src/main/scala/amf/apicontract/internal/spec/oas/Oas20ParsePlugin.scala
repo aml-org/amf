@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
-import amf.apicontract.internal.spec.oas.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
+import amf.apicontract.internal.spec.oas.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header, Oas31Header}
 import amf.apicontract.internal.spec.oas.parser.context.{Oas2WebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.oas.parser.document
 import amf.apicontract.internal.spec.oas.parser.document.{Oas2DocumentParser, OasFragmentParser}
@@ -16,7 +16,7 @@ object Oas20ParsePlugin extends OasParsePlugin {
 
   override def spec: Spec = Oas20
 
-  override def applies(element: Root): Boolean = OasHeader(element).exists(_ != Oas30Header)
+  override def applies(element: Root): Boolean = OasHeader(element).exists(h => h != Oas30Header && h != Oas31Header)
 
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/json`, Mimes.`application/yaml`)
 

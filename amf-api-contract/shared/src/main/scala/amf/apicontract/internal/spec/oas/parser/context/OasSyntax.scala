@@ -1,22 +1,23 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
-import amf.apicontract.internal.spec.async.parser.context.syntax.add
 import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.parser.SyntaxHelper._
 import amf.shapes.internal.spec.oas.parser.{Oas2ShapeSyntax, Oas3ShapeSyntax}
 
 object Oas31Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] =
     add(
       Oas3Syntax.nodes,
-      "webApi" -> Set("webhooks"),
-      "license" -> Set("identifier"),
-      "info"    -> Set("summary")
+      "webApi"     -> Set("webhooks", "jsonSchemaDialect"),
+      "license"    -> Set("identifier"),
+      "info"       -> Set("summary"),
+      "components" -> Set("pathItems")
     )
 }
 
 object Oas3Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] = Oas3ShapeSyntax.nodes ++ Map(
-    "paths" -> Set.empty[String],
+    "paths" -> Set.empty[String], // everything that doesn't start with '/', 'x-' or '$ref' is invalid (OasLikeIgnoreCriteria)
     "webApi" -> Set(
       "openapi",
       "info",
@@ -227,8 +228,8 @@ object Oas3Syntax extends SpecSyntax {
 object Oas2Syntax extends SpecSyntax {
 
   override val nodes: Map[String, Set[String]] = Oas2ShapeSyntax.nodes ++ Map(
-    "paths" -> Set
-      .empty[String], // paths in oas ignores the ones starting with '/', 'x-' and '$ref' but everything else is invalid
+    "paths" -> Set.empty[String], // everything that doesn't start with '/', 'x-' or '$ref' is invalid (OasLikeIgnoreCriteria)
+
     "webApi" -> Set(
       "swagger",
       "info",

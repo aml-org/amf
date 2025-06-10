@@ -5,7 +5,7 @@
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/apiContract#modelVersion": "3.10.0",
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.11.0",
       "http://a.ml/vocabularies/document#transformed": true,
       "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
     },
@@ -258,6 +258,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/source-map/default-node/element_0"
+        }
       ]
     },
     {
@@ -318,6 +323,11 @@
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema/source-map/default-node/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/expects/request/payload/application%2Fjson/any/schema",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },

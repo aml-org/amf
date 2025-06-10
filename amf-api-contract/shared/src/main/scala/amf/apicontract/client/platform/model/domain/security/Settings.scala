@@ -7,6 +7,7 @@ import amf.apicontract.client.scala.model.domain.security.{
   OAuth1Settings => InternalOAuth1Settings,
   OAuth2Settings => InternalOAuth2Settings,
   OpenIdConnectSettings => InternalOpenIdConnectSettings,
+  MutualTLSSettings => InternalMutualTLSSettings,
   Settings => InternalSettings
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
@@ -188,6 +189,22 @@ case class OpenIdConnectSettings(override private[amf] val _internal: InternalOp
   }
 
   /** Set scopes property of this OpenIdConnectSettings. */
+  def withScopes(scopes: ClientList[Scope]): this.type = {
+    _internal.withScopes(scopes.asInternal)
+    this
+  }
+}
+
+@JSExportAll
+case class MutualTLSSettings(override private[amf] val _internal: InternalMutualTLSSettings)
+  extends Settings(_internal) {
+
+  @JSExportTopLevel("MutualTLSSettings")
+  def this() = this(InternalMutualTLSSettings())
+
+  def scopes: ClientList[Scope] = _internal.scopes.asClient
+
+  /** Set scopes property of this MutualTLSSettings. */
   def withScopes(scopes: ClientList[Scope]): this.type = {
     _internal.withScopes(scopes.asInternal)
     this

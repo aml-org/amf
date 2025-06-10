@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Flights-API
+paths:
+  /paramInEndpoint/{endpointParam}:
+    parameters:
+#      - name: ID
+#        in: path
+#        required: true
+#        schema:
+#          type: string
+      - name: ID # should not count because it's not a path param
+        in: query
+        required: true
+        schema:
+          type: string
+
+  /paramInRequest/{requestParam}:
+    get:
+      parameters:
+#        - name: ID
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+        - name: ID # should not count because it's not a path param
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /paramInRequest/{some}/{another}: # should show validation because the second param is missing
+    get:
+      parameters:
+        - name: some
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""

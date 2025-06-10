@@ -1,9 +1,17 @@
 ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json
 Profile: OAS 3.0
 Conforms: true
-Number of results: 2
+Number of results: 5
 
 Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-oas-items-field
+  Message: OAS Schemas 'items' field must be an object
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json#/declares/array/invalid-tuple-array-additional-items-boolean
+  Property: null
+  Range: [(9,6)-(26,7)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT have more than 2 items
@@ -13,10 +21,26 @@ Level: Warning
   Range: [(21,19)-(25,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json
 
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-oas-items-field
+  Message: OAS Schemas 'items' field must be an object
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json#/declares/array/invalid-tuple-array-additional-items-object
+  Property: null
+  Range: [(27,6)-(46,7)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json
+
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [2] should be string
   Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json#/declares/array/invalid-tuple-array-additional-items-object/examples/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json#/declares/array/invalid-tuple-array-additional-items-object/examples/example/default-example
   Range: [(41,19)-(45,9)]
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json
+
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-oas-items-field
+  Message: OAS Schemas 'items' field must be an object
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json#/declares/array/valid-tuple-array-additional-items-object
+  Property: null
+  Range: [(47,6)-(62,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/additional-items.json

@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: OAS 3.1 with all possible endpoint locations
+  version: 1.0.0
+
+webhooks:
+  testWebhook: # doesn't need to start with '/'
+    $ref: '#/components/pathItems/testEndpoint'
+
+paths:
+  /test:
+    $ref: '#/components/pathItems/testEndpoint'
+
+  invalidEndpoint: # MUST start with '/'
+    $ref: '#/components/pathItems/testEndpoint'
+
+components:
+  pathItems:
+    testEndpoint: # doesn't need to start with '/'
+      get:
+        responses:
+          '200':
+            description: A simple string response
+            content:
+              text/plain:
+                schema:
+                  type: string

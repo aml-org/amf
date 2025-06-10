@@ -81,7 +81,7 @@ case class InlineOasTypeParser(
               ctx.closedShape(shape, map, oas.position.toString)
             case _ => // Nothing to do
           }
-          if (isOas3 || isOas31) Some(checkOas3Nullable(shape))
+          if (isOas3) Some(checkOas30Nullable(shape))
           else Some(shape)
         case None => None
       }
@@ -100,6 +100,7 @@ case class InlineOasTypeParser(
       )
 
   protected def isOas: Boolean   = version.isInstanceOf[OASSchemaVersion]
+  protected def isOas2: Boolean  = version.isInstanceOf[OAS20SchemaVersion]
   protected def isOas3: Boolean  = version.isInstanceOf[OAS30SchemaVersion]
   protected def isOas31: Boolean = version.isInstanceOf[OAS31SchemaVersion]
 
@@ -111,7 +112,7 @@ case class InlineOasTypeParser(
     }
   }
 
-  def checkOas3Nullable(parsed: AnyShape): AnyShape = {
+  private def checkOas30Nullable(parsed: AnyShape): AnyShape = {
     map.key("nullable") match {
       case Some(nullableEntry) if nullableEntry.value.toOption[Boolean].getOrElse(false) =>
         val union = UnionShape().withName(name, nameAnnotations).withId(parsed.id + "/nilUnion")
@@ -525,15 +526,25 @@ case class InlineOasTypeParser(
           val shape = ArrayShapeParser(array, map, adopt).parse()
           validateMissingItemsField(shape)
           shape
-        case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt).parse()
-        case Some(Right(array)) => ArrayShapeParser(array, map, adopt).parse()
+        case Some(Left(tuple)) =>
+          val shape = TupleShapeParser(tuple, map, adopt).parse()
+          invalidItemsFieldValidation(shape)
+          shape
+        case Some(Right(array)) =>
+          ArrayShapeParser(array, map, adopt).parse()
       }
     }
 
+    private def invalidItemsFieldValidation(shape: AnyShape): Unit = {
+      if (isOas31) {
+        ctx.eh.violation(InvalidOasItemsField, shape, Some(shape.id), "OAS Schemas 'items' field must be an object")
+      } else if (isOas3 || isOas2)
+        ctx.eh.warning(InvalidOasItemsField, shape, Some(shape.id), "OAS Schemas 'items' field must be an object")
+    }
+
     private def validateMissingItemsField(shape: Shape): Unit = {
-      if (version.isInstanceOf[OAS30SchemaVersion]) {
+      if (isOas3)
         ctx.eh.violation(ItemsFieldRequired, shape, "'items' field is required when schema type is array", map.location)
-      }
     }
   }
 
@@ -671,6 +682,18 @@ case class InlineOasTypeParser(
 
       if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         map.key("$comment", AnyShapeModel.Comment in shape)
+
+      if (version.isInstanceOf[OAS31SchemaVersion]) {
+        map.key("$schema") match {
+          case Some(entry) => Some(entry).foreach(AnyShapeModel.SchemaVersion in shape)
+          case None =>
+            shape.setWithoutId(
+              AnyShapeModel.SchemaVersion,
+              AmfScalar("https://spec.openapis.org/oas/3.1/dialect/base"),
+              Annotations.inferred()
+            )
+        }
+      }
 
       shape
     }

@@ -3,13 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.document
 import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
-import amf.apicontract.internal.spec.common.parser.{
-  AbstractDeclarationsParser,
-  WebApiLikeReferencesParser,
-  YamlTagValidator
-}
+import amf.apicontract.internal.spec.common.parser.{WebApiLikeReferencesParser, YamlTagValidator}
 import amf.apicontract.internal.spec.oas.parser.Oas3ReferencesParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.{
@@ -23,9 +17,8 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec
-import amf.core.internal.utils._
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, Oas3NamedExamplesParser}
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model.{YMap, YScalar}
 
 object Oas3DocumentParser {
   def apply(root: Root, spec: Spec = Spec.OAS30)(implicit ctx: OasWebApiContext): Oas3DocumentParser =
@@ -52,34 +45,19 @@ class Oas3DocumentParser(root: Root, spec: Spec = Spec.OAS30)(implicit override 
     map.key("components").foreach { components =>
       val parent = root.location + "#/declarations"
       val map    = components.value.as[YMap]
+
       parseExamplesDeclaration(map, parent + "/examples")
       parseLinkDeclarations(map, parent + "/links")
       super.parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
       super.parseTypeDeclarations(map, Some(this))
       parseHeaderDeclarations(map, parent + "/headers")
       super.parseParameterDeclarations(map, parent + "/parameters")
-      super.parseResponsesDeclarations("responses", map, parent + "/responses")
+      super.parseResponsesDeclarations("responses", map)
       parseRequestBodyDeclarations(map, parent + "/requestBodies")
       parseCallbackDeclarations(map, parent + "/callbacks")
-
       super.parseAnnotationTypeDeclarations(map, parent)
-      AbstractDeclarationsParser(
-        "resourceTypes".asOasExtension,
-        (entry: YMapEntry) => ResourceType(entry),
-        map,
-        parent + "/resourceTypes",
-        ResourceTypeModel,
-        this
-      ).parse()
-      AbstractDeclarationsParser(
-        "traits".asOasExtension,
-        (entry: YMapEntry) => Trait(entry),
-        map,
-        parent + "/traits",
-        TraitModel,
-        this
-      )
-        .parse()
+      super.parseAbstractDeclarations(parent, map)
+
       ctx.closedShape(parentObj, map, "components")
       validateNames()
     }
