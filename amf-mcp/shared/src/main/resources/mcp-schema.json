@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCP Asset Schema",
+  "type": "object",
+  "required": [
+    "protocolVersion",
+    "name",
+    "introspectedAt",
+    "connectionStatus",
+    "capabilities"
+  ],
+  "properties": {
+    "protocolVersion": {
+      "type": "string",
+      "enum": [ "2024-11-05", "2025-03-26"],
+      "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the MCP server"
+    },
+    "introspectedAt": {
+      "type": "string",
+      "description": "Timestamp when the introspection was performed"
+    },
+    "connectionStatus": {
+      "type": "string",
+      "description": "Status of the connection to the MCP server",
+      "enum": ["success", "failed", "error"]
+    },
+    "transport": {
+      "type": "string",
+      "enum": [ "sse", "stdio", "Streamable HTTP"],
+      "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
+    },
+    "capabilities": {
+      "type": "object",
+      "description": "Boolean flags indicating which capabilities the server supports",
+      "required": [
+        "tools",
+        "resources",
+        "prompts",
+        "logging"
+      ],
+      "properties": {
+        "tools": {
+          "type": "boolean",
+          "description": "Whether the server supports tools"
+        },
+        "resources": {
+          "type": "boolean",
+          "description": "Whether the server supports resources"
+        },
+        "prompts": {
+          "type": "boolean",
+          "description": "Whether the server supports prompts"
+        },
+        "logging": {
+          "type": "boolean",
+          "description": "Whether the server supports logging"
+        }
+      },
+      "additionalProperties": false
+    },
+    "if": {
+      "properties": {
+        "protocolVersion": { "const": "2024-11-05" }
+      }
+    },
+    "then": {
+      "tools": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2024-11-05.json#/definitions/ListToolsResult"
+        },
+        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+      },
+      "resources": {
+        "type": "array",
+        "items": { "$ref": "standard-schemas/2024-11-05.json#/definitions/ListResourcesResult" },
+        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+      },
+      "prompts": {
+        "type": "array",
+        "items": { "$ref": "standard-schemas/2024-11-05.json#/definitions/ListPromptsResult" },
+        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+      }
+    },
+    "else": {
+      "tools": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2025-03-26.json#/definitions/ListToolsResult"
+        },
+        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+      },
+      "resources": {
+        "type": "array",
+        "items": { "$ref": "standard-schemas/2025-03-26.json#/definitions/ListResourcesResult" },
+        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+      },
+      "prompts": {
+        "type": "array",
+        "items": { "$ref": "standard-schemas/2025-03-26.json#/definitions/ListPromptsResult" },
+        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+      }
+    },
+    "logging": {
+      "type": "object",
+      "properties": {},
+      "description": "Present if the server supports sending log messages to the client.",
+      "additionalProperties": true
+    },
+    "additionalProperties": false
+  }
+}
