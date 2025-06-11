@@ -11,7 +11,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/",
 "@type": [
-"http://a.ml/vocabularies/core#encodes",
+"https://modelcontextprotocol.io/vocab#Server",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "test-mcp-server",
@@ -54,7 +54,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0",
 "@type": [
-"http://a.ml/vocabularies/core#tools",
+"https://modelcontextprotocol.io/vocab#Tool",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "echo",
@@ -66,7 +66,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1",
 "@type": [
-"http://a.ml/vocabularies/core#tools",
+"https://modelcontextprotocol.io/vocab#Tool",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "add",
@@ -78,7 +78,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/resources/0",
 "@type": [
-"http://a.ml/vocabularies/core#resources",
+"https://modelcontextprotocol.io/vocab#Resource",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#uri": "test://example",
@@ -89,7 +89,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0",
 "@type": [
-"http://a.ml/vocabularies/core#prompts",
+"https://modelcontextprotocol.io/vocab#Prompt",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "greeting",
@@ -103,7 +103,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema",
 "@type": [
-"http://a.ml/vocabularies/core#inputSchema",
+"https://modelcontextprotocol.io/vocab#ToolInputSchema",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#type": "object",
@@ -117,7 +117,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema",
 "@type": [
-"http://a.ml/vocabularies/core#inputSchema",
+"https://modelcontextprotocol.io/vocab#ToolInputSchema",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#type": "object",
@@ -132,7 +132,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0/arguments/0",
 "@type": [
-"http://a.ml/vocabularies/core#arguments",
+"https://modelcontextprotocol.io/vocab#PromptArgument",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "name",

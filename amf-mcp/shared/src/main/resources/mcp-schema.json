@@ -12,7 +12,10 @@
   "properties": {
     "protocolVersion": {
       "type": "string",
-      "enum": [ "2024-11-05", "2025-03-26"],
+      "enum": [
+        "2024-11-05",
+        "2025-03-26"
+      ],
       "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
     },
     "name": {
@@ -26,11 +29,19 @@
     "connectionStatus": {
       "type": "string",
       "description": "Status of the connection to the MCP server",
-      "enum": ["success", "failed", "error"]
+      "enum": [
+        "success",
+        "failed",
+        "error"
+      ]
     },
     "transport": {
       "type": "string",
-      "enum": [ "sse", "stdio", "Streamable HTTP"],
+      "enum": [
+        "sse",
+        "stdio",
+        "Streamable HTTP"
+      ],
       "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
     },
     "capabilities": {
@@ -62,49 +73,6 @@
       },
       "additionalProperties": false
     },
-    "if": {
-      "properties": {
-        "protocolVersion": { "const": "2024-11-05" }
-      }
-    },
-    "then": {
-      "tools": {
-        "type": "array",
-        "items": {
-          "$ref": "standard-schemas/2024-11-05.json#/definitions/ListToolsResult"
-        },
-        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
-      },
-      "resources": {
-        "type": "array",
-        "items": { "$ref": "standard-schemas/2024-11-05.json#/definitions/ListResourcesResult" },
-        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
-      },
-      "prompts": {
-        "type": "array",
-        "items": { "$ref": "standard-schemas/2024-11-05.json#/definitions/ListPromptsResult" },
-        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
-      }
-    },
-    "else": {
-      "tools": {
-        "type": "array",
-        "items": {
-          "$ref": "standard-schemas/2025-03-26.json#/definitions/ListToolsResult"
-        },
-        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
-      },
-      "resources": {
-        "type": "array",
-        "items": { "$ref": "standard-schemas/2025-03-26.json#/definitions/ListResourcesResult" },
-        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
-      },
-      "prompts": {
-        "type": "array",
-        "items": { "$ref": "standard-schemas/2025-03-26.json#/definitions/ListPromptsResult" },
-        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
-      }
-    },
     "logging": {
       "type": "object",
       "properties": {},
@@ -112,5 +80,66 @@
       "additionalProperties": true
     },
     "additionalProperties": false
+  },
+  "if": {
+    "properties": {
+      "protocolVersion": {
+        "const": "2024-11-05"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "tools": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2024-11-05.json#/definitions/Tool"
+        },
+        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+      },
+      "resources": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2024-11-05.json#/definitions/Resource"
+        },
+        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+      },
+      "prompts": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2024-11-05.json#/definitions/ListPromptsResult"
+        },
+        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "tools": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2025-03-26.json#/definitions/Tool"
+        },
+        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+      },
+      "resources": {
+        "type": "array",
+        "items": {
+          "$ref": "standard-schemas/2025-03-26.json#/definitions/Resource"
+        },
+        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+      },
+      "prompts": {
+        "type": "array",
+        "items": {
+          "@context": {
+            "mcp": "https://modelcontextprotocol.io/vocab#",
+            "@type": "mcp:Prompt"
+          },
+          "$ref": "standard-schemas/2025-03-26.json#/definitions/Prompt"
+        },
+        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+      }
+    }
   }
 }

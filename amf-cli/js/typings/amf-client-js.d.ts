@@ -9556,6 +9556,39 @@ declare module "amf-client-js" {
     static isTypeOf(element: AmfObjectWrapper, typeIri: Array<String>): boolean;
   }
 
+  export class MCPConfiguration extends BaseMCPConfiguration {
+    static MCP(): MCPConfiguration;
+
+    baseUnitClient(): MCPBaseUnitClient;
+  }
+
+  export class BaseMCPConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseMCPConfiguration;
+
+    withErrorHandlerProvider(
+        provider: ErrorHandlerProvider
+    ): BaseMCPConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseMCPConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseMCPConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseMCPConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseMCPConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseMCPConfiguration;
+
+    withTransformationPipeline(
+        pipeline: TransformationPipeline
+    ): BaseMCPConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseMCPConfiguration;
+  }
+  export class MCPBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
   namespace org {
     namespace mulesoft {
       namespace common {
