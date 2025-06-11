@@ -3,10 +3,177 @@ package amf.mcp.internal.plugins.parse.schema
 object MCPSchema {
 
   val schema: String =
-    """
-      |{
+    """{
       |  "$schema": "http://json-schema.org/draft-07/schema#",
+      |  "@context": {
+      |    "mcp": "https://modelcontextprotocol.io/vocab#",
+      |    "@type": "mcp:Server",
+      |    "tools": {
+      |      "@container": "mcp:Tools"
+      |    }
+      |  },
       |  "title": "MCP Asset Schema",
+      |  "definitions": {
+      |    "tool": {
+      |      "@context": {
+      |        "mcp": "https://modelcontextprotocol.io/vocab#",
+      |        "@type": "mcp:Tool"
+      |      },
+      |      "description": "Definition for a tool the client can call.",
+      |      "properties": {
+      |        "description": {
+      |          "description": "A human-readable description of the tool.",
+      |          "type": "string"
+      |        },
+      |        "inputSchema": {
+      |          "@context": {
+      |            "mcp": "https://modelcontextprotocol.io/vocab#",
+      |            "@type": "mcp:ToolInputSchema"
+      |          },
+      |          "description": "A JSON Schema object defining the expected parameters for the tool.",
+      |          "properties": {
+      |            "properties": {
+      |              "additionalProperties": {
+      |                "additionalProperties": true,
+      |                "properties": {},
+      |                "type": "object"
+      |              },
+      |              "type": "object"
+      |            },
+      |            "required": {
+      |              "items": {
+      |                "type": "string"
+      |              },
+      |              "type": "array"
+      |            },
+      |            "type": {
+      |              "const": "object",
+      |              "type": "string"
+      |            }
+      |          },
+      |          "required": [
+      |            "type"
+      |          ],
+      |          "type": "object"
+      |        },
+      |        "name": {
+      |          "description": "The name of the tool.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "inputSchema",
+      |        "name"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "resource": {
+      |      "@context": {
+      |        "mcp": "https://modelcontextprotocol.io/vocab#",
+      |        "@type": "mcp:Resource"
+      |      },
+      |      "description": "A known resource that the server is capable of reading.",
+      |      "properties": {
+      |        "annotations": {
+      |          "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
+      |          "properties": {
+      |            "audience": {
+      |              "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
+      |              "items": {
+      |                "description": "Describes who the intended customer of this object or data is.",
+      |                "enum": [
+      |                  "assistant",
+      |                  "user"
+      |                ],
+      |                "type": "string"
+      |              },
+      |              "type": "array"
+      |            },
+      |            "priority": {
+      |              "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
+      |              "maximum": 1,
+      |              "minimum": 0,
+      |              "type": "number"
+      |            }
+      |          },
+      |          "type": "object"
+      |        },
+      |        "description": {
+      |          "description": "A description of what this resource represents.",
+      |          "type": "string"
+      |        },
+      |        "mimeType": {
+      |          "description": "The MIME type of this resource, if known.",
+      |          "type": "string"
+      |        },
+      |        "name": {
+      |          "description": "A human-readable name for this resource.",
+      |          "type": "string"
+      |        },
+      |        "uri": {
+      |          "description": "The URI of this resource.",
+      |          "format": "uri",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "name",
+      |        "uri"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "prompt": {
+      |      "@context": {
+      |        "mcp": "https://modelcontextprotocol.io/vocab#",
+      |        "@type": "mcp:Prompt"
+      |      },
+      |      "description": "A prompt or prompt template that the server offers.",
+      |      "properties": {
+      |        "arguments": {
+      |          "description": "A list of arguments to use for templating the prompt.",
+      |          "items": {
+      |            "@context": {
+      |              "mcp": "https://modelcontextprotocol.io/vocab#",
+      |              "@type": "mcp:PromptArgument"
+      |            },
+      |            "description": "Describes an argument that a prompt can accept.",
+      |            "properties": {
+      |              "description": {
+      |                "description": "A human-readable description of the argument.",
+      |                "type": "string"
+      |              },
+      |              "name": {
+      |                "description": "The name of the argument.",
+      |                "type": "string"
+      |              },
+      |              "required": {
+      |                "description": "Whether this argument must be provided.",
+      |                "type": "boolean"
+      |              }
+      |            },
+      |            "required": [
+      |              "description",
+      |              "name"
+      |            ],
+      |            "type": "object"
+      |          },
+      |          "type": "array"
+      |        },
+      |        "description": {
+      |          "description": "A description of what this prompt provides",
+      |          "type": "string"
+      |        },
+      |        "name": {
+      |          "description": "The name of the prompt.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "name"
+      |      ],
+      |      "type": "object"
+      |    }
+      |  },
       |  "type": "object",
       |  "required": [
       |    "protocolVersion",
@@ -18,7 +185,10 @@ object MCPSchema {
       |  "properties": {
       |    "protocolVersion": {
       |      "type": "string",
-      |      "enum": [ "2024-11-05", "2025-03-26"],
+      |      "enum": [
+      |        "2024-11-05",
+      |        "2025-03-26"
+      |      ],
       |      "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
       |    },
       |    "name": {
@@ -32,11 +202,19 @@ object MCPSchema {
       |    "connectionStatus": {
       |      "type": "string",
       |      "description": "Status of the connection to the MCP server",
-      |      "enum": ["success", "failed", "error"]
+      |      "enum": [
+      |        "success",
+      |        "failed",
+      |        "error"
+      |      ]
       |    },
       |    "transport": {
       |      "type": "string",
-      |      "enum": [ "sse", "stdio", "Streamable HTTP"],
+      |      "enum": [
+      |        "sse",
+      |        "stdio",
+      |        "Streamable HTTP"
+      |      ],
       |      "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
       |    },
       |    "capabilities": {
@@ -68,448 +246,32 @@ object MCPSchema {
       |      },
       |      "additionalProperties": false
       |    },
-      |    "if": {
-      |      "properties": {
-      |        "protocolVersion": { "const": "2024-11-05" }
-      |      }
-      |    },
-      |    "then": {
-      |      "tools": {
-      |        "type": "array",
-      |        "items": {
-      |          "description": "The server's response to a tools/list request from the client.",
-      |          "properties": {
-      |            "_meta": {
-      |              "additionalProperties": {},
-      |              "description": "This result property is reserved by the protocol to allow clients and servers to attach additional metadata to their responses.",
-      |              "type": "object"
-      |            },
-      |            "nextCursor": {
-      |              "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
-      |              "type": "string"
-      |            },
-      |            "tools": {
-      |              "items": {
-      |                "description": "Definition for a tool the client can call.",
-      |                "properties": {
-      |                  "description": {
-      |                    "description": "A human-readable description of the tool.",
-      |                    "type": "string"
-      |                  },
-      |                  "inputSchema": {
-      |                    "description": "A JSON Schema object defining the expected parameters for the tool.",
-      |                    "properties": {
-      |                      "properties": {
-      |                        "additionalProperties": {
-      |                          "additionalProperties": true,
-      |                          "properties": {},
-      |                          "type": "object"
-      |                        },
-      |                        "type": "object"
-      |                      },
-      |                      "required": {
-      |                        "items": {
-      |                          "type": "string"
-      |                        },
-      |                        "type": "array"
-      |                      },
-      |                      "type": {
-      |                        "const": "object",
-      |                        "type": "string"
-      |                      }
-      |                    },
-      |                    "required": [
-      |                      "type"
-      |                    ],
-      |                    "type": "object"
-      |                  },
-      |                  "name": {
-      |                    "description": "The name of the tool.",
-      |                    "type": "string"
-      |                  }
-      |                },
-      |                "required": [
-      |                  "inputSchema",
-      |                  "name"
-      |                ],
-      |                "type": "object"
-      |              },
-      |              "type": "array"
-      |            }
-      |          },
-      |          "required": [
-      |            "tools"
-      |          ],
-      |          "type": "object"
-      |        },
-      |        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
-      |      },
-      |      "resources": {
-      |        "type": "array",
-      |        "items": {
-      |          "description": "The server's response to a resources/list request from the client.",
-      |          "properties": {
-      |            "_meta": {
-      |              "additionalProperties": {},
-      |              "description": "This result property is reserved by the protocol to allow clients and servers to attach additional metadata to their responses.",
-      |              "type": "object"
-      |            },
-      |            "nextCursor": {
-      |              "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
-      |              "type": "string"
-      |            },
-      |            "resources": {
-      |              "items": {
-      |                "description": "A known resource that the server is capable of reading.",
-      |                "properties": {
-      |                  "annotations": {
-      |                    "description": "Base for objects that include optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
-      |                    "properties": {
-      |                      "audience": {
-      |                        "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
-      |                        "items": {
-      |                          "description": "Describes who the intended customer of this object or data is.",
-      |                          "enum": [
-      |                            "assistant",
-      |                            "user"
-      |                          ],
-      |                          "type": "string"
-      |                        },
-      |                        "type": "array"
-      |                      },
-      |                      "priority": {
-      |                        "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
-      |                        "maximum": 1,
-      |                        "minimum": 0,
-      |                        "type": "number"
-      |                      }
-      |                    },
-      |                    "type": "object"
-      |                  },
-      |                  "description": {
-      |                    "description": "A description of what this resource represents.",
-      |                    "type": "string"
-      |                  },
-      |                  "mimeType": {
-      |                    "description": "The MIME type of this resource, if known.",
-      |                    "type": "string"
-      |                  },
-      |                  "name": {
-      |                    "description": "A human-readable name for this resource.",
-      |                    "type": "string"
-      |                  },
-      |                  "uri": {
-      |                    "description": "The URI of this resource.",
-      |                    "format": "uri",
-      |                    "type": "string"
-      |                  }
-      |                },
-      |                "required": [
-      |                  "name",
-      |                  "uri"
-      |                ],
-      |                "type": "object"
-      |              },
-      |              "type": "array"
-      |            }
-      |          },
-      |          "required": [
-      |            "resources"
-      |          ],
-      |          "type": "object"
-      |        },
-      |        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
-      |      },
-      |      "prompts": {
-      |        "type": "array",
-      |        "items": {
-      |          "description": "The server's response to a prompts/list request from the client.",
-      |          "properties": {
-      |            "_meta": {
-      |              "additionalProperties": {},
-      |              "description": "This result property is reserved by the protocol to allow clients and servers to attach additional metadata to their responses.",
-      |              "type": "object"
-      |            },
-      |            "nextCursor": {
-      |              "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
-      |              "type": "string"
-      |            },
-      |            "prompts": {
-      |              "items": {
-      |                "description": "A prompt or prompt template that the server offers.",
-      |                "properties": {
-      |                  "arguments": {
-      |                    "description": "A list of arguments to use for templating the prompt.",
-      |                    "items": {
-      |                      "description": "Describes an argument that a prompt can accept.",
-      |                      "properties": {
-      |                        "description": {
-      |                          "description": "A human-readable description of the argument.",
-      |                          "type": "string"
-      |                        },
-      |                        "name": {
-      |                          "description": "The name of the argument.",
-      |                          "type": "string"
-      |                        },
-      |                        "required": {
-      |                          "description": "Whether this argument must be provided.",
-      |                          "type": "boolean"
-      |                        }
-      |                      },
-      |                      "required": [
-      |                        "description",
-      |                        "name"
-      |                      ],
-      |                      "type": "object"
-      |                    },
-      |                    "type": "array"
-      |                  },
-      |                  "description": {
-      |                    "description": "A description of what this prompt provides",
-      |                    "type": "string"
-      |                  },
-      |                  "name": {
-      |                    "description": "The name of the prompt.",
-      |                    "type": "string"
-      |                  }
-      |                },
-      |                "required": [
-      |                  "name"
-      |                ],
-      |                "type": "object"
-      |              },
-      |              "type": "array"
-      |            }
-      |          },
-      |          "required": [
-      |            "prompts"
-      |          ],
-      |          "type": "object"
-      |        },
-      |        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
-      |      }
-      |    },
-      |    "else": {
-      |      "tools": {
-      |        "type": "array",
-      |        "items": {
-      |          "description": "The server's response to a tools/list request from the client.",
-      |          "properties": {
-      |            "_meta": {
-      |              "additionalProperties": {},
-      |              "description": "This result property is reserved by the protocol to allow clients and servers to attach additional metadata to their responses.",
-      |              "type": "object"
-      |            },
-      |            "nextCursor": {
-      |              "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
-      |              "type": "string"
-      |            },
-      |            "tools": {
-      |              "items": {
-      |                "description": "Definition for a tool the client can call.",
-      |                "properties": {
-      |                  "description": {
-      |                    "description": "A human-readable description of the tool.",
-      |                    "type": "string"
-      |                  },
-      |                  "inputSchema": {
-      |                    "description": "A JSON Schema object defining the expected parameters for the tool.",
-      |                    "properties": {
-      |                      "properties": {
-      |                        "additionalProperties": {
-      |                          "additionalProperties": true,
-      |                          "properties": {},
-      |                          "type": "object"
-      |                        },
-      |                        "type": "object"
-      |                      },
-      |                      "required": {
-      |                        "items": {
-      |                          "type": "string"
-      |                        },
-      |                        "type": "array"
-      |                      },
-      |                      "type": {
-      |                        "const": "object",
-      |                        "type": "string"
-      |                      }
-      |                    },
-      |                    "required": [
-      |                      "type"
-      |                    ],
-      |                    "type": "object"
-      |                  },
-      |                  "name": {
-      |                    "description": "The name of the tool.",
-      |                    "type": "string"
-      |                  }
-      |                },
-      |                "required": [
-      |                  "inputSchema",
-      |                  "name"
-      |                ],
-      |                "type": "object"
-      |              },
-      |              "type": "array"
-      |            }
-      |          },
-      |          "required": [
-      |            "tools"
-      |          ],
-      |          "type": "object"
-      |        },
-      |        "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
-      |      },
-      |      "resources": {
-      |        "type": "array",
-      |        "items": {
-      |          "description": "The server's response to a resources/list request from the client.",
-      |          "properties": {
-      |            "_meta": {
-      |              "additionalProperties": {},
-      |              "description": "This result property is reserved by the protocol to allow clients and servers to attach additional metadata to their responses.",
-      |              "type": "object"
-      |            },
-      |            "nextCursor": {
-      |              "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
-      |              "type": "string"
-      |            },
-      |            "resources": {
-      |              "items": {
-      |                "description": "A known resource that the server is capable of reading.",
-      |                "properties": {
-      |                  "annotations": {
-      |                    "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
-      |                    "properties": {
-      |                      "audience": {
-      |                        "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
-      |                        "items": {
-      |                          "description": "Describes who the intended customer of this object or data is.",
-      |                          "enum": [
-      |                            "assistant",
-      |                            "user"
-      |                          ],
-      |                          "type": "string"
-      |                        },
-      |                        "type": "array"
-      |                      },
-      |                      "priority": {
-      |                        "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
-      |                        "maximum": 1,
-      |                        "minimum": 0,
-      |                        "type": "number"
-      |                      }
-      |                    },
-      |                    "type": "object"
-      |                  },
-      |                  "description": {
-      |                    "description": "A description of what this resource represents.",
-      |                    "type": "string"
-      |                  },
-      |                  "mimeType": {
-      |                    "description": "The MIME type of this resource, if known.",
-      |                    "type": "string"
-      |                  },
-      |                  "name": {
-      |                    "description": "A human-readable name for this resource.",
-      |                    "type": "string"
-      |                  },
-      |                  "uri": {
-      |                    "description": "The URI of this resource.",
-      |                    "format": "uri",
-      |                    "type": "string"
-      |                  }
-      |                },
-      |                "required": [
-      |                  "name",
-      |                  "uri"
-      |                ],
-      |                "type": "object"
-      |              },
-      |              "type": "array"
-      |            }
-      |          },
-      |          "required": [
-      |            "resources"
-      |          ],
-      |          "type": "object"
-      |        },
-      |        "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
-      |      },
-      |      "prompts": {
-      |        "type": "array",
-      |        "items": {
-      |          "description": "The server's response to a prompts/list request from the client.",
-      |          "properties": {
-      |            "_meta": {
-      |              "additionalProperties": {},
-      |              "description": "This result property is reserved by the protocol to allow clients and servers to attach additional metadata to their responses.",
-      |              "type": "object"
-      |            },
-      |            "nextCursor": {
-      |              "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
-      |              "type": "string"
-      |            },
-      |            "prompts": {
-      |              "items": {
-      |                "description": "A prompt or prompt template that the server offers.",
-      |                "properties": {
-      |                  "arguments": {
-      |                    "description": "A list of arguments to use for templating the prompt.",
-      |                    "items": {
-      |                      "description": "Describes an argument that a prompt can accept.",
-      |                      "properties": {
-      |                        "description": {
-      |                          "description": "A human-readable description of the argument.",
-      |                          "type": "string"
-      |                        },
-      |                        "name": {
-      |                          "description": "The name of the argument.",
-      |                          "type": "string"
-      |                        },
-      |                        "required": {
-      |                          "description": "Whether this argument must be provided.",
-      |                          "type": "boolean"
-      |                        }
-      |                      },
-      |                      "required": [
-      |                        "description",
-      |                        "name"
-      |                      ],
-      |                      "type": "object"
-      |                    },
-      |                    "type": "array"
-      |                  },
-      |                  "description": {
-      |                    "description": "A description of what this prompt provides",
-      |                    "type": "string"
-      |                  },
-      |                  "name": {
-      |                    "description": "The name of the prompt.",
-      |                    "type": "string"
-      |                  }
-      |                },
-      |                "required": [
-      |                  "name"
-      |                ],
-      |                "type": "object"
-      |              },
-      |              "type": "array"
-      |            }
-      |          },
-      |          "required": [
-      |            "prompts"
-      |          ],
-      |          "type": "object"
-      |        },
-      |        "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
-      |      }
-      |    },
       |    "logging": {
       |      "type": "object",
       |      "properties": {},
       |      "description": "Present if the server supports sending log messages to the client.",
       |      "additionalProperties": true
+      |    },
+      |    "tools": {
+      |      "type": "array",
+      |      "items": {
+      |        "$ref": "#/definitions/tool"
+      |      },
+      |      "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+      |    },
+      |    "resources": {
+      |      "type": "array",
+      |      "items": {
+      |        "$ref": "#/definitions/resource"
+      |      },
+      |      "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+      |    },
+      |    "prompts": {
+      |      "type": "array",
+      |      "items": {
+      |        "$ref": "#/definitions/prompt"
+      |      },
+      |      "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
       |    },
       |    "additionalProperties": false
       |  }
