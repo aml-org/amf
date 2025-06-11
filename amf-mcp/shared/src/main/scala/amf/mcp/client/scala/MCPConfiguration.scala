@@ -19,6 +19,7 @@ import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.mcp.internal.plugins.parse.MCPParsePlugin
+import amf.mcp.internal.transformation.{MCPCachePipeline, MCPEditingPipeline, MCPTransformationPipeline}
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.internal.convert.ShapesRegister
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
@@ -220,6 +221,13 @@ object MCPConfiguration {
   def MCP(): MCPConfiguration =
     predefined()
       .withPlugins(List(MCPParsePlugin, AMFJsonLDSchemaGraphRenderPlugin, AMFJsonLDSchemaGraphParsePlugin))
+      .withTransformationPipelines(
+        List(
+          MCPTransformationPipeline(),
+          MCPEditingPipeline(),
+          MCPCachePipeline()
+        )
+      )
 
   private def predefined(): MCPConfiguration = {
     ShapesRegister.register()
