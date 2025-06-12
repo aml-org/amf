@@ -6,6 +6,7 @@ import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Mimes
 import amf.mcp.internal.plugins.parse.schema.MCPSchemaLoader
+import amf.mcp.internal.plugins.validation.MCPValidationHelper
 import amf.shapes.client.scala.ShapesBaseUnitClient
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDObject
@@ -23,18 +24,7 @@ class MCPBaseUnitClient private[amf] (override protected val configuration: MCPC
 
   override def getConfiguration: MCPConfiguration = configuration
 
-  override def validate(baseUnit: BaseUnit): Future[AMFValidationReport] = Future.successful(syncValidate(baseUnit))
-
   def syncValidate(baseUnit: BaseUnit): AMFValidationReport = {
-    val encoded = baseUnit.asInstanceOf[JsonLDInstanceDocument].encodes.head.asInstanceOf[JsonLDObject]
-    val content = JsonLDInstanceRenderHelper.renderToJson(encoded)
-    val results = getConfiguration
-      .elementClient()
-      .payloadValidatorFor(MCPSchemaLoader.schema, Mimes.`application/json`, ValidationMode.StrictValidationMode)
-      .syncValidate(content)
-      .results
-      .distinct
-    val report = AMFValidationReport(baseUnit.location().getOrElse(""), ProfileNames.MCP, results)
-    report
+    MCPValidationHelper.validateMCPInstance(baseUnit.asInstanceOf[JsonLDInstanceDocument])
   }
 }
