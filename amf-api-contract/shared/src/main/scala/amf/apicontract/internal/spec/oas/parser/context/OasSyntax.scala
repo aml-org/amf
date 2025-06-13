@@ -104,7 +104,7 @@ object Oas3Syntax extends SpecSyntax {
       "default",
       "description"
     ),
-    "externalDoc" -> Set(
+    "externalDocs" -> Set(
       "url",
       "description"
     ),
@@ -301,7 +301,7 @@ object Oas2Syntax extends SpecSyntax {
       "deprecated",
       "security"
     ),
-    "externalDoc" -> Set(
+    "externalDocs" -> Set(
       "url",
       "description"
     ),

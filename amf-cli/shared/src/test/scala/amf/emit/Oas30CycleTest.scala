@@ -79,6 +79,11 @@ class Oas30CycleTest extends FunSuiteCycleTests {
       "invalid tuple shape in oas 3",
       "invalid-tuple-shape/api.yaml",
       "invalid-tuple-shape/dumped.yaml"
+    ),
+    FixtureData(
+      "external docs in schema",
+      "external-docs-schema/api.yaml",
+      "external-docs-schema/dumped.yaml"
     )
   )
 

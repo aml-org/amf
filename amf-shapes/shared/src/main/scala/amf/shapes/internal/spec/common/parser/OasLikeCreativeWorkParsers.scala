@@ -28,7 +28,7 @@ case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val
 
     AnnotationParser(creativeWork, map).parse()
     if (ctx.isOas2Syntax || ctx.isOas3Context || ctx.isOas31Context)
-      ctx.closedShape(creativeWork, map, "externalDoc")
+      ctx.closedShape(creativeWork, map, "externalDocs")
     creativeWork
   }
 }

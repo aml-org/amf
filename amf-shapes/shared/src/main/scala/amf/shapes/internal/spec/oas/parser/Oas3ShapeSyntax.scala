@@ -30,6 +30,10 @@ object Oas3ShapeSyntax extends SpecSyntax {
       "propertyName",
       "mapping"
     ),
+    "externalDocs" -> Set(
+      "url",
+      "description"
+    ),
     "schema" -> JsonSchemaFields
   )
 }
