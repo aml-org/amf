@@ -7,10 +7,7 @@ object MCPSchema {
       |  "$schema": "http://json-schema.org/draft-07/schema#",
       |  "@context": {
       |    "mcp": "https://modelcontextprotocol.io/vocab#",
-      |    "@type": "mcp:Server",
-      |    "tools": {
-      |      "@container": "mcp:Tools"
-      |    }
+      |    "@type": "mcp:Server"
       |  },
       |  "title": "MCP Asset Schema",
       |  "definitions": {

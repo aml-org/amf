@@ -26,7 +26,8 @@ object MCPParsePlugin extends AMFParsePlugin {
 
   override def priority: PluginPriority = NormalPriority
 
-  override def applies(element: Root): Boolean = true // We will not validate this
+  override def applies(element: Root): Boolean =
+    if (element.mediatype == Mimes.`application/ld+json`) true else MCPProtocolEntry(element).nonEmpty
 
   override def validSpecsToReference: Seq[Spec] = Nil // No refences supported
 
