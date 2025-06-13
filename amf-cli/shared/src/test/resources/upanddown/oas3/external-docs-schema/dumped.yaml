@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: Sales Management API
+  version: 1.0.0
+paths: {}
+components:
+  parameters:
+    fields:
+      in: query
+      name: fields
+      schema:
+        type: string
+        externalDocs:
+          description: fields command description
+          url: https://confluence.dtoneapp.telekom.net/display/HAL/Resource+query+language
