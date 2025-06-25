@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/grpc/lexical-error.proto
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error: Unexpected end of file
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(12,0)-(12,0)]
+  Location: 
