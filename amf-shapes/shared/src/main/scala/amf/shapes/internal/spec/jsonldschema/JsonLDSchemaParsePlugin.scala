@@ -19,7 +19,7 @@ class JsonLDSchemaParsePlugin(jsonSchema: JsonSchemaDocument) extends AMFParsePl
   override def spec: Spec = JsonLDSchema
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit =
-    new JsonLDSchemaNativeParser(ctx.eh).parse(document, jsonSchema)
+    new JsonLDSchemaNativeParser(ctx).parse(document, jsonSchema)
 
   /** media types which specifies vendors that are parsed by this plugin.
     */

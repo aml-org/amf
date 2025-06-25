@@ -9,7 +9,7 @@ import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel.jsonldschema.JsonLDElementModel
 import amf.shapes.internal.spec.jsonldschema.parser.builder.{JsonLDElementBuilder, JsonLDPropertyBuilder}
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.ContainerCheckErrorList
-import org.yaml.model.{YMapEntry, YNode, YScalar}
+import org.yaml.model.{YMapEntry, YScalar}
 
 import scala.util.matching.Regex
 
@@ -47,12 +47,19 @@ case class JsonLDPropertyParser(
     val key = getKeyOrEmpty(entry)
     properties
       .find(matcher(_, key))
-      .map(parseWithProperty(_, entry))
-      .map(r => generateBuilder(r._1, r._2, entry))
+      .map { property =>
+        val result = parseWithProperty(property, entry)
+        generateBuilder(result._1, result._2, entry, Some(property))
+      }
   }
 
-  private def generateBuilder(element: JsonLDElementBuilder, term: String, entry: YMapEntry) = {
-    val annotation = Annotations(entry)
+  private def generateBuilder(
+      element: JsonLDElementBuilder,
+      term: String,
+      entry: YMapEntry,
+      defShape: Option[Shape] = None
+  ) = {
+    val annotation = Annotations(entry) ++= JsonLDBaseElementParser.schemaDefAnnotations(defShape, ctx)
     JsonLDPropertyBuilder(term, entry.key, None, element, element.path, annotation)
   }
 

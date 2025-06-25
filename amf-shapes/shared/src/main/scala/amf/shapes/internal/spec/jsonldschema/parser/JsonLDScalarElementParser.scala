@@ -52,7 +52,7 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
     shape match {
       case scalar: ScalarShape =>
         checkDataTypeConsistence(scalar)
-        parseScalar(scalar.dataType.option())
+        parseScalar(Some(scalar))
       case a: AnyShape if a.isStrictAnyMeta =>
         parseScalar()
       case _ => unsupported(shape)
@@ -86,7 +86,8 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
     *   a jsondl scalar builder for the given YScalar value and dataType computed from the YType.
     */
 
-  private def parseScalar(expectedDataType: Option[String] = None): JsonLDScalarElementBuilder = {
+  private def parseScalar(defShape: Option[ScalarShape] = None): JsonLDScalarElementBuilder = {
+    val expectedDataType = defShape.flatMap(_.dataType.option())
     val (finalDataType, value) = (expectedDataType, dataType, scalar.value) match {
       case (_, DataTypes.Nil, _)               => (dataType, "null")
       case (_, DataTypes.Integer, value: Long) => (dataType, value.toInt)
@@ -96,7 +97,7 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
         SimpleDateTime.parse(value).map(value => (DataTypes.DateTime, value)).getOrElse((DataTypes.String, value))
       case (_, _, value) => (dataType, value)
     }
-    val annotation = Annotations(scalar)
+    val annotation = Annotations(scalar) ++= JsonLDBaseElementParser.schemaDefAnnotations(defShape, ctx)
     new JsonLDScalarElementBuilder(finalDataType, value, annotation, path = path)
   }
 }

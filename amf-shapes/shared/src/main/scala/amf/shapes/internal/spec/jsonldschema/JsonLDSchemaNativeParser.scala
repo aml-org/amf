@@ -1,10 +1,9 @@
 package amf.shapes.internal.spec.jsonldschema
 
-import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
-import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.client.scala.parse.document.{ParserContext, SyamlParsedDocument}
 import amf.core.internal.parser.Root
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -19,7 +18,7 @@ import amf.shapes.internal.spec.jsonldschema.parser.{
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.IncompatibleDomainElement
 import org.yaml.model.YNode
 
-class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
+class JsonLDSchemaNativeParser(ctx: ParserContext) {
 
   def parse(root: Root, jsonSchema: Document): JsonLDInstanceDocument = {
     val node    = root.parsed.asInstanceOf[SyamlParsedDocument].document.node
@@ -40,12 +39,12 @@ class JsonLDSchemaNativeParser(eh: AMFErrorHandler) {
     val shape: Shape = jsonSchema.encodes match {
       case s: Shape => s
       case other =>
-        eh.violation(IncompatibleDomainElement, other.id, IncompatibleDomainElement.message)
+        ctx.eh.violation(IncompatibleDomainElement, other.id, IncompatibleDomainElement.message)
         AnyShape()
     }
 
     JsonLDSchemaNodeParser(shape, node, "encodes", JsonPath.empty, isRoot = true)(
-      new JsonLDParserContext(eh, validatorFactory = ConfigValidatorFactory)
+      new JsonLDParserContext(ctx.eh, validatorFactory = ConfigValidatorFactory, options = ctx.parsingOptions)
     ).parse()
   }
 }

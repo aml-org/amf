@@ -53,18 +53,20 @@ case class JsonLDObjectElementParser(
     path.segments.reverse.find { segment => !segment.matches(numberRegex) }
   }
 
-  private def parseWithObject(n: NodeShape): JsonLDObjectElementBuilder = parseDynamic(n.properties, n.semanticContext)
+  private def parseWithObject(n: NodeShape): JsonLDObjectElementBuilder =
+    parseDynamic(n.properties, n.semanticContext, Some(n))
 
   private def parseDynamic(
       properties: Seq[PropertyShape],
-      semanticContext: Option[SemanticContext]
+      semanticContext: Option[SemanticContext],
+      defSchema: Option[Shape] = None
   ): JsonLDObjectElementBuilder = {
 
     val propertyParser   = JsonLDPropertyParser(properties, semanticContext, path)
     val propertyBuilders = propertyParser.parse(map.entries)
 
     val objectBuilder = {
-      val annotation = Annotations(map)
+      val annotation = Annotations(map) ++= JsonLDBaseElementParser.schemaDefAnnotations(defSchema, ctx)
       new JsonLDObjectElementBuilder(annotation, key, semanticContext.map(_.computeBase).getOrElse(baseIri), path)
     }
     setClassTerm(objectBuilder, semanticContext)
