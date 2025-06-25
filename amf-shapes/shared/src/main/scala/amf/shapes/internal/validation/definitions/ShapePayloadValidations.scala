@@ -23,6 +23,11 @@ object ShapePayloadValidations extends Validations {
     "Example does not validate type"
   )
 
+  val DuplicatedKeyError = validation(
+    "duplicated-key-error",
+    "The payload provided has a duplicated key"
+  )
+
   val SchemaException = validation(
     "schema-exception",
     "Schema exception"
@@ -37,12 +42,14 @@ object ShapePayloadValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> VIOLATION
     ),
-    SchemaException.id -> all(VIOLATION)
+    SchemaException.id -> all(VIOLATION),
+    DuplicatedKeyError.id -> all(VIOLATION)
   )
 
   override val validations: List[ValidationSpecification] = List(
     UntranslatableDraft2019Fields,
     ExampleValidationErrorSpecification,
-    SchemaException
+    SchemaException,
+    DuplicatedKeyError
   )
 }
