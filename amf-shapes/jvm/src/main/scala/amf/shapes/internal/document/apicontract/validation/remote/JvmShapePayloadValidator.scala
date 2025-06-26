@@ -3,8 +3,8 @@ package amf.shapes.internal.document.apicontract.validation.remote
 import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.document.apicontract.validation.json.{
@@ -15,7 +15,10 @@ import amf.shapes.internal.document.apicontract.validation.json.{
 }
 import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
-import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations.{
+  DuplicatedKeyError,
+  ExampleValidationErrorSpecification
+}
 import amf.shapes.internal.validation.jsonschema._
 import amf.shapes.internal.validation.payload.MaxNestingValueReached
 import org.everit.json.schema.internal._
@@ -175,19 +178,20 @@ case class JvmJsonSchemaReportValidationProcessor(
         Seq(invalidSchemaValidation("Regex defined in schema could not be processed", element, e))
 
       case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
-        Seq(
-          invalidJsonValidation(
-            s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
-            element,
-            e
-          )
-        )
+        val expectedValue = formattedDatatype(shape.asInstanceOf[ScalarShape])
+        val foundValue    = if (e.getMessage.contains("Unquoted string value")) "Object" else "String"
+        Seq(invalidJsonValidation(s"expected type: $expectedValue, found: $foundValue", element, e))
 
       case e: InvalidJsonValue =>
         Seq(invalidJsonValidation("Invalid json value was provided", element, e))
 
       case e: ArithmeticException if e.getMessage == "Division undefined" || e.getMessage == "Division by zero" =>
         Seq(invalidJsonValidation("Can't divide by 0", element, e))
+
+      case duplicated: InvalidJsonObject if duplicated.getMessage.contains("Duplicate key") =>
+        val msg     = duplicated.getMessage
+        val message = msg.substring(msg.indexOf(':') + 2)
+        Seq(duplicatedKeyValidation(message, element, duplicated))
 
       case other =>
         super.processCommonException(other, element)
@@ -214,6 +218,18 @@ case class JvmJsonSchemaReportValidationProcessor(
       targetNode = element.map(_.id).getOrElse(""),
       targetProperty = None,
       validationId = ShapePayloadValidations.SchemaException.id,
+      position = element.flatMap(_.position()),
+      location = element.flatMap(_.location()),
+      source = e
+    )
+
+  private def duplicatedKeyValidation(message: String, element: Option[DomainElement], e: RuntimeException) =
+    AMFValidationResult(
+      message = message,
+      level = SeverityLevels.VIOLATION,
+      targetNode = element.map(_.id).getOrElse(""),
+      targetProperty = None,
+      validationId = DuplicatedKeyError.id,
       position = element.flatMap(_.position()),
       location = element.flatMap(_.location()),
       source = e
