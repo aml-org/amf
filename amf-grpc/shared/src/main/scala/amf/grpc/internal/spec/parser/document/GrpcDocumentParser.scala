@@ -4,23 +4,18 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.AntlrError
 import amf.core.client.scala.model.document.{DeclaresModel, Document}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.domain.{
-  GrpcEnumParser,
-  GrpcExtendOptionParser,
-  GrpcMessageParser,
-  GrpcPackageParser,
-  GrpcServiceParser
-}
+import amf.grpc.internal.spec.parser.domain.{GrpcEnumParser, GrpcExtendOptionParser, GrpcMessageParser, GrpcPackageParser, GrpcServiceParser}
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
-import org.mulesoft.antlrast.ast.{ASTNode, Node}
+import org.mulesoft.antlrast.ast.{AST, ASTNode, Node}
 
 case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
@@ -41,6 +36,7 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
 
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
+    loadSyntaxErrors(ast)
     loadReferences(root.references)
     ast.rootOption().collect({ case n: Node => parseRootNode(n) })
 
@@ -117,6 +113,10 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
       }
     }
     webApi.withEndPoints(endPoints)
+  }
+
+  private def loadSyntaxErrors(ast: AST): Unit = {
+    ast.getErrors.foreach(err => ctx.eh.violation(AntlrError, "", err.message, err.location))
   }
 
 }

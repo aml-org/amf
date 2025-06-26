@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.test";
+option java_outer_classname = "Test";
+option objc_class_prefix = "HLW";
+
+import "library.proto";
+
+package test;
+
+message HelloRequest {
+  repeated string name = 1;
+  library.Some some = 2;
+}
