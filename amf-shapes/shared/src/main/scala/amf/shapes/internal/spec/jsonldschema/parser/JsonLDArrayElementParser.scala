@@ -1,11 +1,11 @@
 package amf.shapes.internal.spec.jsonldschema.parser
 
-import amf.core.client.scala.model.domain.{Annotation, Shape}
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, MatrixShape, SemanticContext, TupleShape}
-import amf.shapes.internal.spec.jsonldschema.parser.builder.{JsonLDArrayElementBuilder, JsonLDElementBuilder}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape}
+import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDArrayElementBuilder
 import amf.shapes.internal.spec.jsonldschema.validation.JsonLDSchemaValidations.UnsupportedShape
-import org.yaml.model.{YSequence, YType}
+import org.yaml.model.YSequence
 
 case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val ctx: JsonLDParserContext)
     extends JsonLDBaseElementParser[JsonLDArrayElementBuilder](seq)(ctx) {
@@ -24,7 +24,7 @@ case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val
   override def parseNode(shape: Shape): JsonLDArrayElementBuilder = {
 
     shape match {
-      case a: ArrayShape => parseItems(a.items)
+      case a: ArrayShape => parseItems(a.items, Some(a))
 
       // case t:TupleShape =>
 //      case m:MatrixShape if seq.nodes.headOption.exists(_.tagType == YType.Seq) =>
@@ -34,9 +34,9 @@ case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val
     }
   }
 
-  private def parseItems(items: Shape): JsonLDArrayElementBuilder = {
-    val annotation = Annotations(seq)
-    val builder = new JsonLDArrayElementBuilder(annotation, path)
+  private def parseItems(items: Shape, defSchema: Option[Shape] = None): JsonLDArrayElementBuilder = {
+    val annotation = Annotations(seq) ++= JsonLDBaseElementParser.schemaDefAnnotations(defSchema, ctx)
+    val builder    = new JsonLDArrayElementBuilder(annotation, path)
 
     builder.withItems(seq.nodes.zipWithIndex.map({ case (node, index) =>
       JsonLDSchemaNodeParser(items, node, index.toString, path.concat(index.toString)).parse()
