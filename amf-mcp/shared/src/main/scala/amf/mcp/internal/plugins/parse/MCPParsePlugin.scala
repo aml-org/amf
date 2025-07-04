@@ -35,8 +35,9 @@ object MCPParsePlugin extends AMFParsePlugin {
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     val newCtx    = createContext(document, ctx)
-    val (unit, _) = SyncJsonLdSchemaParser.parse(mcpSchema, document.raw, newCtx, document.location)
+    val (unit, _) = SyncJsonLdSchemaParser.parse(mcpSchema, document, newCtx, document.location)
     unit.processingData.withSourceSpec(Mcp)
+    unit.encodes.headOption.flatMap(_.location()).foreach(unit.withLocation)
     unit
   }
 
@@ -45,7 +46,7 @@ object MCPParsePlugin extends AMFParsePlugin {
       document.location,
       document.references,
       options = ctx.parsingOptions,
-      ctx,
+      ctx.forLocation(document.location),
       settings = JsonSchemaSettings(JsonSchemaSyntax, JSONSchemaUnspecifiedVersion)
     )
   }
