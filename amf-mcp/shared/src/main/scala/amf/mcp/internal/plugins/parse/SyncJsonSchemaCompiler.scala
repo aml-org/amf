@@ -33,15 +33,15 @@ object SyncJsonSchemaCompiler {
     ParserContext("", config = ParseConfig(config))
   }
 
-  def parseJson(schema: String, eh: AMFErrorHandler) = {
+  def parseJson(schema: String, eh: AMFErrorHandler, location: String = ""): Root = {
     val json = JsonParser(schema)(new SyamlAMFErrorHandler(eh)).document()
     Root(
-        SyamlParsedDocument(json),
-        "",
-        Mimes.`application/json`,
-        Seq.empty,
-        UnspecifiedReference,
-        ""
+      parsed = SyamlParsedDocument(json),
+      location = location,
+      mediatype = Mimes.`application/json`,
+      references = Seq.empty,
+      referenceKind = UnspecifiedReference,
+      raw = schema
     )
   }
 }
