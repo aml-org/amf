@@ -4,13 +4,14 @@ import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security.OAuth2FlowModel
 import amf.apicontract.internal.transformation.compatibility.common.SecuritySettingsMapper
 
-class Oas30SecuritySettingsMapper() extends SecuritySettingsMapper {
+class Oas30SecuritySettingsMapper extends SecuritySettingsMapper {
 
-  def VALID_AUTHORIZATION_GRANTS: List[String] = List("implicit", "clientCredentials", "authorizationCode", "password")
+  private def VALID_AUTHORIZATION_GRANTS: List[String] =
+    List("implicit", "clientCredentials", "authorizationCode", "password")
 
-  def createFlowsFromRamlNullFlow(oauth2: OAuth2Settings): Seq[OAuth2Flow] = {
+  private def createFlowsFromRamlNullFlow(oauth2: OAuth2Settings): Seq[OAuth2Flow] = {
     val grants = oauth2.authorizationGrants
-      .map(g => toOasGrant(g.value()))
+      .map(g => toOas3Grant(g.value()))
       .filter(g => VALID_AUTHORIZATION_GRANTS.contains(g))
     val flow = oauth2.flows.head
     grants
@@ -26,7 +27,7 @@ class Oas30SecuritySettingsMapper() extends SecuritySettingsMapper {
     OAuth2Flow(fields, annotations)
   }
 
-  private def toOasGrant(grant: String): String = grant match {
+  private def toOas3Grant(grant: String): String = grant match {
     case "authorization_code" => "authorizationCode"
     case "password"           => "password"
     case "implicit"           => "implicit"
@@ -41,15 +42,23 @@ class Oas30SecuritySettingsMapper() extends SecuritySettingsMapper {
     } else if (hasRamlNullFlow(oauth2)) oauth2.withFlows(createFlowsFromRamlNullFlow(oauth2))
 
     oauth2.flows.foreach { flow =>
-      correctFlow(flow)
+      fixFlowName(flow)
+      fixFlowFields(flow)
       addPermissiveScope(flow)
     }
   }
 
   private def hasRamlNullFlow(oauth2: OAuth2Settings) = Option(oauth2.flows.head.flow.value()).isEmpty
 
-  private def correctFlow(flow: OAuth2Flow): Unit = {
-    Option(flow.flow.value()) match {
+  // https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#oauth-flows-object
+  private def fixFlowName(flow: OAuth2Flow): Unit = flow.flow.option() match {
+    case Some("application") => flow.withFlow("clientCredentials")
+    case Some("accessCode")  => flow.withFlow("authorizationCode")
+    case _                => // ignore
+  }
+
+  private def fixFlowFields(flow: OAuth2Flow): Unit = {
+    flow.flow.option() match {
       case Some("implicit") =>
         if (flow.authorizationUri.option().isEmpty) flow.withAuthorizationUri("http://")
         flow.fields.removeField(OAuth2FlowModel.AccessTokenUri)

@@ -326,18 +326,18 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
   }
 }
 
-case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit
+case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit], method: String)(implicit
     specCtx: OasSpecEmitterContext
 ) extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     if (request.isLink) {
       val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
-      b.entry("requestBody", specCtx.ref(_, refUrl, request))
+      if (method != "delete") b.entry("requestBody", specCtx.ref(_, refUrl, request))
     } else if (request.payloads.nonEmpty) {
       val partEmitter: Oas3RequestBodyPartEmitter = Oas3RequestBodyPartEmitter(request, ordering, references)
       if (partEmitter.emitters.nonEmpty)
-        b.entry("requestBody", partEmitter.emit(_))
+        if (method != "delete") b.entry("requestBody", partEmitter.emit(_))
     }
   }
 
