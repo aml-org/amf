@@ -3,6 +3,7 @@ package amf.resolution
 import amf.core.client.common.transform._
 import amf.core.internal.remote._
 
+// TODO: can be replaced with CompatibilityCycleTest
 class CompatibilityCycleGoldenTest extends ResolutionTest {
 
   override val defaultPipeline: String = PipelineId.Compatibility
