@@ -1,0 +1,21 @@
+swagger: '2.0'
+info:
+  title: Party Customer Process API
+  version: '1.0'
+paths:
+  /test:
+    get:
+      responses:
+        '200':
+          description: ''
+      security:
+        - oauth_2_0:
+            - edit:customer
+securityDefinitions:
+  oauth_2_0:
+    type: oauth2
+    tokenUrl: https://vis-dev.eu.auth0.com/oauth/token
+    flow: application
+    scopes:
+      read:customer: 'null'
+      edit:customer: 'null'

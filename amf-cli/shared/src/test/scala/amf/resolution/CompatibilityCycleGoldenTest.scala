@@ -10,6 +10,18 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
 
   override def basePath: String = "amf-cli/shared/src/test/resources/compatibility/"
 
+  // W-18770737
+  test("OAS2 to OAS3 should emit valid Oauth security scheme flows") {
+    cycle(
+      "oas20/oauth.yaml",
+      "cycled-apis/oas30/oauth.yaml",
+      Oas20YamlHint,
+      Oas30YamlHint,
+      pipeline = Some(PipelineId.Compatibility),
+      transformWith = Some(Oas30)
+    )
+  }
+
   test("Identical RAML inherited examples are removed in OAS 2.0") {
     cycle(
       "raml10/inherited-examples.raml",
