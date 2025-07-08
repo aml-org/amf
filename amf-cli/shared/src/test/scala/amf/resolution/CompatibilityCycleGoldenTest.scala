@@ -22,6 +22,18 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     )
   }
 
+  // W-18770737
+  test("OAS2 to OAS3 should emit valid delete operation") {
+    cycle(
+      "oas20/delete.yaml",
+      "cycled-apis/oas30/delete.yaml",
+      Oas20YamlHint,
+      Oas30YamlHint,
+      pipeline = Some(PipelineId.Compatibility),
+      transformWith = Some(Oas30)
+    )
+  }
+
   test("Identical RAML inherited examples are removed in OAS 2.0") {
     cycle(
       "raml10/inherited-examples.raml",

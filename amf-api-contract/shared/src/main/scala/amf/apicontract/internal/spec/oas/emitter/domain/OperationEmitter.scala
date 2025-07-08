@@ -93,7 +93,7 @@ case class OasOperationPartEmitter(
     }
   }
 
-  def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
+  private def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
 
     val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -103,7 +103,7 @@ case class OasOperationPartEmitter(
       val parameters = request.queryParameters ++ request.uriParameters ++ request.headers ++ request.cookieParameters
       if (parameters.nonEmpty)
         result ++= OasParametersEmitter("parameters", parameters, ordering, Nil, references).emitters()
-      result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references))
+      result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references, operation.method.value()))
 
     } else {
 
