@@ -10,14 +10,14 @@ import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.TransformationPipelineConverter._
 import amf.mcp.client.scala.{MCPConfiguration => InternalMCPConfiguration}
-import amf.shapes.client.platform.BaseShapesConfiguration
+import amf.shapes.client.platform.config.BaseJsonSchemaBasedSpecConfiguration
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 class BaseMCPConfiguration private[amf](private[amf] override val _internal: InternalMCPConfiguration)
-    extends BaseShapesConfiguration(_internal) {
+    extends BaseJsonSchemaBasedSpecConfiguration(_internal) {
 
   override protected implicit val ec: ExecutionContext = _internal.getExecutionContext
 

@@ -19,12 +19,17 @@ import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.mcp.internal.plugins.parse.MCPParsePlugin
+import amf.mcp.internal.plugins.render.MCPRenderPlugin
 import amf.mcp.internal.plugins.validation.MCPValidationPlugin
-import amf.mcp.internal.transformation.{MCPCachePipeline, MCPEditingPipeline, MCPTransformationPipeline}
-import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
 import amf.shapes.internal.convert.ShapesRegister
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
 import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.transformation.{
+  JsonSchemaBasedSpecCachePipeline,
+  JsonSchemaBasedSpecEditingPipeline,
+  JsonSchemaBasedSpecTransformationPipeline
+}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -35,7 +40,14 @@ class MCPConfiguration private[amf] (
     override private[amf] val listeners: Set[AMFEventListener],
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
-) extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options, idAdopterProvider) {
+) extends JsonSchemaBasedSpecConfiguration(
+      resolvers,
+      errorHandlerProvider,
+      registry,
+      listeners,
+      options,
+      idAdopterProvider
+    ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -223,26 +235,31 @@ object MCPConfiguration {
   def MCP(): MCPConfiguration =
     predefined()
       .withPlugins(
-        List(MCPParsePlugin, AMFJsonLDSchemaGraphRenderPlugin, AMFJsonLDSchemaGraphParsePlugin, MCPValidationPlugin())
+        List(
+          MCPParsePlugin,
+          MCPRenderPlugin,
+          MCPValidationPlugin(),
+          AMFJsonLDSchemaGraphRenderPlugin,
+          AMFJsonLDSchemaGraphParsePlugin
+        )
       )
       .withTransformationPipelines(
         List(
-          MCPTransformationPipeline(),
-          MCPEditingPipeline(),
-          MCPCachePipeline()
+          JsonSchemaBasedSpecTransformationPipeline(),
+          JsonSchemaBasedSpecEditingPipeline(),
+          JsonSchemaBasedSpecCachePipeline()
         )
       )
 
   private def predefined(): MCPConfiguration = {
-    ShapesRegister.register()
-    val predefinedShapesConfig = ShapesConfiguration.predefined()
+    val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new MCPConfiguration(
-      predefinedShapesConfig.resolvers,
-      predefinedShapesConfig.errorHandlerProvider,
-      predefinedShapesConfig.registry,
-      predefinedShapesConfig.listeners,
-      predefinedShapesConfig.options,
-      predefinedShapesConfig.idAdopterProvider
+      baseConfig.resolvers,
+      baseConfig.errorHandlerProvider,
+      baseConfig.registry,
+      baseConfig.listeners,
+      baseConfig.options,
+      baseConfig.idAdopterProvider
     )
   }
 }

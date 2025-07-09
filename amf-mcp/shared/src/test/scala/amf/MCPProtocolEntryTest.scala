@@ -4,7 +4,7 @@ import amf.core.client.scala.parse.document.{SyamlParsedDocument, UnspecifiedRef
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Mimes
-import amf.mcp.internal.plugins.parse.{MCP20241105ProtocolVersion, MCP20250326ProtocolVersion, MCPProtocolEntry}
+import amf.mcp.internal.plugins.parse.entry.{MCP20241105ProtocolVersion, MCP20250326ProtocolVersion, MCPProtocolEntry}
 import org.mulesoft.common.io.Fs
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.YDocument

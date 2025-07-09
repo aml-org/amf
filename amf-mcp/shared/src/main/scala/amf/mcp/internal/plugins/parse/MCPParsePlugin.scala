@@ -1,53 +1,18 @@
 package amf.mcp.internal.plugins.parse
 
-import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.parse.AMFParsePlugin
-import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{Mcp, Mimes, Spec}
+import amf.mcp.internal.plugins.parse.entry.MCPProtocolEntry
 import amf.mcp.internal.plugins.parse.schema.MCPSchemaLoader
-import amf.shapes.internal.spec.common.JSONSchemaUnspecifiedVersion
-import amf.shapes.internal.spec.common.parser.ShapeParserContext
-import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaSettings
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.context.JsonSchemaSyntax
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
+import amf.shapes.internal.plugins.parser.JsonSchemaBasedSpecParsePlugin
 
-object MCPParsePlugin extends AMFParsePlugin {
+object MCPParsePlugin extends JsonSchemaBasedSpecParsePlugin {
 
-  private lazy val mcpSchema = MCPSchemaLoader.doc
+  override protected val specSchema: JsonSchemaDocument = MCPSchemaLoader.doc
+
+  override protected def existsSpecEntry(document: Root): Boolean =
+    if (document.mediatype == Mimes.`application/ld+json`) true else MCPProtocolEntry(document).nonEmpty
 
   override def spec: Spec = Mcp
-
-  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
-    SimpleReferenceHandler // No references to resolve
-
-  override def allowRecursiveReferences: Boolean = true
-
-  override def priority: PluginPriority = NormalPriority
-
-  override def applies(element: Root): Boolean =
-    if (element.mediatype == Mimes.`application/ld+json`) true else MCPProtocolEntry(element).nonEmpty
-
-  override def validSpecsToReference: Seq[Spec] = Nil // No refences supported
-
-  override def mediaTypes: Seq[String] = Seq(Mimes.`application/json`)
-
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    val newCtx    = createContext(document, ctx)
-    val (unit, _) = SyncJsonLdSchemaParser.parse(mcpSchema, document, newCtx, document.location)
-    unit.processingData.withSourceSpec(Mcp)
-    unit.encodes.headOption.flatMap(_.location()).foreach(unit.withLocation)
-    unit
-  }
-
-  private def createContext(document: Root, ctx: ParserContext): ShapeParserContext = {
-    new ShapeParserContext(
-      document.location,
-      document.references,
-      options = ctx.parsingOptions,
-      ctx.forLocation(document.location),
-      settings = JsonSchemaSettings(JsonSchemaSyntax, JSONSchemaUnspecifiedVersion)
-    )
-  }
 }

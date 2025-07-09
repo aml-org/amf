@@ -2,7 +2,6 @@ package amf.mcp.client.platform
 
 import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
 import amf.aml.client.platform.{AMLBaseUnitClient, AMLConfigurationState}
-import amf.mcp.client.scala.{MCPBaseUnitClient => InternalMCPBaseUnitClient}
 import amf.aml.internal.convert.VocabulariesClientConverter.{ClientFuture, ClientList}
 import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
@@ -15,10 +14,13 @@ import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlug
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.mcp.client.scala.{MCPConfiguration => InternalMCPConfiguration}
-import amf.shapes.client.scala.{ShapesConfiguration => InternalShapesConfiguration}
-import amf.shapes.client.platform.ShapesElementClient
+import amf.mcp.client.scala.{
+  MCPBaseUnitClient => InternalMCPBaseUnitClient,
+  MCPConfiguration => InternalMCPConfiguration
+}
 import amf.mcp.internal.convert.MCPClientConverters._
+import amf.shapes.client.platform.ShapesElementClient
+import amf.shapes.client.scala.{ShapesConfiguration => InternalShapesConfiguration}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
