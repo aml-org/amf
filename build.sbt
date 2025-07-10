@@ -305,6 +305,40 @@ lazy val mcpJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
+/** ********************************************** AMF-AGENT-FABRIC *********************************************
+ */
+
+lazy val agentFabric = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-agent-fabric"
+    )
+  )
+  .in(file("./amf-agent-fabric"))
+  .settings(commonSettings)
+  .dependsOn(shapes)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-fabric-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-fabric.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.agent-fabric"))
+
+lazy val agentFabricJVM =
+  agentFabric.jvm
+    .in(file("./amf-agent-fabric/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val agentFabricJS =
+  agentFabric.js
+    .in(file("./amf-agent-fabric/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+//    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF CLI *********************************************
   */
