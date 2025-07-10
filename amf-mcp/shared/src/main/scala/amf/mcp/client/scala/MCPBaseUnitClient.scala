@@ -1,5 +1,6 @@
 package amf.mcp.client.scala
 
+import amf.core.client.common.validation.{ProfileName, ProfileNames}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.AMFParser
 import amf.mcp.internal.plugins.parse.schema.MCPSchemaLoader
@@ -13,4 +14,5 @@ class MCPBaseUnitClient private[amf] (override protected val configuration: MCPC
 
   override protected def schemaShape: Shape = MCPSchemaLoader.schema
 
+  override protected def profile: ProfileName = ProfileNames.MCP
 }

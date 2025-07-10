@@ -1,5 +1,6 @@
 package amf.shapes.client.scala
 
+import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.AMFParser
@@ -18,6 +19,8 @@ abstract class JsonSchemaBasedSpecBaseUnitClient private[amf] (
 
   protected def schemaShape: Shape
 
+  protected def profile: ProfileName
+
   override implicit val exec: ExecutionContext = configuration.getExecutionContext
 
   override def getConfiguration: JsonSchemaBasedSpecConfiguration = configuration
@@ -25,7 +28,8 @@ abstract class JsonSchemaBasedSpecBaseUnitClient private[amf] (
   def syncValidate(baseUnit: BaseUnit): AMFValidationReport = {
     JsonSchemaBasedSpecValidationHelper.validateInstance(
       baseUnit.asInstanceOf[JsonLDInstanceDocument],
-      schemaShape
+      schemaShape,
+      profile
     )
   }
 }
