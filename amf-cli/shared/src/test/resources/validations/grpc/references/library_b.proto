@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package library_b;
+
+message MessageB {
+  string message_b = 2;
+}
+
+message MessageAB {
+  string message_ab = 3;
+}

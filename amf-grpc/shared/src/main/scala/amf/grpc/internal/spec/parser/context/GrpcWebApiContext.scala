@@ -43,14 +43,11 @@ class GrpcWebApiContext(
   def nestedMessage(messageName: String) =
     new GrpcWebApiContext(loc, refs, options, wrapped, ds, messagePath ++ Seq(messageName))
 
-  def fullMessagePath(messageName: String): String = {
-    if (messageName.startsWith(".")) { // fully qualified path
-      messageName
-    } else if (messageName.startsWith(messagePath(1))) { // reference from package
-      "." + messageName
-    } else { // relative to current path
-      (messagePath ++ Seq(messageName)).mkString(".")
-    }
+  def fullMessagePath(messageName: String): String = messagePath match {
+    case _ if messageName.startsWith(".") => messageName // fully qualified path
+    case _ if messagePath.length > 1 && messageName.startsWith(messagePath(1)) =>
+      "." + messageName // reference from package
+    case _ => (messagePath :+ messageName).mkString(".") // relative to the current path
   }
 
   def topLevelPackageRef(messageName: String): Option[String] = {

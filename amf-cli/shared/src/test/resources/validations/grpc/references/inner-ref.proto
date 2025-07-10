@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package com.example.model;
+
+message Address {
+  string city = 2;
+  string country = 5;
+}
+
+// includes a ref to Address (defined above)
+message Person {
+  string name = 1;
+  int32 age = 2;
+  // should be a link in parsing and be resolved in resolution
+  Address home_address = 4;
+}
