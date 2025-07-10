@@ -1,4 +1,4 @@
-package amf.mcp.internal.plugins.parse
+package amf.shapes.internal.helper
 
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFGraphConfiguration

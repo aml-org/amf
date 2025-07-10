@@ -1,8 +1,10 @@
 package amf.mcp.internal.plugins.parse.schema
 
-object MCPSchema {
+import amf.shapes.internal.plugins.parser.schema.JsonSchemaBasedSpecSchema
 
-  val schema: String =
+object MCPSchema extends JsonSchemaBasedSpecSchema{
+
+  override def schema: String =
     """{
       |  "$schema": "http://json-schema.org/draft-07/schema#",
       |  "@context": {

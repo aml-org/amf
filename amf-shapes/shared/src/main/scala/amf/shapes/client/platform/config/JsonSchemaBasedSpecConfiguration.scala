@@ -1,7 +1,7 @@
-package amf.mcp.client.platform
+package amf.shapes.client.platform.config
 
+import amf.aml.client.platform.AMLConfigurationState
 import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
-import amf.aml.client.platform.{AMLBaseUnitClient, AMLConfigurationState}
 import amf.aml.internal.convert.VocabulariesClientConverter.{ClientFuture, ClientList}
 import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
@@ -14,22 +14,18 @@ import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlug
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.mcp.client.scala.{
-  MCPBaseUnitClient => InternalMCPBaseUnitClient,
-  MCPConfiguration => InternalMCPConfiguration
-}
-import amf.mcp.internal.convert.MCPClientConverters._
 import amf.shapes.client.platform.ShapesElementClient
-import amf.shapes.client.scala.{ShapesConfiguration => InternalShapesConfiguration}
+import amf.shapes.client.scala.{
+  JsonSchemaBasedSpecConfiguration => InternalJsonSchemaBasedSpecConfiguration,
+  ShapesConfiguration => InternalShapesConfiguration
+}
+import amf.shapes.internal.convert.ShapeClientConverters._
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-class MCPConfiguration private[amf] (private[amf] override val _internal: InternalMCPConfiguration)
-    extends BaseMCPConfiguration(_internal) {
-
-  /** Contains common AMF graph operations associated to documents */
-  override def baseUnitClient(): AMLBaseUnitClient = new MCPBaseUnitClient(new InternalMCPBaseUnitClient(_internal))
+class JsonSchemaBasedSpecConfiguration private[amf] (private[amf] override val _internal: InternalJsonSchemaBasedSpecConfiguration)
+    extends BaseJsonSchemaBasedSpecConfiguration(_internal) {
 
   /** Contains functionality associated with specific elements of the AMF model */
   override def elementClient(): ShapesElementClient = new ShapesElementClient(
@@ -43,118 +39,110 @@ class MCPConfiguration private[amf] (private[amf] override val _internal: Intern
     * @param parsingOptions
     *   [[ParsingOptions]] to add to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[ParsingOptions]] added
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[ParsingOptions]] added
     */
-  override def withParsingOptions(parsingOptions: ParsingOptions): MCPConfiguration =
+  override def withParsingOptions(parsingOptions: ParsingOptions): JsonSchemaBasedSpecConfiguration =
     _internal.withParsingOptions(parsingOptions)
 
   /** Set [[RenderOptions]]
     * @param renderOptions
     *   [[RenderOptions]] to add to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[ParsingOptions]] added
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[ParsingOptions]] added
     */
-  override def withRenderOptions(renderOptions: RenderOptions): MCPConfiguration =
+  override def withRenderOptions(renderOptions: RenderOptions): JsonSchemaBasedSpecConfiguration =
     _internal.withRenderOptions(renderOptions)
 
   /** Set [[ErrorHandlerProvider]]
     * @param provider
     *   [[ErrorHandlerProvider]] to set to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[ErrorHandlerProvider]] set
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[ErrorHandlerProvider]] set
     */
-  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): MCPConfiguration =
+  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): JsonSchemaBasedSpecConfiguration =
     _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
   /** Add a [[ResourceLoader]]
     * @param rl
     *   [[ResourceLoader]] to add to configuration object
     * @return
-    *   [[MCPConfiguration]] with the [[ResourceLoader]] added
+    *   [[JsonSchemaBasedSpecConfiguration]] with the [[ResourceLoader]] added
     */
-  override def withResourceLoader(rl: ResourceLoader): MCPConfiguration =
+  override def withResourceLoader(rl: ResourceLoader): JsonSchemaBasedSpecConfiguration =
     _internal.withResourceLoader(ResourceLoaderMatcher.asInternal(rl))
 
   /** Set the configuration [[ResourceLoader]]s
     * @param rl
     *   a list of [[ResourceLoader]] to set to the configuration object
     * @return
-    *   [[MCPConfiguration]] with [[ResourceLoader]]s set
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[ResourceLoader]]s set
     */
-  override def withResourceLoaders(rl: ClientList[ResourceLoader]): MCPConfiguration =
+  override def withResourceLoaders(rl: ClientList[ResourceLoader]): JsonSchemaBasedSpecConfiguration =
     _internal.withResourceLoaders(rl.asInternal.toList)
 
   /** Set [[UnitCache]]
     * @param cache
     *   [[UnitCache]] to add to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[UnitCache]] added
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[UnitCache]] added
     */
-  override def withUnitCache(cache: UnitCache): MCPConfiguration =
+  override def withUnitCache(cache: UnitCache): JsonSchemaBasedSpecConfiguration =
     _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
   /** Add a [[TransformationPipeline]]
     * @param pipeline
     *   [[TransformationPipeline]] to add to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[TransformationPipeline]] added
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[TransformationPipeline]] added
     */
-  override def withTransformationPipeline(pipeline: TransformationPipeline): MCPConfiguration =
+  override def withTransformationPipeline(pipeline: TransformationPipeline): JsonSchemaBasedSpecConfiguration =
     _internal.withTransformationPipeline(pipeline)
 
   /** Add an [[AMFEventListener]]
     * @param listener
     *   [[AMFEventListener]] to add to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[AMFEventListener]] added
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[AMFEventListener]] added
     */
-  override def withEventListener(listener: AMFEventListener): MCPConfiguration =
+  override def withEventListener(listener: AMFEventListener): JsonSchemaBasedSpecConfiguration =
     _internal.withEventListener(listener)
 
   /** Register a Dialect
     * @param dialect
     *   [[Dialect]] to register
     * @return
-    *   [[MCPConfiguration]] with [[Dialect]] registered
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[Dialect]] registered
     */
-  override def withDialect(dialect: Dialect): MCPConfiguration = _internal.withDialect(dialect)
+  override def withDialect(dialect: Dialect): JsonSchemaBasedSpecConfiguration = _internal.withDialect(dialect)
 
   /** Register a Dialect
     * @param url
     *   URL of the Dialect to register
     * @return
-    *   A CompletableFuture of [[MCPConfiguration]]
+    *   A CompletableFuture of [[JsonSchemaBasedSpecConfiguration]]
     */
-  def withDialect(url: String): ClientFuture[MCPConfiguration] = _internal.withDialect(url).asClient
+  def withDialect(url: String): ClientFuture[JsonSchemaBasedSpecConfiguration] = _internal.withDialect(url).asClient
 
   /** Set [[BaseExecutionEnvironment]]
     * @param executionEnv
     *   [[BaseExecutionEnvironment]] to set to configuration object
     * @return
-    *   [[MCPConfiguration]] with [[BaseExecutionEnvironment]] set
+    *   [[JsonSchemaBasedSpecConfiguration]] with [[BaseExecutionEnvironment]] set
     */
-  override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): MCPConfiguration =
+  override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): JsonSchemaBasedSpecConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
   /** Register a [[Dialect]] linked from a [[DialectInstance]]
     * @param url
     *   of the [[DialectInstance]]
     * @return
-    *   A CompletableFuture of [[MCPConfiguration]]
+    *   A CompletableFuture of [[JsonSchemaBasedSpecConfiguration]]
     */
-  def forInstance(url: String): ClientFuture[MCPConfiguration] = _internal.forInstance(url).asClient
+  def forInstance(url: String): ClientFuture[JsonSchemaBasedSpecConfiguration] = _internal.forInstance(url).asClient
 
-  override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): MCPConfiguration =
+  override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): JsonSchemaBasedSpecConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 
-  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): MCPConfiguration =
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): JsonSchemaBasedSpecConfiguration =
     _internal.withIdAdopterProvider(idAdopterProvider)
-}
-
-@JSExportAll
-@JSExportTopLevel("MCPConfiguration")
-object MCPConfiguration {
-
-  def MCP(): MCPConfiguration = new MCPConfiguration(InternalMCPConfiguration.MCP())
-
 }

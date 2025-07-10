@@ -1,13 +1,13 @@
-package amf.mcp.internal.plugins.parse
+package amf.shapes.internal.helper
 
 import amf.core.client.scala.adoption.IdAdopter
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.parser.Root
-import amf.mcp.internal.plugins.parse.SyncJsonSchemaCompiler.{context, parseJson}
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.model.document.{JsonLDInstanceDocument, JsonSchemaDocument}
+import amf.shapes.internal.helper.SyncJsonSchemaCompiler.{context, parseJson}
 import amf.shapes.internal.spec.jsonldschema.JsonLDSchemaParsePlugin
 
 object SyncJsonLdSchemaParser {
