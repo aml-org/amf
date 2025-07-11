@@ -7,7 +7,7 @@ import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.parser.Root
 import amf.shapes.client.scala.config.JsonSchemaConfiguration
 import amf.shapes.client.scala.model.document.{JsonLDInstanceDocument, JsonSchemaDocument}
-import amf.shapes.internal.helper.SyncJsonSchemaCompiler.{context, parseJson}
+import amf.shapes.internal.helper.SyncJsonSchemaCompiler.{context, parseJson, parseString}
 import amf.shapes.internal.spec.jsonldschema.JsonLDSchemaParsePlugin
 
 object SyncJsonLdSchemaParser {
@@ -18,7 +18,7 @@ object SyncJsonLdSchemaParser {
              ctx: ParserContext,
              location: String
            ): (JsonLDInstanceDocument, Seq[AMFValidationResult]) = {
-    val ast = parseJson(payload, ctx.eh, location)
+    val ast = parseString(payload, ctx.eh, location)
     parse(doc, ast, ctx, location)
   }
 
