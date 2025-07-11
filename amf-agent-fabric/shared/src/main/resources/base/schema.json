@@ -1,0 +1,329 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Factory",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "agents",
+    "agents-fabric"
+  ],
+  "properties": {
+    "apiVersion": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "agents": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/Agent"
+        }
+      }
+    },
+    "agents-fabric": {
+      "$ref": "#/definitions/AgentsFabric"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AgentSpec": {
+      "type": "object",
+      "required": [
+        "llm",
+        "instructions"
+      ],
+      "properties": {
+        "llm": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mcp": {
+                "type": "object",
+                "required": [
+                  "server"
+                ],
+                "properties": {
+                  "server": {
+                    "type": "string"
+                  },
+                  "allowed": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {
+              "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+                "type": "object",
+                "properties": {
+                  "authentication": {
+                    "$ref": "#/definitions/Authentication"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "policies": {
+          "type": "object",
+          "properties": {
+            "inbound": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "outbound": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Agent": {
+      "type": "object",
+      "properties": {
+        "card": {
+          "$ref": "a2a.json#/definitions/AgentCard"
+        },
+        "spec": {
+          "$ref": "#/definitions/AgentSpec"
+        }
+      },
+      "required": [
+        "card",
+        "spec"
+      ]
+    },
+    "OAuth2ClientCredentialsAuth": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string"
+        },
+        "clientSecret": {
+          "type": "string"
+        },
+        "policies": {
+          "type": "object",
+          "properties": {
+            "inbound": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "outbound": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "clientId",
+        "clientSecret"
+      ]
+    },
+    "Authentication": {
+      "type": "object",
+      "properties": {
+        "oAuth2ClientCredentials": {
+          "$ref": "#/definitions/OAuth2ClientCredentialsAuth"
+        }
+      }
+    },
+    "ExternalAgent": {
+      "type": "object",
+      "properties": {
+        "cardUrl": {
+          "type": "string"
+        },
+        "authentication": {
+          "$ref": "#/definitions/Authentication"
+        }
+      }
+    },
+    "EinsteinLLM": {
+      "type": "object",
+      "required": [
+        "clientId",
+        "clientSecret",
+        "baseUrl",
+        "modelName"
+      ],
+      "properties": {
+        "clientId": {
+          "type": "string"
+        },
+        "clientSecret": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "modelName": {
+          "type": "string"
+        },
+        "probability": {
+          "type": "number"
+        },
+        "locale": {
+          "type": "string"
+        }
+      }
+    },
+    "SseTransportConfig": {
+      "type": "object",
+      "properties": {
+        "ssePath": {
+          "type": "string"
+        },
+        "messagesPath": {
+          "type": "string"
+        }
+      }
+    },
+    "StreamableHttpTransportConfig": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "messagesPath": {
+          "type": "string"
+        }
+      }
+    },
+    "MCPTransport": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "sse"
+          ],
+          "properties": {
+            "sse": {
+              "$ref": "#/definitions/SseTransportConfig"
+            }
+          }
+        },
+        {
+          "required": [
+            "streamableHttp"
+          ],
+          "properties": {
+            "streamableHttp": {
+              "$ref": "#/definitions/StreamableHttpTransportConfig"
+            }
+          }
+        }
+      ]
+    },
+    "MCPServer": {
+      "type": "object",
+      "required": [
+        "url",
+        "transport",
+        "tools"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "transport": {
+          "$ref": "#/definitions/MCPTransport"
+        },
+        "tools": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "denied": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "AgentsFabric": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "external-agents": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+              "$ref": "#/definitions/ExternalAgent"
+            }
+          }
+        },
+        "llm-providers": {
+          "type": "object",
+          "properties": {
+            "einstein": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "patternProperties": {
+                  "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+                    "$ref": "#/definitions/EinsteinLLM"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "mcp-servers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {
+              "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+                "$ref": "#/definitions/MCPServer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

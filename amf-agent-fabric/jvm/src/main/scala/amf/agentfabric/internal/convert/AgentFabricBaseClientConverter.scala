@@ -1,0 +1,5 @@
+package amf.agentfabric.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait AgentFabricBaseClientConverter extends AgentFabricBaseConverter with ShapesBaseClientConverter

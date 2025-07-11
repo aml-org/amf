@@ -1,6 +1,6 @@
 package amf.shapes.internal.validation.plugin
 
-import amf.core.client.common.validation.{MCPSchemaProfile, ProfileName}
+import amf.core.client.common.validation.ProfileName
 import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
@@ -26,12 +26,11 @@ abstract class JsonSchemaBasedSpecValidationPlugin extends BaseModelValidationPl
   ): Future[ValidationResult] = {
     val report = JsonSchemaBasedSpecValidationHelper.validateInstance(
       unit.asInstanceOf[JsonLDInstanceDocument],
-      schemaShape
+      schemaShape,
+      profile
     )
     Future.successful(ValidationResult(unit, report))
   }
-
-  override protected def profile: ProfileName = MCPSchemaProfile
 
   override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit
       executionContext: ExecutionContext

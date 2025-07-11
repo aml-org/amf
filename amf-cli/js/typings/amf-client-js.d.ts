@@ -9594,6 +9594,39 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
+  export class AgentFabricConfiguration extends BaseAgentFabricConfiguration {
+    static AgentFabric(): AgentFabricConfiguration;
+
+    baseUnitClient(): AgentFabricBaseUnitClient;
+  }
+
+  export class BaseAgentFabricConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentFabricConfiguration;
+
+    withErrorHandlerProvider(
+        provider: ErrorHandlerProvider
+    ): BaseAgentFabricConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentFabricConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentFabricConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentFabricConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentFabricConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentFabricConfiguration;
+
+    withTransformationPipeline(
+        pipeline: TransformationPipeline
+    ): BaseAgentFabricConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentFabricConfiguration;
+  }
+  export class AgentFabricBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
   namespace org {
     namespace mulesoft {
       namespace common {
