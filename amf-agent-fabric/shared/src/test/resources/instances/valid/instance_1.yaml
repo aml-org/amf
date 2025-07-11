@@ -1,0 +1,224 @@
+apiVersion: 0.1
+agents:
+  google-maps-agent:
+    card:
+      protocolVersion: 0.2.9
+      name: GeoSpatial Route Planner Agent
+      description: Provides advanced route planning, traffic analysis, and custom
+        map generation services. This agent can calculate optimal routes, estimate
+        travel times considering real-time traffic, and create personalized maps with
+        points of interest.
+      url: https://acme.com/a2a/maps/v1
+      capabilities: {}
+      version: 1.0.0
+      provider:
+        organization: Acme Inc.
+        url: https://www.acme.com
+      securitySchemes:
+        oAuth2ClientCredentials:
+          type: oauth2
+          flows:
+            clientCredentials:
+              tokenUrl: https://${envUrl}/token
+              scopes:
+                read: Grants read access
+      security:
+        - oAuth2ClientCredentials:
+            - openid
+            - profile
+            - email
+      defaultInputModes:
+        - application/json
+        - text/plain
+      defaultOutputModes:
+        - application/json
+        - image/png
+      skills:
+        - id: route-optimizer-traffic
+          name: Traffic-Aware Route Optimizer
+          description: Calculates the optimal driving route between two or more locations,
+            taking into account real-time traffic conditions, road closures, and user
+            preferences (e.g., avoid tolls, prefer highways).
+          examples:
+            - Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San
+              Francisco International Airport' avoiding tolls.
+            - '{"origin": {"lat": 37.422, "lng": -122.084}, "destination": {"lat": 37.7749,
+          "lng": -122.4194}, "preferences": ["avoid_ferries"]}'
+          inputModes:
+            - application/json
+            - text/plain
+          outputModes:
+            - application/json
+            - application/vnd.geo+json
+            - text/html
+          tags:
+            - maps
+    spec:
+      llm: my-einstein
+      instructions:
+        - You're mission is helping people find the best route possible between two
+          points. You will extract origin and destination
+        - If the user didn't say otherwise, assume they are traveling by car. Valid
+          transportation means are Car, Bicycle, walking, and public transport.
+        - If the user says they're riding a motorcycle, treat it the same as cars.
+        - When presenting routes, present the one with the lowest total distance, the
+          one with the lowest fuel consumption, and the fastest one.
+        - Check the weather in the areas involved in the route and show a warning if
+          there are any weather alerts.
+      tools:
+        - mcp:
+            server: google-maps-mcp
+            allowed:
+              - geocode
+              - trace-route
+              - render-route
+      links:
+        - weather-agent:
+            authentication:
+              oAuth2ClientCredentials:
+                clientId: "${weather.clientId}"
+                clientSecret: "${weather.clientSecret}"
+                policies:
+                  inbound:
+                    - tracing
+                    - guardrails
+                  outbound:
+                    - gaurdrails-outbound
+                    - traffic-agent
+      policies:
+        inbound:
+          - tracing
+          - oauth2
+        outbound:
+          - tokenCounter
+  weather-agent:
+    card:
+      protocolVersion: 0.2.9
+      name: Weather Agent
+      description: You are a helpful agent who can talk to users about the weather.
+      url: https://acme.com/a2a/weather/v1
+      capabilities: {}
+      version: 1.0.0
+      provider:
+        organization: Acme Inc.
+        url: https://www.acme.com
+      securitySchemes:
+        oAuth2ClientCredentials:
+          type: oauth2
+          flows:
+            clientCredentials:
+              tokenUrl: https://${envUrl}/token
+              scopes:
+                read: Grants read access
+      security:
+        - oAuth2ClientCredentials:
+            - openid
+            - profile
+            - email
+      defaultInputModes:
+        - application/json
+        - text/plain
+      defaultOutputModes:
+        - application/json
+        - image/png
+      skills:
+        - id: forecast
+          name: Weather forecast
+          description: Provides the weather forecast at a given location.
+          tags:
+            - weather
+    spec:
+      llm: my-einstein
+      instructions:
+        - Provide the weather forecast at a given location. By default, provide forecast
+          for today and the next 2 days.
+      tools:
+        - mcp:
+            server: weather-mcp
+            allowed:
+              - forecast
+  traffic-agent:
+    card:
+      protocolVersion: 0.2.9
+      name: Traffic Agent
+      description: You are a helpful agent who can talk to users about the traffic.
+      url: https://acme.com/a2a/traffic/v1
+      capabilities: {}
+      version: 1.0.0
+      provider:
+        organization: Acme Inc.
+        url: https://www.acme.com
+      securitySchemes:
+        oAuth2ClientCredentials:
+          type: oauth2
+          flows:
+            clientCredentials:
+              tokenUrl: https://${envUrl}/token
+              scopes:
+                read: Grants read access
+      security:
+        - oAuth2ClientCredentials:
+            - openid
+            - profile
+            - email
+      defaultInputModes:
+        - application/json
+        - text/plain
+      defaultOutputModes:
+        - application/json
+        - image/png
+      skills:
+        - id: traffic-notifications
+          name: Traffic Notifications
+          description: Provide the latest traffic news in a large metropolitan area
+            or inter-state route.
+          tags:
+            - traffic
+    spec:
+      llm: my-einstein
+      instructions:
+        - Resolve a wide area of interest from the prompt and use available tools to
+          fetch relevant notifications.
+      tools:
+        - mcp:
+            server: weather-mcp
+        - mcp:
+            server: google-maps-mcp
+agents-fabric:
+  external-agents:
+    anypoint-agent:
+      cardUrl: www.anypoint.com/a2a/
+      authentication:
+        oAuth2ClientCredentials:
+          clientId: "${anypoint.clientId}"
+          clientSecret: "${anypoint.clientSecret}"
+  llm-providers:
+    einstein:
+      - my-einstein:
+          clientId: "${einstein.clientId}"
+          clientSecret: "${einstein.clientSecret}"
+          baseUrl: "${saleforce.url}"
+          modelName: sfdc_ai__DefaultOpenAIGPT35Turbo
+          probability: 0.3
+          locale: en_US
+  mcp-servers:
+    - weather-mcp:
+        url: https://weather-mcp.anypoint.com/
+        transport:
+          sse:
+            ssePath: "/sse"
+            messagesPath: "/messages"
+        tools:
+          allowed:
+            - forecast
+          denied:
+            - histogram
+    - google-maps-mcp:
+        url: https://maps.google.com/mcp
+        transport:
+          streamableHttp:
+            path: "/mes"
+            messagesPath: "/messages"
+        tools:
+          allowed:
+            - "*"

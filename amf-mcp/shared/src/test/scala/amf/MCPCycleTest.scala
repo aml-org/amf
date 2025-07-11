@@ -12,8 +12,12 @@ class MCPCycleTest extends FileAssertionTest {
   private val basePath: String               = "amf-mcp/shared/src/test/resources/instances/"
   private val mcpConfig: ShapesConfiguration = MCPConfiguration.MCP()
 
-  test("Render MCP instance to JSON-LD") {
-    cycle("valid/instance_1.json", "valid/instance_1.jsonld")
+  test("Render MCP JSON instance to JSON-LD") {
+    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
+  }
+
+  test("Render MCP YAML instance to JSON-LD") {
+    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
   }
 
   def cycle(source: String, golden: String): Future[Assertion] = {

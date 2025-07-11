@@ -9,13 +9,16 @@ import org.scalatest.Assertion
 import scala.concurrent.Future
 
 class AgentFabricCycleTest extends FileAssertionTest {
-  private val basePath: String               = "amf-agent-fabric/shared/src/test/resources/instances/"
+  private val basePath: String                 = "amf-agent-fabric/shared/src/test/resources/instances/"
   private val agentConfig: ShapesConfiguration = AgentFabricConfiguration.AgentFabric()
 
-  test("Render AgentFabric instance to JSON-LD") {
-    cycle("valid/instance_1.json", "valid/instance_1.jsonld")
+  test("Render AgentFabric JSON instance to JSON-LD") {
+    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
   }
 
+  test("Render AgentFabric YAML instance to JSON-LD") {
+    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
+  }
   def cycle(source: String, golden: String): Future[Assertion] = {
     for {
       parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)

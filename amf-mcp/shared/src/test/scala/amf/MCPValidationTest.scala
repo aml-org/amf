@@ -9,7 +9,7 @@ class MCPValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext 
   private val basePath: String          = "file://amf-mcp/shared/src/test/resources/instances/"
   private val client: MCPBaseUnitClient = MCPConfiguration.MCP().baseUnitClient()
 
-  test("Valid MCP Instance should conforms") {
+  test("Valid MCP JSON Instance should conforms") {
     for {
       parseResult      <- client.parse(basePath + "valid/instance_1.json")
       validationReport <- client.validate(parseResult.baseUnit)
@@ -19,9 +19,30 @@ class MCPValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext 
     }
   }
 
-  test("Invalid MCP Instance should not conforms") {
+  test("Valid MCP YAML Instance should conforms") {
+    for {
+      parseResult      <- client.parse(basePath + "valid/instance_1.yaml")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
+  test("Invalid MCP JSON Instance should not conforms") {
     for {
       parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.json")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe false
+      validationReport.results.size shouldBe 1
+    }
+  }
+
+  test("Invalid MCP YAML Instance should not conforms") {
+    for {
+      parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.yaml")
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       parseResult.conforms shouldBe true
