@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "library_b.proto";
+package library_a;
+
+message MessageA {
+  string message_a = 2;
+}
+
+message MessageAB {
+  library_b.MessageAB message_ab = 5;
+}

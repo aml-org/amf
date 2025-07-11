@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package com.example.model;
+
+import "library_a.proto";
+import "library_b.proto";
+
+// The request message referencing a message in libraries a & b
+message HelloRequest {
+  library_a.MessageA message_a = 2;
+  library_b.MessageB message_b = 3;
+}
