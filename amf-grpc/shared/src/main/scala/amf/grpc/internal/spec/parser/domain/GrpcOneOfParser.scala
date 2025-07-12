@@ -25,7 +25,7 @@ case class GrpcOneOfParser(ast: Node)(implicit context: GrpcWebApiContext) exten
     collect(ast, Seq(ONE_OF_FIELD)).map { case (oneOfField: Node) =>
       GrpcFieldParser(oneOfField).parse(property => {
         val shape = NodeShape(toAnnotations(oneOfField))
-        shape.withProperties(Seq(property.adopted(shape.id)))
+        shape.withProperties(Seq(property))
         members.append(shape)
       })
     }

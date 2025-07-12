@@ -27,11 +27,11 @@ case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends Grp
           case Some(t) =>
             t.value
           case _ =>
-            astError(propertyMap.id, "missing mandatory Proto3 map field name", toAnnotations(field))
+            astError("missing mandatory Proto3 map field name", toAnnotations(field))
             ""
         }
       case _ =>
-        astError(propertyMap.id, "missing mandatory Proto3 map field name", toAnnotations(field))
+        astError("missing mandatory Proto3 map field name", toAnnotations(field))
         ""
     }
   }

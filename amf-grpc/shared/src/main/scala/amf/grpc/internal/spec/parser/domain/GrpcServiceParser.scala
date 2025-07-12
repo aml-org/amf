@@ -37,7 +37,7 @@ case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) ext
         case Some(serviceName) =>
           endpoint.withName(serviceName.value)
         case None =>
-          astError(endpoint.id, "missing Protobuf3 service name", endpoint.annotations)
+          astError("missing Protobuf3 service name", endpoint.annotations)
       }
     }
   }

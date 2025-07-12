@@ -45,7 +45,6 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
           GrpcOptionParser(messageElementAst).parse { extension => nodeShape.withCustomDomainProperty(extension) }
         case _ =>
           astError(
-            nodeShape.id,
             s"unexpected Proto3 message element ${messageElement.children.head.name}",
             toAnnotations(messageElement.children.head)
           )

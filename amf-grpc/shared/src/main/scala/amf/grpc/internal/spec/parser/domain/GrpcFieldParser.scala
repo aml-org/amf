@@ -31,14 +31,14 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
   def parseFieldNumber(): Unit = {
     parseFieldNumber(ast) match {
       case Some(order) => propertyShape.withSerializationOrder(order)
-      case None        => astError(propertyShape.id, "missing Protobuf3 field number", propertyShape.annotations)
+      case None        => astError("missing Protobuf3 field number", propertyShape.annotations)
     }
   }
 
   def parseFieldRange(): Unit = {
     parseFieldRange(ast) match {
       case Some(range) => propertyShape.withRange(range)
-      case _           => astError(propertyShape.id, "missing Protobuf3 field type", propertyShape.annotations)
+      case _           => astError("missing Protobuf3 field type", propertyShape.annotations)
     }
   }
 

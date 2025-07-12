@@ -74,11 +74,11 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
           case Some(name) =>
             name.value
           case None =>
-            astError("", "Missing mandatory proto3 rpcName", toAnnotations(node))
+            astError("Missing mandatory proto3 rpcName", toAnnotations(node))
             "AnonymousOperation"
         }
       case _ =>
-        astError("", "Missing mandatory proto3 rpcName", toAnnotations(ast))
+        astError("Missing mandatory proto3 rpcName", toAnnotations(ast))
         "AnonymousOperation"
     }
   }

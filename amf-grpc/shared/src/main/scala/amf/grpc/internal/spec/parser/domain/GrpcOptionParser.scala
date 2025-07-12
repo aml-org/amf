@@ -27,7 +27,6 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
     path(ast, Seq(OPTION_NAME)) foreach { case node: Node =>
       extension.withName(node.children.filter(n => n.isInstanceOf[Node]).head.asInstanceOf[Node].source)
     }
-    extension.id = extension.id + extension.name.value().urlEncoded
   }
 
   private def parseExtension() = {
@@ -36,7 +35,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
         val data = parseConstant(constant)
         extension.withExtension(data)
       case _ =>
-        astError(extension.id, "Missing mandatory protobuf3 option constant value", toAnnotations(ast))
+        astError("Missing mandatory protobuf3 option constant value", toAnnotations(ast))
     }
   }
 
@@ -66,7 +65,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
       s
     } else {
       val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.String)
-      astError(s.id, s"Unknown protobuf constant ${constAst.source}", toAnnotations(constAst))
+      astError(s"Unknown protobuf constant ${constAst.source}", toAnnotations(constAst))
       s
     }
   }

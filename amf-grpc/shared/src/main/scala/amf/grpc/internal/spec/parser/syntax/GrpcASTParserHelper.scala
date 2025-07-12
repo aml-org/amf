@@ -16,10 +16,10 @@ import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 trait GrpcASTParserHelper extends AntlrASTParserHelper {
 
-  def withName(ast: Node, nametoken: String, element: NamedDomainElement)(implicit
+  def withName(ast: Node, nameToken: String, element: NamedDomainElement)(implicit
       ctx: GrpcWebApiContext
   ): Unit = {
-    path(ast, Seq(nametoken, IDENTIFIER)).foreach { node =>
+    path(ast, Seq(nameToken, IDENTIFIER)).foreach { node =>
       withOptTerminal(node) {
         case Some(shapeName) =>
           element.withName(shapeName.value)
@@ -29,20 +29,18 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
               withOptTerminal(keywordNode) {
                 case Some(kw) =>
                   element.withName(kw.value)
-                case _ =>
-                  astError(element.id, s"missing Protobuf3 $nametoken", element.annotations)
+                case _ => astError(s"missing Protobuf3 $nameToken", element.annotations)
               }
-            case None =>
-              astError(element.id, s"missing Protobuf3 $nametoken", element.annotations)
+            case None => astError(s"missing Protobuf3 $nameToken", element.annotations)
           }
       }
     }
   }
 
-  def withDeclaredShape(ast: Node, nametoken: String, element: AnyShape)(implicit
+  def withDeclaredShape(ast: Node, nameToken: String, element: AnyShape)(implicit
       ctx: GrpcWebApiContext
   ): Unit = {
-    path(ast, Seq(nametoken, IDENTIFIER)).foreach { node =>
+    path(ast, Seq(nameToken, IDENTIFIER)).foreach { node =>
       withOptTerminal(node) {
         case Some(shapeName) =>
           element.withName(ctx.fullMessagePath(shapeName.value))
@@ -50,7 +48,7 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
           ctx.declarations += element
           element.add(DeclaredElement())
         case None =>
-          astError(element.id, s"missing Protobuf3 $nametoken", element.annotations)
+          astError(s"missing Protobuf3 $nameToken", element.annotations)
       }
     }
 
@@ -159,16 +157,13 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     scalar
   }
 
-  private def parseIsRepeated(ast: ASTNode)(implicit grpcWebApiContext: GrpcWebApiContext): Boolean = {
-    ast match {
-      case node: Node =>
-        find(node, REPEATED).headOption match {
-          case Some(_: Terminal) => true
-          case _                 => false
-        }
-      case _ => false
-    }
-
+  private def parseIsRepeated(ast: ASTNode): Boolean = ast match {
+    case node: Node =>
+      find(node, REPEATED).headOption match {
+        case Some(_: Terminal) => true
+        case _                 => false
+      }
+    case _ => false
   }
 
   def collectOptions(ast: Node, path: Seq[String], setterFn: DomainExtension => Unit)(implicit
