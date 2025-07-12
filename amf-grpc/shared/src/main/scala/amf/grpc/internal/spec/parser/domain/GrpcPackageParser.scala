@@ -9,7 +9,7 @@ import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
-  val webApi = WebApi()
+  val webApi: WebApi = WebApi()
 
   def parse(): WebApi = {
     parseName() match {
@@ -23,10 +23,7 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
     collectOptions(
       ast,
       Seq(OPTION_STATEMENT),
-      { extension =>
-        extension.adopted(webApi.id)
-        webApi.withCustomDomainProperty(extension)
-      }
+      extension => webApi.withCustomDomainProperty(extension)
     )
     webApi
   }

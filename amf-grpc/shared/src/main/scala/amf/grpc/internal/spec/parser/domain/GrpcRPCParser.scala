@@ -9,22 +9,19 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
-  def parse(adopt: Operation => Unit): Operation = {
-    parseServiceMessages(adopt)
-  }
-
-  def parseServiceMessages(adopt: Operation => Unit): Operation = {
+  def parse(setterFn: Operation => Unit): Operation = {
     val operationName         = parseName()
     val messages: Seq[String] = collect(ast, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
     val request               = messages.head
     val response              = messages.last
     val operation = parseStreamingMetadata() match {
-      case (false, false) => buildOperation(operationName, "post", request, response, adopt)
-      case (true, false)  => buildOperation(operationName, "publish", request, response, adopt)
-      case (false, true)  => buildOperation(operationName, "subscribe", request, response, adopt)
-      case (true, true)   => buildOperation(operationName, "pubsub", request, response, adopt)
+      case (false, false) => buildOperation(operationName, "post", request, response)
+      case (true, false)  => buildOperation(operationName, "publish", request, response)
+      case (false, true)  => buildOperation(operationName, "subscribe", request, response)
+      case (true, true)   => buildOperation(operationName, "pubsub", request, response)
     }
     parseOptions(ast, operation)
+    setterFn(operation)
     operation
   }
 
@@ -32,23 +29,18 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
     collectOptions(
       ast,
       Seq(OPTION_STATEMENT),
-      { extension =>
-        extension.adopted(operation.id)
-        operation.withCustomDomainProperty(extension)
-      }
+      extension => operation.withCustomDomainProperty(extension)
     )
   }
 
-  def buildOperation(
+  private def buildOperation(
       operationName: String,
       operationType: String,
       request: String,
-      response: String,
-      adopt: Operation => Unit
+      response: String
   ): Operation = {
     val operation =
       Operation(toAnnotations(ast)).withName(operationName).withOperationId(operationName).withMethod(operationType)
-    adopt(operation)
     val requestBody = parseObjectRange(ast, request)
     operation
       .withRequest()
@@ -62,7 +54,7 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
     operation
   }
 
-  def parseStreamingMetadata(): (Boolean, Boolean) = {
+  private def parseStreamingMetadata(): (Boolean, Boolean) = {
     var foundRequest   = false
     var streamRequest  = false
     var streamResponse = false

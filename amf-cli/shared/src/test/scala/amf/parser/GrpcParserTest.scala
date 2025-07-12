@@ -47,7 +47,7 @@ class StandardGoogleProtoParserTest extends GrpcFunSuiteCycleTests {
     "type.proto",
     "wrappers.proto"
   ).foreach { protoFile =>
-    multiGoldenTest(s"Can generate standard google proto file ${protoFile}", s"${protoFile}.%s") { config =>
+    multiGoldenTest(s"Can generate standard google proto file $protoFile", s"$protoFile.%s") { config =>
       cycle(
         protoFile,
         config.golden,

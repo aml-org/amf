@@ -13,26 +13,26 @@ import scala.collection.mutable
 case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val enum: ScalarShape = ScalarShape(toAnnotations(ast))
 
-  def parse(adopt: ScalarShape => Unit): ScalarShape = {
-    parseName(adopt)
+  def parse(setterFn: ScalarShape => Unit = _ => ()): ScalarShape = {
+    parseName()
+    setterFn(enum)
     parseElements()
     enum
   }
 
-  def parseName(adopt: ScalarShape => Unit): Unit = withDeclaredShape(ast, ENUM_NAME, enum, { _ => adopt(enum) })
+  def parseName(): Unit = withDeclaredShape(ast, ENUM_NAME, enum)
 
-  def parseElements(): Unit = {
+  private def parseElements(): Unit = {
     val values: mutable.Buffer[DataNode] = mutable.Buffer()
-    val enumSchema                       = NodeShape(toAnnotations(ast)).adopted(enum.id)
+    val enumSchema                       = NodeShape(toAnnotations(ast))
     collect(ast, Seq(ENUM_BODY, ENUM_ELEMENT, ENUM_FIELD)).foreach { enumField =>
-      val propertySchema = PropertyShape(toAnnotations(enumField)).adopted(enumSchema.id)
+      val propertySchema = PropertyShape(toAnnotations(enumField))
       path(enumField, Seq(IDENTIFIER)) match {
         case Some(e) =>
           withOptTerminal(e) {
             case Some(t) =>
               propertySchema.withName(t.value)
               val data = ScalarNode(toAnnotations(e)).withValue(t.value)
-              data.adopted(enumSchema.id)
               values.append(data)
             case _ =>
               astError(propertySchema.id, "Missing protobuf 3 enumeration field name", toAnnotations(e))
