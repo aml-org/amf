@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'library.Some'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto/web-api/types#/shape/.test.HelloRequest/property/some/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto#/declares/shape/.test.HelloRequest/property/property/some/unresolved
   Property: 
   Range: [(14,2)-(14,14)]
   Location: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto
