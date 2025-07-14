@@ -345,7 +345,7 @@ lazy val agentFabricJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql)
+  .dependsOn(grpc, graphql, mcp, agentFabric)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -434,6 +434,8 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .dependsOn(apiContractJVM)
   .dependsOn(graphqlJVM)
   .dependsOn(grpcJVM)
+  .dependsOn(mcpJVM)
+  .dependsOn(agentFabricJVM)
   .disablePlugins(SonarPlugin, NpmOpsPlugin, ScoverageSbtPlugin)
 
 addCommandAlias(
