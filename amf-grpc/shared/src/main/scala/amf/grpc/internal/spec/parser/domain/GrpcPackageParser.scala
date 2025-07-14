@@ -9,7 +9,7 @@ import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
-  val webApi = WebApi()
+  val webApi: WebApi = WebApi()
 
   def parse(): WebApi = {
     parseName() match {
@@ -17,16 +17,13 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
         doc.withPkg(pkg, annotations)
         webApi.withName(pkg, annotations)
       case _ =>
-        astError(webApi.id, "Missing protobuf3 package statement", toAnnotations(ast))
+        astError("Missing protobuf3 package statement", toAnnotations(ast))
         webApi.withName(ctx.rootContextDocument.split("/").last)
     }
     collectOptions(
       ast,
       Seq(OPTION_STATEMENT),
-      { extension =>
-        extension.adopted(webApi.id)
-        webApi.withCustomDomainProperty(extension)
-      }
+      extension => webApi.withCustomDomainProperty(extension)
     )
     webApi
   }

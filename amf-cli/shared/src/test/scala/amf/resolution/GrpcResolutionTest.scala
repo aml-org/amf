@@ -10,7 +10,6 @@ class GrpcResolutionTest extends AMFModelTest {
   test("nested reference in messages in the same file") {
     val api = s"$basePath/references/inner-ref.proto"
     grpcClient.parse(api) flatMap { parseResult =>
-      println(parseResult)
       parseResult.conforms shouldBe true
       val bu                = parseResult.baseUnit
       val parseDeclarations = getDeclarations(bu)

@@ -71,5 +71,5 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
     }
   }
 
-  override def withIdAdoption: Boolean = false // TODO pending analysis and parsing cleanup
+  override def withIdAdoption: Boolean = true
 }
