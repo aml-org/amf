@@ -13,15 +13,19 @@ object MCPSchema extends JsonSchemaBasedSpecSchema{
       |  },
       |  "title": "MCP Asset Schema",
       |  "definitions": {
-      |    "tool": {
+      |    "Tool": {
       |      "@context": {
       |        "mcp": "https://modelcontextprotocol.io/vocab#",
       |        "@type": "mcp:Tool"
       |      },
       |      "description": "Definition for a tool the client can call.",
       |      "properties": {
+      |        "annotations": {
+      |          "$ref": "#/definitions/ToolAnnotations",
+      |          "description": "Optional additional tool information."
+      |        },
       |        "description": {
-      |          "description": "A human-readable description of the tool.",
+      |          "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
       |          "type": "string"
       |        },
       |        "inputSchema": {
@@ -66,7 +70,86 @@ object MCPSchema extends JsonSchemaBasedSpecSchema{
       |      ],
       |      "type": "object"
       |    },
-      |    "resource": {
+      |    "ToolAnnotations": {
+      |      "description": "Additional properties describing a Tool to clients.\n\nNOTE: all properties in ToolAnnotations are **hints**.\nThey are not guaranteed to provide a faithful description of\ntool behavior (including descriptive properties like `title`).\n\nClients should never make tool use decisions based on ToolAnnotations\nreceived from untrusted servers.",
+      |      "properties": {
+      |        "destructiveHint": {
+      |          "description": "If true, the tool may perform destructive updates to its environment.\nIf false, the tool performs only additive updates.\n\n(This property is meaningful only when `readOnlyHint == false`)\n\nDefault: true",
+      |          "type": "boolean"
+      |        },
+      |        "idempotentHint": {
+      |          "description": "If true, calling the tool repeatedly with the same arguments\nwill have no additional effect on the its environment.\n\n(This property is meaningful only when `readOnlyHint == false`)\n\nDefault: false",
+      |          "type": "boolean"
+      |        },
+      |        "openWorldHint": {
+      |          "description": "If true, this tool may interact with an \"open world\" of external\nentities. If false, the tool's domain of interaction is closed.\nFor example, the world of a web search tool is open, whereas that\nof a memory tool is not.\n\nDefault: true",
+      |          "type": "boolean"
+      |        },
+      |        "readOnlyHint": {
+      |          "description": "If true, the tool does not modify its environment.\n\nDefault: false",
+      |          "type": "boolean"
+      |        },
+      |        "title": {
+      |          "description": "A human-readable title for the tool.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "type": "object"
+      |    },
+      |    "Prompt": {
+      |      "@context": {
+      |        "mcp": "https://modelcontextprotocol.io/vocab#",
+      |        "@type": "mcp:Prompt"
+      |      },
+      |      "description": "A prompt or prompt template that the server offers.",
+      |      "properties": {
+      |        "arguments": {
+      |          "description": "A list of arguments to use for templating the prompt.",
+      |          "items": {
+      |            "$ref": "#/definitions/PromptArgument"
+      |          },
+      |          "type": "array"
+      |        },
+      |        "description": {
+      |          "description": "An optional description of what this prompt provides",
+      |          "type": "string"
+      |        },
+      |        "name": {
+      |          "description": "The name of the prompt or prompt template.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "name"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "PromptArgument": {
+      |      "@context": {
+      |        "mcp": "https://modelcontextprotocol.io/vocab#",
+      |        "@type": "mcp:PromptArgument"
+      |      },
+      |      "description": "Describes an argument that a prompt can accept.",
+      |      "properties": {
+      |        "description": {
+      |          "description": "A human-readable description of the argument.",
+      |          "type": "string"
+      |        },
+      |        "name": {
+      |          "description": "The name of the argument.",
+      |          "type": "string"
+      |        },
+      |        "required": {
+      |          "description": "Whether this argument must be provided.",
+      |          "type": "boolean"
+      |        }
+      |      },
+      |      "required": [
+      |        "name"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "Resource": {
       |      "@context": {
       |        "mcp": "https://modelcontextprotocol.io/vocab#",
       |        "@type": "mcp:Resource"
@@ -74,31 +157,11 @@ object MCPSchema extends JsonSchemaBasedSpecSchema{
       |      "description": "A known resource that the server is capable of reading.",
       |      "properties": {
       |        "annotations": {
-      |          "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
-      |          "properties": {
-      |            "audience": {
-      |              "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
-      |              "items": {
-      |                "description": "Describes who the intended customer of this object or data is.",
-      |                "enum": [
-      |                  "assistant",
-      |                  "user"
-      |                ],
-      |                "type": "string"
-      |              },
-      |              "type": "array"
-      |            },
-      |            "priority": {
-      |              "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
-      |              "maximum": 1,
-      |              "minimum": 0,
-      |              "type": "number"
-      |            }
-      |          },
-      |          "type": "object"
+      |          "$ref": "#/definitions/Annotations",
+      |          "description": "Optional annotations for the client."
       |        },
       |        "description": {
-      |          "description": "A description of what this resource represents.",
+      |          "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
       |          "type": "string"
       |        },
       |        "mimeType": {
@@ -106,8 +169,12 @@ object MCPSchema extends JsonSchemaBasedSpecSchema{
       |          "type": "string"
       |        },
       |        "name": {
-      |          "description": "A human-readable name for this resource.",
+      |          "description": "A human-readable name for this resource.\n\nThis can be used by clients to populate UI elements.",
       |          "type": "string"
+      |        },
+      |        "size": {
+      |          "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
+      |          "type": "integer"
       |        },
       |        "uri": {
       |          "description": "The URI of this resource.",
@@ -121,64 +188,38 @@ object MCPSchema extends JsonSchemaBasedSpecSchema{
       |      ],
       |      "type": "object"
       |    },
-      |    "prompt": {
-      |      "@context": {
-      |        "mcp": "https://modelcontextprotocol.io/vocab#",
-      |        "@type": "mcp:Prompt"
-      |      },
-      |      "description": "A prompt or prompt template that the server offers.",
+      |    "Annotations": {
+      |      "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
       |      "properties": {
-      |        "arguments": {
-      |          "description": "A list of arguments to use for templating the prompt.",
+      |        "audience": {
+      |          "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
       |          "items": {
-      |            "@context": {
-      |              "mcp": "https://modelcontextprotocol.io/vocab#",
-      |              "@type": "mcp:PromptArgument"
-      |            },
-      |            "description": "Describes an argument that a prompt can accept.",
-      |            "properties": {
-      |              "description": {
-      |                "description": "A human-readable description of the argument.",
-      |                "type": "string"
-      |              },
-      |              "name": {
-      |                "description": "The name of the argument.",
-      |                "type": "string"
-      |              },
-      |              "required": {
-      |                "description": "Whether this argument must be provided.",
-      |                "type": "boolean"
-      |              }
-      |            },
-      |            "required": [
-      |              "description",
-      |              "name"
-      |            ],
-      |            "type": "object"
+      |            "$ref": "#/definitions/Role"
       |          },
       |          "type": "array"
       |        },
-      |        "description": {
-      |          "description": "A description of what this prompt provides",
-      |          "type": "string"
-      |        },
-      |        "name": {
-      |          "description": "The name of the prompt.",
-      |          "type": "string"
+      |        "priority": {
+      |          "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
+      |          "maximum": 1,
+      |          "minimum": 0,
+      |          "type": "number"
       |        }
       |      },
-      |      "required": [
-      |        "name"
-      |      ],
       |      "type": "object"
+      |    },
+      |    "Role": {
+      |      "description": "The sender or recipient of messages and data in a conversation.",
+      |      "enum": [
+      |        "assistant",
+      |        "user"
+      |      ],
+      |      "type": "string"
       |    }
       |  },
       |  "type": "object",
       |  "required": [
       |    "protocolVersion",
       |    "name",
-      |    "introspectedAt",
-      |    "connectionStatus",
       |    "capabilities"
       |  ],
       |  "properties": {
@@ -254,21 +295,21 @@ object MCPSchema extends JsonSchemaBasedSpecSchema{
       |    "tools": {
       |      "type": "array",
       |      "items": {
-      |        "$ref": "#/definitions/tool"
+      |        "$ref": "#/definitions/Tool"
       |      },
       |      "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
       |    },
       |    "resources": {
       |      "type": "array",
       |      "items": {
-      |        "$ref": "#/definitions/resource"
+      |        "$ref": "#/definitions/Resource"
       |      },
       |      "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
       |    },
       |    "prompts": {
       |      "type": "array",
       |      "items": {
-      |        "$ref": "#/definitions/prompt"
+      |        "$ref": "#/definitions/Prompt"
       |      },
       |      "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
       |    },
