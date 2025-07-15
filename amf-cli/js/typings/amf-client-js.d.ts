@@ -6811,6 +6811,8 @@ declare module "amf-client-js" {
     static readonly PAYLOAD: ProfileName;
     static readonly RAML08: ProfileName;
     static readonly RAML10: ProfileName;
+    static readonly MCP: ProfileName;
+    static readonly AGENT_FABRIC: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -8897,6 +8899,8 @@ declare module "amf-client-js" {
     static readonly PAYLOAD: Spec;
     static readonly RAML08: Spec;
     static readonly RAML10: Spec;
+    static readonly MCP: Spec;
+    static readonly AGENT_FABRIC: Spec;
 
     static apply(name: string): Spec;
   }
