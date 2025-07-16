@@ -3,6 +3,7 @@ package amf
 import amf.core.common.FileAssertionTest
 import amf.core.internal.remote.Mimes
 import amf.agentfabric.client.scala.AgentFabricConfiguration
+import amf.core.client.scala.config.RenderOptions
 import amf.shapes.client.scala.ShapesConfiguration
 import org.scalatest.Assertion
 
@@ -10,7 +11,8 @@ import scala.concurrent.Future
 
 class AgentFabricCycleTest extends FileAssertionTest {
   private val basePath: String                 = "amf-agent-fabric/shared/src/test/resources/instances/"
-  private val agentConfig: ShapesConfiguration = AgentFabricConfiguration.AgentFabric()
+  private val renderOptions                    = RenderOptions().withPrettyPrint
+  private val agentConfig: ShapesConfiguration = AgentFabricConfiguration.AgentFabric().withRenderOptions(renderOptions)
 
   test("Render AgentFabric JSON instance to JSON-LD") {
     cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")

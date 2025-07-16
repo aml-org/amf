@@ -17,7 +17,7 @@ class AgentFabricSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecution
     val client = AgentFabricConfiguration.AgentFabric().baseUnitClient()
     for {
       result     <- client.parse(basePath + "valid/instance_1.json")
-      jsonld     <- Future.successful(client.render(result.baseUnit, Mimes.`application/ld+json`))
+      jsonld     = client.render(result.baseUnit, Mimes.`application/ld+json`)
       jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
     } yield {
       result.conforms shouldBe true
