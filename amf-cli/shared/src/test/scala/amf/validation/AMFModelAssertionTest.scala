@@ -373,8 +373,7 @@ class AMFModelAssertionTest extends AMFModelTest {
     val ramlApi = s"$basePath/raml/uri-params/implicit-path-param.raml"
     modelAssertion(ramlApi, PipelineId.Editing) { bu =>
       val endPoint     = getEndpoints(bu).last
-      val paramField   = endPoint.fields.get(EndPointModel.Parameters).asInstanceOf[AmfArray]
-      val params       = paramField.values
+      val params       = endPoint.parameters
       val virtualParam = params.head
       virtualParam.annotations.isVirtual shouldBe true
 

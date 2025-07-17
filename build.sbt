@@ -338,14 +338,47 @@ lazy val agentFabricJS =
   agentFabric.js
     .in(file("./amf-agent-fabric/js"))
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
-//    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
+
+/** ********************************************** AMF-AGENT-CARD *********************************************
+ */
+
+lazy val agentCard = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-agent-card"
+    )
+  )
+  .in(file("./amf-agent-card"))
+  .settings(commonSettings)
+  .dependsOn(shapes)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-card-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-card.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.agent-card"))
+
+lazy val agentCardJVM =
+  agentCard.jvm
+    .in(file("./amf-agent-card/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val agentCardJS =
+  agentCard.js
+    .in(file("./amf-agent-card/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF CLI *********************************************
   */
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql, mcp, agentFabric)
+  .dependsOn(grpc, graphql, mcp, agentFabric, agentCard)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -436,6 +469,7 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .dependsOn(grpcJVM)
   .dependsOn(mcpJVM)
   .dependsOn(agentFabricJVM)
+  .dependsOn(agentCardJVM)
   .disablePlugins(SonarPlugin, NpmOpsPlugin, ScoverageSbtPlugin)
 
 addCommandAlias(
