@@ -6813,6 +6813,7 @@ declare module "amf-client-js" {
     static readonly RAML10: ProfileName;
     static readonly MCP: ProfileName;
     static readonly AGENT_FABRIC: ProfileName;
+    static readonly AGENT_CARD: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -8901,6 +8902,7 @@ declare module "amf-client-js" {
     static readonly RAML10: Spec;
     static readonly MCP: Spec;
     static readonly AGENT_FABRIC: Spec;
+    static readonly AGENT_CARD: Spec;
 
     static apply(name: string): Spec;
   }
@@ -9595,6 +9597,39 @@ declare module "amf-client-js" {
     withUnitCache(cache: UnitCache): BaseMCPConfiguration;
   }
   export class MCPBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class AgentCardConfiguration extends BaseAgentCardConfiguration {
+    static AgentCard(): AgentCardConfiguration;
+
+    baseUnitClient(): AgentCardBaseUnitClient;
+  }
+
+  export class BaseAgentCardConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentCardConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseAgentCardConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentCardConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentCardConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentCardConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentCardConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentCardConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseAgentCardConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentCardConfiguration;
+  }
+  export class AgentCardBaseUnitClient extends AMLBaseUnitClient {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 

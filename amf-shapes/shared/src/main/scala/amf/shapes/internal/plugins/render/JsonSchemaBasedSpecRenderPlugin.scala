@@ -17,10 +17,7 @@ abstract class JsonSchemaBasedSpecRenderPlugin extends SYAMLBasedRenderPlugin {
 
   override val id: String = s"${spec.id.trim.toLowerCase()}-render-plugin"
 
-  override def applies(element: RenderInfo): Boolean = element.unit match {
-    case _: JsonLDInstanceDocument => true
-    case _                         => false
-  }
+  override def applies(element: RenderInfo): Boolean = element.unit.isInstanceOf[JsonLDInstanceDocument]
 
   override def defaultSyntax(): String = spec.mediaType
 
@@ -31,7 +28,6 @@ abstract class JsonSchemaBasedSpecRenderPlugin extends SYAMLBasedRenderPlugin {
       renderConfig: RenderConfiguration,
       errorHandler: AMFErrorHandler
   ): Option[YDocument] = {
-
     unit match {
       case jsonLdInstanceDocument: JsonLDInstanceDocument if jsonLdInstanceDocument.encodes.nonEmpty =>
         val encoded = jsonLdInstanceDocument.encodes.head.asInstanceOf[JsonLDObject]
@@ -42,6 +38,5 @@ abstract class JsonSchemaBasedSpecRenderPlugin extends SYAMLBasedRenderPlugin {
         Some(document)
       case _ => None
     }
-
   }
 }

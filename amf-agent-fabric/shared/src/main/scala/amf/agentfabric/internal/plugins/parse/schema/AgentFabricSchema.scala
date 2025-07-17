@@ -388,7 +388,7 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |        },
       |        "protocolVersion": {
       |          "default": "0.2.5",
-      |          "description": "The version of the A2A protocol this agent supports.",
+      |          "description": "The version of the agent-card protocol this agent supports.",
       |          "type": "string"
       |        },
       |        "provider": {

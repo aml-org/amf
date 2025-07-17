@@ -1,922 +1,922 @@
 {
-"@graph": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
-"@type": [
-"http://a.ml/vocabularies/document#BaseUnitProcessingData"
-],
-"http://a.ml/vocabularies/document#transformed": false,
-"http://a.ml/vocabularies/document#sourceSpec": "Agent Fabric"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
-"@type": [
-"http://a.ml/vocabularies/core#encodes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#apiVersion": 0.1,
-"http://a.ml/vocabularies/core#agents": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents"
-},
-"http://a.ml/vocabularies/core#agents-fabric": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents",
-"@type": [
-"http://a.ml/vocabularies/core#agents",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#google-maps-agent": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent"
-},
-"http://a.ml/vocabularies/core#weather-agent": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent"
-},
-"http://a.ml/vocabularies/core#traffic-agent": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric",
-"@type": [
-"http://a.ml/vocabularies/core#agents-fabric",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#external-agents": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents"
-},
-"http://a.ml/vocabularies/core#llm-providers": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers"
-},
-"http://a.ml/vocabularies/core#mcp-servers": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent",
-"@type": [
-"http://a.ml/vocabularies/core#google-maps-agent",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#card": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card"
-},
-"http://a.ml/vocabularies/core#spec": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent",
-"@type": [
-"http://a.ml/vocabularies/core#weather-agent",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#card": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card"
-},
-"http://a.ml/vocabularies/core#spec": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent",
-"@type": [
-"http://a.ml/vocabularies/core#traffic-agent",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#card": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card"
-},
-"http://a.ml/vocabularies/core#spec": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents",
-"@type": [
-"http://a.ml/vocabularies/core#external-agents",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#anypoint-agent": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers",
-"@type": [
-"http://a.ml/vocabularies/core#llm-providers",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#einstein": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0",
-"@type": [
-"http://a.ml/vocabularies/core#mcp-servers",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#weather-mcp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1",
-"@type": [
-"http://a.ml/vocabularies/core#mcp-servers",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#google-maps-mcp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card",
-"@type": [
-"http://a.ml/vocabularies/core#card",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
-"http://a.ml/vocabularies/core#name": "GeoSpatial Route Planner Agent",
-"http://a.ml/vocabularies/core#description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
-"http://a.ml/vocabularies/core#url": "https://acme.com/a2a/maps/v1",
-"http://a.ml/vocabularies/core#capabilities": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/capabilities"
-},
-"http://a.ml/vocabularies/core#version": "1.0.0",
-"http://a.ml/vocabularies/core#provider": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/provider"
-},
-"http://a.ml/vocabularies/core#securitySchemes": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes"
-},
-"http://a.ml/vocabularies/core#security": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/security/0"
-}
-],
-"http://a.ml/vocabularies/core#defaultInputModes": [
-"application/json",
-"text/plain"
-],
-"http://a.ml/vocabularies/core#defaultOutputModes": [
-"application/json",
-"image/png"
-],
-"http://a.ml/vocabularies/core#skills": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/0"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec",
-"@type": [
-"http://a.ml/vocabularies/core#spec",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#llm": "my-einstein",
-"http://a.ml/vocabularies/core#instructions": [
-"You're mission is helping people find the best route possible between two points. You will extract origin and destination",
-"If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.",
-"If the user says they're riding a motorcycle, treat it the same as cars.",
-"When presenting routes, present the one with the lowest total distance, the one with the lowest fuel consumption, and the fastest one.",
-"Check the weather in the areas involved in the route and show a warning if there are any weather alerts."
-],
-"http://a.ml/vocabularies/core#tools": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0"
-}
-],
-"http://a.ml/vocabularies/core#links": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0"
-}
-],
-"http://a.ml/vocabularies/core#policies": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/policies"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card",
-"@type": [
-"http://a.ml/vocabularies/core#card",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
-"http://a.ml/vocabularies/core#name": "Weather Agent",
-"http://a.ml/vocabularies/core#description": "You are a helpful agent who can talk to users about the weather.",
-"http://a.ml/vocabularies/core#url": "https://acme.com/a2a/weather/v1",
-"http://a.ml/vocabularies/core#capabilities": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/capabilities"
-},
-"http://a.ml/vocabularies/core#version": "1.0.0",
-"http://a.ml/vocabularies/core#provider": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/provider"
-},
-"http://a.ml/vocabularies/core#securitySchemes": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes"
-},
-"http://a.ml/vocabularies/core#security": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/security/0"
-}
-],
-"http://a.ml/vocabularies/core#defaultInputModes": [
-"application/json",
-"text/plain"
-],
-"http://a.ml/vocabularies/core#defaultOutputModes": [
-"application/json",
-"image/png"
-],
-"http://a.ml/vocabularies/core#skills": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/skills/0"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec",
-"@type": [
-"http://a.ml/vocabularies/core#spec",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#llm": "my-einstein",
-"http://a.ml/vocabularies/core#instructions": [
-"Provide the weather forecast at a given location. By default, provide forecast for today and the next 2 days."
-],
-"http://a.ml/vocabularies/core#tools": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card",
-"@type": [
-"http://a.ml/vocabularies/core#card",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
-"http://a.ml/vocabularies/core#name": "Traffic Agent",
-"http://a.ml/vocabularies/core#description": "You are a helpful agent who can talk to users about the traffic.",
-"http://a.ml/vocabularies/core#url": "https://acme.com/a2a/traffic/v1",
-"http://a.ml/vocabularies/core#capabilities": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/capabilities"
-},
-"http://a.ml/vocabularies/core#version": "1.0.0",
-"http://a.ml/vocabularies/core#provider": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/provider"
-},
-"http://a.ml/vocabularies/core#securitySchemes": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes"
-},
-"http://a.ml/vocabularies/core#security": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/security/0"
-}
-],
-"http://a.ml/vocabularies/core#defaultInputModes": [
-"application/json",
-"text/plain"
-],
-"http://a.ml/vocabularies/core#defaultOutputModes": [
-"application/json",
-"image/png"
-],
-"http://a.ml/vocabularies/core#skills": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/skills/0"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec",
-"@type": [
-"http://a.ml/vocabularies/core#spec",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#llm": "my-einstein",
-"http://a.ml/vocabularies/core#instructions": [
-"Resolve a wide area of interest from the prompt and use available tools to fetch relevant notifications."
-],
-"http://a.ml/vocabularies/core#tools": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1"
-}
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent",
-"@type": [
-"http://a.ml/vocabularies/core#anypoint-agent",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#cardUrl": "www.anypoint.com/a2a/",
-"http://a.ml/vocabularies/core#authentication": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0",
-"@type": [
-"http://a.ml/vocabularies/core#einstein",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#my-einstein": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0/my-einstein"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp",
-"@type": [
-"http://a.ml/vocabularies/core#weather-mcp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#url": "https://weather-mcp.anypoint.com/",
-"http://a.ml/vocabularies/core#transport": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport"
-},
-"http://a.ml/vocabularies/core#tools": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/tools"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp",
-"@type": [
-"http://a.ml/vocabularies/core#google-maps-mcp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#url": "https://maps.google.com/mcp",
-"http://a.ml/vocabularies/core#transport": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport"
-},
-"http://a.ml/vocabularies/core#tools": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/tools"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/capabilities",
-"@type": [
-"http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/provider",
-"@type": [
-"http://a.ml/vocabularies/core#provider",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#organization": "Acme Inc.",
-"http://a.ml/vocabularies/core#url": "https://www.acme.com"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes",
-"@type": [
-"http://a.ml/vocabularies/core#securitySchemes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/security/0",
-"@type": [
-"http://a.ml/vocabularies/core#security",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": [
-"openid",
-"profile",
-"email"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/0",
-"@type": [
-"http://a.ml/vocabularies/core#skills",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#id": "route-optimizer-traffic",
-"http://a.ml/vocabularies/core#name": "Traffic-Aware Route Optimizer",
-"http://a.ml/vocabularies/core#description": "Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).",
-"http://a.ml/vocabularies/core#examples": [
-"Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.",
-"{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"
-],
-"http://a.ml/vocabularies/core#inputModes": [
-"application/json",
-"text/plain"
-],
-"http://a.ml/vocabularies/core#outputModes": [
-"application/json",
-"application/vnd.geo+json",
-"text/html"
-],
-"http://a.ml/vocabularies/core#tags": [
-"maps"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#mcp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0/mcp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0",
-"@type": [
-"http://a.ml/vocabularies/core#links",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#weather-agent": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/policies",
-"@type": [
-"http://a.ml/vocabularies/core#policies",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#inbound": [
-"tracing",
-"oauth2"
-],
-"http://a.ml/vocabularies/core#outbound": [
-"tokenCounter"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/capabilities",
-"@type": [
-"http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/provider",
-"@type": [
-"http://a.ml/vocabularies/core#provider",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#organization": "Acme Inc.",
-"http://a.ml/vocabularies/core#url": "https://www.acme.com"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes",
-"@type": [
-"http://a.ml/vocabularies/core#securitySchemes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/security/0",
-"@type": [
-"http://a.ml/vocabularies/core#security",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": [
-"openid",
-"profile",
-"email"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/skills/0",
-"@type": [
-"http://a.ml/vocabularies/core#skills",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#id": "forecast",
-"http://a.ml/vocabularies/core#name": "Weather forecast",
-"http://a.ml/vocabularies/core#description": "Provides the weather forecast at a given location.",
-"http://a.ml/vocabularies/core#tags": [
-"weather"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#mcp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0/mcp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/capabilities",
-"@type": [
-"http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/provider",
-"@type": [
-"http://a.ml/vocabularies/core#provider",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#organization": "Acme Inc.",
-"http://a.ml/vocabularies/core#url": "https://www.acme.com"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes",
-"@type": [
-"http://a.ml/vocabularies/core#securitySchemes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/security/0",
-"@type": [
-"http://a.ml/vocabularies/core#security",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": [
-"openid",
-"profile",
-"email"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/skills/0",
-"@type": [
-"http://a.ml/vocabularies/core#skills",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#id": "traffic-notifications",
-"http://a.ml/vocabularies/core#name": "Traffic Notifications",
-"http://a.ml/vocabularies/core#description": "Provide the latest traffic news in a large metropolitan area or inter-state route.",
-"http://a.ml/vocabularies/core#tags": [
-"traffic"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#mcp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0/mcp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#mcp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1/mcp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication",
-"@type": [
-"http://a.ml/vocabularies/core#authentication",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication/oAuth2ClientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0/my-einstein",
-"@type": [
-"http://a.ml/vocabularies/core#my-einstein",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#clientId": "${einstein.clientId}",
-"http://a.ml/vocabularies/core#clientSecret": "${einstein.clientSecret}",
-"http://a.ml/vocabularies/core#baseUrl": "${saleforce.url}",
-"http://a.ml/vocabularies/core#modelName": "sfdc_ai__DefaultOpenAIGPT35Turbo",
-"http://a.ml/vocabularies/core#probability": 0.3,
-"http://a.ml/vocabularies/core#locale": "en_US"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport",
-"@type": [
-"http://a.ml/vocabularies/core#transport",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#sse": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport/sse"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/tools",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#allowed": [
-"forecast"
-],
-"http://a.ml/vocabularies/core#denied": [
-"histogram"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport",
-"@type": [
-"http://a.ml/vocabularies/core#transport",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#streamableHttp": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport/streamableHttp"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/tools",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#allowed": [
-"*"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "oauth2",
-"http://a.ml/vocabularies/core#flows": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0/mcp",
-"@type": [
-"http://a.ml/vocabularies/core#mcp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#server": "google-maps-mcp",
-"http://a.ml/vocabularies/core#allowed": [
-"geocode",
-"trace-route",
-"render-route"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent",
-"@type": [
-"http://a.ml/vocabularies/core#weather-agent",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#authentication": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "oauth2",
-"http://a.ml/vocabularies/core#flows": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0/mcp",
-"@type": [
-"http://a.ml/vocabularies/core#mcp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#server": "weather-mcp",
-"http://a.ml/vocabularies/core#allowed": [
-"forecast"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "oauth2",
-"http://a.ml/vocabularies/core#flows": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0/mcp",
-"@type": [
-"http://a.ml/vocabularies/core#mcp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#server": "weather-mcp"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1/mcp",
-"@type": [
-"http://a.ml/vocabularies/core#mcp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#server": "google-maps-mcp"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication/oAuth2ClientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#clientId": "${anypoint.clientId}",
-"http://a.ml/vocabularies/core#clientSecret": "${anypoint.clientSecret}"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport/sse",
-"@type": [
-"http://a.ml/vocabularies/core#sse",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#ssePath": "/sse",
-"http://a.ml/vocabularies/core#messagesPath": "/messages"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport/streamableHttp",
-"@type": [
-"http://a.ml/vocabularies/core#streamableHttp",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#path": "/mes",
-"http://a.ml/vocabularies/core#messagesPath": "/messages"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
-"@type": [
-"http://a.ml/vocabularies/core#flows",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#clientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication",
-"@type": [
-"http://a.ml/vocabularies/core#authentication",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
-"@type": [
-"http://a.ml/vocabularies/core#flows",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#clientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
-"@type": [
-"http://a.ml/vocabularies/core#flows",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#clientCredentials": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#clientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
-"http://a.ml/vocabularies/core#scopes": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#oAuth2ClientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#clientId": "${weather.clientId}",
-"http://a.ml/vocabularies/core#clientSecret": "${weather.clientSecret}",
-"http://a.ml/vocabularies/core#policies": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials/policies"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#clientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
-"http://a.ml/vocabularies/core#scopes": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
-"@type": [
-"http://a.ml/vocabularies/core#clientCredentials",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
-"http://a.ml/vocabularies/core#scopes": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
-}
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
-"@type": [
-"http://a.ml/vocabularies/core#scopes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#read": "Grants read access"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials/policies",
-"@type": [
-"http://a.ml/vocabularies/core#policies",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#inbound": [
-"tracing",
-"guardrails"
-],
-"http://a.ml/vocabularies/core#outbound": [
-"gaurdrails-outbound",
-"traffic-agent"
-]
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
-"@type": [
-"http://a.ml/vocabularies/core#scopes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#read": "Grants read access"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
-"@type": [
-"http://a.ml/vocabularies/core#scopes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#read": "Grants read access"
-},
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml",
-"@type": [
-"http://a.ml/vocabularies/document#JsonLDInstanceDocument",
-"http://a.ml/vocabularies/document#Document",
-"http://a.ml/vocabularies/document#Fragment",
-"http://a.ml/vocabularies/document#Module",
-"http://a.ml/vocabularies/document#Unit"
-],
-"http://a.ml/vocabularies/document#encodes": [
-{
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
-}
-],
-"http://a.ml/vocabularies/document#root": true,
-"http://a.ml/vocabularies/document#processingData": {
-"@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
-}
-}
-]
+  "@graph": [
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Agent Fabric"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
+      "@type": [
+        "http://a.ml/vocabularies/core#encodes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#apiVersion": 0.1,
+      "http://a.ml/vocabularies/core#agents": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents"
+      },
+      "http://a.ml/vocabularies/core#agents-fabric": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents",
+      "@type": [
+        "http://a.ml/vocabularies/core#agents",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#google-maps-agent": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent"
+      },
+      "http://a.ml/vocabularies/core#weather-agent": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent"
+      },
+      "http://a.ml/vocabularies/core#traffic-agent": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric",
+      "@type": [
+        "http://a.ml/vocabularies/core#agents-fabric",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#external-agents": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents"
+      },
+      "http://a.ml/vocabularies/core#llm-providers": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers"
+      },
+      "http://a.ml/vocabularies/core#mcp-servers": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0"
+        },
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent",
+      "@type": [
+        "http://a.ml/vocabularies/core#google-maps-agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#card": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card"
+      },
+      "http://a.ml/vocabularies/core#spec": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent",
+      "@type": [
+        "http://a.ml/vocabularies/core#weather-agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#card": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card"
+      },
+      "http://a.ml/vocabularies/core#spec": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent",
+      "@type": [
+        "http://a.ml/vocabularies/core#traffic-agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#card": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card"
+      },
+      "http://a.ml/vocabularies/core#spec": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents",
+      "@type": [
+        "http://a.ml/vocabularies/core#external-agents",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#anypoint-agent": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers",
+      "@type": [
+        "http://a.ml/vocabularies/core#llm-providers",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#einstein": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#mcp-servers",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#weather-mcp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1",
+      "@type": [
+        "http://a.ml/vocabularies/core#mcp-servers",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#google-maps-mcp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card",
+      "@type": [
+        "http://a.ml/vocabularies/core#card",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
+      "http://a.ml/vocabularies/core#name": "GeoSpatial Route Planner Agent",
+      "http://a.ml/vocabularies/core#description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
+      "http://a.ml/vocabularies/core#url": "https://acme.com/a2a/maps/v1",
+      "http://a.ml/vocabularies/core#capabilities": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/capabilities"
+      },
+      "http://a.ml/vocabularies/core#version": "1.0.0",
+      "http://a.ml/vocabularies/core#provider": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/provider"
+      },
+      "http://a.ml/vocabularies/core#securitySchemes": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes"
+      },
+      "http://a.ml/vocabularies/core#security": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/security/0"
+        }
+      ],
+      "http://a.ml/vocabularies/core#defaultInputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#defaultOutputModes": [
+        "application/json",
+        "image/png"
+      ],
+      "http://a.ml/vocabularies/core#skills": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec",
+      "@type": [
+        "http://a.ml/vocabularies/core#spec",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#llm": "my-einstein",
+      "http://a.ml/vocabularies/core#instructions": [
+        "You're mission is helping people find the best route possible between two points. You will extract origin and destination",
+        "If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.",
+        "If the user says they're riding a motorcycle, treat it the same as cars.",
+        "When presenting routes, present the one with the lowest total distance, the one with the lowest fuel consumption, and the fastest one.",
+        "Check the weather in the areas involved in the route and show a warning if there are any weather alerts."
+      ],
+      "http://a.ml/vocabularies/core#tools": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0"
+        }
+      ],
+      "http://a.ml/vocabularies/core#links": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0"
+        }
+      ],
+      "http://a.ml/vocabularies/core#policies": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/policies"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card",
+      "@type": [
+        "http://a.ml/vocabularies/core#card",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
+      "http://a.ml/vocabularies/core#name": "Weather Agent",
+      "http://a.ml/vocabularies/core#description": "You are a helpful agent who can talk to users about the weather.",
+      "http://a.ml/vocabularies/core#url": "https://acme.com/a2a/weather/v1",
+      "http://a.ml/vocabularies/core#capabilities": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/capabilities"
+      },
+      "http://a.ml/vocabularies/core#version": "1.0.0",
+      "http://a.ml/vocabularies/core#provider": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/provider"
+      },
+      "http://a.ml/vocabularies/core#securitySchemes": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes"
+      },
+      "http://a.ml/vocabularies/core#security": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/security/0"
+        }
+      ],
+      "http://a.ml/vocabularies/core#defaultInputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#defaultOutputModes": [
+        "application/json",
+        "image/png"
+      ],
+      "http://a.ml/vocabularies/core#skills": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/skills/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec",
+      "@type": [
+        "http://a.ml/vocabularies/core#spec",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#llm": "my-einstein",
+      "http://a.ml/vocabularies/core#instructions": [
+        "Provide the weather forecast at a given location. By default, provide forecast for today and the next 2 days."
+      ],
+      "http://a.ml/vocabularies/core#tools": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card",
+      "@type": [
+        "http://a.ml/vocabularies/core#card",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
+      "http://a.ml/vocabularies/core#name": "Traffic Agent",
+      "http://a.ml/vocabularies/core#description": "You are a helpful agent who can talk to users about the traffic.",
+      "http://a.ml/vocabularies/core#url": "https://acme.com/a2a/traffic/v1",
+      "http://a.ml/vocabularies/core#capabilities": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/capabilities"
+      },
+      "http://a.ml/vocabularies/core#version": "1.0.0",
+      "http://a.ml/vocabularies/core#provider": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/provider"
+      },
+      "http://a.ml/vocabularies/core#securitySchemes": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes"
+      },
+      "http://a.ml/vocabularies/core#security": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/security/0"
+        }
+      ],
+      "http://a.ml/vocabularies/core#defaultInputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#defaultOutputModes": [
+        "application/json",
+        "image/png"
+      ],
+      "http://a.ml/vocabularies/core#skills": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/skills/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec",
+      "@type": [
+        "http://a.ml/vocabularies/core#spec",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#llm": "my-einstein",
+      "http://a.ml/vocabularies/core#instructions": [
+        "Resolve a wide area of interest from the prompt and use available tools to fetch relevant notifications."
+      ],
+      "http://a.ml/vocabularies/core#tools": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0"
+        },
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent",
+      "@type": [
+        "http://a.ml/vocabularies/core#anypoint-agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#cardUrl": "www.anypoint.com/a2a/",
+      "http://a.ml/vocabularies/core#authentication": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#einstein",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#my-einstein": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0/my-einstein"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp",
+      "@type": [
+        "http://a.ml/vocabularies/core#weather-mcp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#url": "https://weather-mcp.anypoint.com/",
+      "http://a.ml/vocabularies/core#transport": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport"
+      },
+      "http://a.ml/vocabularies/core#tools": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/tools"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp",
+      "@type": [
+        "http://a.ml/vocabularies/core#google-maps-mcp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#url": "https://maps.google.com/mcp",
+      "http://a.ml/vocabularies/core#transport": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport"
+      },
+      "http://a.ml/vocabularies/core#tools": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/tools"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/capabilities",
+      "@type": [
+        "http://a.ml/vocabularies/core#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/provider",
+      "@type": [
+        "http://a.ml/vocabularies/core#provider",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#organization": "Acme Inc.",
+      "http://a.ml/vocabularies/core#url": "https://www.acme.com"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes",
+      "@type": [
+        "http://a.ml/vocabularies/core#securitySchemes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/security/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#security",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": [
+        "openid",
+        "profile",
+        "email"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#id": "route-optimizer-traffic",
+      "http://a.ml/vocabularies/core#name": "Traffic-Aware Route Optimizer",
+      "http://a.ml/vocabularies/core#description": "Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).",
+      "http://a.ml/vocabularies/core#examples": [
+        "Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.",
+        "{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"
+      ],
+      "http://a.ml/vocabularies/core#inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#outputModes": [
+        "application/json",
+        "application/vnd.geo+json",
+        "text/html"
+      ],
+      "http://a.ml/vocabularies/core#tags": [
+        "maps"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#mcp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0/mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#links",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#weather-agent": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/policies",
+      "@type": [
+        "http://a.ml/vocabularies/core#policies",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#inbound": [
+        "tracing",
+        "oauth2"
+      ],
+      "http://a.ml/vocabularies/core#outbound": [
+        "tokenCounter"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/capabilities",
+      "@type": [
+        "http://a.ml/vocabularies/core#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/provider",
+      "@type": [
+        "http://a.ml/vocabularies/core#provider",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#organization": "Acme Inc.",
+      "http://a.ml/vocabularies/core#url": "https://www.acme.com"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes",
+      "@type": [
+        "http://a.ml/vocabularies/core#securitySchemes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/security/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#security",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": [
+        "openid",
+        "profile",
+        "email"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/skills/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#id": "forecast",
+      "http://a.ml/vocabularies/core#name": "Weather forecast",
+      "http://a.ml/vocabularies/core#description": "Provides the weather forecast at a given location.",
+      "http://a.ml/vocabularies/core#tags": [
+        "weather"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#mcp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0/mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/capabilities",
+      "@type": [
+        "http://a.ml/vocabularies/core#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/provider",
+      "@type": [
+        "http://a.ml/vocabularies/core#provider",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#organization": "Acme Inc.",
+      "http://a.ml/vocabularies/core#url": "https://www.acme.com"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes",
+      "@type": [
+        "http://a.ml/vocabularies/core#securitySchemes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/security/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#security",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": [
+        "openid",
+        "profile",
+        "email"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/skills/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#id": "traffic-notifications",
+      "http://a.ml/vocabularies/core#name": "Traffic Notifications",
+      "http://a.ml/vocabularies/core#description": "Provide the latest traffic news in a large metropolitan area or inter-state route.",
+      "http://a.ml/vocabularies/core#tags": [
+        "traffic"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#mcp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0/mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1",
+      "@type": [
+        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#mcp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1/mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication",
+      "@type": [
+        "http://a.ml/vocabularies/core#authentication",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication/oAuth2ClientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/llm-providers/einstein/0/my-einstein",
+      "@type": [
+        "http://a.ml/vocabularies/core#my-einstein",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#clientId": "${einstein.clientId}",
+      "http://a.ml/vocabularies/core#clientSecret": "${einstein.clientSecret}",
+      "http://a.ml/vocabularies/core#baseUrl": "${saleforce.url}",
+      "http://a.ml/vocabularies/core#modelName": "sfdc_ai__DefaultOpenAIGPT35Turbo",
+      "http://a.ml/vocabularies/core#probability": 0.3,
+      "http://a.ml/vocabularies/core#locale": "en_US"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport",
+      "@type": [
+        "http://a.ml/vocabularies/core#transport",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#sse": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport/sse"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/tools",
+      "@type": [
+        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#allowed": [
+        "forecast"
+      ],
+      "http://a.ml/vocabularies/core#denied": [
+        "histogram"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport",
+      "@type": [
+        "http://a.ml/vocabularies/core#transport",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#streamableHttp": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport/streamableHttp"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/tools",
+      "@type": [
+        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#allowed": [
+        "*"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#oAuth2ClientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#type": "oauth2",
+      "http://a.ml/vocabularies/core#flows": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/tools/0/mcp",
+      "@type": [
+        "http://a.ml/vocabularies/core#mcp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#server": "google-maps-mcp",
+      "http://a.ml/vocabularies/core#allowed": [
+        "geocode",
+        "trace-route",
+        "render-route"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent",
+      "@type": [
+        "http://a.ml/vocabularies/core#weather-agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#authentication": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#oAuth2ClientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#type": "oauth2",
+      "http://a.ml/vocabularies/core#flows": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0/mcp",
+      "@type": [
+        "http://a.ml/vocabularies/core#mcp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#server": "weather-mcp",
+      "http://a.ml/vocabularies/core#allowed": [
+        "forecast"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#oAuth2ClientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#type": "oauth2",
+      "http://a.ml/vocabularies/core#flows": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/0/mcp",
+      "@type": [
+        "http://a.ml/vocabularies/core#mcp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#server": "weather-mcp"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/spec/tools/1/mcp",
+      "@type": [
+        "http://a.ml/vocabularies/core#mcp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#server": "google-maps-mcp"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/external-agents/anypoint-agent/authentication/oAuth2ClientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#oAuth2ClientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#clientId": "${anypoint.clientId}",
+      "http://a.ml/vocabularies/core#clientSecret": "${anypoint.clientSecret}"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/0/weather-mcp/transport/sse",
+      "@type": [
+        "http://a.ml/vocabularies/core#sse",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#ssePath": "/sse",
+      "http://a.ml/vocabularies/core#messagesPath": "/messages"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents-fabric/mcp-servers/1/google-maps-mcp/transport/streamableHttp",
+      "@type": [
+        "http://a.ml/vocabularies/core#streamableHttp",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#path": "/mes",
+      "http://a.ml/vocabularies/core#messagesPath": "/messages"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
+      "@type": [
+        "http://a.ml/vocabularies/core#flows",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#clientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication",
+      "@type": [
+        "http://a.ml/vocabularies/core#authentication",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
+      "@type": [
+        "http://a.ml/vocabularies/core#flows",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#clientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
+      "@type": [
+        "http://a.ml/vocabularies/core#flows",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#clientCredentials": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#clientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
+      "http://a.ml/vocabularies/core#scopes": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#oAuth2ClientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#clientId": "${weather.clientId}",
+      "http://a.ml/vocabularies/core#clientSecret": "${weather.clientSecret}",
+      "http://a.ml/vocabularies/core#policies": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials/policies"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#clientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
+      "http://a.ml/vocabularies/core#scopes": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
+      "@type": [
+        "http://a.ml/vocabularies/core#clientCredentials",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
+      "http://a.ml/vocabularies/core#scopes": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
+      }
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
+      "@type": [
+        "http://a.ml/vocabularies/core#scopes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#read": "Grants read access"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent/authentication/oAuth2ClientCredentials/policies",
+      "@type": [
+        "http://a.ml/vocabularies/core#policies",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#inbound": [
+        "tracing",
+        "guardrails"
+      ],
+      "http://a.ml/vocabularies/core#outbound": [
+        "gaurdrails-outbound",
+        "traffic-agent"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
+      "@type": [
+        "http://a.ml/vocabularies/core#scopes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#read": "Grants read access"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/traffic-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
+      "@type": [
+        "http://a.ml/vocabularies/core#scopes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#read": "Grants read access"
+    },
+    {
+      "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-agent-fabric/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
+      }
+    }
+  ]
 }
