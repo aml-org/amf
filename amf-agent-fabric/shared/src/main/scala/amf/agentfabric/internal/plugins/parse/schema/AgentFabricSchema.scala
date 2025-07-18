@@ -95,23 +95,6 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |              }
       |            }
       |          }
-      |        },
-      |        "policies": {
-      |          "type": "object",
-      |          "properties": {
-      |            "inbound": {
-      |              "type": "array",
-      |              "items": {
-      |                "type": "string"
-      |              }
-      |            },
-      |            "outbound": {
-      |              "type": "array",
-      |              "items": {
-      |                "type": "string"
-      |              }
-      |            }
-      |          }
       |        }
       |      }
       |    },
@@ -130,45 +113,95 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |        "spec"
       |      ]
       |    },
-      |    "OAuth2ClientCredentialsAuth": {
+      |    "BasicAuth": {
       |      "type": "object",
+      |      "title": "Basic Authentication",
+      |      "description": "Properties for Basic Authentication.",
       |      "properties": {
-      |        "clientId": {
+      |        "type": {
+      |          "const": "basic",
       |          "type": "string"
       |        },
-      |        "clientSecret": {
-      |          "type": "string"
+      |        "username": {
+      |          "type": "string",
+      |          "description": "The username for authentication."
       |        },
-      |        "policies": {
-      |          "type": "object",
-      |          "properties": {
-      |            "inbound": {
-      |              "type": "array",
-      |              "items": {
-      |                "type": "string"
-      |              }
-      |            },
-      |            "outbound": {
-      |              "type": "array",
-      |              "items": {
-      |                "type": "string"
-      |              }
-      |            }
-      |          }
+      |        "password": {
+      |          "type": "string",
+      |          "description": "The password for authentication."
       |        }
       |      },
       |      "required": [
+      |        "type",
+      |        "username",
+      |        "password"
+      |      ]
+      |    },
+      |    "AnypointClientCredentialsAuth": {
+      |      "type": "object",
+      |      "properties": {
+      |        "type": {
+      |          "const": "apikey-client-credentials",
+      |          "type": "string"
+      |        },
+      |        "clientId": {
+      |          "type": "string",
+      |          "description": "The client ID."
+      |        },
+      |        "clientSecret": {
+      |          "type": "string",
+      |          "description": "The client secret."
+      |        }
+      |      }
+      |    },
+      |    "OAuth2ClientCredentialsAuth": {
+      |      "type": "object",
+      |      "title": "OAuth 2.0 Client Credentials Grant",
+      |      "description": "Properties for the OAuth 2.0 Client Credentials Grant Type.",
+      |      "properties": {
+      |        "type": {
+      |          "const": "oauth2-client-credentials",
+      |          "type": "string"
+      |        },
+      |        "clientId": {
+      |          "type": "string",
+      |          "description": "The client ID."
+      |        },
+      |        "clientSecret": {
+      |          "type": "string",
+      |          "description": "The client secret."
+      |        },
+      |        "tokenUrl": {
+      |          "type": "string",
+      |          "description": "The URL of the token endpoint to obtain the access token."
+      |        },
+      |        "scopes": {
+      |          "type": "array",
+      |          "items": {
+      |            "type": "string"
+      |          },
+      |          "description": "An array of scopes to request."
+      |        }
+      |      },
+      |      "required": [
+      |        "type",
       |        "clientId",
-      |        "clientSecret"
+      |        "clientSecret",
+      |        "tokenUrl"
       |      ]
       |    },
       |    "Authentication": {
-      |      "type": "object",
-      |      "properties": {
-      |        "oAuth2ClientCredentials": {
+      |      "anyOf": [
+      |        {
       |          "$ref": "#/definitions/OAuth2ClientCredentialsAuth"
+      |        },
+      |        {
+      |          "$ref": "#/definitions/BasicAuth"
+      |        },
+      |        {
+      |          "$ref": "#/definitions/AnypointClientCredentialsAuth"
       |        }
-      |      }
+      |      ]
       |    },
       |    "ExternalAgent": {
       |      "type": "object",
@@ -190,6 +223,10 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |        "modelName"
       |      ],
       |      "properties": {
+      |        "type": {
+      |          "type": "string",
+      |          "const": "einstein"
+      |        },
       |        "clientId": {
       |          "type": "string"
       |        },
@@ -210,25 +247,36 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |        }
       |      }
       |    },
-      |    "SseTransportConfig": {
-      |      "type": "object",
+      |    "SseTransport": {
+      |      "required": [
+      |        "sse"
+      |      ],
       |      "properties": {
-      |        "ssePath": {
-      |          "type": "string"
-      |        },
-      |        "messagesPath": {
-      |          "type": "string"
+      |        "sse": {
+      |          "type": "object",
+      |          "properties": {
+      |            "ssePath": {
+      |              "type": "string"
+      |            },
+      |            "messagesPath": {
+      |              "type": "string"
+      |            }
+      |          }
       |        }
       |      }
       |    },
-      |    "StreamableHttpTransportConfig": {
-      |      "type": "object",
+      |    "StreamableHttpTransport": {
+      |      "required": [
+      |        "streamableHttp"
+      |      ],
       |      "properties": {
-      |        "path": {
-      |          "type": "string"
-      |        },
-      |        "messagesPath": {
-      |          "type": "string"
+      |        "streamableHttp": {
+      |          "type": "object",
+      |          "properties": {
+      |            "path": {
+      |              "type": "string"
+      |            }
+      |          }
       |        }
       |      }
       |    },
@@ -236,24 +284,10 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |      "type": "object",
       |      "oneOf": [
       |        {
-      |          "required": [
-      |            "sse"
-      |          ],
-      |          "properties": {
-      |            "sse": {
-      |              "$ref": "#/definitions/SseTransportConfig"
-      |            }
-      |          }
+      |          "$ref": "#/definitions/SseTransport"
       |        },
       |        {
-      |          "required": [
-      |            "streamableHttp"
-      |          ],
-      |          "properties": {
-      |            "streamableHttp": {
-      |              "$ref": "#/definitions/StreamableHttpTransportConfig"
-      |            }
-      |          }
+      |          "$ref": "#/definitions/StreamableHttpTransport"
       |        }
       |      ]
       |    },
@@ -261,8 +295,7 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |      "type": "object",
       |      "required": [
       |        "url",
-      |        "transport",
-      |        "tools"
+      |        "transport"
       |      ],
       |      "properties": {
       |        "url": {
@@ -293,7 +326,9 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |    },
       |    "AgentsFabric": {
       |      "type": "object",
-      |      "required": [],
+      |      "required": [
+      |        "llm-providers"
+      |      ],
       |      "properties": {
       |        "external-agents": {
       |          "type": "object",
@@ -305,17 +340,9 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |        },
       |        "llm-providers": {
       |          "type": "object",
-      |          "properties": {
-      |            "einstein": {
-      |              "type": "array",
-      |              "items": {
-      |                "type": "object",
-      |                "patternProperties": {
-      |                  "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-      |                    "$ref": "#/definitions/EinsteinLLM"
-      |                  }
-      |                }
-      |              }
+      |          "patternProperties": {
+      |            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+      |              "$ref": "#/definitions/EinsteinLLM"
       |            }
       |          }
       |        },
@@ -388,7 +415,7 @@ object AgentFabricSchema extends JsonSchemaBasedSpecSchema{
       |        },
       |        "protocolVersion": {
       |          "default": "0.2.5",
-      |          "description": "The version of the agent-card protocol this agent supports.",
+      |          "description": "The version of the A2A protocol this agent supports.",
       |          "type": "string"
       |        },
       |        "provider": {

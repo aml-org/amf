@@ -22,16 +22,16 @@
       "type": "object",
       "patternProperties": {
         "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-          "$ref": "#/definitions/Agent"
+          "$ref": "#/$defs/Agent"
         }
       }
     },
     "agents-fabric": {
-      "$ref": "#/definitions/AgentsFabric"
+      "$ref": "#/$defs/AgentsFabric"
     }
   },
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "AgentSpec": {
       "type": "object",
       "required": [
@@ -82,26 +82,9 @@
                 "type": "object",
                 "properties": {
                   "authentication": {
-                    "$ref": "#/definitions/Authentication"
+                    "$ref": "#/$defs/Authentication"
                   }
                 }
-              }
-            }
-          }
-        },
-        "policies": {
-          "type": "object",
-          "properties": {
-            "inbound": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "outbound": {
-              "type": "array",
-              "items": {
-                "type": "string"
               }
             }
           }
@@ -115,7 +98,7 @@
           "$ref": "a2a.json#/definitions/AgentCard"
         },
         "spec": {
-          "$ref": "#/definitions/AgentSpec"
+          "$ref": "#/$defs/AgentSpec"
         }
       },
       "required": [
@@ -123,45 +106,95 @@
         "spec"
       ]
     },
-    "OAuth2ClientCredentialsAuth": {
+    "BasicAuth": {
       "type": "object",
+      "title": "Basic Authentication",
+      "description": "Properties for Basic Authentication.",
       "properties": {
-        "clientId": {
+        "type": {
+          "const": "basic",
           "type": "string"
         },
-        "clientSecret": {
-          "type": "string"
+        "username": {
+          "type": "string",
+          "description": "The username for authentication."
         },
-        "policies": {
-          "type": "object",
-          "properties": {
-            "inbound": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "outbound": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
+        "password": {
+          "type": "string",
+          "description": "The password for authentication."
         }
       },
       "required": [
+        "type",
+        "username",
+        "password"
+      ]
+    },
+    "AnypointClientCredentialsAuth": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "apikey-client-credentials",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The client ID."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The client secret."
+        }
+      }
+    },
+    "OAuth2ClientCredentialsAuth": {
+      "type": "object",
+      "title": "OAuth 2.0 Client Credentials Grant",
+      "description": "Properties for the OAuth 2.0 Client Credentials Grant Type.",
+      "properties": {
+        "type": {
+          "const": "oauth2-client-credentials",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The client ID."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The client secret."
+        },
+        "tokenUrl": {
+          "type": "string",
+          "description": "The URL of the token endpoint to obtain the access token."
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of scopes to request."
+        }
+      },
+      "required": [
+        "type",
         "clientId",
-        "clientSecret"
+        "clientSecret",
+        "tokenUrl"
       ]
     },
     "Authentication": {
-      "type": "object",
-      "properties": {
-        "oAuth2ClientCredentials": {
-          "$ref": "#/definitions/OAuth2ClientCredentialsAuth"
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OAuth2ClientCredentialsAuth"
+        },
+        {
+          "$ref": "#/$defs/BasicAuth"
+        },
+        {
+          "$ref": "#/$defs/AnypointClientCredentialsAuth"
         }
-      }
+      ]
     },
     "ExternalAgent": {
       "type": "object",
@@ -170,7 +203,7 @@
           "type": "string"
         },
         "authentication": {
-          "$ref": "#/definitions/Authentication"
+          "$ref": "#/$defs/Authentication"
         }
       }
     },
@@ -183,6 +216,10 @@
         "modelName"
       ],
       "properties": {
+        "type": {
+          "type": "string",
+          "const": "einstein"
+        },
         "clientId": {
           "type": "string"
         },
@@ -203,25 +240,36 @@
         }
       }
     },
-    "SseTransportConfig": {
-      "type": "object",
+    "SseTransport": {
+      "required": [
+        "sse"
+      ],
       "properties": {
-        "ssePath": {
-          "type": "string"
-        },
-        "messagesPath": {
-          "type": "string"
+        "sse": {
+          "type": "object",
+          "properties": {
+            "ssePath": {
+              "type": "string"
+            },
+            "messagesPath": {
+              "type": "string"
+            }
+          }
         }
       }
     },
-    "StreamableHttpTransportConfig": {
-      "type": "object",
+    "StreamableHttpTransport": {
+      "required": [
+        "streamableHttp"
+      ],
       "properties": {
-        "path": {
-          "type": "string"
-        },
-        "messagesPath": {
-          "type": "string"
+        "streamableHttp": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -229,24 +277,10 @@
       "type": "object",
       "oneOf": [
         {
-          "required": [
-            "sse"
-          ],
-          "properties": {
-            "sse": {
-              "$ref": "#/definitions/SseTransportConfig"
-            }
-          }
+          "$ref": "#/$defs/SseTransport"
         },
         {
-          "required": [
-            "streamableHttp"
-          ],
-          "properties": {
-            "streamableHttp": {
-              "$ref": "#/definitions/StreamableHttpTransportConfig"
-            }
-          }
+          "$ref": "#/$defs/StreamableHttpTransport"
         }
       ]
     },
@@ -254,8 +288,7 @@
       "type": "object",
       "required": [
         "url",
-        "transport",
-        "tools"
+        "transport"
       ],
       "properties": {
         "url": {
@@ -263,7 +296,7 @@
           "format": "uri"
         },
         "transport": {
-          "$ref": "#/definitions/MCPTransport"
+          "$ref": "#/$defs/MCPTransport"
         },
         "tools": {
           "type": "object",
@@ -286,29 +319,23 @@
     },
     "AgentsFabric": {
       "type": "object",
-      "required": [],
+      "required": [
+        "llm-providers"
+      ],
       "properties": {
         "external-agents": {
           "type": "object",
           "patternProperties": {
             "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-              "$ref": "#/definitions/ExternalAgent"
+              "$ref": "#/$defs/ExternalAgent"
             }
           }
         },
         "llm-providers": {
           "type": "object",
-          "properties": {
-            "einstein": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "patternProperties": {
-                  "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-                    "$ref": "#/definitions/EinsteinLLM"
-                  }
-                }
-              }
+          "patternProperties": {
+            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+              "$ref": "#/$defs/EinsteinLLM"
             }
           }
         },
@@ -318,7 +345,7 @@
             "type": "object",
             "patternProperties": {
               "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-                "$ref": "#/definitions/MCPServer"
+                "$ref": "#/$defs/MCPServer"
               }
             }
           }
