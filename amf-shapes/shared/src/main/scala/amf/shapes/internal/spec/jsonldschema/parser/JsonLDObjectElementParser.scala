@@ -25,7 +25,7 @@ case class JsonLDObjectElementParser(
   }
 
   override def unsupported(s: Shape): JsonLDObjectElementBuilder = {
-    ctx.violation(UnsupportedShape, s.id, "Invalid shape class for map node")
+    ctx.violation(UnsupportedShape, s.id, "Invalid shape class for map node", map.location)
     JsonLDObjectElementBuilder.empty(key, path)
   }
 

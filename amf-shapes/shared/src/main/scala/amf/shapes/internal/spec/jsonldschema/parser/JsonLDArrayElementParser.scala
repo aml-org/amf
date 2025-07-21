@@ -17,7 +17,7 @@ case class JsonLDArrayElementParser(seq: YSequence, path: JsonPath)(implicit val
   }
 
   override def unsupported(s: Shape): JsonLDArrayElementBuilder = {
-    ctx.violation(UnsupportedShape, s.id, "Invalid shape class for array node")
+    ctx.violation(UnsupportedShape, s.id, "Invalid shape class for array node", seq.location)
     parseItems(AnyShape())
   }
 
