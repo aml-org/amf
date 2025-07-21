@@ -44,7 +44,7 @@ case class JsonLDScalarElementParser private (scalar: YScalar, tagType: YType, p
   }
 
   override def unsupported(s: Shape): JsonLDScalarElementBuilder = {
-    ctx.violation(UnsupportedShape, s.id, "Invalid shape class for scalar node")
+    ctx.violation(UnsupportedShape, s.id, "Invalid shape class for scalar node", scalar.location)
     parseScalar()
   }
 
