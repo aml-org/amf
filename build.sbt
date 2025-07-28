@@ -305,38 +305,38 @@ lazy val mcpJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
-/** ********************************************** AMF-AGENT-FABRIC *********************************************
+/** ********************************************** AMF-AGENT-DOMAIN *********************************************
  */
 
-lazy val agentFabric = crossProject(JSPlatform, JVMPlatform)
+lazy val agentDomain = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
-      name := "amf-agent-fabric"
+      name := "amf-agent-domain"
     )
   )
-  .in(file("./amf-agent-fabric"))
+  .in(file("./amf-agent-domain"))
   .settings(commonSettings)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
-    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-fabric-javadoc.jar",
+    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-domain-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-fabric.js",
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-domain.js",
     npmDependencies ++= npmDeps
   )
-  .settings(AutomaticModuleName.settings("amf.agent-fabric"))
+  .settings(AutomaticModuleName.settings("amf.agent-domain"))
 
-lazy val agentFabricJVM =
-  agentFabric.jvm
-    .in(file("./amf-agent-fabric/jvm"))
+lazy val agentDomainJVM =
+  agentDomain.jvm
+    .in(file("./amf-agent-domain/jvm"))
     .disablePlugins(SonarPlugin)
 
-lazy val agentFabricJS =
-  agentFabric.js
-    .in(file("./amf-agent-fabric/js"))
+lazy val agentDomainJS =
+  agentDomain.js
+    .in(file("./amf-agent-domain/js"))
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-AGENT-CARD *********************************************
@@ -378,7 +378,7 @@ lazy val agentCardJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql, mcp, agentFabric, agentCard)
+  .dependsOn(grpc, graphql, mcp, agentDomain, agentCard)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -468,7 +468,7 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .dependsOn(graphqlJVM)
   .dependsOn(grpcJVM)
   .dependsOn(mcpJVM)
-  .dependsOn(agentFabricJVM)
+  .dependsOn(agentDomainJVM)
   .dependsOn(agentCardJVM)
   .disablePlugins(SonarPlugin, NpmOpsPlugin, ScoverageSbtPlugin)
 

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "0.1.0-beta",
+  "agents": {
+    "google-maps-agent": {
+      "card": {
+        "protocolVersion": "0.2.9",
+        "name": "GeoSpatial Route Planner Agent",
+        "description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
+        "url": "${registry.url}/google-maps-agent",
+        "capabilities": {},
+        "version": "1.0.0",
+        "provider": {
+          "organization": "Acme Inc.",
+          "url": "https://www.acme.com"
+        },
+        "securitySchemes": {
+          "anypointClientCredentials": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "client_secret",
+            "description": "The client ID for Anypoint Platform authentication.\n"
+          }
+        },
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "image/png"
+        ],
+        "skills": [
+          {
+            "id": "exchange-rates",
+            "name": "Returns exchange rates for a given currency",
+            "description": "Calculate the exchange rates for a given currency.",
+            "examples": [
+              "What is the exchange rate for USD to EUR?",
+              "How much is 100 USD in EUR?"
+            ],
+            "inputModes": [
+              "application/json",
+              "text/plain"
+            ],
+            "outputModes": [
+              "application/json",
+              "application/vnd.geo+json",
+              "text/html"
+            ],
+            "tags": [
+              "exchange-rates"
+            ]
+          },
+          {
+            "id": "weather",
+            "name": "Returns the weather for a given location",
+            "description": "Get the current weather conditions for a specified location.",
+            "examples": [
+              "What is the weather like in New York?",
+              "Is it going to rain in San Francisco today?"
+            ],
+            "inputModes": [
+              "application/json",
+              "text/plain"
+            ],
+            "outputModes": [
+              "application/json",
+              "application/vnd.geo+json",
+              "text/html"
+            ],
+            "tags": [
+              "weather"
+            ]
+          }
+        ]
+      },
+      "spec": {
+        "llm": "my-einstein",
+        "instructions": [
+          "You're mission is helping people find the best route possible between two points. You will extract origin and destination",
+          "If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.",
+          "Help the user find the exchange rates for the currency they are using.",
+          "Check the weather in the areas involved in the route and show a warning if there are any weather alerts."
+        ],
+        "links": [
+          {
+            "weather-agent": {}
+          },
+          {
+            "exchange-agent": {}
+          }
+        ]
+      }
+    }
+  },
+  "services": {
+    "external-agents": {
+      "weather-agent": {
+        "cardUrl": "${weather.cardUrl}/",
+        "authentication": {
+          "type": "apikey-client-credentials",
+          "clientId": "${weather.clientId}",
+          "clientSecret": "${weather.clientSecret}"
+        }
+      },
+      "exchange-agent": {
+        "cardUrl": "${exchange.cardUrl}/"
+      }
+    },
+    "llm-providers": {
+      "my-einstein": {
+        "type": "einstein",
+        "clientId": "${einstein.clientId}",
+        "clientSecret": "${einstein.clientSecret}",
+        "baseUrl": "${saleforce.url}",
+        "modelName": "sfdc_ai__DefaultOpenAIGPT35Turbo",
+        "probability": 0.3,
+        "locale": "en_US"
+      }
+    }
+  }
+}
