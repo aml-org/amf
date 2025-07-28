@@ -1,0 +1,5 @@
+package amf.agentsdomain.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait AgentsDomainBaseClientConverter extends AgentsDomainBaseConverter with ShapesBaseClientConverter

@@ -6812,7 +6812,7 @@ declare module "amf-client-js" {
     static readonly RAML08: ProfileName;
     static readonly RAML10: ProfileName;
     static readonly MCP: ProfileName;
-    static readonly AGENT_FABRIC: ProfileName;
+    static readonly AGENTS_DOMAIN: ProfileName;
     static readonly AGENT_CARD: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
@@ -8901,7 +8901,7 @@ declare module "amf-client-js" {
     static readonly RAML08: Spec;
     static readonly RAML10: Spec;
     static readonly MCP: Spec;
-    static readonly AGENT_FABRIC: Spec;
+    static readonly AGENTS_DOMAIN: Spec;
     static readonly AGENT_CARD: Spec;
 
     static apply(name: string): Spec;
@@ -9633,36 +9633,36 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
-  export class AgentFabricConfiguration extends BaseAgentFabricConfiguration {
-    static AgentFabric(): AgentFabricConfiguration;
+  export class AgentsDomainConfiguration extends BaseAgentsDomainConfiguration {
+    static AgentsDomain(): AgentsDomainConfiguration;
 
-    baseUnitClient(): AgentFabricBaseUnitClient;
+    baseUnitClient(): AgentsDomainBaseUnitClient;
   }
 
-  export class BaseAgentFabricConfiguration extends BaseShapesConfiguration {
-    withDialect(dialect: Dialect): BaseAgentFabricConfiguration;
+  export class BaseAgentsDomainConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentsDomainConfiguration;
 
     withErrorHandlerProvider(
         provider: ErrorHandlerProvider
-    ): BaseAgentFabricConfiguration;
+    ): BaseAgentsDomainConfiguration;
 
-    withEventListener(listener: AMFEventListener): BaseAgentFabricConfiguration;
+    withEventListener(listener: AMFEventListener): BaseAgentsDomainConfiguration;
 
-    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentFabricConfiguration;
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentsDomainConfiguration;
 
-    withRenderOptions(renderOptions: RenderOptions): BaseAgentFabricConfiguration;
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentsDomainConfiguration;
 
-    withResourceLoader(rl: ResourceLoader): BaseAgentFabricConfiguration;
+    withResourceLoader(rl: ResourceLoader): BaseAgentsDomainConfiguration;
 
-    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentFabricConfiguration;
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentsDomainConfiguration;
 
     withTransformationPipeline(
         pipeline: TransformationPipeline
-    ): BaseAgentFabricConfiguration;
+    ): BaseAgentsDomainConfiguration;
 
-    withUnitCache(cache: UnitCache): BaseAgentFabricConfiguration;
+    withUnitCache(cache: UnitCache): BaseAgentsDomainConfiguration;
   }
-  export class AgentFabricBaseUnitClient extends AMLBaseUnitClient {
+  export class AgentsDomainBaseUnitClient extends AMLBaseUnitClient {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
