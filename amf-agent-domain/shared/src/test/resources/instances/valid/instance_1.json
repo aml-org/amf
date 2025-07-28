@@ -1,0 +1,179 @@
+{
+  "apiVersion": 0.1,
+  "agents": {
+    "weather-agent": {
+      "card": {
+        "protocolVersion": "0.2.9",
+        "name": "Weather Agent",
+        "description": "Provides advanced weather forecasting, climate analysis, and real-time weather updates. This agent can predict weather conditions, analyze climate trends, and provide personalized weather reports.",
+        "url": "${registry.url}/weather-agent",
+        "capabilities": {},
+        "version": "1.0.0",
+        "provider": {
+          "organization": "Acme Inc.",
+          "url": "https://weather-agent.ch.anypoint.com"
+        },
+        "securitySchemes": {
+          "anypointClientCredentials": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "clientSecret",
+            "description": "The client secret for Anypoint Platform authentication.            \n"
+          }
+        },
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "image/png"
+        ],
+        "skills": [
+          {
+            "id": "weather",
+            "name": "Returns the weather for a given location",
+            "description": "Get the current weather conditions for a specified location.",
+            "examples": [
+              "What is the weather like in New York?",
+              "Is it going to rain in San Francisco today?"
+            ],
+            "inputModes": [
+              "application/json",
+              "text/plain"
+            ],
+            "outputModes": [
+              "application/json",
+              "application/vnd.geo+json",
+              "text/html"
+            ],
+            "tags": [
+              "weather",
+              "geolocation"
+            ]
+          }
+        ]
+      },
+      "spec": {
+        "llm": "my-einstein",
+        "instructions": [
+          "You are a weather agent that provides current weather conditions and forecasts for specified locations.",
+          "If the user asks for weather in a specific location, return the current weather conditions.",
+          "If the user asks for a forecast, provide a 7-day weather forecast.",
+          "If the user asks for historical weather data, provide the weather conditions for the",
+          "Always return an answer in human format. Explaning the weather conditions in a way that is easy to understand."
+        ],
+        "tools": [
+          {
+            "mcp": {
+              "server": "weather-mcp"
+            }
+          }
+        ]
+      }
+    },
+    "exchange-rate-agent": {
+      "card": {
+        "protocolVersion": "0.2.9",
+        "name": "Exchange Rate Agent",
+        "description": "Provides real-time exchange rate information and currency conversion services.",
+        "url": "${registry.url}/exchange-rate-agent",
+        "capabilities": {},
+        "version": "1.0.0",
+        "provider": {
+          "organization": "Acme Inc.",
+          "url": "https://weather-agent.ch.anypoint.com"
+        },
+        "securitySchemes": {
+          "anypointClientCredentials": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "clientSecret",
+            "description": "The client secret for Anypoint Platform authentication.            \n"
+          }
+        },
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "image/png"
+        ],
+        "skills": [
+          {
+            "id": "exchange",
+            "name": "Returns the exchange rate for a given currency pair",
+            "description": "Get the current exchange rate between two specified currencies.",
+            "examples": [
+              "What is the exchange rate from USD to EUR?",
+              "How much is 100 JPY in USD?"
+            ],
+            "inputModes": [
+              "application/json",
+              "text/plain"
+            ],
+            "outputModes": [
+              "application/json",
+              "application/vnd.geo+json",
+              "text/html"
+            ],
+            "tags": [
+              "exchange-rate"
+            ]
+          }
+        ]
+      },
+      "spec": {
+        "llm": "my-einstein",
+        "instructions": [
+          "You are an exchange rate agent that provides real-time exchange rate information and currency conversion services.",
+          "You should always show the exchange rate in a human-readable format.",
+          "If the user asks for the exchange rate between two currencies, return the current exchange rate with the total amount converted."
+        ],
+        "tools": [
+          {
+            "mcp": {
+              "server": "exchange-rate-mcp"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "agent-domain": {
+    "mcp-servers": [
+      {
+        "weather-mcp": {
+          "url": "https://mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/",
+          "transport": {
+            "streamableHttp": {
+              "path": "/weather/mcp"
+            }
+          }
+        }
+      },
+      {
+        "exchange-rate-mcp": {
+          "url": "https://mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/",
+          "transport": {
+            "streamableHttp": {
+              "path": "/exchange_rate/mcp"
+            }
+          }
+        }
+      }
+    ],
+    "llm-providers": {
+      "my-einstein": {
+        "type": "einstein",
+        "clientId": "${einstein.clientId}",
+        "clientSecret": "${einstein.clientSecret}",
+        "baseUrl": "${einstein.url}",
+        "modelName": "sfdc_ai__DefaultOpenAIGPT35Turbo",
+        "probability": 0.3,
+        "locale": "en_US"
+      }
+    }
+  }
+}
