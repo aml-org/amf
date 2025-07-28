@@ -7,10 +7,10 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
   override def schema: String =
     """{
       |  "$schema": "http://json-schema.org/draft-07/schema#",
-      |  "description": "An AgentCard conveys key information:\n- Overall details (version, name, description, uses)\n- Skills: A set of capabilities the agent can perform\n- Default modalities/content types supported by the agent.\n- Authentication requirements",
+      |  "description": "The AgentCard is a self-describing manifest for an agent. It provides essential\nmetadata including the agent's identity, capabilities, skills, supported\ncommunication methods, and security requirements.",
       |  "properties": {
       |    "additionalInterfaces": {
-      |      "description": "Announcement of additional supported transports. Client can use any of\nthe supported transports.",
+      |      "description": "A list of additional supported interfaces (transport and URL combinations).\nThis allows agents to expose multiple transports, potentially at different URLs.\n\nBest practices:\n- SHOULD include all supported transports for completeness\n- SHOULD include an entry matching the main 'url' and 'preferredTransport'\n- MAY reuse URLs if multiple transports are available at the same endpoint\n- MUST accurately declare the transport available at each URL\n\nClients can select any interface from this list based on their transport capabilities\nand preferences. This enables transport negotiation and fallback scenarios.",
       |      "items": {
       |        "$ref": "#/definitions/AgentInterface"
       |      },
@@ -18,59 +18,65 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
       |    },
       |    "capabilities": {
       |      "$ref": "#/definitions/AgentCapabilities",
-      |      "description": "Optional capabilities supported by the agent."
+      |      "description": "A declaration of optional capabilities supported by the agent."
       |    },
       |    "defaultInputModes": {
-      |      "description": "The set of interaction modes that the agent supports across all skills. This can be overridden per-skill.\nSupported media types for input.",
+      |      "description": "Default set of supported input MIME types for all skills, which can be\noverridden on a per-skill basis.",
       |      "items": {
       |        "type": "string"
       |      },
       |      "type": "array"
       |    },
       |    "defaultOutputModes": {
-      |      "description": "Supported media types for output.",
+      |      "description": "Default set of supported output MIME types for all skills, which can be\noverridden on a per-skill basis.",
       |      "items": {
       |        "type": "string"
       |      },
       |      "type": "array"
       |    },
       |    "description": {
-      |      "description": "A human-readable description of the agent. Used to assist users and\nother agents in understanding what the agent can do.",
+      |      "description": "A human-readable description of the agent, assisting users and other agents\nin understanding its purpose.",
       |      "examples": [
       |        "Agent that helps users with recipes and cooking."
       |      ],
       |      "type": "string"
       |    },
       |    "documentationUrl": {
-      |      "description": "A URL to documentation for the agent.",
+      |      "description": "An optional URL to the agent's documentation.",
       |      "type": "string"
       |    },
       |    "iconUrl": {
-      |      "description": "A URL to an icon for the agent.",
+      |      "description": "An optional URL to an icon for the agent.",
       |      "type": "string"
       |    },
       |    "name": {
-      |      "description": "Human readable name of the agent.",
+      |      "description": "A human-readable name for the agent.",
       |      "examples": [
       |        "Recipe Agent"
       |      ],
       |      "type": "string"
       |    },
       |    "preferredTransport": {
-      |      "description": "The transport of the preferred endpoint. If empty, defaults to JSONRPC.",
+      |      "default": "JSONRPC",
+      |      "description": "The transport protocol for the preferred endpoint (the main 'url' field).\nIf not specified, defaults to 'JSONRPC'.\n\nIMPORTANT: The transport specified here MUST be available at the main 'url'.\nThis creates a binding between the main URL and its supported transport protocol.\nClients should prefer this transport and URL combination when both are supported.",
+      |      "examples": [
+      |        "JSONRPC",
+      |        "GRPC",
+      |        "HTTP+JSON"
+      |      ],
       |      "type": "string"
       |    },
       |    "protocolVersion": {
-      |      "default": "0.2.5",
-      |      "description": "The version of the agent-card protocol this agent supports.",
+      |      "default": "0.2.6",
+      |      "description": "The version of the A2A protocol this agent supports.",
       |      "type": "string"
       |    },
       |    "provider": {
       |      "$ref": "#/definitions/AgentProvider",
-      |      "description": "The service provider of the agent"
+      |      "description": "Information about the agent's service provider."
       |    },
       |    "security": {
-      |      "description": "Security requirements for contacting the agent.",
+      |      "description": "A list of security requirement objects that apply to all agent interactions. Each object\nlists security schemes that can be used. Follows the OpenAPI 3.0 Security Requirement Object.",
       |      "items": {
       |        "additionalProperties": {
       |          "items": {
@@ -86,26 +92,36 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
       |      "additionalProperties": {
       |        "$ref": "#/definitions/SecurityScheme"
       |      },
-      |      "description": "Security scheme details used for authenticating with this agent.",
+      |      "description": "A declaration of the security schemes available to authorize requests. The key is the\nscheme name. Follows the OpenAPI 3.0 Security Scheme Object.",
       |      "type": "object"
       |    },
+      |    "signatures": {
+      |      "description": "JSON Web Signatures computed for this AgentCard.",
+      |      "items": {
+      |        "$ref": "#/definitions/AgentCardSignature"
+      |      },
+      |      "type": "array"
+      |    },
       |    "skills": {
-      |      "description": "Skills are a unit of capability that an agent can perform.",
+      |      "description": "The set of skills, or distinct capabilities, that the agent can perform.",
       |      "items": {
       |        "$ref": "#/definitions/AgentSkill"
       |      },
       |      "type": "array"
       |    },
       |    "supportsAuthenticatedExtendedCard": {
-      |      "description": "true if the agent supports providing an extended agent card when the user is authenticated.\nDefaults to false if not specified.",
+      |      "description": "If true, the agent can provide an extended agent card with additional details\nto authenticated users. Defaults to false.",
       |      "type": "boolean"
       |    },
       |    "url": {
-      |      "description": "A URL to the address the agent is hosted at. This represents the\npreferred endpoint as declared by the agent.",
+      |      "description": "The preferred endpoint URL for interacting with the agent.\nThis URL MUST support the transport specified by 'preferredTransport'.",
+      |      "examples": [
+      |        "https://api.example.com/a2a/v1"
+      |      ],
       |      "type": "string"
       |    },
       |    "version": {
-      |      "description": "The version of the agent - format is up to the provider.",
+      |      "description": "The agent's own version number. The format is defined by the provider.",
       |      "examples": [
       |        "1.0.0"
       |      ],
@@ -125,78 +141,206 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
       |  ],
       |  "type": "object",
       |  "definitions": {
-      |    "AgentInterface": {
-      |      "description": "AgentInterface provides a declaration of a combination of the\ntarget url and the supported transport to interact with the agent.",
-      |      "properties": {
-      |        "transport": {
-      |          "description": "The transport supported this url. This is an open form string, to be\neasily extended for many transport protocols. The core ones officially\nsupported are JSONRPC, GRPC and HTTP+JSON.",
-      |          "type": "string"
-      |        },
-      |        "url": {
-      |          "type": "string"
-      |        }
-      |      },
-      |      "required": [
-      |        "transport",
-      |        "url"
-      |      ],
-      |      "type": "object"
-      |    },
       |    "AgentCapabilities": {
       |      "description": "Defines optional capabilities supported by an agent.",
       |      "properties": {
       |        "extensions": {
-      |          "description": "extensions supported by this agent.",
+      |          "description": "A list of protocol extensions supported by the agent.",
       |          "items": {
       |            "$ref": "#/definitions/AgentExtension"
       |          },
       |          "type": "array"
       |        },
       |        "pushNotifications": {
-      |          "description": "true if the agent can notify updates to client.",
+      |          "description": "Indicates if the agent supports sending push notifications for asynchronous task updates.",
       |          "type": "boolean"
       |        },
       |        "stateTransitionHistory": {
-      |          "description": "true if the agent exposes status change history for tasks.",
+      |          "description": "Indicates if the agent provides a history of state transitions for a task.",
       |          "type": "boolean"
       |        },
       |        "streaming": {
-      |          "description": "true if the agent supports SSE.",
+      |          "description": "Indicates if the agent supports Server-Sent Events (SSE) for streaming responses.",
       |          "type": "boolean"
       |        }
       |      },
       |      "type": "object"
       |    },
-      |    "AgentExtension": {
-      |      "description": "A declaration of an extension supported by an Agent.",
-      |      "examples": [
-      |        {
-      |          "description": "Google OAuth 2.0 authentication",
-      |          "required": false,
-      |          "uri": "https://developers.google.com/identity/protocols/oauth2"
-      |        }
-      |      ],
+      |    "APIKeySecurityScheme": {
+      |      "description": "Defines a security scheme using an API key.",
       |      "properties": {
       |        "description": {
-      |          "description": "A description of how this agent uses this extension.",
+      |          "description": "An optional description for the security scheme.",
       |          "type": "string"
       |        },
-      |        "params": {
-      |          "additionalProperties": {},
-      |          "description": "Optional configuration for the extension.",
-      |          "type": "object"
+      |        "in": {
+      |          "description": "The location of the API key.",
+      |          "enum": [
+      |            "cookie",
+      |            "header",
+      |            "query"
+      |          ],
+      |          "type": "string"
       |        },
-      |        "required": {
-      |          "description": "Whether the client must follow specific requirements of the extension.",
-      |          "type": "boolean"
+      |        "name": {
+      |          "description": "The name of the header, query, or cookie parameter to be used.",
+      |          "type": "string"
       |        },
-      |        "uri": {
-      |          "description": "The URI of the extension.",
+      |        "type": {
+      |          "const": "apiKey",
+      |          "description": "The type of the security scheme. Must be 'apiKey'.",
       |          "type": "string"
       |        }
       |      },
       |      "required": [
-      |        "uri"
+      |        "in",
+      |        "name",
+      |        "type"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "HTTPAuthSecurityScheme": {
+      |      "description": "Defines a security scheme using HTTP authentication.",
+      |      "properties": {
+      |        "bearerFormat": {
+      |          "description": "A hint to the client to identify how the bearer token is formatted (e.g., \"JWT\").\nThis is primarily for documentation purposes.",
+      |          "type": "string"
+      |        },
+      |        "description": {
+      |          "description": "An optional description for the security scheme.",
+      |          "type": "string"
+      |        },
+      |        "scheme": {
+      |          "description": "The name of the HTTP Authentication scheme to be used in the Authorization header,\nas defined in RFC7235 (e.g., \"Bearer\").\nThis value should be registered in the IANA Authentication Scheme registry.",
+      |          "type": "string"
+      |        },
+      |        "type": {
+      |          "const": "http",
+      |          "description": "The type of the security scheme. Must be 'http'.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "scheme",
+      |        "type"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "OAuth2SecurityScheme": {
+      |      "description": "Defines a security scheme using OAuth 2.0.",
+      |      "properties": {
+      |        "description": {
+      |          "description": "An optional description for the security scheme.",
+      |          "type": "string"
+      |        },
+      |        "flows": {
+      |          "$ref": "#/definitions/OAuthFlows",
+      |          "description": "An object containing configuration information for the supported OAuth 2.0 flows."
+      |        },
+      |        "type": {
+      |          "const": "oauth2",
+      |          "description": "The type of the security scheme. Must be 'oauth2'.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "flows",
+      |        "type"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "OAuthFlows": {
+      |      "description": "Defines the configuration for the supported OAuth 2.0 flows.",
+      |      "properties": {
+      |        "authorizationCode": {
+      |          "$ref": "#/definitions/AuthorizationCodeOAuthFlow",
+      |          "description": "Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0."
+      |        },
+      |        "clientCredentials": {
+      |          "$ref": "#/definitions/ClientCredentialsOAuthFlow",
+      |          "description": "Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0."
+      |        },
+      |        "implicit": {
+      |          "$ref": "#/definitions/ImplicitOAuthFlow",
+      |          "description": "Configuration for the OAuth Implicit flow."
+      |        },
+      |        "password": {
+      |          "$ref": "#/definitions/PasswordOAuthFlow",
+      |          "description": "Configuration for the OAuth Resource Owner Password flow."
+      |        }
+      |      },
+      |      "type": "object"
+      |    },
+      |    "PasswordOAuthFlow": {
+      |      "description": "Defines configuration details for the OAuth 2.0 Resource Owner Password flow.",
+      |      "properties": {
+      |        "refreshUrl": {
+      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+      |          "type": "string"
+      |        },
+      |        "scopes": {
+      |          "additionalProperties": {
+      |            "type": "string"
+      |          },
+      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+      |          "type": "object"
+      |        },
+      |        "tokenUrl": {
+      |          "description": "The token URL to be used for this flow. This MUST be a URL.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "scopes",
+      |        "tokenUrl"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "ImplicitOAuthFlow": {
+      |      "description": "Defines configuration details for the OAuth 2.0 Implicit flow.",
+      |      "properties": {
+      |        "authorizationUrl": {
+      |          "description": "The authorization URL to be used for this flow. This MUST be a URL.",
+      |          "type": "string"
+      |        },
+      |        "refreshUrl": {
+      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+      |          "type": "string"
+      |        },
+      |        "scopes": {
+      |          "additionalProperties": {
+      |            "type": "string"
+      |          },
+      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+      |          "type": "object"
+      |        }
+      |      },
+      |      "required": [
+      |        "authorizationUrl",
+      |        "scopes"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "OpenIdConnectSecurityScheme": {
+      |      "description": "Defines a security scheme using OpenID Connect.",
+      |      "properties": {
+      |        "description": {
+      |          "description": "An optional description for the security scheme.",
+      |          "type": "string"
+      |        },
+      |        "openIdConnectUrl": {
+      |          "description": "The OpenID Connect Discovery URL for the OIDC provider's metadata.",
+      |          "type": "string"
+      |        },
+      |        "type": {
+      |          "const": "openIdConnect",
+      |          "description": "The type of the security scheme. Must be 'openIdConnect'.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "openIdConnectUrl",
+      |        "type"
       |      ],
       |      "type": "object"
       |    },
@@ -215,246 +359,125 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
       |          "$ref": "#/definitions/OpenIdConnectSecurityScheme"
       |        }
       |      ],
-      |      "description": "Mirrors the OpenAPI Security Scheme Object\n(https://swagger.io/specification/#security-scheme-object)"
+      |      "description": "Defines a security scheme that can be used to secure an agent's endpoints.\nThis is a discriminated union type based on the OpenAPI 3.0 Security Scheme Object."
       |    },
-      |    "APIKeySecurityScheme": {
-      |      "description": "API Key security scheme.",
+      |    "AgentCardSignature": {
+      |      "description": "AgentCardSignature represents a JWS signature of an AgentCard.\nThis follows the JSON format of an RFC 7515 JSON Web Signature (JWS).",
       |      "properties": {
-      |        "description": {
-      |          "description": "Description of this security scheme.",
+      |        "header": {
+      |          "additionalProperties": {},
+      |          "description": "The unprotected JWS header values.",
+      |          "type": "object"
+      |        },
+      |        "protected": {
+      |          "description": "The protected JWS header for the signature. This is a Base64url-encoded\nJSON object, as per RFC 7515.",
       |          "type": "string"
       |        },
-      |        "in": {
-      |          "description": "The location of the API key. Valid values are \"query\", \"header\", or \"cookie\".",
-      |          "enum": [
-      |            "cookie",
-      |            "header",
-      |            "query"
+      |        "signature": {
+      |          "description": "The computed signature, Base64url-encoded.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "protected",
+      |        "signature"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "AgentExtension": {
+      |      "description": "A declaration of a protocol extension supported by an Agent.",
+      |      "examples": [
+      |        {
+      |          "description": "Google OAuth 2.0 authentication",
+      |          "required": false,
+      |          "uri": "https://developers.google.com/identity/protocols/oauth2"
+      |        }
+      |      ],
+      |      "properties": {
+      |        "description": {
+      |          "description": "A human-readable description of how this agent uses the extension.",
+      |          "type": "string"
+      |        },
+      |        "params": {
+      |          "additionalProperties": {},
+      |          "description": "Optional, extension-specific configuration parameters.",
+      |          "type": "object"
+      |        },
+      |        "required": {
+      |          "description": "If true, the client must understand and comply with the extension's requirements\nto interact with the agent.",
+      |          "type": "boolean"
+      |        },
+      |        "uri": {
+      |          "description": "The unique URI identifying the extension.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "uri"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "AgentInterface": {
+      |      "description": "Declares a combination of a target URL and a transport protocol for interacting with the agent.\nThis allows agents to expose the same functionality over multiple transport mechanisms.",
+      |      "properties": {
+      |        "transport": {
+      |          "description": "The transport protocol supported at this URL.",
+      |          "examples": [
+      |            "JSONRPC",
+      |            "GRPC",
+      |            "HTTP+JSON"
       |          ],
       |          "type": "string"
       |        },
-      |        "name": {
-      |          "description": "The name of the header, query or cookie parameter to be used.",
-      |          "type": "string"
-      |        },
-      |        "type": {
-      |          "const": "apiKey",
+      |        "url": {
+      |          "description": "The URL where this interface is available. Must be a valid absolute HTTPS URL in production.",
+      |          "examples": [
+      |            "https://api.example.com/a2a/v1",
+      |            "https://grpc.example.com/a2a",
+      |            "https://rest.example.com/v1"
+      |          ],
       |          "type": "string"
       |        }
       |      },
       |      "required": [
-      |        "in",
-      |        "name",
-      |        "type"
+      |        "transport",
+      |        "url"
       |      ],
       |      "type": "object"
       |    },
-      |    "HTTPAuthSecurityScheme": {
-      |      "description": "HTTP Authentication security scheme.",
-      |      "properties": {
-      |        "bearerFormat": {
-      |          "description": "A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually\ngenerated by an authorization server, so this information is primarily for documentation\npurposes.",
-      |          "type": "string"
-      |        },
-      |        "description": {
-      |          "description": "Description of this security scheme.",
-      |          "type": "string"
-      |        },
-      |        "scheme": {
-      |          "description": "The name of the HTTP Authentication scheme to be used in the Authorization header as defined\nin RFC7235. The values used SHOULD be registered in the IANA Authentication Scheme registry.\nThe value is case-insensitive, as defined in RFC7235.",
-      |          "type": "string"
-      |        },
-      |        "type": {
-      |          "const": "http",
-      |          "type": "string"
+      |    "AgentProvider": {
+      |      "description": "Represents the service provider of an agent.",
+      |      "examples": [
+      |        {
+      |          "organization": "Google",
+      |          "url": "https://ai.google.dev"
       |        }
-      |      },
-      |      "required": [
-      |        "scheme",
-      |        "type"
       |      ],
-      |      "type": "object"
-      |    },
-      |    "OAuth2SecurityScheme": {
-      |      "description": "OAuth2.0 security scheme configuration.",
       |      "properties": {
-      |        "description": {
-      |          "description": "Description of this security scheme.",
+      |        "organization": {
+      |          "description": "The name of the agent provider's organization.",
       |          "type": "string"
       |        },
-      |        "flows": {
-      |          "$ref": "#/definitions/OAuthFlows",
-      |          "description": "An object containing configuration information for the flow types supported."
-      |        },
-      |        "type": {
-      |          "const": "oauth2",
+      |        "url": {
+      |          "description": "A URL for the agent provider's website or relevant documentation.",
       |          "type": "string"
       |        }
       |      },
       |      "required": [
-      |        "flows",
-      |        "type"
-      |      ],
-      |      "type": "object"
-      |    },
-      |    "OpenIdConnectSecurityScheme": {
-      |      "description": "OpenID Connect security scheme configuration.",
-      |      "properties": {
-      |        "description": {
-      |          "description": "Description of this security scheme.",
-      |          "type": "string"
-      |        },
-      |        "openIdConnectUrl": {
-      |          "description": "Well-known URL to discover the [[OpenID-Connect-Discovery]] provider metadata.",
-      |          "type": "string"
-      |        },
-      |        "type": {
-      |          "const": "openIdConnect",
-      |          "type": "string"
-      |        }
-      |      },
-      |      "required": [
-      |        "openIdConnectUrl",
-      |        "type"
-      |      ],
-      |      "type": "object"
-      |    },
-      |    "OAuthFlows": {
-      |      "description": "Allows configuration of the supported OAuth Flows",
-      |      "properties": {
-      |        "authorizationCode": {
-      |          "$ref": "#/definitions/AuthorizationCodeOAuthFlow",
-      |          "description": "Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0."
-      |        },
-      |        "clientCredentials": {
-      |          "$ref": "#/definitions/ClientCredentialsOAuthFlow",
-      |          "description": "Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0"
-      |        },
-      |        "implicit": {
-      |          "$ref": "#/definitions/ImplicitOAuthFlow",
-      |          "description": "Configuration for the OAuth Implicit flow"
-      |        },
-      |        "password": {
-      |          "$ref": "#/definitions/PasswordOAuthFlow",
-      |          "description": "Configuration for the OAuth Resource Owner Password flow"
-      |        }
-      |      },
-      |      "type": "object"
-      |    },
-      |    "AuthorizationCodeOAuthFlow": {
-      |      "description": "Configuration details for a supported OAuth Flow",
-      |      "properties": {
-      |        "authorizationUrl": {
-      |          "description": "The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2\nstandard requires the use of TLS",
-      |          "type": "string"
-      |        },
-      |        "refreshUrl": {
-      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2\nstandard requires the use of TLS.",
-      |          "type": "string"
-      |        },
-      |        "scopes": {
-      |          "additionalProperties": {
-      |            "type": "string"
-      |          },
-      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope name and a short\ndescription for it. The map MAY be empty.",
-      |          "type": "object"
-      |        },
-      |        "tokenUrl": {
-      |          "description": "The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard\nrequires the use of TLS.",
-      |          "type": "string"
-      |        }
-      |      },
-      |      "required": [
-      |        "authorizationUrl",
-      |        "scopes",
-      |        "tokenUrl"
-      |      ],
-      |      "type": "object"
-      |    },
-      |    "ClientCredentialsOAuthFlow": {
-      |      "description": "Configuration details for a supported OAuth Flow",
-      |      "properties": {
-      |        "refreshUrl": {
-      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2\nstandard requires the use of TLS.",
-      |          "type": "string"
-      |        },
-      |        "scopes": {
-      |          "additionalProperties": {
-      |            "type": "string"
-      |          },
-      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope name and a short\ndescription for it. The map MAY be empty.",
-      |          "type": "object"
-      |        },
-      |        "tokenUrl": {
-      |          "description": "The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard\nrequires the use of TLS.",
-      |          "type": "string"
-      |        }
-      |      },
-      |      "required": [
-      |        "scopes",
-      |        "tokenUrl"
-      |      ],
-      |      "type": "object"
-      |    },
-      |    "ImplicitOAuthFlow": {
-      |      "description": "Configuration details for a supported OAuth Flow",
-      |      "properties": {
-      |        "authorizationUrl": {
-      |          "description": "The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2\nstandard requires the use of TLS",
-      |          "type": "string"
-      |        },
-      |        "refreshUrl": {
-      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2\nstandard requires the use of TLS.",
-      |          "type": "string"
-      |        },
-      |        "scopes": {
-      |          "additionalProperties": {
-      |            "type": "string"
-      |          },
-      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope name and a short\ndescription for it. The map MAY be empty.",
-      |          "type": "object"
-      |        }
-      |      },
-      |      "required": [
-      |        "authorizationUrl",
-      |        "scopes"
-      |      ],
-      |      "type": "object"
-      |    },
-      |    "PasswordOAuthFlow": {
-      |      "description": "Configuration details for a supported OAuth Flow",
-      |      "properties": {
-      |        "refreshUrl": {
-      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2\nstandard requires the use of TLS.",
-      |          "type": "string"
-      |        },
-      |        "scopes": {
-      |          "additionalProperties": {
-      |            "type": "string"
-      |          },
-      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope name and a short\ndescription for it. The map MAY be empty.",
-      |          "type": "object"
-      |        },
-      |        "tokenUrl": {
-      |          "description": "The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard\nrequires the use of TLS.",
-      |          "type": "string"
-      |        }
-      |      },
-      |      "required": [
-      |        "scopes",
-      |        "tokenUrl"
+      |        "organization",
+      |        "url"
       |      ],
       |      "type": "object"
       |    },
       |    "AgentSkill": {
-      |      "description": "Represents a unit of capability that an agent can perform.",
+      |      "description": "Represents a distinct capability or function that an agent can perform.",
       |      "properties": {
       |        "description": {
-      |          "description": "Description of the skill - will be used by the client or a human\nas a hint to understand what the skill does.",
+      |          "description": "A detailed description of the skill, intended to help clients or users\nunderstand its purpose and functionality.",
       |          "type": "string"
       |        },
       |        "examples": {
-      |          "description": "The set of example scenarios that the skill can perform.\nWill be used by the client as a hint to understand how the skill can be used.",
+      |          "description": "Example prompts or scenarios that this skill can handle. Provides a hint to\nthe client on how to use the skill.",
       |          "examples": [
       |            [
       |              "I need a recipe for bread"
@@ -466,29 +489,29 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
       |          "type": "array"
       |        },
       |        "id": {
-      |          "description": "Unique identifier for the agent's skill.",
+      |          "description": "A unique identifier for the agent's skill.",
       |          "type": "string"
       |        },
       |        "inputModes": {
-      |          "description": "The set of interaction modes that the skill supports\n(if different than the default).\nSupported media types for input.",
+      |          "description": "The set of supported input MIME types for this skill, overriding the agent's defaults.",
       |          "items": {
       |            "type": "string"
       |          },
       |          "type": "array"
       |        },
       |        "name": {
-      |          "description": "Human readable name of the skill.",
+      |          "description": "A human-readable name for the skill.",
       |          "type": "string"
       |        },
       |        "outputModes": {
-      |          "description": "Supported media types for output.",
+      |          "description": "The set of supported output MIME types for this skill, overriding the agent's defaults.",
       |          "items": {
       |            "type": "string"
       |          },
       |          "type": "array"
       |        },
       |        "tags": {
-      |          "description": "Set of tagwords describing classes of capabilities for this specific skill.",
+      |          "description": "A set of keywords describing the skill's capabilities.",
       |          "examples": [
       |            [
       |              "cooking",
@@ -510,27 +533,236 @@ object AgentCardSchema extends JsonSchemaBasedSpecSchema {
       |      ],
       |      "type": "object"
       |    },
-      |    "AgentProvider": {
-      |      "description": "Represents the service provider of an agent.",
-      |      "examples": [
-      |        {
-      |          "organization": "Google",
-      |          "url": "https://ai.google.dev"
-      |        }
-      |      ],
+      |    "Artifact": {
+      |      "description": "Represents a file, data structure, or other resource generated by an agent during a task.",
       |      "properties": {
-      |        "organization": {
-      |          "description": "Agent provider's organization name.",
+      |        "artifactId": {
+      |          "description": "A unique identifier for the artifact within the scope of the task.",
       |          "type": "string"
       |        },
-      |        "url": {
-      |          "description": "Agent provider's URL.",
+      |        "description": {
+      |          "description": "An optional, human-readable description of the artifact.",
+      |          "type": "string"
+      |        },
+      |        "extensions": {
+      |          "description": "The URIs of extensions that are relevant to this artifact.",
+      |          "items": {
+      |            "type": "string"
+      |          },
+      |          "type": "array"
+      |        },
+      |        "metadata": {
+      |          "additionalProperties": {},
+      |          "description": "Optional metadata for extensions. The key is an extension-specific identifier.",
+      |          "type": "object"
+      |        },
+      |        "name": {
+      |          "description": "An optional, human-readable name for the artifact.",
+      |          "type": "string"
+      |        },
+      |        "parts": {
+      |          "description": "An array of content parts that make up the artifact.",
+      |          "items": {
+      |            "$ref": "#/definitions/Part"
+      |          },
+      |          "type": "array"
+      |        }
+      |      },
+      |      "required": [
+      |        "artifactId",
+      |        "parts"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "Part": {
+      |
+      |      "anyOf": [
+      |        {
+      |          "$ref": "#/definitions/TextPart"
+      |        },
+      |        {
+      |          "$ref": "#/definitions/FilePart"
+      |        },
+      |        {
+      |          "$ref": "#/definitions/DataPart"
+      |        }
+      |      ],
+      |      "description": "A discriminated union representing a part of a message or artifact, which can\nbe text, a file, or structured data."
+      |    },
+      |    "TextPart": {
+      |      "description": "Represents a text segment within a message or artifact.",
+      |      "properties": {
+      |        "kind": {
+      |          "const": "text",
+      |          "description": "The type of this part, used as a discriminator. Always 'text'.",
+      |          "type": "string"
+      |        },
+      |        "metadata": {
+      |          "additionalProperties": {},
+      |          "description": "Optional metadata associated with this part.",
+      |          "type": "object"
+      |        },
+      |        "text": {
+      |          "description": "The string content of the text part.",
       |          "type": "string"
       |        }
       |      },
       |      "required": [
-      |        "organization",
-      |        "url"
+      |        "kind",
+      |        "text"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "FilePart": {
+      |      "description": "Represents a file segment within a message or artifact. The file content can be\nprovided either directly as bytes or as a URI.",
+      |      "properties": {
+      |        "file": {
+      |          "anyOf": [
+      |            {
+      |              "$ref": "#/definitions/FileWithBytes"
+      |            },
+      |            {
+      |              "$ref": "#/definitions/FileWithUri"
+      |            }
+      |          ],
+      |          "description": "The file content, represented as either a URI or as base64-encoded bytes."
+      |        },
+      |        "kind": {
+      |          "const": "file",
+      |          "description": "The type of this part, used as a discriminator. Always 'file'.",
+      |          "type": "string"
+      |        },
+      |        "metadata": {
+      |          "additionalProperties": {},
+      |          "description": "Optional metadata associated with this part.",
+      |          "type": "object"
+      |        }
+      |      },
+      |      "required": [
+      |        "file",
+      |        "kind"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "FileWithBytes": {
+      |      "description": "Represents a file with its content provided directly as a base64-encoded string.",
+      |      "properties": {
+      |        "bytes": {
+      |          "description": "The base64-encoded content of the file.",
+      |          "type": "string"
+      |        },
+      |        "mimeType": {
+      |          "description": "The MIME type of the file (e.g., \"application/pdf\").",
+      |          "type": "string"
+      |        },
+      |        "name": {
+      |          "description": "An optional name for the file (e.g., \"document.pdf\").",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "bytes"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "FileWithUri": {
+      |      "description": "Represents a file with its content located at a specific URI.",
+      |      "properties": {
+      |        "mimeType": {
+      |          "description": "The MIME type of the file (e.g., \"application/pdf\").",
+      |          "type": "string"
+      |        },
+      |        "name": {
+      |          "description": "An optional name for the file (e.g., \"document.pdf\").",
+      |          "type": "string"
+      |        },
+      |        "uri": {
+      |          "description": "A URL pointing to the file's content.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "uri"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "DataPart": {
+      |      "description": "Represents a structured data segment (e.g., JSON) within a message or artifact.",
+      |      "properties": {
+      |        "data": {
+      |          "additionalProperties": {},
+      |          "description": "The structured data content.",
+      |          "type": "object"
+      |        },
+      |        "kind": {
+      |          "const": "data",
+      |          "description": "The type of this part, used as a discriminator. Always 'data'.",
+      |          "type": "string"
+      |        },
+      |        "metadata": {
+      |          "additionalProperties": {},
+      |          "description": "Optional metadata associated with this part.",
+      |          "type": "object"
+      |        }
+      |      },
+      |      "required": [
+      |        "data",
+      |        "kind"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "AuthorizationCodeOAuthFlow": {
+      |      "description": "Defines configuration details for the OAuth 2.0 Authorization Code flow.",
+      |      "properties": {
+      |        "authorizationUrl": {
+      |          "description": "The authorization URL to be used for this flow.\nThis MUST be a URL and use TLS.",
+      |          "type": "string"
+      |        },
+      |        "refreshUrl": {
+      |          "description": "The URL to be used for obtaining refresh tokens.\nThis MUST be a URL and use TLS.",
+      |          "type": "string"
+      |        },
+      |        "scopes": {
+      |          "additionalProperties": {
+      |            "type": "string"
+      |          },
+      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+      |          "type": "object"
+      |        },
+      |        "tokenUrl": {
+      |          "description": "The token URL to be used for this flow.\nThis MUST be a URL and use TLS.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "authorizationUrl",
+      |        "scopes",
+      |        "tokenUrl"
+      |      ],
+      |      "type": "object"
+      |    },
+      |    "ClientCredentialsOAuthFlow": {
+      |      "description": "Defines configuration details for the OAuth 2.0 Client Credentials flow.",
+      |      "properties": {
+      |        "refreshUrl": {
+      |          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+      |          "type": "string"
+      |        },
+      |        "scopes": {
+      |          "additionalProperties": {
+      |            "type": "string"
+      |          },
+      |          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+      |          "type": "object"
+      |        },
+      |        "tokenUrl": {
+      |          "description": "The token URL to be used for this flow. This MUST be a URL.",
+      |          "type": "string"
+      |        }
+      |      },
+      |      "required": [
+      |        "scopes",
+      |        "tokenUrl"
       |      ],
       |      "type": "object"
       |    }

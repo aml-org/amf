@@ -6,7 +6,7 @@
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
       "http://a.ml/vocabularies/document#transformed": false,
-      "http://a.ml/vocabularies/document#sourceSpec": "Agents Domain"
+      "http://a.ml/vocabularies/document#sourceSpec": "Agent Domain"
     },
     {
       "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
@@ -14,12 +14,12 @@
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#apiVersion": 0.1,
+      "http://a.ml/vocabularies/core#schemaVersion": "0.1.0-beta",
       "http://a.ml/vocabularies/core#agents": {
         "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents"
       },
-      "http://a.ml/vocabularies/core#agent-domain": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain"
+      "http://a.ml/vocabularies/core#services": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services"
       }
     },
     {
@@ -28,106 +28,78 @@
         "http://a.ml/vocabularies/core#agents",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#weather-agent": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent"
-      },
-      "http://a.ml/vocabularies/core#exchange-rate-agent": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent"
+      "http://a.ml/vocabularies/core#google-maps-agent": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services",
       "@type": [
-        "http://a.ml/vocabularies/core#agent-domain",
+        "http://a.ml/vocabularies/core#services",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#mcp-servers": [
-        {
-          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0"
-        },
-        {
-          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1"
-        }
-      ],
+      "http://a.ml/vocabularies/core#external-agents": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents"
+      },
       "http://a.ml/vocabularies/core#llm-providers": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/llm-providers"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/llm-providers"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent",
       "@type": [
-        "http://a.ml/vocabularies/core#weather-agent",
+        "http://a.ml/vocabularies/core#google-maps-agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#card": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card"
       },
       "http://a.ml/vocabularies/core#spec": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents",
       "@type": [
-        "http://a.ml/vocabularies/core#exchange-rate-agent",
+        "http://a.ml/vocabularies/core#external-agents",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#card": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card"
+      "http://a.ml/vocabularies/core#weather-agent": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents/weather-agent"
       },
-      "http://a.ml/vocabularies/core#spec": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/spec"
+      "http://a.ml/vocabularies/core#exchange-agent": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents/exchange-agent"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0",
-      "@type": [
-        "http://a.ml/vocabularies/core#mcp-servers",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#weather-mcp": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0/weather-mcp"
-      }
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1",
-      "@type": [
-        "http://a.ml/vocabularies/core#mcp-servers",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#exchange-rate-mcp": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1/exchange-rate-mcp"
-      }
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/llm-providers",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/llm-providers",
       "@type": [
         "http://a.ml/vocabularies/core#llm-providers",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#my-einstein": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/llm-providers/my-einstein"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/llm-providers/my-einstein"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card",
       "@type": [
         "http://a.ml/vocabularies/core#card",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
-      "http://a.ml/vocabularies/core#name": "Weather Agent",
-      "http://a.ml/vocabularies/core#description": "Provides advanced weather forecasting, climate analysis, and real-time weather updates. This agent can predict weather conditions, analyze climate trends, and provide personalized weather reports.",
-      "http://a.ml/vocabularies/core#url": "${registry.url}/weather-agent",
+      "http://a.ml/vocabularies/core#name": "GeoSpatial Route Planner Agent",
+      "http://a.ml/vocabularies/core#description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
+      "http://a.ml/vocabularies/core#url": "${registry.url}/google-maps-agent",
       "http://a.ml/vocabularies/core#capabilities": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/capabilities"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/capabilities"
       },
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/core#provider": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/provider"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/provider"
       },
       "http://a.ml/vocabularies/core#securitySchemes": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes"
       },
       "http://a.ml/vocabularies/core#defaultInputModes": [
         "application/json",
@@ -139,106 +111,56 @@
       ],
       "http://a.ml/vocabularies/core#skills": [
         {
-          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/skills/0"
+          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/0"
+        },
+        {
+          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/1"
         }
       ]
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec",
       "@type": [
         "http://a.ml/vocabularies/core#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#llm": "my-einstein",
       "http://a.ml/vocabularies/core#instructions": [
-        "You are a weather agent that provides current weather conditions and forecasts for specified locations.",
-        "If the user asks for weather in a specific location, return the current weather conditions.",
-        "If the user asks for a forecast, provide a 7-day weather forecast.",
-        "If the user asks for historical weather data, provide the weather conditions for the",
-        "Always return an answer in human format. Explaning the weather conditions in a way that is easy to understand."
+        "You're mission is helping people find the best route possible between two points. You will extract origin and destination",
+        "If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.",
+        "Help the user find the exchange rates for the currency they are using.",
+        "Check the weather in the areas involved in the route and show a warning if there are any weather alerts."
       ],
-      "http://a.ml/vocabularies/core#tools": [
+      "http://a.ml/vocabularies/core#links": [
         {
-          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0"
+          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0"
+        },
+        {
+          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/1"
         }
       ]
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents/weather-agent",
       "@type": [
-        "http://a.ml/vocabularies/core#card",
+        "http://a.ml/vocabularies/core#weather-agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
-      "http://a.ml/vocabularies/core#name": "Exchange Rate Agent",
-      "http://a.ml/vocabularies/core#description": "Provides real-time exchange rate information and currency conversion services.",
-      "http://a.ml/vocabularies/core#url": "${registry.url}/exchange-rate-agent",
-      "http://a.ml/vocabularies/core#capabilities": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/capabilities"
-      },
-      "http://a.ml/vocabularies/core#version": "1.0.0",
-      "http://a.ml/vocabularies/core#provider": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/provider"
-      },
-      "http://a.ml/vocabularies/core#securitySchemes": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/securitySchemes"
-      },
-      "http://a.ml/vocabularies/core#defaultInputModes": [
-        "application/json",
-        "text/plain"
-      ],
-      "http://a.ml/vocabularies/core#defaultOutputModes": [
-        "application/json",
-        "image/png"
-      ],
-      "http://a.ml/vocabularies/core#skills": [
-        {
-          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/skills/0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/spec",
-      "@type": [
-        "http://a.ml/vocabularies/core#spec",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#llm": "my-einstein",
-      "http://a.ml/vocabularies/core#instructions": [
-        "You are an exchange rate agent that provides real-time exchange rate information and currency conversion services.",
-        "You should always show the exchange rate in a human-readable format.",
-        "If the user asks for the exchange rate between two currencies, return the current exchange rate with the total amount converted."
-      ],
-      "http://a.ml/vocabularies/core#tools": [
-        {
-          "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/spec/tools/0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0/weather-mcp",
-      "@type": [
-        "http://a.ml/vocabularies/core#weather-mcp",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#url": "https://mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/",
-      "http://a.ml/vocabularies/core#transport": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0/weather-mcp/transport"
+      "http://a.ml/vocabularies/core#cardUrl": "${weather.cardUrl}/",
+      "http://a.ml/vocabularies/core#authentication": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents/weather-agent/authentication"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1/exchange-rate-mcp",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents/exchange-agent",
       "@type": [
-        "http://a.ml/vocabularies/core#exchange-rate-mcp",
+        "http://a.ml/vocabularies/core#exchange-agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#url": "https://mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/",
-      "http://a.ml/vocabularies/core#transport": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1/exchange-rate-mcp/transport"
-      }
+      "http://a.ml/vocabularies/core#cardUrl": "${exchange.cardUrl}/"
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/llm-providers/my-einstein",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/llm-providers/my-einstein",
       "@type": [
         "http://a.ml/vocabularies/core#my-einstein",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -246,39 +168,65 @@
       "http://a.ml/vocabularies/core#type": "einstein",
       "http://a.ml/vocabularies/core#clientId": "${einstein.clientId}",
       "http://a.ml/vocabularies/core#clientSecret": "${einstein.clientSecret}",
-      "http://a.ml/vocabularies/core#baseUrl": "${einstein.url}",
+      "http://a.ml/vocabularies/core#baseUrl": "${saleforce.url}",
       "http://a.ml/vocabularies/core#modelName": "sfdc_ai__DefaultOpenAIGPT35Turbo",
       "http://a.ml/vocabularies/core#probability": 0.3,
       "http://a.ml/vocabularies/core#locale": "en_US"
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/capabilities",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/capabilities",
       "@type": [
         "http://a.ml/vocabularies/core#capabilities",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ]
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/provider",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/provider",
       "@type": [
         "http://a.ml/vocabularies/core#provider",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#organization": "Acme Inc.",
-      "http://a.ml/vocabularies/core#url": "https://weather-agent.ch.anypoint.com"
+      "http://a.ml/vocabularies/core#url": "https://www.acme.com"
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes",
       "@type": [
         "http://a.ml/vocabularies/core#securitySchemes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#anypointClientCredentials": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/anypointClientCredentials"
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/anypointClientCredentials"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/skills/0",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#id": "exchange-rates",
+      "http://a.ml/vocabularies/core#name": "Returns exchange rates for a given currency",
+      "http://a.ml/vocabularies/core#description": "Calculate the exchange rates for a given currency.",
+      "http://a.ml/vocabularies/core#examples": [
+        "What is the exchange rate for USD to EUR?",
+        "How much is 100 USD in EUR?"
+      ],
+      "http://a.ml/vocabularies/core#inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#outputModes": [
+        "application/json",
+        "application/vnd.geo+json",
+        "text/html"
+      ],
+      "http://a.ml/vocabularies/core#tags": [
+        "exchange-rates"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/skills/1",
       "@type": [
         "http://a.ml/vocabularies/core#skills",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -300,155 +248,63 @@
         "text/html"
       ],
       "http://a.ml/vocabularies/core#tags": [
-        "weather",
-        "geolocation"
+        "weather"
       ]
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0",
       "@type": [
-        "http://a.ml/vocabularies/core#tools",
+        "http://a.ml/vocabularies/core#links",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#mcp": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0/mcp"
+      "http://a.ml/vocabularies/core#weather-agent": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/capabilities",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/1",
       "@type": [
-        "http://a.ml/vocabularies/core#capabilities",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ]
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/provider",
-      "@type": [
-        "http://a.ml/vocabularies/core#provider",
+        "http://a.ml/vocabularies/core#links",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#organization": "Acme Inc.",
-      "http://a.ml/vocabularies/core#url": "https://weather-agent.ch.anypoint.com"
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/securitySchemes",
-      "@type": [
-        "http://a.ml/vocabularies/core#securitySchemes",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#anypointClientCredentials": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/securitySchemes/anypointClientCredentials"
+      "http://a.ml/vocabularies/core#exchange-agent": {
+        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/1/exchange-agent"
       }
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/skills/0",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/services/external-agents/weather-agent/authentication",
       "@type": [
-        "http://a.ml/vocabularies/core#skills",
+        "http://a.ml/vocabularies/core#authentication",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#id": "exchange",
-      "http://a.ml/vocabularies/core#name": "Returns the exchange rate for a given currency pair",
-      "http://a.ml/vocabularies/core#description": "Get the current exchange rate between two specified currencies.",
-      "http://a.ml/vocabularies/core#examples": [
-        "What is the exchange rate from USD to EUR?",
-        "How much is 100 JPY in USD?"
-      ],
-      "http://a.ml/vocabularies/core#inputModes": [
-        "application/json",
-        "text/plain"
-      ],
-      "http://a.ml/vocabularies/core#outputModes": [
-        "application/json",
-        "application/vnd.geo+json",
-        "text/html"
-      ],
-      "http://a.ml/vocabularies/core#tags": [
-        "exchange-rate"
-      ]
+      "http://a.ml/vocabularies/core#type": "apikey-client-credentials",
+      "http://a.ml/vocabularies/core#clientId": "${weather.clientId}",
+      "http://a.ml/vocabularies/core#clientSecret": "${weather.clientSecret}"
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/spec/tools/0",
-      "@type": [
-        "http://a.ml/vocabularies/core#tools",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#mcp": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/spec/tools/0/mcp"
-      }
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0/weather-mcp/transport",
-      "@type": [
-        "http://a.ml/vocabularies/core#transport",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#streamableHttp": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0/weather-mcp/transport/streamableHttp"
-      }
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1/exchange-rate-mcp/transport",
-      "@type": [
-        "http://a.ml/vocabularies/core#transport",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#streamableHttp": {
-        "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1/exchange-rate-mcp/transport/streamableHttp"
-      }
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/card/securitySchemes/anypointClientCredentials",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/card/securitySchemes/anypointClientCredentials",
       "@type": [
         "http://a.ml/vocabularies/core#anypointClientCredentials",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#type": "apiKey",
       "http://a.ml/vocabularies/core#in": "header",
-      "http://a.ml/vocabularies/core#name": "clientSecret",
-      "http://a.ml/vocabularies/core#description": "The client secret for Anypoint Platform authentication.\n"
+      "http://a.ml/vocabularies/core#name": "client_secret",
+      "http://a.ml/vocabularies/core#description": "The client ID for Anypoint Platform authentication.\n"
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/weather-agent/spec/tools/0/mcp",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/0/weather-agent",
       "@type": [
-        "http://a.ml/vocabularies/core#mcp",
+        "http://a.ml/vocabularies/core#weather-agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#server": "weather-mcp"
+      ]
     },
     {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/card/securitySchemes/anypointClientCredentials",
+      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/google-maps-agent/spec/links/1/exchange-agent",
       "@type": [
-        "http://a.ml/vocabularies/core#anypointClientCredentials",
+        "http://a.ml/vocabularies/core#exchange-agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#type": "apiKey",
-      "http://a.ml/vocabularies/core#in": "header",
-      "http://a.ml/vocabularies/core#name": "clientSecret",
-      "http://a.ml/vocabularies/core#description": "The client secret for Anypoint Platform authentication.\n"
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agents/exchange-rate-agent/spec/tools/0/mcp",
-      "@type": [
-        "http://a.ml/vocabularies/core#mcp",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#server": "exchange-rate-mcp"
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/0/weather-mcp/transport/streamableHttp",
-      "@type": [
-        "http://a.ml/vocabularies/core#streamableHttp",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#path": "/weather/mcp"
-    },
-    {
-      "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/agent-domain/mcp-servers/1/exchange-rate-mcp/transport/streamableHttp",
-      "@type": [
-        "http://a.ml/vocabularies/core#streamableHttp",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#path": "/exchange_rate/mcp"
+      ]
     },
     {
       "@id": "file://amf-agent-domain/shared/src/test/resources/instances/valid/instance_1.yaml",

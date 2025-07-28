@@ -2,39 +2,49 @@ package amf.agentdomain.internal.plugins.parse.schema
 
 import amf.shapes.internal.plugins.parser.schema.JsonSchemaBasedSpecSchema
 
-object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
+object AgentDomainSchema extends JsonSchemaBasedSpecSchema {
 
   override def schema: String =
     """{
       |  "$schema": "http://json-schema.org/draft-07/schema#",
-      |  "title": "Agent Factory",
+      |  "title": "Agent domain",
       |  "type": "object",
       |  "required": [
-      |    "apiVersion",
+      |    "schemaVersion",
       |    "agents",
-      |    "agent-domain"
+      |    "services"
       |  ],
       |  "properties": {
-      |    "apiVersion": {
-      |      "anyOf": [
-      |        {
-      |          "type": "string"
-      |        },
-      |        {
-      |          "type": "number"
-      |        }
-      |      ]
+      |    "schemaVersion": {
+      |      "type": "string",
+      |      "const": "0.1.0-beta",
+      |      "description": "The schema version for this file",
+      |      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+      |      "additionalProperties": false
       |    },
       |    "agents": {
       |      "type": "object",
+      |      "description": "The agents defined as part of this domain",
       |      "patternProperties": {
       |        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
       |          "$ref": "#/definitions/Agent"
       |        }
-      |      }
+      |      },
+      |      "propertyNames": {
+      |        "not": {
+      |          "enum": [
+      |            "default",
+      |            "defaults",
+      |            "system",
+      |            "local"
+      |          ]
+      |        }
+      |      },
+      |      "additionalProperties": false
       |    },
-      |    "agent-domain": {
-      |      "$ref": "#/definitions/AgentDomain"
+      |    "services": {
+      |      "$ref": "#/definitions/Services",
+      |      "description": "The external services consumed by the agents in this domain"
       |    }
       |  },
       |  "additionalProperties": false,
@@ -47,16 +57,29 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |      ],
       |      "properties": {
       |        "llm": {
-      |          "type": "string"
+      |          "type": "string",
+      |          "description": "A reference to the LLM used for reasoning and orchestration"
       |        },
       |        "instructions": {
       |          "type": "array",
+      |          "description": "Set of custom instructions that will inform the orchestration",
       |          "items": {
       |            "type": "string"
       |          }
       |        },
+      |        "maxNumberOfLoops": {
+      |          "type": "integer",
+      |          "description": "The maximum number of steps that a task can take. Useful for keeping orchestrations from running too long and consuming too many tokens",
+      |          "default": 25
+      |        },
+      |        "maxConsecutiveErrors": {
+      |          "type": "integer",
+      |          "description": "The maximum number of errors that the orchestrator will attempt to recover from before returning a failed status.",
+      |          "default": 3
+      |        },
       |        "tools": {
       |          "type": "array",
+      |          "description": "The tools available to this agent",
       |          "items": {
       |            "type": "object",
       |            "properties": {
@@ -67,10 +90,19 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |                ],
       |                "properties": {
       |                  "server": {
-      |                    "type": "string"
+      |                    "type": "string",
+      |                    "description": "A reference to the MCP server serving the tools"
       |                  },
       |                  "allowed": {
       |                    "type": "array",
+      |                    "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
+      |                    "items": {
+      |                      "type": "string"
+      |                    }
+      |                  },
+      |                  "denied": {
+      |                    "type": "array",
+      |                    "description": "Filters the list of tools advertised by the MCP server to not include those in this list. Mutually exclusive with 'allowed'",
       |                    "items": {
       |                      "type": "string"
       |                    }
@@ -82,6 +114,7 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |        },
       |        "links": {
       |          "type": "array",
+      |          "description": "Defines which of the other agents defined in this domain can be orchestrated by this conductor",
       |          "items": {
       |            "type": "object",
       |            "patternProperties": {
@@ -93,7 +126,8 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |                  }
       |                }
       |              }
-      |            }
+      |            },
+      |            "additionalProperties": false
       |          }
       |        }
       |      }
@@ -205,6 +239,7 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |    },
       |    "ExternalAgent": {
       |      "type": "object",
+      |      "description": "Defines an agent that exists outside of this domain",
       |      "properties": {
       |        "cardUrl": {
       |          "type": "string"
@@ -216,6 +251,7 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |    },
       |    "EinsteinLLM": {
       |      "type": "object",
+      |      "description": "Configuration for using Salesforce Einstein as the reasoning LLM",
       |      "required": [
       |        "clientId",
       |        "clientSecret",
@@ -228,22 +264,29 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |          "const": "einstein"
       |        },
       |        "clientId": {
-      |          "type": "string"
+      |          "type": "string",
+      |          "description": "The Client Id"
       |        },
       |        "clientSecret": {
-      |          "type": "string"
+      |          "type": "string",
+      |          "description": "The Client Secret"
       |        },
       |        "baseUrl": {
-      |          "type": "string"
+      |          "type": "string",
+      |          "description": "The base URL for the Einstein instance"
       |        },
       |        "modelName": {
-      |          "type": "string"
+      |          "type": "string",
+      |          "description": "The name of the language model to use"
       |        },
       |        "probability": {
-      |          "type": "number"
+      |          "type": "number",
+      |          "description": "The Einstein probability setting"
       |        },
       |        "locale": {
-      |          "type": "string"
+      |          "type": "string",
+      |          "description": "The locale to use",
+      |          "default": "en_US"
       |        }
       |      }
       |    },
@@ -256,10 +299,12 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |          "type": "object",
       |          "properties": {
       |            "ssePath": {
-      |              "type": "string"
+      |              "type": "string",
+      |              "description": "Path to the SSE endpoint"
       |            },
       |            "messagesPath": {
-      |              "type": "string"
+      |              "type": "string",
+      |              "description": "Path to the messages endpoint"
       |            }
       |          }
       |        }
@@ -274,7 +319,8 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |          "type": "object",
       |          "properties": {
       |            "path": {
-      |              "type": "string"
+      |              "type": "string",
+      |              "description": "Path to the mcp endpoint"
       |            }
       |          }
       |        }
@@ -300,7 +346,8 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |      "properties": {
       |        "url": {
       |          "type": "string",
-      |          "format": "uri"
+      |          "format": "uri",
+      |          "description": "The base URL for the MCP server"
       |        },
       |        "transport": {
       |          "$ref": "#/definitions/MCPTransport"
@@ -310,22 +357,28 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |          "properties": {
       |            "allowed": {
       |              "type": "array",
+      |              "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
       |              "items": {
       |                "type": "string"
       |              }
       |            },
       |            "denied": {
       |              "type": "array",
+      |              "description": "Filters the list of tools advertised by the MCP server to those not in this list. Mutually exclusive with 'allowed'",
       |              "items": {
       |                "type": "string"
       |              }
       |            }
       |          }
+      |        },
+      |        "authentication": {
+      |          "$ref": "#/definitions/Authentication"
       |        }
       |      }
       |    },
-      |    "AgentDomain": {
+      |    "Services": {
       |      "type": "object",
+      |      "description": "The external services consumed by the agents in this domain",
       |      "required": [
       |        "llm-providers"
       |      ],
@@ -336,25 +389,30 @@ object AgentDomainSchema extends JsonSchemaBasedSpecSchema{
       |            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
       |              "$ref": "#/definitions/ExternalAgent"
       |            }
-      |          }
+      |          },
+      |          "additionalProperties": false
       |        },
       |        "llm-providers": {
       |          "type": "object",
+      |          "description": "The LLMs available to the agents in this domain",
       |          "patternProperties": {
       |            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
       |              "$ref": "#/definitions/EinsteinLLM"
       |            }
-      |          }
+      |          },
+      |          "additionalProperties": false
       |        },
       |        "mcp-servers": {
       |          "type": "array",
+      |          "description": "The MCP servers available to the agents in this domain",
       |          "items": {
       |            "type": "object",
       |            "patternProperties": {
       |              "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
       |                "$ref": "#/definitions/MCPServer"
       |              }
-      |            }
+      |            },
+      |            "additionalProperties": false
       |          }
       |        }
       |      }
