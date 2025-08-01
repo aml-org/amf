@@ -16,47 +16,39 @@ import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 trait GrpcASTParserHelper extends AntlrASTParserHelper {
 
-  def withName(ast: Node, nametoken: String, element: NamedDomainElement, adopt: NamedDomainElement => Unit = { _ => })(
-      implicit ctx: GrpcWebApiContext
+  def withName(ast: Node, nameToken: String, element: NamedDomainElement)(implicit
+      ctx: GrpcWebApiContext
   ): Unit = {
-    path(ast, Seq(nametoken, IDENTIFIER)).foreach { node =>
+    path(ast, Seq(nameToken, IDENTIFIER)).foreach { node =>
       withOptTerminal(node) {
         case Some(shapeName) =>
           element.withName(shapeName.value)
-          adopt(element)
         case None =>
           path(node, Seq(KEYWORDS)) match {
             case Some(keywordNode) =>
               withOptTerminal(keywordNode) {
                 case Some(kw) =>
                   element.withName(kw.value)
-                  adopt(element)
-                case _ =>
-                  adopt(element)
-                  astError(element.id, s"missing Protobuf3 $nametoken", element.annotations)
+                case _ => astError(s"missing Protobuf3 $nameToken", element.annotations)
               }
-            case None =>
-              adopt(element)
-              astError(element.id, s"missing Protobuf3 $nametoken", element.annotations)
+            case None => astError(s"missing Protobuf3 $nameToken", element.annotations)
           }
       }
     }
   }
 
-  def withDeclaredShape(ast: Node, nametoken: String, element: AnyShape, adopt: NamedDomainElement => Unit = { _ => })(
-      implicit ctx: GrpcWebApiContext
+  def withDeclaredShape(ast: Node, nameToken: String, element: AnyShape)(implicit
+      ctx: GrpcWebApiContext
   ): Unit = {
-    path(ast, Seq(nametoken, IDENTIFIER)).foreach { node =>
+    path(ast, Seq(nameToken, IDENTIFIER)).foreach { node =>
       withOptTerminal(node) {
         case Some(shapeName) =>
           element.withName(ctx.fullMessagePath(shapeName.value))
           element.withDisplayName(shapeName.value)
-          adopt(element)
           ctx.declarations += element
           element.add(DeclaredElement())
         case None =>
-          adopt(element)
-          astError(element.id, s"missing Protobuf3 $nametoken", element.annotations)
+          astError(s"missing Protobuf3 $nameToken", element.annotations)
       }
     }
 
@@ -102,9 +94,8 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
               case _          => None
             }
           case _ =>
-            path(n, Seq(MESSAGE_TYPE)).flatMap {
-              case messageRef: Node =>
-                Some(parseObjectRange(n, messageRef.source))
+            path(n, Seq(MESSAGE_TYPE)).flatMap { case messageRef: Node =>
+              Some(parseObjectRange(n, messageRef.source))
             }
         }
         // check if array
@@ -166,23 +157,20 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     scalar
   }
 
-  private def parseIsRepeated(ast: ASTNode)(implicit grpcWebApiContext: GrpcWebApiContext): Boolean = {
-    ast match {
-      case node: Node =>
-        find(node, REPEATED).headOption match {
-          case Some(n: Terminal) => true
-          case _                 => false
-        }
-      case _ => false
-    }
-
+  private def parseIsRepeated(ast: ASTNode): Boolean = ast match {
+    case node: Node =>
+      find(node, REPEATED).headOption match {
+        case Some(_: Terminal) => true
+        case _                 => false
+      }
+    case _ => false
   }
 
-  def collectOptions(ast: Node, path: Seq[String], adopt: DomainExtension => Unit)(implicit
+  def collectOptions(ast: Node, path: Seq[String], setterFn: DomainExtension => Unit)(implicit
       ctx: GrpcWebApiContext
   ): Unit = {
     collect(ast, path).map { case optNode: Node =>
-      GrpcOptionParser(optNode).parse(adopt)
+      GrpcOptionParser(optNode).parse(setterFn)
     }
   }
 }

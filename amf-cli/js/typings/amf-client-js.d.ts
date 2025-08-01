@@ -6656,6 +6656,7 @@ declare module "amf-client-js" {
     getMaxYamlReferences: undefined | number;
     isAmfJsonLdSerialization: boolean;
     isTokens: boolean;
+    isSourceSchemaDef: boolean;
 
     constructor();
 
@@ -6671,11 +6672,15 @@ declare module "amf-client-js" {
 
     withTokens(): ParsingOptions;
 
+    withSourceSchemaDef(): ParsingOptions;
+
     withoutAmfJsonLdSerialization(): ParsingOptions;
 
     withoutBaseUnitUrl(): ParsingOptions;
 
     withoutTokens(): ParsingOptions;
+
+    withoutSourceSchemaDef(): ParsingOptions;
   }
   export class Path {
     static delimiter: string;
@@ -6806,6 +6811,9 @@ declare module "amf-client-js" {
     static readonly PAYLOAD: ProfileName;
     static readonly RAML08: ProfileName;
     static readonly RAML10: ProfileName;
+    static readonly MCP: ProfileName;
+    static readonly AGENT_DOMAIN: ProfileName;
+    static readonly AGENT_CARD: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -8892,6 +8900,9 @@ declare module "amf-client-js" {
     static readonly PAYLOAD: Spec;
     static readonly RAML08: Spec;
     static readonly RAML10: Spec;
+    static readonly MCP: Spec;
+    static readonly AGENT_DOMAIN: Spec;
+    static readonly AGENT_CARD: Spec;
 
     static apply(name: string): Spec;
   }
@@ -9554,6 +9565,105 @@ declare module "amf-client-js" {
   export class TypeUtil {
     static isTypeOf(element: AmfObjectWrapper, typeIri: String): boolean;
     static isTypeOf(element: AmfObjectWrapper, typeIri: Array<String>): boolean;
+  }
+
+  export class MCPConfiguration extends BaseMCPConfiguration {
+    static MCP(): MCPConfiguration;
+
+    baseUnitClient(): MCPBaseUnitClient;
+  }
+
+  export class BaseMCPConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseMCPConfiguration;
+
+    withErrorHandlerProvider(
+        provider: ErrorHandlerProvider
+    ): BaseMCPConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseMCPConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseMCPConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseMCPConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseMCPConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseMCPConfiguration;
+
+    withTransformationPipeline(
+        pipeline: TransformationPipeline
+    ): BaseMCPConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseMCPConfiguration;
+  }
+  export class MCPBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class AgentCardConfiguration extends BaseAgentCardConfiguration {
+    static AgentCard(): AgentCardConfiguration;
+
+    baseUnitClient(): AgentCardBaseUnitClient;
+  }
+
+  export class BaseAgentCardConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentCardConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseAgentCardConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentCardConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentCardConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentCardConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentCardConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentCardConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseAgentCardConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentCardConfiguration;
+  }
+  export class AgentCardBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class AgentDomainConfiguration extends BaseAgentDomainConfiguration {
+    static AgentDomain(): AgentDomainConfiguration;
+
+    baseUnitClient(): AgentDomainBaseUnitClient;
+  }
+
+  export class BaseAgentDomainConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentDomainConfiguration;
+
+    withErrorHandlerProvider(
+        provider: ErrorHandlerProvider
+    ): BaseAgentDomainConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentDomainConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentDomainConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentDomainConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentDomainConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentDomainConfiguration;
+
+    withTransformationPipeline(
+        pipeline: TransformationPipeline
+    ): BaseAgentDomainConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentDomainConfiguration;
+  }
+  export class AgentDomainBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
   namespace org {

@@ -22,10 +22,14 @@ class CompatibilityCycledValidationTest extends CompatibilityCycle with Matchers
 
   override val basePath = "amf-cli/shared/src/test/resources/compatibility/"
 
+  // OAS 2 & 3 to RAML
   testCycleCompatibility("oas30", Oas30JsonHint, Raml10, basePath)
   testCycleCompatibility("oas20", Oas20JsonHint, Raml10, basePath)
+  // RAML to OAS 2 & 3
   testCycleCompatibility("raml10", Raml10YamlHint, Oas30, basePath)
   testCycleCompatibility("raml10", Raml10YamlHint, Oas20, basePath)
+  // OAS 2 to OAS 3 TODO: report and fix errors found
+//  testCycleCompatibility("oas20", Oas20JsonHint, Oas30, basePath)
 }
 
 trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformSecrets {

@@ -9,21 +9,18 @@ import org.mulesoft.antlrast.ast.Node
 case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val propertyShape: PropertyShape = PropertyShape(toAnnotations(ast))
 
-  def parse(adopt: PropertyShape => Unit): PropertyShape = {
+  def parse(setterFn: PropertyShape => Unit = _ => ()): PropertyShape = {
     parseFieldName()
-    adopt(propertyShape)
+    setterFn(propertyShape)
     parseFieldNumber()
     parseFieldRange()
     parseOptions()
     propertyShape
   }
 
-  def parseOptions() = {
+  def parseOptions(): Unit = {
     collect(ast, Seq(FIELD_OPTIONS_ELEMENTS, FIELD_OPTION)).foreach { case n: Node =>
-      GrpcOptionParser(n).parse({ extension =>
-        extension.adopted(propertyShape.id)
-        propertyShape.withCustomDomainProperty(extension)
-      })
+      GrpcOptionParser(n).parse(ex => propertyShape.withCustomDomainProperty(ex))
     }
   }
 
@@ -34,14 +31,14 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
   def parseFieldNumber(): Unit = {
     parseFieldNumber(ast) match {
       case Some(order) => propertyShape.withSerializationOrder(order)
-      case None        => astError(propertyShape.id, "missing Protobuf3 field number", propertyShape.annotations)
+      case None        => astError("missing Protobuf3 field number", propertyShape.annotations)
     }
   }
 
   def parseFieldRange(): Unit = {
     parseFieldRange(ast) match {
       case Some(range) => propertyShape.withRange(range)
-      case _           => astError(propertyShape.id, "missing Protobuf3 field type", propertyShape.annotations)
+      case _           => astError("missing Protobuf3 field type", propertyShape.annotations)
     }
   }
 

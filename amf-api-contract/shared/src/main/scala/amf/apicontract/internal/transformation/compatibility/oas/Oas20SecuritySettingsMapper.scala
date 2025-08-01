@@ -5,7 +5,7 @@ import amf.apicontract.internal.metamodel.domain.security.OAuth2FlowModel
 import amf.apicontract.internal.transformation.compatibility.common.SecuritySettingsMapper
 import amf.core.internal.metamodel.Field
 
-class Oas20SecuritySettingsMapper() extends SecuritySettingsMapper {
+class Oas20SecuritySettingsMapper extends SecuritySettingsMapper {
 
   /** Fixes OAuth2 settings based on OpenAPI 2.0 conventions. Maps OAuth2 grant types to flow types and ensures required
     * URIs are set.

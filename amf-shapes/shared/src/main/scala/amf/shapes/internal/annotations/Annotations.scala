@@ -106,3 +106,8 @@ case class InputTypeField() extends Annotation
   * the one stored by this Annotation. Used by ALS to link.
   */
 case class TargetName(name: YPart) extends Annotation
+
+/**
+ * Annotation needed by ALS to have the definition original definition of the schema in a JsonLdElement
+ */
+case class SourceSchemaDef(definition: Shape) extends Annotation

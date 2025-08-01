@@ -21,6 +21,9 @@ object ApiValidationProfiles {
   val GraphQLValidationProfile: ValidationProfile =
     buildProfileFrom(GraphQLProfile, GraphQLValidations, withStaticValidations = false)
 
+  val GrpcValidationProfile: ValidationProfile =
+    buildProfileFrom(GrpcProfile, GrpcValidations, withStaticValidations = false)
+
   val GraphQLFederationValidationProfile: ValidationProfile =
     buildProfileFrom(GraphQLFederationProfile, GraphQLFederationValidations, withStaticValidations = false)
 
@@ -34,6 +37,7 @@ object ApiValidationProfiles {
     Oas31ValidationProfile.name   -> Oas31ValidationProfile,
     Async20ValidationProfile.name -> Async20ValidationProfile,
     GraphQLValidationProfile.name -> GraphQLValidationProfile,
+    GrpcValidationProfile.name    -> GrpcValidationProfile,
     AmfValidationProfile.name     -> AmfValidationProfile
   )
 
@@ -53,6 +57,8 @@ object ApiEffectiveValidations {
   val GraphQLEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(GraphQLValidationProfile)
   val GraphQLFederationEffectiveValidations: EffectiveValidations =
     EffectiveValidations().someEffective(GraphQLFederationValidationProfile)
+
+  val GrpcEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(GrpcValidationProfile)
 
   val AmfEffectiveValidations: EffectiveValidations = EffectiveValidations().someEffective(AmfValidationProfile)
 }

@@ -7,6 +7,11 @@ class ValidOasYamlModelParserTest extends ValidModelTest {
     checkValid("oas3/operation-ref/api-external.yaml")
   }
 
+  // W-18551468
+  test("oas 30 external docs should work at schema level") {
+    checkValid("/oas3/external-docs-in-schema.yaml")
+  }
+
   test("Test multiple formData parameters") {
     checkValid("/parameters/multiple-formdata.yaml")
   }

@@ -1,5 +1,6 @@
 package amf.shapes.internal.spec.jsonldschema.parser
 
+import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.ErrorHandlingContext
@@ -14,7 +15,8 @@ import scala.collection.mutable
 class JsonLDParserContext(
     val eh: AMFErrorHandler,
     val yValueCache: RenderedYValues = RenderedYValues(),
-    val validatorFactory: ValidatorFactory
+    val validatorFactory: ValidatorFactory,
+    val options: ParsingOptions
 ) extends ErrorHandlingContext
     with ParseErrorHandler
     with IllegalTypeHandler {

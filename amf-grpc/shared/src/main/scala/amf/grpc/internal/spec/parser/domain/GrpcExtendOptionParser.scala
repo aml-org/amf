@@ -9,15 +9,15 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
-  def parse(adopt: CustomDomainProperty => Unit): Unit = {
+  def parse(setterFn: CustomDomainProperty => Unit): Unit = {
     val domain: String = parseDomain()
-    parseExtensionFields(domain, adopt)
+    parseExtensionFields(domain, setterFn)
   }
 
-  def parseExtensionFields(domain: String, adopt: CustomDomainProperty => Unit): Unit = {
+  def parseExtensionFields(domain: String, setterFn: CustomDomainProperty => Unit): Unit = {
     collect(ast, Seq(FIELD)).foreach { case fieldElement: Node =>
       val customDomainProperty = CustomDomainProperty(toAnnotations(ast))
-      adopt(customDomainProperty)
+      setterFn(customDomainProperty)
       val propertyShape = GrpcFieldParser(fieldElement)(ctx).parse { _ => }
       customDomainProperty
         .withSerializationOrder(propertyShape.serializationOrder.value())
@@ -27,7 +27,7 @@ case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext
     }
   }
 
-  def parseDomain(): String = {
+  private def parseDomain(): String = {
     path(ast, Seq(EXTEND_IDENTIFIER)) match {
       case Some(n: Node) =>
         withOptTerminal(n) {

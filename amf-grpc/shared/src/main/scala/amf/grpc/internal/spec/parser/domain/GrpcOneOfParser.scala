@@ -13,23 +13,24 @@ case class GrpcOneOfParser(ast: Node)(implicit context: GrpcWebApiContext) exten
 
   val union: UnionShape = UnionShape(toAnnotations(ast))
 
-  def parse(adopt: UnionShape => Unit): UnionShape = {
-    parseName(adopt)
+  def parse(setterFn: UnionShape => Unit): UnionShape = {
+    parseName()
+    setterFn(union)
     parseMembers()
     union
   }
 
-  protected def parseMembers(): Unit = {
+  private def parseMembers(): Unit = {
     val members: mutable.Buffer[Shape] = mutable.Buffer()
     collect(ast, Seq(ONE_OF_FIELD)).map { case (oneOfField: Node) =>
       GrpcFieldParser(oneOfField).parse(property => {
-        val shape = NodeShape(toAnnotations(oneOfField)).adopted(union.id)
-        shape.withProperties(Seq(property.adopted(shape.id)))
+        val shape = NodeShape(toAnnotations(oneOfField))
+        shape.withProperties(Seq(property))
         members.append(shape)
       })
     }
     union.withAnyOf(members)
   }
 
-  protected def parseName(adopt: UnionShape => Unit): Unit = withName(ast, ONE_OF_NAME, union, { _ => adopt(union) })
+  protected def parseName(): Unit = withName(ast, ONE_OF_NAME, union)
 }

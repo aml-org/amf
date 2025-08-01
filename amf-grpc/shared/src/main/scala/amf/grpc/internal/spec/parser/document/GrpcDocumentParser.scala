@@ -4,6 +4,7 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.AntlrError
 import amf.core.client.scala.model.document.{DeclaresModel, Document}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.DeclaredElement
@@ -20,7 +21,7 @@ import amf.grpc.internal.spec.parser.domain.{
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
-import org.mulesoft.antlrast.ast.{ASTNode, Node}
+import org.mulesoft.antlrast.ast.{AST, ASTNode, Node}
 
 case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
@@ -41,6 +42,7 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
 
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
+    loadSyntaxErrors(ast)
     loadReferences(root.references)
     ast.rootOption().collect({ case n: Node => parseRootNode(n) })
 
@@ -61,55 +63,52 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
     parseExtensions(node)
   }
 
-  def parseWebAPI(node: Node): Unit = {
+  private def parseWebAPI(node: Node): Unit = {
     val webApi = GrpcPackageParser(node, doc).parse()
-    doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
+    doc.withLocation(root.location).withEncodes(webApi)
   }
 
   def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
-  def parseMessages(node: Node): Unit = {
+  private def parseMessages(node: Node): Unit = {
     collect(node, Seq(TOP_LEVEL_DEF, MESSAGE_DEF)).zipWithIndex.foreach { case (element: ASTNode, idx: Int) =>
       withNode(element) { node =>
         val shape = GrpcMessageParser(node).parse(shape => {
           shape.name.option() match {
-            case None => shape.withName(s"Message${idx}")
+            case None => shape.withName(s"Message$idx")
             case _    =>
           }
-          shape.adopted(webapi.id + "/types")
         })
         ctx.declarations += shape.add(DeclaredElement())
       }
     }
   }
 
-  def parseEnums(node: Node): Unit = {
+  private def parseEnums(node: Node): Unit = {
     collect(node, Seq(TOP_LEVEL_DEF, ENUM_DEF)).zipWithIndex.foreach { case (element: ASTNode, idx: Int) =>
       withNode(element) { node =>
         val shape = GrpcEnumParser(node).parse(shape => {
           shape.name.option() match {
-            case None => shape.withName(s"Enum${idx}")
+            case None => shape.withName(s"Enum$idx")
             case _    =>
           }
-          shape.adopted(webapi.id + "/types")
         })
         ctx.declarations += shape.add(DeclaredElement())
       }
     }
   }
 
-  def parseExtensions(node: Node): Unit = {
+  private def parseExtensions(node: Node): Unit = {
     collect(node, Seq(EXTENDS_STATEMENT)).foreach { element =>
       withNode(element) { node =>
-        GrpcExtendOptionParser(node).parse(customDomainProperty => {
-          customDomainProperty.adopted(webapi.id + "/annotations")
+        GrpcExtendOptionParser(node).parse(customDomainProperty =>
           ctx.declarations += customDomainProperty.add(DeclaredElement())
-        })
+        )
       }
     }
   }
 
-  def parseServices(node: Node): Unit = {
+  private def parseServices(node: Node): Unit = {
     val webApi = doc.encodes.asInstanceOf[WebApi]
     val endPoints: Seq[EndPoint] = collect(node, Seq(TOP_LEVEL_DEF, SERVICE_DEF)).map { element =>
       withNode(element) { node =>
@@ -117,6 +116,10 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
       }
     }
     webApi.withEndPoints(endPoints)
+  }
+
+  private def loadSyntaxErrors(ast: AST): Unit = {
+    ast.getErrors.foreach(err => ctx.eh.violation(AntlrError, "", err.message, err.location))
   }
 
 }

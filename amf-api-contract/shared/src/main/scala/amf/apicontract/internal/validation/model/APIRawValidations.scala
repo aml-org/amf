@@ -1656,6 +1656,11 @@ object APIRawValidations extends CommonValidationDefinitions {
     override def validations(): Seq[AMFValidation] = result
   }
 
+  object GrpcValidations extends ProfileValidations {
+    private lazy val result                        = Seq()
+    override def validations(): Seq[AMFValidation] = result
+  }
+
   trait GenericValidations {
     def urlValidation(owlClass: ValueType, owlProperty: ValueType): AMFValidation =
       AMFValidation(

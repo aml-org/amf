@@ -1,0 +1,22 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto
+Profile: 
+Conforms: false
+Number of results: 2
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: File Not Found: amf-cli/shared/src/test/resources/validations/grpc/library.proto (No such file or directory)
+  Severity: Violation
+  Target: library.proto
+  Property: 
+  Range: [(8,7)-(8,22)]
+  Location: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'library.Some'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto#/declares/shape/.test.HelloRequest/property/property/some/unresolved
+  Property: 
+  Range: [(14,2)-(14,14)]
+  Location: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import.proto

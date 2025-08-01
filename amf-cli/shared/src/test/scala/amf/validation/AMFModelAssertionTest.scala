@@ -6,67 +6,25 @@ import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, Secur
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
-import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
-import amf.graphql.client.scala.GraphQLConfiguration
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{AVROSchemaType, BaseVirtualNode, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.testing.AMFModelTest
 import amf.testing.BaseUnitUtils._
-import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest
-import org.scalatest.Assertion
-import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YNodePlain, YScalar}
 
-import scala.concurrent.Future
-
 /** Tests for a specific field/value/node in an API. Uses [[amf.testing.BaseUnitUtils]] to quickly get nodes.
-  */
-class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
-
-  val basePath          = "file://amf-cli/shared/src/test/resources/validations"
-  val ro: RenderOptions = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
-  val graphqlConfig: AMFConfiguration        = GraphQLConfiguration.GraphQL().withRenderOptions(ro)
-  val ramlConfig: AMFConfiguration           = RAMLConfiguration.RAML10().withRenderOptions(ro)
-  val ramlClient: AMFBaseUnitClient          = ramlConfig.baseUnitClient()
-  val raml08Config: AMFConfiguration         = RAMLConfiguration.RAML08().withRenderOptions(ro)
-  val raml08Client: AMFBaseUnitClient        = raml08Config.baseUnitClient()
-  val oasConfig: AMFConfiguration            = OASConfiguration.OAS30().withRenderOptions(ro)
-  val oasClient: AMFBaseUnitClient           = oasConfig.baseUnitClient()
-  val oas31Config: AMFConfiguration          = OASConfiguration.OAS31().withRenderOptions(ro)
-  val oas31Client: AMFBaseUnitClient         = oas31Config.baseUnitClient()
-  val oas2Config: AMFConfiguration           = OASConfiguration.OAS20().withRenderOptions(ro)
-  val oas2Client: AMFBaseUnitClient          = oas2Config.baseUnitClient()
-  val oasComponentsConfig: AMFConfiguration  = OASConfiguration.OAS30Component().withRenderOptions(ro)
-  val oasComponentsClient: AMFBaseUnitClient = oasComponentsConfig.baseUnitClient()
-  val asyncConfig: AMFConfiguration          = AsyncAPIConfiguration.Async20().withRenderOptions(ro)
-  val asyncClient: AMFBaseUnitClient         = asyncConfig.baseUnitClient()
-  val avroConfig: AMFConfiguration           = AvroConfiguration.Avro().withRenderOptions(ro)
-  val avroClient: AMFBaseUnitClient          = avroConfig.baseUnitClient()
-
-  def modelAssertion(
-      path: String,
-      pipelineId: String = PipelineId.Default,
-      transform: Boolean = true
-  )(assertion: BaseUnit => Assertion): Future[Assertion] = {
-    val client = APIConfiguration.APIWithJsonSchema().baseUnitClient()
-    client.parse(path) flatMap { parseResult =>
-      if (!transform) assertion(parseResult.baseUnit)
-      else {
-        val specificClient  = configFor(parseResult.sourceSpec).baseUnitClient()
-        val transformResult = specificClient.transform(parseResult.baseUnit, pipelineId)
-        assertion(transformResult.baseUnit)
-      }
-    }
-  }
+ */
+class AMFModelAssertionTest extends AMFModelTest {
+  val basePath = "file://amf-cli/shared/src/test/resources/validations"
 
   test("RAML propagated parameters should be virtual and undefined parameters should be virtual and default") {
     modelAssertion(s"$basePath/raml/default-parameter.raml") { bu =>
@@ -415,8 +373,7 @@ class AMFModelAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionCont
     val ramlApi = s"$basePath/raml/uri-params/implicit-path-param.raml"
     modelAssertion(ramlApi, PipelineId.Editing) { bu =>
       val endPoint     = getEndpoints(bu).last
-      val paramField   = endPoint.fields.get(EndPointModel.Parameters).asInstanceOf[AmfArray]
-      val params       = paramField.values
+      val params       = endPoint.parameters
       val virtualParam = params.head
       virtualParam.annotations.isVirtual shouldBe true
 

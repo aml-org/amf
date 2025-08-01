@@ -1,10 +1,8 @@
 package amf.shapes.internal.spec.jsonldschema.parser
 
-import amf.core.client.common.validation.ValidationMode
-import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.remote.Mimes
-import amf.shapes.client.scala.ShapesConfiguration
+import amf.core.client.scala.model.domain.{Annotation, Shape}
 import amf.shapes.client.scala.model.domain.{AnyShape, SemanticContext}
+import amf.shapes.internal.annotations.SourceSchemaDef
 import amf.shapes.internal.spec.jsonldschema.parser.builder.JsonLDElementBuilder
 import org.yaml.model.YValue
 
@@ -51,4 +49,11 @@ abstract class JsonLDBaseElementParser[T <: JsonLDElementBuilder](node: YValue)(
       .conforms
   }
 
+}
+
+object JsonLDBaseElementParser {
+  def schemaDefAnnotations(shape: Option[Shape], ctx: JsonLDParserContext): Seq[Annotation] = shape match {
+    case Some(s) if ctx.options.isSourceSchemaDef => Seq(SourceSchemaDef(s))
+    case _                                        => Nil
+  }
 }
