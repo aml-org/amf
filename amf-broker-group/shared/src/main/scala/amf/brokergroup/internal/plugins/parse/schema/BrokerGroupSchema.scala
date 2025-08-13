@@ -7,11 +7,11 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
   override def schema: String =
     """{
       |  "$schema": "http://json-schema.org/draft-07/schema#",
-      |  "title": "Agent domain",
+      |  "title": "Broker Group",
       |  "type": "object",
       |  "required": [
       |    "schemaVersion",
-      |    "agents",
+      |    "brokers",
       |    "services"
       |  ],
       |  "properties": {
@@ -22,9 +22,9 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       |      "additionalProperties": false
       |    },
-      |    "agents": {
+      |    "brokers": {
       |      "type": "object",
-      |      "description": "The agents defined as part of this domain",
+      |      "description": "The brokers defined as part of this group",
       |      "patternProperties": {
       |        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
       |          "$ref": "#/definitions/Agent"
@@ -36,7 +36,8 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |            "default",
       |            "defaults",
       |            "system",
-      |            "local"
+      |            "local",
+      |            "null"
       |          ]
       |        }
       |      },
@@ -44,12 +45,12 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |    },
       |    "services": {
       |      "$ref": "#/definitions/Services",
-      |      "description": "The external services consumed by the agents in this domain"
+      |      "description": "The external services consumed by the brokers in this group"
       |    }
       |  },
       |  "additionalProperties": false,
       |  "definitions": {
-      |    "AgentSpec": {
+      |    "BrokerSpec": {
       |      "type": "object",
       |      "required": [
       |        "llm",
@@ -77,9 +78,14 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |          "description": "The maximum number of errors that the orchestrator will attempt to recover from before returning a failed status.",
       |          "default": 3
       |        },
+      |        "taskTimeoutMillis": {
+      |          "type": "integer",
+      |          "description": "A timeout (in millis) for how long should each orchestration task ",
+      |          "default": 60000
+      |        },
       |        "tools": {
       |          "type": "array",
-      |          "description": "The tools available to this agent",
+      |          "description": "The tools available to this broker",
       |          "items": {
       |            "type": "object",
       |            "properties": {
@@ -114,7 +120,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |        },
       |        "links": {
       |          "type": "array",
-      |          "description": "Defines which of the other agents defined in this domain can be orchestrated by this conductor",
+      |          "description": "Defines which of the other brokers or external agents can be orchestrated by this broker",
       |          "items": {
       |            "type": "object",
       |            "patternProperties": {
@@ -139,7 +145,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |          "$ref": "#/definitions/AgentCard"
       |        },
       |        "spec": {
-      |          "$ref": "#/definitions/AgentSpec"
+      |          "$ref": "#/definitions/BrokerSpec"
       |        }
       |      },
       |      "required": [
@@ -239,7 +245,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |    },
       |    "ExternalAgent": {
       |      "type": "object",
-      |      "description": "Defines an agent that exists outside of this domain",
+      |      "description": "Defines an agent that exists outside of this broker group",
       |      "properties": {
       |        "cardUrl": {
       |          "type": "string"
@@ -378,7 +384,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |    },
       |    "Services": {
       |      "type": "object",
-      |      "description": "The external services consumed by the agents in this domain",
+      |      "description": "The external services consumed by the brokers in this group",
       |      "required": [
       |        "llm-providers"
       |      ],
@@ -394,7 +400,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |        },
       |        "llm-providers": {
       |          "type": "object",
-      |          "description": "The LLMs available to the agents in this domain",
+      |          "description": "The LLMs available to the brokers in this group",
       |          "patternProperties": {
       |            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
       |              "$ref": "#/definitions/EinsteinLLM"
@@ -404,7 +410,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |        },
       |        "mcp-servers": {
       |          "type": "array",
-      |          "description": "The MCP servers available to the agents in this domain",
+      |          "description": "The MCP servers available to the brokers in this group",
       |          "items": {
       |            "type": "object",
       |            "patternProperties": {

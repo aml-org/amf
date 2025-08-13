@@ -1,24 +1,24 @@
 {
   "schemaVersion": "0.1.0-beta",
-  "agents": {
-    "google-maps-agent": {
+  "brokers": {
+    "weather-agent": {
       "card": {
         "protocolVersion": "0.2.9",
-        "name": "GeoSpatial Route Planner Agent",
-        "description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
-        "url": "${registry.url}/google-maps-agent",
+        "name": "Weather Agent",
+        "description": "Provides advanced weather forecasting, climate analysis, and real-time weather updates. This agent can predict weather conditions, analyze climate trends, and provide personalized weather reports.",
+        "url": "${registry.url}/weather-agent",
         "capabilities": {},
         "version": "1.0.0",
         "provider": {
           "organization": "Acme Inc.",
-          "url": "https://www.acme.com"
+          "url": "https://weather-agent.ch.anypoint.com"
         },
         "securitySchemes": {
           "anypointClientCredentials": {
             "type": "apiKey",
             "in": "header",
-            "name": "client_secret",
-            "description": "The client ID for Anypoint Platform authentication.\n"
+            "name": "clientSecret",
+            "description": "The client secret for Anypoint Platform authentication.\n"
           }
         },
         "defaultInputModes": [
@@ -30,27 +30,6 @@
           "image/png"
         ],
         "skills": [
-          {
-            "id": "exchange-rates",
-            "name": "Returns exchange rates for a given currency",
-            "description": "Calculate the exchange rates for a given currency.",
-            "examples": [
-              "What is the exchange rate for USD to EUR?",
-              "How much is 100 USD in EUR?"
-            ],
-            "inputModes": [
-              "application/json",
-              "text/plain"
-            ],
-            "outputModes": [
-              "application/json",
-              "application/vnd.geo+json",
-              "text/html"
-            ],
-            "tags": [
-              "exchange-rates"
-            ]
-          },
           {
             "id": "weather",
             "name": "Returns the weather for a given location",
@@ -69,7 +48,8 @@
               "text/html"
             ],
             "tags": [
-              "weather"
+              "weather",
+              "geolocation"
             ]
           }
         ]
@@ -77,42 +57,119 @@
       "spec": {
         "llm": "my-einstein",
         "instructions": [
-          "You're mission is helping people find the best route possible between two points. You will extract origin and destination",
-          "If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.",
-          "Help the user find the exchange rates for the currency they are using.",
-          "Check the weather in the areas involved in the route and show a warning if there are any weather alerts."
+          "You are a weather agent that provides current weather conditions and forecasts for specified locations.",
+          "If the user asks for weather in a specific location, return the current weather conditions.",
+          "If the user asks for a forecast, provide a 7-day weather forecast.",
+          "If the user asks for historical weather data, provide the weather conditions for the",
+          "Always return an answer in human format. Explaning the weather conditions in a way that is easy to understand."
         ],
-        "links": [
+        "tools": [
           {
-            "weather-agent": {}
-          },
+            "mcp": {
+              "server": "weather-mcp"
+            }
+          }
+        ]
+      }
+    },
+    "exchange-rate-agent": {
+      "card": {
+        "protocolVersion": "0.2.9",
+        "name": "Exchange Rate Agent",
+        "description": "Provides real-time exchange rate information and currency conversion services.",
+        "url": "${registry.url}/exchange-rate-agent",
+        "capabilities": {},
+        "version": "1.0.0",
+        "provider": {
+          "organization": "Acme Inc.",
+          "url": "https://weather-agent.ch.anypoint.com"
+        },
+        "securitySchemes": {
+          "anypointClientCredentials": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "clientSecret",
+            "description": "The client secret for Anypoint Platform authentication.            \n"
+          }
+        },
+        "defaultInputModes": [
+          "application/json",
+          "text/plain"
+        ],
+        "defaultOutputModes": [
+          "application/json",
+          "image/png"
+        ],
+        "skills": [
           {
-            "exchange-agent": {}
+            "id": "exchange",
+            "name": "Returns the exchange rate for a given currency pair",
+            "description": "Get the current exchange rate between two specified currencies.",
+            "examples": [
+              "What is the exchange rate from USD to EUR?",
+              "How much is 100 JPY in USD?"
+            ],
+            "inputModes": [
+              "application/json",
+              "text/plain"
+            ],
+            "outputModes": [
+              "application/json",
+              "application/vnd.geo+json",
+              "text/html"
+            ],
+            "tags": [
+              "exchange-rate"
+            ]
+          }
+        ]
+      },
+      "spec": {
+        "llm": "my-einstein",
+        "instructions": [
+          "You are an exchange rate agent that provides real-time exchange rate information and currency conversion services.",
+          "You should always show the exchange rate in a human-readable format.",
+          "If the user asks for the exchange rate between two currencies, return the current exchange rate with the total amount converted."
+        ],
+        "tools": [
+          {
+            "mcp": {
+              "server": "exchange-rate-mcp"
+            }
           }
         ]
       }
     }
   },
   "services": {
-    "external-agents": {
-      "weather-agent": {
-        "cardUrl": "${weather.cardUrl}/",
-        "authentication": {
-          "type": "apikey-client-credentials",
-          "clientId": "${weather.clientId}",
-          "clientSecret": "${weather.clientSecret}"
+    "mcp-servers": [
+      {
+        "weather-mcp": {
+          "url": "https://mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/",
+          "transport": {
+            "streamableHttp": {
+              "path": "/weather/mcp"
+            }
+          }
         }
       },
-      "exchange-agent": {
-        "cardUrl": "${exchange.cardUrl}/"
+      {
+        "exchange-rate-mcp": {
+          "url": "https://mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/",
+          "transport": {
+            "streamableHttp": {
+              "path": "/exchange_rate/mcp"
+            }
+          }
+        }
       }
-    },
+    ],
     "llm-providers": {
       "my-einstein": {
         "type": "einstein",
         "clientId": "${einstein.clientId}",
         "clientSecret": "${einstein.clientSecret}",
-        "baseUrl": "${saleforce.url}",
+        "baseUrl": "${einstein.url}",
         "modelName": "sfdc_ai__DefaultOpenAIGPT35Turbo",
         "probability": 0.3,
         "locale": "en_US"

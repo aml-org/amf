@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-AMF is adopting the agent specifications: MCP, Agent domain, and Agent 2 Agent (Agent Card).
+AMF is adopting the agent specifications: MCP, Broker Group, and Agent 2 Agent (Agent Card).
 
 AMF aims to remain as faithful as possible to the definitions of these specifications without making any changes to
 them. In the future, the goal is to host the specifications in a separate repository so they can evolve independently,

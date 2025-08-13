@@ -27,7 +27,7 @@ class BrokerGroupSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecution
     }
   }
 
-  test("Transformation (empty) should conforms") {
+  test("Transformation (empty) should conform") {
     val client = BrokerGroupConfiguration.BrokerGroup().baseUnitClient()
     for {
       parseResult <- client.parse(basePath + "valid/instance_1.json")

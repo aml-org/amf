@@ -26,7 +26,7 @@ class BrokerGroupSchemaEntryTest extends AsyncFunSuiteWithPlatformGlobalExecutio
     maybeVersion.get.version shouldBe "0.1"
   }
 
-  test("BrokerGroup without protocol entry") {
+  test("BrokerGroup without schema version") {
     val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "none.json"))
     maybeVersion.nonEmpty shouldBe false
   }
