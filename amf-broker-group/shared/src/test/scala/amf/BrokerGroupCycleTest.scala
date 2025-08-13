@@ -21,6 +21,11 @@ class BrokerGroupCycleTest extends FileAssertionTest {
   test("Render BrokerGroup YAML instance to JSON-LD") {
     cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
   }
+
+  test("Render BrokerGroup YAML instance 2 to JSON-LD") {
+    cycle("valid/instance_2.yaml", "valid/instance_2.yaml.jsonld")
+  }
+
   def cycle(source: String, golden: String): Future[Assertion] = {
     for {
       parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)

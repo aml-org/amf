@@ -29,6 +29,16 @@ class BrokerGroupValidationTest extends AsyncFunSuiteWithPlatformGlobalExecution
     }
   }
 
+  test("Valid BrokerGroup YAML Instance for laulima demo should conform") {
+    for {
+      parseResult      <- client.parse(basePath + "valid/instance_2.yaml")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
   test("Invalid BrokerGroup JSON Instance should not conform") {
     for {
       parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.json")
