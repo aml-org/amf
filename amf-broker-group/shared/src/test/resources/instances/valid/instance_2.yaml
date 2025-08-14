@@ -1,0 +1,155 @@
+schemaVersion: 0.1.0-beta
+brokers:
+  employee-onboarding-broker:
+    card:
+      protocolVersion: 0.2.9
+      name: Employee Onboarding Broker
+      description: This agent acts as a broker for employee onboarding, orchestrating the process by leveraging various available tools to ensure new employees are registered with all the systems required for their daily operations.
+      url: ${agentregistry.url}/employee-onboarding-conductor
+      provider:
+        organization: Mulesoft
+        url: https://www.mulesoft.com/
+      defaultInputModes:
+        - application/json
+        - text/plain
+      defaultOutputModes:
+        - application/json
+      skills:
+        - id: onboarding-agent
+          name: Onboarding Agent
+          description: This agent acts as a conductor, orchestrating the use of various specialized tools and agents (including MCP) to effectively manage employee onboarding.
+          examples:
+            - Onboard a new sales employee. Their name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'
+          inputModes:
+            - application/json
+            - text/plain
+          outputModes:
+            - application/json
+            - text/plain
+          tags: [ onboarding ]
+      capabilities:
+        streaming: false
+        pushNotifications: false
+        stateTransitionHistory: false
+        extensions: [ ]
+      version: 1.0.0
+    spec:
+      llm: my-einstein
+      instructions:
+        - |
+          You are the Employee Onboarding Orchestrator. Coordinate onboarding of a new employee across the systems needed for day-to-day work.
+          
+          ## The process for onboarding an employee is:
+          - Onboard in Workday :Create the new-hire record. Fetch the address using available tools and do not ask for it unless you are not sure how to get it. 
+          - Onboard in Salesforce: create the employee's CRM profile in Salesforce. 
+          - Since this a long running task send a slack update using tool ConductorSlackMcpServer.send_status_update to update the status of actions taken so far. It should be a human readable summary something like {
+          {
+            "message": "Workday and Salesforce onboarding completed and working on next steps....",
+            "contextId": "<fetch-the-context-id-from-input>"
+          }
+          - Request employee laptop: submit a laptop request in Zendesk. 
+          - Request employee badge: initiate the employee badge request. 
+          - IT system setup: provision the necessary IT systems for the employee.
+          
+          ## Final Response
+          - Return a plain-text human readable summary of the actions taken representing all the steps not just the final step. Format it using bullet points. DO NOT include any tool name in the summary.
+
+      tools:
+        - mcp:
+            server: talent-pool-mcp
+            allowList:
+              - TalentPoolMcpServer.match_email_to_address
+        - mcp:
+            server: slack-mcp
+            allowList:
+              - ConductorSlackMcpServer.send_status_update
+      links:
+        - workday-agent:
+            authentication:
+              oAuth2ClientCredentials:
+                policies:
+                  inbound:
+                    - tracing
+                    - guardrails
+                  outbound:
+                    - gaurdrails-outbound
+                    - traffic-agent
+        - badging-agent:
+            authentication:
+              oAuth2ClientCredentials:
+                policies:
+                  inbound:
+                    - tracing
+                    - guardrails
+                  outbound:
+                    - gaurdrails-outbound
+                    - traffic-agent
+        - salesforce-agent:
+            authentication:
+              oAuth2ClientCredentials:
+                policies:
+                  inbound:
+                    - tracing
+                    - guardrails
+                  outbound:
+                    - gaurdrails-outbound
+                    - traffic-agent
+        - zendesk-agent:
+            authentication:
+              oAuth2ClientCredentials:
+                policies:
+                  inbound:
+                    - tracing
+                    - guardrails
+                  outbound:
+                    - gaurdrails-outbound
+                    - traffic-agent
+        - it-conductor-agent:
+            authentication:
+              oAuth2ClientCredentials:
+                policies:
+                  inbound:
+                    - tracing
+                    - guardrails
+                  outbound:
+                    - gaurdrails-outbound
+                    - traffic-agent
+
+services:
+  external-agents:
+    workday-agent:
+      cardUrl: https://conductor-workday-a2a-agent-d70nm3.5sc6y6-3.usa-e2.cloudhub.io/workday-agent/
+    badging-agent:
+      cardUrl: https://conductor-badge-a2a-agent-d70nm3.5sc6y6-3.usa-e2.cloudhub.io/badging-agent/
+    salesforce-agent:
+      cardUrl: https://conductor-salesforce-a2a-agent-d70nm3.5sc6y6-3.usa-e2.cloudhub.io/salesforce-agent/
+    zendesk-agent:
+      cardUrl: https://conductor-zendesk-a2a-agent-d70nm3.5sc6y6-2.usa-e2.cloudhub.io/zendesk/
+    it-conductor-agent:
+      cardUrl: https://agent-domain-ingress-gw-inkbh1.paga8m.usa-w1.cloudhub.io/it-setup-conductor/
+  llm-providers:
+    my-einstein:
+      type: einstein
+      clientId: ${einstein.clientId}
+      clientSecret: ${einstein.clientSecret}
+      baseUrl: ${einstein.url}
+      modelName: sfdc_ai__DefaultOpenAIGPT35Turbo
+      probability: 0.3
+      locale: en_US
+  mcp-servers:
+    - talent-pool-mcp:
+        url: https://conductor-talent-pool-mcp-sapn7c.5sc6y6-4.usa-e2.cloudhub.io/
+        transport:
+          streamableHttp:
+            path: /mcp
+        tools:
+          allowList:
+            - TalentPoolMcpServer.match_email_to_address
+    - slack-mcp:
+        url: https://conductor-slack-mcp-server-d70nm3.5sc6y6-4.usa-e2.cloudhub.io/
+        transport:
+          streamableHttp:
+            path: /mcp
+        tools:
+          allowList:
+            - ConductorSlackMcpServer.send_status_update

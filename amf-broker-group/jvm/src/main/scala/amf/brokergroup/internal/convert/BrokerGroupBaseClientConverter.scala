@@ -1,0 +1,5 @@
+package amf.brokergroup.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait BrokerGroupBaseClientConverter extends BrokerGroupBaseConverter with ShapesBaseClientConverter
