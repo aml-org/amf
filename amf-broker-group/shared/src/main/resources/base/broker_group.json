@@ -71,10 +71,10 @@
           "description": "The maximum number of errors that the orchestrator will attempt to recover from before returning a failed status.",
           "default": 3
         },
-        "taskTimeoutMillis": {
+        "taskTimeoutSecs": {
           "type": "integer",
-          "description": "A timeout (in millis) for how long should each orchestration task ",
-          "default": 60000
+          "description": "A timeout (in seconds) for how long should each orchestration task ",
+          "default": 60
         },
         "tools": {
           "type": "array",
