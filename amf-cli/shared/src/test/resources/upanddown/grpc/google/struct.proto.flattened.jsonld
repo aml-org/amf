@@ -53,6 +53,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/customDomainProperties/_6/definedBy"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/source-map"
+        }
       ]
     },
     {
@@ -204,6 +209,17 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/customDomainProperties/data-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -279,6 +295,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/customDomainProperties/_6/data-node/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(95,1)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/customDomainProperties/data-node/source-map/lexical/element_0",
