@@ -248,16 +248,46 @@
         }
       }
     },
+    "OpenAILLM": {
+      "type": "object",
+      "description": "Configuration for using OpenAI as the reasoning LLM",
+      "required": [
+        "kind",
+        "modelName",
+        "apiKey"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "openai",
+          "description": "Discriminator to identify OpenAI LLM configuration"
+        },
+        "modelName": {
+          "type": "string",
+          "description": "The name of the language model to use"
+        },
+        "apiKey": {
+          "type": "string",
+          "description": "The API key for authenticating into OpenAI"
+        }
+      }
+    },
     "EinsteinLLM": {
       "type": "object",
       "description": "Configuration for using Salesforce Einstein as the reasoning LLM",
       "required": [
+        "kind",
         "clientId",
         "clientSecret",
         "baseUrl",
         "modelName"
       ],
       "properties": {
+        "kind": {
+          "type": "string",
+          "const": "einstein",
+          "description": "Discriminator to identify Einstein LLM configuration"
+        },
         "type": {
           "type": "string",
           "const": "einstein"
@@ -375,6 +405,16 @@
         }
       }
     },
+    "LLMProvider": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/EinsteinLLM"
+        },
+        {
+          "$ref": "#/$defs/OpenAILLM"
+        }
+      ]
+    },
     "Services": {
       "type": "object",
       "description": "The external services consumed by the brokers in this group",
@@ -396,7 +436,7 @@
           "description": "The LLMs available to the brokers in this group",
           "patternProperties": {
             "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-              "$ref": "#/$defs/EinsteinLLM"
+              "$ref": "#/$defs/LLMProvider"
             }
           },
           "additionalProperties": false

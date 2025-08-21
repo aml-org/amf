@@ -243,7 +243,7 @@
         "http://a.ml/vocabularies/core#my-einstein",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#type": "einstein",
+      "http://a.ml/vocabularies/core#kind": "einstein",
       "http://a.ml/vocabularies/core#clientId": "${einstein.clientId}",
       "http://a.ml/vocabularies/core#clientSecret": "${einstein.clientSecret}",
       "http://a.ml/vocabularies/core#baseUrl": "${einstein.url}",
@@ -424,7 +424,7 @@
       "http://a.ml/vocabularies/core#type": "apiKey",
       "http://a.ml/vocabularies/core#in": "header",
       "http://a.ml/vocabularies/core#name": "clientSecret",
-      "http://a.ml/vocabularies/core#description": "The client secret for Anypoint Platform authentication.            \n"
+      "http://a.ml/vocabularies/core#description": "The client secret for Anypoint Platform authentication.\n"
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/exchange-rate-agent/spec/tools/0/mcp",
