@@ -1209,6 +1209,29 @@
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/customDomainProperties/_3/definedBy"
           }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(68,1)]"
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ],
@@ -1263,7 +1286,30 @@
                 "@value": "library"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#endpoint": []
+            "http://a.ml/vocabularies/apiContract#endpoint": [],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/web-api/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/web-api/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/web-api"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(1,0)-(7,1)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document#declares": [

@@ -78,10 +78,10 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |          "description": "The maximum number of errors that the orchestrator will attempt to recover from before returning a failed status.",
       |          "default": 3
       |        },
-      |        "taskTimeoutMillis": {
+      |        "taskTimeoutSecs": {
       |          "type": "integer",
-      |          "description": "A timeout (in millis) for how long should each orchestration task ",
-      |          "default": 60000
+      |          "description": "A timeout (in seconds) for how long should each orchestration task ",
+      |          "default": 60
       |        },
       |        "tools": {
       |          "type": "array",
@@ -255,16 +255,46 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |        }
       |      }
       |    },
+      |    "OpenAILLM": {
+      |      "type": "object",
+      |      "description": "Configuration for using OpenAI as the reasoning LLM",
+      |      "required": [
+      |        "kind",
+      |        "modelName",
+      |        "apiKey"
+      |      ],
+      |      "properties": {
+      |        "kind": {
+      |          "type": "string",
+      |          "const": "openai",
+      |          "description": "Discriminator to identify OpenAI LLM configuration"
+      |        },
+      |        "modelName": {
+      |          "type": "string",
+      |          "description": "The name of the language model to use"
+      |        },
+      |        "apiKey": {
+      |          "type": "string",
+      |          "description": "The API key for authenticating into OpenAI"
+      |        }
+      |      }
+      |    },
       |    "EinsteinLLM": {
       |      "type": "object",
       |      "description": "Configuration for using Salesforce Einstein as the reasoning LLM",
       |      "required": [
+      |        "kind",
       |        "clientId",
       |        "clientSecret",
       |        "baseUrl",
       |        "modelName"
       |      ],
       |      "properties": {
+      |        "kind": {
+      |          "type": "string",
+      |          "const": "einstein",
+      |          "description": "Discriminator to identify Einstein LLM configuration"
+      |        },
       |        "type": {
       |          "type": "string",
       |          "const": "einstein"
@@ -382,6 +412,16 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |        }
       |      }
       |    },
+      |    "LLMProvider": {
+      |      "oneOf": [
+      |        {
+      |          "$ref": "#/definitions/EinsteinLLM"
+      |        },
+      |        {
+      |          "$ref": "#/definitions/OpenAILLM"
+      |        }
+      |      ]
+      |    },
       |    "Services": {
       |      "type": "object",
       |      "description": "The external services consumed by the brokers in this group",
@@ -403,7 +443,7 @@ object BrokerGroupSchema extends JsonSchemaBasedSpecSchema {
       |          "description": "The LLMs available to the brokers in this group",
       |          "patternProperties": {
       |            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-      |              "$ref": "#/definitions/EinsteinLLM"
+      |              "$ref": "#/definitions/LLMProvider"
       |            }
       |          },
       |          "additionalProperties": false

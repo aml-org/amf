@@ -89,7 +89,7 @@
             "type": "apiKey",
             "in": "header",
             "name": "clientSecret",
-            "description": "The client secret for Anypoint Platform authentication.            \n"
+            "description": "The client secret for Anypoint Platform authentication.\n"
           }
         },
         "defaultInputModes": [
@@ -166,7 +166,7 @@
     ],
     "llm-providers": {
       "my-einstein": {
-        "type": "einstein",
+        "kind": "einstein",
         "clientId": "${einstein.clientId}",
         "clientSecret": "${einstein.clientSecret}",
         "baseUrl": "${einstein.url}",

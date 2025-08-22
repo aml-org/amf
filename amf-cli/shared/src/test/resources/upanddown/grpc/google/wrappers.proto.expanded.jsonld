@@ -366,6 +366,29 @@
           {
             "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/wrappers.proto#/web-api/customDomainProperties/_6/definedBy"
           }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/wrappers.proto#/web-api/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/wrappers.proto#/web-api/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/wrappers.proto#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(41,0)-(123,1)]"
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ],

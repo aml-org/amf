@@ -116,7 +116,7 @@ services:
             path: /exchange_rate/mcp
   llm-providers:
     my-einstein:
-      type: einstein
+      kind: einstein
       clientId: ${einstein.clientId}
       clientSecret: ${einstein.clientSecret}
       baseUrl: ${einstein.url}
