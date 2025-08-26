@@ -29,7 +29,7 @@ abstract class JsonSchemaBasedSpecValidationPlugin extends BaseModelValidationPl
       schemaShape,
       profile
     )
-    Future.successful(ValidationResult(unit, report))
+    report.map(r => ValidationResult(unit, r))
   }
 
   override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(implicit

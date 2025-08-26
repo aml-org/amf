@@ -26,7 +26,7 @@ abstract class JsonSchemaBasedSpecBaseUnitClient private[amf] (
   override def getConfiguration: JsonSchemaBasedSpecConfiguration = configuration
 
   def syncValidate(baseUnit: BaseUnit): AMFValidationReport = {
-    JsonSchemaBasedSpecValidationHelper.validateInstance(
+    JsonSchemaBasedSpecValidationHelper.validateInstanceSync(
       baseUnit.asInstanceOf[JsonLDInstanceDocument],
       schemaShape,
       profile

@@ -1,18 +1,26 @@
 package amf.shapes.internal.validation.plugin
 
-import amf.core.client.common.validation.{ProfileName, ProfileNames, ValidationMode}
+import amf.core.client.common.validation.{ProfileName, ValidationMode}
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.datanode.DataNodeParser
+import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Mimes
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDObject
 import amf.shapes.internal.plugins.render.JsonLDInstanceRenderHelper
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.context.JsonLdSchemaContext
+
+import scala.concurrent.Future
 
 object JsonSchemaBasedSpecValidationHelper {
   private lazy val config = ShapesConfiguration.predefined()
 
-  def validateInstance(
+  def validateInstanceSync(
       instanceUnit: JsonLDInstanceDocument,
       schema: Shape,
       profile: ProfileName
@@ -25,7 +33,29 @@ object JsonSchemaBasedSpecValidationHelper {
       .syncValidate(content)
       .results
       .distinct
-    val report = AMFValidationReport(instanceUnit.location().getOrElse(""), profile, results)
+    val report = AMFValidationReport(getLocation(instanceUnit), profile, results)
     report
   }
+
+  def validateInstance(
+      instanceUnit: JsonLDInstanceDocument,
+      schema: Shape,
+      profile: ProfileName
+  ): Future[AMFValidationReport] = {
+    val fragment = createPayloadFragment(instanceUnit)
+    config
+      .elementClient()
+      .payloadValidatorFor(schema, Mimes.`application/yaml`, ValidationMode.StrictValidationMode)
+      .validate(fragment)
+  }
+
+  private def createPayloadFragment(unit: JsonLDInstanceDocument): PayloadFragment = {
+    val ctx      = JsonLdSchemaContext(ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
+    val encoded  = unit.encodes.head.asInstanceOf[JsonLDObject]
+    val ast      = JsonLDInstanceRenderHelper.renderAsYNode(encoded)
+    val dataNode = DataNodeParser(ast)(ctx).parse()
+    PayloadFragment(dataNode, Mimes.`application/yaml`).withLocation(getLocation(unit))
+  }
+
+  private def getLocation(unit: JsonLDInstanceDocument): String = unit.location().getOrElse("")
 }
