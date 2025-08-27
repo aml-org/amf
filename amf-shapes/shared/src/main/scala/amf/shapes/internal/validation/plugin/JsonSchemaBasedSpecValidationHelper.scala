@@ -1,6 +1,7 @@
 package amf.shapes.internal.validation.plugin
 
 import amf.core.client.common.validation.{ProfileName, ValidationMode}
+import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.Shape
@@ -17,10 +18,12 @@ import amf.shapes.internal.plugins.render.JsonLDInstanceRenderHelper
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.context.JsonLdSchemaContext
 import org.yaml.model.{YMap, YNode, YSequence}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object JsonSchemaBasedSpecValidationHelper {
-  private lazy val config = ShapesConfiguration.predefined()
+
+  private lazy val config =
+    ShapesConfiguration.predefined().withParsingOptions(ParsingOptions().withValidationLexicalInformation)
 
   def validateInstanceSync(
       instanceUnit: JsonLDInstanceDocument,
@@ -43,12 +46,13 @@ object JsonSchemaBasedSpecValidationHelper {
       instanceUnit: JsonLDInstanceDocument,
       schema: Shape,
       profile: ProfileName
-  ): Future[AMFValidationReport] = {
+  )(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val fragment = createPayloadFragment(instanceUnit)
     config
       .elementClient()
       .payloadValidatorFor(schema, Mimes.`application/yaml`, ValidationMode.StrictValidationMode)
       .validate(fragment)
+      .map(processReport(_, profile, instanceUnit))
   }
 
   private def createPayloadFragment(unit: JsonLDInstanceDocument): PayloadFragment = {
@@ -65,6 +69,10 @@ object JsonSchemaBasedSpecValidationHelper {
       case seq: YSequence => Some(YNode(seq))
       case _              => None
     }
+  }
+
+  private def processReport(report: AMFValidationReport, profile: ProfileName, instanceUnit: JsonLDInstanceDocument) = {
+    AMFValidationReport(getLocation(instanceUnit), profile, report.results.distinct)
   }
 
   private def getLocation(unit: JsonLDInstanceDocument): String = unit.location().getOrElse("")

@@ -141,7 +141,8 @@ class JvmShapePayloadValidator(
     })
   }
 
-  private def getMaxJsonYamlNestingDepth = configuration.maxJsonYamlDepth.getOrElse(DEFAULT_MAX_NESTING_LIMIT)
+  private def getMaxJsonYamlNestingDepth: Int  = configuration.maxJsonYamlDepth.getOrElse(DEFAULT_MAX_NESTING_LIMIT)
+  private def getLexicalConfiguration: Boolean = configuration.validationLexicalInformation
 
   private def withJsonExceptionCatching(jsonLoading: () => Object): Object = {
     try jsonLoading()
@@ -152,12 +153,13 @@ class JvmShapePayloadValidator(
   }
 
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
-    JvmJsonSchemaReportValidationProcessor(profileName, shape)
+    JvmJsonSchemaReportValidationProcessor(profileName, shape, getLexicalConfiguration)
 }
 
 case class JvmJsonSchemaReportValidationProcessor(
     override val profileName: ProfileName,
     shape: Shape,
+    shouldIncludeLexical: Boolean,
     override protected var intermediateResults: Seq[AMFValidationResult] = Seq()
 ) extends JsonSchemaReportValidationProcessor {
 
@@ -245,9 +247,8 @@ case class JvmJsonSchemaReportValidationProcessor(
   ): Seq[AMFValidationResult] = {
 
     val lexicalProvider: Option[LexicalProvider] = element match {
-      // TODO Should add here a check to do this only for JsonLdInstances
-      case Some(element) => Some(LexicalProvider(element))
-      case _             => None
+      case Some(element) if shouldIncludeLexical => Some(LexicalProvider(element))
+      case _                                     => None
     }
 
     var exceptionsStack: List[ValidationException] = List(validationException)
