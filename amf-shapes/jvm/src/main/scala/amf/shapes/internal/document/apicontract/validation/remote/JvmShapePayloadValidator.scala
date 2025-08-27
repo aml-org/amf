@@ -13,6 +13,7 @@ import amf.shapes.internal.document.apicontract.validation.json.{
   JSONTokenerHack,
   ScalarTokenerHack
 }
+import org.json.{JSONObject => OrgJSONObject}
 import amf.shapes.internal.validation.common.ValidationProcessor
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.{
@@ -243,6 +244,12 @@ case class JvmJsonSchemaReportValidationProcessor(
       element: Option[DomainElement]
   ): Seq[AMFValidationResult] = {
 
+    val lexicalProvider: Option[LexicalProvider] = element match {
+      // TODO Should add here a check to do this only for JsonLdInstances
+      case Some(element) => Some(LexicalProvider(element))
+      case _             => None
+    }
+
     var exceptionsStack: List[ValidationException] = List(validationException)
 
     var accumulator = Seq[AMFValidationResult]()
@@ -252,14 +259,18 @@ case class JvmJsonSchemaReportValidationProcessor(
       exceptionsStack = exceptionsStack.tail
 
       if (exception.getCausingExceptions.isEmpty) {
+        val jsonException    = exception.toJSON
+        val pointer          = getPointer(jsonException)
+        val message          = makeValidationMessage(jsonException, pointer)
+        val providedLocation = lexicalProvider.flatMap(_.findLocationInformation(pointer))
         accumulator = AMFValidationResult(
-          message = makeValidationMessage(exception),
+          message = message,
           level = SeverityLevels.VIOLATION,
           targetNode = element.map(_.id).getOrElse(""),
           targetProperty = element.map(_.id),
           validationId = ExampleValidationErrorSpecification.id,
-          position = element.flatMap(_.position()),
-          location = element.flatMap(_.location()),
+          position = providedLocation.map(_._1).orElse(element.flatMap(_.position())),
+          location = providedLocation.map(_._2).orElse(element.flatMap(_.location())),
           source = validationException
         ) +: accumulator
       } else {
@@ -269,13 +280,15 @@ case class JvmJsonSchemaReportValidationProcessor(
     accumulator
   }
 
-  private def makeValidationMessage(validationException: ValidationException): String = {
-    val json    = validationException.toJSON
-    var pointer = json.getString("pointerToViolation")
-    if (pointer.startsWith("#")) pointer = pointer.replaceFirst("#", "")
-    (pointer + " " + adjustMessage(json.getString("message"))).trim
-  }
+  private def makeValidationMessage(jsonException: OrgJSONObject, pointer: String): String =
+    (pointer + " " + adjustMessage(jsonException.getString("message"))).trim
 
   //  maintains compatibility with older validation messages after updating everit and org.json versions. (APIMF-2929)
   private def adjustMessage(msg: String): String = msg.replace("BigDecimal", "Double")
+
+  private def getPointer(jsonException: OrgJSONObject): String = {
+    val pointer = jsonException.getString("pointerToViolation")
+    if (pointer.startsWith("#")) pointer.replaceFirst("#", "")
+    else pointer
+  }
 }
