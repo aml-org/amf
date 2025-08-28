@@ -9666,6 +9666,10 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
+  export class ConfigurationAdapter  {
+    adapt(baseConfiguration: AMLConfiguration): AMFConfiguration;
+  }
+
   namespace org {
     namespace mulesoft {
       namespace common {

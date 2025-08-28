@@ -1,14 +1,16 @@
 package amf.apicontract.client.platform
 
+import amf.aml.client.platform.AMLConfiguration
 import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.apicontract.client.scala.{
   APIConfiguration => InternalAPIConfiguration,
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
+  AvroConfiguration => InternalAvroConfiguration,
   OASConfiguration => InternalOASConfiguration,
   RAMLConfiguration => InternalRAMLConfiguration,
   WebAPIConfiguration => InternalWebAPIConfiguration,
-  AvroConfiguration => InternalAvroConfiguration
+  ConfigurationAdapter => InternalConfigurationAdapter
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
@@ -227,4 +229,11 @@ object APIConfiguration {
 @JSExportTopLevel("AvroConfiguration")
 object AvroConfiguration {
   def Avro(): AMFConfiguration = InternalAvroConfiguration.Avro()
+}
+
+@JSExportAll
+@JSExportTopLevel("ConfigurationAdapter")
+object ConfigurationAdapter {
+  def adapt(baseConfiguration: AMLConfiguration): AMFConfiguration =
+    InternalConfigurationAdapter.adapt(baseConfiguration)
 }
