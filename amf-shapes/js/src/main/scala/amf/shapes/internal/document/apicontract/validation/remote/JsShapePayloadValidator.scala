@@ -87,24 +87,47 @@ class JsShapePayloadValidator(
   }
 
   private def asAmfResult(result: ValidationResult, fragment: Option[PayloadFragment]) = {
+
+    val shouldIncludeLexical = configuration.validationLexicalInformation
+
+    val lexicalProvider: Option[LexicalProvider] = fragment match {
+      case Some(element) if shouldIncludeLexical => Some(LexicalProvider(element.encodes))
+      case _                                     => None
+    }
+
+    val pointer          = getPointer(result)
+    val message          = makeValidationMessage(result, pointer)
+    val providedLocation = lexicalProvider.flatMap(_.findLocationInformation(sanitizePointer(pointer)))
+
     AMFValidationResult(
-      message = makeValidationMessage(result),
+      message = message,
       level = SeverityLevels.VIOLATION,
       targetNode = fragment.map(_.encodes.id).getOrElse(""),
       targetProperty = fragment.map(_.encodes.id),
       validationId = ExampleValidationErrorSpecification.id,
-      position = fragment.flatMap(_.encodes.position()),
-      location = fragment.flatMap(_.encodes.location()),
+      position = providedLocation.map(_._1).orElse(fragment.flatMap(_.encodes.position())),
+      location = providedLocation.map(_._2).orElse(fragment.flatMap(_.encodes.location())),
       source = result
     )
   }
 
-  private def makeValidationMessage(validationResult: ValidationResult): String = {
-    var pointer = validationResult.dataPath
-    if (pointer.startsWith(".")) pointer = pointer.replaceFirst("\\.", "")
+  private def makeValidationMessage(validationResult: ValidationResult, pointer: String): String =
     (pointer + " " + validationResult.message).trim
+
+  private def getPointer(validationResult: ValidationResult): String = {
+    val pointer = validationResult.dataPath
+    if (pointer.startsWith(".")) pointer.replaceFirst("\\.", "")
+    else pointer
   }
 
+  private def sanitizePointer(pointer: String): String = {
+    var sanitized = pointer
+    sanitized = sanitized.replaceAll("\\[", "/")
+    sanitized = sanitized.replaceAll("]", "/")
+    if (sanitized.nonEmpty && !sanitized.startsWith("/")) sanitized = "/" + sanitized
+    if (sanitized.endsWith("/")) sanitized = sanitized.dropRight(1)
+    sanitized
+  }
 }
 
 case class JsReportValidationProcessor(

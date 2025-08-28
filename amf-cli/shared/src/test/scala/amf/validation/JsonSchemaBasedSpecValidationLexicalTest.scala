@@ -1,18 +1,18 @@
-package amf
+package amf.validation
 
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.mcp.client.scala.{MCPBaseUnitClient, MCPConfiguration}
 import org.scalatest.matchers.should.Matchers
 
-// This suite is mean to test the lexical in general for JsonSchemaBasedSpecs. I choose to do it in MCP because is the easier one
-class MCPValidationLexicalTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
+class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-  private val basePath: String          = "file://amf-mcp/shared/src/test/resources/instances/invalid/lexical/"
+  // This suite is mean to test the lexical in general for JsonSchemaBasedSpecs. I choose to do it in MCP because is the easier one
+  private val basePath: String = "file://amf-mcp/shared/src/test/resources/instances/invalid/lexical/"
   private val client: MCPBaseUnitClient = MCPConfiguration.MCP().baseUnitClient()
 
   test("Invalid MCP with missing required property at root") {
     for {
-      parseResult      <- client.parse(basePath + "invalid-root-required.yaml")
+      parseResult <- client.parse(basePath + "invalid-root-required.yaml")
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       validationReport.conforms shouldBe false
@@ -25,7 +25,7 @@ class MCPValidationLexicalTest extends AsyncFunSuiteWithPlatformGlobalExecutionC
 
   test("Invalid MCP with missing required property at array") {
     for {
-      parseResult      <- client.parse(basePath + "invalid-array-required.yaml")
+      parseResult <- client.parse(basePath + "invalid-array-required.yaml")
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       validationReport.conforms shouldBe false
@@ -38,7 +38,7 @@ class MCPValidationLexicalTest extends AsyncFunSuiteWithPlatformGlobalExecutionC
 
   test("Invalid MCP with missing required inner property") {
     for {
-      parseResult      <- client.parse(basePath + "invalid-property-required.yaml")
+      parseResult <- client.parse(basePath + "invalid-property-required.yaml")
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       validationReport.conforms shouldBe false
@@ -51,7 +51,7 @@ class MCPValidationLexicalTest extends AsyncFunSuiteWithPlatformGlobalExecutionC
 
   test("Invalid MCP with invalid type") {
     for {
-      parseResult      <- client.parse(basePath + "invalid-type.yaml")
+      parseResult <- client.parse(basePath + "invalid-type.yaml")
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       validationReport.conforms shouldBe false
@@ -64,7 +64,7 @@ class MCPValidationLexicalTest extends AsyncFunSuiteWithPlatformGlobalExecutionC
 
   test("Invalid MCP with invalid additional property") {
     for {
-      parseResult      <- client.parse(basePath + "invalid-additional.yaml")
+      parseResult <- client.parse(basePath + "invalid-additional.yaml")
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       validationReport.conforms shouldBe false
