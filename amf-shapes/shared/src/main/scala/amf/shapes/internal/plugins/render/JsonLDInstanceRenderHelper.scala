@@ -9,7 +9,7 @@ object JsonLDInstanceRenderHelper {
 
   private lazy val config = JsonLDSchemaConfiguration.JsonLDSchema()
 
-  private def renderAsYNode(element: JsonLDObject): YNode = config.elementClient().renderElement(element)
+  def renderAsYNode(element: JsonLDObject): YNode = config.elementClient().renderElement(element)
 
   def renderToJson(element: JsonLDObject): String = JsonRender.render(renderAsYNode(element))
 
