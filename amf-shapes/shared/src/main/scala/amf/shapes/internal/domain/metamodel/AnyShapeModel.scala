@@ -3,11 +3,12 @@ package amf.shapes.internal.domain.metamodel
 import amf.core.client.scala.vocabulary.Namespace.{Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.avro.AvroFields
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
+import amf.shapes.internal.domain.metamodel.grpc.GrpcFields
 
 trait AnyShapeModel
     extends ShapeModel
@@ -15,7 +16,8 @@ trait AnyShapeModel
     with ExamplesField
     with DocumentationField
     with WithSemanticContext
-    with AvroFields {
+    with AvroFields
+    with GrpcFields {
 
   val XMLSerialization: Field = Field(
     XMLSerializerModel,
@@ -65,9 +67,6 @@ object AnyShapeModel extends AnyShapeModel {
       XMLSerialization,
       Comment,
       SchemaVersion,
-      Examples,
-      AvroNamespace,
-      Aliases,
-      Size
-    ) ++ ExternalSourceElementModel.fields
+      Examples
+    ) ++ AvroFields.fields ++ GrpcFields.fields ++ ExternalSourceElementModel.fields
 }
