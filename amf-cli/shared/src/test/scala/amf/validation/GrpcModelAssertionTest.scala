@@ -17,4 +17,15 @@ class GrpcModelAssertionTest extends AMFModelTest {
       userMessage.reservedValues.size shouldBe 9
     }
   }
+
+  test("valid reserved values in enum declaration") {
+    val api = s"$basePath/valid-reserved-enum.proto"
+    grpcClient.parse(api) flatMap { parseResult =>
+      parseResult.conforms shouldBe true
+      val bu                = parseResult.baseUnit
+      val parseDeclarations = getDeclarations(bu)
+      val accountStatusEnum = parseDeclarations.head.asInstanceOf[ScalarShape]
+      accountStatusEnum.reservedValues.size shouldBe 9
+    }
+  }
 }
