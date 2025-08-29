@@ -21,7 +21,8 @@ class GrpcParserTest extends GrpcFunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/grpc/"
 
   Seq(
-    "simple.proto"
+    "simple.proto",
+    "reserved.proto"
   ).foreach { protoFile =>
     multiGoldenTest(s"Can generate gRPC spec $protoFile", s"$protoFile.%s") { config =>
       cycle(

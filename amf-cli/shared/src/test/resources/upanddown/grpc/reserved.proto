@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package example.api.v1;
+
+message User {
+  // --- Field Number Reservation ---
+  // We are reserving the field number 2, and the range of numbers from 5 to 7.
+  // The compiler will throw an error if you try defining new fields with tags 2, 5, 6, or 7.
+  reserved 2;
+  reserved 3 to 4;
+  reserved 5, 6, 7 to 10;
+  reserved 20 to max;
+
+  // --- Field Name Reservation ---
+  // We are also reserving the field name "full_name".
+  // This prevents anyone from creating a new field with this exact name, even if it has a different field number.
+  reserved "full_name";
+  reserved "full", "name";
+
+  // Active fields
+  int64 id = 1;
+  int64 status = 11;
+}
+
+enum AccountStatus {
+  reserved 1;
+  reserved "PENDING_DELETION";
+  reserved 7 to 8;
+  reserved 2, 15, 9 to 11, 40 to max;
+  reserved "FOO", "BAR";
+
+  STATUS_ACTIVE = 0;
+  // STATUS_SUSPENDED = 1; // This value is now deprecated and reserved.
+  STATUS_ARCHIVED = 4;
+}
