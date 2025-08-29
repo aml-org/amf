@@ -35,7 +35,8 @@ trait AntlrASTParserHelper {
           find(n, nextName).flatMap {
             case nested: Node =>
               collectNodes(nested, names.tail)
-            case t: Terminal => throw new Exception(s"Reached terminal ${t.name} when collecting nodes with path: ${names.mkString(",")}")
+            case t: Terminal =>
+              throw new Exception(s"Reached terminal ${t.name} when collecting nodes with path: ${names.mkString(",")}")
           }
         case _ => Nil
       }
@@ -87,6 +88,16 @@ trait AntlrASTParserHelper {
       case _ =>
         f(None)
     }
+
+  def extractTerminalValue(astNode: ASTNode)(implicit ctx: ParserContext): Option[String] = astNode match {
+    case _: Node =>
+      withOptTerminal(astNode) {
+        case Some(t) => Some(t.value)
+        case _       => None
+      }
+    case Terminal(_, _, value) => Some(value)
+    case _                     => None
+  }
 
   def toAnnotations(elem: ASTNode): Annotations = {
     val lexInfo = LexicalInformation(elem.location.range)
