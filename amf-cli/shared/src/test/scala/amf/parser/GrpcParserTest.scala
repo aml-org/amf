@@ -20,15 +20,19 @@ trait GrpcFunSuiteCycleTests extends FunSuiteCycleTests {
 class GrpcParserTest extends GrpcFunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/grpc/"
 
-  multiGoldenTest("Can generate simple gRPC specs", "simple.%s") { config =>
-    cycle(
-      "simple.proto",
-      config.golden,
-      GrpcProtoHint,
-      AmfJsonHint,
-      renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
-      eh = Some(UnhandledErrorHandler)
-    )
+  Seq(
+    "simple.proto"
+  ).foreach { protoFile =>
+    multiGoldenTest(s"Can generate gRPC spec $protoFile", s"$protoFile.%s") { config =>
+      cycle(
+        protoFile,
+        config.golden,
+        GrpcProtoHint,
+        AmfJsonHint,
+        renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
+        eh = Some(UnhandledErrorHandler)
+      )
+    }
   }
 }
 
