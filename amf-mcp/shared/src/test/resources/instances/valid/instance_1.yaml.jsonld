@@ -11,11 +11,14 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Server",
+        "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "test-mcp-server",
       "http://a.ml/vocabularies/core#protocolVersion": "2024-11-05",
+      "http://a.ml/vocabularies/core#transport": {
+        "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport"
+      },
       "http://a.ml/vocabularies/core#capabilities": {
         "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities"
       },
@@ -41,6 +44,16 @@
       "http://a.ml/vocabularies/core#connectionStatus": "success"
     },
     {
+      "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
+        "http://anypoint.com/vocabs/mcp#Transport",
+        "http://a.ml/vocabularies/core#transport",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/mcp#kind": "streamableHttp"
+    },
+    {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities",
       "@type": [
         "http://a.ml/vocabularies/core#capabilities",
@@ -54,47 +67,47 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Tool",
+        "http://anypoint.com/vocabs/mcp#Tool",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "echo",
-      "http://a.ml/vocabularies/core#description": "Echo back the provided text",
-      "http://a.ml/vocabularies/core#inputSchema": {
+      "http://anypoint.com/vocabs/mcp#name": "echo",
+      "http://anypoint.com/vocabs/mcp#description": "Echo back the provided text",
+      "http://anypoint.com/vocabs/mcp#inputSchema": {
         "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema"
       }
     },
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Tool",
+        "http://anypoint.com/vocabs/mcp#Tool",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "add",
-      "http://a.ml/vocabularies/core#description": "Add two numbers together",
-      "http://a.ml/vocabularies/core#inputSchema": {
+      "http://anypoint.com/vocabs/mcp#name": "add",
+      "http://anypoint.com/vocabs/mcp#description": "Add two numbers together",
+      "http://anypoint.com/vocabs/mcp#inputSchema": {
         "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema"
       }
     },
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/resources/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Resource",
+        "http://anypoint.com/vocabs/mcp#Resource",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#uri": "test://example",
-      "http://a.ml/vocabularies/core#name": "Example Resource",
-      "http://a.ml/vocabularies/core#description": "A test resource",
-      "http://a.ml/vocabularies/core#mimeType": "text/plain"
+      "http://anypoint.com/vocabs/mcp#uri": "test://example",
+      "http://anypoint.com/vocabs/mcp#name": "Example Resource",
+      "http://anypoint.com/vocabs/mcp#description": "A test resource",
+      "http://anypoint.com/vocabs/mcp#mimeType": "text/plain"
     },
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Prompt",
+        "http://anypoint.com/vocabs/mcp#Prompt",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "greeting",
-      "http://a.ml/vocabularies/core#description": "A friendly greeting prompt",
-      "http://a.ml/vocabularies/core#arguments": [
+      "http://anypoint.com/vocabs/mcp#name": "greeting",
+      "http://anypoint.com/vocabs/mcp#description": "A friendly greeting prompt",
+      "http://anypoint.com/vocabs/mcp#arguments": [
         {
           "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0/arguments/0"
         }
@@ -103,28 +116,28 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#ToolInputSchema",
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#type": "object",
-      "http://a.ml/vocabularies/core#properties": {
+      "http://anypoint.com/vocabs/mcp#type": "object",
+      "http://anypoint.com/vocabs/mcp#properties": {
         "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties"
       },
-      "http://a.ml/vocabularies/core#required": [
+      "http://anypoint.com/vocabs/mcp#required": [
         "text"
       ]
     },
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#ToolInputSchema",
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#type": "object",
-      "http://a.ml/vocabularies/core#properties": {
+      "http://anypoint.com/vocabs/mcp#type": "object",
+      "http://anypoint.com/vocabs/mcp#properties": {
         "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties"
       },
-      "http://a.ml/vocabularies/core#required": [
+      "http://anypoint.com/vocabs/mcp#required": [
         "a",
         "b"
       ]
@@ -132,12 +145,12 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0/arguments/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#PromptArgument",
+        "http://anypoint.com/vocabs/mcp#PromptArgument",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "name",
-      "http://a.ml/vocabularies/core#description": "Name to greet",
-      "http://a.ml/vocabularies/core#required": true
+      "http://anypoint.com/vocabs/mcp#name": "name",
+      "http://anypoint.com/vocabs/mcp#description": "Name to greet",
+      "http://anypoint.com/vocabs/mcp#required": true
     },
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties",
