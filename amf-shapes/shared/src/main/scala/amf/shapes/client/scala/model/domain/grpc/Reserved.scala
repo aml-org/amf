@@ -1,15 +1,16 @@
 package amf.shapes.client.scala.model.domain.grpc
 
-import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.model.{IntField, StrField}
+import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.grpc.ReservedModel
 import amf.shapes.internal.domain.metamodel.grpc.ReservedModel._
 
 case class Reserved private[amf] (fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def range: Option[Range] = fields.field(ReservedModel.Range)
-  def fieldName: Shape     = fields.field(FieldName)
-  def number: Shape        = fields.field(Number)
+  def range: Range        = fields.field(ReservedModel.Range)
+  def fieldName: StrField = fields.field(FieldName)
+  def number: IntField    = fields.field(Number)
 
   def withRange(range: Range): this.type          = set(ReservedModel.Range, range)
   def withFieldName(fieldName: String): this.type = set(FieldName, fieldName)

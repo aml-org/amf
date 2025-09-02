@@ -2,13 +2,12 @@ package amf.grpc.internal.spec.parser.domain
 
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper.MAX_VALUE
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.grpc._
 import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 case class GrpcReservedValuesParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
-  private val MAX_VALUE = 536870911
-
   def parse(setterFn: Seq[Reserved] => Unit): Seq[Reserved] = {
     val reservedValues = parseReserved()
     setterFn(reservedValues)

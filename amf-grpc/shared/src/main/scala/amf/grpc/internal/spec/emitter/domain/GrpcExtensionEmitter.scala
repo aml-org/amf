@@ -15,7 +15,7 @@ case class GrpcExtensionEmitter(
 
   def emit(): Unit = {
     builder.fixed { f =>
-      f += (s"extend ${emitDomain(domain)} {")
+      f += s"extend ${emitDomain(domain)} {"
       f.obj { o =>
         o.list { l =>
           extensions.foreach { customDomainProperty =>

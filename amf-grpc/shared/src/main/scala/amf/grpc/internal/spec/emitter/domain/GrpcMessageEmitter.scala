@@ -10,7 +10,7 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
     extends GrpcEmitter {
   def emit(): Unit = {
     builder.fixed { f =>
-      f += (s"message ${messageName} {", messageNamePos)
+      f += (s"message $messageName {", messageNamePos)
       f.obj { o =>
         o.list { l =>
           emitProperties(l)
@@ -21,10 +21,11 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
           ctx.nestedEnums(shape).foreach { nested =>
             GrpcEnumEmitter(nested, l, ctx).emit()
           }
+          GrpcReservedEmitter(shape, l, ctx).emit()
           emitOneOf(l)
         }
       }
-      f += ("}")
+      f += "}"
     }
 
   }
