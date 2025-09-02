@@ -9667,7 +9667,7 @@ declare module "amf-client-js" {
   }
 
   export class ConfigurationAdapter  {
-    adapt(baseConfiguration: AMLConfiguration): AMFConfiguration;
+    static adapt(baseConfiguration: AMFGraphConfiguration): AMFConfiguration;
   }
 
   namespace org {
