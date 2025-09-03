@@ -14,7 +14,7 @@
   "properties": {
     "ansVersion": {
       "type": "string",
-      "const": "0.1.0-beta",
+      "const": "1.0.0",
       "description": "The schema version for this file",
       "additionalProperties": false
     },
@@ -459,7 +459,7 @@
       "required": [
         "kind",
         "modelName",
-        "apiKey"
+        "authentication"
       ],
       "properties": {
         "kind": {
@@ -471,9 +471,17 @@
           "type": "string",
           "description": "The name of the language model to use"
         },
-        "apiKey": {
-          "type": "string",
-          "description": "The API key for authenticating into OpenAI"
+        "authentication": {
+          "type": "object",
+          "properties": {
+            "apiKey": {
+              "type": "string",
+              "description": "The API key for authenticating into OpenAI"
+            }
+          },
+          "required": [
+            "apiKey"
+          ]
         }
       }
     },
@@ -555,12 +563,12 @@
       "additionalProperties": false
     },
     "ConnectionElement": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/AgentConnection"
-        },
+      "oneOf": [
         {
           "$ref": "#/definitions/LLMConnection"
+        },
+        {
+          "$ref": "#/definitions/AgentConnection"
         },
         {
           "$ref": "#/definitions/MCPServerConnection"
@@ -576,6 +584,18 @@
         }
       },
       "additionalProperties": false
+    },
+    "ConnectionRef": {
+      "type": "object",
+      "description": "The reference to a connection",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
     },
     "AgentEntity": {
       "@context": {
@@ -611,6 +631,9 @@
                 "properties": {
                   "agentRef": {
                     "$ref": "#/definitions/RegistryRef"
+                  },
+                  "connectionRef": {
+                    "$ref": "#/definitions/ConnectionRef"
                   }
                 },
                 "required": [
@@ -626,6 +649,9 @@
                 "properties": {
                   "mcpRef": {
                     "$ref": "#/definitions/RegistryRef"
+                  },
+                  "connectionRef": {
+                    "$ref": "#/definitions/ConnectionRef"
                   }
                 },
                 "required": [
