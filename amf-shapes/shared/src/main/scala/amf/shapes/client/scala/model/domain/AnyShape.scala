@@ -4,6 +4,7 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.model.domain.grpc.GrpcShapeFields
 import amf.shapes.internal.annotations.{AVROSchemaType, InlineDefinition, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.domain.metamodel.AnyShapeModel._
@@ -16,7 +17,8 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
     with InheritanceChain
     with DocumentedElement
     with ExemplifiedDomainElement
-    with AvroShapeFields {
+    with AvroShapeFields
+    with GrpcShapeFields {
 
   // This is used in ShapeNormalization to know if a Shape should go through the AnyShapeAdjuster
   private[amf] val isConcreteShape: Boolean = false

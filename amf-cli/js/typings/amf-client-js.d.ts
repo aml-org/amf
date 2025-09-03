@@ -7093,6 +7093,63 @@ declare module "amf-client-js" {
 
     withXone(subShapes: Array<Shape>): this;
   }
+  export class Reserved implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    number: number;
+    fieldName: string;
+    range: ReservedRange;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withNumber(number: number): this;
+
+    withFieldName(fieldName: string): this;
+
+    withRange(range: ReservedRange): this;
+  }
+  export class ReservedRange implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    from: number;
+    to: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withFrom(from: number): this;
+
+    withTo(to: number): this;
+  }
   export class PropertyShapePath implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;

@@ -38,4 +38,9 @@ trait AvroFields {
         "(AVRO) an integer specifying the number of bytes per value"
       )
     )
+
+}
+
+object AvroFields extends AvroFields {
+  val fields = Seq(AvroNamespace, Aliases, Size)
 }

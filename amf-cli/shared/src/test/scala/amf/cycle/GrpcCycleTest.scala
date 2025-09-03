@@ -21,4 +21,8 @@ class GrpcCycleTest extends FunSuiteCycleTests {
   test("Can cycle through a simple gRPC API") {
     cycle("simple/api.proto", "simple/dumped.proto", GrpcProtoHint, GrpcProtoHint)
   }
+
+  test("GRPC reserved keyword emission") {
+    cycle("reserved/api.proto", "reserved/dumped.proto", GrpcProtoHint, GrpcProtoHint)
+  }
 }

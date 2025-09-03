@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package example.api.v1;
+message User {
+  int64 id = 1;
+  int64 status = 11;
+  reserved "full";
+  reserved "name";
+  reserved "full_name";
+  reserved 20 to max;
+  reserved 5;
+  reserved 6;
+  reserved 7 to 10;
+  reserved 3 to 4;
+  reserved 2;
+}
+enum AccountStatus {
+  reserved "FOO";
+  reserved "BAR";
+  reserved 2;
+  reserved 15;
+  reserved 9 to 11;
+  reserved 40 to max;
+  reserved 7 to 8;
+  reserved "PENDING_DELETION";
+  reserved 1;
+  STATUS_ACTIVE = 0;
+  STATUS_ARCHIVED = 4;
+}
