@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class ReservedRange(override private[amf] val _internal: InternalRange) extends DomainElement {
 
-  @JSExportTopLevel("Range")
+  @JSExportTopLevel("ReservedRange")
   def this() = this(InternalRange())
 
   def from: IntField = _internal.from

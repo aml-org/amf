@@ -7099,6 +7099,9 @@ declare module "amf-client-js" {
     id: string;
     isExternalLink: BoolField;
     position: Range;
+    number: number;
+    fieldName: string;
+    range: ReservedRange;
 
     constructor();
 
@@ -7114,13 +7117,20 @@ declare module "amf-client-js" {
 
     withIsExternalLink(isExternalLink: boolean): DomainElement;
 
+    withNumber(number: number): this;
+
+    withFieldName(fieldName: string): this;
+
+    withRange(range: ReservedRange): this;
   }
-  export class Range implements DomainElement {
+  export class ReservedRange implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
     extendsNode: Array<DomainElement>;
     id: string;
     isExternalLink: BoolField;
     position: Range;
+    from: number;
+    to: number;
 
     constructor();
 
@@ -7136,6 +7146,9 @@ declare module "amf-client-js" {
 
     withIsExternalLink(isExternalLink: boolean): DomainElement;
 
+    withFrom(from: number): this;
+
+    withTo(to: number): this;
   }
   export class PropertyShapePath implements DomainElement {
     customDomainProperties: Array<DomainExtension>;

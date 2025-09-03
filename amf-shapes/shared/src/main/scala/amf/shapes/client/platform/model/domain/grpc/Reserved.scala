@@ -12,8 +12,8 @@ case class Reserved(override private[amf] val _internal: InternalReserved) exten
   @JSExportTopLevel("Reserved")
   def this() = this(InternalReserved())
 
-  def number: IntField = _internal.number
-  def fieldName: StrField = _internal.fieldName
+  def number: IntField     = _internal.number
+  def fieldName: StrField  = _internal.fieldName
   def range: ReservedRange = _internal.range
 
   def withNumber(number: Int): this.type = {
@@ -23,6 +23,11 @@ case class Reserved(override private[amf] val _internal: InternalReserved) exten
 
   def withFieldName(fieldName: String): this.type = {
     _internal.withFieldName(fieldName)
+    this
+  }
+
+  def withRange(range: ReservedRange): this.type = {
+    _internal.withRange(range)
     this
   }
 }
