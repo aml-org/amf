@@ -8,11 +8,11 @@ import amf.shapes.internal.domain.metamodel.grpc.ReservedModel._
 
 case class Reserved private[amf] (fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def range: Range        = fields.field(ReservedModel.Range)
-  def fieldName: StrField = fields.field(FieldName)
-  def number: IntField    = fields.field(Number)
+  def range: ReservedRange = fields.field(ReservedModel.Range)
+  def fieldName: StrField  = fields.field(FieldName)
+  def number: IntField     = fields.field(Number)
 
-  def withRange(range: Range): this.type          = set(ReservedModel.Range, range)
+  def withRange(range: ReservedRange): this.type  = set(ReservedModel.Range, range)
   def withFieldName(fieldName: String): this.type = set(FieldName, fieldName)
   def withNumber(number: Int): this.type          = set(Number, number)
 

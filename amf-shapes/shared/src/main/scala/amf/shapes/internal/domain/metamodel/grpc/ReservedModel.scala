@@ -5,12 +5,12 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Int, Str}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.client.scala.model.domain.grpc.Reserved
 
 trait ReservedModel extends DomainElementModel {
 
   val Range: Field = Field(
-    RangeModel,
+    ReservedRangeModel,
     Shapes + "range",
     ModelDoc(ModelVocabularies.Shapes, "range", "(GRPC) range of values to be reserved")
   )
@@ -28,9 +28,9 @@ trait ReservedModel extends DomainElementModel {
   )
 
   override val `type`: List[ValueType] =
-    List(Shapes + "ReservedShape") ++ DomainElementModel.`type`
+    List(Shapes + "Reserved") ++ DomainElementModel.`type`
 
-  override def modelInstance: AnyShape = AnyShape()
+  override def modelInstance: Reserved = Reserved()
 }
 
 object ReservedModel extends ReservedModel {

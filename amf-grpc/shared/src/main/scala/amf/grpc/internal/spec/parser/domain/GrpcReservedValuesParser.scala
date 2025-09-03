@@ -35,8 +35,8 @@ case class GrpcReservedValuesParser(ast: Node)(implicit ctx: GrpcWebApiContext) 
     val reserved = Reserved(toAnnotations(range))
     numbers match {
       case Seq(number) if range.children.size == 1 => reserved.withNumber(number)
-      case Seq(minToMax) => reserved.withRange(Range(minToMax, MAX_VALUE, toAnnotations(range)))
-      case Seq(min, max) => reserved.withRange(Range(min, max, toAnnotations(range)))
+      case Seq(minToMax) => reserved.withRange(ReservedRange(minToMax, MAX_VALUE, toAnnotations(range)))
+      case Seq(min, max) => reserved.withRange(ReservedRange(min, max, toAnnotations(range)))
       case _             => reserved // return empty reserved as fallback
     }
   }

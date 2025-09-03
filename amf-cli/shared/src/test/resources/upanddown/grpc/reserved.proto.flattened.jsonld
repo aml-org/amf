@@ -212,7 +212,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fieldName": "full",
@@ -225,7 +225,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_1",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fieldName": "name",
@@ -238,7 +238,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_2",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fieldName": "full_name",
@@ -251,11 +251,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -266,7 +266,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_4",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#number": 5,
@@ -279,7 +279,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_5",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#number": 6,
@@ -292,11 +292,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -307,11 +307,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -322,7 +322,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_8",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#number": 2,
@@ -384,7 +384,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fieldName": "FOO",
@@ -397,7 +397,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_9",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fieldName": "BAR",
@@ -410,7 +410,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_10",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#number": 2,
@@ -423,7 +423,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_11",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#number": 15,
@@ -436,11 +436,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -451,11 +451,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -466,11 +466,11 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -481,7 +481,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_15",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fieldName": "PENDING_DELETION",
@@ -494,7 +494,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_16",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ReservedShape",
+        "http://a.ml/vocabularies/shapes#Reserved",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#number": 1,
@@ -618,16 +618,16 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range",
       "@type": [
-        "http://a.ml/vocabularies/shapes#Range",
+        "http://a.ml/vocabularies/shapes#ReservedRange",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#from": 20,
       "http://a.ml/vocabularies/shapes#to": 536870911,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range/source-map"
         }
       ]
     },
@@ -665,16 +665,16 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range",
       "@type": [
-        "http://a.ml/vocabularies/shapes#Range",
+        "http://a.ml/vocabularies/shapes#ReservedRange",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#from": 7,
       "http://a.ml/vocabularies/shapes#to": 10,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range/source-map"
         }
       ]
     },
@@ -690,16 +690,16 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range",
       "@type": [
-        "http://a.ml/vocabularies/shapes#Range",
+        "http://a.ml/vocabularies/shapes#ReservedRange",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#from": 3,
       "http://a.ml/vocabularies/shapes#to": 4,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range/source-map"
         }
       ]
     },
@@ -851,16 +851,16 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range",
       "@type": [
-        "http://a.ml/vocabularies/shapes#Range",
+        "http://a.ml/vocabularies/shapes#ReservedRange",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#from": 9,
       "http://a.ml/vocabularies/shapes#to": 11,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range/source-map"
         }
       ]
     },
@@ -876,16 +876,16 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range",
       "@type": [
-        "http://a.ml/vocabularies/shapes#Range",
+        "http://a.ml/vocabularies/shapes#ReservedRange",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#from": 40,
       "http://a.ml/vocabularies/shapes#to": 536870911,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range/source-map"
         }
       ]
     },
@@ -901,16 +901,16 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range",
       "@type": [
-        "http://a.ml/vocabularies/shapes#Range",
+        "http://a.ml/vocabularies/shapes#ReservedRange",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#from": 7,
       "http://a.ml/vocabularies/shapes#to": 8,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range/source-map"
         }
       ]
     },
@@ -1005,13 +1005,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,11)-(17,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range/source-map/lexical/element_0"
         }
       ]
     },
@@ -1031,13 +1031,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,14)-(11,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range/source-map/lexical/element_0"
         }
       ]
     },
@@ -1047,13 +1047,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,17)-(11,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range/source-map/lexical/element_0"
         }
       ]
     },
@@ -1137,13 +1137,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,14)-(29,16)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range/source-map/lexical/element_0"
         }
       ]
     },
@@ -1153,13 +1153,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,18)-(29,25)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range/source-map/lexical/element_0"
         }
       ]
     },
@@ -1169,13 +1169,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,27)-(29,36)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range/source-map/lexical/element_0"
         }
       ]
     },
@@ -1205,18 +1205,18 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,2)-(22,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_3/reserved-range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,11)-(12,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_6/reserved-range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,17)-(11,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/reservedValues/reserved_7/reserved-range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,11)-(10,17)]"
     },
     {
@@ -1240,18 +1240,18 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,2)-(34,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_12/reserved-range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,18)-(29,25)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_13/reserved-range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,27)-(29,36)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/range",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/reservedValues/reserved_14/reserved-range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,11)-(28,17)]"
     }
   ]
