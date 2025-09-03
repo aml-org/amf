@@ -17,14 +17,14 @@ class BrokerGroupSchemaEntryTest extends AsyncFunSuiteWithPlatformGlobalExecutio
   test("BrokerGroup with valid ansVersion") {
     val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "valid.json"))
     maybeVersion.nonEmpty shouldBe true
-    maybeVersion.get.version shouldBe "0.1.0-beta"
+    maybeVersion.get.version shouldBe "1.0.0"
   }
 
   // Given that the versions are still not fixed, we are not validating it in the entry parser. It will be validated with the schema validation
   test("BrokerGroup with other ansVersion") {
     val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "other.json"))
     maybeVersion.nonEmpty shouldBe true
-    maybeVersion.get.version shouldBe "1.0.0"
+    maybeVersion.get.version shouldBe "1.1.0"
   }
 
   test("BrokerGroup without schema version") {
