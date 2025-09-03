@@ -14,16 +14,17 @@ class BrokerGroupSchemaEntryTest extends AsyncFunSuiteWithPlatformGlobalExecutio
 
   private val basePath: String = "amf-broker-group/shared/src/test/resources/instances/entry/"
 
-  test("BrokerGroup with string schemaVersion") {
-    val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "any-string.json"))
+  test("BrokerGroup with valid ansVersion") {
+    val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "valid.json"))
     maybeVersion.nonEmpty shouldBe true
     maybeVersion.get.version shouldBe "0.1.0-beta"
   }
 
-  test("BrokerGroup with number schemaVersion") {
-    val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "any-number.json"))
+  // Given that the versions are still not fixed, we are not validating it in the entry parser. It will be validated with the schema validation
+  test("BrokerGroup with other ansVersion") {
+    val maybeVersion = BrokerGroupSchemaVersionEntry.apply(getRoot(basePath + "other.json"))
     maybeVersion.nonEmpty shouldBe true
-    maybeVersion.get.version shouldBe "0.1"
+    maybeVersion.get.version shouldBe "1.0.0"
   }
 
   test("BrokerGroup without schema version") {

@@ -1,5 +1,7 @@
 name: test-mcp-server
 protocolVersion: '2024-11-05'
+transport:
+  kind: streamableHttp
 capabilities:
   tools: true
   resources: true

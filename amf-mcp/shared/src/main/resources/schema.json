@@ -1,15 +1,174 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "@context": {
-    "mcp": "https://modelcontextprotocol.io/vocab#",
-    "@type": "mcp:Server"
-  },
   "title": "MCP Asset Schema",
+  "$ref": "#/definitions/MCPServer",
   "definitions": {
+    "@context": {
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Server"
+      ]
+    },
+    "MCPServer": {
+      "type": "object",
+      "required": [
+        "transport"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "A human-readable description of the server."
+        },
+        "protocolVersion": {
+          "type": "string",
+          "enum": [
+            "2024-11-05",
+            "2025-03-26"
+          ],
+          "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
+        },
+        "introspectedAt": {
+          "type": "string",
+          "description": "Timestamp when the introspection was performed"
+        },
+        "connectionStatus": {
+          "type": "string",
+          "description": "Status of the connection to the MCP server",
+          "enum": [
+            "success",
+            "failed",
+            "error"
+          ]
+        },
+        "transport": {
+          "$ref": "#/definitions/MCPTransport",
+          "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
+        },
+        "capabilities": {
+          "type": "object",
+          "description": "Boolean flags indicating which capabilities the server supports",
+          "required": [
+            "tools",
+            "resources",
+            "prompts",
+            "logging"
+          ],
+          "properties": {
+            "tools": {
+              "type": "boolean",
+              "description": "Whether the server supports tools"
+            },
+            "resources": {
+              "type": "boolean",
+              "description": "Whether the server supports resources"
+            },
+            "prompts": {
+              "type": "boolean",
+              "description": "Whether the server supports prompts"
+            },
+            "logging": {
+              "type": "boolean",
+              "description": "Whether the server supports logging"
+            }
+          },
+          "additionalProperties": false
+        },
+        "logging": {
+          "type": "object",
+          "properties": {},
+          "description": "Present if the server supports sending log messages to the client.",
+          "additionalProperties": true
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tool"
+          },
+          "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+        },
+        "prompts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prompt"
+          },
+          "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+        },
+        "additionalProperties": false
+      }
+    },
+    "SseTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#SseTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/mcp#"
+      },
+      "required": [
+        "kind",
+        "ssePath"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "sse"
+        },
+        "ssePath": {
+          "type": "string",
+          "description": "Path to the SSE endpoint"
+        },
+        "messagesPath": {
+          "type": "string",
+          "description": "Path to the messages endpoint"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StreamableHttpTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#StreamableHttpTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "streamableHttp"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the mcp endpoint"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MCPTransport": {
+      "type": "object",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SseTransport"
+        },
+        {
+          "$ref": "#/definitions/StreamableHttpTransport"
+        }
+      ]
+    },
     "Tool": {
       "@context": {
-        "mcp": "https://modelcontextprotocol.io/vocab#",
-        "@type": "mcp:Tool"
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Tool"
+        ]
       },
       "description": "Definition for a tool the client can call.",
       "properties": {
@@ -23,8 +182,9 @@
         },
         "inputSchema": {
           "@context": {
-            "mcp": "https://modelcontextprotocol.io/vocab#",
-            "@type": "mcp:ToolInputSchema"
+            "@type": [
+              "http://anypoint.com/vocabs/mcp#ToolInputSchema"
+            ]
           },
           "description": "A JSON Schema object defining the expected parameters for the tool.",
           "properties": {
@@ -91,8 +251,9 @@
     },
     "Prompt": {
       "@context": {
-        "mcp": "https://modelcontextprotocol.io/vocab#",
-        "@type": "mcp:Prompt"
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Prompt"
+        ]
       },
       "description": "A prompt or prompt template that the server offers.",
       "properties": {
@@ -119,8 +280,9 @@
     },
     "PromptArgument": {
       "@context": {
-        "mcp": "https://modelcontextprotocol.io/vocab#",
-        "@type": "mcp:PromptArgument"
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#PromptArgument"
+        ]
       },
       "description": "Describes an argument that a prompt can accept.",
       "properties": {
@@ -144,8 +306,9 @@
     },
     "Resource": {
       "@context": {
-        "mcp": "https://modelcontextprotocol.io/vocab#",
-        "@type": "mcp:Resource"
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Resource"
+        ]
       },
       "description": "A known resource that the server is capable of reading.",
       "properties": {
@@ -208,104 +371,5 @@
       ],
       "type": "string"
     }
-  },
-  "type": "object",
-  "required": [
-    "protocolVersion",
-    "name",
-    "capabilities"
-  ],
-  "properties": {
-    "protocolVersion": {
-      "type": "string",
-      "enum": [
-        "2024-11-05",
-        "2025-03-26"
-      ],
-      "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
-    },
-    "name": {
-      "type": "string",
-      "description": "The name of the MCP server"
-    },
-    "introspectedAt": {
-      "type": "string",
-      "description": "Timestamp when the introspection was performed"
-    },
-    "connectionStatus": {
-      "type": "string",
-      "description": "Status of the connection to the MCP server",
-      "enum": [
-        "success",
-        "failed",
-        "error"
-      ]
-    },
-    "transport": {
-      "type": "string",
-      "enum": [
-        "sse",
-        "stdio",
-        "Streamable HTTP"
-      ],
-      "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
-    },
-    "capabilities": {
-      "type": "object",
-      "description": "Boolean flags indicating which capabilities the server supports",
-      "required": [
-        "tools",
-        "resources",
-        "prompts",
-        "logging"
-      ],
-      "properties": {
-        "tools": {
-          "type": "boolean",
-          "description": "Whether the server supports tools"
-        },
-        "resources": {
-          "type": "boolean",
-          "description": "Whether the server supports resources"
-        },
-        "prompts": {
-          "type": "boolean",
-          "description": "Whether the server supports prompts"
-        },
-        "logging": {
-          "type": "boolean",
-          "description": "Whether the server supports logging"
-        }
-      },
-      "additionalProperties": false
-    },
-    "logging": {
-      "type": "object",
-      "properties": {},
-      "description": "Present if the server supports sending log messages to the client.",
-      "additionalProperties": true
-    },
-    "tools": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Tool"
-      },
-      "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
-    },
-    "resources": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Resource"
-      },
-      "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
-    },
-    "prompts": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Prompt"
-      },
-      "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
-    },
-    "additionalProperties": false
   }
 }

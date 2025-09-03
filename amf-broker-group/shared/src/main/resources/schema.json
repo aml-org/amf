@@ -1,18 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Broker Group",
+  "title": "Agent Network Specification",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#Network"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
   "type": "object",
   "required": [
-    "schemaVersion",
-    "brokers",
-    "services"
+    "ansVersion"
   ],
   "properties": {
-    "schemaVersion": {
+    "ansVersion": {
       "type": "string",
       "const": "0.1.0-beta",
       "description": "The schema version for this file",
-      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "additionalProperties": false
     },
     "brokers": {
@@ -20,7 +23,7 @@
       "description": "The brokers defined as part of this group",
       "patternProperties": {
         "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-          "$ref": "#/definitions/Agent"
+          "$ref": "#/definitions/Broker"
         }
       },
       "propertyNames": {
@@ -36,29 +39,81 @@
       },
       "additionalProperties": false
     },
-    "services": {
-      "$ref": "#/definitions/Services",
-      "description": "The external services consumed by the brokers in this group"
+    "connections": {
+      "$ref": "#/definitions/Connections",
+      "description": "The list of connections defined as part of this network."
+    },
+    "agents": {
+      "type": "object",
+      "description": "The agent elements",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/AgentEntity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mcps": {
+      "type": "object",
+      "description": "The mcp elements",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/MCPServer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "llms": {
+      "type": "object",
+      "description": "The llms defined.",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/LLMEntity"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,
   "definitions": {
+    "RegistryRef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ]
+    },
     "BrokerSpec": {
       "type": "object",
       "required": [
-        "llm",
-        "instructions"
+        "llmRef",
+        "instructions",
+        "links"
       ],
       "properties": {
-        "llm": {
-          "type": "string",
-          "description": "A reference to the LLM used for reasoning and orchestration"
+        "llmRef": {
+          "description": "The reference to the LLM to be used by the orchestrator",
+          "$ref": "#/definitions/RegistryRef"
         },
         "instructions": {
           "type": "array",
           "description": "Set of custom instructions that will inform the orchestration",
           "items": {
             "type": "string"
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "ref": "#/definitions/PolicyBinding"
+            }
           }
         },
         "maxNumberOfLoops": {
@@ -82,33 +137,19 @@
           "items": {
             "type": "object",
             "properties": {
-              "mcp": {
-                "type": "object",
-                "required": [
-                  "server"
-                ],
-                "properties": {
-                  "server": {
-                    "type": "string",
-                    "description": "A reference to the MCP server serving the tools"
-                  },
-                  "allowed": {
-                    "type": "array",
-                    "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "denied": {
-                    "type": "array",
-                    "description": "Filters the list of tools advertised by the MCP server to not include those in this list. Mutually exclusive with 'allowed'",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
+              "mcpRef": {
+                "$ref": "#/definitions/RegistryRef",
+                "description": "The reference to the MCP server to be available to this broker"
+              },
+              "allowed": {
+                "type": "array",
+                "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
+                "items": {
+                  "type": "string"
                 }
               }
-            }
+            },
+            "additionalProperties": false
           }
         },
         "links": {
@@ -116,22 +157,27 @@
           "description": "Defines which of the other brokers or external agents can be orchestrated by this broker",
           "items": {
             "type": "object",
-            "patternProperties": {
-              "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-                "type": "object",
-                "properties": {
-                  "authentication": {
-                    "$ref": "#/definitions/Authentication"
-                  }
-                }
+            "properties": {
+              "agentRef": {
+                "$ref": "#/definitions/RegistryRef"
               }
             },
+            "required": [
+              "agentRef"
+            ],
             "additionalProperties": false
           }
         }
       }
     },
-    "Agent": {
+    "Broker": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Agent",
+          "http://anypoint.com/vocabs/agents#Broker"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "properties": {
         "card": {
@@ -141,6 +187,7 @@
           "$ref": "#/definitions/BrokerSpec"
         }
       },
+      "additionalProperties": false,
       "required": [
         "card",
         "spec"
@@ -151,7 +198,7 @@
       "title": "Basic Authentication",
       "description": "Properties for Basic Authentication.",
       "properties": {
-        "type": {
+        "kind": {
           "const": "basic",
           "type": "string"
         },
@@ -164,16 +211,22 @@
           "description": "The password for authentication."
         }
       },
+      "additionalProperties": false,
       "required": [
-        "type",
+        "kind",
         "username",
         "password"
       ]
     },
     "AnypointClientCredentialsAuth": {
       "type": "object",
+      "required": [
+        "kind",
+        "clientId",
+        "clientSecret"
+      ],
       "properties": {
-        "type": {
+        "kind": {
           "const": "apikey-client-credentials",
           "type": "string"
         },
@@ -185,14 +238,15 @@
           "type": "string",
           "description": "The client secret."
         }
-      }
+      },
+      "additionalProperties": false
     },
     "OAuth2ClientCredentialsAuth": {
       "type": "object",
       "title": "OAuth 2.0 Client Credentials Grant",
       "description": "Properties for the OAuth 2.0 Client Credentials Grant Type.",
       "properties": {
-        "type": {
+        "kind": {
           "const": "oauth2-client-credentials",
           "type": "string"
         },
@@ -216,14 +270,21 @@
           "description": "An array of scopes to request."
         }
       },
+      "additionalProperties": false,
       "required": [
-        "type",
+        "kind",
         "clientId",
         "clientSecret",
         "tokenUrl"
       ]
     },
     "Authentication": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "anyOf": [
         {
           "$ref": "#/definitions/OAuth2ClientCredentialsAuth"
@@ -236,19 +297,163 @@
         }
       ]
     },
-    "ExternalAgent": {
+    "AgentConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#AgentConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
-      "description": "Defines an agent that exists outside of this broker group",
+      "description": "Defines an agent that exists outside of this domain",
+      "required": [
+        "kind",
+        "spec"
+      ],
       "properties": {
-        "cardUrl": {
+        "kind": {
+          "const": "agent",
           "type": "string"
         },
-        "authentication": {
-          "$ref": "#/definitions/Authentication"
+        "agentRef": {
+          "$ref": "#/definitions/RegistryRef"
+        },
+        "spec": {
+          "type": "object",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "authentication": {
+              "$ref": "#/definitions/Authentication"
+            },
+            "policies": {
+              "type": "array",
+              "items": {
+                "ref": "#/definitions/PolicyBinding"
+              }
+            }
+          },
+          "additionalProperties": false
         }
       }
     },
-    "OpenAILLM": {
+    "LLMConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#LLMConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "description": "Configuration for using Salesforce Einstein as the reasoning LLM",
+      "required": [
+        "kind",
+        "spec"
+      ],
+      "properties": {
+        "kind": {
+          "const": "llm",
+          "type": "string"
+        },
+        "llmRef": {
+          "$ref": "#/definitions/RegistryRef"
+        },
+        "spec": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/EinsteinConnectionSpec"
+            },
+            {
+              "$ref": "#/definitions/OpenAIConnectionSpec"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "EinsteinConnectionSpec": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#ConnectionSpec",
+          "http://anypoint.com/vocabs/agents#EinsteinConnectionSpec"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "description": "The configuration for the Einstein instance",
+      "required": [
+        "kind",
+        "url",
+        "authentication"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "einstein"
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL for the Einstein instance"
+        },
+        "authentication": {
+          "type": "object",
+          "properties": {
+            "clientId": {
+              "type": "string",
+              "description": "The Client Id"
+            },
+            "clientSecret": {
+              "type": "string",
+              "description": "The Client Secret"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "clientId",
+            "clientSecret"
+          ]
+        },
+        "configuration": {
+          "type": "object",
+          "description": "The configuration for the Einstein instance",
+          "properties": {
+            "modelName": {
+              "type": "string",
+              "description": "The name of the language model to use"
+            },
+            "probability": {
+              "type": "number",
+              "description": "The Einstein probability setting"
+            },
+            "locale": {
+              "type": "string",
+              "description": "The locale to use",
+              "default": "en_US"
+            }
+          }
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "ref": "#/definitions/PolicyBinding"
+          }
+        }
+      }
+    },
+    "OpenAIConnectionSpec": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#ConnectionSpec",
+          "http://anypoint.com/vocabs/agents#OpenAIConnectionSpec"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "description": "Configuration for using OpenAI as the reasoning LLM",
       "required": [
@@ -272,88 +477,332 @@
         }
       }
     },
-    "EinsteinLLM": {
+    "MCPServerConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#MCPServerConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
-      "description": "Configuration for using Salesforce Einstein as the reasoning LLM",
+      "required": [
+        "spec",
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "mcp",
+          "type": "string"
+        },
+        "mcpRef": {
+          "$ref": "#/definitions/RegistryRef"
+        },
+        "spec": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "The base URL for the MCP server"
+            },
+            "authentication": {
+              "$ref": "#/definitions/Authentication",
+              "description": "The Authentication to use when connecting to the MCP server"
+            },
+            "policies": {
+              "type": "array",
+              "items": {
+                "ref": "#/definitions/PolicyBinding"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "PolicyBinding": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#PolicyBinding"
+        ]
+      },
+      "type": "object",
+      "description": "The policy to be applied",
+      "properties": {
+        "policyRef": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "namespace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "configuration": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "policyRef",
+        "configuration"
+      ],
+      "additionalProperties": false
+    },
+    "ConnectionElement": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/AgentConnection"
+        },
+        {
+          "$ref": "#/definitions/LLMConnection"
+        },
+        {
+          "$ref": "#/definitions/MCPServerConnection"
+        }
+      ]
+    },
+    "Connections": {
+      "type": "object",
+      "description": "The registry elements",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/ConnectionElement"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AgentEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Agent"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "A description for this agent"
+        },
+        "platform": {
+          "type": "string",
+          "description": "The name of the platform this agent is running on. i.e Bedrock, AgentForce, etc."
+        },
+        "protocol": {
+          "type": "string",
+          "description": "The name of the protocol. For example a2a"
+        },
+        "card": {
+          "$ref": "#/definitions/AgentCard"
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "links": {
+              "description": "Defines the list of agents this agent is connected with",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "agentRef": {
+                    "$ref": "#/definitions/RegistryRef"
+                  }
+                },
+                "required": [
+                  "agentRef"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "tools": {
+              "description": "Defines the list of tools this agent is connected with",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "mcpRef": {
+                    "$ref": "#/definitions/RegistryRef"
+                  }
+                },
+                "required": [
+                  "mcpRef"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "LLMEntity": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MCPServer": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Server"
+        ]
+      },
+      "type": "object",
+      "required": [
+        "transport"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "A human-readable description of the server."
+        },
+        "protocolVersion": {
+          "type": "string",
+          "enum": [
+            "2024-11-05",
+            "2025-03-26"
+          ],
+          "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
+        },
+        "introspectedAt": {
+          "type": "string",
+          "description": "Timestamp when the introspection was performed"
+        },
+        "connectionStatus": {
+          "type": "string",
+          "description": "Status of the connection to the MCP server",
+          "enum": [
+            "success",
+            "failed",
+            "error"
+          ]
+        },
+        "transport": {
+          "$ref": "#/definitions/MCPTransport",
+          "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
+        },
+        "capabilities": {
+          "type": "object",
+          "description": "Boolean flags indicating which capabilities the server supports",
+          "required": [
+            "tools",
+            "resources",
+            "prompts",
+            "logging"
+          ],
+          "properties": {
+            "tools": {
+              "type": "boolean",
+              "description": "Whether the server supports tools"
+            },
+            "resources": {
+              "type": "boolean",
+              "description": "Whether the server supports resources"
+            },
+            "prompts": {
+              "type": "boolean",
+              "description": "Whether the server supports prompts"
+            },
+            "logging": {
+              "type": "boolean",
+              "description": "Whether the server supports logging"
+            }
+          },
+          "additionalProperties": false
+        },
+        "logging": {
+          "type": "object",
+          "properties": {},
+          "description": "Present if the server supports sending log messages to the client.",
+          "additionalProperties": true
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tool"
+          },
+          "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+        },
+        "prompts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prompt"
+          },
+          "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+        },
+        "additionalProperties": false
+      }
+    },
+    "SseTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#SseTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/mcp#"
+      },
       "required": [
         "kind",
-        "clientId",
-        "clientSecret",
-        "baseUrl",
-        "modelName"
+        "ssePath"
       ],
       "properties": {
         "kind": {
           "type": "string",
-          "const": "einstein",
-          "description": "Discriminator to identify Einstein LLM configuration"
+          "const": "sse"
         },
-        "type": {
+        "ssePath": {
           "type": "string",
-          "const": "einstein"
+          "description": "Path to the SSE endpoint"
         },
-        "clientId": {
+        "messagesPath": {
           "type": "string",
-          "description": "The Client Id"
-        },
-        "clientSecret": {
-          "type": "string",
-          "description": "The Client Secret"
-        },
-        "baseUrl": {
-          "type": "string",
-          "description": "The base URL for the Einstein instance"
-        },
-        "modelName": {
-          "type": "string",
-          "description": "The name of the language model to use"
-        },
-        "probability": {
-          "type": "number",
-          "description": "The Einstein probability setting"
-        },
-        "locale": {
-          "type": "string",
-          "description": "The locale to use",
-          "default": "en_US"
+          "description": "Path to the messages endpoint"
         }
-      }
-    },
-    "SseTransport": {
-      "required": [
-        "sse"
-      ],
-      "properties": {
-        "sse": {
-          "type": "object",
-          "properties": {
-            "ssePath": {
-              "type": "string",
-              "description": "Path to the SSE endpoint"
-            },
-            "messagesPath": {
-              "type": "string",
-              "description": "Path to the messages endpoint"
-            }
-          }
-        }
-      }
+      },
+      "additionalProperties": false
     },
     "StreamableHttpTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#StreamableHttpTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "required": [
-        "streamableHttp"
+        "kind"
       ],
       "properties": {
-        "streamableHttp": {
-          "type": "object",
-          "properties": {
-            "path": {
-              "type": "string",
-              "description": "Path to the mcp endpoint"
-            }
-          }
+        "kind": {
+          "type": "string",
+          "const": "streamableHttp"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the mcp endpoint"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "MCPTransport": {
       "type": "object",
@@ -366,95 +815,212 @@
         }
       ]
     },
-    "MCPServer": {
-      "type": "object",
-      "required": [
-        "url",
-        "transport"
-      ],
+    "Tool": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Tool"
+        ]
+      },
+      "description": "Definition for a tool the client can call.",
       "properties": {
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "The base URL for the MCP server"
+        "annotations": {
+          "$ref": "#/definitions/ToolAnnotations",
+          "description": "Optional additional tool information."
         },
-        "transport": {
-          "$ref": "#/definitions/MCPTransport"
+        "description": {
+          "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
+          "type": "string"
         },
-        "tools": {
-          "type": "object",
+        "inputSchema": {
+          "@context": {
+            "@type": [
+              "http://anypoint.com/vocabs/mcp#ToolInputSchema"
+            ]
+          },
+          "description": "A JSON Schema object defining the expected parameters for the tool.",
           "properties": {
-            "allowed": {
-              "type": "array",
-              "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
-              "items": {
-                "type": "string"
-              }
+            "properties": {
+              "additionalProperties": {
+                "additionalProperties": true,
+                "properties": {},
+                "type": "object"
+              },
+              "type": "object"
             },
-            "denied": {
-              "type": "array",
-              "description": "Filters the list of tools advertised by the MCP server to those not in this list. Mutually exclusive with 'allowed'",
+            "required": {
               "items": {
                 "type": "string"
-              }
+              },
+              "type": "array"
+            },
+            "type": {
+              "const": "object",
+              "type": "string"
             }
-          }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
         },
-        "authentication": {
-          "$ref": "#/definitions/Authentication"
+        "name": {
+          "description": "The name of the tool.",
+          "type": "string"
         }
-      }
-    },
-    "LLMProvider": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/EinsteinLLM"
-        },
-        {
-          "$ref": "#/definitions/OpenAILLM"
-        }
-      ]
-    },
-    "Services": {
-      "type": "object",
-      "description": "The external services consumed by the brokers in this group",
+      },
       "required": [
-        "llm-providers"
+        "inputSchema",
+        "name"
       ],
+      "type": "object"
+    },
+    "ToolAnnotations": {
+      "description": "Additional properties describing a Tool to clients.\n\nNOTE: all properties in ToolAnnotations are **hints**.\nThey are not guaranteed to provide a faithful description of\ntool behavior (including descriptive properties like `title`).\n\nClients should never make tool use decisions based on ToolAnnotations\nreceived from untrusted servers.",
       "properties": {
-        "external-agents": {
-          "type": "object",
-          "patternProperties": {
-            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-              "$ref": "#/definitions/ExternalAgent"
-            }
-          },
-          "additionalProperties": false
+        "destructiveHint": {
+          "description": "If true, the tool may perform destructive updates to its environment.\nIf false, the tool performs only additive updates.\n\n(This property is meaningful only when `readOnlyHint == false`)\n\nDefault: true",
+          "type": "boolean"
         },
-        "llm-providers": {
-          "type": "object",
-          "description": "The LLMs available to the brokers in this group",
-          "patternProperties": {
-            "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-              "$ref": "#/definitions/LLMProvider"
-            }
-          },
-          "additionalProperties": false
+        "idempotentHint": {
+          "description": "If true, calling the tool repeatedly with the same arguments\nwill have no additional effect on the its environment.\n\n(This property is meaningful only when `readOnlyHint == false`)\n\nDefault: false",
+          "type": "boolean"
         },
-        "mcp-servers": {
-          "type": "array",
-          "description": "The MCP servers available to the brokers in this group",
-          "items": {
-            "type": "object",
-            "patternProperties": {
-              "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-                "$ref": "#/definitions/MCPServer"
-              }
-            },
-            "additionalProperties": false
-          }
+        "openWorldHint": {
+          "description": "If true, this tool may interact with an \"open world\" of external\nentities. If false, the tool's domain of interaction is closed.\nFor example, the world of a web search tool is open, whereas that\nof a memory tool is not.\n\nDefault: true",
+          "type": "boolean"
+        },
+        "readOnlyHint": {
+          "description": "If true, the tool does not modify its environment.\n\nDefault: false",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "A human-readable title for the tool.",
+          "type": "string"
         }
-      }
+      },
+      "type": "object"
+    },
+    "Prompt": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Prompt"
+        ]
+      },
+      "description": "A prompt or prompt template that the server offers.",
+      "properties": {
+        "arguments": {
+          "description": "A list of arguments to use for templating the prompt.",
+          "items": {
+            "$ref": "#/definitions/PromptArgument"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "An optional description of what this prompt provides",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the prompt or prompt template.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "PromptArgument": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#PromptArgument"
+        ]
+      },
+      "description": "Describes an argument that a prompt can accept.",
+      "properties": {
+        "description": {
+          "description": "A human-readable description of the argument.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the argument.",
+          "type": "string"
+        },
+        "required": {
+          "description": "Whether this argument must be provided.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "Resource": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Resource"
+        ]
+      },
+      "description": "A known resource that the server is capable of reading.",
+      "properties": {
+        "annotations": {
+          "$ref": "#/definitions/Annotations",
+          "description": "Optional annotations for the client."
+        },
+        "description": {
+          "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of this resource, if known.",
+          "type": "string"
+        },
+        "name": {
+          "description": "A human-readable name for this resource.\n\nThis can be used by clients to populate UI elements.",
+          "type": "string"
+        },
+        "size": {
+          "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
+          "type": "integer"
+        },
+        "uri": {
+          "description": "The URI of this resource.",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "uri"
+      ],
+      "type": "object"
+    },
+    "Annotations": {
+      "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
+      "properties": {
+        "audience": {
+          "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
+          "items": {
+            "$ref": "#/definitions/Role"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Role": {
+      "description": "The sender or recipient of messages and data in a conversation.",
+      "enum": [
+        "assistant",
+        "user"
+      ],
+      "type": "string"
     },
     "AgentCard": {
       "description": "An AgentCard conveys key information:\n- Overall details (version, name, description, uses)\n- Skills: A set of capabilities the agent can perform\n- Default modalities/content types supported by the agent.\n- Authentication requirements",
