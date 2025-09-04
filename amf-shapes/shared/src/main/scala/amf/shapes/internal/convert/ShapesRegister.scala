@@ -9,7 +9,12 @@ import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.platform.model.domain.federation._
 import amf.shapes.client.platform.model.domain.grpc._
 import amf.shapes.client.scala.model
-import amf.shapes.internal.document.metamodel.{AvroSchemaDocumentModel, JsonSchemaDocumentModel}
+import amf.shapes.client.platform.model.document.JsonLDInstanceDocument
+import amf.shapes.internal.document.metamodel.{
+  AvroSchemaDocumentModel,
+  JsonLDInstanceDocumentModel,
+  JsonSchemaDocumentModel
+}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.metamodel.grpc._
 import amf.shapes.internal.domain.metamodel.federation._
@@ -113,13 +118,18 @@ private[amf] object ShapesRegister extends UniqueInitializer with PlatformSecret
     platform.registerWrapper(JsonSchemaDocumentModel) {
       case s: amf.shapes.client.scala.model.document.JsonSchemaDocument => JsonSchemaDocument(s)
     }
+    platform.registerWrapper(JsonLDInstanceDocumentModel) {
+      case s: amf.shapes.client.scala.model.document.JsonLDInstanceDocument => new JsonLDInstanceDocument(s)
+    }
     platform.registerWrapper(AvroSchemaDocumentModel) {
       case s: amf.shapes.client.scala.model.document.AvroSchemaDocument => AvroSchemaDocument(s)
     }
     platform.registerWrapper(ReservedModel) { case s: amf.shapes.client.scala.model.domain.grpc.Reserved =>
       Reserved(s)
     }
-    platform.registerWrapper(ReservedRangeModel) { case s: amf.shapes.client.scala.model.domain.grpc.ReservedRange => ReservedRange(s) }
+    platform.registerWrapper(ReservedRangeModel) { case s: amf.shapes.client.scala.model.domain.grpc.ReservedRange =>
+      ReservedRange(s)
+    }
   }
 
 }
