@@ -1,19 +1,17 @@
 package amf
 
+import amf.agentcard.client.scala.AgentCardConfiguration
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.config.RenderOptions
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.{Mimes, Spec}
-import amf.agentcard.client.scala.AgentCardConfiguration
-import amf.core.client.scala.config.RenderOptions
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.Future
 
 class AgentCardSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath      = "file://amf-agent-card/shared/src/test/resources/instances/"
-  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris
+  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris.withEntityEmission
   private val client        = AgentCardConfiguration.AgentCard().withRenderOptions(renderOptions).baseUnitClient()
 
   test("Parsed JSON-LD from AgentCard should have AgentCard source spec") {

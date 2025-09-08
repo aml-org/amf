@@ -1,6 +1,7 @@
 package amf
 
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.config.RenderOptions
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.{Mimes, Spec}
 import amf.mcp.client.scala.MCPConfiguration
@@ -12,9 +13,9 @@ import scala.concurrent.Future
 class MCPSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath = "file://amf-mcp/shared/src/test/resources/instances/"
+  private val client = MCPConfiguration.MCP().withRenderOptions(RenderOptions().withEntityEmission).baseUnitClient()
 
   test("Parsed JSON-LD from MCP should have MCP source spec") {
-    val client = MCPConfiguration.MCP().baseUnitClient()
     for {
       result     <- client.parse(basePath + "valid/instance_1.json")
       jsonld     <- Future.successful(client.render(result.baseUnit, Mimes.`application/ld+json`))
@@ -28,7 +29,6 @@ class MCPSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext 
   }
 
   test("Transformation (empty) should conforms") {
-    val client = MCPConfiguration.MCP().baseUnitClient()
     for {
       parseResult <- client.parse(basePath + "valid/instance_1.json")
       transformationDefault = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Default)
