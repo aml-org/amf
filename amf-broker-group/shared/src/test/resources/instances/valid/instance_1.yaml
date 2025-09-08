@@ -1,3 +1,4 @@
+# TODO: update from https://github.com/mulesoft-emu/agent-fabric-specification/blob/spike/ans/examples/demo-project/agent-network.yaml
 # This document is no longer just for broker but it allows us to describe the ai network (like a backend for the visualizer that can be deployed)
 # This makes the brokers, agents, mcps and llms as first class citizens.
 # This not only allows us to deploy brokers but also describe the network that are outside of our platform and visualize it, without the need of crawler
@@ -6,13 +7,13 @@
 ansVersion: 1.0.0
 # The list of brokers that are part of the network.
 brokers:
-  google-maps-agent:
+  google-maps-broker:
     card: #    The a2a Card
       protocolVersion: 0.2.9
       name: GeoSpatial Route Planner Agent
       description: Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.
       url: https://${ingressgw.url}/a2a/maps/v1
-      capabilities: { }
+      capabilities: {}
       version: 1.0.0
       provider:
         organization: Acme Inc.
@@ -58,9 +59,10 @@ brokers:
           tags:
             - maps
     spec: # The spec section defines behavior. In this case of the broker. This means that this definition can be deployed.
-      llmRef:
-        # Declares that needs a connection to the specified llm.
-        name: my-einstein
+      llm:
+        llmRef:
+          # Declares that needs a connection to the specified llm.
+          name: my-einstein
       # Configuration of the broker. Should we put this under a configuration section?
       maxNumberOfLoops: 10
       maxConsecutiveErrors: 1
@@ -91,48 +93,54 @@ brokers:
 agents:
   # An external agent that is not part of the network but we can connect to them if needed
   test-agent:
-    platform: bedrock
-    # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
-    links:
-      # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
-      - agentRef:
-          name: ???
+    metadata:
+      platform: agentforce
+      protocol: other
+      # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
+      links:
+        # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
+        - agentRef:
+            name: sf-crm-agent
 
   weather-agent:
-    platform: gemini
-    # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
-    links:
-      # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
-      - agentRef:
-          name: ???
+    description: "An agent that handles the weather forecast"
+    metadata:
+      platform: gemini
+      protocol: a2a
+      # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
+      tools:
+        # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
+        - mcpRef:
+            name: weather-mcp
   sf-crm-agent:
-    platform: agentforce
-    protocol: a2a
-    # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
-    links:
-      # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
-      - agentRef:
-          name: ???
+    metadata:
+      platform: agentforce
+      protocol: other
+
+
 mcps:
   # We can declare the mcp here.
   # In a future version with the MCP Transcoding work we can potencially create MCP servers automatically form api specs. By adding a spec section to this.
-  weather-mcp:
-    transport:
-      kind: sse
-      ssePath: /sse
-      messagesPath: /messages
+  google-maps-mcp:
+    metadata:
+      transport:
+        kind: streamableHttp
+        path: /mcp
 
 llms:
   my-enistein:
-    kind: einstein
     description: This is a description of the llm.
+    metadata:
+      platform: einstein
+      policyRef:
+        name: llmgw-einstein
 #This section describes the physical connections to agents, llms and mcps. This represents the real wireing of the nodes.
 connections:
   #Sugar syntax. If registryRef is not specified the name of the connection is used.
-  test-agent:
+  weather-agent:
     kind: agent
     agentRef:
-      name: test-agent
+      name: weather-agent
     spec:
       url: https://weather-agent.anypoint.mulesoft.com/
       authentication:
@@ -142,31 +150,22 @@ connections:
         tokenUrl: ${weather.tokenUrl}
       policies:
         - policyRef:
-            name: rate-limit
-          config:
-            requests: 100
-            timeWindow: 60
+            name: a-two-a-pii-detector
+          configuration:
+            entities:
+              - Email
+              - US SSN
+            action: Log
+
 
   my-einstein:
     kind: llm
     llmRef:
       name: my-enistein
     spec:
-      kind: openai
-      modelName: gpt5-mini
-      authentication:
-        apiKey: ${openai.apiKey}
-
-
-  anypoint-agent:
-    kind: agent
-    spec:
-      url: www.anypoint.com/a2a/
-
-  weather-mcp:
-    kind: mcp
-    spec:
-      url: https://weather-mcp.anypoint.com/
+      url: ${}
+      configuration:
+        apiKey: ${einstein.apiKey}
 
   google-maps-mcp:
     kind: mcp

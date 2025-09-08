@@ -14,10 +14,6 @@
         "transport"
       ],
       "properties": {
-        "description": {
-          "type": "string",
-          "description": "A human-readable description of the server."
-        },
         "protocolVersion": {
           "type": "string",
           "enum": [
@@ -98,6 +94,13 @@
             "$ref": "#/definitions/Prompt"
           },
           "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+        },
+        "securitySchemes": {
+          "additionalProperties": {
+            "$ref": "a2a.json#/definitions/SecurityScheme"
+          },
+          "description": "Security scheme details used for authenticating with this agent.",
+          "type": "object"
         },
         "additionalProperties": false
       }

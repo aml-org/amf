@@ -37,8 +37,8 @@
         "http://a.ml/vocabularies/core#brokers",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#google-maps-agent": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent"
+      "http://a.ml/vocabularies/core#google-maps-broker": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker"
       }
     },
     {
@@ -63,8 +63,8 @@
         "http://a.ml/vocabularies/core#mcps",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#weather-mcp": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/weather-mcp"
+      "http://a.ml/vocabularies/core#google-maps-mcp": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/google-maps-mcp"
       }
     },
     {
@@ -83,34 +83,28 @@
         "http://a.ml/vocabularies/core#connections",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#test-agent": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent"
+      "http://a.ml/vocabularies/core#weather-agent": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent"
       },
       "http://a.ml/vocabularies/core#my-einstein": {
         "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein"
-      },
-      "http://a.ml/vocabularies/core#anypoint-agent": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/anypoint-agent"
-      },
-      "http://a.ml/vocabularies/core#weather-mcp": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-mcp"
       },
       "http://a.ml/vocabularies/core#google-maps-mcp": {
         "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/google-maps-mcp"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker",
       "@type": [
         "http://anypoint.com/vocabs/agents#Agent",
         "http://anypoint.com/vocabs/agents#Broker",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#card": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card"
       },
       "http://anypoint.com/vocabs/agents#spec": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec"
       }
     },
     {
@@ -119,12 +113,9 @@
         "http://anypoint.com/vocabs/agents#Agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#platform": "bedrock",
-      "http://anypoint.com/vocabs/agents#links": [
-        {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/links/0"
-        }
-      ]
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/metadata"
+      }
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent",
@@ -132,12 +123,10 @@
         "http://anypoint.com/vocabs/agents#Agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#platform": "gemini",
-      "http://anypoint.com/vocabs/agents#links": [
-        {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/links/0"
-        }
-      ]
+      "http://anypoint.com/vocabs/agents#description": "An agent that handles the weather forecast",
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/metadata"
+      }
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent",
@@ -145,47 +134,45 @@
         "http://anypoint.com/vocabs/agents#Agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#platform": "agentforce",
-      "http://anypoint.com/vocabs/agents#protocol": "a2a",
-      "http://anypoint.com/vocabs/agents#links": [
-        {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent/links/0"
-        }
-      ]
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent/metadata"
+      }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/weather-mcp",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/google-maps-mcp",
       "@type": [
-        "http://anypoint.com/vocabs/mcp#Server",
+        "http://a.ml/vocabularies/core#google-maps-mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#transport": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/weather-mcp/transport"
+      "http://a.ml/vocabularies/core#metadata": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/google-maps-mcp/metadata"
       }
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/llms/my-enistein",
       "@type": [
-        "http://a.ml/vocabularies/core#my-enistein",
+        "http://anypoint.com/vocabs/agents#LLM",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#kind": "einstein",
-      "http://a.ml/vocabularies/core#description": "This is a description of the llm."
+      "http://anypoint.com/vocabs/agents#description": "This is a description of the llm.",
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/llms/my-enistein/metadata"
+      }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent",
       "@type": [
         "http://anypoint.com/vocabs/agents#AgentConnection",
         "http://anypoint.com/vocabs/agents#Connection",
-        "http://a.ml/vocabularies/core#test-agent",
+        "http://a.ml/vocabularies/core#weather-agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#agentRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/agentRef"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/agentRef"
       },
       "http://anypoint.com/vocabs/agents#kind": "agent",
       "http://anypoint.com/vocabs/agents#spec": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec"
       }
     },
     {
@@ -205,32 +192,6 @@
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/anypoint-agent",
-      "@type": [
-        "http://anypoint.com/vocabs/agents#AgentConnection",
-        "http://anypoint.com/vocabs/agents#Connection",
-        "http://a.ml/vocabularies/core#anypoint-agent",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#kind": "agent",
-      "http://anypoint.com/vocabs/agents#spec": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/anypoint-agent/spec"
-      }
-    },
-    {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-mcp",
-      "@type": [
-        "http://anypoint.com/vocabs/agents#MCPServerConnection",
-        "http://anypoint.com/vocabs/agents#Connection",
-        "http://a.ml/vocabularies/core#weather-mcp",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#kind": "mcp",
-      "http://anypoint.com/vocabs/agents#spec": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-mcp/spec"
-      }
-    },
-    {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/google-maps-mcp",
       "@type": [
         "http://anypoint.com/vocabs/agents#MCPServerConnection",
@@ -244,7 +205,7 @@
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card",
       "@type": [
         "http://a.ml/vocabularies/core#card",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -254,18 +215,18 @@
       "http://a.ml/vocabularies/core#description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
       "http://a.ml/vocabularies/core#url": "https://${ingressgw.url}/a2a/maps/v1",
       "http://a.ml/vocabularies/core#capabilities": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/capabilities"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/capabilities"
       },
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/core#provider": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/provider"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/provider"
       },
       "http://a.ml/vocabularies/core#securitySchemes": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes"
       },
       "http://a.ml/vocabularies/core#security": [
         {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/security/0"
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/security/0"
         }
       ],
       "http://a.ml/vocabularies/core#defaultInputModes": [
@@ -278,18 +239,18 @@
       ],
       "http://a.ml/vocabularies/core#skills": [
         {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/skills/0"
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/skills/0"
         }
       ]
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec",
       "@type": [
         "http://a.ml/vocabularies/core#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#llmRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/llmRef"
+      "http://a.ml/vocabularies/core#llm": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/llm"
       },
       "http://a.ml/vocabularies/core#maxNumberOfLoops": 10,
       "http://a.ml/vocabularies/core#maxConsecutiveErrors": 1,
@@ -302,123 +263,122 @@
       ],
       "http://a.ml/vocabularies/core#tools": [
         {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/tools/0"
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/tools/0"
         }
       ],
       "http://a.ml/vocabularies/core#links": [
         {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/links/0"
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/links/0"
         }
       ],
       "http://a.ml/vocabularies/core#policies": [
         {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/policies/0"
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/policies/0"
         }
       ]
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/links/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/metadata",
       "@type": [
-        "http://anypoint.com/vocabs/agents#links",
+        "http://a.ml/vocabularies/core#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#agentRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/links/0/agentRef"
+      "http://a.ml/vocabularies/core#platform": "agentforce",
+      "http://a.ml/vocabularies/core#protocol": "other",
+      "http://a.ml/vocabularies/core#links": [
+        {
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/metadata/links/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/metadata",
+      "@type": [
+        "http://a.ml/vocabularies/core#metadata",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#platform": "gemini",
+      "http://a.ml/vocabularies/core#protocol": "a2a",
+      "http://a.ml/vocabularies/core#tools": [
+        {
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/metadata/tools/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent/metadata",
+      "@type": [
+        "http://a.ml/vocabularies/core#metadata",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#platform": "agentforce",
+      "http://a.ml/vocabularies/core#protocol": "other"
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/google-maps-mcp/metadata",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Server",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#transport": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/google-maps-mcp/metadata/transport"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/links/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/llms/my-enistein/metadata",
       "@type": [
-        "http://anypoint.com/vocabs/agents#links",
+        "http://a.ml/vocabularies/core#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#agentRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/links/0/agentRef"
+      "http://a.ml/vocabularies/core#platform": "einstein",
+      "http://a.ml/vocabularies/core#policyRef": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/llms/my-enistein/metadata/policyRef"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent/links/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/agentRef",
       "@type": [
-        "http://anypoint.com/vocabs/agents#links",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#agentRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent/links/0/agentRef"
-      }
-    },
-    {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/weather-mcp/transport",
-      "@type": [
-        "http://anypoint.com/vocabs/mcp#SseTransport",
-        "http://anypoint.com/vocabs/mcp#Transport",
-        "http://a.ml/vocabularies/core#transport",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#kind": "sse",
-      "http://anypoint.com/vocabs/agents#ssePath": "/sse",
-      "http://anypoint.com/vocabs/agents#messagesPath": "/messages"
-    },
-    {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/agentRef",
-      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
         "http://a.ml/vocabularies/core#agentRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "test-agent"
+      "http://anypoint.com/vocabs/agents#name": "weather-agent"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec",
       "@type": [
         "http://a.ml/vocabularies/core#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#url": "https://weather-agent.anypoint.mulesoft.com/",
       "http://a.ml/vocabularies/core#authentication": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/authentication"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/authentication"
       },
       "http://a.ml/vocabularies/core#policies": [
         {
-          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/policies/0"
+          "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/policies/0"
         }
       ]
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein/llmRef",
       "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
         "http://a.ml/vocabularies/core#llmRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "my-enistein"
+      "http://anypoint.com/vocabs/agents#name": "my-enistein"
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein/spec",
       "@type": [
-        "http://anypoint.com/vocabs/agents#ConnectionSpec",
-        "http://anypoint.com/vocabs/agents#OpenAIConnectionSpec",
         "http://a.ml/vocabularies/core#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#kind": "openai",
-      "http://anypoint.com/vocabs/agents#authentication": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein/spec/authentication"
-      },
-      "http://anypoint.com/vocabs/agents#modelName": "gpt5-mini"
-    },
-    {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/anypoint-agent/spec",
-      "@type": [
-        "http://a.ml/vocabularies/core#spec",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#url": "www.anypoint.com/a2a/"
-    },
-    {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-mcp/spec",
-      "@type": [
-        "http://a.ml/vocabularies/core#spec",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#url": "https://weather-mcp.anypoint.com/"
+      "http://a.ml/vocabularies/core#url": "${}",
+      "http://a.ml/vocabularies/core#configuration": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein/spec/configuration"
+      }
     },
     {
       "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/google-maps-mcp/spec",
@@ -429,14 +389,14 @@
       "http://a.ml/vocabularies/core#url": "https://maps.google.com/mcp"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/capabilities",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/capabilities",
       "@type": [
         "http://a.ml/vocabularies/core#capabilities",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ]
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/provider",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/provider",
       "@type": [
         "http://a.ml/vocabularies/core#provider",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -445,17 +405,17 @@
       "http://a.ml/vocabularies/core#url": "https://www.acme.com"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes",
       "@type": [
         "http://a.ml/vocabularies/core#securitySchemes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#oAuth2ClientCredentials": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/security/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/security/0",
       "@type": [
         "http://a.ml/vocabularies/core#security",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -467,7 +427,7 @@
       ]
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/skills/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/skills/0",
       "@type": [
         "http://a.ml/vocabularies/core#skills",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -493,21 +453,23 @@
       ]
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/llmRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/llm",
       "@type": [
-        "http://a.ml/vocabularies/core#llmRef",
+        "http://a.ml/vocabularies/core#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "my-einstein"
+      "http://a.ml/vocabularies/core#llmRef": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/llm/llmRef"
+      }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/tools/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/tools/0",
       "@type": [
         "http://a.ml/vocabularies/core#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#mcpRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/tools/0/mcpRef"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/tools/0/mcpRef"
       },
       "http://a.ml/vocabularies/core#allowed": [
         "geocode",
@@ -516,52 +478,67 @@
       ]
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/links/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/links/0",
       "@type": [
         "http://a.ml/vocabularies/core#links",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#agentRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/links/0/agentRef"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/links/0/agentRef"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/policies/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/policies/0",
       "@type": [
         "http://a.ml/vocabularies/core#policies",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#policyRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/policies/0/policyRef"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/policies/0/policyRef"
       },
       "http://a.ml/vocabularies/core#config": null
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/links/0/agentRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/metadata/links/0",
       "@type": [
-        "http://anypoint.com/vocabs/agents#agentRef",
+        "http://a.ml/vocabularies/core#links",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "???"
+      "http://a.ml/vocabularies/core#agentRef": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/metadata/links/0/agentRef"
+      }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/links/0/agentRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/metadata/tools/0",
       "@type": [
-        "http://anypoint.com/vocabs/agents#agentRef",
+        "http://a.ml/vocabularies/core#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "???"
+      "http://a.ml/vocabularies/core#mcpRef": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/metadata/tools/0/mcpRef"
+      }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/sf-crm-agent/links/0/agentRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcps/google-maps-mcp/metadata/transport",
       "@type": [
-        "http://anypoint.com/vocabs/agents#agentRef",
+        "http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
+        "http://anypoint.com/vocabs/mcp#Transport",
+        "http://a.ml/vocabularies/core#transport",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "???"
+      "http://anypoint.com/vocabs/agents#kind": "streamableHttp",
+      "http://anypoint.com/vocabs/agents#path": "/mcp"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/authentication",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/llms/my-enistein/metadata/policyRef",
+      "@type": [
+        "http://a.ml/vocabularies/core#policyRef",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#name": "llmgw-einstein"
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/authentication",
       "@type": [
         "http://a.ml/vocabularies/core#authentication",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -572,55 +549,63 @@
       "http://a.ml/vocabularies/core#tokenUrl": "${weather.tokenUrl}"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/policies/0",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/policies/0",
       "@type": [
         "http://a.ml/vocabularies/core#policies",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#policyRef": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/policies/0/policyRef"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/policies/0/policyRef"
       },
-      "http://a.ml/vocabularies/core#config": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/policies/0/config"
+      "http://a.ml/vocabularies/core#configuration": {
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/policies/0/configuration"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein/spec/authentication",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/my-einstein/spec/configuration",
       "@type": [
-        "http://a.ml/vocabularies/core#authentication",
+        "http://a.ml/vocabularies/core#configuration",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#apiKey": "${openai.apiKey}"
+      "http://a.ml/vocabularies/core#apiKey": "${einstein.apiKey}"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials",
       "@type": [
         "http://a.ml/vocabularies/core#oAuth2ClientCredentials",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#type": "oauth2",
       "http://a.ml/vocabularies/core#flows": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials/flows"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/tools/0/mcpRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/llm/llmRef",
       "@type": [
-        "http://a.ml/vocabularies/core#mcpRef",
+        "http://anypoint.com/vocabs/agents#Reference",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "google-maps-mcp"
+      "http://anypoint.com/vocabs/agents#name": "my-einstein"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/links/0/agentRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/tools/0/mcpRef",
       "@type": [
-        "http://a.ml/vocabularies/core#agentRef",
+        "http://anypoint.com/vocabs/agents#Reference",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "weather-agent"
+      "http://anypoint.com/vocabs/agents#name": "google-maps-mcp"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/spec/policies/0/policyRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/links/0/agentRef",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "weather-agent"
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/spec/policies/0/policyRef",
       "@type": [
         "http://a.ml/vocabularies/core#policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -628,45 +613,64 @@
       "http://a.ml/vocabularies/core#name": "rate-limit"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/policies/0/policyRef",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/test-agent/metadata/links/0/agentRef",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "sf-crm-agent"
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/weather-agent/metadata/tools/0/mcpRef",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "weather-mcp"
+    },
+    {
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/policies/0/policyRef",
       "@type": [
         "http://a.ml/vocabularies/core#policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "rate-limit"
+      "http://a.ml/vocabularies/core#name": "a-two-a-pii-detector"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/test-agent/spec/policies/0/config",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-agent/spec/policies/0/configuration",
       "@type": [
-        "http://a.ml/vocabularies/core#config",
+        "http://a.ml/vocabularies/core#configuration",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#requests": 100,
-      "http://a.ml/vocabularies/core#timeWindow": 60
+      "http://a.ml/vocabularies/core#entities": [
+        "Email",
+        "US SSN"
+      ],
+      "http://a.ml/vocabularies/core#action": "Log"
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials/flows",
       "@type": [
         "http://a.ml/vocabularies/core#flows",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#clientCredentials": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials",
       "@type": [
         "http://a.ml/vocabularies/core#clientCredentials",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#tokenUrl": "https://${envUrl}/token",
       "http://a.ml/vocabularies/core#scopes": {
-        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
+        "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes"
       }
     },
     {
-      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-agent/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
+      "@id": "file://amf-broker-group/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/google-maps-broker/card/securitySchemes/oAuth2ClientCredentials/flows/clientCredentials/scopes",
       "@type": [
         "http://a.ml/vocabularies/core#scopes",
         "http://a.ml/vocabularies/document#JsonLDObject"
