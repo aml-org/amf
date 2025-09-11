@@ -39,6 +39,10 @@
           "$ref": "#/definitions/MCPTransport",
           "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
         },
+        "provider": {
+          "$ref": "#/definitions/MCPProvider",
+          "description": "The service provider of the MCP server."
+        },
         "capabilities": {
           "type": "object",
           "description": "Boolean flags indicating which capabilities the server supports",
@@ -95,6 +99,10 @@
           },
           "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
         },
+        "platform": {
+          "type": "string",
+          "description": "The platform the mcp server is running"
+        },
         "securitySchemes": {
           "additionalProperties": {
             "$ref": "a2a.json#/definitions/SecurityScheme"
@@ -104,6 +112,30 @@
         },
         "additionalProperties": false
       }
+    },
+    "MCPProvider": {
+      "description": "Represents the service provider of an MCP server.",
+      "examples": [
+        {
+          "organization": "Google",
+          "url": "https://ai.google.dev"
+        }
+      ],
+      "properties": {
+        "organization": {
+          "description": "MCP provider's organization name.",
+          "type": "string"
+        },
+        "url": {
+          "description": "MCP provider's URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "url"
+      ],
+      "type": "object"
     },
     "SseTransport": {
       "@context": {
@@ -166,6 +198,10 @@
           "$ref": "#/definitions/StreamableHttpTransport"
         }
       ]
+    },
+    "provider": {
+      "$ref": "#/definitions/MCPProvider",
+      "description": "The service provider of the MCP server"
     },
     "Tool": {
       "@context": {
