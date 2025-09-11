@@ -1,7 +1,7 @@
 {
   "ansVersion": "1.0.0",
   "brokers": {
-    "google-maps-agent": {
+    "google-maps-broker": {
       "card": {
         "protocolVersion": "0.2.9",
         "name": "GeoSpatial Route Planner Agent",
@@ -68,8 +68,10 @@
         ]
       },
       "spec": {
-        "llmRef": {
-          "name": "my-einstein"
+        "llm": {
+          "llmRef": {
+            "name": "my-einstein"
+          }
         },
         "maxNumberOfLoops": 10,
         "maxConsecutiveErrors": 1,
@@ -112,57 +114,65 @@
   },
   "agents": {
     "test-agent": {
-      "platform": "bedrock",
-      "links": [
-        {
-          "agentRef": {
-            "name": "???"
+      "metadata": {
+        "platform": "agentforce",
+        "protocol": "other",
+        "links": [
+          {
+            "agentRef": {
+              "name": "sf-crm-agent"
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "weather-agent": {
-      "platform": "gemini",
-      "links": [
-        {
-          "agentRef": {
-            "name": "???"
+      "description": "An agent that handles the weather forecast",
+      "metadata": {
+        "platform": "gemini",
+        "protocol": "a2a",
+        "tools": [
+          {
+            "mcpRef": {
+              "name": "weather-mcp"
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "sf-crm-agent": {
-      "platform": "agentforce",
-      "protocol": "a2a",
-      "links": [
-        {
-          "agentRef": {
-            "name": "???"
-          }
-        }
-      ]
+      "metadata": {
+        "platform": "agentforce",
+        "protocol": "other"
+      }
     }
   },
   "mcps": {
-    "weather-mcp": {
-      "transport": {
-        "kind": "sse",
-        "ssePath": "/sse",
-        "messagesPath": "/messages"
+    "google-maps-mcp": {
+      "metadata": {
+        "transport": {
+          "kind": "streamableHttp",
+          "path": "/mcp"
+        }
       }
     }
   },
   "llms": {
     "my-enistein": {
-      "kind": "einstein",
-      "description": "This is a description of the llm."
+      "description": "This is a description of the llm.",
+      "metadata": {
+        "platform": "einstein",
+        "policyRef": {
+          "name": "llmgw-einstein"
+        }
+      }
     }
   },
   "connections": {
-    "test-agent": {
+    "weather-agent": {
       "kind": "agent",
       "agentRef": {
-        "name": "test-agent"
+        "name": "weather-agent"
       },
       "spec": {
         "url": "https://weather-agent.anypoint.mulesoft.com/",
@@ -175,11 +185,14 @@
         "policies": [
           {
             "policyRef": {
-              "name": "rate-limit"
+              "name": "a-two-a-pii-detector"
             },
-            "config": {
-              "requests": 100,
-              "timeWindow": 60
+            "configuration": {
+              "entities": [
+                "Email",
+                "US SSN"
+              ],
+              "action": "Log"
             }
           }
         ]
@@ -191,23 +204,10 @@
         "name": "my-enistein"
       },
       "spec": {
-        "kind": "openai",
-        "modelName": "gpt5-mini",
-        "authentication": {
-          "apiKey": "${openai.apiKey}"
+        "url": "${}",
+        "configuration": {
+          "apiKey": "${einstein.apiKey}"
         }
-      }
-    },
-    "anypoint-agent": {
-      "kind": "agent",
-      "spec": {
-        "url": "www.anypoint.com/a2a/"
-      }
-    },
-    "weather-mcp": {
-      "kind": "mcp",
-      "spec": {
-        "url": "https://weather-mcp.anypoint.com/"
       }
     },
     "google-maps-mcp": {
