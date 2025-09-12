@@ -9723,6 +9723,39 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
+  export class AgentMetadataConfiguration extends BaseAgentMetadataConfiguration {
+    static AgentMetadata(): AgentMetadataConfiguration;
+
+    baseUnitClient(): AgentMetadataBaseUnitClient;
+  }
+
+  export class BaseAgentMetadataConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentMetadataConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseAgentMetadataConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentMetadataConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentMetadataConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentMetadataConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentMetadataConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentMetadataConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseAgentMetadataConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentMetadataConfiguration;
+  }
+  export class AgentMetadataBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
   export class BrokerGroupConfiguration extends BaseBrokerGroupConfiguration {
     static BrokerGroup(): BrokerGroupConfiguration;
 

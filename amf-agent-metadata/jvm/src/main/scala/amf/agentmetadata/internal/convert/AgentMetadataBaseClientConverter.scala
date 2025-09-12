@@ -1,0 +1,5 @@
+package amf.agentmetadata.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait AgentMetadataBaseClientConverter extends AgentMetadataBaseConverter with ShapesBaseClientConverter
