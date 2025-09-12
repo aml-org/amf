@@ -9756,6 +9756,39 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
+  export class LLMMetadataConfiguration extends BaseLLMMetadataConfiguration {
+    static LLMMetadata(): LLMMetadataConfiguration;
+
+    baseUnitClient(): LLMMetadataBaseUnitClient;
+  }
+
+  export class BaseLLMMetadataConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseLLMMetadataConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseLLMMetadataConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseLLMMetadataConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseLLMMetadataConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseLLMMetadataConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseLLMMetadataConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseLLMMetadataConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseLLMMetadataConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseLLMMetadataConfiguration;
+  }
+  export class LLMMetadataBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
   export class BrokerGroupConfiguration extends BaseBrokerGroupConfiguration {
     static BrokerGroup(): BrokerGroupConfiguration;
 
