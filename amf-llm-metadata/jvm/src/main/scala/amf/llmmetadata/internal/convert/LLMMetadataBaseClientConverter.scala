@@ -1,0 +1,5 @@
+package amf.llmmetadata.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait LLMMetadataBaseClientConverter extends LLMMetadataBaseConverter with ShapesBaseClientConverter
