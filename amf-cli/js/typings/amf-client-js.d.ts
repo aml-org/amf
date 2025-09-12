@@ -9690,6 +9690,39 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
+  export class OtherCardConfiguration extends BaseOtherCardConfiguration {
+    static OtherCard(): OtherCardConfiguration;
+
+    baseUnitClient(): OtherCardBaseUnitClient;
+  }
+
+  export class BaseOtherCardConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseOtherCardConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseOtherCardConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseOtherCardConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseOtherCardConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseOtherCardConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseOtherCardConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseOtherCardConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseOtherCardConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseOtherCardConfiguration;
+  }
+  export class OtherCardBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
   export class BrokerGroupConfiguration extends BaseBrokerGroupConfiguration {
     static BrokerGroup(): BrokerGroupConfiguration;
 
