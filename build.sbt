@@ -373,12 +373,46 @@ lazy val agentCardJS =
     .in(file("./amf-agent-card/js"))
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
+/** ********************************************** AMF-OTHER-CARD *********************************************
+ */
+
+lazy val otherCard = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-other-card"
+    )
+  )
+  .in(file("./amf-other-card"))
+  .settings(commonSettings)
+  .dependsOn(shapes)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-other-card-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-other-card.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.other-card"))
+
+lazy val otherCardJVM =
+  otherCard.jvm
+    .in(file("./amf-other-card/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val otherCardJS =
+  otherCard.js
+    .in(file("./amf-other-card/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+
 /** ********************************************** AMF CLI *********************************************
   */
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql, mcp, brokerGroup, agentCard)
+  .dependsOn(grpc, graphql, mcp, brokerGroup, agentCard, otherCard)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
