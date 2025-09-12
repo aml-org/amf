@@ -9,15 +9,15 @@ class OtherCardValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionCo
   private val basePath: String                  = "file://amf-other-card/shared/src/test/resources/instances/"
   private val client: OtherCardBaseUnitClient = OtherCardConfiguration.OtherCard().baseUnitClient()
 
-//  test("Valid OtherCard JSON Instance should conform") {
-//    for {
-//      parseResult      <- client.parse(basePath + "valid/instance_1.json")
-//      validationReport <- client.validate(parseResult.baseUnit)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      validationReport.conforms shouldBe true
-//    }
-//  }
+  test("Valid OtherCard JSON Instance should conform") {
+    for {
+      parseResult      <- client.parse(basePath + "valid/instance_1.json")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
 //
 //  test("Valid OtherCard YAML Instance should conform") {
 //    for {
