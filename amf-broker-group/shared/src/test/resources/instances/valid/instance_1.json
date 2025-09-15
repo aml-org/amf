@@ -1,12 +1,13 @@
 {
-  "ansVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "label": "Weather",
   "brokers": {
-    "google-maps-broker": {
+    "weather-agent": {
       "card": {
         "protocolVersion": "0.2.9",
-        "name": "GeoSpatial Route Planner Agent",
+        "name": "Agent that now how to handle the weather",
         "description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
-        "url": "https://${ingressgw.url}/a2a/maps/v1",
+        "url": "https://${ingressgw.url}/weather-agent",
         "capabilities": {},
         "version": "1.0.0",
         "provider": {
@@ -14,27 +15,12 @@
           "url": "https://www.acme.com"
         },
         "securitySchemes": {
-          "oAuth2ClientCredentials": {
-            "type": "oauth2",
-            "flows": {
-              "clientCredentials": {
-                "tokenUrl": "https://${envUrl}/token",
-                "scopes": {
-                  "read": "Grants read access"
-                }
-              }
-            }
+          "anypointApiKey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "client_id/client_secret"
           }
         },
-        "security": [
-          {
-            "oAuth2ClientCredentials": [
-              "openid",
-              "profile",
-              "email"
-            ]
-          }
-        ],
         "defaultInputModes": [
           "application/json",
           "text/plain"
@@ -45,12 +31,11 @@
         ],
         "skills": [
           {
-            "id": "route-optimizer-traffic",
-            "name": "Traffic-Aware Route Optimizer",
-            "description": "Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).",
+            "id": "weather-agent-skills",
+            "name": "Handles the weather",
+            "description": "Can calculate the weather for a given location at a given time",
             "examples": [
-              "Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.",
-              "{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"
+              "What is the weather in buenos aires in 2025 12 of May"
             ],
             "inputModes": [
               "application/json",
@@ -62,158 +47,113 @@
               "text/html"
             ],
             "tags": [
-              "maps"
+              "weather"
             ]
           }
         ]
       },
       "spec": {
         "llm": {
-          "llmRef": {
-            "name": "my-einstein"
+          "ref": {
+            "name": "open-ai"
+          },
+          "configuration": {
+            "model": "gpt-5-nano"
           }
         },
         "maxNumberOfLoops": 10,
         "maxConsecutiveErrors": 1,
         "instructions": [
-          "You're mission is helping people find the best route possible between two points. You will extract origin and destination",
-          "If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.",
-          "If the user says they're riding a motorcycle, treat it the same as cars.",
-          "When presenting routes, present the one with the lowest total distance, the one with the lowest fuel consumption, and the fastest one.",
-          "Check the weather in the areas involved in the route and show a warning if there are any weather alerts."
+          "You are a weather agent"
         ],
         "tools": [
           {
-            "mcpRef": {
-              "name": "google-maps-mcp"
-            },
-            "allowed": [
-              "geocode",
-              "trace-route",
-              "render-route"
-            ]
+            "mcp": {
+              "ref": {
+                "name": "weather-mcp"
+              },
+              "connection": {
+                "ref": {
+                  "name": "weather-mcp-connection"
+                }
+              }
+            }
+          },
+          {
+            "mcp": {
+              "ref": {
+                "name": "weather-mcp"
+              }
+            }
           }
         ],
         "links": [
           {
-            "agentRef": {
-              "name": "weather-agent"
+            "agent": {
+              "ref": {
+                "name": "my-agent"
+              },
+              "connection": {
+                "ref": {
+                  "name": "ai-connection"
+                }
+              }
             }
-          }
-        ],
-        "policies": [
-          {
-            "policyRef": {
-              "name": "rate-limit"
-            },
-            "config": null
           }
         ]
       }
     }
   },
   "agents": {
-    "test-agent": {
+    "my-agent": {
       "metadata": {
-        "platform": "agentforce",
-        "protocol": "other",
-        "links": [
-          {
-            "agentRef": {
-              "name": "sf-crm-agent"
-            }
-          }
-        ]
-      }
-    },
-    "weather-agent": {
-      "description": "An agent that handles the weather forecast",
-      "metadata": {
-        "platform": "gemini",
-        "protocol": "a2a",
-        "tools": [
-          {
-            "mcpRef": {
-              "name": "weather-mcp"
-            }
-          }
-        ]
-      }
-    },
-    "sf-crm-agent": {
-      "metadata": {
-        "platform": "agentforce",
-        "protocol": "other"
-      }
+        "platform": "bedrock",
+        "protocol": "a2a"
+      },
+      "label": "My Agent"
     }
   },
-  "mcps": {
-    "google-maps-mcp": {
+  "mcpServers": {
+    "weather-mcp": {
+      "tags": [
+        "Geolocation"
+      ],
       "metadata": {
         "transport": {
           "kind": "streamableHttp",
-          "path": "/mcp"
+          "path": "/weather/mcp"
         }
       }
     }
   },
-  "llms": {
-    "my-enistein": {
+  "llmProviders": {
+    "open-ai": {
       "description": "This is a description of the llm.",
       "metadata": {
-        "platform": "einstein",
-        "policyRef": {
-          "name": "llmgw-einstein"
-        }
+        "platform": "OpenAI"
       }
     }
   },
   "connections": {
-    "weather-agent": {
-      "kind": "agent",
-      "agentRef": {
-        "name": "weather-agent"
-      },
-      "spec": {
-        "url": "https://weather-agent.anypoint.mulesoft.com/",
-        "authentication": {
-          "kind": "oauth2-client-credentials",
-          "clientId": "${weather.clientId}",
-          "clientSecret": "${weather.clientSecret}",
-          "tokenUrl": "${weather.tokenUrl}"
-        },
-        "policies": [
-          {
-            "policyRef": {
-              "name": "a-two-a-pii-detector"
-            },
-            "configuration": {
-              "entities": [
-                "Email",
-                "US SSN"
-              ],
-              "action": "Log"
-            }
-          }
-        ]
-      }
-    },
-    "my-einstein": {
+    "ai-connection": {
       "kind": "llm",
-      "llmRef": {
-        "name": "my-enistein"
+      "ref": {
+        "name": "open-ai"
       },
       "spec": {
-        "url": "${}",
+        "url": "https://api.openai.com/v1/",
         "configuration": {
-          "apiKey": "${einstein.apiKey}"
+          "apiKey": "${openai.apiKey}"
         }
       }
     },
-    "google-maps-mcp": {
+    "weather-mcp-connection": {
       "kind": "mcp",
+      "ref": {
+        "name": "weather-mcp"
+      },
       "spec": {
-        "url": "https://maps.google.com/mcp"
+        "url": "https://mcp-server-afj4wo.5sc6y6-3.usa-e2.cloudhub.io"
       }
     }
   }

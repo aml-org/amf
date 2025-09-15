@@ -9,10 +9,10 @@
   },
   "type": "object",
   "required": [
-    "ansVersion"
+    "schemaVersion"
   ],
   "properties": {
-    "ansVersion": {
+    "schemaVersion": {
       "type": "string",
       "const": "1.0.0",
       "description": "The schema version for this file"
@@ -32,6 +32,51 @@
       }
     },
     "brokers": {
+      "$ref": "#/definitions/Brokers",
+      "description": "The list of brokers defined as part of this network."
+    },
+    "connections": {
+      "$ref": "#/definitions/Connections",
+      "description": "The list of connections defined as part of this network."
+    },
+    "agents": {
+      "$ref": "#/definitions/Agents",
+      "description": "The list of agents defined as part of this network."
+    },
+    "mcpServers": {
+      "$ref": "#/definitions/MCPs",
+      "description": "The list of MCP servers defined as part of this network."
+    },
+    "llmProviders": {
+      "$ref": "#/definitions/LLMs",
+      "description": "The list of LLM providers defined as part of this network."
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Agents": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The agent elements",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/AgentEntity"
+        }
+      }
+    },
+    "Brokers": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
+        ]
+      },
       "type": "object",
       "additionalProperties": false,
       "description": "The brokers defined as part of this group",
@@ -52,21 +97,29 @@
         }
       }
     },
-    "connections": {
-      "$ref": "#/definitions/Connections",
-      "description": "The list of connections defined as part of this network."
-    },
-    "agents": {
+    "LLMs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#llm"
+        ]
+      },
       "type": "object",
       "additionalProperties": false,
-      "description": "The agent elements",
+      "description": "The llms defined.",
       "patternProperties": {
         "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-          "$ref": "#/definitions/AgentEntity"
+          "$ref": "#/definitions/LLMEntity"
         }
       }
     },
-    "mcps": {
+    "MCPs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
+        ]
+      },
       "type": "object",
       "additionalProperties": false,
       "description": "The mcp elements",
@@ -76,42 +129,122 @@
         }
       }
     },
-    "llms": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "The llms defined.",
-      "patternProperties": {
-        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-          "$ref": "#/definitions/LLMEntity"
-        }
-      }
-    }
-  },
-  "additionalProperties": false,
-  "definitions": {
     "BrokerLLM": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "llmRef"
+        "ref",
+        "configuration"
       ],
       "properties": {
-        "llmRef": {
+        "ref": {
           "description": "The reference to the LLM to be used by the orchestrator",
-          "$ref": "#/definitions/RegistryRef"
+          "$ref": "#/definitions/LLMRef"
         },
-        "connectionRef": {
-          "$ref": "#/definitions/ConnectionRef"
+        "connection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ref"
+          ],
+          "properties": {
+            "ref": {
+              "$ref": "#/definitions/ConnectionRef"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "model"
+          ],
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "The name of the model to use"
+            }
+          }
         }
       }
     },
-    "RegistryRef": {
+    "AgentRef": {
+      "description": "A Reference to an Agent",
       "@context": {
         "@type": [
-          "http://anypoint.com/vocabs/agents#Reference"
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
         ],
         "@base": "http://anypoint.com/vocabs/agents#"
       },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "MCPRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "Reference to an MCP Server.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "PolicyRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#policy"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "LLMRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#llm"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "A reference to an LLM Provider",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -147,7 +280,7 @@
           "policies": {
             "type": "array",
             "items": {
-              "ref": "#/definitions/PolicyBinding"
+              "$ref": "#/definitions/PolicyBinding"
             }
           }
         },
@@ -173,41 +306,78 @@
             "type": "object",
             "additionalProperties": false,
             "required": [
-              "mcpRef"
+              "mcp"
             ],
             "properties": {
-              "mcpRef": {
-                "$ref": "#/definitions/RegistryRef",
-                "description": "The reference to the MCP server to be available to this broker"
-              },
-              "connectionRef": {
-                "$ref": "#/definitions/ConnectionRef"
-              },
-              "allowed": {
-                "type": "array",
-                "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
-                "items": {
-                  "type": "string"
+              "mcp": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/definitions/MCPRef",
+                    "description": "The reference to the MCP server to be available to this broker"
+                  },
+                  "connection": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "The connection to be used by this mcp",
+                    "required": [
+                      "ref"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/definitions/ConnectionRef"
+                      }
+                    }
+                  },
+                  "allowed": {
+                    "type": "array",
+                    "description": "Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
           }
         },
         "links": {
-          "type": "array",
-          "description": "Defines which of the other brokers or external agents can be orchestrated by this broker",
+          "description": "Defines the list of agents this agent is connected with",
           "items": {
             "type": "object",
             "additionalProperties": false,
             "required": [
-              "agentRef"
+              "agent"
             ],
             "properties": {
-              "agentRef": {
-                "$ref": "#/definitions/RegistryRef"
-              },
-              "connectionRef": {
-                "$ref": "#/definitions/ConnectionRef"
+              "agent": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/definitions/AgentRef"
+                  },
+                  "connection": {
+                    "type": "object",
+                    "description": "The connection to be used by this agent",
+                    "additionalProperties": false,
+                    "required": [
+                      "ref"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/definitions/ConnectionRef"
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -215,7 +385,7 @@
         "policies": {
           "type": "array",
           "items": {
-            "ref": "#/definitions/PolicyBinding"
+            "$ref": "#/definitions/PolicyBinding"
           }
         }
       }
@@ -244,9 +414,22 @@
       }
     },
     "BasicAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#BasicAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "title": "Basic Authentication",
       "description": "Properties for Basic Authentication.",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "username",
+        "password"
+      ],
       "properties": {
         "kind": {
           "const": "basic",
@@ -259,16 +442,21 @@
         "password": {
           "type": "string",
           "description": "The password for authentication."
+        },
+        "headerName": {
+          "type": "string",
+          "description": "The name of the header where to set the key. If not specified 'Authorization' is set by default."
         }
-      },
-      "additionalProperties": false,
-      "required": [
-        "kind",
-        "username",
-        "password"
-      ]
+      }
     },
-    "AnypointClientCredentialsAuth": {
+    "ApiKeyClientCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#ApiKeyClientCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -282,23 +470,86 @@
           "type": "string"
         },
         "clientId": {
-          "type": "string",
-          "description": "The client ID."
+          "type": "object",
+          "description": "The client ID.",
+          "additionalProperties": false,
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "The value for the clientId"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name for the clientId by default is going to be 'client_id'"
+            }
+          }
         },
         "clientSecret": {
+          "type": "object",
+          "description": "The client secret.",
+          "additionalProperties": false,
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "The value for the clientSecret"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name for the clientSecret by default is going to be 'client_secret'"
+            }
+          }
+        }
+      }
+    },
+    "APIKeyAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#APIKeyAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "kind": {
+          "const": "apiKey",
+          "type": "string"
+        },
+        "headerName": {
+          "description": "The name of the header to be used. If not specified Authorization is used.",
+          "type": "string"
+        },
+        "apiKey": {
           "type": "string",
-          "description": "The client secret."
+          "description": "The value of the apiKey"
         }
       }
     },
     "OAuth2ClientCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2ClientCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "additionalProperties": false,
       "required": [
         "kind",
         "clientId",
         "clientSecret",
-        "tokenUrl"
+        "token"
       ],
       "title": "OAuth 2.0 Client Credentials Grant",
       "description": "Properties for the OAuth 2.0 Client Credentials Grant Type.",
@@ -315,9 +566,29 @@
           "type": "string",
           "description": "The client secret."
         },
-        "tokenUrl": {
-          "type": "string",
-          "description": "The URL of the token endpoint to obtain the access token."
+        "token": {
+          "type": "object",
+          "description": "Configuration on how to fetch the token.",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The url of the token provider"
+            },
+            "timeout": {
+              "type": "number",
+              "description": "Time in seconds to wait for the service to return the token."
+            },
+            "bodyEncoding": {
+              "type": "string",
+              "enum": [
+                "form",
+                "json"
+              ]
+            }
+          }
         },
         "scopes": {
           "type": "array",
@@ -343,7 +614,10 @@
           "$ref": "#/definitions/BasicAuth"
         },
         {
-          "$ref": "#/definitions/AnypointClientCredentialsAuth"
+          "$ref": "#/definitions/ApiKeyClientCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/APIKeyAuth"
         }
       ]
     },
@@ -360,6 +634,7 @@
       "description": "Defines an agent that exists outside of this domain",
       "required": [
         "kind",
+        "ref",
         "spec"
       ],
       "properties": {
@@ -367,8 +642,8 @@
           "const": "agent",
           "type": "string"
         },
-        "agentRef": {
-          "$ref": "#/definitions/RegistryRef"
+        "ref": {
+          "$ref": "#/definitions/AgentRef"
         },
         "spec": {
           "type": "object",
@@ -386,7 +661,7 @@
             "policies": {
               "type": "array",
               "items": {
-                "ref": "#/definitions/PolicyBinding"
+                "$ref": "#/definitions/PolicyBinding"
               }
             }
           }
@@ -406,6 +681,7 @@
       "description": "Configuration for using Salesforce Einstein as the reasoning LLM",
       "required": [
         "kind",
+        "ref",
         "spec"
       ],
       "properties": {
@@ -413,8 +689,8 @@
           "const": "llm",
           "type": "string"
         },
-        "llmRef": {
-          "$ref": "#/definitions/RegistryRef"
+        "ref": {
+          "$ref": "#/definitions/LLMRef"
         },
         "spec": {
           "type": "object",
@@ -433,7 +709,7 @@
             "policies": {
               "type": "array",
               "items": {
-                "ref": "#/definitions/PolicyBinding"
+                "$ref": "#/definitions/PolicyBinding"
               }
             }
           }
@@ -452,6 +728,7 @@
       "additionalProperties": false,
       "required": [
         "spec",
+        "ref",
         "kind"
       ],
       "properties": {
@@ -459,8 +736,8 @@
           "const": "mcp",
           "type": "string"
         },
-        "mcpRef": {
-          "$ref": "#/definitions/RegistryRef"
+        "ref": {
+          "$ref": "#/definitions/MCPRef"
         },
         "spec": {
           "type": "object",
@@ -478,7 +755,7 @@
             "policies": {
               "type": "array",
               "items": {
-                "ref": "#/definitions/PolicyBinding"
+                "$ref": "#/definitions/PolicyBinding"
               }
             }
           }
@@ -495,12 +772,12 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "policyRef",
+        "ref",
         "configuration"
       ],
       "properties": {
-        "policyRef": {
-          "$ref": "#/definitions/RegistryRef"
+        "ref": {
+          "$ref": "#/definitions/PolicyRef"
         },
         "configuration": {
           "type": "object"
@@ -508,6 +785,12 @@
       }
     },
     "ConnectionElement": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "oneOf": [
         {
           "$ref": "#/definitions/LLMConnection"
@@ -521,6 +804,12 @@
       ]
     },
     "Connections": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#connection"
+        ]
+      },
       "description": "The registry elements",
       "type": "object",
       "additionalProperties": false,
@@ -531,6 +820,13 @@
       }
     },
     "ConnectionRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#connection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "description": "The reference to a connection",
       "type": "object",
       "additionalProperties": false,
@@ -598,11 +894,20 @@
                 "type": "object",
                 "additionalProperties": false,
                 "required": [
-                  "agentRef"
+                  "agent"
                 ],
                 "properties": {
-                  "agentRef": {
-                    "$ref": "#/definitions/RegistryRef"
+                  "agent": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "ref"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/definitions/AgentRef"
+                      }
+                    }
                   }
                 }
               }
@@ -612,20 +917,29 @@
               "items": {
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "mcp"
+                ],
                 "properties": {
-                  "mcpRef": {
-                    "$ref": "#/definitions/RegistryRef"
-                  },
-                  "allowed": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
+                  "mcp": {
+                    "type": "object",
+                    "required": [
+                      "ref"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/definitions/MCPRef"
+                      },
+                      "allowed": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
-                },
-                "required": [
-                  "mcpRef"
-                ]
+                }
               }
             }
           }
@@ -657,7 +971,7 @@
         "metadata": {
           "oneOf": [
             {
-              "$ref": "#/definitions/WellKnowLLM"
+              "$ref": "#/definitions/WellKnownLLM"
             },
             {
               "$ref": "#/definitions/CustomLLM"
@@ -666,10 +980,19 @@
         }
       }
     },
-    "WellKnowLLM": {
+    "WellKnownLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "additionalProperties": false,
-      "required": ["platform"],
+      "required": [
+        "platform"
+      ],
       "properties": {
         "platform": {
           "type": "string",
@@ -690,10 +1013,17 @@
       }
     },
     "CustomLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#CustomLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "policyRef",
+        "transcoder",
         "platform"
       ],
       "properties": {
@@ -706,12 +1036,24 @@
             "type": "string"
           }
         },
-        "policyRef": {
-          "$ref": "#/definitions/RegistryRef"
+        "transcoder": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "$ref": "#/definitions/PolicyRef"
+            }
+          }
         }
       }
     },
     "MCPServerEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#MCPServer"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
       "description": "The definition of the MCP Server entity",
       "type": "object",
       "additionalProperties": false,
