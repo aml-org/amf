@@ -1,37 +1,31 @@
-# TODO: update from https://github.com/mulesoft-emu/agent-fabric-specification/blob/spike/ans/examples/demo-project/agent-network.yaml
 # This document is no longer just for broker but it allows us to describe the ai network (like a backend for the visualizer that can be deployed)
 # This makes the brokers, agents, mcps and llms as first class citizens.
 # This not only allows us to deploy brokers but also describe the network that are outside of our platform and visualize it, without the need of crawler
 # This does not replace the Exchange UI but provides a declarative way to describe the entire network
 # Agent Network Specification
-ansVersion: 1.0.0
+schemaVersion: 1.0.0
+
+label: Weather
+# Global Tags are inherited by all elements in the network
+
 # The list of brokers that are part of the network.
 brokers:
-  google-maps-broker:
+  weather-agent:
     card: #    The a2a Card
       protocolVersion: 0.2.9
-      name: GeoSpatial Route Planner Agent
+      name: Agent that now how to handle the weather
       description: Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.
-      url: https://${ingressgw.url}/a2a/maps/v1
-      capabilities: {}
+      url: https://${ingressgw.url}/weather-agent
+      capabilities: { }
       version: 1.0.0
       provider:
         organization: Acme Inc.
         url: https://www.acme.com
       securitySchemes:
-        oAuth2ClientCredentials:
-          type: oauth2
-          flows:
-            clientCredentials:
-              tokenUrl: https://${envUrl}/token
-              scopes:
-                read: Grants read access
-
-      security:
-        - oAuth2ClientCredentials:
-            - openid
-            - profile
-            - email
+        anypointApiKey:
+          type: apiKey
+          in: header
+          name: client_id/client_secret
       defaultInputModes:
         - application/json
         - text/plain
@@ -39,16 +33,11 @@ brokers:
         - application/json
         - image/png
       skills:
-        - id: route-optimizer-traffic
-          name: Traffic-Aware Route Optimizer
-          description: Calculates the optimal driving route between two or more locations,
-            taking into account real-time traffic conditions, road closures, and user preferences
-            (e.g., avoid tolls, prefer highways).
+        - id: weather-agent-skills
+          name: Handles the weather
+          description: Can calculate the weather for a given location at a given time
           examples:
-            - Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco
-              International Airport' avoiding tolls.
-            - '{"origin": {"lat": 37.422, "lng": -122.084}, "destination": {"lat": 37.7749,
-              "lng": -122.4194}, "preferences": ["avoid_ferries"]}'
+            - What is the weather in buenos aires in 2025 12 of May
           inputModes:
             - application/json
             - text/plain
@@ -57,117 +46,80 @@ brokers:
             - application/vnd.geo+json
             - text/html
           tags:
-            - maps
+            - weather
     spec: # The spec section defines behavior. In this case of the broker. This means that this definition can be deployed.
       llm:
-        llmRef:
+        ref:
           # Declares that needs a connection to the specified llm.
-          name: my-einstein
+          name: open-ai
+        configuration:
+          model: gpt-5-nano
+
       # Configuration of the broker. Should we put this under a configuration section?
       maxNumberOfLoops: 10
       maxConsecutiveErrors: 1
       instructions:
-        - You're mission is helping people find the best route possible between two points. You will extract origin and destination
-        - If the user didn't say otherwise, assume they are traveling by car. Valid transportation means are Car, Bicycle, walking, and public transport.
-        - If the user says they're riding a motorcycle, treat it the same as cars.
-        - When presenting routes, present the one with the lowest total distance, the one with the lowest fuel consumption, and the fastest one.
-        - Check the weather in the areas involved in the route and show a warning if there are any weather alerts.
+        - You are a weather agent
       # References the tools to be linked to the broker.
       tools:
-        - mcpRef:
-            name: google-maps-mcp
-          allowed:
-            - geocode
-            - trace-route
-            - render-route
+        - mcp:
+            ref:
+              name: weather-mcp
+            connection:
+              ref:
+                name: weather-mcp-connection
+        - mcp:
+            ref:
+              name: weather-mcp
       # References the agents to be linked to the broker.
       links:
-        - agentRef:
-            name: weather-agent
-
-      # List of policies to be applied to the broker.
-      policies:
-        - policyRef:
-            name: rate-limit
-          config:
+        - agent:
+            ref:
+              name: my-agent
+            connection:
+              ref:
+                name: ai-connection
 agents:
-  # An external agent that is not part of the network but we can connect to them if needed
-  test-agent:
+  my-agent:
     metadata:
-      platform: agentforce
-      protocol: other
-      # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
-      links:
-        # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
-        - agentRef:
-            name: sf-crm-agent
-
-  weather-agent:
-    description: "An agent that handles the weather forecast"
-    metadata:
-      platform: gemini
+      platform: bedrock
       protocol: a2a
-      # We can declare the a2a card here. Or we can specify cardUrl: and we can download it on publish time
-      tools:
-        # We can also declare links to other agents. This will allow us to render this metadata in the visualizer UI. And apply governance to this
-        - mcpRef:
-            name: weather-mcp
-  sf-crm-agent:
-    metadata:
-      platform: agentforce
-      protocol: other
+    label: My Agent
 
-
-mcps:
+mcpServers:
   # We can declare the mcp here.
   # In a future version with the MCP Transcoding work we can potencially create MCP servers automatically form api specs. By adding a spec section to this.
-  google-maps-mcp:
+  weather-mcp:
+    # Elements in the network can define additional tags that only applies to them
+    tags:
+      - Geolocation
     metadata:
       transport:
         kind: streamableHttp
-        path: /mcp
+        path: /weather/mcp
 
-llms:
-  my-enistein:
+llmProviders:
+  open-ai:
     description: This is a description of the llm.
     metadata:
-      platform: einstein
-      policyRef:
-        name: llmgw-einstein
+      platform: OpenAI
+
+
 #This section describes the physical connections to agents, llms and mcps. This represents the real wireing of the nodes.
 connections:
   #Sugar syntax. If registryRef is not specified the name of the connection is used.
-  weather-agent:
-    kind: agent
-    agentRef:
-      name: weather-agent
-    spec:
-      url: https://weather-agent.anypoint.mulesoft.com/
-      authentication:
-        kind: oauth2-client-credentials
-        clientId: ${weather.clientId}
-        clientSecret: ${weather.clientSecret}
-        tokenUrl: ${weather.tokenUrl}
-      policies:
-        - policyRef:
-            name: a-two-a-pii-detector
-          configuration:
-            entities:
-              - Email
-              - US SSN
-            action: Log
-
-
-  my-einstein:
+  ai-connection:
     kind: llm
-    llmRef:
-      name: my-enistein
+    ref:
+      name: open-ai
     spec:
-      url: ${}
+      url: https://api.openai.com/v1/
       configuration:
-        apiKey: ${einstein.apiKey}
+        apiKey: ${openai.apiKey}
 
-  google-maps-mcp:
+  weather-mcp-connection:
     kind: mcp
+    ref:
+      name: weather-mcp
     spec:
-      url: https://maps.google.com/mcp
+      url: https://mcp-server-afj4wo.5sc6y6-3.usa-e2.cloudhub.io

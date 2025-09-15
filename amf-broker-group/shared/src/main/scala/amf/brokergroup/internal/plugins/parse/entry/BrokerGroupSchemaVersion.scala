@@ -6,7 +6,7 @@ class BrokerGroupSchemaVersion(override val version: String) extends IdVersion(v
 
 object BrokerGroupSchemaVersion extends IdEntryVersion {
 
-  override protected val idKey: String = "ansVersion"
+  override protected val idKey: String = "schemaVersion"
 
   override protected def getIdVersionFromString(text: String): Option[IdVersion] = {
     // No fixed versions at the moment, so any text could be a version
