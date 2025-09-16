@@ -1,7 +1,7 @@
 package amf.mcp.internal.plugins.parse
 
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Mcp, Mimes, Spec}
+import amf.core.internal.remote.{Mcp, Spec}
 import amf.mcp.internal.plugins.parse.entry.MCPProtocolEntry
 import amf.mcp.internal.plugins.parse.schema.MCPSchemaLoader
 import amf.shapes.client.scala.model.document.JsonSchemaDocument
@@ -11,8 +11,7 @@ object MCPParsePlugin extends JsonSchemaBasedSpecParsePlugin {
 
   override protected val specSchema: JsonSchemaDocument = MCPSchemaLoader.doc
 
-  override protected def existsSpecEntry(document: Root): Boolean =
-    if (document.mediatype == Mimes.`application/ld+json`) true else MCPProtocolEntry(document).nonEmpty
+  override protected def existsSpecEntry(document: Root): Boolean = MCPProtocolEntry(document).nonEmpty
 
   override def spec: Spec = Mcp
 }

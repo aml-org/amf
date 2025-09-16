@@ -1,20 +1,20 @@
 package amf
 
+import amf.brokergroup.client.scala.BrokerGroupConfiguration
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.config.RenderOptions
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.{Mimes, Spec}
-import amf.brokergroup.client.scala.BrokerGroupConfiguration
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.Future
 
 class BrokerGroupSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath = "file://amf-broker-group/shared/src/test/resources/instances/"
+  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris.withEntityEmission
+  private val client        = BrokerGroupConfiguration.BrokerGroup().withRenderOptions(renderOptions).baseUnitClient()
 
   test("Parsed JSON-LD from BrokerGroup should have BrokerGroup source spec") {
-    val client = BrokerGroupConfiguration.BrokerGroup().baseUnitClient()
     for {
       result     <- client.parse(basePath + "valid/instance_1.json")
       jsonld     = client.render(result.baseUnit, Mimes.`application/ld+json`)
@@ -28,7 +28,6 @@ class BrokerGroupSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecution
   }
 
   test("Transformation (empty) should conform") {
-    val client = BrokerGroupConfiguration.BrokerGroup().baseUnitClient()
     for {
       parseResult <- client.parse(basePath + "valid/instance_1.json")
       transformationDefault = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Default)

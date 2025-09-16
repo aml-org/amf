@@ -124,4 +124,6 @@ case class JsonLDObject(
 
     this
   }
+
+  def getModel: JsonLDEntityModel = model
 }
