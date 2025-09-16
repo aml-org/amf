@@ -1300,6 +1300,8 @@ declare module "amf-client-js" {
     lexical(): Range;
 
     location(): undefined | string;
+
+    resolvedReferenceLike(): undefined | string;
   }
   export class AnyField implements ValueField<any> {
     isNull: boolean;
