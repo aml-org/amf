@@ -1,7 +1,42 @@
 {
 "@graph": [
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/BaseUnitProcessingData",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
+"@type": [
+"http://anypoint.com/vocabs/mcp#Server",
+"http://a.ml/vocabularies/document#JsonLDObject"
+],
+"http://a.ml/vocabularies/core#connectionStatus": "success",
+"http://a.ml/vocabularies/core#tools": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1"
+}
+],
+"http://a.ml/vocabularies/core#resources": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/resources/0"
+}
+],
+"http://a.ml/vocabularies/core#capabilities": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities"
+},
+"http://a.ml/vocabularies/core#name": "test-mcp-server",
+"http://a.ml/vocabularies/core#protocolVersion": "2024-11-05",
+"http://a.ml/vocabularies/core#introspectedAt": "Thu Jun 05 09:38:22 PDT 2025",
+"http://a.ml/vocabularies/core#prompts": [
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0"
+}
+],
+"http://a.ml/vocabularies/core#transport": {
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport"
+}
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
 "@type": [
 "http://a.ml/vocabularies/document#BaseUnitProcessingData"
 ],
@@ -9,229 +44,32 @@
 "http://a.ml/vocabularies/document#sourceSpec": "MCP"
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0",
 "@type": [
-"http://anypoint.com/vocabs/mcp#Server",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@graph": [
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/2"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/3"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/4"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/5"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/6"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/7"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/8"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/9"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/10"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/11"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/12"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/13"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/14"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/15"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/16"
-}
-],
-"http://a.ml/vocabularies/core#@entities": [
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/1"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/2"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/3"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/4"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/5"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/6"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/7"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/8"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/9"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/10"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/11"
-}
-]
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/0",
-"@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
-"http://a.ml/vocabularies/core#@type": [
-"http://a.ml/vocabularies/document#BaseUnitProcessingData"
-],
-"http://a.ml/vocabularies/core#transformed": false,
-"http://a.ml/vocabularies/core#sourceSpec": "MCP"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1",
-"@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
-"http://a.ml/vocabularies/core#@type": [
-"http://anypoint.com/vocabs/mcp#Server",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#name": "test-mcp-server",
-"http://a.ml/vocabularies/core#protocolVersion": "2024-11-05",
-"http://a.ml/vocabularies/core#transport": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http:/a.ml/vocabularies/core#transport"
-},
-"http://a.ml/vocabularies/core#capabilities": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http:/a.ml/vocabularies/core#capabilities"
-},
-"http://a.ml/vocabularies/core#tools": [
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23tools/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23tools/1"
-}
-],
-"http://a.ml/vocabularies/core#resources": [
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23resources/0"
-}
-],
-"http://a.ml/vocabularies/core#prompts": [
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23prompts/0"
-}
-],
-"http://a.ml/vocabularies/core#introspectedAt": "Thu Jun 05 09:38:22 PDT 2025",
-"http://a.ml/vocabularies/core#connectionStatus": "success"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/2",
-"@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport",
-"http://a.ml/vocabularies/core#@type": [
-"http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
-"http://anypoint.com/vocabs/mcp#Transport",
-"http://a.ml/vocabularies/core#transport",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#kind": "streamableHttp"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/3",
-"@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities",
-"http://a.ml/vocabularies/core#@type": [
-"http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#tools": true,
-"http://a.ml/vocabularies/core#resources": true,
-"http://a.ml/vocabularies/core#prompts": true,
-"http://a.ml/vocabularies/core#logging": true
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/4",
-"@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0",
-"http://a.ml/vocabularies/core#@type": [
 "http://anypoint.com/vocabs/mcp#Tool",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "echo",
 "http://a.ml/vocabularies/core#description": "Echo back the provided text",
 "http://a.ml/vocabularies/core#inputSchema": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/4/http:/a.ml/vocabularies/core#inputSchema"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema"
 }
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/5",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1",
-"http://a.ml/vocabularies/core#@type": [
 "http://anypoint.com/vocabs/mcp#Tool",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#name": "add",
 "http://a.ml/vocabularies/core#description": "Add two numbers together",
 "http://a.ml/vocabularies/core#inputSchema": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/5/http:/a.ml/vocabularies/core#inputSchema"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema"
 }
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/6",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/resources/0",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/resources/0",
-"http://a.ml/vocabularies/core#@type": [
 "http://anypoint.com/vocabs/mcp#Resource",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
@@ -241,13 +79,19 @@
 "http://a.ml/vocabularies/core#mimeType": "text/plain"
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/7",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
+"http://a.ml/vocabularies/core#capabilities",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0",
-"http://a.ml/vocabularies/core#@type": [
+"http://a.ml/vocabularies/core#tools": true,
+"http://a.ml/vocabularies/core#resources": true,
+"http://a.ml/vocabularies/core#prompts": true,
+"http://a.ml/vocabularies/core#logging": true
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0",
+"@type": [
 "http://anypoint.com/vocabs/mcp#Prompt",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
@@ -255,43 +99,43 @@
 "http://a.ml/vocabularies/core#description": "A friendly greeting prompt",
 "http://a.ml/vocabularies/core#arguments": [
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/7/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23arguments/0"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0/arguments/0"
 }
 ]
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/8",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
+"http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
+"http://anypoint.com/vocabs/mcp#Transport",
+"http://a.ml/vocabularies/core#transport",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema",
-"http://a.ml/vocabularies/core#@type": [
+"http://anypoint.com/vocabs/agents#kind": "streamableHttp"
+},
+{
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema",
+"@type": [
 "http://anypoint.com/vocabs/mcp#ToolInputSchema",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#type": "object",
 "http://a.ml/vocabularies/core#properties": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/8/http:/a.ml/vocabularies/core#properties"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties"
 },
 "http://a.ml/vocabularies/core#required": [
 "text"
 ]
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/9",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema",
-"http://a.ml/vocabularies/core#@type": [
 "http://anypoint.com/vocabs/mcp#ToolInputSchema",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#type": "object",
 "http://a.ml/vocabularies/core#properties": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/9/http:/a.ml/vocabularies/core#properties"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties"
 },
 "http://a.ml/vocabularies/core#required": [
 "a",
@@ -299,13 +143,8 @@
 ]
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/10",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0/arguments/0",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0/arguments/0",
-"http://a.ml/vocabularies/core#@type": [
 "http://anypoint.com/vocabs/mcp#PromptArgument",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
@@ -314,46 +153,31 @@
 "http://a.ml/vocabularies/core#required": true
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/11",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties",
-"http://a.ml/vocabularies/core#@type": [
 "http://a.ml/vocabularies/core#properties",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#text": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/11/http:/a.ml/vocabularies/core#text"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties/text"
 }
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/12",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties",
-"http://a.ml/vocabularies/core#@type": [
 "http://a.ml/vocabularies/core#properties",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
 "http://a.ml/vocabularies/core#a": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/12/http:/a.ml/vocabularies/core#a"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/a"
 },
 "http://a.ml/vocabularies/core#b": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/12/http:/a.ml/vocabularies/core#b"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/b"
 }
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/13",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties/text",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties/text",
-"http://a.ml/vocabularies/core#@type": [
 "http://a.ml/vocabularies/core#text",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
@@ -361,13 +185,8 @@
 "http://a.ml/vocabularies/core#description": "The text to echo back"
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/14",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/a",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/a",
-"http://a.ml/vocabularies/core#@type": [
 "http://a.ml/vocabularies/core#a",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
@@ -375,13 +194,8 @@
 "http://a.ml/vocabularies/core#description": "First number"
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/15",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/b",
 "@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/b",
-"http://a.ml/vocabularies/core#@type": [
 "http://a.ml/vocabularies/core#b",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
@@ -389,402 +203,7 @@
 "http://a.ml/vocabularies/core#description": "Second number"
 },
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/16",
-"@type": [
-"http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml",
-"http://a.ml/vocabularies/core#@type": [
-"http://a.ml/vocabularies/document#JsonLDInstanceDocument",
-"http://a.ml/vocabularies/document#Document",
-"http://a.ml/vocabularies/document#Fragment",
-"http://a.ml/vocabularies/document#Module",
-"http://a.ml/vocabularies/document#Unit"
-],
-"http://a.ml/vocabularies/core#encodes": [
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/16/http%3A%2F%2Fa.ml%2Fvocabularies%2Fdocument%23encodes/0"
-}
-],
-"http://a.ml/vocabularies/core#root": true,
-"http://a.ml/vocabularies/core#processingData": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/16/http:/a.ml/vocabularies/document#processingData"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/0",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#StreamableHttpTransport": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/0/http:/anypoint.com/vocabs/mcp#StreamableHttpTransport"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/1",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#ToolInputSchema": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/1/http:/anypoint.com/vocabs/mcp#ToolInputSchema"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/2",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#Tool": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/2/http:/anypoint.com/vocabs/mcp#Tool"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/3",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#PromptArgument": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/3/http:/anypoint.com/vocabs/mcp#PromptArgument"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/4",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#text": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/4/http:/a.ml/vocabularies/core#text"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/5",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#Resource": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/5/http:/anypoint.com/vocabs/mcp#Resource"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/6",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#capabilities": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/6/http:/a.ml/vocabularies/core#capabilities"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/7",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#properties": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/7/http:/a.ml/vocabularies/core#properties"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/8",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#a": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/8/http:/a.ml/vocabularies/core#a"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/9",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#Server": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/9/http:/anypoint.com/vocabs/mcp#Server"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/10",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#Prompt": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/10/http:/anypoint.com/vocabs/mcp#Prompt"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/11",
-"@type": [
-"http://a.ml/vocabularies/core#@entities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#b": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/11/http:/a.ml/vocabularies/core#b"
-}
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http:/a.ml/vocabularies/core#transport",
-"@type": [
-"http://a.ml/vocabularies/core#transport",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http:/a.ml/vocabularies/core#capabilities",
-"@type": [
-"http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23tools/0",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23tools/1",
-"@type": [
-"http://a.ml/vocabularies/core#tools",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23resources/0",
-"@type": [
-"http://a.ml/vocabularies/core#resources",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/resources/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/1/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23prompts/0",
-"@type": [
-"http://a.ml/vocabularies/core#prompts",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/4/http:/a.ml/vocabularies/core#inputSchema",
-"@type": [
-"http://a.ml/vocabularies/core#inputSchema",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/5/http:/a.ml/vocabularies/core#inputSchema",
-"@type": [
-"http://a.ml/vocabularies/core#inputSchema",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/7/http%3A%2F%2Fa.ml%2Fvocabularies%2Fcore%23arguments/0",
-"@type": [
-"http://a.ml/vocabularies/core#arguments",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0/arguments/0"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/8/http:/a.ml/vocabularies/core#properties",
-"@type": [
-"http://a.ml/vocabularies/core#properties",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/9/http:/a.ml/vocabularies/core#properties",
-"@type": [
-"http://a.ml/vocabularies/core#properties",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/11/http:/a.ml/vocabularies/core#text",
-"@type": [
-"http://a.ml/vocabularies/core#text",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/0/inputSchema/properties/text"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/12/http:/a.ml/vocabularies/core#a",
-"@type": [
-"http://a.ml/vocabularies/core#a",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/a"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/12/http:/a.ml/vocabularies/core#b",
-"@type": [
-"http://a.ml/vocabularies/core#b",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/tools/1/inputSchema/properties/b"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/16/http%3A%2F%2Fa.ml%2Fvocabularies%2Fdocument%23encodes/0",
-"@type": [
-"http://a.ml/vocabularies/core#encodes",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40graph/16/http:/a.ml/vocabularies/document#processingData",
-"@type": [
-"http://a.ml/vocabularies/core#processingData",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/0/http:/anypoint.com/vocabs/mcp#StreamableHttpTransport",
-"@type": [
-"http://a.ml/vocabularies/core#StreamableHttpTransport",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#kind": "http://www.w3.org/2001/XMLSchema#string"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/1/http:/anypoint.com/vocabs/mcp#ToolInputSchema",
-"@type": [
-"http://a.ml/vocabularies/core#ToolInputSchema",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#properties": "http://a.ml/vocabularies/core#properties",
-"http://a.ml/vocabularies/core#required": "http://www.w3.org/2001/XMLSchema#string"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/2/http:/anypoint.com/vocabs/mcp#Tool",
-"@type": [
-"http://a.ml/vocabularies/core#Tool",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#inputSchema": "http://anypoint.com/vocabs/mcp#ToolInputSchema"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/3/http:/anypoint.com/vocabs/mcp#PromptArgument",
-"@type": [
-"http://a.ml/vocabularies/core#PromptArgument",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#required": "http://www.w3.org/2001/XMLSchema#boolean"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/4/http:/a.ml/vocabularies/core#text",
-"@type": [
-"http://a.ml/vocabularies/core#text",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/5/http:/anypoint.com/vocabs/mcp#Resource",
-"@type": [
-"http://a.ml/vocabularies/core#Resource",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#uri": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#mimeType": "http://www.w3.org/2001/XMLSchema#string"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/6/http:/a.ml/vocabularies/core#capabilities",
-"@type": [
-"http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#tools": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#resources": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#prompts": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#logging": "http://www.w3.org/2001/XMLSchema#boolean"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/7/http:/a.ml/vocabularies/core#properties",
-"@type": [
-"http://a.ml/vocabularies/core#properties",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#a": "http://a.ml/vocabularies/core#a",
-"http://a.ml/vocabularies/core#b": "http://a.ml/vocabularies/core#b",
-"http://a.ml/vocabularies/core#text": "http://a.ml/vocabularies/core#text"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/8/http:/a.ml/vocabularies/core#a",
-"@type": [
-"http://a.ml/vocabularies/core#a",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/9/http:/anypoint.com/vocabs/mcp#Server",
-"@type": [
-"http://a.ml/vocabularies/core#Server",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#connectionStatus": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#tools": "http://anypoint.com/vocabs/mcp#Tool",
-"http://a.ml/vocabularies/core#resources": "http://anypoint.com/vocabs/mcp#Resource",
-"http://a.ml/vocabularies/core#capabilities": "http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#protocolVersion": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#introspectedAt": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#prompts": "http://anypoint.com/vocabs/mcp#Prompt",
-"http://a.ml/vocabularies/core#transport": "http://anypoint.com/vocabs/mcp#StreamableHttpTransport"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/10/http:/anypoint.com/vocabs/mcp#Prompt",
-"@type": [
-"http://a.ml/vocabularies/core#Prompt",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#arguments": "http://anypoint.com/vocabs/mcp#PromptArgument"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/%40entities/11/http:/a.ml/vocabularies/core#b",
-"@type": [
-"http://a.ml/vocabularies/core#b",
-"http://a.ml/vocabularies/document#JsonLDObject"
-],
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string"
-},
-{
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld",
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml",
 "@type": [
 "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
 "http://a.ml/vocabularies/document#Document",
@@ -794,201 +213,12 @@
 ],
 "http://a.ml/vocabularies/document#encodes": [
 {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/encodes/"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
 }
 ],
 "http://a.ml/vocabularies/document#root": true,
 "http://a.ml/vocabularies/document#processingData": {
-"@id": "file://amf-mcp/shared/src/test/resources/instances/cycle/instance-with-entities.jsonld#/BaseUnitProcessingData"
-}
-}
-],
-"@entities": [
-{
-"http://a.ml/vocabularies/core#encodes": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#Tool": {
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#inputSchema": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#@graph": {
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#a": "http://a.ml/vocabularies/core#a",
-"http://a.ml/vocabularies/core#b": "http://a.ml/vocabularies/core#b",
-"http://a.ml/vocabularies/core#inputSchema": "http://a.ml/vocabularies/core#inputSchema",
-"http://a.ml/vocabularies/core#properties": "http://a.ml/vocabularies/core#properties",
-"http://a.ml/vocabularies/core#transformed": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#@type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#encodes": "http://a.ml/vocabularies/core#encodes",
-"http://a.ml/vocabularies/core#connectionStatus": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#tools": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#resources": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#root": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#sourceSpec": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#capabilities": "http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/core#uri": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#processingData": "http://a.ml/vocabularies/core#processingData",
-"http://a.ml/vocabularies/core#mimeType": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#logging": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#kind": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#text": "http://a.ml/vocabularies/core#text",
-"http://a.ml/vocabularies/core#protocolVersion": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#required": "http://www.w3.org/2001/XMLSchema#boolean",
-"http://a.ml/vocabularies/core#arguments": "http://a.ml/vocabularies/core#arguments",
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#introspectedAt": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#prompts": "http://a.ml/vocabularies/core#prompts",
-"http://a.ml/vocabularies/core#transport": "http://a.ml/vocabularies/core#transport"
-}
-},
-{
-"http://a.ml/vocabularies/core#Resource": {
-"http://a.ml/vocabularies/core#uri": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#mimeType": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#PromptArgument": {
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#required": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#resources": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#prompts": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#arguments": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#Prompt": {
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#arguments": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#ToolInputSchema": {
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#properties": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#required": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#Server": {
-"http://a.ml/vocabularies/core#connectionStatus": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#tools": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#resources": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#capabilities": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#name": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#protocolVersion": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#introspectedAt": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#prompts": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#transport": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#inputSchema": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#text": {
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#StreamableHttpTransport": {
-"http://a.ml/vocabularies/core#kind": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#capabilities": {
-"http://a.ml/vocabularies/core#tools": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#resources": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#logging": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#prompts": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#processingData": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#properties": {
-"http://a.ml/vocabularies/core#a": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#b": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#text": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#tools": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#a": {
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#@entities": {
-"http://a.ml/vocabularies/core#ToolInputSchema": "http://a.ml/vocabularies/core#ToolInputSchema",
-"http://a.ml/vocabularies/core#a": "http://a.ml/vocabularies/core#a",
-"http://a.ml/vocabularies/core#b": "http://a.ml/vocabularies/core#b",
-"http://a.ml/vocabularies/core#Tool": "http://a.ml/vocabularies/core#Tool",
-"http://a.ml/vocabularies/core#properties": "http://a.ml/vocabularies/core#properties",
-"http://a.ml/vocabularies/core#capabilities": "http://a.ml/vocabularies/core#capabilities",
-"http://a.ml/vocabularies/core#Prompt": "http://a.ml/vocabularies/core#Prompt",
-"http://a.ml/vocabularies/core#Resource": "http://a.ml/vocabularies/core#Resource",
-"http://a.ml/vocabularies/core#text": "http://a.ml/vocabularies/core#text",
-"http://a.ml/vocabularies/core#PromptArgument": "http://a.ml/vocabularies/core#PromptArgument",
-"http://a.ml/vocabularies/core#StreamableHttpTransport": "http://a.ml/vocabularies/core#StreamableHttpTransport",
-"http://a.ml/vocabularies/core#Server": "http://a.ml/vocabularies/core#Server"
-}
-},
-{
-"http://anypoint.com/vocabs/mcp#Server": {
-"http://a.ml/vocabularies/core#@graph": "http://a.ml/vocabularies/core#@graph",
-"http://a.ml/vocabularies/core#@entities": "http://a.ml/vocabularies/core#@entities"
-}
-},
-{
-"http://a.ml/vocabularies/core#b": {
-"http://a.ml/vocabularies/core#type": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#description": "http://www.w3.org/2001/XMLSchema#string",
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-},
-{
-"http://a.ml/vocabularies/core#transport": {
-"http://a.ml/vocabularies/core#@id": "http://www.w3.org/2001/XMLSchema#string"
+"@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
 }
 }
 ]
