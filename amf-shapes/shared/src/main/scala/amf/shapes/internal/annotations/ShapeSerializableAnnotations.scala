@@ -7,17 +7,19 @@ import amf.core.internal.annotations.{
   InheritanceProvenance,
   InheritedShapes,
   NilUnion,
+  ResolvedReferenceLike,
   TrackedElement
 }
 
 private[amf] object ShapeSerializableAnnotations extends SerializableAnnotations {
 
   override val annotations: Map[String, AnnotationGraphLoader] = Map(
-    "type-expression"        -> ParsedFromTypeExpression,
-    "inheritance-provenance" -> InheritanceProvenance,
-    "inherited-shapes"       -> InheritedShapes,
-    "nil-union"              -> NilUnion,
-    "inferred-property"      -> InferredProperty,
-    "tracked-element"        -> TrackedElement
+    "type-expression"         -> ParsedFromTypeExpression,
+    "inheritance-provenance"  -> InheritanceProvenance,
+    "inherited-shapes"        -> InheritedShapes,
+    "nil-union"               -> NilUnion,
+    "inferred-property"       -> InferredProperty,
+    "tracked-element"         -> TrackedElement,
+    "resolved-reference-like" -> ResolvedReferenceLike
   )
 }
