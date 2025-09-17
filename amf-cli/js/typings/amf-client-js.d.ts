@@ -6814,7 +6814,7 @@ declare module "amf-client-js" {
     static readonly RAML08: ProfileName;
     static readonly RAML10: ProfileName;
     static readonly MCP: ProfileName;
-    static readonly BROKER_GROUP: ProfileName;
+    static readonly AGENT_NETWORK: ProfileName;
     static readonly AGENT_CARD: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
@@ -8960,7 +8960,7 @@ declare module "amf-client-js" {
     static readonly RAML08: Spec;
     static readonly RAML10: Spec;
     static readonly MCP: Spec;
-    static readonly BROKER_GROUP: Spec;
+    static readonly AGENT_NETWORK: Spec;
     static readonly AGENT_CARD: Spec;
 
     static apply(name: string): Spec;
@@ -9791,36 +9791,36 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
-  export class BrokerGroupConfiguration extends BaseBrokerGroupConfiguration {
-    static BrokerGroup(): BrokerGroupConfiguration;
+  export class AgentNetworkConfiguration extends BaseAgentNetworkConfiguration {
+    static AgentNetwork(): AgentNetworkConfiguration;
 
-    baseUnitClient(): BrokerGroupBaseUnitClient;
+    baseUnitClient(): AgentNetworkBaseUnitClient;
   }
 
-  export class BaseBrokerGroupConfiguration extends BaseShapesConfiguration {
-    withDialect(dialect: Dialect): BaseBrokerGroupConfiguration;
+  export class BaseAgentNetworkConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentNetworkConfiguration;
 
     withErrorHandlerProvider(
         provider: ErrorHandlerProvider
-    ): BaseBrokerGroupConfiguration;
+    ): BaseAgentNetworkConfiguration;
 
-    withEventListener(listener: AMFEventListener): BaseBrokerGroupConfiguration;
+    withEventListener(listener: AMFEventListener): BaseAgentNetworkConfiguration;
 
-    withParsingOptions(parsingOptions: ParsingOptions): BaseBrokerGroupConfiguration;
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentNetworkConfiguration;
 
-    withRenderOptions(renderOptions: RenderOptions): BaseBrokerGroupConfiguration;
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentNetworkConfiguration;
 
-    withResourceLoader(rl: ResourceLoader): BaseBrokerGroupConfiguration;
+    withResourceLoader(rl: ResourceLoader): BaseAgentNetworkConfiguration;
 
-    withResourceLoaders(rl: Array<ResourceLoader>): BaseBrokerGroupConfiguration;
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentNetworkConfiguration;
 
     withTransformationPipeline(
         pipeline: TransformationPipeline
-    ): BaseBrokerGroupConfiguration;
+    ): BaseAgentNetworkConfiguration;
 
-    withUnitCache(cache: UnitCache): BaseBrokerGroupConfiguration;
+    withUnitCache(cache: UnitCache): BaseAgentNetworkConfiguration;
   }
-  export class BrokerGroupBaseUnitClient extends AMLBaseUnitClient {
+  export class AgentNetworkBaseUnitClient extends AMLBaseUnitClient {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
