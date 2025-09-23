@@ -5,6 +5,7 @@ import amf.core.client.scala.parse.document.{SyamlParsedDocument, UnspecifiedRef
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Mimes
+import amf.shapes.internal.plugins.parser.entry.DefaultIdVersion
 import org.mulesoft.common.io.Fs
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.YDocument
@@ -14,22 +15,11 @@ class LLMMetadataProtocolEntryTest extends AsyncFunSuiteWithPlatformGlobalExecut
 
   private val basePath: String = "amf-llm-metadata/shared/src/test/resources/instances/entry/"
 
-//  test("LLMMetadata with string protocolVersion") {
-//    val maybeVersion = LLMMetadataIdEntry.apply(getRoot(basePath + "any-string.json"))
-//    maybeVersion.nonEmpty shouldBe true
-//    maybeVersion.get.version shouldBe "0.1"
-//  }
-//
-//  test("LLMMetadata with number protocolVersion") {
-//    val maybeVersion = LLMMetadataIdEntry.apply(getRoot(basePath + "any-number.json"))
-//    maybeVersion.nonEmpty shouldBe true
-//    maybeVersion.get.version shouldBe "0.1"
-//  }
-//
-//  test("LLMMetadata without protocol entry") {
-//    val maybeVersion = LLMMetadataIdEntry.apply(getRoot(basePath + "none.json"))
-//    maybeVersion.nonEmpty shouldBe false
-//  }
+  test("LLMMetadata with string protocolVersion") {
+    val maybeVersion = LLMMetadataIdEntry.apply(getRoot(basePath + "none.json"))
+    maybeVersion.nonEmpty shouldBe true
+    maybeVersion.get shouldBe DefaultIdVersion
+  }
 
   private def getRoot(path: String): Root =
     Root(SyamlParsedDocument(getYDocument(path)), "", Mimes.`application/json`, Nil, UnspecifiedReference, "")

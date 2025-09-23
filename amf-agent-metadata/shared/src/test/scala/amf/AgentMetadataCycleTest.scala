@@ -15,13 +15,13 @@ class AgentMetadataCycleTest extends FileAssertionTest {
   private val agentConfig: ShapesConfiguration =
     AgentMetadataConfiguration.AgentMetadata().withRenderOptions(renderOptions)
 
-//  test("Render AgentMetadata JSON instance to JSON-LD") {
-//    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
-//  }
-//
-//  test("Render AgentMetadata YAML instance to JSON-LD") {
-//    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
-//  }
+  test("Render AgentMetadata JSON instance to JSON-LD") {
+    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
+  }
+
+  test("Render AgentMetadata YAML instance to JSON-LD") {
+    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
+  }
 
   def cycle(source: String, golden: String): Future[Assertion] = {
     for {
