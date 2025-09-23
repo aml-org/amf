@@ -1,14 +1,12 @@
 package amf
 
+import amf.agentmetadata.client.scala.AgentMetadataConfiguration
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.config.RenderOptions
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.{Mimes, Spec}
-import amf.agentmetadata.client.scala.AgentMetadataConfiguration
-import amf.core.client.scala.config.RenderOptions
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.Future
 
 class AgentMetadataSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
@@ -16,18 +14,18 @@ class AgentMetadataSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecuti
   private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris.withEntityEmission
   private val client        = AgentMetadataConfiguration.AgentMetadata().withRenderOptions(renderOptions).baseUnitClient()
 
-//  test("Parsed JSON-LD from AgentMetadata should have AgentMetadata source spec") {
-//    for {
-//      result <- client.parse(basePath + "valid/instance_1.json")
-//      jsonld = client.render(result.baseUnit, Mimes.`application/ld+json`)
-//      jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
-//    } yield {
-//      result.conforms shouldBe true
-//      jsonLdUnit.conforms shouldBe true
-//      jsonLdUnit.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-//      jsonLdUnit.sourceSpec shouldBe Spec.AGENT_METADATA
-//    }
-//  }
+  test("Parsed JSON-LD from AgentMetadata should have AgentMetadata source spec") {
+    for {
+      result <- client.parse(basePath + "valid/instance_1.json")
+      jsonld = client.render(result.baseUnit, Mimes.`application/ld+json`)
+      jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
+    } yield {
+      result.conforms shouldBe true
+      jsonLdUnit.conforms shouldBe true
+      jsonLdUnit.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+      jsonLdUnit.sourceSpec shouldBe Spec.AGENT_METADATA
+    }
+  }
 
   test("Transformation (empty) should conforms") {
     for {

@@ -5,6 +5,7 @@ import amf.core.client.scala.parse.document.{SyamlParsedDocument, UnspecifiedRef
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Mimes
+import amf.shapes.internal.plugins.parser.entry.DefaultIdVersion
 import org.mulesoft.common.io.Fs
 import org.scalatest.matchers.should.Matchers
 import org.yaml.model.YDocument
@@ -14,22 +15,11 @@ class AgentMetadataProtocolEntryTest extends AsyncFunSuiteWithPlatformGlobalExec
 
   private val basePath: String = "amf-agent-metadata/shared/src/test/resources/instances/entry/"
 
-//  test("AgentMetadata with string protocolVersion") {
-//    val maybeVersion = AgentMetadataIdEntry.apply(getRoot(basePath + "any-string.json"))
-//    maybeVersion.nonEmpty shouldBe true
-//    maybeVersion.get.version shouldBe "0.1"
-//  }
-//
-//  test("AgentMetadata with number protocolVersion") {
-//    val maybeVersion = AgentMetadataIdEntry.apply(getRoot(basePath + "any-number.json"))
-//    maybeVersion.nonEmpty shouldBe true
-//    maybeVersion.get.version shouldBe "0.1"
-//  }
-//
-//  test("AgentMetadata without protocol entry") {
-//    val maybeVersion = AgentMetadataIdEntry.apply(getRoot(basePath + "none.json"))
-//    maybeVersion.nonEmpty shouldBe false
-//  }
+  test("AgentMetadata with string protocolVersion") {
+    val maybeVersion = AgentMetadataIdEntry.apply(getRoot(basePath + "none.json"))
+    maybeVersion.nonEmpty shouldBe true
+    maybeVersion.get shouldBe DefaultIdVersion
+  }
 
   private def getRoot(path: String): Root =
     Root(SyamlParsedDocument(getYDocument(path)), "", Mimes.`application/json`, Nil, UnspecifiedReference, "")
