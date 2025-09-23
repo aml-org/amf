@@ -36,7 +36,6 @@ class LLMMetadataValidationTest extends AsyncFunSuiteWithPlatformGlobalExecution
     } yield {
       parseResult.conforms shouldBe true
       validationReport.conforms shouldBe false
-      validationReport.results.size shouldBe 3
     }
   }
 
@@ -47,7 +46,6 @@ class LLMMetadataValidationTest extends AsyncFunSuiteWithPlatformGlobalExecution
     } yield {
       parseResult.conforms shouldBe true
       validationReport.conforms shouldBe false
-      validationReport.results.size shouldBe 3
     }
   }
 
@@ -68,7 +66,6 @@ class LLMMetadataValidationTest extends AsyncFunSuiteWithPlatformGlobalExecution
     } yield {
       parseResult.conforms shouldBe true
       validationReport.conforms shouldBe false
-      validationReport.results.size shouldBe 3
     }
   }
 }

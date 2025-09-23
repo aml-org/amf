@@ -48,3 +48,5 @@ This is a list of each schema and what dependencies have to be manually included
   - PolicyRef (from the [references.json](https://github.com/mulesoft-emu/agent-fabric-specification/blob/master/agent-fabric-schema/src/main/resources/references.json) file)
 - agent-network
   - this module has all the dependencies from references.json, llm_metadata.json, some from the a2a.json and some from mcp_metadata.json
+- agent-card
+  - in the schema we add a $ref to the AgentCard definition

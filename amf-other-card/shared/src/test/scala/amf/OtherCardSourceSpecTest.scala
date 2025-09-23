@@ -13,21 +13,21 @@ import scala.concurrent.Future
 class OtherCardSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath      = "file://amf-other-card/shared/src/test/resources/instances/"
-  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris
+  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris.withEntityEmission
   private val client        = OtherCardConfiguration.OtherCard().withRenderOptions(renderOptions).baseUnitClient()
 
-//  test("Parsed JSON-LD from OtherCard should have OtherCard source spec") {
-//    for {
-//      result <- client.parse(basePath + "valid/instance_1.json")
-//      jsonld = client.render(result.baseUnit, Mimes.`application/ld+json`)
-//      jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
-//    } yield {
-//      result.conforms shouldBe true
-//      jsonLdUnit.conforms shouldBe true
-//      jsonLdUnit.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-//      jsonLdUnit.sourceSpec shouldBe Spec.OTHER_CARD
-//    }
-//  }
+  test("Parsed JSON-LD from OtherCard should have OtherCard source spec") {
+    for {
+      result <- client.parse(basePath + "valid/instance_1.json")
+      jsonld = client.render(result.baseUnit, Mimes.`application/ld+json`)
+      jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
+    } yield {
+      result.conforms shouldBe true
+      jsonLdUnit.conforms shouldBe true
+      jsonLdUnit.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+      jsonLdUnit.sourceSpec shouldBe Spec.OTHER_CARD
+    }
+  }
 
   test("Transformation (empty) should conforms") {
     for {

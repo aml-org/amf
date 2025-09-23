@@ -13,7 +13,7 @@ import scala.concurrent.Future
 class AgentMetadataSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private val basePath      = "file://amf-agent-metadata/shared/src/test/resources/instances/"
-  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris
+  private val renderOptions = RenderOptions().withPrettyPrint.withCompactUris.withEntityEmission
   private val client        = AgentMetadataConfiguration.AgentMetadata().withRenderOptions(renderOptions).baseUnitClient()
 
 //  test("Parsed JSON-LD from AgentMetadata should have AgentMetadata source spec") {
