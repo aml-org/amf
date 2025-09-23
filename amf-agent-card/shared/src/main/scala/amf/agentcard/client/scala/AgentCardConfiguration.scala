@@ -1,5 +1,8 @@
 package amf.agentcard.client.scala
 
+import amf.agentcard.internal.plugins.parse.AgentCardParsePlugin
+import amf.agentcard.internal.plugins.render.AgentCardRenderPlugin
+import amf.agentcard.internal.plugins.validation.AgentCardValidationPlugin
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.adoption.IdAdopterProvider
@@ -18,13 +21,9 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
-import amf.agentcard.internal.plugins.parse.AgentCardParsePlugin
-import amf.agentcard.internal.plugins.render.AgentCardRenderPlugin
-import amf.agentcard.internal.plugins.validation.AgentCardValidationPlugin
-import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
-import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
-import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
   JsonSchemaBasedSpecEditingPipeline,
@@ -41,12 +40,12 @@ class AgentCardConfiguration private[amf] (
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
 ) extends JsonSchemaBasedSpecConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry,
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry,
+        listeners,
+        options,
+        idAdopterProvider
     ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
@@ -60,12 +59,12 @@ class AgentCardConfiguration private[amf] (
       idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): AgentCardConfiguration =
     new AgentCardConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry.asInstanceOf[AMLRegistry],
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry.asInstanceOf[AMLRegistry],
+        listeners,
+        options,
+        idAdopterProvider
     )
 
   override def baseUnitClient(): AgentCardBaseUnitClient = new AgentCardBaseUnitClient(this)
@@ -157,7 +156,8 @@ class AgentCardConfiguration private[amf] (
     super._withTransformationPipeline(pipeline)
 
   /** AMF internal method just to facilitate the construction */
-  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AgentCardConfiguration =
+  override private[amf] def withTransformationPipelines(
+      pipelines: List[TransformationPipeline]): AgentCardConfiguration =
     super._withTransformationPipelines(pipelines)
 
   /** Set [[ErrorHandlerProvider]]
@@ -175,7 +175,8 @@ class AgentCardConfiguration private[amf] (
     * @return
     *   [[AgentCardConfiguration]] with [[AMFEventListener]] added
     */
-  override def withEventListener(listener: AMFEventListener): AgentCardConfiguration = super._withEventListener(listener)
+  override def withEventListener(listener: AMFEventListener): AgentCardConfiguration =
+    super._withEventListener(listener)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AgentCardConfiguration =
     super._withEntities(entities)
@@ -235,31 +236,31 @@ object AgentCardConfiguration {
   def AgentCard(): AgentCardConfiguration =
     predefined()
       .withPlugins(
-        List(
-          AgentCardParsePlugin,
-          AgentCardRenderPlugin,
-          AgentCardValidationPlugin(),
-          AMFJsonLDSchemaGraphRenderPlugin,
-          AMFJsonLDSchemaGraphParsePlugin
-        )
+          List(
+              AgentCardParsePlugin,
+              AgentCardRenderPlugin,
+              AgentCardValidationPlugin(),
+              JsonSchemaBasedSpecGraphRenderPlugin,
+              AMFJsonLDSchemaGraphParsePlugin
+          )
       )
       .withTransformationPipelines(
-        List(
-          JsonSchemaBasedSpecTransformationPipeline(),
-          JsonSchemaBasedSpecEditingPipeline(),
-          JsonSchemaBasedSpecCachePipeline()
-        )
+          List(
+              JsonSchemaBasedSpecTransformationPipeline(),
+              JsonSchemaBasedSpecEditingPipeline(),
+              JsonSchemaBasedSpecCachePipeline()
+          )
       )
 
   private def predefined(): AgentCardConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new AgentCardConfiguration(
-      baseConfig.resolvers,
-      baseConfig.errorHandlerProvider,
-      baseConfig.registry,
-      baseConfig.listeners,
-      baseConfig.options,
-      baseConfig.idAdopterProvider
+        baseConfig.resolvers,
+        baseConfig.errorHandlerProvider,
+        baseConfig.registry,
+        baseConfig.listeners,
+        baseConfig.options,
+        baseConfig.idAdopterProvider
     )
   }
 }

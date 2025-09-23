@@ -1,5 +1,8 @@
 package amf.agentmetadata.client.scala
 
+import amf.agentmetadata.internal.plugins.parse.AgentMetadataParsePlugin
+import amf.agentmetadata.internal.plugins.render.AgentMetadataRenderPlugin
+import amf.agentmetadata.internal.plugins.validation.AgentMetadataValidationPlugin
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.adoption.IdAdopterProvider
@@ -18,13 +21,9 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
-import amf.agentmetadata.internal.plugins.parse.AgentMetadataParsePlugin
-import amf.agentmetadata.internal.plugins.render.AgentMetadataRenderPlugin
-import amf.agentmetadata.internal.plugins.validation.AgentMetadataValidationPlugin
-import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
-import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
-import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
   JsonSchemaBasedSpecEditingPipeline,
@@ -41,12 +40,12 @@ class AgentMetadataConfiguration private[amf] (
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
 ) extends JsonSchemaBasedSpecConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry,
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry,
+        listeners,
+        options,
+        idAdopterProvider
     ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
@@ -60,12 +59,12 @@ class AgentMetadataConfiguration private[amf] (
       idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): AgentMetadataConfiguration =
     new AgentMetadataConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry.asInstanceOf[AMLRegistry],
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry.asInstanceOf[AMLRegistry],
+        listeners,
+        options,
+        idAdopterProvider
     )
 
   override def baseUnitClient(): AgentMetadataBaseUnitClient = new AgentMetadataBaseUnitClient(this)
@@ -157,7 +156,8 @@ class AgentMetadataConfiguration private[amf] (
     super._withTransformationPipeline(pipeline)
 
   /** AMF internal method just to facilitate the construction */
-  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AgentMetadataConfiguration =
+  override private[amf] def withTransformationPipelines(
+      pipelines: List[TransformationPipeline]): AgentMetadataConfiguration =
     super._withTransformationPipelines(pipelines)
 
   /** Set [[ErrorHandlerProvider]]
@@ -175,7 +175,8 @@ class AgentMetadataConfiguration private[amf] (
     * @return
     *   [[AgentMetadataConfiguration]] with [[AMFEventListener]] added
     */
-  override def withEventListener(listener: AMFEventListener): AgentMetadataConfiguration = super._withEventListener(listener)
+  override def withEventListener(listener: AMFEventListener): AgentMetadataConfiguration =
+    super._withEventListener(listener)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AgentMetadataConfiguration =
     super._withEntities(entities)
@@ -187,7 +188,8 @@ class AgentMetadataConfiguration private[amf] (
     super.withExtensions(dialect).asInstanceOf[AgentMetadataConfiguration]
   }
 
-  private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AgentMetadataConfiguration =
+  private[amf] override def withAnnotations(
+      annotations: Map[String, AnnotationGraphLoader]): AgentMetadataConfiguration =
     super._withAnnotations(annotations)
 
   /** Set [[BaseExecutionEnvironment]]
@@ -235,31 +237,31 @@ object AgentMetadataConfiguration {
   def AgentMetadata(): AgentMetadataConfiguration =
     predefined()
       .withPlugins(
-        List(
-          AgentMetadataParsePlugin,
-          AgentMetadataRenderPlugin,
-          AgentMetadataValidationPlugin(),
-          AMFJsonLDSchemaGraphRenderPlugin,
-          AMFJsonLDSchemaGraphParsePlugin
-        )
+          List(
+              AgentMetadataParsePlugin,
+              AgentMetadataRenderPlugin,
+              AgentMetadataValidationPlugin(),
+              JsonSchemaBasedSpecGraphRenderPlugin,
+              AMFJsonLDSchemaGraphParsePlugin
+          )
       )
       .withTransformationPipelines(
-        List(
-          JsonSchemaBasedSpecTransformationPipeline(),
-          JsonSchemaBasedSpecEditingPipeline(),
-          JsonSchemaBasedSpecCachePipeline()
-        )
+          List(
+              JsonSchemaBasedSpecTransformationPipeline(),
+              JsonSchemaBasedSpecEditingPipeline(),
+              JsonSchemaBasedSpecCachePipeline()
+          )
       )
 
   private def predefined(): AgentMetadataConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new AgentMetadataConfiguration(
-      baseConfig.resolvers,
-      baseConfig.errorHandlerProvider,
-      baseConfig.registry,
-      baseConfig.listeners,
-      baseConfig.options,
-      baseConfig.idAdopterProvider
+        baseConfig.resolvers,
+        baseConfig.errorHandlerProvider,
+        baseConfig.registry,
+        baseConfig.listeners,
+        baseConfig.options,
+        baseConfig.idAdopterProvider
     )
   }
 }

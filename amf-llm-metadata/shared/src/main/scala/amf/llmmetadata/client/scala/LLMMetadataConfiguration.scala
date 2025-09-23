@@ -21,10 +21,9 @@ import amf.core.internal.validation.core.ValidationProfile
 import amf.llmmetadata.internal.plugins.parse.LLMMetadataParsePlugin
 import amf.llmmetadata.internal.plugins.render.LLMMetadataRenderPlugin
 import amf.llmmetadata.internal.plugins.validation.LLMMetadataValidationPlugin
-import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
-import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
-import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
   JsonSchemaBasedSpecEditingPipeline,
@@ -41,12 +40,12 @@ class LLMMetadataConfiguration private[amf] (
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
 ) extends JsonSchemaBasedSpecConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry,
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry,
+        listeners,
+        options,
+        idAdopterProvider
     ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
@@ -60,12 +59,12 @@ class LLMMetadataConfiguration private[amf] (
       idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): LLMMetadataConfiguration =
     new LLMMetadataConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry.asInstanceOf[AMLRegistry],
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry.asInstanceOf[AMLRegistry],
+        listeners,
+        options,
+        idAdopterProvider
     )
 
   override def baseUnitClient(): LLMMetadataBaseUnitClient = new LLMMetadataBaseUnitClient(this)
@@ -157,7 +156,8 @@ class LLMMetadataConfiguration private[amf] (
     super._withTransformationPipeline(pipeline)
 
   /** AMF internal method just to facilitate the construction */
-  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): LLMMetadataConfiguration =
+  override private[amf] def withTransformationPipelines(
+      pipelines: List[TransformationPipeline]): LLMMetadataConfiguration =
     super._withTransformationPipelines(pipelines)
 
   /** Set [[ErrorHandlerProvider]]
@@ -175,7 +175,8 @@ class LLMMetadataConfiguration private[amf] (
     * @return
     *   [[LLMMetadataConfiguration]] with [[AMFEventListener]] added
     */
-  override def withEventListener(listener: AMFEventListener): LLMMetadataConfiguration = super._withEventListener(listener)
+  override def withEventListener(listener: AMFEventListener): LLMMetadataConfiguration =
+    super._withEventListener(listener)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): LLMMetadataConfiguration =
     super._withEntities(entities)
@@ -235,31 +236,31 @@ object LLMMetadataConfiguration {
   def LLMMetadata(): LLMMetadataConfiguration =
     predefined()
       .withPlugins(
-        List(
-          LLMMetadataParsePlugin,
-          LLMMetadataRenderPlugin,
-          LLMMetadataValidationPlugin(),
-          AMFJsonLDSchemaGraphRenderPlugin,
-          AMFJsonLDSchemaGraphParsePlugin
-        )
+          List(
+              LLMMetadataParsePlugin,
+              LLMMetadataRenderPlugin,
+              LLMMetadataValidationPlugin(),
+              JsonSchemaBasedSpecGraphRenderPlugin,
+              AMFJsonLDSchemaGraphParsePlugin
+          )
       )
       .withTransformationPipelines(
-        List(
-          JsonSchemaBasedSpecTransformationPipeline(),
-          JsonSchemaBasedSpecEditingPipeline(),
-          JsonSchemaBasedSpecCachePipeline()
-        )
+          List(
+              JsonSchemaBasedSpecTransformationPipeline(),
+              JsonSchemaBasedSpecEditingPipeline(),
+              JsonSchemaBasedSpecCachePipeline()
+          )
       )
 
   private def predefined(): LLMMetadataConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new LLMMetadataConfiguration(
-      baseConfig.resolvers,
-      baseConfig.errorHandlerProvider,
-      baseConfig.registry,
-      baseConfig.listeners,
-      baseConfig.options,
-      baseConfig.idAdopterProvider
+        baseConfig.resolvers,
+        baseConfig.errorHandlerProvider,
+        baseConfig.registry,
+        baseConfig.listeners,
+        baseConfig.options,
+        baseConfig.idAdopterProvider
     )
   }
 }
