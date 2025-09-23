@@ -46,3 +46,5 @@ This is a list of each schema and what dependencies have to be manually included
   - SecurityScheme (and all its inner definitions)
 - llm-metadata
   - PolicyRef (from the [references.json](https://github.com/mulesoft-emu/agent-fabric-specification/blob/master/agent-fabric-schema/src/main/resources/references.json) file)
+- agent-network
+  - this module has all the dependencies from references.json, llm_metadata.json, some from the a2a.json and some from mcp_metadata.json
