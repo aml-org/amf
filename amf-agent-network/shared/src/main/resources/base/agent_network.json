@@ -139,7 +139,7 @@
       "properties": {
         "ref": {
           "description": "The reference to the LLM to be used by the orchestrator",
-          "$ref": "#/definitions/LLMRef"
+          "$ref": "references.json#/definitions/LLMRef"
         },
         "connection": {
           "type": "object",
@@ -149,7 +149,7 @@
           ],
           "properties": {
             "ref": {
-              "$ref": "#/definitions/ConnectionRef"
+              "$ref": "references.json#/definitions/ConnectionRef"
             }
           }
         },
@@ -165,97 +165,6 @@
               "description": "The name of the model to use"
             }
           }
-        }
-      }
-    },
-    "AgentRef": {
-      "description": "A Reference to an Agent",
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#Reference",
-          "http://anypoint.com/vocabs/agents/reference/kind#agent"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "namespace": {
-          "type": "string"
-        }
-      }
-    },
-    "MCPRef": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#Reference",
-          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "description": "Reference to an MCP Server.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "namespace": {
-          "type": "string"
-        }
-      }
-    },
-    "PolicyRef": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#Reference",
-          "http://anypoint.com/vocabs/agents/reference/kind#policy"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "namespace": {
-          "type": "string"
-        }
-      }
-    },
-    "LLMRef": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#Reference",
-          "http://anypoint.com/vocabs/agents/reference/kind#llm"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "description": "A reference to an LLM Provider",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "namespace": {
-          "type": "string"
         }
       }
     },
@@ -276,12 +185,6 @@
           "description": "Set of custom instructions that will inform the orchestration",
           "items": {
             "type": "string"
-          },
-          "policies": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/PolicyBinding"
-            }
           }
         },
         "maxNumberOfLoops": {
@@ -317,7 +220,7 @@
                 ],
                 "properties": {
                   "ref": {
-                    "$ref": "#/definitions/MCPRef",
+                    "$ref": "references.json#/definitions/MCPRef",
                     "description": "The reference to the MCP server to be available to this broker"
                   },
                   "connection": {
@@ -329,7 +232,7 @@
                     ],
                     "properties": {
                       "ref": {
-                        "$ref": "#/definitions/ConnectionRef"
+                        "$ref": "references.json#/definitions/ConnectionRef"
                       }
                     }
                   },
@@ -362,7 +265,7 @@
                 ],
                 "properties": {
                   "ref": {
-                    "$ref": "#/definitions/AgentRef"
+                    "$ref": "references.json#/definitions/AgentRef"
                   },
                   "connection": {
                     "type": "object",
@@ -373,7 +276,7 @@
                     ],
                     "properties": {
                       "ref": {
-                        "$ref": "#/definitions/ConnectionRef"
+                        "$ref": "references.json#/definitions/ConnectionRef"
                       }
                     }
                   }
@@ -643,7 +546,7 @@
           "type": "string"
         },
         "ref": {
-          "$ref": "#/definitions/AgentRef"
+          "$ref": "references.json#/definitions/AgentRef"
         },
         "spec": {
           "type": "object",
@@ -690,7 +593,7 @@
           "type": "string"
         },
         "ref": {
-          "$ref": "#/definitions/LLMRef"
+          "$ref": "references.json#/definitions/LLMRef"
         },
         "spec": {
           "type": "object",
@@ -737,7 +640,7 @@
           "type": "string"
         },
         "ref": {
-          "$ref": "#/definitions/MCPRef"
+          "$ref": "references.json#/definitions/MCPRef"
         },
         "spec": {
           "type": "object",
@@ -745,7 +648,6 @@
           "properties": {
             "url": {
               "type": "string",
-              "format": "uri",
               "description": "The base URL for the MCP server"
             },
             "authentication": {
@@ -777,7 +679,7 @@
       ],
       "properties": {
         "ref": {
-          "$ref": "#/definitions/PolicyRef"
+          "$ref": "references.json#/definitions/PolicyRef"
         },
         "configuration": {
           "type": "object"
@@ -819,26 +721,7 @@
         }
       }
     },
-    "ConnectionRef": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#Reference",
-          "http://anypoint.com/vocabs/agents/reference/kind#connection"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "description": "The reference to a connection",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
-    },
+
     "AgentEntity": {
       "@context": {
         "@type": [
@@ -905,7 +788,7 @@
                     ],
                     "properties": {
                       "ref": {
-                        "$ref": "#/definitions/AgentRef"
+                        "$ref": "references.json#/definitions/AgentRef"
                       }
                     }
                   }
@@ -929,7 +812,7 @@
                     "additionalProperties": false,
                     "properties": {
                       "ref": {
-                        "$ref": "#/definitions/MCPRef"
+                        "$ref": "references.json#/definitions/MCPRef"
                       },
                       "allowed": {
                         "type": "array",
@@ -969,81 +852,7 @@
           "description": "The description of this llm"
         },
         "metadata": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/WellKnownLLM"
-            },
-            {
-              "$ref": "#/definitions/CustomLLM"
-            }
-          ]
-        }
-      }
-    },
-    "WellKnownLLM": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#LLMMetadata",
-          "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "platform"
-      ],
-      "properties": {
-        "platform": {
-          "type": "string",
-          "enum": [
-            "OpenAI",
-            "Anthropic",
-            "AzureOpenai",
-            "GoogleGemini",
-            "Einstein"
-          ]
-        },
-        "models": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "CustomLLM": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#LLMMetadata",
-          "http://anypoint.com/vocabs/agents#CustomLLMMetadata"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "transcoder",
-        "platform"
-      ],
-      "properties": {
-        "platform": {
-          "type": "string"
-        },
-        "models": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "transcoder": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "ref": {
-              "$ref": "#/definitions/PolicyRef"
-            }
-          }
+          "$ref": "llm_metadata.json#/definitions/LLMMetadata"
         }
       }
     },
@@ -1075,7 +884,7 @@
           }
         },
         "metadata": {
-          "$ref": "mcp.json#/definitions/MCPServer"
+          "$ref": "mcp_metadata.json#/definitions/MCPServer"
         }
       }
     }

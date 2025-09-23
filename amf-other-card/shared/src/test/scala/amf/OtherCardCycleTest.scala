@@ -14,21 +14,21 @@ class OtherCardCycleTest extends FileAssertionTest {
   private val renderOptions                    = RenderOptions().withPrettyPrint
   private val agentConfig: ShapesConfiguration = OtherCardConfiguration.OtherCard().withRenderOptions(renderOptions)
 
-//  test("Render OtherCard JSON instance to JSON-LD") {
-//    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
-//  }
-//
-//  test("Render OtherCard YAML instance to JSON-LD") {
-//    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
-//  }
-//  def cycle(source: String, golden: String): Future[Assertion] = {
-//    for {
-//      parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)
-//      actualString = agentConfig.baseUnitClient().render(parsed.baseUnit, Mimes.`application/ld+json`)
-//      actualFile <- writeTemporaryFile(golden)(actualString)
-//      assertion  <- assertDifferences(actualFile, basePath + golden)
-//    } yield {
-//      assertion
-//    }
-//  }
+  test("Render OtherCard JSON instance to JSON-LD") {
+    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
+  }
+
+  test("Render OtherCard YAML instance to JSON-LD") {
+    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
+  }
+  def cycle(source: String, golden: String): Future[Assertion] = {
+    for {
+      parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)
+      actualString = agentConfig.baseUnitClient().render(parsed.baseUnit, Mimes.`application/ld+json`)
+      actualFile <- writeTemporaryFile(golden)(actualString)
+      assertion  <- assertDifferences(actualFile, basePath + golden)
+    } yield {
+      assertion
+    }
+  }
 }

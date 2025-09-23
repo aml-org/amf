@@ -7,10 +7,10 @@ import org.scalatest.matchers.should.Matchers
 
 class AgentMetadataSchemaLoaderTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-//  test("Validate that AgentMetadata Schema has no errors") {
-//    AgentMetadataSchemaLoader.doc != null shouldBe true
-//    AgentMetadataSchemaLoader.schema != null shouldBe true
-//    AgentMetadataSchemaLoader.schema.isInstanceOf[NodeShape] shouldBe true
-//    AgentMetadataSchemaLoader.errors.size shouldBe 0
-//  }
+  test("Validate that AgentMetadata Schema has no errors") {
+    AgentMetadataSchemaLoader.doc != null shouldBe true
+    AgentMetadataSchemaLoader.schema != null shouldBe true
+    AgentMetadataSchemaLoader.schema.isInstanceOf[NodeShape] shouldBe true
+    AgentMetadataSchemaLoader.errors.size shouldBe 0
+  }
 }

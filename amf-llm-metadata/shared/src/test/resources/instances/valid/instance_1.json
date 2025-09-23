@@ -1,4 +1,10 @@
 {
-  "any": "value",
-  "should": "be valid"
+  "platform": "MyCustomLLMProvider",
+  "models": ["custom-model-v1", "custom-model-v2-beta"],
+  "transcoder": {
+    "ref": {
+      "name": "my-custom-transcoder-policy",
+      "namespace": "prod-environment"
+    }
+  }
 }
