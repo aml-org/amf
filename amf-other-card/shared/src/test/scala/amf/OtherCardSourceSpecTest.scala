@@ -28,21 +28,21 @@ class OtherCardSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionCo
 //      jsonLdUnit.sourceSpec shouldBe Spec.OTHER_CARD
 //    }
 //  }
-//
-//  test("Transformation (empty) should conforms") {
-//    for {
-//      parseResult <- client.parse(basePath + "valid/instance_1.json")
-//      transformationDefault = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Default)
-//      transformationEditing = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Editing)
-//      transformationCache   = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Cache)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      transformationDefault.conforms shouldBe true
-//      transformationEditing.conforms shouldBe true
-//      transformationCache.conforms shouldBe true
-//      transformationDefault.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-//      transformationEditing.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-//      transformationCache.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-//    }
-//  }
+
+  test("Transformation (empty) should conforms") {
+    for {
+      parseResult <- client.parse(basePath + "valid/instance_1.json")
+      transformationDefault = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Default)
+      transformationEditing = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Editing)
+      transformationCache   = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Cache)
+    } yield {
+      parseResult.conforms shouldBe true
+      transformationDefault.conforms shouldBe true
+      transformationEditing.conforms shouldBe true
+      transformationCache.conforms shouldBe true
+      transformationDefault.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+      transformationEditing.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+      transformationCache.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+    }
+  }
 }

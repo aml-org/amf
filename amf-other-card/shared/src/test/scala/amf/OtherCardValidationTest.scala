@@ -18,57 +18,57 @@ class OtherCardValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionCo
       validationReport.conforms shouldBe true
     }
   }
-//
-//  test("Valid OtherCard YAML Instance should conform") {
-//    for {
-//      parseResult      <- client.parse(basePath + "valid/instance_1.yaml")
-//      validationReport <- client.validate(parseResult.baseUnit)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      validationReport.conforms shouldBe true
-//    }
-//  }
-//
-//  test("Invalid OtherCard JSON Instance should not conform") {
-//    for {
-//      parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.json")
-//      validationReport <- client.validate(parseResult.baseUnit)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      validationReport.conforms shouldBe false
-//      validationReport.results.size shouldBe 7
-//    }
-//  }
-//
-//  test("Invalid OtherCard YAML Instance should not conform") {
-//    for {
-//      parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.yaml")
-//      validationReport <- client.validate(parseResult.baseUnit)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      validationReport.conforms shouldBe false
-//      validationReport.results.size shouldBe 7
-//    }
-//  }
-//
-//  test("Valid OtherCard Instance should conform with sync validate") {
-//    for {
-//      parseResult <- client.parse(basePath + "valid/instance_1.json")
-//      validationReport = client.syncValidate(parseResult.baseUnit)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      validationReport.conforms shouldBe true
-//    }
-//  }
-//
-//  test("Invalid OtherCard Instance should not conform with sync validate") {
-//    for {
-//      parseResult <- client.parse(basePath + "invalid/invalid_instance_1.json")
-//      validationReport = client.syncValidate(parseResult.baseUnit)
-//    } yield {
-//      parseResult.conforms shouldBe true
-//      validationReport.conforms shouldBe false
-//      validationReport.results.size shouldBe 7
-//    }
-//  }
+
+  test("Valid OtherCard YAML Instance should conform") {
+    for {
+      parseResult      <- client.parse(basePath + "valid/instance_1.yaml")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
+  test("Invalid OtherCard JSON Instance should not conform") {
+    for {
+      parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.json")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe false
+      validationReport.results.size shouldBe 1
+    }
+  }
+
+  test("Invalid OtherCard YAML Instance should not conform") {
+    for {
+      parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.yaml")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe false
+      validationReport.results.size shouldBe 1
+    }
+  }
+
+  test("Valid OtherCard Instance should conform with sync validate") {
+    for {
+      parseResult <- client.parse(basePath + "valid/instance_1.json")
+      validationReport = client.syncValidate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
+  test("Invalid OtherCard Instance should not conform with sync validate") {
+    for {
+      parseResult <- client.parse(basePath + "invalid/invalid_instance_1.json")
+      validationReport = client.syncValidate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe false
+      validationReport.results.size shouldBe 1
+    }
+  }
 }
