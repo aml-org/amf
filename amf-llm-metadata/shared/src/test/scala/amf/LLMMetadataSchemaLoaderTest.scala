@@ -7,10 +7,10 @@ import org.scalatest.matchers.should.Matchers
 
 class LLMMetadataSchemaLoaderTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-//  test("Validate that LLMMetadata Schema has no errors") {
-//    LLMMetadataSchemaLoader.doc != null shouldBe true
-//    LLMMetadataSchemaLoader.schema != null shouldBe true
-//    LLMMetadataSchemaLoader.schema.isInstanceOf[NodeShape] shouldBe true
-//    LLMMetadataSchemaLoader.errors.size shouldBe 0
-//  }
+  test("Validate that LLMMetadata Schema has no errors") {
+    LLMMetadataSchemaLoader.doc != null shouldBe true
+    LLMMetadataSchemaLoader.schema != null shouldBe true
+//    LLMMetadataSchemaLoader.schema.isInstanceOf[NodeShape] shouldBe true // TODO returns AnyShape
+    LLMMetadataSchemaLoader.errors.size shouldBe 0
+  }
 }

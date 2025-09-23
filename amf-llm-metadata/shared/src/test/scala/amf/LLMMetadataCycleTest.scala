@@ -14,21 +14,21 @@ class LLMMetadataCycleTest extends FileAssertionTest {
   private val renderOptions                    = RenderOptions().withPrettyPrint
   private val agentConfig: ShapesConfiguration = LLMMetadataConfiguration.LLMMetadata().withRenderOptions(renderOptions)
 
-//  test("Render LLMMetadata JSON instance to JSON-LD") {
-//    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
-//  }
-//
-//  test("Render LLMMetadata YAML instance to JSON-LD") {
-//    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
-//  }
-//  def cycle(source: String, golden: String): Future[Assertion] = {
-//    for {
-//      parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)
-//      actualString = agentConfig.baseUnitClient().render(parsed.baseUnit, Mimes.`application/ld+json`)
-//      actualFile <- writeTemporaryFile(golden)(actualString)
-//      assertion  <- assertDifferences(actualFile, basePath + golden)
-//    } yield {
-//      assertion
-//    }
-//  }
+  test("Render LLMMetadata JSON instance to JSON-LD") {
+    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
+  }
+
+  test("Render LLMMetadata YAML instance to JSON-LD") {
+    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
+  }
+  def cycle(source: String, golden: String): Future[Assertion] = {
+    for {
+      parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)
+      actualString = agentConfig.baseUnitClient().render(parsed.baseUnit, Mimes.`application/ld+json`)
+      actualFile <- writeTemporaryFile(golden)(actualString)
+      assertion  <- assertDifferences(actualFile, basePath + golden)
+    } yield {
+      assertion
+    }
+  }
 }
