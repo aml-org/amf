@@ -22,7 +22,7 @@ import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
-import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
+import amf.shapes.internal.plugins.parser.JsonSchemaBasedSpecGraphParsePlugin
 import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
@@ -241,7 +241,7 @@ object AgentCardConfiguration {
               AgentCardRenderPlugin,
               AgentCardValidationPlugin(),
               JsonSchemaBasedSpecGraphRenderPlugin,
-              AMFJsonLDSchemaGraphParsePlugin
+              JsonSchemaBasedSpecGraphParsePlugin
           )
       )
       .withTransformationPipelines(

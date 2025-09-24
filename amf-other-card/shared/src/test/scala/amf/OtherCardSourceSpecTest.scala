@@ -1,14 +1,14 @@
 package amf
 
 import amf.core.client.common.transform.PipelineId
-import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
-import amf.core.internal.remote.{Mimes, Spec}
-import amf.othercard.client.scala.OtherCardConfiguration
 import amf.core.client.scala.config.RenderOptions
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.Spec
+import amf.othercard.client.scala.OtherCardConfiguration
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
+import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDObject
 import org.scalatest.matchers.should.Matchers
-
-import scala.concurrent.Future
 
 class OtherCardSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
@@ -19,13 +19,23 @@ class OtherCardSourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionCo
   test("Parsed JSON-LD from OtherCard should have OtherCard source spec") {
     for {
       result <- client.parse(basePath + "valid/instance_1.json")
-      jsonld = client.render(result.baseUnit, Mimes.`application/ld+json`)
-      jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
+      jsonld = client.render(result.baseUnit, `application/ld+json`)
+      cycledResult <- client.parseContent(jsonld)
     } yield {
       result.conforms shouldBe true
-      jsonLdUnit.conforms shouldBe true
-      jsonLdUnit.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-      jsonLdUnit.sourceSpec shouldBe Spec.OTHER_CARD
+      cycledResult.conforms shouldBe true
+      result.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+      cycledResult.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
+      cycledResult.sourceSpec shouldBe Spec.OTHER_CARD
+      val encodes       = result.baseUnit.asInstanceOf[JsonLDInstanceDocument].encodes
+      val cycledEncodes = cycledResult.baseUnit.asInstanceOf[JsonLDInstanceDocument].encodes
+      encodes.headOption shouldBe defined
+      cycledEncodes.headOption shouldBe defined
+      encodes.head.isInstanceOf[JsonLDObject] shouldBe true
+      cycledEncodes.head.isInstanceOf[JsonLDObject] shouldBe true
+      val rootPropertiesSize       = encodes.head.asInstanceOf[JsonLDObject].fields.fields().size
+      val cycledRootPropertiesSize = cycledEncodes.head.asInstanceOf[JsonLDObject].fields.fields().size
+      rootPropertiesSize shouldBe cycledRootPropertiesSize
     }
   }
 
