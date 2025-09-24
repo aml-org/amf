@@ -1300,6 +1300,8 @@ declare module "amf-client-js" {
     lexical(): Range;
 
     location(): undefined | string;
+
+    resolvedReferenceLike(): undefined | string;
   }
   export class AnyField implements ValueField<any> {
     isNull: boolean;
@@ -6812,7 +6814,7 @@ declare module "amf-client-js" {
     static readonly RAML08: ProfileName;
     static readonly RAML10: ProfileName;
     static readonly MCP: ProfileName;
-    static readonly BROKER_GROUP: ProfileName;
+    static readonly AGENT_NETWORK: ProfileName;
     static readonly AGENT_CARD: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
@@ -7092,6 +7094,63 @@ declare module "amf-client-js" {
     withWriteOnly(writeOnly: boolean): this;
 
     withXone(subShapes: Array<Shape>): this;
+  }
+  export class Reserved implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    number: number;
+    fieldName: string;
+    range: ReservedRange;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withNumber(number: number): this;
+
+    withFieldName(fieldName: string): this;
+
+    withRange(range: ReservedRange): this;
+  }
+  export class ReservedRange implements DomainElement {
+    customDomainProperties: Array<DomainExtension>;
+    extendsNode: Array<DomainElement>;
+    id: string;
+    isExternalLink: BoolField;
+    position: Range;
+    from: number;
+    to: number;
+
+    constructor();
+
+    annotations(): Annotations;
+
+    graph(): Graph;
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this;
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this;
+
+    withId(id: string): this;
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement;
+
+    withFrom(from: number): this;
+
+    withTo(to: number): this;
   }
   export class PropertyShapePath implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -8901,7 +8960,7 @@ declare module "amf-client-js" {
     static readonly RAML08: Spec;
     static readonly RAML10: Spec;
     static readonly MCP: Spec;
-    static readonly BROKER_GROUP: Spec;
+    static readonly AGENT_NETWORK: Spec;
     static readonly AGENT_CARD: Spec;
 
     static apply(name: string): Spec;
@@ -9633,37 +9692,140 @@ declare module "amf-client-js" {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 
-  export class BrokerGroupConfiguration extends BaseBrokerGroupConfiguration {
-    static BrokerGroup(): BrokerGroupConfiguration;
+  export class OtherCardConfiguration extends BaseOtherCardConfiguration {
+    static OtherCard(): OtherCardConfiguration;
 
-    baseUnitClient(): BrokerGroupBaseUnitClient;
+    baseUnitClient(): OtherCardBaseUnitClient;
   }
 
-  export class BaseBrokerGroupConfiguration extends BaseShapesConfiguration {
-    withDialect(dialect: Dialect): BaseBrokerGroupConfiguration;
+  export class BaseOtherCardConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseOtherCardConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseOtherCardConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseOtherCardConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseOtherCardConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseOtherCardConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseOtherCardConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseOtherCardConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseOtherCardConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseOtherCardConfiguration;
+  }
+  export class OtherCardBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class AgentMetadataConfiguration extends BaseAgentMetadataConfiguration {
+    static AgentMetadata(): AgentMetadataConfiguration;
+
+    baseUnitClient(): AgentMetadataBaseUnitClient;
+  }
+
+  export class BaseAgentMetadataConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentMetadataConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseAgentMetadataConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentMetadataConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentMetadataConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentMetadataConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentMetadataConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentMetadataConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseAgentMetadataConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentMetadataConfiguration;
+  }
+  export class AgentMetadataBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class LLMMetadataConfiguration extends BaseLLMMetadataConfiguration {
+    static LLMMetadata(): LLMMetadataConfiguration;
+
+    baseUnitClient(): LLMMetadataBaseUnitClient;
+  }
+
+  export class BaseLLMMetadataConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseLLMMetadataConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseLLMMetadataConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseLLMMetadataConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseLLMMetadataConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseLLMMetadataConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseLLMMetadataConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseLLMMetadataConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseLLMMetadataConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseLLMMetadataConfiguration;
+  }
+  export class LLMMetadataBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class AgentNetworkConfiguration extends BaseAgentNetworkConfiguration {
+    static AgentNetwork(): AgentNetworkConfiguration;
+
+    baseUnitClient(): AgentNetworkBaseUnitClient;
+  }
+
+  export class BaseAgentNetworkConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentNetworkConfiguration;
 
     withErrorHandlerProvider(
         provider: ErrorHandlerProvider
-    ): BaseBrokerGroupConfiguration;
+    ): BaseAgentNetworkConfiguration;
 
-    withEventListener(listener: AMFEventListener): BaseBrokerGroupConfiguration;
+    withEventListener(listener: AMFEventListener): BaseAgentNetworkConfiguration;
 
-    withParsingOptions(parsingOptions: ParsingOptions): BaseBrokerGroupConfiguration;
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentNetworkConfiguration;
 
-    withRenderOptions(renderOptions: RenderOptions): BaseBrokerGroupConfiguration;
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentNetworkConfiguration;
 
-    withResourceLoader(rl: ResourceLoader): BaseBrokerGroupConfiguration;
+    withResourceLoader(rl: ResourceLoader): BaseAgentNetworkConfiguration;
 
-    withResourceLoaders(rl: Array<ResourceLoader>): BaseBrokerGroupConfiguration;
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentNetworkConfiguration;
 
     withTransformationPipeline(
         pipeline: TransformationPipeline
-    ): BaseBrokerGroupConfiguration;
+    ): BaseAgentNetworkConfiguration;
 
-    withUnitCache(cache: UnitCache): BaseBrokerGroupConfiguration;
+    withUnitCache(cache: UnitCache): BaseAgentNetworkConfiguration;
   }
-  export class BrokerGroupBaseUnitClient extends AMLBaseUnitClient {
+  export class AgentNetworkBaseUnitClient extends AMLBaseUnitClient {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class ConfigurationAdapter  {
+    static adapt(baseConfiguration: AMFGraphConfiguration): AMFConfiguration;
   }
 
   namespace org {

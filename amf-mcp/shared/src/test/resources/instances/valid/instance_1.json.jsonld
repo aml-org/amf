@@ -11,13 +11,16 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Server",
+        "http://anypoint.com/vocabs/mcp#Server",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "test-mcp-server",
       "http://a.ml/vocabularies/core#protocolVersion": "2024-11-05",
       "http://a.ml/vocabularies/core#capabilities": {
         "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/capabilities"
+      },
+      "http://a.ml/vocabularies/core#transport": {
+        "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/transport"
       },
       "http://a.ml/vocabularies/core#tools": [
         {
@@ -52,9 +55,19 @@
       "http://a.ml/vocabularies/core#logging": true
     },
     {
+      "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/transport",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
+        "http://anypoint.com/vocabs/mcp#Transport",
+        "http://a.ml/vocabularies/core#transport",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#kind": "streamableHttp"
+    },
+    {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Tool",
+        "http://anypoint.com/vocabs/mcp#Tool",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "echo",
@@ -66,7 +79,7 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Tool",
+        "http://anypoint.com/vocabs/mcp#Tool",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "add",
@@ -78,7 +91,7 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/resources/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Resource",
+        "http://anypoint.com/vocabs/mcp#Resource",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#uri": "test://example",
@@ -89,7 +102,7 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#Prompt",
+        "http://anypoint.com/vocabs/mcp#Prompt",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "greeting",
@@ -103,7 +116,7 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#ToolInputSchema",
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#type": "object",
@@ -117,7 +130,7 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#ToolInputSchema",
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#type": "object",
@@ -132,7 +145,7 @@
     {
       "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.json#/encodes/prompts/0/arguments/0",
       "@type": [
-        "https://modelcontextprotocol.io/vocab#PromptArgument",
+        "http://anypoint.com/vocabs/mcp#PromptArgument",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "name",

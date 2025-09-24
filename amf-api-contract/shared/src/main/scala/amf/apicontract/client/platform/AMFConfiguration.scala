@@ -5,10 +5,11 @@ import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.apicontract.client.scala.{
   APIConfiguration => InternalAPIConfiguration,
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
+  AvroConfiguration => InternalAvroConfiguration,
+  ConfigurationAdapter => InternalConfigurationAdapter,
   OASConfiguration => InternalOASConfiguration,
   RAMLConfiguration => InternalRAMLConfiguration,
-  WebAPIConfiguration => InternalWebAPIConfiguration,
-  AvroConfiguration => InternalAvroConfiguration
+  WebAPIConfiguration => InternalWebAPIConfiguration
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
@@ -21,6 +22,7 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.execution.BaseExecutionEnvironment
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
@@ -227,4 +229,11 @@ object APIConfiguration {
 @JSExportTopLevel("AvroConfiguration")
 object AvroConfiguration {
   def Avro(): AMFConfiguration = InternalAvroConfiguration.Avro()
+}
+
+@JSExportAll
+@JSExportTopLevel("ConfigurationAdapter")
+object ConfigurationAdapter {
+  def adapt(baseConfiguration: AMFGraphConfiguration): AMFConfiguration =
+    InternalConfigurationAdapter.adapt(baseConfiguration)
 }

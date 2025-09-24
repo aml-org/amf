@@ -41,29 +41,15 @@ class GrpcEmitterContext(document: BaseUnit) {
 
   def messages: Seq[NodeShape] = {
     document match {
-      case dec: DeclaresModel => dec.declares.map(isMessage).collect { case Some(s) => s }
+      case dec: DeclaresModel => dec.declares.collect { case n: NodeShape => n }
       case _                  => Nil
     }
   }
 
   def enums: Seq[ScalarShape] = {
     document match {
-      case dec: DeclaresModel => dec.declares.map(isEnum).collect { case Some(s) => s }
+      case dec: DeclaresModel => dec.declares.collect { case s: ScalarShape if s.values.nonEmpty => s }
       case _                  => Nil
-    }
-  }
-
-  private def isMessage(s: DomainElement): Option[NodeShape] = {
-    s match {
-      case n: NodeShape => Some(n)
-      case _            => None
-    }
-  }
-
-  private def isEnum(s: DomainElement): Option[ScalarShape] = {
-    s match {
-      case s: ScalarShape if s.values.nonEmpty => Some(s)
-      case _                                   => None
     }
   }
 

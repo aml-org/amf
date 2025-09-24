@@ -29,7 +29,10 @@ abstract class JsonSchemaBasedSpecParsePlugin extends AMFParsePlugin {
 
   override def priority: PluginPriority = NormalPriority
 
-  override def applies(element: Root): Boolean = existsSpecEntry(element)
+  override def applies(element: Root): Boolean = existsSpecEntry(element) && isNotJsonLd(element)
+
+  // This is needed because of the documents without entry key. JSON-LD documents should be processed by the specific parse plugin
+  private def isNotJsonLd(element: Root): Boolean = element.mediatype != Mimes.`application/ld+json`
 
   // In a JSON/YAML instance is not possible to have references
   override def validSpecsToReference: Seq[Spec] = Nil

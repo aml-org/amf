@@ -25,11 +25,12 @@ abstract class JsonSchemaBasedSpecBaseUnitClient private[amf] (
 
   override def getConfiguration: JsonSchemaBasedSpecConfiguration = configuration
 
+  // Sync Validate method returns no LexicalInformation in case of a validation error. If it is needed use `validate`
   def syncValidate(baseUnit: BaseUnit): AMFValidationReport = {
-    JsonSchemaBasedSpecValidationHelper.validateInstance(
-      baseUnit.asInstanceOf[JsonLDInstanceDocument],
-      schemaShape,
-      profile
+    JsonSchemaBasedSpecValidationHelper.validateInstanceSync(
+        baseUnit.asInstanceOf[JsonLDInstanceDocument],
+        schemaShape,
+        profile
     )
   }
 }

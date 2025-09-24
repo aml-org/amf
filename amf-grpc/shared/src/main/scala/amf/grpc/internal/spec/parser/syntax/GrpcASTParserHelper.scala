@@ -174,3 +174,7 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     }
   }
 }
+
+object GrpcASTParserHelper extends GrpcASTParserHelper {
+  val MAX_VALUE = 536870911
+}

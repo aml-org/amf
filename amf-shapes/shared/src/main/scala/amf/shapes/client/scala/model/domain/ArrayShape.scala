@@ -2,8 +2,8 @@ package amf.shapes.client.scala.model.domain
 
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.shapes.internal.domain.metamodel.ArrayShapeModel
 import amf.shapes.internal.domain.metamodel.ArrayShapeModel._
-import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ArrayShapeModel}
 import org.yaml.model.YPart
 
 case class ArrayShape private[amf] (override val fields: Fields, override val annotations: Annotations)

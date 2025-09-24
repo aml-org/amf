@@ -57,5 +57,8 @@ object TokenTypes {
   val SERVICE_OPTIONS         = "google.protobuf.ServiceOptions"
   val FILE_OPTIONS            = "google.protobuf.FileOptions"
   val ONEOF_OPTIONS           = "google.protobuf.OneofOptions"
-
+  val RESERVED                = "reserved"
+  val RANGES                  = "ranges"
+  val RANGE                   = "range_"
+  val RESERVED_FIELD_NAMES    = "reservedFieldNames"
 }

@@ -7,13 +7,14 @@ import amf.shapes.client.platform.config.{
   JsonLDSchemaConfiguration,
   JsonLDSchemaConfigurationClient,
   AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult,
-  SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration,
-  JsonSchemaBasedSpecConfiguration => ClientJsonSchemaBasedSpecConfiguration
+  JsonSchemaBasedSpecConfiguration => ClientJsonSchemaBasedSpecConfiguration,
+  SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration
 }
 import amf.shapes.client.platform.model.document.{JsonSchemaDocument => ClientJsonSchemaDocument}
 import amf.shapes.client.scala.model.document.{JsonLDInstanceDocument, JsonSchemaDocument}
 import amf.shapes.client.platform.model.document.{JsonLDInstanceDocument => ClientJsonLDInstanceDocument}
 import amf.shapes.client.platform.model.domain
+import amf.shapes.client.platform.model.domain.grpc._
 import amf.shapes.client.platform.{
   JsonLDInstanceResult,
   JsonLDSchemaElementClient,
@@ -33,10 +34,11 @@ import amf.shapes.client.platform.model.domain.jsonldinstance.{JsonLDArray, Json
 import amf.shapes.client.scala.model.domain.jsonldinstance
 import amf.shapes.client.scala.model.domain.operations._
 import amf.shapes.client.scala.{
-  JsonLDSchemaElementClient => InternalJsonLDSchemaElementClient,
   JsonLDInstanceResult => InternalJsonLDInstanceResult,
+  JsonLDSchemaElementClient => InternalJsonLDSchemaElementClient,
   JsonLDSchemaResult => InternalJsonLDSchemaResult
 }
+import amf.shapes.client.scala.model.domain.grpc.{Reserved => InternalReserved, ReservedRange => InternalRange}
 
 trait ShapesBaseConverter
     extends VocabulariesBaseConverter
@@ -81,6 +83,8 @@ trait ShapesBaseConverter
     with JsonLDSchemaConfigurationClientConverter
     with JsonLDInstanceDocumentConverter
     with JsonSchemaBasedSpecConfigurationConverter
+    with ReservedConverter
+    with RangeConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -463,5 +467,19 @@ trait JsonSchemaBasedSpecConfigurationConverter {
 
     override def asInternal(from: ClientJsonSchemaBasedSpecConfiguration): JsonSchemaBasedSpecConfiguration =
       from._internal
+  }
+}
+
+trait ReservedConverter {
+  implicit object ReservedMatcher extends BidirectionalMatcher[InternalReserved, Reserved] {
+    override def asClient(from: InternalReserved): Reserved   = Reserved(from)
+    override def asInternal(from: Reserved): InternalReserved = from._internal
+  }
+}
+
+trait RangeConverter {
+  implicit object RangeMatcher extends BidirectionalMatcher[InternalRange, ReservedRange] {
+    override def asClient(from: InternalRange): ReservedRange   = ReservedRange(from)
+    override def asInternal(from: ReservedRange): InternalRange = from._internal
   }
 }

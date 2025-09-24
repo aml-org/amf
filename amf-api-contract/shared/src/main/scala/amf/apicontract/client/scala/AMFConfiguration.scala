@@ -590,7 +590,7 @@ class AMFConfiguration private[amf] (
 }
 
 object ConfigurationAdapter extends APIConfigurationBuilder {
-  def adapt(baseConfiguration: AMLConfiguration): AMFConfiguration = {
+  def adapt(baseConfiguration: AMFGraphConfiguration): AMFConfiguration = {
     val pluginsRegistry: PluginsRegistry = baseConfiguration.registry.getPluginsRegistry
     val configuration = common()
       .withPlugins(

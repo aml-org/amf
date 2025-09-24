@@ -11,18 +11,19 @@ case class GrpcEnumEmitter(shape: ScalarShape, builder: StringDocBuilder, ctx: G
 
   def emit(): Unit = {
     builder.fixed { l =>
-      l += (s"enum ${enumName} {", enumPos)
+      l += (s"enum $enumName {", enumPos)
       l.obj { o =>
         emitValues(o)
       }
-      l += ("}")
+      l += "}"
     }
   }
 
-  def enumName: String  = shape.displayName.option().getOrElse("AnonymousEnum")
-  def enumPos: Position = pos(shape.displayName.annotations())
+  private def enumName: String  = shape.displayName.option().getOrElse("AnonymousEnum")
+  private def enumPos: Position = pos(shape.displayName.annotations())
 
-  def emitValues(builder: StringDocBuilder): Unit = {
+  private def emitValues(builder: StringDocBuilder): Unit = {
+    GrpcReservedEmitter(shape, builder, ctx).emit()
     Option(shape.serializationSchema) match {
       case Some(serialization: NodeShape) =>
         serialization.properties.foreach { prop =>

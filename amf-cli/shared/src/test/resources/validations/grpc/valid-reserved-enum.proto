@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package example.api.v1;
+
+enum AccountStatus {
+  reserved 1;
+  reserved "PENDING_DELETION";
+  reserved 7 to 8;
+  reserved 2, 15, 9 to 11, 40 to max;
+  reserved "FOO", "BAR";
+
+  STATUS_ACTIVE = 0;
+  // STATUS_SUSPENDED = 1; // This value is now deprecated and reserved.
+  STATUS_ARCHIVED = 4;
+}

@@ -1,0 +1,120 @@
+package amf.llmmetadata.internal.plugins.parse.schema
+
+import amf.shapes.internal.plugins.parser.schema.JsonSchemaBasedSpecSchema
+
+object LLMMetadataSchema extends JsonSchemaBasedSpecSchema {
+
+  override def schema: String =
+    """
+      |{
+      |  "$schema": "http://json-schema.org/draft-07/schema#",
+      |  "title": "LLM Asset Schema",
+      |  "$ref": "#/definitions/LLMMetadata",
+      |  "definitions": {
+      |    "LLMMetadata": {
+      |      "@context": {
+      |        "@type": [
+      |          "http://anypoint.com/vocabs/agents#LLMMetadata"
+      |        ],
+      |        "@base": "http://anypoint.com/vocabs/agents#"
+      |      },
+      |      "oneOf": [
+      |        {
+      |          "$ref": "#/definitions/WellKnownLLM"
+      |        },
+      |        {
+      |          "$ref": "#/definitions/CustomLLM"
+      |        }
+      |      ]
+      |    },
+      |    "WellKnownLLM": {
+      |      "@context": {
+      |        "@type": [
+      |          "http://anypoint.com/vocabs/agents#LLMMetadata",
+      |          "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata"
+      |        ],
+      |        "@base": "http://anypoint.com/vocabs/agents#"
+      |      },
+      |      "type": "object",
+      |      "additionalProperties": false,
+      |      "required": [
+      |        "platform"
+      |      ],
+      |      "properties": {
+      |        "platform": {
+      |          "type": "string",
+      |          "enum": [
+      |            "OpenAI",
+      |            "AzureOpenai"
+      |          ]
+      |        },
+      |        "models": {
+      |          "type": "array",
+      |          "items": {
+      |            "type": "string"
+      |          }
+      |        }
+      |      }
+      |    },
+      |    "CustomLLM": {
+      |      "@context": {
+      |        "@type": [
+      |          "http://anypoint.com/vocabs/agents#LLMMetadata",
+      |          "http://anypoint.com/vocabs/agents#CustomLLMMetadata"
+      |        ],
+      |        "@base": "http://anypoint.com/vocabs/agents#"
+      |      },
+      |      "type": "object",
+      |      "additionalProperties": false,
+      |      "required": [
+      |        "transcoder",
+      |        "platform"
+      |      ],
+      |      "properties": {
+      |        "platform": {
+      |          "type": "string"
+      |        },
+      |        "models": {
+      |          "type": "array",
+      |          "items": {
+      |            "type": "string"
+      |          }
+      |        },
+      |        "transcoder": {
+      |          "type": "object",
+      |          "additionalProperties": false,
+      |          "properties": {
+      |            "ref": {
+      |              "$ref": "#/definitions/PolicyRef"
+      |            }
+      |          }
+      |        }
+      |      }
+      |    },
+      |    "PolicyRef": {
+      |      "@context": {
+      |        "@type": [
+      |          "http://anypoint.com/vocabs/agents#Reference",
+      |          "http://anypoint.com/vocabs/agents/reference/kind#policy"
+      |        ],
+      |        "@base": "http://anypoint.com/vocabs/agents#"
+      |      },
+      |      "type": "object",
+      |      "additionalProperties": false,
+      |      "required": [
+      |        "name"
+      |      ],
+      |      "properties": {
+      |        "name": {
+      |          "type": "string"
+      |        },
+      |        "namespace": {
+      |          "type": "string"
+      |        }
+      |      }
+      |    }
+      |  }
+      |}
+      |""".stripMargin
+
+}

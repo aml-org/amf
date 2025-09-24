@@ -1,0 +1,5 @@
+package amf.othercard.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait OtherCardBaseClientConverter extends OtherCardBaseConverter with ShapesBaseClientConverter

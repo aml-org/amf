@@ -181,6 +181,8 @@ AMF Model Documentation
 * [PulsarServerBinding](#pulsarserverbinding)
 * [RecursiveShape](#recursiveshape)
 * [Request](#request)
+* [Reserved](#reserved)
+* [ReservedRange](#reservedrange)
 * [ResourceType](#resourcetype)
 * [ResourceTypeFragment](#resourcetypefragment)
 * [Response](#response)
@@ -663,6 +665,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -781,6 +784,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -1687,6 +1691,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -2437,6 +2442,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -2749,6 +2755,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -2845,6 +2852,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -3457,6 +3465,31 @@ Types:
  | recursive | boolean | - | Indication taht this kind of linkable element can support recursive links | `http://a.ml/vocabularies/document#recursive` |
  | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
 
+## Reserved
+(GRPC) class to allocate values or fields to be reserved
+Types:
+* `http://a.ml/vocabularies/shapes#Reserved`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+ | range | [ReservedRange](#reservedrange) | - | (GRPC) range of values to be reserved | `http://a.ml/vocabularies/shapes#range` |
+ | fieldName | string | - | (GRPC) field name to be reserved | `http://a.ml/vocabularies/shapes#fieldName` |
+ | number | int | - | (GRPC) number to be reserved | `http://a.ml/vocabularies/shapes#number` |
+
+## ReservedRange
+(GRPC) class to allocate a reserved range of values
+Types:
+* `http://a.ml/vocabularies/shapes#ReservedRange`
+* `http://a.ml/vocabularies/document#DomainElement`
+
+ | Name | Value | Sorted | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ | ------ |
+ | extends | [[DomainElement](#domainelement)] | false | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | `http://a.ml/vocabularies/document#extends` |
+ | from | int | - | (GRPC) from value of the range | `http://a.ml/vocabularies/shapes#from` |
+ | to | int | - | (GRPC) to value of the range | `http://a.ml/vocabularies/shapes#to` |
+
 ## ResourceType
 Type of document base unit encoding a RAML resource type
 Types:
@@ -3602,6 +3635,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -3664,6 +3698,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -4344,6 +4379,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |
@@ -4418,6 +4454,7 @@ Types:
  | namespace | string | - | (AVRO) a JSON string that qualifies the name | `http://a.ml/vocabularies/shapes#namespace` |
  | aliases | [string] | false | (AVRO) a JSON array of strings, providing alternate names for this shape | `http://a.ml/vocabularies/shapes#aliases` |
  | size | int | - | (AVRO) an integer specifying the number of bytes per value | `http://a.ml/vocabularies/shapes#size` |
+ | reservedValues | [[Reserved](#reserved)] | false | (GRPC) field name or values to be reserved | `http://a.ml/vocabularies/shapes#reservedValues` |
  | raw | string | - | Raw textual information that cannot be processed for the current model semantics. | `http://a.ml/vocabularies/document#raw` |
  | reference-id | url | - | Internal identifier for an inlined fragment | `http://a.ml/vocabularies/document#reference-id` |
  | location | string | - | Location of an inlined fragment | `http://a.ml/vocabularies/document#location` |

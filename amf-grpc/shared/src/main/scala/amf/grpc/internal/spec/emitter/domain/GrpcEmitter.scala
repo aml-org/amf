@@ -23,7 +23,7 @@ trait GrpcEmitter {
       case a: ArrayShape if a.items.isInstanceOf[NodeShape]   => objectRange(a.items.asInstanceOf[NodeShape])
       case s: ScalarShape                                     => scalarRange(s)
       case o: NodeShape                                       => objectRange(o)
-      case s                                                  => "UnknownMessage"
+      case _                                                  => "UnknownMessage"
     }
   }
 
