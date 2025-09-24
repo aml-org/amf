@@ -21,10 +21,9 @@ import amf.core.internal.validation.core.ValidationProfile
 import amf.othercard.internal.plugins.parse.OtherCardParsePlugin
 import amf.othercard.internal.plugins.render.OtherCardRenderPlugin
 import amf.othercard.internal.plugins.validation.OtherCardValidationPlugin
-import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
-import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
-import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
   JsonSchemaBasedSpecEditingPipeline,
@@ -41,12 +40,12 @@ class OtherCardConfiguration private[amf] (
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
 ) extends JsonSchemaBasedSpecConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry,
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry,
+        listeners,
+        options,
+        idAdopterProvider
     ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
@@ -60,12 +59,12 @@ class OtherCardConfiguration private[amf] (
       idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): OtherCardConfiguration =
     new OtherCardConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry.asInstanceOf[AMLRegistry],
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry.asInstanceOf[AMLRegistry],
+        listeners,
+        options,
+        idAdopterProvider
     )
 
   override def baseUnitClient(): OtherCardBaseUnitClient = new OtherCardBaseUnitClient(this)
@@ -157,7 +156,8 @@ class OtherCardConfiguration private[amf] (
     super._withTransformationPipeline(pipeline)
 
   /** AMF internal method just to facilitate the construction */
-  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): OtherCardConfiguration =
+  override private[amf] def withTransformationPipelines(
+      pipelines: List[TransformationPipeline]): OtherCardConfiguration =
     super._withTransformationPipelines(pipelines)
 
   /** Set [[ErrorHandlerProvider]]
@@ -175,7 +175,8 @@ class OtherCardConfiguration private[amf] (
     * @return
     *   [[OtherCardConfiguration]] with [[AMFEventListener]] added
     */
-  override def withEventListener(listener: AMFEventListener): OtherCardConfiguration = super._withEventListener(listener)
+  override def withEventListener(listener: AMFEventListener): OtherCardConfiguration =
+    super._withEventListener(listener)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): OtherCardConfiguration =
     super._withEntities(entities)
@@ -235,31 +236,31 @@ object OtherCardConfiguration {
   def OtherCard(): OtherCardConfiguration =
     predefined()
       .withPlugins(
-        List(
-          OtherCardParsePlugin,
-          OtherCardRenderPlugin,
-          OtherCardValidationPlugin(),
-          AMFJsonLDSchemaGraphRenderPlugin,
-          AMFJsonLDSchemaGraphParsePlugin
-        )
+          List(
+              OtherCardParsePlugin,
+              OtherCardRenderPlugin,
+              OtherCardValidationPlugin(),
+              JsonSchemaBasedSpecGraphRenderPlugin,
+              AMFJsonLDSchemaGraphParsePlugin
+          )
       )
       .withTransformationPipelines(
-        List(
-          JsonSchemaBasedSpecTransformationPipeline(),
-          JsonSchemaBasedSpecEditingPipeline(),
-          JsonSchemaBasedSpecCachePipeline()
-        )
+          List(
+              JsonSchemaBasedSpecTransformationPipeline(),
+              JsonSchemaBasedSpecEditingPipeline(),
+              JsonSchemaBasedSpecCachePipeline()
+          )
       )
 
   private def predefined(): OtherCardConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new OtherCardConfiguration(
-      baseConfig.resolvers,
-      baseConfig.errorHandlerProvider,
-      baseConfig.registry,
-      baseConfig.listeners,
-      baseConfig.options,
-      baseConfig.idAdopterProvider
+        baseConfig.resolvers,
+        baseConfig.errorHandlerProvider,
+        baseConfig.registry,
+        baseConfig.listeners,
+        baseConfig.options,
+        baseConfig.idAdopterProvider
     )
   }
 }

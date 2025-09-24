@@ -1,5 +1,8 @@
 package amf.agentnetwork.client.scala
 
+import amf.agentnetwork.internal.plugins.parse.AgentNetworkParsePlugin
+import amf.agentnetwork.internal.plugins.render.AgentNetworkRenderPlugin
+import amf.agentnetwork.internal.plugins.validation.AgentNetworkValidationPlugin
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.adoption.IdAdopterProvider
@@ -18,13 +21,9 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
-import amf.agentnetwork.internal.plugins.parse.AgentNetworkParsePlugin
-import amf.agentnetwork.internal.plugins.render.AgentNetworkRenderPlugin
-import amf.agentnetwork.internal.plugins.validation.AgentNetworkValidationPlugin
-import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
-import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
-import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
   JsonSchemaBasedSpecEditingPipeline,
@@ -41,12 +40,12 @@ class AgentNetworkConfiguration private[amf] (
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
 ) extends JsonSchemaBasedSpecConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry,
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry,
+        listeners,
+        options,
+        idAdopterProvider
     ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
@@ -60,12 +59,12 @@ class AgentNetworkConfiguration private[amf] (
       idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): AgentNetworkConfiguration =
     new AgentNetworkConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry.asInstanceOf[AMLRegistry],
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry.asInstanceOf[AMLRegistry],
+        listeners,
+        options,
+        idAdopterProvider
     )
 
   override def baseUnitClient(): AgentNetworkBaseUnitClient = new AgentNetworkBaseUnitClient(this)
@@ -157,7 +156,8 @@ class AgentNetworkConfiguration private[amf] (
     super._withTransformationPipeline(pipeline)
 
   /** AMF internal method just to facilitate the construction */
-  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AgentNetworkConfiguration =
+  override private[amf] def withTransformationPipelines(
+      pipelines: List[TransformationPipeline]): AgentNetworkConfiguration =
     super._withTransformationPipelines(pipelines)
 
   /** Set [[ErrorHandlerProvider]]
@@ -175,7 +175,8 @@ class AgentNetworkConfiguration private[amf] (
     * @return
     *   [[AgentNetworkConfiguration]] with [[AMFEventListener]] added
     */
-  override def withEventListener(listener: AMFEventListener): AgentNetworkConfiguration = super._withEventListener(listener)
+  override def withEventListener(listener: AMFEventListener): AgentNetworkConfiguration =
+    super._withEventListener(listener)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AgentNetworkConfiguration =
     super._withEntities(entities)
@@ -187,7 +188,8 @@ class AgentNetworkConfiguration private[amf] (
     super.withExtensions(dialect).asInstanceOf[AgentNetworkConfiguration]
   }
 
-  private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AgentNetworkConfiguration =
+  private[amf] override def withAnnotations(
+      annotations: Map[String, AnnotationGraphLoader]): AgentNetworkConfiguration =
     super._withAnnotations(annotations)
 
   /** Set [[BaseExecutionEnvironment]]
@@ -235,31 +237,31 @@ object AgentNetworkConfiguration {
   def AgentNetwork(): AgentNetworkConfiguration =
     predefined()
       .withPlugins(
-        List(
-          AgentNetworkParsePlugin,
-          AgentNetworkRenderPlugin,
-          AgentNetworkValidationPlugin(),
-          AMFJsonLDSchemaGraphRenderPlugin,
-          AMFJsonLDSchemaGraphParsePlugin
-        )
+          List(
+              AgentNetworkParsePlugin,
+              AgentNetworkRenderPlugin,
+              AgentNetworkValidationPlugin(),
+              JsonSchemaBasedSpecGraphRenderPlugin,
+              AMFJsonLDSchemaGraphParsePlugin
+          )
       )
       .withTransformationPipelines(
-        List(
-          JsonSchemaBasedSpecTransformationPipeline(),
-          JsonSchemaBasedSpecEditingPipeline(),
-          JsonSchemaBasedSpecCachePipeline()
-        )
+          List(
+              JsonSchemaBasedSpecTransformationPipeline(),
+              JsonSchemaBasedSpecEditingPipeline(),
+              JsonSchemaBasedSpecCachePipeline()
+          )
       )
 
   private def predefined(): AgentNetworkConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new AgentNetworkConfiguration(
-      baseConfig.resolvers,
-      baseConfig.errorHandlerProvider,
-      baseConfig.registry,
-      baseConfig.listeners,
-      baseConfig.options,
-      baseConfig.idAdopterProvider
+        baseConfig.resolvers,
+        baseConfig.errorHandlerProvider,
+        baseConfig.registry,
+        baseConfig.listeners,
+        baseConfig.options,
+        baseConfig.idAdopterProvider
     )
   }
 }

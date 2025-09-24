@@ -21,10 +21,9 @@ import amf.core.internal.validation.core.ValidationProfile
 import amf.mcp.internal.plugins.parse.MCPParsePlugin
 import amf.mcp.internal.plugins.render.MCPRenderPlugin
 import amf.mcp.internal.plugins.validation.MCPValidationPlugin
-import amf.shapes.client.scala.{JsonSchemaBasedSpecConfiguration, ShapesConfiguration}
-import amf.shapes.internal.convert.ShapesRegister
+import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
-import amf.shapes.internal.plugins.render.AMFJsonLDSchemaGraphRenderPlugin
+import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
   JsonSchemaBasedSpecEditingPipeline,
@@ -41,12 +40,12 @@ class MCPConfiguration private[amf] (
     override private[amf] val options: AMFOptions,
     override private[amf] val idAdopterProvider: IdAdopterProvider
 ) extends JsonSchemaBasedSpecConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry,
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry,
+        listeners,
+        options,
+        idAdopterProvider
     ) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
@@ -60,12 +59,12 @@ class MCPConfiguration private[amf] (
       idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): MCPConfiguration =
     new MCPConfiguration(
-      resolvers,
-      errorHandlerProvider,
-      registry.asInstanceOf[AMLRegistry],
-      listeners,
-      options,
-      idAdopterProvider
+        resolvers,
+        errorHandlerProvider,
+        registry.asInstanceOf[AMLRegistry],
+        listeners,
+        options,
+        idAdopterProvider
     )
 
   override def baseUnitClient(): MCPBaseUnitClient = new MCPBaseUnitClient(this)
@@ -235,31 +234,31 @@ object MCPConfiguration {
   def MCP(): MCPConfiguration =
     predefined()
       .withPlugins(
-        List(
-          MCPParsePlugin,
-          MCPRenderPlugin,
-          MCPValidationPlugin(),
-          AMFJsonLDSchemaGraphRenderPlugin,
-          AMFJsonLDSchemaGraphParsePlugin
-        )
+          List(
+              MCPParsePlugin,
+              MCPRenderPlugin,
+              MCPValidationPlugin(),
+              JsonSchemaBasedSpecGraphRenderPlugin,
+              AMFJsonLDSchemaGraphParsePlugin
+          )
       )
       .withTransformationPipelines(
-        List(
-          JsonSchemaBasedSpecTransformationPipeline(),
-          JsonSchemaBasedSpecEditingPipeline(),
-          JsonSchemaBasedSpecCachePipeline()
-        )
+          List(
+              JsonSchemaBasedSpecTransformationPipeline(),
+              JsonSchemaBasedSpecEditingPipeline(),
+              JsonSchemaBasedSpecCachePipeline()
+          )
       )
 
   private def predefined(): MCPConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()
     new MCPConfiguration(
-      baseConfig.resolvers,
-      baseConfig.errorHandlerProvider,
-      baseConfig.registry,
-      baseConfig.listeners,
-      baseConfig.options,
-      baseConfig.idAdopterProvider
+        baseConfig.resolvers,
+        baseConfig.errorHandlerProvider,
+        baseConfig.registry,
+        baseConfig.listeners,
+        baseConfig.options,
+        baseConfig.idAdopterProvider
     )
   }
 }
