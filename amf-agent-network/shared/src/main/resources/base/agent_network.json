@@ -852,7 +852,87 @@
           "description": "The description of this llm"
         },
         "metadata": {
-          "$ref": "llm_metadata.json#/definitions/LLMMetadata"
+          "$ref": "#/definitions/LLMMetadata"
+        }
+      }
+    },
+    "LLMMetadata": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WellKnownLLM"
+        },
+        {
+          "$ref": "#/definitions/CustomLLM"
+        }
+      ]
+    },
+    "WellKnownLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": [
+            "OpenAI",
+            "AzureOpenai"
+          ]
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CustomLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#CustomLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transcoder",
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "transcoder": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "$ref": "references.json#/definitions/PolicyRef"
+            }
+          }
         }
       }
     },

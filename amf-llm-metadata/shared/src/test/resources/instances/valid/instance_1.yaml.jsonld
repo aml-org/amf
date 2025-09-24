@@ -11,38 +11,23 @@
     {
       "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
       "@type": [
-        "http://anypoint.com/vocabs/agents#CustomLLMMetadata",
-        "http://anypoint.com/vocabs/agents#LLMMetadata",
+        "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#transcoder": {
-        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transcoder"
-      },
-      "http://anypoint.com/vocabs/agents#platform": "MyCustomLLMProvider",
-      "http://anypoint.com/vocabs/agents#models": [
-        "custom-model-v1",
-        "custom-model-v2-beta"
-      ]
-    },
-    {
-      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transcoder",
-      "@type": [
-        "http://a.ml/vocabularies/core#transcoder",
-        "http://anypoint.com/vocabs/agents#transcoder",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#ref": {
-        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transcoder/ref"
+      "http://a.ml/vocabularies/core#platform": "openai",
+      "http://a.ml/vocabularies/core#policyRef": {
+        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/policyRef"
       }
     },
     {
-      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transcoder/ref",
+      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/policyRef",
       "@type": [
-        "http://anypoint.com/vocabs/agents#ref",
+        "http://a.ml/vocabularies/core#policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "my-custom-transcoder-policy",
-      "http://anypoint.com/vocabs/agents#namespace": "prod-environment"
+      "http://a.ml/vocabularies/core#groupId": "com.mulesoft.policies",
+      "http://a.ml/vocabularies/core#assetId": "openai-transcoding-policy",
+      "http://a.ml/vocabularies/core#version": "1.0.0-20250917215110"
     },
     {
       "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.yaml",
