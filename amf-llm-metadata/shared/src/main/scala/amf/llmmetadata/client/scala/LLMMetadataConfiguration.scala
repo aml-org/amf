@@ -22,7 +22,7 @@ import amf.llmmetadata.internal.plugins.parse.LLMMetadataParsePlugin
 import amf.llmmetadata.internal.plugins.render.LLMMetadataRenderPlugin
 import amf.llmmetadata.internal.plugins.validation.LLMMetadataValidationPlugin
 import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
-import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
+import amf.shapes.internal.plugins.parser.JsonSchemaBasedSpecGraphParsePlugin
 import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
@@ -241,7 +241,7 @@ object LLMMetadataConfiguration {
               LLMMetadataRenderPlugin,
               LLMMetadataValidationPlugin(),
               JsonSchemaBasedSpecGraphRenderPlugin,
-              AMFJsonLDSchemaGraphParsePlugin
+              JsonSchemaBasedSpecGraphParsePlugin
           )
       )
       .withTransformationPipelines(

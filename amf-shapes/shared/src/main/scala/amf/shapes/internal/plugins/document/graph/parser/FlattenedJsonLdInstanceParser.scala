@@ -68,8 +68,10 @@ class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[
     contextEntity.properties.foreach { property =>
       val propertyIri   = property._1
       val propertyValue = property._2
+
       map
         .key(propertyIri.iri())
+        .orElse(map.key(compactUriFromContext(propertyIri.iri())))  // iri from JSON-LD could be compacted
         .flatMap { entry =>
           traverseJsonLdObjectProperty(entry, propertyIri, propertyValue)
         }

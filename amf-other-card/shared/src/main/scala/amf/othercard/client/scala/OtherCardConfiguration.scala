@@ -22,7 +22,7 @@ import amf.othercard.internal.plugins.parse.OtherCardParsePlugin
 import amf.othercard.internal.plugins.render.OtherCardRenderPlugin
 import amf.othercard.internal.plugins.validation.OtherCardValidationPlugin
 import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
-import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
+import amf.shapes.internal.plugins.parser.JsonSchemaBasedSpecGraphParsePlugin
 import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
@@ -241,7 +241,7 @@ object OtherCardConfiguration {
               OtherCardRenderPlugin,
               OtherCardValidationPlugin(),
               JsonSchemaBasedSpecGraphRenderPlugin,
-              AMFJsonLDSchemaGraphParsePlugin
+              JsonSchemaBasedSpecGraphParsePlugin
           )
       )
       .withTransformationPipelines(

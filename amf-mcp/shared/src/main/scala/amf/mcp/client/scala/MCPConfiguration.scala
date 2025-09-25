@@ -22,7 +22,7 @@ import amf.mcp.internal.plugins.parse.MCPParsePlugin
 import amf.mcp.internal.plugins.render.MCPRenderPlugin
 import amf.mcp.internal.plugins.validation.MCPValidationPlugin
 import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
-import amf.shapes.internal.plugins.parser.AMFJsonLDSchemaGraphParsePlugin
+import amf.shapes.internal.plugins.parser.JsonSchemaBasedSpecGraphParsePlugin
 import amf.shapes.internal.plugins.render.JsonSchemaBasedSpecGraphRenderPlugin
 import amf.shapes.internal.transformation.{
   JsonSchemaBasedSpecCachePipeline,
@@ -239,7 +239,7 @@ object MCPConfiguration {
               MCPRenderPlugin,
               MCPValidationPlugin(),
               JsonSchemaBasedSpecGraphRenderPlugin,
-              AMFJsonLDSchemaGraphParsePlugin
+              JsonSchemaBasedSpecGraphParsePlugin
           )
       )
       .withTransformationPipelines(
