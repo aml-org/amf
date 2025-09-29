@@ -27,7 +27,7 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
 
   val doc: Document = Document()
 
-  def loadReferences(references: Seq[ParsedReference]): Unit = {
+  private def loadReferences(references: Seq[ParsedReference]): Unit = {
     references.foreach { reference =>
       reference.unit match {
         case dec: DeclaresModel =>

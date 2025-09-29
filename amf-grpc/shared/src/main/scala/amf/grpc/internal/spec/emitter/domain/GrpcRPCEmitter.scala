@@ -9,50 +9,69 @@ import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 case class GrpcRPCEmitter(operation: Operation, builder: StringDocBuilder, ctx: GrpcEmitterContext)
     extends GrpcEmitter {
 
-  def emit(): Unit = {
-    if (mustEmitOptions(operation)) {
-      builder.fixed { f =>
-        f += (s"rpc $name($streamRequest$request) returns ($streamResponse$response) {", operationPos)
-        f.obj { o =>
-          o.list { l =>
-            emitOptions(operation, l, ctx)
-          }
-        }
-        f += (s"}")
-      }
-    } else {
-      builder += (s"rpc $name($streamRequest$request) returns ($streamResponse$response) {}", operationPos)
-    }
+  // Constants for unknown types and streaming methods
+  private val UnknownMessage = "UnknownMessage"
+  private val RequestStreamingMethods = Set("publish", "pubsub")
+  private val ResponseStreamingMethods = Set("subscribe", "pubsub")
 
+  def emit(): Unit = {
+    val rpcSignature = buildRpcSignature
+    if (mustEmitOptions(operation)) {
+      emitRpcWithOptions(rpcSignature)
+    } else {
+      builder += (s"$rpcSignature {}", operationPos)
+    }
   }
 
-  def operationPos: Position = pos(operation.annotations)
+  /** Builds the complete RPC method signature */
+  private def buildRpcSignature: String = {
+    val requestType = s"$streamRequest$request"
+    val responseType = s"$streamResponse$response"
+    s"rpc $name($requestType) returns ($responseType)"
+  }
 
-  def name: String =
+  /** Emits RPC with options block */
+  private def emitRpcWithOptions(signature: String): Unit = {
+    builder.fixed { f =>
+      f += (s"$signature {", operationPos)
+      f.obj { o =>
+        o.list { l =>
+          emitOptions(operation, l, ctx)
+        }
+      }
+      f += "}"
+    }
+  }
+
+  private def operationPos: Position = pos(operation.annotations)
+
+  /** Resolves the RPC method name from operation metadata */
+  private def name: String = {
     operation.operationId
       .option()
       .orElse(operation.name.option())
       .getOrElse(s"operation${operation.method.value()}")
-
-  def request: String =
-    operation.request.payloads.headOption.map { schema =>
-      fieldRange(schema.schema)
-    } getOrElse ("UnknownMessage")
-
-  def response: String =
-    operation.responses.head.payloads.headOption.map { schema =>
-      fieldRange(schema.schema)
-    } getOrElse ("UnknownMessage")
-
-  def streamRequest: String = operation.method.option().getOrElse("") match {
-    case "publish" => "stream "
-    case "pubsub"  => "stream "
-    case _         => ""
   }
 
-  def streamResponse: String = operation.method.option().getOrElse("") match {
-    case "subscribe" => "stream "
-    case "pubsub"    => "stream "
-    case _           => ""
+  private def request: String = {
+    operation.request.payloads.headOption
+      .map(schema => fieldRange(schema.schema))
+      .getOrElse(UnknownMessage)
+  }
+
+  private def response: String = {
+    operation.responses.head.payloads.headOption
+      .map(schema => fieldRange(schema.schema))
+      .getOrElse(UnknownMessage)
+  }
+
+  /** Determines if should emit 'stream' for request */
+  private def streamRequest: String = {
+    if (operation.method.option().exists(RequestStreamingMethods.contains)) "stream " else ""
+  }
+
+  /** Determines if should emit 'stream' for response */
+  private def streamResponse: String = {
+    if (operation.method.option().exists(ResponseStreamingMethods.contains)) "stream " else ""
   }
 }

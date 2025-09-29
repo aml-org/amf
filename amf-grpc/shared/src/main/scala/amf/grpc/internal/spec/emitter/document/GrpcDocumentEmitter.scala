@@ -16,7 +16,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
 
   def emit(): Unit = {
     builder.doc { doc =>
-      doc += ("syntax = \"proto3\";\n")
+      doc += "syntax = \"proto3\";\n"
       emitReferences(doc)
       doc.list { l =>
         emitPackage(l)
@@ -32,7 +32,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
   def webApi: WebApi           = document.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
   def endpoints: Seq[EndPoint] = webApi.endPoints
 
-  def emitReferences(b: StringDocBuilder): Unit = {
+  private def emitReferences(b: StringDocBuilder): Unit = {
     var checkDefaultGoogleDescriptor = false
     // we make the location relative to the location of the unit if we can
     val rootLocation =
@@ -45,7 +45,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
       b += ("import \"" + refLocation + "\";")
     }
     if (!checkDefaultGoogleDescriptor && declaresOptions) {
-      b += ("import \"google/protobuf/descriptor.proto\";")
+      b += "import \"google/protobuf/descriptor.proto\";"
     }
     if (document.references.nonEmpty || declaresOptions) {
       b += "\n"
@@ -53,7 +53,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
 
   }
 
-  def declaresOptions: Boolean = {
+  private def declaresOptions: Boolean = {
     document match {
       case lib: DeclaresModel =>
         lib.declares.exists(_.isInstanceOf[CustomDomainProperty])
@@ -61,7 +61,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
     }
   }
 
-  def emitPackage(l: StringDocBuilder): SourceCodeBlock = {
+  private def emitPackage(l: StringDocBuilder): SourceCodeBlock = {
     val nameField = if (document.pkg.option().isDefined) {
       document.pkg
     } else {
@@ -73,11 +73,11 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
     l += (s"package $normalizedName;", position)
   }
 
-  private def emitMessages(l: StringDocBuilder) = {
+  private def emitMessages(l: StringDocBuilder): Unit = {
     ctx.topLevelMessages.foreach { s => GrpcMessageEmitter(s, l, ctx).emit() }
   }
 
-  private def emitEnums(l: StringDocBuilder) = {
+  private def emitEnums(l: StringDocBuilder): Unit = {
     ctx.topLevelEnums.foreach { s => GrpcEnumEmitter(s, l, ctx).emit() }
   }
 
