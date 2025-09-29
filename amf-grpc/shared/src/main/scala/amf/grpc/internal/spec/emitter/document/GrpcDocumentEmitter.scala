@@ -49,6 +49,11 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
       val refLocation = ref.location().get.replace("file://", "").replace(rootLocation, "")
       builder += ("import \"" + refLocation + "\";")
     }
+
+    document.annotations
+      .collect { case ann: WellKnownType => ann }
+      .foreach { ann => builder += "import \"" + ann.typeName + "\";" }
+    builder += "" // new line after imports
   }
 
   private def emitMessages(l: StringDocBuilder): Unit = {

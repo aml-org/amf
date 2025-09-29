@@ -25,4 +25,8 @@ class GrpcCycleTest extends FunSuiteCycleTests {
   test("GRPC reserved keyword emission") {
     cycle("reserved/api.proto", "reserved/dumped.proto", GrpcProtoHint, GrpcProtoHint)
   }
+
+  test("GRPC Google Protobuf well-known imports emission") {
+    cycle("imports/api.proto", "imports/dumped.proto", GrpcProtoHint, GrpcProtoHint)
+  }
 }
