@@ -28,6 +28,7 @@ trait GrpcEmitter {
       case a: ArrayShape                 => arrayRange(a)
       case s: ScalarShape                => scalarRange(s)
       case o: NodeShape                  => objectRange(o)
+      case a: AnyShape                   => anyRange(a)
       case _                             => UnknownMessage
     }
   }
@@ -40,6 +41,7 @@ trait GrpcEmitter {
     arrayShape.items match {
       case s: ScalarShape => scalarRange(s)
       case n: NodeShape   => objectRange(n)
+      case a: AnyShape    => anyRange(a)
       case _              => UnknownMessage
     }
   }
@@ -63,16 +65,18 @@ trait GrpcEmitter {
       case DataType.Long if maybeFormat.contains("fixed64")     => "fixed64"
       case DataType.Integer if maybeFormat.contains("sfixed32") => "sfixed32"
       case DataType.Long if maybeFormat.contains("sfixed64")    => "sfixed64"
-      case DataType.Integer                                     => "int32"
-      case DataType.Long                                        => "int64"
-      case DataType.Boolean                                     => "bool"
-      case DataType.String                                      => "string"
-      case DataType.Byte                                        => "bytes"
-      case _                                                    => "string"
+      case DataType.Integer                                   => "int32"
+      case DataType.Long                                      => "int64"
+      case DataType.Boolean                                   => "bool"
+      case DataType.String                                    => "string"
+      case DataType.Byte                                      => "bytes"
+      case _                                                  => "string"
     }
   }
 
   private def objectRange(o: NodeShape): String = resolveShapeName(o, UnknownMessage)
+
+  private def anyRange(anyShape: AnyShape): String = resolveShapeName(anyShape, UnknownAny)
 
   /** Generates gRPC map type syntax from a NodeShape with additional properties */
   private def mapRange(m: NodeShape): String = {

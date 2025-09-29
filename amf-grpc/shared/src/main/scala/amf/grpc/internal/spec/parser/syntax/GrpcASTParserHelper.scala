@@ -115,7 +115,7 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     val topLevelAlias      = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     val qualifiedReference = ctx.fullMessagePath(literalReference)
     val externalReference =
-      s".${literalReference}" // absolute reference based on the assumption the reference is for an external package imported in the file
+      s".$literalReference" // absolute reference based on the assumption the reference is for an external package imported in the file
     ctx.declarations
       .findType(
         qualifiedReference,
@@ -139,6 +139,10 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
       case Some(s: ScalarShape) =>
         s.link(literalReference, toAnnotations(n))
           .asInstanceOf[ScalarShape]
+          .withName(literalReference, toAnnotations(n))
+      case Some(s: AnyShape) =>
+        s.link(literalReference, toAnnotations(n))
+          .asInstanceOf[AnyShape]
           .withName(literalReference, toAnnotations(n))
       case _ =>
         val shape = UnresolvedShape(literalReference, toAnnotations(n))
