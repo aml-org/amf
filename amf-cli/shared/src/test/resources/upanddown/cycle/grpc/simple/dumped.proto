@@ -1,10 +1,11 @@
 syntax = "proto3";
 
+package helloworld;
+
 import "library.proto";
 import "google/protobuf/descriptor.proto";
 
 
-package helloworld;
 message MyOption {
   string a = 1;
   string b = 2;

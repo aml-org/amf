@@ -5,6 +5,8 @@ import org.yaml.model.{YMapEntry, YPart}
 
 case class InlineDefinition() extends Annotation
 
+case class WellKnownType(typeName: String) extends PerpetualAnnotation
+
 case class ParsedJSONSchema(rawText: String) extends EternalSerializedAnnotation {
   override val name: String  = "parsed-json-schema"
   override val value: String = rawText

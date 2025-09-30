@@ -10,6 +10,7 @@ import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
+import amf.grpc.internal.spec.common.WellKnownTypes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.domain.{
   GrpcEnumParser,
@@ -21,13 +22,14 @@ import amf.grpc.internal.spec.parser.domain.{
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations.WellKnownType
 import org.mulesoft.antlrast.ast.{AST, ASTNode, Node}
 
 case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
   val doc: Document = Document()
 
-  def loadReferences(references: Seq[ParsedReference]): Unit = {
+  private def loadReferences(references: Seq[ParsedReference]): Unit = {
     references.foreach { reference =>
       reference.unit match {
         case dec: DeclaresModel =>
@@ -47,12 +49,22 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
     ast.rootOption().collect({ case n: Node => parseRootNode(n) })
 
     ctx.declarations.futureDeclarations.resolve()
+    generateImportAnnotations(doc)
     doc
       .withDeclares(
         ctx.declarations.shapes.values.toList ++
           ctx.declarations.annotations.values.toList
       )
       .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRPC))
+  }
+
+  private def generateImportAnnotations(doc: Document): Unit = {
+    val importFromTypes = ctx.globalSpace.collect {
+      case (key, _) if key.startsWith(".google") =>
+        WellKnownTypes.getImportUrlForKey(key).getOrElse(key.replace(".", "/"))
+    }.toSet
+
+    importFromTypes.foreach(importFromType => doc.annotations += WellKnownType(importFromType))
   }
 
   private def parseRootNode(node: Node): Unit = {

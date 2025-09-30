@@ -2,12 +2,14 @@ package amf.grpc.internal.spec.emitter.document
 
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.plugins.syntax.{SourceCodeBlock, StringDocBuilder}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 import amf.grpc.internal.spec.emitter.domain._
+import amf.shapes.internal.annotations.WellKnownType
 import org.mulesoft.common.collections._
 
 class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GrpcEmitter {
@@ -16,10 +18,10 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
 
   def emit(): Unit = {
     builder.doc { doc =>
-      doc += ("syntax = \"proto3\";\n")
-      emitReferences(doc)
+      doc += "syntax = \"proto3\";\n"
+      emitPackage()
+      emitReferences()
       doc.list { l =>
-        emitPackage(l)
         emitMessages(l)
         emitEnums(l)
         emitServices(l)
@@ -32,52 +34,33 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
   def webApi: WebApi           = document.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
   def endpoints: Seq[EndPoint] = webApi.endPoints
 
-  def emitReferences(b: StringDocBuilder): Unit = {
-    var checkDefaultGoogleDescriptor = false
-    // we make the location relative to the location of the unit if we can
+  private def emitPackage(): SourceCodeBlock = {
+    val nameField      = if (document.pkg.nonEmpty) document.pkg else webApi.name
+    val name           = nameField.option().getOrElse("anonymous")
+    val normalizedName = name.toLowerCase.replaceAll("-", "_").replaceAll(" ", "")
+    builder += s"package $normalizedName;\n"
+  }
+
+  private def emitReferences(): Unit = {
+    // make the location relative to the location of the unit if we can
     val rootLocation =
       document.location().getOrElse("").replace("file://", "").split("/").dropRight(1).mkString("/") + "/"
     document.references.collect { case r if r.location().isDefined => r }.foreach { ref =>
       val refLocation = ref.location().get.replace("file://", "").replace(rootLocation, "")
-      if (refLocation.contains("google/protobuf/descriptor.proto\"")) {
-        checkDefaultGoogleDescriptor = true
-      }
-      b += ("import \"" + refLocation + "\";")
-    }
-    if (!checkDefaultGoogleDescriptor && declaresOptions) {
-      b += ("import \"google/protobuf/descriptor.proto\";")
-    }
-    if (document.references.nonEmpty || declaresOptions) {
-      b += "\n"
+      builder += ("import \"" + refLocation + "\";")
     }
 
+    document.annotations
+      .collect { case ann: WellKnownType => ann }
+      .foreach { ann => builder += "import \"" + ann.typeName + "\";" }
+    builder += "" // new line after imports
   }
 
-  def declaresOptions: Boolean = {
-    document match {
-      case lib: DeclaresModel =>
-        lib.declares.exists(_.isInstanceOf[CustomDomainProperty])
-      case _ => false
-    }
-  }
-
-  def emitPackage(l: StringDocBuilder): SourceCodeBlock = {
-    val nameField = if (document.pkg.option().isDefined) {
-      document.pkg
-    } else {
-      webApi.name
-    }
-    val position       = pos(nameField.annotations())
-    val name           = nameField.option().getOrElse("anonymous")
-    val normalizedName = name.toLowerCase.replaceAll("-", "_").replaceAll(" ", "")
-    l += (s"package $normalizedName;", position)
-  }
-
-  private def emitMessages(l: StringDocBuilder) = {
+  private def emitMessages(l: StringDocBuilder): Unit = {
     ctx.topLevelMessages.foreach { s => GrpcMessageEmitter(s, l, ctx).emit() }
   }
 
-  private def emitEnums(l: StringDocBuilder) = {
+  private def emitEnums(l: StringDocBuilder): Unit = {
     ctx.topLevelEnums.foreach { s => GrpcEnumEmitter(s, l, ctx).emit() }
   }
 

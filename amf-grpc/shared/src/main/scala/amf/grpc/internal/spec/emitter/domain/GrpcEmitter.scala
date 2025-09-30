@@ -4,9 +4,14 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
-import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
 
 trait GrpcEmitter {
+
+  // Constants for unknown type fallbacks
+  private val UnknownMessage = "UnknownMessage"
+  private val UnknownEnum    = "UnknownEnum"
+  private val UnknownAny     = "UnknownAny"
 
   def emitOptions(domainElement: DomainElement, builder: StringDocBuilder, ctx: GrpcEmitterContext): Unit = {
     domainElement.customDomainProperties.foreach { extension =>
@@ -16,50 +21,75 @@ trait GrpcEmitter {
 
   def mustEmitOptions(domainElement: DomainElement): Boolean = domainElement.customDomainProperties.nonEmpty
 
+  /** Converts a Shape to its corresponding gRPC field type string representation. */
   def fieldRange(range: Shape): String = {
     range match {
-      case m: NodeShape if Option(m.additionalPropertiesKeySchema).isDefined => mapRange(m)
-      case a: ArrayShape if a.items.isInstanceOf[ScalarShape] => scalarRange(a.items.asInstanceOf[ScalarShape])
-      case a: ArrayShape if a.items.isInstanceOf[NodeShape]   => objectRange(a.items.asInstanceOf[NodeShape])
-      case s: ScalarShape                                     => scalarRange(s)
-      case o: NodeShape                                       => objectRange(o)
-      case _                                                  => "UnknownMessage"
+      case m: NodeShape if isMapShape(m) => mapRange(m)
+      case a: ArrayShape                 => arrayRange(a)
+      case s: ScalarShape                => scalarRange(s)
+      case o: NodeShape                  => objectRange(o)
+      case a: AnyShape                   => anyRange(a)
+      case _                             => UnknownMessage
     }
   }
 
-  def scalarRange(s: ScalarShape): String = {
-    if (s.isLink) {
-      s.linkLabel.option().orElse(s.displayName.option()).orElse(s.name.option()).getOrElse("UnknownEnum")
-    } else {
-      s.dataType.value() match {
-        case DataType.Double if s.format.option().isEmpty               => "double"
-        case DataType.Float if s.format.option().isEmpty                => "float"
-        case DataType.Integer if s.format.option().contains("uint32")   => "uint32"
-        case DataType.Long if s.format.option().contains("uint64")      => "uint64"
-        case DataType.Integer if s.format.option().contains("sint32")   => "sint32"
-        case DataType.Long if s.format.option().contains("sint64")      => "sint64"
-        case DataType.Integer if s.format.option().contains("fixed32")  => "fixed32"
-        case DataType.Long if s.format.option().contains("fixed64")     => "fixed64"
-        case DataType.Integer if s.format.option().contains("sfixed32") => "sfixed32"
-        case DataType.Long if s.format.option().contains("sfixed64")    => "sfixed64"
-        case DataType.Integer                                           => "int32"
-        case DataType.Long                                              => "int64"
-        case DataType.Boolean                                           => "bool"
-        case DataType.String                                            => "string"
-        case DataType.Byte                                              => "bytes"
-        case _                                                          => "string"
-      }
+  private def isMapShape(nodeShape: NodeShape): Boolean =
+    Option(nodeShape.additionalPropertiesKeySchema).isDefined
+
+  /** Handles array shape type resolution */
+  private def arrayRange(arrayShape: ArrayShape): String = {
+    arrayShape.items match {
+      case s: ScalarShape => scalarRange(s)
+      case n: NodeShape   => objectRange(n)
+      case a: AnyShape    => anyRange(a)
+      case _              => UnknownMessage
     }
   }
 
-  def objectRange(o: NodeShape): String = {
-    o.linkLabel.option().orElse(o.displayName.option()).orElse(o.name.option()).getOrElse("UnknownMessage")
+  /** Converts a ScalarShape to its gRPC type representation */
+  private def scalarRange(s: ScalarShape): String =
+    if (s.isLink) { resolveShapeName(s, UnknownEnum) }
+    else mapDataTypeToGrpcType(s)
+
+  /** Maps AMF DataType to gRPC primitive types, considering format specifications */
+  private def mapDataTypeToGrpcType(s: ScalarShape): String = {
+    val maybeFormat = s.format.option()
+    s.dataType.value() match {
+      case DataType.Double if maybeFormat.isEmpty               => "double"
+      case DataType.Float if maybeFormat.isEmpty                => "float"
+      case DataType.Integer if maybeFormat.contains("uint32")   => "uint32"
+      case DataType.Long if maybeFormat.contains("uint64")      => "uint64"
+      case DataType.Integer if maybeFormat.contains("sint32")   => "sint32"
+      case DataType.Long if maybeFormat.contains("sint64")      => "sint64"
+      case DataType.Integer if maybeFormat.contains("fixed32")  => "fixed32"
+      case DataType.Long if maybeFormat.contains("fixed64")     => "fixed64"
+      case DataType.Integer if maybeFormat.contains("sfixed32") => "sfixed32"
+      case DataType.Long if maybeFormat.contains("sfixed64")    => "sfixed64"
+      case DataType.Integer                                   => "int32"
+      case DataType.Long                                      => "int64"
+      case DataType.Boolean                                   => "bool"
+      case DataType.String                                    => "string"
+      case DataType.Byte                                      => "bytes"
+      case _                                                  => "string"
+    }
   }
 
-  def mapRange(m: NodeShape): String = {
+  private def objectRange(o: NodeShape): String = resolveShapeName(o, UnknownMessage)
+
+  private def anyRange(anyShape: AnyShape): String = resolveShapeName(anyShape, UnknownAny)
+
+  /** Generates gRPC map type syntax from a NodeShape with additional properties */
+  private def mapRange(m: NodeShape): String = {
     val key   = fieldRange(m.additionalPropertiesKeySchema)
     val value = fieldRange(m.additionalPropertiesSchema)
     s"map<$key,$value>"
   }
 
+  private def resolveShapeName(s: AnyShape, defaultName: String): String = {
+    s.linkLabel
+      .option()
+      .orElse(s.displayName.option())
+      .orElse(s.name.option())
+      .getOrElse(defaultName)
+  }
 }
