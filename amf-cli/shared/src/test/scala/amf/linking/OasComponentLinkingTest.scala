@@ -1,4 +1,4 @@
-package amf.components
+package amf.linking
 
 import amf.apicontract.client.scala.model.document.ComponentModule
 import amf.apicontract.client.scala.model.domain.Request
