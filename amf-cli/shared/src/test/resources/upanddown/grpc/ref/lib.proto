@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package lib;
+
+message Something {
+  repeated string message = 2;
+}
