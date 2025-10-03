@@ -14,16 +14,16 @@ case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext
     parseExtensionFields(domain, setterFn)
   }
 
-  def parseExtensionFields(domain: String, setterFn: CustomDomainProperty => Unit): Unit = {
+  private def parseExtensionFields(domain: String, setterFn: CustomDomainProperty => Unit): Unit = {
     collect(ast, Seq(FIELD)).foreach { case fieldElement: Node =>
       val customDomainProperty = CustomDomainProperty(toAnnotations(ast))
-      setterFn(customDomainProperty)
       val propertyShape = GrpcFieldParser(fieldElement)(ctx).parse { _ => }
       customDomainProperty
         .withSerializationOrder(propertyShape.serializationOrder.value())
         .withDomain(Seq(domain))
         .withSchema(propertyShape.range)
         .withName(propertyShape.name.value())
+      setterFn(customDomainProperty)
     }
   }
 

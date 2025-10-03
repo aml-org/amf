@@ -27,7 +27,7 @@ case class GrpcExtensionEmitter(
     }
   }
 
-  def emitDomain(domain: String): String = {
+  private def emitDomain(domain: String): String = {
     domain match {
       case "field"                      => FIELD_OPTIONS
       case "enum"                       => ENUM_OPTIONS

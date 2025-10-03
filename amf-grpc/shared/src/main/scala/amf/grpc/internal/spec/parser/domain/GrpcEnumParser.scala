@@ -23,6 +23,7 @@ case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extend
 
   private def parseElements(): Unit = {
     parseReservedValues()
+    parseOptions()
     val (values, properties) = parseEnumFields()
     val enumSchema = NodeShape(toAnnotations(ast)).withProperties(properties)
     enum.withValues(values).withSerializationSchema(enumSchema)
@@ -32,6 +33,14 @@ case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extend
     collect(ast, Seq(ENUM_BODY, ENUM_ELEMENT, RESERVED)).foreach { case reserved: Node =>
       GrpcReservedValuesParser(reserved).parse { reservedValues =>
         enum.withReservedValues(reservedValues)
+      }
+    }
+  }
+
+  private def parseOptions(): Unit = {
+    collect(ast, Seq(ENUM_BODY, ENUM_ELEMENT, OPTION_STATEMENT)).foreach { case option: Node =>
+      GrpcOptionParser(option).parse { extension =>
+        enum.withCustomDomainProperty(extension)
       }
     }
   }
@@ -48,6 +57,12 @@ case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extend
     
     val maybeName = parseFieldName(enumField, propertySchema)
     val maybeOrder = parseFieldOrder(enumField, propertySchema)
+
+    collect(enumField, Seq(OPTIONS_ENUM_VALUE, OPTION_ENUM_VALUE)).foreach { case option: Node =>
+      GrpcOptionParser(option).parse { extension =>
+        propertySchema.withCustomDomainProperty(extension)
+      }
+    }
     
     (maybeName, if (maybeName.isDefined && maybeOrder) Some(propertySchema) else None)
   }
