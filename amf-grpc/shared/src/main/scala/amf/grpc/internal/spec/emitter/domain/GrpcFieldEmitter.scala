@@ -13,41 +13,50 @@ class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: 
 
   def emit(): Unit = {
     if (mustEmitOptions(property)) {
-      emitWithOptions()
+      emitFieldWithOptions()
     } else {
-      builder += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber;", position)
+      builder += (s"${buildFieldSignature()};", position)
     }
   }
 
-  private def emitWithOptions(): Unit = {
+  private def emitFieldWithOptions(): Unit = {
     if (property.customDomainProperties.length == 1) {
-      val inlinedOption = builder.inlined { b =>
-        domain.GrpcOptionsEmitter(property.customDomainProperties.head, b, ctx).emitFieldExtension()
-      }
-      builder += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber [$inlinedOption];", position)
+      emitFieldWithSingleOption()
     } else {
-      builder.fixed { f =>
-        f += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber [", position)
-        f.obj { o =>
-          o.listWithDelimiter(",\n") { l =>
-            property.customDomainProperties.foreach { cdp =>
-              domain.GrpcOptionsEmitter(cdp, l, ctx).emitFieldExtension()
-            }
+      emitFieldWithMultipleOptions()
+    }
+  }
+
+  private def emitFieldWithSingleOption(): Unit = {
+    val cleanOption = buildSingleOptionContent(property.customDomainProperties.head, builder, ctx)
+    builder += (s"${buildFieldSignature()} [$cleanOption];", position)
+  }
+
+  private def emitFieldWithMultipleOptions(): Unit = {
+    builder.fixed { f =>
+      f += (s"${buildFieldSignature()} [", position)
+      f.obj { o =>
+        o.listWithDelimiter(",\n") { l =>
+          property.customDomainProperties.foreach { cdp =>
+            domain.GrpcOptionsEmitter(cdp, l, ctx).emitFieldExtension()
           }
         }
-        f += "];"
       }
+      f += "];"
     }
   }
 
-  def position: Position = pos(property.range.annotations)
+  private def buildFieldSignature(): String = {
+    s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber"
+  }
 
-  def fieldName: String = property.displayName.option().getOrElse(property.name.value())
+  private def position: Position = pos(property.range.annotations)
 
-  def fieldNumber: Int = property.serializationOrder.option().getOrElse(0)
+  private def fieldName: String = property.displayName.option().getOrElse(property.name.value())
 
-  def repeated: String = if (property.range.isInstanceOf[ArrayShape]) { "repeated " }
-  else { "" }
+  private def fieldNumber: Int = property.serializationOrder.option().getOrElse(0)
+
+  private def repeated: String = if (property.range.isInstanceOf[ArrayShape]) "repeated " else ""
 
 }
 

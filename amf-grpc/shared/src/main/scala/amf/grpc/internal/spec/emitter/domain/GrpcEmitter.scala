@@ -21,6 +21,18 @@ trait GrpcEmitter {
 
   def mustEmitOptions(domainElement: DomainElement): Boolean = domainElement.customDomainProperties.nonEmpty
 
+  def buildSingleOptionContent(
+      customDomainProperty: amf.core.client.scala.model.domain.extensions.DomainExtension,
+      builder: StringDocBuilder,
+      ctx: GrpcEmitterContext
+  ): String = {
+    val optionContent = builder.inlined { b =>
+      GrpcOptionsEmitter(customDomainProperty, b, ctx).emitFieldExtension()
+    }
+    // Remove trailing semicolon from option content since caller adds it at their level
+    if (optionContent.endsWith(";")) optionContent.dropRight(1) else optionContent
+  }
+
   /** Converts a Shape to its corresponding gRPC field type string representation. */
   def fieldRange(range: Shape): String = {
     range match {

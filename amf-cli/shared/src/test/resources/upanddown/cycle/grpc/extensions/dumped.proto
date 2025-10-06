@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package minimal_example;
+
+import "google/protobuf/descriptor.proto";
+
+message SampleMessage {
+  string user_email = 1 [(minimal_example.is_personally_identifiable) = true];
+  int32 user_id = 2;
+  option (minimal_example.message_author) = "Bob";
+}
+enum Status {
+  option (minimal_example.is_deprecated_enum) = true;
+  UNKNOWN = 0 [(minimal_example.enum_value_description) = "Default status"];
+  ACTIVE = 1;
+}
+service SampleService {
+  rpc GetSample(SampleMessage) returns (SampleMessage) {
+    option (minimal_example.required_permission) = "users:read";
+  }
+  option (minimal_example.service_version) = "v1.2.0";
+}
+extend google.protobuf.MessageOptions {
+  string message_author = 50002;
+}
+extend google.protobuf.ServiceOptions {
+  string service_version = 50006;
+}
+extend google.protobuf.FieldOptions {
+  bool is_personally_identifiable = 50003;
+}
+extend google.protobuf.FileOptions {
+  string file_owner = 50001;
+}
+extend google.protobuf.EnumValueOptions {
+  string enum_value_description = 50005;
+}
+extend google.protobuf.EnumOptions {
+  bool is_deprecated_enum = 50004;
+}
+extend google.protobuf.MethodOptions {
+  string required_permission = 50007;
+}
+option (minimal_example.file_owner) = "Alice";

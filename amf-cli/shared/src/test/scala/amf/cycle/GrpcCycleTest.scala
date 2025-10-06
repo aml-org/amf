@@ -29,4 +29,8 @@ class GrpcCycleTest extends FunSuiteCycleTests {
   test("GRPC Google Protobuf well-known imports emission") {
     cycle("imports/api.proto", "imports/dumped.proto", GrpcProtoHint, GrpcProtoHint)
   }
+
+  test("GRPC extensions emission") {
+    cycle("extensions/all.proto", "extensions/dumped.proto", GrpcProtoHint, GrpcProtoHint)
+  }
 }
