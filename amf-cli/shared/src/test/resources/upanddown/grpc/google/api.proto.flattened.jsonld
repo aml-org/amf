@@ -328,7 +328,12 @@
       "http://a.ml/vocabularies/document#package": "google.protobuf",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0",
@@ -351,7 +356,12 @@
       "http://a.ml/vocabularies/document#package": "google.protobuf",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1",
@@ -402,7 +412,12 @@
       "http://a.ml/vocabularies/document#package": "google.protobuf",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/declares/shape/.google.protobuf.Api",
@@ -510,6 +525,17 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/source-map/grpc-raw-proto/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -592,6 +618,17 @@
       ],
       "http://a.ml/vocabularies/apiContract#modelVersion": "3.11.0",
       "http://a.ml/vocabularies/document#sourceSpec": "Grpc"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/source-map/grpc-raw-proto/element_0"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/web-api",
@@ -916,7 +953,12 @@
       "http://a.ml/vocabularies/document#package": "google.protobuf",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/BaseUnitProcessingData",
@@ -925,6 +967,17 @@
       ],
       "http://a.ml/vocabularies/apiContract#modelVersion": "3.11.0",
       "http://a.ml/vocabularies/document#sourceSpec": "Grpc"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/source-map/grpc-raw-proto/element_0"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/declares/shape/.google.protobuf.Api/property/property/name",
@@ -1279,6 +1332,11 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto",
+      "http://a.ml/vocabularies/document-source-maps#value": "// Protocol Buffers - Google's data interchange format\n// Copyright 2008 Google Inc.  All rights reserved.\n// https://developers.google.com/protocol-buffers/\n//\n// Redistribution and use in source and binary forms, with or without\n// modification, are permitted provided that the following conditions are\n// met:\n//\n//     * Redistributions of source code must retain the above copyright\n// notice, this list of conditions and the following disclaimer.\n//     * Redistributions in binary form must reproduce the above\n// copyright notice, this list of conditions and the following disclaimer\n// in the documentation and/or other materials provided with the\n// distribution.\n//     * Neither the name of Google Inc. nor the names of its\n// contributors may be used to endorse or promote products derived from\n// this software without specific prior written permission.\n//\n// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n// \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\nsyntax = \"proto3\";\n\npackage google.protobuf;\n\nimport \"source_context.proto\";\nimport \"type.proto\";\n\noption csharp_namespace = \"Google.Protobuf.WellKnownTypes\";\noption java_package = \"com.google.protobuf\";\noption java_outer_classname = \"ApiProto\";\noption java_multiple_files = true;\noption objc_class_prefix = \"GPB\";\noption go_package = \"google.golang.org/protobuf/types/known/apipb\";\n\n// Api is a light-weight descriptor for an API Interface.\n//\n// Interfaces are also described as \"protocol buffer services\" in some contexts,\n// such as by the \"service\" keyword in a .proto file, but they are different\n// from API Services, which represent a concrete implementation of an interface\n// as opposed to simply a description of methods and bindings. They are also\n// sometimes simply referred to as \"APIs\" in other contexts, such as the name of\n// this message itself. See https://cloud.google.com/apis/design/glossary for\n// detailed terminology.\nmessage Api {\n  // The fully qualified name of this interface, including package name\n  // followed by the interface's simple name.\n  string name = 1;\n\n  // The methods of this interface, in unspecified order.\n  repeated Method methods = 2;\n\n  // Any metadata attached to the interface.\n  repeated Option options = 3;\n\n  // A version string for this interface. If specified, must have the form\n  // `major-version.minor-version`, as in `1.10`. If the minor version is\n  // omitted, it defaults to zero. If the entire version field is empty, the\n  // major version is derived from the package name, as outlined below. If the\n  // field is not empty, the version in the package name will be verified to be\n  // consistent with what is provided here.\n  //\n  // The versioning schema uses [semantic\n  // versioning](http://semver.org) where the major version number\n  // indicates a breaking change and the minor version an additive,\n  // non-breaking change. Both version numbers are signals to users\n  // what to expect from different versions, and should be carefully\n  // chosen based on the product plan.\n  //\n  // The major version is also reflected in the package name of the\n  // interface, which must end in `v<major-version>`, as in\n  // `google.feature.v1`. For major versions 0 and 1, the suffix can\n  // be omitted. Zero major versions must only be used for\n  // experimental, non-GA interfaces.\n  //\n  //\n  string version = 4;\n\n  // Source context for the protocol buffer service represented by this\n  // message.\n  SourceContext source_context = 5;\n\n  // Included interfaces. See [Mixin][].\n  repeated Mixin mixins = 6;\n\n  // The source syntax of the service.\n  Syntax syntax = 7;\n}\n\n// Method represents a method of an API interface.\nmessage Method {\n  // The simple name of this method.\n  string name = 1;\n\n  // A URL of the input message type.\n  string request_type_url = 2;\n\n  // If true, the request is streamed.\n  bool request_streaming = 3;\n\n  // The URL of the output message type.\n  string response_type_url = 4;\n\n  // If true, the response is streamed.\n  bool response_streaming = 5;\n\n  // Any metadata attached to the method.\n  repeated Option options = 6;\n\n  // The source syntax of this method.\n  Syntax syntax = 7;\n}\n\n// Declares an API Interface to be included in this interface. The including\n// interface must redeclare all the methods from the included interface, but\n// documentation and options are inherited as follows:\n//\n// - If after comment and whitespace stripping, the documentation\n//   string of the redeclared method is empty, it will be inherited\n//   from the original method.\n//\n// - Each annotation belonging to the service config (http,\n//   visibility) which is not set in the redeclared method will be\n//   inherited.\n//\n// - If an http annotation is inherited, the path pattern will be\n//   modified as follows. Any version prefix will be replaced by the\n//   version of the including interface plus the [root][] path if\n//   specified.\n//\n// Example of a simple mixin:\n//\n//     package google.acl.v1;\n//     service AccessControl {\n//       // Get the underlying ACL object.\n//       rpc GetAcl(GetAclRequest) returns (Acl) {\n//         option (google.api.http).get = \"/v1/{resource=**}:getAcl\";\n//       }\n//     }\n//\n//     package google.storage.v2;\n//     service Storage {\n//       rpc GetAcl(GetAclRequest) returns (Acl);\n//\n//       // Get a data record.\n//       rpc GetData(GetDataRequest) returns (Data) {\n//         option (google.api.http).get = \"/v2/{resource=**}\";\n//       }\n//     }\n//\n// Example of a mixin configuration:\n//\n//     apis:\n//     - name: google.storage.v2.Storage\n//       mixins:\n//       - name: google.acl.v1.AccessControl\n//\n// The mixin construct implies that all methods in `AccessControl` are\n// also declared with same name and request/response types in\n// `Storage`. A documentation generator or annotation processor will\n// see the effective `Storage.GetAcl` method after inheriting\n// documentation and annotations as follows:\n//\n//     service Storage {\n//       // Get the underlying ACL object.\n//       rpc GetAcl(GetAclRequest) returns (Acl) {\n//         option (google.api.http).get = \"/v2/{resource=**}:getAcl\";\n//       }\n//       ...\n//     }\n//\n// Note how the version in the path pattern changed from `v1` to `v2`.\n//\n// If the `root` field in the mixin is specified, it should be a\n// relative path under which inherited HTTP paths are placed. Example:\n//\n//     apis:\n//     - name: google.storage.v2.Storage\n//       mixins:\n//       - name: google.acl.v1.AccessControl\n//         root: acls\n//\n// This implies the following inherited HTTP annotation:\n//\n//     service Storage {\n//       // Get the underlying ACL object.\n//       rpc GetAcl(GetAclRequest) returns (Acl) {\n//         option (google.api.http).get = \"/v2/acls/{resource=**}:getAcl\";\n//       }\n//       ...\n//     }\nmessage Mixin {\n  // The fully qualified name of the interface which is included.\n  string name = 1;\n\n  // If non-empty specifies a path under which inherited HTTP paths\n  // are rooted.\n  string root = 2;\n}\n"
+    },
+    {
       "http://a.ml/vocabularies/core#extensionName": "csharp_namespace",
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/web-api/customDomainProperties/data-node",
       "@type": [
@@ -1443,6 +1501,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/declares/shape/.google.protobuf.SourceContext/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/0",
+      "http://a.ml/vocabularies/document-source-maps#value": "// Protocol Buffers - Google's data interchange format\n// Copyright 2008 Google Inc.  All rights reserved.\n// https://developers.google.com/protocol-buffers/\n//\n// Redistribution and use in source and binary forms, with or without\n// modification, are permitted provided that the following conditions are\n// met:\n//\n//     * Redistributions of source code must retain the above copyright\n// notice, this list of conditions and the following disclaimer.\n//     * Redistributions in binary form must reproduce the above\n// copyright notice, this list of conditions and the following disclaimer\n// in the documentation and/or other materials provided with the\n// distribution.\n//     * Neither the name of Google Inc. nor the names of its\n// contributors may be used to endorse or promote products derived from\n// this software without specific prior written permission.\n//\n// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n// \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\nsyntax = \"proto3\";\n\npackage google.protobuf;\n\noption csharp_namespace = \"Google.Protobuf.WellKnownTypes\";\noption java_package = \"com.google.protobuf\";\noption java_outer_classname = \"SourceContextProto\";\noption java_multiple_files = true;\noption objc_class_prefix = \"GPB\";\noption go_package = \"google.golang.org/protobuf/types/known/sourcecontextpb\";\n\n// `SourceContext` represents information about the source of a\n// protobuf element, like the file in which it is defined.\nmessage SourceContext {\n  // The path-qualified name of the .proto file that contained the associated\n  // protobuf element.  For example: `\"google/protobuf/source_context.proto\"`.\n  string file_name = 1;\n}\n"
     },
     {
       "http://a.ml/vocabularies/core#extensionName": "csharp_namespace",
@@ -2516,6 +2579,22 @@
       ],
       "http://a.ml/vocabularies/apiContract#modelVersion": "3.11.0",
       "http://a.ml/vocabularies/document#sourceSpec": "Grpc"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0/source-map/grpc-raw-proto/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1",
+      "http://a.ml/vocabularies/document-source-maps#value": "// Protocol Buffers - Google's data interchange format\n// Copyright 2008 Google Inc.  All rights reserved.\n// https://developers.google.com/protocol-buffers/\n//\n// Redistribution and use in source and binary forms, with or without\n// modification, are permitted provided that the following conditions are\n// met:\n//\n//     * Redistributions of source code must retain the above copyright\n// notice, this list of conditions and the following disclaimer.\n//     * Redistributions in binary form must reproduce the above\n// copyright notice, this list of conditions and the following disclaimer\n// in the documentation and/or other materials provided with the\n// distribution.\n//     * Neither the name of Google Inc. nor the names of its\n// contributors may be used to endorse or promote products derived from\n// this software without specific prior written permission.\n//\n// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n// \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\nsyntax = \"proto3\";\n\npackage google.protobuf;\n\nimport \"any.proto\";\nimport \"source_context.proto\";\n\noption csharp_namespace = \"Google.Protobuf.WellKnownTypes\";\noption cc_enable_arenas = true;\noption java_package = \"com.google.protobuf\";\noption java_outer_classname = \"TypeProto\";\noption java_multiple_files = true;\noption objc_class_prefix = \"GPB\";\noption go_package = \"google.golang.org/protobuf/types/known/typepb\";\n\n// A protocol buffer message type.\nmessage Type {\n  // The fully qualified message name.\n  string name = 1;\n  // The list of fields.\n  repeated Field fields = 2;\n  // The list of types appearing in `oneof` definitions in this type.\n  repeated string oneofs = 3;\n  // The protocol buffer options.\n  repeated Option options = 4;\n  // The source context.\n  SourceContext source_context = 5;\n  // The source syntax.\n  Syntax syntax = 6;\n}\n\n// A single field of a message type.\nmessage Field {\n  // Basic field types.\n  enum Kind {\n    // Field type unknown.\n    TYPE_UNKNOWN = 0;\n    // Field type double.\n    TYPE_DOUBLE = 1;\n    // Field type float.\n    TYPE_FLOAT = 2;\n    // Field type int64.\n    TYPE_INT64 = 3;\n    // Field type uint64.\n    TYPE_UINT64 = 4;\n    // Field type int32.\n    TYPE_INT32 = 5;\n    // Field type fixed64.\n    TYPE_FIXED64 = 6;\n    // Field type fixed32.\n    TYPE_FIXED32 = 7;\n    // Field type bool.\n    TYPE_BOOL = 8;\n    // Field type string.\n    TYPE_STRING = 9;\n    // Field type group. Proto2 syntax only, and deprecated.\n    TYPE_GROUP = 10;\n    // Field type message.\n    TYPE_MESSAGE = 11;\n    // Field type bytes.\n    TYPE_BYTES = 12;\n    // Field type uint32.\n    TYPE_UINT32 = 13;\n    // Field type enum.\n    TYPE_ENUM = 14;\n    // Field type sfixed32.\n    TYPE_SFIXED32 = 15;\n    // Field type sfixed64.\n    TYPE_SFIXED64 = 16;\n    // Field type sint32.\n    TYPE_SINT32 = 17;\n    // Field type sint64.\n    TYPE_SINT64 = 18;\n  }\n\n  // Whether a field is optional, required, or repeated.\n  enum Cardinality {\n    // For fields with unknown cardinality.\n    CARDINALITY_UNKNOWN = 0;\n    // For optional fields.\n    CARDINALITY_OPTIONAL = 1;\n    // For required fields. Proto2 syntax only.\n    CARDINALITY_REQUIRED = 2;\n    // For repeated fields.\n    CARDINALITY_REPEATED = 3;\n  }\n\n  // The field type.\n  Kind kind = 1;\n  // The field cardinality.\n  Cardinality cardinality = 2;\n  // The field number.\n  int32 number = 3;\n  // The field name.\n  string name = 4;\n  // The field type URL, without the scheme, for message or enumeration\n  // types. Example: `\"type.googleapis.com/google.protobuf.Timestamp\"`.\n  string type_url = 6;\n  // The index of the field type in `Type.oneofs`, for message or enumeration\n  // types. The first type has index 1; zero means the type is not in the list.\n  int32 oneof_index = 7;\n  // Whether to use alternative packed wire representation.\n  bool packed = 8;\n  // The protocol buffer options.\n  repeated Option options = 9;\n  // The field JSON name.\n  string json_name = 10;\n  // The string value of the default value of this field. Proto2 syntax only.\n  string default_value = 11;\n}\n\n// Enum type definition.\nmessage Enum {\n  // Enum type name.\n  string name = 1;\n  // Enum value definitions.\n  repeated EnumValue enumvalue = 2;\n  // Protocol buffer options.\n  repeated Option options = 3;\n  // The source context.\n  SourceContext source_context = 4;\n  // The source syntax.\n  Syntax syntax = 5;\n}\n\n// Enum value definition.\nmessage EnumValue {\n  // Enum value name.\n  string name = 1;\n  // Enum value number.\n  int32 number = 2;\n  // Protocol buffer options.\n  repeated Option options = 3;\n}\n\n// A protocol buffer option, which can be attached to a message, field,\n// enumeration, etc.\nmessage Option {\n  // The option's name. For protobuf built-in options (options defined in\n  // descriptor.proto), this is the short name. For example, `\"map_entry\"`.\n  // For custom options, it should be the fully-qualified name. For example,\n  // `\"google.api.http\"`.\n  string name = 1;\n  // The option's value packed in an Any message. If the value is a primitive,\n  // the corresponding wrapper type defined in google/protobuf/wrappers.proto\n  // should be used. If the value is an enum, it should be stored as an int32\n  // value using the google.protobuf.Int32Value type.\n  Any value = 2;\n}\n\n// The syntax in which a protocol buffer element is defined.\nenum Syntax {\n  // Syntax `proto2`.\n  SYNTAX_PROTO2 = 0;\n  // Syntax `proto3`.\n  SYNTAX_PROTO3 = 1;\n}\n"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/declares/shape/.google.protobuf.Api/property/property/name/scalar/default-scalar",
@@ -5089,6 +5168,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0/declares/shape/.google.protobuf.Any/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/references/1/references/0",
+      "http://a.ml/vocabularies/document-source-maps#value": "// Protocol Buffers - Google's data interchange format\n// Copyright 2008 Google Inc.  All rights reserved.\n// https://developers.google.com/protocol-buffers/\n//\n// Redistribution and use in source and binary forms, with or without\n// modification, are permitted provided that the following conditions are\n// met:\n//\n//     * Redistributions of source code must retain the above copyright\n// notice, this list of conditions and the following disclaimer.\n//     * Redistributions in binary form must reproduce the above\n// copyright notice, this list of conditions and the following disclaimer\n// in the documentation and/or other materials provided with the\n// distribution.\n//     * Neither the name of Google Inc. nor the names of its\n// contributors may be used to endorse or promote products derived from\n// this software without specific prior written permission.\n//\n// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n// \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\nsyntax = \"proto3\";\n\npackage google.protobuf;\n\noption csharp_namespace = \"Google.Protobuf.WellKnownTypes\";\noption go_package = \"google.golang.org/protobuf/types/known/anypb\";\noption java_package = \"com.google.protobuf\";\noption java_outer_classname = \"AnyProto\";\noption java_multiple_files = true;\noption objc_class_prefix = \"GPB\";\n\n// `Any` contains an arbitrary serialized protocol buffer message along with a\n// URL that describes the type of the serialized message.\n//\n// Protobuf library provides support to pack/unpack Any values in the form\n// of utility functions or additional generated methods of the Any type.\n//\n// Example 1: Pack and unpack a message in C++.\n//\n//     Foo foo = ...;\n//     Any any;\n//     any.PackFrom(foo);\n//     ...\n//     if (any.UnpackTo(&foo)) {\n//       ...\n//     }\n//\n// Example 2: Pack and unpack a message in Java.\n//\n//     Foo foo = ...;\n//     Any any = Any.pack(foo);\n//     ...\n//     if (any.is(Foo.class)) {\n//       foo = any.unpack(Foo.class);\n//     }\n//\n//  Example 3: Pack and unpack a message in Python.\n//\n//     foo = Foo(...)\n//     any = Any()\n//     any.Pack(foo)\n//     ...\n//     if any.Is(Foo.DESCRIPTOR):\n//       any.Unpack(foo)\n//       ...\n//\n//  Example 4: Pack and unpack a message in Go\n//\n//      foo := &pb.Foo{...}\n//      any, err := anypb.New(foo)\n//      if err != nil {\n//        ...\n//      }\n//      ...\n//      foo := &pb.Foo{}\n//      if err := any.UnmarshalTo(foo); err != nil {\n//        ...\n//      }\n//\n// The pack methods provided by protobuf library will by default use\n// 'type.googleapis.com/full.type.name' as the type URL and the unpack\n// methods only use the fully qualified type name after the last '/'\n// in the type URL, for example \"foo.bar.com/x/y.z\" will yield type\n// name \"y.z\".\n//\n//\n// JSON\n// ====\n// The JSON representation of an `Any` value uses the regular\n// representation of the deserialized, embedded message, with an\n// additional field `@type` which contains the type URL. Example:\n//\n//     package google.profile;\n//     message Person {\n//       string first_name = 1;\n//       string last_name = 2;\n//     }\n//\n//     {\n//       \"@type\": \"type.googleapis.com/google.profile.Person\",\n//       \"firstName\": <string>,\n//       \"lastName\": <string>\n//     }\n//\n// If the embedded message type is well-known and has a custom JSON\n// representation, that representation will be embedded adding a field\n// `value` which holds the custom JSON in addition to the `@type`\n// field. Example (for message [google.protobuf.Duration][]):\n//\n//     {\n//       \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n//       \"value\": \"1.212s\"\n//     }\n//\nmessage Any {\n  // A URL/resource name that uniquely identifies the type of the serialized\n  // protocol buffer message. This string must contain at least\n  // one \"/\" character. The last segment of the URL's path must represent\n  // the fully qualified name of the type (as in\n  // `path/google.protobuf.Duration`). The name should be in a canonical form\n  // (e.g., leading \".\" is not accepted).\n  //\n  // In practice, teams usually precompile into the binary all types that they\n  // expect it to use in the context of Any. However, for URLs which use the\n  // scheme `http`, `https`, or no scheme, one can optionally set up a type\n  // server that maps type URLs to message definitions as follows:\n  //\n  // * If no scheme is provided, `https` is assumed.\n  // * An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  //   value in binary format, or produce an error.\n  // * Applications are allowed to cache lookup results based on the\n  //   URL, or have them precompiled into a binary to avoid any\n  //   lookup. Therefore, binary compatibility needs to be preserved\n  //   on changes to types. (Use versioned type names to manage\n  //   breaking changes.)\n  //\n  // Note: this functionality is not currently available in the official\n  // protobuf release, and it is not used for type URLs beginning with\n  // type.googleapis.com.\n  //\n  // Schemes other than `http`, `https` (or the empty scheme) might be\n  // used with implementation specific semantics.\n  //\n  string type_url = 1;\n\n  // Must be a valid serialized protocol buffer of the above specified type.\n  bytes value = 2;\n}\n"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/declares/shape/.google.protobuf.Api/property/property/name/scalar/default-scalar/source-map",

@@ -63,7 +63,12 @@
       "http://a.ml/vocabularies/document#package": "example.api.v1",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User",
@@ -168,6 +173,17 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/source-map/grpc-raw-proto/element_0"
         }
       ]
     },
@@ -519,6 +535,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/scalar/.example.api.v1.AccountStatus/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto",
+      "http://a.ml/vocabularies/document-source-maps#value": "syntax = \"proto3\";\n\npackage example.api.v1;\n\nmessage User {\n  // --- Field Number Reservation ---\n  // We are reserving the field number 2, and the range of numbers from 5 to 7.\n  // The compiler will throw an error if you try defining new fields with tags 2, 5, 6, or 7.\n  reserved 2;\n  reserved 3 to 4;\n  reserved 5, 6, 7 to 10;\n  reserved 20 to max;\n\n  // --- Field Name Reservation ---\n  // We are also reserving the field name \"full_name\".\n  // This prevents anyone from creating a new field with this exact name, even if it has a different field number.\n  reserved \"full_name\";\n  reserved \"full\", \"name\";\n\n  // Active fields\n  int64 id = 1;\n  int64 status = 11;\n}\n\nenum AccountStatus {\n  reserved 1;\n  reserved \"PENDING_DELETION\";\n  reserved 7 to 8;\n  reserved 2, 15, 9 to 11, 40 to max;\n  reserved \"FOO\", \"BAR\";\n\n  STATUS_ACTIVE = 0;\n  // STATUS_SUSPENDED = 1; // This value is now deprecated and reserved.\n  STATUS_ARCHIVED = 4;\n}\n"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/reserved.proto#/declares/shape/.example.api.v1.User/property/property/id/scalar/default-scalar",

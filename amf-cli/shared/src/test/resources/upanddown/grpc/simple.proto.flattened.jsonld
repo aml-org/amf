@@ -1071,7 +1071,12 @@
       "http://a.ml/vocabularies/document#package": "helloworld",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0",
@@ -1094,7 +1099,12 @@
       "http://a.ml/vocabularies/document#package": "library",
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/BaseUnitProcessingData"
-      }
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/scalar/.helloworld.Corpus",
@@ -1304,6 +1314,17 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map/grpc-raw-proto/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -1348,6 +1369,17 @@
       ],
       "http://a.ml/vocabularies/apiContract#modelVersion": "3.11.0",
       "http://a.ml/vocabularies/document#sourceSpec": "Grpc"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/source-map/grpc-raw-proto/element_0"
+        }
+      ]
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/scalar/.helloworld.Corpus/list",
@@ -1858,6 +1890,11 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto",
+      "http://a.ml/vocabularies/document-source-maps#value": "syntax = \"proto3\";\n\noption java_multiple_files = true;\noption java_package = \"io.grpc.examples.helloworld\";\noption java_outer_classname = \"HelloWorldProto\";\noption objc_class_prefix = \"HLW\";\n\nimport \"library.proto\";\n\npackage helloworld;\n\n// The greeting service definition.\nservice Greeter {\n  // Sends a greeting\n  rpc SayHello1 (HelloRequest) returns (HelloReply) {}\n  rpc SayHello2 (stream HelloRequest) returns (HelloReply) {}\n  rpc SayHello3 (HelloRequest) returns (stream HelloReply) {}\n  rpc SayHello4 (stream HelloRequest) returns (stream HelloReply) {}\n}\n\n// The request message containing the user's name.\nmessage HelloRequest {\n  repeated string name = 1;\n  library.Wadus wadus = 2;\n}\n\nmessage SampleMessage {\n  map<string, SearchRequest> searches = 3;\n  message NestedMessage1 {\n    string fa = 1;\n    NestedMessage2 fb = 2;\n    message NestedMessage2 {\n      string fa = 1;\n    }\n  }\n  NestedMessage1.NestedMessage2 fc = 10;\n  .helloworld.HelloRequest fd = 11;\n  oneof test_oneof {\n    string name = 4;\n    HelloRequest sub_message = 9;\n  }\n}\n\nenum Corpus {\n  UNIVERSAL = 0;\n}\n\nmessage SearchRequest {\n  string query = 1;\n  int32 page_number = 2;\n  int32 result_per_page = 3;\n  enum Corpus {\n    UNIVERSAL = 0;\n    WEB = 1;\n    IMAGES = 2;\n    LOCAL = 3;\n    NEWS = 4;\n    PRODUCTS = 5;\n    VIDEO = 6;\n  }\n  Corpus corpus = 4;\n}\n\n// The response message containing the greetings\nmessage HelloReply {\n  string message = 1;\n  SearchRequest.Corpus other = 2;\n}"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -1902,6 +1939,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/declares/shape/.library.Wadus/source-map/declared-element/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0/source-map/grpc-raw-proto/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/references/0",
+      "http://a.ml/vocabularies/document-source-maps#value": "syntax = \"proto3\";\n\npackage library;\n\nmessage Wadus {\n  repeated string message = 2;\n}"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/scalar/.helloworld.Corpus/in/data-node",
