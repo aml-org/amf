@@ -12,17 +12,11 @@ import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
 import amf.grpc.internal.spec.common.WellKnownTypes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.domain.{
-  GrpcEnumParser,
-  GrpcExtendOptionParser,
-  GrpcMessageParser,
-  GrpcPackageParser,
-  GrpcServiceParser
-}
+import amf.grpc.internal.spec.parser.domain.{GrpcEnumParser, GrpcExtendOptionParser, GrpcMessageParser, GrpcPackageParser, GrpcServiceParser}
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.annotations.WellKnownType
+import amf.shapes.internal.annotations.{GrpcRawProto, WellKnownType}
 import org.mulesoft.antlrast.ast.{AST, ASTNode, Node}
 
 case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
@@ -56,6 +50,9 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
           ctx.declarations.annotations.values.toList
       )
       .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRPC))
+
+    doc.annotations += GrpcRawProto(root.raw)
+    doc
   }
 
   private def generateImportAnnotations(doc: Document): Unit = {
