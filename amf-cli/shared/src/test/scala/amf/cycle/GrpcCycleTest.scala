@@ -3,7 +3,7 @@ package amf.cycle
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
-import amf.core.internal.remote.GrpcProtoHint
+import amf.core.internal.remote.{AmfJsonHint, GrpcProtoHint}
 import amf.grpc.client.scala.GRPCConfiguration
 import amf.io.FunSuiteCycleTests
 
@@ -32,5 +32,13 @@ class GrpcCycleTest extends FunSuiteCycleTests {
 
   test("GRPC extensions emission") {
     cycle("extensions/all.proto", "extensions/dumped.proto", GrpcProtoHint, GrpcProtoHint)
+  }
+
+  test("GRPC complete example to proto") {
+    cycle("all/main.proto", "all/dumped.proto", GrpcProtoHint, GrpcProtoHint)
+  }
+
+  test("GRPC complete example to JSON-LD") {
+    cycle("all/main.proto", "all/dumped.jsonld", GrpcProtoHint, AmfJsonHint)
   }
 }
