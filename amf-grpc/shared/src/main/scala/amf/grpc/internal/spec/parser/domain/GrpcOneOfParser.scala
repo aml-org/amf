@@ -1,23 +1,36 @@
 package amf.grpc.internal.spec.parser.domain
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{NamedDomainElement, Shape}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{ONE_OF_FIELD, ONE_OF_NAME}
-import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.antlrast.ast.Node
 
 import scala.collection.mutable
 
 case class GrpcOneOfParser(ast: Node)(implicit context: GrpcWebApiContext) extends GrpcASTParserHelper {
 
-  val union: UnionShape = UnionShape(toAnnotations(ast))
+  private val base: AnyShape = AnyShape(toAnnotations(ast))
 
-  def parse(setterFn: UnionShape => Unit): UnionShape = {
-    parseName()
-    setterFn(union)
+//  def parse(setterFn: AnyShape => Unit): AnyShape = {
+//    innerParse()
+//    setterFn(base)
+//    base
+//  }
+
+  def parseAsProperty(setterFn: PropertyShape => Unit): PropertyShape = {
+    innerParse()
+    val property =
+      PropertyShape(toAnnotations(ast)).withName(base.name.value(), base.name.annotations()).withRange(base)
+    setterFn(property)
+    property
+  }
+
+  private def innerParse(): Unit = {
+    parseName(base)
     parseMembers()
-    union
   }
 
   private def parseMembers(): Unit = {
@@ -29,8 +42,8 @@ case class GrpcOneOfParser(ast: Node)(implicit context: GrpcWebApiContext) exten
         members.append(shape)
       })
     }
-    union.withAnyOf(members)
+    base.withXone(members)
   }
 
-  protected def parseName(): Unit = withName(ast, ONE_OF_NAME, union)
+  protected def parseName(element: NamedDomainElement): Unit = withName(ast, ONE_OF_NAME, element)
 }

@@ -5,7 +5,6 @@ package helloworld;
 import "library.proto";
 import "google/protobuf/descriptor.proto";
 
-
 message MyOption {
   string a = 1;
   string b = 2;
@@ -38,16 +37,16 @@ message SampleMessage {
   map<string,SearchRequest> searches = 3;
   NestedMessage1.NestedMessage2 fc = 10;
   .helloworld.HelloRequest fd = 11;
+  oneof test_oneof {
+    string name = 4;
+    HelloRequest sub_message = 9;
+  }
   message NestedMessage1 {
     string fa = 1;
     NestedMessage2 fb = 2;
     message NestedMessage2 {
       string fa = 1;
     }
-  }
-  oneof test_oneof {
-    string name = 4;
-    HelloRequest sub_message = 9;
   }
 }
 message HelloReply {
