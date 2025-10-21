@@ -1,12 +1,13 @@
 package amf.grpc.internal.spec.emitter.domain
 
-import org.mulesoft.common.client.lexical.Position
+import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
-import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
+import amf.shapes.client.scala.model.domain.NodeShape
+import org.mulesoft.common.client.lexical.Position
 
-class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
+class GrpcOneOfEmitter(oneOf: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
   def emit(): Unit = {
     builder.fixed { f =>
       f += (s"oneof $name {", unionPos)
@@ -17,13 +18,13 @@ class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEm
     }
   }
 
-  def unionPos: Position = pos(union.annotations)
-  def name: String = {
-    union.name.option().getOrElse("AnonymousUnion")
+  private def unionPos: Position = pos(oneOf.annotations)
+  private def name: String = {
+    oneOf.name.option().getOrElse("AnonymousUnion")
   }
-  def emitFields(builder: StringDocBuilder) = {
+  private def emitFields(builder: StringDocBuilder) = {
     builder.list { l =>
-      union.anyOf.foreach {
+      oneOf.range.xone.foreach {
         case member: NodeShape =>
           member.properties.foreach { property =>
             GrpcFieldEmitter(property, l, ctx).emit()
@@ -34,6 +35,6 @@ class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEm
 }
 
 object GrpcOneOfEmitter {
-  def apply(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) =
-    new GrpcOneOfEmitter(union, builder, ctx)
+  def apply(oneOf: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) =
+    new GrpcOneOfEmitter(oneOf, builder, ctx)
 }

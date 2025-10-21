@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+// Some imports (real and well known)
+import "ref.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/any.proto";
+
+// Some options
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.all";
+option java_outer_classname = "AllExample";
+option objc_class_prefix = "HLW";
+
+package all;
+
+// Service definition, it matches to endpoint in AMF model
+service Greeter {
+  option deprecated = false;
+  // Some RPCs, they match to operations in AMF model.
+  // Input match to request and output to response in AMF model
+  rpc PostExample (RequestMessage) returns (ResponseMessage) {
+    option deprecated = true;
+  }
+  rpc PublishExample (stream RequestMessage) returns (ResponseMessage) {}
+  rpc SubscribeExample (RequestMessage) returns (stream ResponseMessage) {}
+  rpc PubSubExample (stream RequestMessage) returns (stream ResponseMessage) {}
+}
+
+// Simple Message for Request
+message RequestMessage {
+  string a = 1;
+}
+
+// Simple Message for Response
+message ResponseMessage {
+  string a = 1;
+}
+
+// Some root level enum
+enum RootEnum {
+  SOMETHING = 0;
+}
+
+// Some complex message, using a little of everything
+message ComplexMessage {
+  // Map property
+  map<string, SearchRequest> searches = 3;
+  // OneOf property
+  oneof oneOfProperty {
+    string name = 18;
+  }
+  // Enum property
+  enum enumProperty {
+    UNIVERSAL = 0;
+    WEB = 1;
+    IMAGES = 2;
+    LOCAL = 3;
+    NEWS = 4;
+    PRODUCTS = 5;
+    VIDEO = 6;
+  }
+  // Enum reference
+  RootEnum something = 4;
+  // Nested Message
+  message NestedMessage1 {
+    string n1 = 1;
+    NestedMessage2 n2 = 2;
+    // Nested Message in nested Message
+    message NestedMessage2 {
+      string nn1 = 1;
+    }
+  }
+  // Reference to nested element
+  NestedMessage1.NestedMessage2 n3 = 10;
+  // Reference to root Message using package
+  .all.ComplexMessage.NestedMessage1 n4 = 11;
+  // Reference to external file Message
+  reference.RefMessage reference = 15;
+  // Some reservations
+  reserved 20;
+  reserved 21 to 25;
+  reserved 26, 27, 28 to 49;
+  reserved 50 to max;
+  reserved "reserved_1";
+  reserved "reserved_2", "reserved_3";
+  // Some properties with modificators
+  option deprecated = true;
+  repeated string complex_property = 1 [deprecated = true, packed = true];
+  string other_complex_property = 2 [(mystruct) = { a: "hello"}];
+}
+
+// Message with all types
+message SearchRequest {
+  bool bool_property = 1;
+  string string_property = 2;
+  bytes bytes_property = 3;
+  double double_property = 4;
+  fixed32 fixed32_property = 5;
+  fixed64 fixed64_property = 6;
+  sfixed32 sfixed32_property = 7;
+  sfixed64 sfixed64_property = 8;
+  float float_property = 9;
+  int32 int32_property = 10;
+  int64 int64_property = 11;
+  sint32 sint32_property = 12;
+  sint64 sint64_property = 13;
+  uint32 uint32_property = 14;
+  uint64 uint64_property = 15;
+}
+
+// Message using google.protobuf.Any import
+message Any {
+  google.protobuf.Any message = 1;
+  repeated google.protobuf.Any details = 2;
+  map<string, google.protobuf.Any> metadata = 3;
+}
+
+// Extension of google.protobuf.FieldOptions import
+// Extensions does not exists in proto3, but imports of proto2 google libs could be extended
+message MyOption {
+  string a = 1;
+  string b = 2;
+}
+extend google.protobuf.FieldOptions {
+  MyOption mystruct = 5124;
+}

@@ -1250,15 +1250,13 @@
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/fd"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof"
         }
       ],
       "http://www.w3.org/ns/shacl#name": ".helloworld.SampleMessage",
       "http://a.ml/vocabularies/core#name": "SampleMessage",
-      "http://www.w3.org/ns/shacl#and": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/source-map"
@@ -1717,26 +1715,20 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof",
       "@type": [
-        "http://a.ml/vocabularies/shapes#UnionShape",
-        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#anyOf": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node"
-        },
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof"
+      },
       "http://www.w3.org/ns/shacl#name": "test_oneof",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/source-map"
         }
       ]
     },
@@ -2419,53 +2411,36 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof",
       "@type": [
-        "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://www.w3.org/ns/shacl#property": [
+      "http://www.w3.org/ns/shacl#name": "test_oneof",
+      "http://www.w3.org/ns/shacl#xone": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10",
-      "@type": [
-        "http://www.w3.org/ns/shacl#NodeShape",
-        "http://a.ml/vocabularies/shapes#AnyShape",
-        "http://www.w3.org/ns/shacl#Shape",
-        "http://a.ml/vocabularies/shapes#Shape",
-        "http://a.ml/vocabularies/document#DomainElement"
-      ],
-      "http://www.w3.org/ns/shacl#property": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/source-map/lexical/element_0"
         }
       ]
     },
@@ -3137,68 +3112,59 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(37,2)-(37,35)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node",
       "@type": [
-        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar"
-      },
-      "http://a.ml/vocabularies/shapes#serializationOrder": 4,
-      "http://www.w3.org/ns/shacl#name": "name",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message",
-      "@type": [
-        "http://www.w3.org/ns/shacl#PropertyShape",
-        "http://www.w3.org/ns/shacl#Shape",
-        "http://a.ml/vocabularies/shapes#Shape",
-        "http://a.ml/vocabularies/document#DomainElement"
-      ],
-      "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest"
-      },
-      "http://a.ml/vocabularies/shapes#serializationOrder": 9,
-      "http://www.w3.org/ns/shacl#name": "sub_message",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof",
       "http://a.ml/vocabularies/document-source-maps#value": "[(38,2)-(41,3)]"
     },
     {
@@ -3575,78 +3541,69 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(37,2)-(37,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name",
       "@type": [
-        "http://a.ml/vocabularies/shapes#ScalarShape",
-        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://www.w3.org/ns/shacl#datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 4,
+      "http://www.w3.org/ns/shacl#name": "name",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(39,4)-(39,20)]"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message",
       "@type": [
-        "http://www.w3.org/ns/shacl#NodeShape",
-        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
         "http://a.ml/vocabularies/shapes#Shape",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/document#link-target": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.HelloRequest"
-        }
-      ],
-      "http://a.ml/vocabularies/document#link-label": "HelloRequest",
-      "http://www.w3.org/ns/shacl#name": "HelloRequest",
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 9,
+      "http://www.w3.org/ns/shacl#name": "sub_message",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(40,4)-(40,33)]"
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(38,2)-(41,3)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/scalar/.helloworld.SearchRequest.Corpus/in/data-node/source-map/lexical/element_0",
@@ -3775,40 +3732,77 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,14)-(28,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,4)-(39,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest",
       "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+      "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.HelloRequest"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document#link-label": "HelloRequest",
+      "http://www.w3.org/ns/shacl#name": "HelloRequest",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10",
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,4)-(40,33)]"
     },
     {
@@ -3817,18 +3811,55 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,11)-(6,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node/property/property/name/scalar/default-scalar",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(39,4)-(39,20)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(40,4)-(40,33)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node/property/property/name/scalar/default-scalar",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,4)-(39,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/and/union/test_oneof/anyOf/shape/default-node_10/property/property/sub_message/shape/HelloRequest",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/declares/shape/.helloworld.SampleMessage/property/property/test_oneof/any/test_oneof/exclusiveOr/shape/default-node_10/property/property/sub_message/shape/HelloRequest",
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,4)-(40,16)]"
     }
   ]

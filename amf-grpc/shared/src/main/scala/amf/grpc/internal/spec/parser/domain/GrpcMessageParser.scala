@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
-import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
+import amf.shapes.client.scala.model.domain.NodeShape
 import org.mulesoft.antlrast.ast.Node
 
 class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
@@ -32,8 +32,8 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
         case ENUM_DEF =>
           GrpcEnumParser(messageElementAst)(context).parse()
         case ONE_OF =>
-          GrpcOneOfParser(messageElementAst)(context).parse { union: UnionShape =>
-            nodeShape.withAnd(nodeShape.and ++ Seq(union))
+          GrpcOneOfParser(messageElementAst)(context).parseAsProperty { oneOf: PropertyShape =>
+            nodeShape.withProperties(nodeShape.properties :+ oneOf)
           }
         case MAP_FIELD =>
           GrpcMapParser(messageElementAst)(context).parse { mapProperty: PropertyShape =>
