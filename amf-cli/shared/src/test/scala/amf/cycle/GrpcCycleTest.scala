@@ -2,7 +2,7 @@ package amf.cycle
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.internal.remote.{AmfJsonHint, GrpcProtoHint}
 import amf.grpc.client.scala.GRPCConfiguration
 import amf.io.FunSuiteCycleTests
@@ -15,7 +15,7 @@ class GrpcCycleTest extends FunSuiteCycleTests {
     GRPCConfiguration
       .GRPC()
       .withRenderOptions(options.getOrElse(renderOptions()))
-      .withErrorHandlerProvider(() => eh.getOrElse(IgnoringErrorHandler))
+      .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
   }
 
   test("Can cycle through a simple gRPC API") {

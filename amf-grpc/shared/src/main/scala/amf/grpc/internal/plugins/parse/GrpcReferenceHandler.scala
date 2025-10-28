@@ -10,11 +10,9 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 class GrpcReferenceHandler extends ReferenceHandler with GrpcASTParserHelper {
   val collector: CompilerReferenceCollector = CompilerReferenceCollector()
 
-  override def collect(document: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
-    document match {
-      case antlr: AntlrParsedDocument => collectImports(antlr, ctx)
-      case _                          => collector
-    }
+  override def collect(document: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = document match {
+    case antlr: AntlrParsedDocument => collectImports(antlr, ctx)
+    case _                          => collector
   }
 
   private def collectImports(antlr: AntlrParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
@@ -26,12 +24,13 @@ class GrpcReferenceHandler extends ReferenceHandler with GrpcASTParserHelper {
           createShapesForImport(importString, toAnnotations(stmt)).foreach { shape =>
             ctx.globalSpace.update(s".${shape.name.value()}", shape)
           }
+        } else {
+          collector.+=(
+            importString,
+            LibraryReference,
+            stmt.location
+          )
         }
-        collector.+=(
-          importString,
-          LibraryReference,
-          stmt.location
-        )
       }
     }
     collector

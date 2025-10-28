@@ -3,7 +3,7 @@ package amf.cycle
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.internal.remote.{AmfJsonHint, GrpcProtoHint, Spec}
 import amf.grpc.client.scala.GRPCConfiguration
 import amf.resolution.ResolutionTest
@@ -11,7 +11,7 @@ import amf.resolution.ResolutionTest
 class GrpcCycleResolutionTest extends ResolutionTest {
 
   private val config: AMFConfiguration =
-    GRPCConfiguration.GRPC().withRenderOptions(renderOptions()).withErrorHandlerProvider(() => IgnoringErrorHandler)
+    GRPCConfiguration.GRPC().withRenderOptions(renderOptions()).withErrorHandlerProvider(() => UnhandledErrorHandler)
 
   override def basePath: String               = "amf-cli/shared/src/test/resources/upanddown/cycle/grpc/"
   override def renderOptions(): RenderOptions = RenderOptions().withPrettyPrint // I want to render flattened
