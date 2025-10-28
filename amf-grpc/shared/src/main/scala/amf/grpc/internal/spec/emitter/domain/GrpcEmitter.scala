@@ -77,12 +77,12 @@ trait GrpcEmitter {
       case DataType.Long if maybeFormat.contains("fixed64")     => "fixed64"
       case DataType.Integer if maybeFormat.contains("sfixed32") => "sfixed32"
       case DataType.Long if maybeFormat.contains("sfixed64")    => "sfixed64"
-      case DataType.Integer                                   => "int32"
-      case DataType.Long                                      => "int64"
-      case DataType.Boolean                                   => "bool"
-      case DataType.String                                    => "string"
-      case DataType.Byte                                      => "bytes"
-      case _                                                  => "string"
+      case DataType.Integer                                     => "int32"
+      case DataType.Long                                        => "int64"
+      case DataType.Boolean                                     => "bool"
+      case DataType.String                                      => "string"
+      case DataType.Byte                                        => "bytes"
+      case _                                                    => "string"
     }
   }
 
