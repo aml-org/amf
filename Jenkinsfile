@@ -89,7 +89,7 @@ pipeline {
             steps {
                 script {
                     lastStage = env.STAGE_NAME
-                    sh 'sbt publish'
+                    sh 'sbt aetherDeploy'
                 }
             }
         }

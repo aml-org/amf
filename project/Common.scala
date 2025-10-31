@@ -1,5 +1,5 @@
-import sbt.Keys.{scalacOptions, _}
-import sbt.{Def, File, Path, _}
+import sbt.Keys.{scalacOptions, *}
+import sbt.{Def, File, Path, *}
 
 object Common {
 
@@ -14,6 +14,8 @@ object Common {
   val snapshots: MavenRepository = "MuleSoft snapshots" at s"$nexus/snapshots"
   val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
   val public: MavenRepository    = "MuleSoft public" at s"$nexus/public"
+
+  val sonatypeReleases = "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
 
   val settings: Seq[Def.Setting[_]] = Seq(
     Test / parallelExecution := false,
