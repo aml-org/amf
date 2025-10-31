@@ -1,7 +1,7 @@
 package metabuild
 
-import sbt.Keys.{scalacOptions, _}
-import sbt.{Def, _}
+import sbt.Keys.{scalacOptions, *}
+import sbt.{Def, *}
 
 // This is necessary to resolve mulesoft specific sbt plugins
 object Common {
@@ -10,6 +10,8 @@ object Common {
 
   val snapshots: MavenRepository = "MuleSoft snapshots" at s"$nexus/snapshots"
   val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
+
+  val sonatypeReleases = "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
 
   val settings: Seq[Def.Setting[_]] = Seq(
     Test / parallelExecution := false,
