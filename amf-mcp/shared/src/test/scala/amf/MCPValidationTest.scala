@@ -29,6 +29,26 @@ class MCPValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext 
     }
   }
 
+  test("Valid MCP JSON Instance 2 should conforms") {
+    for {
+      parseResult      <- client.parse(basePath + "valid/instance_2.json")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
+  test("Valid MCP YAML Instance 2 should conforms") {
+    for {
+      parseResult      <- client.parse(basePath + "valid/instance_2.yaml")
+      validationReport <- client.validate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
   test("Invalid MCP JSON Instance should not conforms") {
     for {
       parseResult      <- client.parse(basePath + "invalid/invalid_instance_1.json")
@@ -54,6 +74,16 @@ class MCPValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext 
   test("Valid MCP Instance should conforms with sync validate") {
     for {
       parseResult <- client.parse(basePath + "valid/instance_1.json")
+      validationReport = client.syncValidate(parseResult.baseUnit)
+    } yield {
+      parseResult.conforms shouldBe true
+      validationReport.conforms shouldBe true
+    }
+  }
+
+  test("Valid MCP Instance 2 should conforms with sync validate") {
+    for {
+      parseResult <- client.parse(basePath + "valid/instance_2.json")
       validationReport = client.syncValidate(parseResult.baseUnit)
     } yield {
       parseResult.conforms shouldBe true

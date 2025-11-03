@@ -1,0 +1,64 @@
+{
+  "capabilities": {
+    "resources": {
+      "subscribe": false,
+      "listChanged": false
+    },
+    "tools": {
+      "listChanged": false
+    },
+    "logging": {},
+    "experimental": {}
+  },
+  "transport": {
+    "kind": "streamableHttp",
+    "path": "/mcp"
+  },
+  "tools": [
+    {
+      "name": "weather-information",
+      "description": "Returns the weather of the specified latitude and longitude within the specified dates (in year-month-day format) if needed. If dates are not specified it will return current weather.\nAs an example For getting current weather for Buenos Aires {\"latitude\": \"34.6037\", \"longitude\": \"58.3821\"}",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ]
+      }
+    },
+    {
+      "name": "get-geolocation",
+      "description": "Returns the geolocation of a given place for example BuenosAires, Argentina, or London, England",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "city"
+        ]
+      }
+    }
+  ],
+  "prompts": [],
+  "resources": [],
+  "resourceTemplates": []
+}

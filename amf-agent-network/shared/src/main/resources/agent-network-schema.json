@@ -1079,10 +1079,18 @@
           "type": "object"
         },
         "logging": {
-          "additionalProperties": true,
-          "description": "Present if the server supports sending log messages to the client.",
-          "properties": {},
-          "type": "object"
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "description": "Present if the server supports sending log messages to the client.",
+              "properties": {},
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server supports sending log messages to the client."
+            }
+          ]
         },
         "prompts": {
           "anyOf": [
