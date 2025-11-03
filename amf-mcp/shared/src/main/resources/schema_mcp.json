@@ -44,33 +44,7 @@
           "description": "The service provider of the MCP server."
         },
         "capabilities": {
-          "type": "object",
-          "description": "Boolean flags indicating which capabilities the server supports",
-          "required": [
-            "tools",
-            "resources",
-            "prompts",
-            "logging"
-          ],
-          "properties": {
-            "tools": {
-              "type": "boolean",
-              "description": "Whether the server supports tools"
-            },
-            "resources": {
-              "type": "boolean",
-              "description": "Whether the server supports resources"
-            },
-            "prompts": {
-              "type": "boolean",
-              "description": "Whether the server supports prompts"
-            },
-            "logging": {
-              "type": "boolean",
-              "description": "Whether the server supports logging"
-            }
-          },
-          "additionalProperties": false
+          "$ref": "#/definitions/ServerCapabilities"
         },
         "logging": {
           "type": "object",
@@ -89,6 +63,13 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Resource"
+          },
+          "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+        },
+        "resourceTemplates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceTemplate"
           },
           "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
         },
@@ -112,6 +93,136 @@
         },
         "additionalProperties": false
       }
+    },
+    "ServerCapabilities": {
+      "type": "object",
+      "description": "Capabilities that a server may support. Known capabilities are defined here, in this schema, but this is not a closed set: any server can define its own, additional capabilities.",
+      "properties": {
+        "completions": {
+          "additionalProperties": true,
+          "description": "Present if the server supports argument autocompletion suggestions.",
+          "properties": {},
+          "type": "object"
+        },
+        "experimental": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "description": "Experimental, non-standard capabilities that the server supports.",
+          "type": "object"
+        },
+        "logging": {
+          "additionalProperties": true,
+          "description": "Present if the server supports sending log messages to the client.",
+          "properties": {},
+          "type": "object"
+        },
+        "prompts": {
+          "anyOf": [
+            {
+              "description": "Present if the server offers any prompt templates.",
+              "properties": {
+                "listChanged": {
+                  "description": "Whether this server supports notifications for changes to the prompt list.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server offers any prompt templates. "
+            }
+          ]
+        },
+        "resources": {
+          "anyOf": [
+            {
+              "description": "Present if the server offers any resources to read.",
+              "properties": {
+                "listChanged": {
+                  "description": "Whether this server supports notifications for changes to the resource list.",
+                  "type": "boolean"
+                },
+                "subscribe": {
+                  "description": "Whether this server supports subscribing to resource updates.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server offers any resources to read. "
+            }
+          ]
+        },
+        "tools": {
+          "anyOf": [
+            {
+              "description": "Present if the server offers any tools to call.",
+              "properties": {
+                "listChanged": {
+                  "description": "Whether this server supports notifications for changes to the tool list.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server offers any tools to call."
+            }
+          ]
+        }
+      }
+    },
+    "ResourceTemplate": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#ResourceTemplate"
+        ]
+      },
+      "description": "A template description for resources available on the server.",
+      "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
+        "annotations": {
+          "$ref": "#/definitions/Annotations",
+          "description": "Optional annotations for the client."
+        },
+        "description": {
+          "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type for all resources that match this template. This should only be included if all resources matching this template have the same type.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
+        },
+        "uriTemplate": {
+          "description": "A URI template (according to RFC 6570) that can be used to construct resource URIs.",
+          "format": "uri-template",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "uriTemplate"
+      ],
+      "type": "object"
     },
     "MCPProvider": {
       "description": "Represents the service provider of an MCP server.",
@@ -165,13 +276,36 @@
       },
       "additionalProperties": false
     },
+    "StdioTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#StdioTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/mcp#"
+      },
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "stdio"
+        },
+        "instructions": {
+          "type": "string",
+          "description": "The instructions to run the mcp server"
+        }
+      },
+      "additionalProperties": false
+    },
     "StreamableHttpTransport": {
       "@context": {
         "@type": [
           "http://anypoint.com/vocabs/mcp#Transport",
           "http://anypoint.com/vocabs/mcp#StreamableHttpTransport"
         ],
-        "@base": "http://anypoint.com/vocabs/agents#"
+        "@base": "http://anypoint.com/vocabs/mcp#"
       },
       "required": [
         "kind"
@@ -196,12 +330,11 @@
         },
         {
           "$ref": "#/definitions/StreamableHttpTransport"
+        },
+        {
+          "$ref": "#/definitions/StdioTransport"
         }
       ]
-    },
-    "provider": {
-      "$ref": "#/definitions/MCPProvider",
-      "description": "The service provider of the MCP server"
     },
     "Tool": {
       "@context": {
@@ -211,9 +344,14 @@
       },
       "description": "Definition for a tool the client can call.",
       "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
         "annotations": {
           "$ref": "#/definitions/ToolAnnotations",
-          "description": "Optional additional tool information."
+          "description": "Optional additional tool information.\n\nDisplay name precedence order is: title, annotations.title, then name."
         },
         "description": {
           "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
@@ -252,7 +390,43 @@
           "type": "object"
         },
         "name": {
-          "description": "The name of the tool.",
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "outputSchema": {
+          "@context": {
+            "@type": [
+              "http://anypoint.com/vocabs/mcp#ToolOutputSchema"
+            ]
+          },
+          "description": "An optional JSON Schema object defining the structure of the tool's output returned in\nthe structuredContent field of a CallToolResult.",
+          "properties": {
+            "properties": {
+              "additionalProperties": {
+                "additionalProperties": true,
+                "properties": {},
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "required": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": {
+              "const": "object",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "type": "string"
         }
       },
@@ -263,6 +437,11 @@
       "type": "object"
     },
     "ToolAnnotations": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#ToolAnnotations"
+        ]
+      },
       "description": "Additional properties describing a Tool to clients.\n\nNOTE: all properties in ToolAnnotations are **hints**.\nThey are not guaranteed to provide a faithful description of\ntool behavior (including descriptive properties like `title`).\n\nClients should never make tool use decisions based on ToolAnnotations\nreceived from untrusted servers.",
       "properties": {
         "destructiveHint": {
@@ -296,6 +475,11 @@
       },
       "description": "A prompt or prompt template that the server offers.",
       "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
         "arguments": {
           "description": "A list of arguments to use for templating the prompt.",
           "items": {
@@ -308,7 +492,11 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the prompt or prompt template.",
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "type": "string"
         }
       },
@@ -330,12 +518,16 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the argument.",
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
           "type": "string"
         },
         "required": {
           "description": "Whether this argument must be provided.",
           "type": "boolean"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
         }
       },
       "required": [
@@ -351,6 +543,11 @@
       },
       "description": "A known resource that the server is capable of reading.",
       "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
         "annotations": {
           "$ref": "#/definitions/Annotations",
           "description": "Optional annotations for the client."
@@ -364,12 +561,16 @@
           "type": "string"
         },
         "name": {
-          "description": "A human-readable name for this resource.\n\nThis can be used by clients to populate UI elements.",
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
           "type": "string"
         },
         "size": {
           "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
           "type": "integer"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
         },
         "uri": {
           "description": "The URI of this resource.",
@@ -384,6 +585,11 @@
       "type": "object"
     },
     "Annotations": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Annotations"
+        ]
+      },
       "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
       "properties": {
         "audience": {
@@ -403,6 +609,11 @@
       "type": "object"
     },
     "Role": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Role"
+        ]
+      },
       "description": "The sender or recipient of messages and data in a conversation.",
       "enum": [
         "assistant",
