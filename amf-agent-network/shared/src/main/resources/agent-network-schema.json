@@ -978,6 +978,7 @@
       "required": [
         "transport"
       ],
+      "additionalProperties": false,
       "properties": {
         "protocolVersion": {
           "type": "string",
@@ -1055,8 +1056,7 @@
           },
           "description": "Security scheme details used for authenticating with this agent.",
           "type": "object"
-        },
-        "additionalProperties": false
+        }
       }
     },
     "ServerCapabilities": {
