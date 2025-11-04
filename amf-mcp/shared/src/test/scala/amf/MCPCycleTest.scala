@@ -22,6 +22,14 @@ class MCPCycleTest extends FileAssertionTest {
     cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
   }
 
+  test("Render MCP JSON instance 2 to JSON-LD") {
+    cycle("valid/instance_2.json", "valid/instance_2.json.jsonld")
+  }
+
+  test("Render MCP YAML instance 2 to JSON-LD") {
+    cycle("valid/instance_2.yaml", "valid/instance_2.yaml.jsonld")
+  }
+
   def cycle(source: String, golden: String): Future[Assertion] = {
     for {
       parsed <- mcpConfig.baseUnitClient().parse("file://" + basePath + source)
