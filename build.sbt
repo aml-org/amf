@@ -1,4 +1,4 @@
-import Common.snapshots
+import Common.{releases, snapshots}
 import NpmOpsPlugin.autoImport.*
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
@@ -26,6 +26,14 @@ ThisBuild / resolvers ++= List(
   Resolver.mavenCentral
 )
 ThisBuild / credentials ++= Common.credentials()
+
+publishTo := {
+  if ((ThisBuild / version).value.endsWith("SNAPSHOT")) {
+    Some(snapshots)
+  } else {
+    Some(releases)
+  }
+}
 enablePlugins(AetherPlugin)
 
 val npmDeps =
