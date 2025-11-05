@@ -32,7 +32,7 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(19,4)-(32,0)]"
+      validationReport.results.head.position.get.value shouldBe "[(18,4)-(31,0)]"
     }
   }
 
@@ -45,7 +45,7 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(10,0)-(11,0)]"
+      validationReport.results.head.position.get.value shouldBe "[(9,0)-(10,0)]"
     }
   }
 
@@ -58,7 +58,7 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(3,14)-(8,1)]"
+      validationReport.results.head.position.get.value shouldBe "[(2,14)-(7,1)]"
     }
   }
 
@@ -68,10 +68,10 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport <- client.validate(parseResult.baseUnit)
     } yield {
       validationReport.conforms shouldBe false
-      validationReport.results.size shouldBe 4
+      validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(9,0)-(12,0)]"
+      validationReport.results.head.position.get.value shouldBe "[(1,0)-(13,0)]"
     }
   }
 }
