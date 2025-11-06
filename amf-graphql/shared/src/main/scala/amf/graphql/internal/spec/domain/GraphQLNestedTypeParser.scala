@@ -23,7 +23,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     collectFields()
     parseDescription(objTypeNode, obj, obj.meta)
     if (isInterface) {
-      obj synthetically () set AmfScalar(true, synthesized()) as NodeShapeModel.IsAbstract
+      obj set true as NodeShapeModel.IsAbstract
       inFederation { implicit fCtx =>
         FederationMetadataParser(
           objTypeNode,

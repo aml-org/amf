@@ -21,11 +21,11 @@ class DeprecatedDirectiveApplicationParser(override implicit val ctx: GraphQLBas
   override protected def parseDefinedBy(directiveApplication: DomainExtension, node: Node): Unit = {
     findDeclaration() match {
       case Some(declaration) =>
-        directiveApplication withoutId () set declaration as DefinedBy
+        directiveApplication set declaration as DefinedBy
       case None =>
         val declaration = generateDeclaration()
         ctx.declarations += declaration // is this really necessary?
-        directiveApplication withoutId () set declaration as DefinedBy
+        directiveApplication set declaration as DefinedBy
     }
   }
 

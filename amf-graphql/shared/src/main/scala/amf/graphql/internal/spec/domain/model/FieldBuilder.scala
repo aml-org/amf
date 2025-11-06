@@ -1,22 +1,16 @@
 package amf.graphql.internal.spec.domain.model
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter, Payload, Request, Response}
-import amf.apicontract.internal.metamodel.domain.{
-  EndPointModel,
-  MessageModel,
-  OperationModel,
-  RequestModel,
-  ResponseModel
-}
+import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
+import amf.apicontract.client.scala.model.domain._
+import amf.apicontract.internal.metamodel.domain._
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
+import amf.core.internal.parser.domain.Annotations.{inferred, virtual}
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.model.FieldBuilderInfo._
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel
-import amf.graphql.internal.spec.document._
 
 trait FieldBuilderInfo
 object FieldBuilderInfo {
@@ -42,7 +36,7 @@ case class FieldBuilder[I <: FieldBuilderInfo](
     operationType: RootTypes.Value = RootTypes.Query,
     arguments: List[Parameter] = List.empty,
     schema: AnyShape = AnyShape(virtual())
-) {
+) extends AntlrASTParserHelper {
 
   def withName(name: AmfScalar): FieldBuilder[I with Name] = {
     copy(name = name)

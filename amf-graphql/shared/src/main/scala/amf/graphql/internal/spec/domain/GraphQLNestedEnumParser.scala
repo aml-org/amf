@@ -66,7 +66,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLBaseWe
           }
         }
         enum set AmfArray(values, toAnnotations(valuesNode)) as ShapeModel.Values
-      case _ => enum synthetically () set Seq() as ShapeModel.Values
+      case _ => enum set Seq() as ShapeModel.Values
     }
   }
 

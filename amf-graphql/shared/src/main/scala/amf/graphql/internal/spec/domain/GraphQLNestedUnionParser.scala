@@ -43,7 +43,7 @@ class GraphQLNestedUnionParser(unionTypeDef: Node)(implicit val ctx: GraphQLBase
         }
       }
       val finalMembers: Seq[AnyShape] = members.collect { case Some(t) => t }
-      union synthetically () set AmfArray(finalMembers, toAnnotations(membersNode)) as UnionShapeModel.AnyOf
+      union set AmfArray(finalMembers, toAnnotations(membersNode)) as UnionShapeModel.AnyOf
     }
   }
 
