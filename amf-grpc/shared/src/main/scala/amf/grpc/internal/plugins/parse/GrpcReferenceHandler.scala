@@ -18,7 +18,8 @@ class GrpcReferenceHandler extends ReferenceHandler with GrpcASTParserHelper {
   private def collectImports(antlr: AntlrParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     antlr.ast.rootOption().foreach { root =>
       collect(root, Seq(IMPORT_STATEMENT, STRING_LITERAL)).foreach { case stmt: Node =>
-        val importString = stmt.children.head.asInstanceOf[Terminal].value.replaceAll("\"", "")
+        val importString =
+          stmt.children.headOption.map(_.asInstanceOf[Terminal].value.replaceAll("\"", "")).getOrElse("")
         // Register well-known types in global space
         if (isWellKnownImport(importString)) {
           createShapesForImport(importString, toAnnotations(stmt)).foreach { shape =>
