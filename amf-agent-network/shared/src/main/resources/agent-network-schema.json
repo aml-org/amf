@@ -984,22 +984,10 @@
           "type": "string",
           "enum": [
             "2024-11-05",
-            "2025-03-26"
+            "2025-03-26",
+            "2025-06-18"
           ],
           "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
-        },
-        "introspectedAt": {
-          "type": "string",
-          "description": "Timestamp when the introspection was performed"
-        },
-        "connectionStatus": {
-          "type": "string",
-          "description": "Status of the connection to the MCP server",
-          "enum": [
-            "success",
-            "failed",
-            "error"
-          ]
         },
         "transport": {
           "$ref": "#/definitions/MCPTransport",

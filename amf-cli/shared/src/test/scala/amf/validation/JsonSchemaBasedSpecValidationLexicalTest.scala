@@ -19,7 +19,7 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(1,0)-(9,0)]"
+      validationReport.results.head.position.get.value shouldBe "[(1,0)-(7,0)]"
     }
   }
 
@@ -45,7 +45,7 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(9,0)-(10,0)]"
+      validationReport.results.head.position.get.value shouldBe "[(7,0)-(8,0)]"
     }
   }
 
@@ -71,7 +71,7 @@ class JsonSchemaBasedSpecValidationLexicalTest extends AsyncFunSuiteWithPlatform
       validationReport.results.size shouldBe 1
       validationReport.results.head.position.isDefined shouldBe true
       validationReport.results.head.location.isDefined shouldBe true
-      validationReport.results.head.position.get.value shouldBe "[(1,0)-(13,0)]"
+      validationReport.results.head.position.get.value shouldBe "[(1,0)-(11,0)]"
     }
   }
 }
