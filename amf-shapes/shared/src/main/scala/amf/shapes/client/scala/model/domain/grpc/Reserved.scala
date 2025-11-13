@@ -1,7 +1,7 @@
 package amf.shapes.client.scala.model.domain.grpc
 
 import amf.core.client.scala.model.{IntField, StrField}
-import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.grpc.ReservedModel
 import amf.shapes.internal.domain.metamodel.grpc.ReservedModel._
@@ -12,9 +12,11 @@ case class Reserved private[amf] (fields: Fields, annotations: Annotations) exte
   def fieldName: StrField  = fields.field(FieldName)
   def number: IntField     = fields.field(Number)
 
-  def withRange(range: ReservedRange): this.type  = set(ReservedModel.Range, range)
-  def withFieldName(fieldName: String): this.type = set(FieldName, fieldName)
-  def withNumber(number: Int): this.type          = set(Number, number)
+  def withRange(range: ReservedRange, ann: Annotations = Annotations()): this.type =
+    set(ReservedModel.Range, range, ann)
+  def withFieldName(fieldName: String, ann: Annotations = Annotations()): this.type =
+    set(FieldName, AmfScalar(fieldName, ann), ann)
+  def withNumber(number: Int, ann: Annotations = Annotations()): this.type = set(Number, AmfScalar(number, ann), ann)
 
   override def meta: ReservedModel.type = ReservedModel
 

@@ -1,18 +1,19 @@
 package amf.grpc.internal.spec.parser.document
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
-import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.AntlrError
 import amf.core.client.scala.model.document.{DeclaresModel, Document}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.metamodel.document.FragmentModel
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
 import amf.grpc.internal.spec.common.WellKnownTypes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.domain.{GrpcEnumParser, GrpcExtendOptionParser, GrpcMessageParser, GrpcPackageParser, GrpcServiceParser}
+import amf.grpc.internal.spec.parser.domain._
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -44,12 +45,8 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
 
     ctx.declarations.futureDeclarations.resolve()
     generateImportAnnotations(doc)
-    doc
-      .withDeclares(
-        ctx.declarations.shapes.values.toList ++
-          ctx.declarations.annotations.values.toList
-      )
-      .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRPC))
+    setDeclarations(doc)
+    setProcessingData(doc, Spec.GRPC)
 
     doc.annotations += GrpcRawProto(root.raw)
     doc
@@ -74,17 +71,16 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
 
   private def parseWebAPI(node: Node): Unit = {
     val webApi = GrpcPackageParser(node, doc).parse()
-    doc.withLocation(root.location).withEncodes(webApi)
+    doc.withLocation(root.location)
+    doc set webApi as FragmentModel.Encodes
   }
-
-  def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
   private def parseMessages(node: Node): Unit = {
     collect(node, Seq(TOP_LEVEL_DEF, MESSAGE_DEF)).zipWithIndex.foreach { case (element: ASTNode, idx: Int) =>
       withNode(element) { node =>
         val shape = GrpcMessageParser(node).parse(shape => {
           shape.name.option() match {
-            case None => shape.withName(s"Message$idx")
+            case None => shape.withName(s"Message$idx", toAnnotations(element))
             case _    =>
           }
         })
@@ -98,7 +94,7 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
       withNode(element) { node =>
         val shape = GrpcEnumParser(node).parse(shape => {
           shape.name.option() match {
-            case None => shape.withName(s"Enum$idx")
+            case None => shape.withName(s"Enum$idx", toAnnotations(element))
             case _    =>
           }
         })
@@ -121,10 +117,10 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
     val webApi = doc.encodes.asInstanceOf[WebApi]
     val endPoints: Seq[EndPoint] = collect(node, Seq(TOP_LEVEL_DEF, SERVICE_DEF)).map { element =>
       withNode(element) { node =>
-        GrpcServiceParser(node).parse(ep => webApi.withEndPoints(webApi.endPoints ++ Seq(ep)))
+        GrpcServiceParser(node).parse()
       }
     }
-    webApi.withEndPoints(endPoints)
+    webApi set (endPoints, toAnnotations(node)) as WebApiModel.EndPoints
   }
 
   private def loadSyntaxErrors(ast: AST): Unit = {
