@@ -32,20 +32,22 @@ case class GrpcReservedValuesParser(ast: Node)(implicit ctx: GrpcWebApiContext) 
   }
 
   private def processRangeNumbers(numbers: Seq[Int], range: Node): Reserved = {
-    val reserved = Reserved(toAnnotations(range))
+    val ann      = toAnnotations(range)
+    val reserved = Reserved(ann)
     numbers match {
-      case Seq(number) if range.children.size == 1 => reserved.withNumber(number)
-      case Seq(minToMax) => reserved.withRange(ReservedRange(minToMax, MAX_VALUE, toAnnotations(range)))
-      case Seq(min, max) => reserved.withRange(ReservedRange(min, max, toAnnotations(range)))
-      case _             => reserved // return empty reserved as fallback
+      case Seq(number) if range.children.size == 1 => reserved.withNumber(number, toAnnotations(range.children.head))
+      case Seq(minToMax)                           => reserved.withRange(ReservedRange(minToMax, MAX_VALUE, ann), ann)
+      case Seq(min, max)                           => reserved.withRange(ReservedRange(min, max, ann), ann)
+      case _                                       => reserved // return empty reserved as fallback
     }
   }
 
   private def parseFieldNames(): Seq[Reserved] = {
     collect(ast, Seq(RESERVED_FIELD_NAMES, STRING_LITERAL)).collect { case fieldNode: Node =>
+      val ann = toAnnotations(fieldNode)
       getString(fieldNode) match {
-        case Some(fieldName) => Reserved(toAnnotations(fieldNode)).withFieldName(fieldName)
-        case None            => Reserved(toAnnotations(fieldNode)) // return empty reserved as fallback
+        case Some(fieldName) => Reserved(ann).withFieldName(fieldName, ann)
+        case None            => Reserved(ann) // return empty reserved as fallback
       }
     }
   }

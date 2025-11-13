@@ -1,6 +1,7 @@
 package amf.grpc.internal.spec.parser.domain
 
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.domain.Annotations
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
@@ -9,7 +10,8 @@ import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
-  val webApi: WebApi = WebApi(toAnnotations(ast))
+  val ann: Annotations = toAnnotations(ast)
+  val webApi: WebApi = WebApi(ann)
 
   def parse(): WebApi = {
     parseName() match {
@@ -17,13 +19,16 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
         doc.withPkg(pkg, annotations)
         webApi.withName(pkg, annotations)
       case _ =>
-        astError("Missing protobuf3 package statement", toAnnotations(ast))
-        webApi.withName(ctx.rootContextDocument.split("/").last)
+        astError("Missing protobuf3 package statement", ann)
+        webApi.withName(ctx.rootContextDocument.split("/").last, ann)
     }
     collectOptions(
       ast,
       Seq(OPTION_STATEMENT),
-      extension => webApi.withCustomDomainProperty(extension)
+      extension => {
+        val extensions = webApi.customDomainProperties :+ extension
+        webApi set (extensions, ann) as WebApiModel.CustomDomainProperties
+      }
     )
     webApi
   }
@@ -33,10 +38,8 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
       case Some(n: Node) =>
         val ids: Seq[String] = collect(n, Seq(FULL_IDENTIFIER, IDENTIFIER)).map { element: ASTNode =>
           withOptTerminal(element) {
-            case Some(packageId) =>
-              packageId.value
-            case None =>
-              ""
+            case Some(packageId) => packageId.value
+            case None            => ""
           }
         }
         if (ids.nonEmpty) {

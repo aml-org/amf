@@ -1,13 +1,13 @@
 package amf.graphql.internal.spec.domain.model
 
+import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.domain.Annotations.{inferred, synthesized}
-import amf.graphql.internal.spec.document._
+import amf.core.internal.parser.domain.Annotations.inferred
 
-object GraphqlArgument {
+object GraphqlArgument extends AntlrASTParserHelper {
 
   def apply(annotations: Annotations, fieldName: AmfScalar): Parameter = {
     val param = Parameter(annotations).withName(fieldName.toString(), fieldName.annotations)

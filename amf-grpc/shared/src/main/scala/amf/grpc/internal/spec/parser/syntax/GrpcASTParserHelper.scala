@@ -2,13 +2,15 @@ package amf.grpc.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.model.domain.{NamedDomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfScalar, NamedDomainElement, Shape}
 import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.SearchScope
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.domain.GrpcOptionParser
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, ScalarShapeModel}
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.spec.common.TypeDef._
@@ -20,15 +22,16 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
       ctx: GrpcWebApiContext
   ): Unit = {
     path(ast, Seq(nameToken, IDENTIFIER)).foreach { node =>
+      val ann = toAnnotations(ast)
       withOptTerminal(node) {
         case Some(shapeName) =>
-          element.withName(shapeName.value)
+          element.withName(shapeName.value, ann)
         case None =>
           path(node, Seq(KEYWORDS)) match {
             case Some(keywordNode) =>
               withOptTerminal(keywordNode) {
                 case Some(kw) =>
-                  element.withName(kw.value)
+                  element.withName(kw.value, ann)
                 case _ => astError(s"missing Protobuf3 $nameToken", element.annotations)
               }
             case None => astError(s"missing Protobuf3 $nameToken", element.annotations)
@@ -41,10 +44,11 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
       ctx: GrpcWebApiContext
   ): Unit = {
     path(ast, Seq(nameToken, IDENTIFIER)).foreach { node =>
+      val ann = toAnnotations(node)
       withOptTerminal(node) {
         case Some(shapeName) =>
-          element.withName(ctx.fullMessagePath(shapeName.value))
-          element.withDisplayName(shapeName.value)
+          element.withName(ctx.fullMessagePath(shapeName.value), ann)
+          element set (shapeName.value, ann) as ShapeModel.DisplayName
           ctx.declarations += element
           element.add(DeclaredElement())
         case None =>
@@ -101,17 +105,15 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
         // check if array
         shape map { shape =>
           if (parseIsRepeated(ast)) {
-            ArrayShape(toAnnotations(ast)).withItems(shape)
-          } else {
-            shape
-          }
+            ArrayShape(toAnnotations(ast)) set shape as ArrayShapeModel.Items
+          } else shape
         }
-      case _ =>
-        None
+      case _ => None
     }
   }
 
   protected def parseObjectRange(n: ASTNode, literalReference: String)(implicit ctx: GrpcWebApiContext): AnyShape = {
+    val ann                = toAnnotations(n)
     val topLevelAlias      = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     val qualifiedReference = ctx.fullMessagePath(literalReference)
     val externalReference =
@@ -135,17 +137,17 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
         }
       } match {
       case Some(s: NodeShape) =>
-        s.link(literalReference, toAnnotations(n)).asInstanceOf[NodeShape].withName(literalReference, toAnnotations(n))
+        s.link(literalReference, ann).asInstanceOf[NodeShape].withName(literalReference, ann)
       case Some(s: ScalarShape) =>
-        s.link(literalReference, toAnnotations(n))
+        s.link(literalReference, ann)
           .asInstanceOf[ScalarShape]
-          .withName(literalReference, toAnnotations(n))
+          .withName(literalReference, ann)
       case Some(s: AnyShape) =>
-        s.link(literalReference, toAnnotations(n))
+        s.link(literalReference, ann)
           .asInstanceOf[AnyShape]
-          .withName(literalReference, toAnnotations(n))
+          .withName(literalReference, ann)
       case _ =>
-        val shape = UnresolvedShape(literalReference, toAnnotations(n))
+        val shape = UnresolvedShape(literalReference, ann)
         shape.withContext(ctx)
         shape.unresolved(literalReference, Seq(qualifiedReference) ++ topLevelAlias, Some(n.location))
         shape
@@ -153,11 +155,11 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
   }
 
   private def parseScalarRange(n: ASTNode, scalarType: TypeDef, format: Option[String]): ScalarShape = {
-    val scalar = ScalarShape(toAnnotations(n)).withDataType(XsdTypeDefMapping.xsd(scalarType))
-    format match {
-      case Some(format) => scalar.withFormat(format)
-      case _            =>
-    }
+    val ann      = toAnnotations(n)
+    val scalar   = ScalarShape(ann)
+    val datatype = XsdTypeDefMapping.xsd(scalarType)
+    scalar set AmfScalar(datatype, ann) as ScalarShapeModel.DataType
+    format.map(format => scalar set AmfScalar(format, ann) as ScalarShapeModel.Format)
     scalar
   }
 

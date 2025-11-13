@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AvroConfiguration}
-import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
@@ -11,6 +11,7 @@ import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
+import amf.grpc.client.scala.GRPCConfiguration
 import amf.shapes.internal.spec.raml.parser.expression.ExpressionMember
 import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
@@ -80,10 +81,16 @@ class SourceMapsAnnotationsTest extends AsyncFunSuiteWithPlatformGlobalExecution
     runTest("all-types-avro.json", Some(AvroConfiguration.Avro()))
   }
 
+  test("Test GRPC annotations") {
+    runTest("/../../upanddown/cycle/grpc/all/main.proto", Some(GRPCConfiguration.GRPC()))
+  }
+
   private def parse(file: String, config: Option[AMFConfiguration] = None): Future[BaseUnit] = {
     val url           = s"file://$directory$file"
     val configuration = config.getOrElse(APIConfiguration.API())
-    AMFParser.parse(url, configuration).map(_.baseUnit)
+    AMFParser.parse(url, configuration).map{parseResult =>
+      parseResult.baseUnit
+    }
   }
 
   private def runTest(file: String, config: Option[AMFConfiguration] = None): Future[Assertion] =
@@ -106,36 +113,28 @@ class SourceMapsAnnotationsTest extends AsyncFunSuiteWithPlatformGlobalExecution
   private def checkElement(e: AmfElement, rangesChecker: RangesChecker): Seq[String] =
     e match {
       case o: AmfObject =>
-        if (rangesChecker.insideSynthesized) Seq() // fail?
+        if (rangesChecker.insideSynthesized) Seq()
         else
           rangesChecker.lastRange match {
             case Some(r) if o.range().forall(oR => r.contains(oR)) => checkObj(o, rangesChecker.on(o))
             case None                                              => checkObj(o, rangesChecker.on(o))
-            case r                                                 => Seq() // Seq(rangeNotContained(o, r, o.range()))
+            case _                                                 => Seq()
           }
       case a: AmfArray =>
-        if (rangesChecker.insideSynthesized) Seq() // fail?
+        if (rangesChecker.insideSynthesized) Seq()
         else
           rangesChecker.lastRange match {
             case Some(r) if a.range().forall(oR => r.contains(oR)) =>
               a.values.flatMap(checkElement(_, rangesChecker.on(a)))
             case None => a.values.flatMap(checkElement(_, rangesChecker.on(a)))
-            case r    => Seq() // Seq(rangeNotContained(a, r, a.range()))
+            case _    => Seq()
           }
       case _ => Seq()
     }
 
-  private def checkFeRange(fe: FieldEntry, meta: String, rangesChecker: RangesChecker): Seq[String] =
-    if (rangesChecker.insideSynthesized || rangesChecker.lastRange.isEmpty) Seq()
-    else {
-      if (!fe.range().forall(fR => rangesChecker.lastRange.exists(_.contains(fR))))
-        Seq() // Seq(rangeNotContained(fe.field, meta, rangesChecker.lastRange, fe.range()))
-      else Seq()
-    }
-
-  private def checkInValue(fe: FieldEntry, meta: String, rangesChecker: RangesChecker): Seq[String] = {
+  private def checkInValue(fe: FieldEntry, rangesChecker: RangesChecker): Seq[String] = {
     if (fe.isSynthesized) Nil
-    else checkFeRange(fe, meta, rangesChecker) ++ checkElement(fe.value.value, rangesChecker.on(fe.value.value))
+    else checkElement(fe.value.value, rangesChecker.on(fe.value.value))
   }
 
   private def checkObj(o: AmfObject, rangesChecker: RangesChecker): Seq[String] =
@@ -143,7 +142,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuiteWithPlatformGlobalExecution
       .fields()
       .flatMap { fe: FieldEntry =>
         val meta = o.meta.`type`.head.iri()
-        checkInField(fe, meta) ++ checkInValue(fe, meta, rangesChecker)
+        checkInField(fe, meta) ++ checkInValue(fe, rangesChecker)
       }
       .toSeq
 
@@ -177,9 +176,13 @@ class SourceMapsAnnotationsTest extends AsyncFunSuiteWithPlatformGlobalExecution
   }
 
   private def checkInField(fe: FieldEntry, meta: String): Seq[String] = {
-    val fieldStrings = if (!fe.fieldHasMaps()) Some(missingField(fe.field, meta)) else None
+    val fieldStrings = if (!fe.fieldHasMaps())
+      Some(missingField(fe.field, meta))
+    else None
     val valueStrings =
-      if (fe.valueShouldHaveMaps() && !fe.valueHasMaps()) Some(missingValue(fe.field, meta)) else None
+      if (fe.valueShouldHaveMaps() && !fe.valueHasMaps())
+        Some(missingValue(fe.field, meta))
+      else None
     (fieldStrings ++ valueStrings).toSeq
   }
 
@@ -188,12 +191,6 @@ class SourceMapsAnnotationsTest extends AsyncFunSuiteWithPlatformGlobalExecution
 
   private def missingValue(f: Field, meta: String) =
     s"missing annotations for value of field ${f.value.iri()} at obj type $meta"
-
-  private def rangeNotContained(e: AmfElement, parent: Option[PositionRange], self: Option[PositionRange]) =
-    s"range is not contained in parent $e [$parent - $self]"
-
-  private def rangeNotContained(f: Field, meta: String, parent: Option[PositionRange], self: Option[PositionRange]) =
-    s"range is not contained in parent [$parent - $self] of field ${f.value.iri()} at obj type $meta"
 
   case class RangesChecker(lastRange: Option[PositionRange], insideSynthesized: Boolean = false) {
     def on(e: AmfElement): RangesChecker =

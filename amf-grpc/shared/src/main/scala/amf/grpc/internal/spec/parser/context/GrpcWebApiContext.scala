@@ -53,7 +53,7 @@ class GrpcWebApiContext(
   def topLevelPackageRef(messageName: String): Option[String] = {
     if (messageName.startsWith(".")) { // fully qualified path
       None
-    } else if (messageName.startsWith(messagePath(1))) { // reference from package
+    } else if (messagePath.size > 1 && messageName.startsWith(messagePath(1))) { // reference from package
       Some("." + messageName)
     } else { // relative to current path
       Some((messagePath.take(2) ++ Seq(messageName)).mkString("."))

@@ -83,7 +83,8 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   }
 
   def withResponse(name: String): Response = {
-    val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)
+    val result =
+      Response(annotations).withName(name, annotations).withStatusCode(if (name == "default") "200" else name)
     add(Responses, result)
     result
   }

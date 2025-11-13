@@ -1,11 +1,14 @@
 package amf.grpc.internal.spec.parser.domain
 
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{IDENTIFIER, KEY_TYPE, MAP_NAME}
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
+import amf.shapes.internal.domain.metamodel.{NodeShapeModel, ScalarShapeModel}
 import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
@@ -37,17 +40,19 @@ case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends Grp
   }
 
   private def parseFields(): Any = {
-    val range          = parseFieldRange(ast).getOrElse(ScalarShape().withDataType(XsdTypes.xsdString.iri()))
-    val key            = parseFieldRange(ast, KEY_TYPE).getOrElse(ScalarShape().withDataType(XsdTypes.xsdString.iri()))
-    val mapValueSchema = NodeShape(toAnnotations(ast))
-    mapValueSchema.withAdditionalPropertiesSchema(range)
-    mapValueSchema.withAdditionalPropertiesKeySchema(key)
+    val ann           = toAnnotations(ast)
+    val defaultScalar = ScalarShape(ann)
+    defaultScalar set (XsdTypes.xsdString.iri(), ann) as ScalarShapeModel.DataType
+    val range          = parseFieldRange(ast).getOrElse(defaultScalar)
+    val key            = parseFieldRange(ast, KEY_TYPE).getOrElse(defaultScalar)
+    val mapValueSchema = NodeShape(ann)
+    mapValueSchema set range as NodeShapeModel.AdditionalPropertiesSchema
+    mapValueSchema set key as NodeShapeModel.AdditionalPropertiesKeySchema
 
     val order = parseFieldNumber(ast).getOrElse(0)
     val name  = parseFieldName(ast)
-    propertyMap
-      .withName(name)
-      .withSerializationOrder(order)
-      .withRange(mapValueSchema)
+    propertyMap.withName(name, ann)
+    propertyMap.set(PropertyShapeModel.SerializationOrder, AmfScalar(order, ann), ann)
+    propertyMap.set(PropertyShapeModel.Range, mapValueSchema, ann)
   }
 }

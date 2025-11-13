@@ -3,7 +3,7 @@ package amf.grpc.internal.spec.parser.domain
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DataNode, ObjectNode, ScalarNode}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.utils.AmfStrings
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
@@ -15,17 +15,18 @@ import scala.collection.mutable
 case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val extension: DomainExtension = DomainExtension(toAnnotations(ast))
 
-  def parse(setterFn: DomainExtension => Unit): DomainExtension = {
+  def parse(setterFn: DomainExtension => Unit = _ => ()): DomainExtension = {
     parseName()
     setterFn(extension)
     parseExtension()
-    extension.withDefinedBy(CustomDomainProperty(toAnnotations(ast)))
+    extension set CustomDomainProperty(toAnnotations(ast)) as DomainExtensionModel.DefinedBy
     extension
   }
 
   def parseName(): Unit = {
     path(ast, Seq(OPTION_NAME)) foreach { case node: Node =>
-      extension.withName(node.children.filter(n => n.isInstanceOf[Node]).head.asInstanceOf[Node].source)
+      val name = node.children.filter(n => n.isInstanceOf[Node]).head.asInstanceOf[Node].source
+      extension.withName(name, toAnnotations(node))
     }
   }
 
@@ -33,49 +34,42 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
     find(ast, CONSTANT).headOption match {
       case Some(constant: Node) =>
         val data = parseConstant(constant)
-        extension.withExtension(data)
+        extension set data as DomainExtensionModel.Extension
       case _ =>
         astError("Missing mandatory protobuf3 option constant value", toAnnotations(ast))
     }
   }
 
   private def parseConstant(constAst: Node): DataNode = {
-    if (constAst.children.head.name == FULL_IDENTIFIER) {
-      val identValue = normalize(constAst.source)
-      val s          = ScalarNode(toAnnotations(constAst)).withValue(identValue)
-      identValue match {
-        case "true"  => s.withDataType(DataType.Boolean)
-        case "false" => s.withDataType(DataType.Boolean)
-        case _       => s.withDataType(DataType.String)
-      }
-      s
-    } else if (constAst.children.head.name == BLOCK_LITERAL) {
-      parseBlockLiteral(constAst.children.head.asInstanceOf[Node])
-    } else if (constAst.children.exists(_.name == INT_LITERAL)) {
-      val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.Integer)
-      s
-    } else if (constAst.children.exists(_.name == FLOAT_LITERAL)) {
-      val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.Float)
-      s
-    } else if (constAst.children.head.name == BOOL_LITERAL) {
-      val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.Boolean)
-      s
-    } else if (constAst.children.head.name == STRING_LITERAL) {
-      val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.String)
-      s
-    } else {
-      val s = ScalarNode(toAnnotations(constAst)).withValue(normalize(constAst.source)).withDataType(DataType.String)
-      astError(s"Unknown protobuf constant ${constAst.source}", toAnnotations(constAst))
-      s
+    val ann        = toAnnotations(constAst)
+    val identValue = constAst.source.replaceAll("\"", "")
+
+    def createScalar(dataType: String): ScalarNode =
+      ScalarNode(ann).withValue(identValue, ann).withDataType(dataType, ann)
+
+    constAst.children.headOption.map(_.name) match {
+      case Some(FULL_IDENTIFIER) =>
+        val dataType = identValue match {
+          case "true" | "false" => DataType.Boolean
+          case _                => DataType.String
+        }
+        createScalar(dataType)
+      case Some(BLOCK_LITERAL)  => parseBlockLiteral(constAst.children.head.asInstanceOf[Node])
+      case Some(BOOL_LITERAL)   => createScalar(DataType.Boolean)
+      case Some(STRING_LITERAL) => createScalar(DataType.String)
+      case _ if constAst.children.exists(_.name == INT_LITERAL)   => createScalar(DataType.Integer)
+      case _ if constAst.children.exists(_.name == FLOAT_LITERAL) => createScalar(DataType.Float)
+      case _ =>
+        astError(s"Unknown protobuf constant ${constAst.source}", ann)
+        createScalar(DataType.String)
     }
   }
 
-  private def normalize(s: String) = s.replaceAll("\"", "")
-
   private def parseBlockLiteral(constAst: Node): ObjectNode = {
-    val obj = ObjectNode(toAnnotations(constAst))
+    val ann = toAnnotations(constAst)
+    val obj = ObjectNode(ann)
     blockPairs(constAst.children).foreach { case (key, value) =>
-      obj.addProperty(key.urlEncoded, value)
+      obj.addProperty(key.urlEncoded, value, ann)
     }
     obj
   }
