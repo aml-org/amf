@@ -26,7 +26,6 @@ ThisBuild / resolvers ++= List(
   Resolver.mavenCentral
 )
 ThisBuild / credentials ++= Common.credentials()
-enablePlugins(AetherPlugin)
 
 val npmDeps =
   List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.11.3")))

@@ -8,15 +8,8 @@ addSbtPlugin("com.eed3si9n"       % "sbt-sriracha"             % "0.1.0")
 addSbtPlugin("net.virtual-void"   % "sbt-dependency-graph"     % "0.10.0-RC1")
 addSbtPlugin("com.eed3si9n"       % "sbt-buildinfo"            % "0.10.0")
 addSbtPlugin("org.scala-js"       % "sbt-jsdependencies"       % "1.0.2")
-addSbtPlugin("no.arktekk.sbt"     % "aether-deploy"            % "0.30.0")
 
-resolvers ++= List(
-  Common.releases,
-  Common.snapshots,
-  Resolver.mavenLocal,
-  Resolver.mavenCentral,
-  Common.sonatypeReleases
-)
+resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral)
 credentials ++= Common.credentials()
 
 //addSbtPlugin("com.github.amlorg" % "scala-js-typings" % "0.0.18")
