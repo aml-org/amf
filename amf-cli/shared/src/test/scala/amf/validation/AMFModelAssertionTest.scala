@@ -6,10 +6,11 @@ import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, Secur
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
-import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, TrackedElement, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.shapes.client.scala.model.domain._
@@ -22,7 +23,7 @@ import org.scalatest
 import org.yaml.model.{YNodePlain, YScalar}
 
 /** Tests for a specific field/value/node in an API. Uses [[amf.testing.BaseUnitUtils]] to quickly get nodes.
- */
+  */
 class AMFModelAssertionTest extends AMFModelTest {
   val basePath = "file://amf-cli/shared/src/test/resources/validations"
 
@@ -849,6 +850,33 @@ class AMFModelAssertionTest extends AMFModelTest {
       val request        = getFirstRequest(parseResult.baseUnit)
       val requestLexical = request.annotations.lexical()
       requestLexical.equals(PositionRange.NONE) shouldBe false
+    }
+  }
+
+  test("re-parse a RAML API and keep the tracked-element pointing to the right element") {
+    val api = s"$basePath/raml/tracked-element.raml"
+    // raw sourcemaps emission doesn't emit fully tracked-element annotations so in the cycle they're not parsed
+    val ro         = RenderOptions().withCompactUris
+    val ramlConfig = RAMLConfiguration.RAML10().withRenderOptions(ro)
+    val ramlClient = ramlConfig.baseUnitClient()
+
+    // parse and render API (1st parse)
+    ramlClient.parse(api) flatMap { parseResult =>
+      parseResult.conforms shouldBe true
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Editing)
+      val jsonLdRendered  = ramlClient.render(transformResult.baseUnit, Mimes.`application/ld+json`)
+      jsonLdRendered.nonEmpty shouldBe true
+
+      // parse rendered graph (2nd parse)
+      ramlClient.parseContent(jsonLdRendered) map { parseResultCycle =>
+        parseResultCycle.conforms shouldBe true
+        val transformResultCycle     = ramlClient.transform(parseResultCycle.baseUnit, PipelineId.Editing)
+        val header                   = getFirstResponse(transformResultCycle.baseUnit).headers.head
+        val schemaExampleAnnotations = header.schema.asInstanceOf[AnyShape].examples.head.annotations
+
+        // check that the example is tracked by the header, works with or without transformation in 1st or 2nd parse
+        schemaExampleAnnotations.isTrackedBy(header.id) shouldBe true
+      }
     }
   }
 }
