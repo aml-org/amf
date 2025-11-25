@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: W-16883114
+version: v1
+description: an API that triggers ruleset violations that shouldn't ONLY in Governance
+documentation:
+  - title: W-16883114
+    content: an API that triggers ruleset violations that shouldn't ONLY in Governance
+
+securitySchemes:
+  client-enforcement:
+    type: x-client-enforcement
+    describedBy:
+      responses:
+        401: # triggers requests and responses error
+          description: a description
+          headers:
+            Content-Type: # triggers parameters and headers error
+              description: a description
+              type: string
+              example: application/json
+          body:
+            application/json:
+              type: string
+              example: a string example
+securedBy:
+  - client-enforcement
+
+/test:
+  get:
+    displayName: Get
+    description: a description
+    responses:
+      200: # makes it conform if removed, may be a problem in overriding the response
+        description: a description
+        headers:
+          Content-Type:
+            type: string
+            example: application/json
+            displayName: Username
+            description: a description
