@@ -133,11 +133,7 @@ trait AntlrASTParserHelper {
   implicit class AntlrFieldSetter[T <: AmfObject](obj: T) {
 
     class AntlrModelSetter(element: AmfElement, fieldAnnotations: Annotations) {
-      def as(field: Field): T = {
-        obj.setWithoutId(field, element, fieldAnnotations)
-//        obj.set(field, element, fieldAnnotations)
-      }
-
+      def as(field: Field): T = obj.setWithoutId(field, element, fieldAnnotations)
     }
 
     private def getAnnotation(element: AmfElement): Annotations =
