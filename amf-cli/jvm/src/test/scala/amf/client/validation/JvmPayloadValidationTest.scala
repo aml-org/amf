@@ -18,6 +18,14 @@ class JvmPayloadValidationTest extends PayloadValidationTest with NativeOpsFromJ
     report.results.head.message shouldBe "expected type: String, found: Integer" // APIKit compatibility
   }
 
+  // W-20197699
+  test("Test unexpected type error string") {
+    val test   = ScalarShape().withDataType(DataTypes.Number)
+    val report = payloadValidator(test, `application/json`).syncValidate("FOOBAR")
+    report.conforms shouldBe false
+    report.results.head.message shouldBe "expected type: Number, found: String" // APIKit compatibility
+  }
+
   // regex pending analysis (APIMF-3058) jvm cannot process regex, on the other hand it is valid for js
   test("Avoid exception for pattern regex that cannot be parsed") {
     val shape = ScalarShape()
