@@ -155,16 +155,52 @@
         },
         "configuration": {
           "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "model"
-          ],
           "properties": {
             "model": {
               "type": "string",
               "description": "The name of the model to use"
+            },
+            "openAI" : {
+              "$ref": "#/definitions/OpenAISettings"
             }
-          }
+          },
+          "required": [
+            "model"
+          ]
+        }
+      }
+    },
+    "OpenAISettings": {
+      "description": "OpenAI specific configuration settings",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reasoningEffort": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "MINIMAL",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "description": "Constrains effort on reasoning for reasoning models. gtp-5.1 defaults to NONE, previous ones default to MEDIUM."
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Controls randomness in the output"
+        },
+        "topP": {
+          "type": "number",
+          "description": "Nucleus sampling parameter"
+        },
+        "topLogprobs": {
+          "type": "integer",
+          "description": "Number of most likely tokens to return at each position"
+        },
+        "maxOutputTokens": {
+          "type": "integer",
+          "description": "Maximum number of tokens to generate"
         }
       }
     },
