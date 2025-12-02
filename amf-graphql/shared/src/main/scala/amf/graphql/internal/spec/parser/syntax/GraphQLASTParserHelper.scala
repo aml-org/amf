@@ -8,17 +8,16 @@ import amf.core.internal.metamodel.domain.common.DescribedElementModel
 import amf.core.internal.parser.domain.Annotations.{inferred, synthesized, virtual}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.graphql.internal.spec.context.{GraphQLBaseWebApiContext, GraphQLWebApiContext}
-import amf.graphql.internal.spec.parser.syntax.ValueParser.parseValue
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.graphql.internal.spec.parser.syntax.ValueParser.parseValue
 import amf.graphqlfederation.internal.spec.context.GraphQLFederationWebApiContext
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
-import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.shapes.internal.domain.metamodel.operations.AbstractParameterModel
+import amf.shapes.internal.domain.metamodel.{ScalarShapeModel, UnionShapeModel}
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 
 import scala.reflect.ClassTag
-import amf.graphql.internal.spec.document._
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
@@ -155,8 +154,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
         None
     }
     datatype.foreach { dt =>
-      def parsingFn: Node => AmfScalar = (n: Node) => AmfScalar(dt, toAnnotations(n))
-      scalar using parsingFn set t as ScalarShapeModel.DataType
+      scalar set AmfScalar(dt, toAnnotations(t)) as ScalarShapeModel.DataType
     }
     scalar
   }

@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.domain.Annotations.{synthesized, virtual}
 import amf.core.internal.parser.domain.Fields
 import amf.graphql.internal.spec.context.GraphQLBaseWebApiContext
-import amf.graphql.internal.spec.document.GraphQLFieldSetter
+import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphqlfederation.internal.spec.domain.{FederationMetadataParser, ShapeFederationMetadataFactory}

@@ -1,0 +1,30 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import-format.proto
+Profile: 
+Conforms: false
+Number of results: 3
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error in the following text: '*'
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: 
+  Location: 
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: File Not Found: amf-cli/shared/src/test/resources/validations/grpc (Is a directory)
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(6,0)-(5,13)]
+  Location: file://amf-cli/shared/src/test/resources/validations/grpc/invalid-import-format.proto
+
+- Constraint: http://a.ml/vocabularies/amf/parser#antlr-error
+  Message: Syntax error: Unexpected end of file
+  Severity: Violation
+  Target: 
+  Property: 
+  Range: [(6,0)-(6,0)]
+  Location: 

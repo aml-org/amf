@@ -1,9 +1,16 @@
 package amf.antlr.client.scala.parse.syntax
 
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
+import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.annotations.{DeclaredElement, LexicalInformation}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.document.{BaseUnitModel, ModuleModel}
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Spec
 import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
 import org.mulesoft.common.client.lexical.ASTElement
 
@@ -53,11 +60,9 @@ trait AntlrASTParserHelper {
           find(n, nextName) match {
             case found: Seq[ASTElement] if found.length == 1 =>
               path(found.head, names.tail)
-            case _ =>
-              None
+            case _ => None
           }
-        case _ =>
-          None
+        case _ => None
       }
     }
   }
@@ -99,9 +104,10 @@ trait AntlrASTParserHelper {
     case _                     => None
   }
 
+  /** adds SourceASTElement and LexicalInformation annotations */
   def toAnnotations(elem: ASTNode): Annotations = {
     val lexInfo = LexicalInformation(elem.location.range)
-    Annotations(SourceASTElement(elem)) ++= Set(lexInfo)
+    Annotations(SourceASTElement(elem)) += lexInfo
   }
 
   def astError(id: String, message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
@@ -110,5 +116,43 @@ trait AntlrASTParserHelper {
 
   def astError(message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
     ctx.eh.violation(ParserSideValidations.InvalidAst, "", message, annotations)
+  }
+
+  def setDeclarations(doc: Document)(implicit ctx: WebApiContext): Unit = {
+    val declarations = ctx.declarations.shapes.values.toList ++ ctx.declarations.annotations.values.toList
+    declarations.foreach(_.annotations += DeclaredElement())
+    doc.setWithoutId(ModuleModel.Declares, AmfArray(declarations, Annotations.virtual()), Annotations.virtual())
+  }
+
+  def setProcessingData(doc: Document, spec: Spec): Unit = {
+    val processingData = APIContractProcessingData(Annotations.synthesized())
+    doc.withProcessingData(processingData.withSourceSpec(spec))
+    doc set processingData as BaseUnitModel.ProcessingData
+  }
+
+  implicit class AntlrFieldSetter[T <: AmfObject](obj: T) {
+
+    class AntlrModelSetter(element: AmfElement, fieldAnnotations: Annotations) {
+      def as(field: Field): T = obj.setWithoutId(field, element, fieldAnnotations)
+    }
+
+    private def getAnnotation(element: AmfElement): Annotations =
+      if (element.annotations.size > 0) element.annotations else Annotations.synthesized()
+
+    def set(element: AmfElement) = new AntlrModelSetter(element, getAnnotation(element))
+
+    def set(value: Boolean, ann: Annotations): AntlrModelSetter = new AntlrModelSetter(AmfScalar(value, ann), ann)
+    def set(value: Boolean): AntlrModelSetter                   = set(value, Annotations.synthesized())
+
+    def set(value: String, ann: Annotations): AntlrModelSetter = new AntlrModelSetter(AmfScalar(value, ann), ann)
+    def set(value: String): AntlrModelSetter                   = set(value, Annotations.synthesized())
+
+    def set(value: Int, ann: Annotations): AntlrModelSetter = new AntlrModelSetter(AmfScalar(value, ann), ann)
+    def set(value: Int): AntlrModelSetter                   = set(value, Annotations.synthesized())
+
+    def set(values: Seq[AmfElement], ann: Annotations): AntlrModelSetter =
+      new AntlrModelSetter(AmfArray(values, ann), ann)
+
+    def set(values: Seq[AmfElement]): AntlrModelSetter = set(values, Annotations.synthesized())
   }
 }

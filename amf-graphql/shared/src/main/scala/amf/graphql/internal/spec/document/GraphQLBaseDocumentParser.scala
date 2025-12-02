@@ -2,7 +2,6 @@ package amf.graphql.internal.spec.document
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.antlr.client.scala.parse.syntax.SourceASTElement
-import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
@@ -11,7 +10,7 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.annotations.DeclaredElement
-import amf.core.internal.metamodel.document.{BaseUnitModel, BaseUnitProcessingDataModel, FragmentModel, ModuleModel}
+import amf.core.internal.metamodel.document.{BaseUnitModel, FragmentModel, ModuleModel}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
@@ -52,7 +51,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
     inFederation { implicit fCtx =>
       fCtx.linkingActions.executeAll()
     }
-    setDeclarations()
+    setDeclarations(doc)
     setProcessingData()
     doc
   }
@@ -65,16 +64,8 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   }
 
   private def setProcessingData(): Unit = {
-    inFederation { _ =>
-      val processingData = APIContractProcessingData()
-      processingData set Spec.GRAPHQL_FEDERATION.id as BaseUnitProcessingDataModel.SourceSpec
-      doc synthetically () set processingData as BaseUnitModel.ProcessingData
-    }
-    inGraphQL { _ =>
-      val processingData = APIContractProcessingData()
-      processingData set Spec.GRAPHQL.id as BaseUnitProcessingDataModel.SourceSpec
-      doc synthetically () set processingData as BaseUnitModel.ProcessingData
-    }
+    inFederation { _ => setProcessingData(doc, Spec.GRAPHQL_FEDERATION) }
+    inGraphQL { _ => setProcessingData(doc, Spec.GRAPHQL) }
   }
 
   private def loadSyntaxErrors(ast: AST): Unit = {
@@ -90,7 +81,7 @@ case class GraphQLBaseDocumentParser(root: Root)(implicit val ctx: GraphQLBaseWe
   }
 
   private def makeVirtual(shape: NodeShape): Unit = {
-    val i = 5
+    shape.annotations ++= Annotations.virtual()
   }
 
   private def parseNestedType(objTypeDef: Node, isVirtualRoot: Boolean = false): Unit = {

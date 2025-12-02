@@ -1,10 +1,10 @@
 package amf.grpc.internal.spec.emitter.domain
 
-import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
-import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
+import amf.shapes.client.scala.model.domain.NodeShape
+import org.mulesoft.common.client.lexical.Position
 
 case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext)
     extends GrpcEmitter {
@@ -22,7 +22,6 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
             GrpcEnumEmitter(nested, l, ctx).emit()
           }
           GrpcReservedEmitter(shape, l, ctx).emit()
-          emitOneOf(l)
         }
       }
       f += "}"
@@ -30,18 +29,12 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
 
   }
 
-  def messageName: String      = shape.displayName.option().getOrElse("AnonymousMessage")
-  def messageNamePos: Position = pos(shape.displayName.annotations())
+  private def messageName: String      = shape.displayName.option().getOrElse("AnonymousMessage")
+  private def messageNamePos: Position = pos(shape.displayName.annotations())
 
-  def emitOneOf(builder: StringDocBuilder): Unit = {
-    shape.and.foreach {
-      case union: UnionShape =>
-        GrpcOneOfEmitter(union, builder, ctx).emit()
-    }
-  }
-
-  def emitProperties(builder: StringDocBuilder): Unit = shape.properties.foreach { p =>
-    GrpcFieldEmitter(p, builder, ctx).emit()
+  private def emitProperties(builder: StringDocBuilder): Unit = shape.properties.foreach {
+    case oneOf if oneOf.range.isXOne => GrpcOneOfEmitter(oneOf, builder, ctx).emit()
+    case p                           => GrpcFieldEmitter(p, builder, ctx).emit()
   }
 }
 

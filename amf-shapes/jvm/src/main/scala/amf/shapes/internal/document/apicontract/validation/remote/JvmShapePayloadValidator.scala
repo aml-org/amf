@@ -182,8 +182,7 @@ case class JvmJsonSchemaReportValidationProcessor(
 
       case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
         val expectedValue = formattedDatatype(shape.asInstanceOf[ScalarShape])
-        val foundValue    = if (e.getMessage.contains("Unquoted string value")) "Object" else "String"
-        Seq(invalidJsonValidation(s"expected type: $expectedValue, found: $foundValue", element, e))
+        Seq(invalidJsonValidation(s"expected type: $expectedValue, found: String", element, e))
 
       case e: InvalidJsonValue =>
         Seq(invalidJsonValidation("Invalid json value was provided", element, e))

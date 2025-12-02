@@ -40,6 +40,8 @@ object TokenTypes {
   val IDENTIFIER              = "ident"
   val KEYWORDS                = "keywords"
   val OPTION_STATEMENT        = "optionStatement"
+  val OPTIONS_ENUM_VALUE      = "enumValueOptions"
+  val OPTION_ENUM_VALUE       = "enumValueOption"
   val OPTION                  = "option"
   val OPTION_NAME             = "optionName"
   val CONSTANT                = "constant"

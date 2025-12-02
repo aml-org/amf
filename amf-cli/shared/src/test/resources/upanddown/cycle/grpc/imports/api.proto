@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package example.api.v1;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/api.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/source_context.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/type.proto";
+import "google/protobuf/wrappers.proto";
+
+
+message Any {
+  google.protobuf.Any message = 1;
+  repeated google.protobuf.Any details = 2;
+  map<string, google.protobuf.Any> metadata = 3;
+}
+
+message Api {
+  google.protobuf.Api api_info = 1;
+  repeated google.protobuf.Method methods = 2;
+  google.protobuf.Mixin mixin = 3;
+}
+
+message Duration {
+  google.protobuf.Duration timeout = 1;
+  google.protobuf.Duration retry_delay = 2;
+}
+
+message Empty {
+  google.protobuf.Empty empty_field = 1;
+}
+
+message FieldMask {
+  google.protobuf.FieldMask update_mask = 1;
+  google.protobuf.FieldMask read_mask = 2;
+}
+
+message SourceContext {
+  google.protobuf.SourceContext source = 1;
+}
+
+message Struct {
+  google.protobuf.Struct config = 1;
+  google.protobuf.Value value = 2;
+  google.protobuf.ListValue list = 3;
+  google.protobuf.NullValue null_value = 4;
+}
+
+message Timestamp {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+}
+
+message Type {
+  google.protobuf.Type type_info = 1;
+  google.protobuf.Field field = 2;
+  google.protobuf.Enum enum_type = 3;
+  google.protobuf.EnumValue enum_value = 4;
+  google.protobuf.Option option = 5;
+  google.protobuf.Syntax syntax = 6;
+}
+
+message Wrappers {
+  google.protobuf.DoubleValue double_val = 1;
+  google.protobuf.FloatValue float_val = 2;
+  google.protobuf.Int64Value int64_val = 3;
+  google.protobuf.UInt64Value uint64_val = 4;
+  google.protobuf.Int32Value int32_val = 5;
+  google.protobuf.UInt32Value uint32_val = 6;
+  google.protobuf.BoolValue bool_val = 7;
+  google.protobuf.StringValue string_val = 8;
+  google.protobuf.BytesValue bytes_val = 9;
+}

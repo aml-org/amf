@@ -1,6 +1,9 @@
 package amf.grpc.internal.spec.parser.domain
 
-import amf.apicontract.client.scala.model.domain.Operation
+import amf.apicontract.client.scala.model.domain.{Operation, Payload, Request, Response}
+import amf.apicontract.internal.metamodel.domain.{OperationModel, PayloadModel, RequestModel, ResponseModel}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
@@ -9,49 +12,92 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
+  private val STREAM_KEYWORD = "stream"
+
+  private object OperationType {
+    val POST      = "post"
+    val PUBLISH   = "publish"
+    val SUBSCRIBE = "subscribe"
+    val PUBSUB    = "pubsub"
+  }
+
   def parse(setterFn: Operation => Unit): Operation = {
-    val operationName         = parseName()
-    val messages: Seq[String] = collect(ast, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
-    val request               = messages.head
-    val response              = messages.last
-    val operation = parseStreamingMetadata() match {
-      case (false, false) => buildOperation(operationName, "post", request, response)
-      case (true, false)  => buildOperation(operationName, "publish", request, response)
-      case (false, true)  => buildOperation(operationName, "subscribe", request, response)
-      case (true, true)   => buildOperation(operationName, "pubsub", request, response)
-    }
-    parseOptions(ast, operation)
+    val operationName               = parseName()
+    val (requestName, responseName) = parseMessageTypes()
+    val operationType               = determineOperationType()
+    val operation                   = buildOperation(operationName, operationType, requestName, responseName)
+    parseOptions(operation)
     setterFn(operation)
     operation
   }
 
-  def parseOptions(ast: Node, operation: Operation): Unit = {
+  private def parseOptions(operation: Operation): Unit = {
     collectOptions(
       ast,
       Seq(OPTION_STATEMENT),
-      extension => operation.withCustomDomainProperty(extension)
+      ex => {
+        val extensions = operation.customDomainProperties :+ ex
+        operation set (extensions, toAnnotations(ast)) as OperationModel.CustomDomainProperties
+      }
     )
+  }
+
+  private def parseMessageTypes(): (String, String) = {
+    val messages = collect(ast, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
+    (messages.head, messages.last)
+  }
+
+  private def determineOperationType(): String = {
+    val (streamRequest, streamResponse) = parseStreamingMetadata()
+    (streamRequest, streamResponse) match {
+      case (false, false) => OperationType.POST
+      case (true, false)  => OperationType.PUBLISH
+      case (false, true)  => OperationType.SUBSCRIBE
+      case (true, true)   => OperationType.PUBSUB
+    }
   }
 
   private def buildOperation(
       operationName: String,
       operationType: String,
-      request: String,
-      response: String
+      requestName: String,
+      responseName: String
   ): Operation = {
-    val operation =
-      Operation(toAnnotations(ast)).withName(operationName).withOperationId(operationName).withMethod(operationType)
-    val requestBody = parseObjectRange(ast, request)
+    val ann       = toAnnotations(ast)
+    val operation = Operation(ann).withName(operationName, ann)
+    operation set (operationName, ann) as OperationModel.OperationId
+    operation set (operationType, ann) as OperationModel.Method
+
+
+    val request = createRequest(requestName, ann)
+    operation set AmfArray(Seq(request), ann) as OperationModel.Request
+
+    val response = createResponse(responseName, ann)
+    operation set AmfArray(Seq(response), ann) as OperationModel.Responses
+
     operation
-      .withRequest()
-      .withPayload(Some(Mimes.`application/grpc`))
-      .withSchema(requestBody)
-    val responseBody = parseObjectRange(ast, response)
-    operation
-      .withResponse("")
-      .withPayload(Some(Mimes.`application/protobuf`))
-      .withSchema(responseBody)
-    operation
+  }
+
+  private def createRequest(name: String, ann: Annotations): Request = {
+    val request = Request(ann)
+    val payload = Payload(ann)
+    payload set (Mimes.`application/grpc`, ann) as PayloadModel.MediaType
+    val schema = parseObjectRange(ast, name)
+    payload set schema as PayloadModel.Schema
+    val payloads = request.payloads :+ payload
+    request set (payloads, ann) as RequestModel.Payloads
+    request
+  }
+
+  private def createResponse(name: String, ann: Annotations): Response = {
+    val response = Response(ann)
+    val payload  = Payload(ann)
+    payload set (Mimes.`application/protobuf`, ann) as PayloadModel.MediaType
+    val schema = parseObjectRange(ast, name)
+    payload set schema as PayloadModel.Schema
+    val payloads = response.payloads :+ payload
+    response set (payloads, ann) as ResponseModel.Payloads
+    response
   }
 
   private def parseStreamingMetadata(): (Boolean, Boolean) = {

@@ -19,4 +19,8 @@ class GrpcMultiPlatformValidationsTest extends MultiPlatformReportGenTest with M
     validate("invalid-import.proto", Some("invalid-import.report"), configOverride = Some(config))
   }
 
+  test("Invalid import format should not be handled correctly") {
+    validate("invalid-import-format.proto", Some("invalid-import-format.report"), configOverride = Some(config))
+  }
+
 }

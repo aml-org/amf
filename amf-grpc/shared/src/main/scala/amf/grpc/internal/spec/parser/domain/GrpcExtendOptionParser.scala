@@ -1,6 +1,8 @@
 package amf.grpc.internal.spec.parser.domain
 
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
@@ -14,16 +16,19 @@ case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext
     parseExtensionFields(domain, setterFn)
   }
 
-  def parseExtensionFields(domain: String, setterFn: CustomDomainProperty => Unit): Unit = {
+  private def parseExtensionFields(domain: String, setterFn: CustomDomainProperty => Unit): Unit = {
     collect(ast, Seq(FIELD)).foreach { case fieldElement: Node =>
-      val customDomainProperty = CustomDomainProperty(toAnnotations(ast))
+      val ann                  = toAnnotations(fieldElement)
+      val customDomainProperty = CustomDomainProperty(ann)
+      val propertyShape        = GrpcFieldParser(fieldElement)(ctx).parse { _ => () }
+      customDomainProperty set AmfScalar(
+        propertyShape.serializationOrder.value(),
+        ann
+      ) as CustomDomainPropertyModel.SerializationOrder
+      customDomainProperty set AmfArray(Seq(AmfScalar(domain, ann)), ann) as CustomDomainPropertyModel.Domain
+      customDomainProperty set propertyShape.range as CustomDomainPropertyModel.Schema
+      customDomainProperty.withName(propertyShape.name.value(), ann)
       setterFn(customDomainProperty)
-      val propertyShape = GrpcFieldParser(fieldElement)(ctx).parse { _ => }
-      customDomainProperty
-        .withSerializationOrder(propertyShape.serializationOrder.value())
-        .withDomain(Seq(domain))
-        .withSchema(propertyShape.range)
-        .withName(propertyShape.name.value())
     }
   }
 

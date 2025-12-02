@@ -14,7 +14,6 @@
 "http://anypoint.com/vocabs/mcp#Server",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
-"http://a.ml/vocabularies/core#name": "test-mcp-server",
 "http://a.ml/vocabularies/core#protocolVersion": "2024-11-05",
 "http://a.ml/vocabularies/core#transport": {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport"
@@ -39,9 +38,7 @@
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/prompts/0"
 }
-],
-"http://a.ml/vocabularies/core#introspectedAt": "Thu Jun 05 09:38:22 PDT 2025",
-"http://a.ml/vocabularies/core#connectionStatus": "success"
+]
 },
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/transport",
@@ -51,7 +48,7 @@
 "http://a.ml/vocabularies/core#transport",
 "http://a.ml/vocabularies/document#JsonLDObject"
 ],
-"http://anypoint.com/vocabs/agents#kind": "streamableHttp"
+"http://anypoint.com/vocabs/mcp#kind": "streamableHttp"
 },
 {
 "@id": "file://amf-mcp/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities",

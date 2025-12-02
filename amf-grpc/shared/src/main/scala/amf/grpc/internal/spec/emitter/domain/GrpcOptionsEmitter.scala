@@ -12,9 +12,9 @@ case class GrpcOptionsEmitter(domainExtension: DomainExtension, builder: StringD
     emitExtension(builder)
   }
 
-  val name = domainExtension.name.value()
+  val name: String = domainExtension.name.value()
 
-  def emitExtension(builder: StringDocBuilder): Unit = {
+  private def emitExtension(builder: StringDocBuilder): Unit = {
     val prefix = if (isDefaultOption) {
       s"option $name ="
     } else {
@@ -32,7 +32,7 @@ case class GrpcOptionsEmitter(domainExtension: DomainExtension, builder: StringD
     emitOptionData(prefix, builder, domainExtension.extension)
   }
 
-  def emitOptionData(prefix: String, builder: StringDocBuilder, node: DataNode, eol: String = ""): Unit = {
+  private def emitOptionData(prefix: String, builder: StringDocBuilder, node: DataNode, eol: String = ""): Unit = {
     node match {
       case node: ScalarNode =>
         node.dataType.option().getOrElse(DataType.String) match {
@@ -45,18 +45,18 @@ case class GrpcOptionsEmitter(domainExtension: DomainExtension, builder: StringD
           f.obj { o =>
             o.list { l =>
               node.allPropertiesWithName() foreach { case (k, v) =>
-                emitOptionData(s"${k}: ", l, v)
+                emitOptionData(s"$k: ", l, v)
               }
             }
           }
-          f += ("}")
+          f += "};"
         }
     }
   }
 
-  def isDefaultOption = DEFAULT_OPTIONS.contains(name)
+  private def isDefaultOption = DEFAULT_OPTIONS.contains(name)
 
-  val DEFAULT_OPTIONS = Set(
+  private val DEFAULT_OPTIONS = Set(
     "allow_alias",
     "cc_enable_arenas",
     "cc_generic_services",
@@ -88,6 +88,7 @@ case class GrpcOptionsEmitter(domainExtension: DomainExtension, builder: StringD
     "ruby_package",
     "swift_prefix",
     "uninterpreted_option",
-    "weak"
+    "weak",
+    "targets"
   )
 }
