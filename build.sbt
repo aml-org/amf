@@ -79,14 +79,21 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "commons-collections", name = "commons-collections"),
       ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind")
     ),
-    libraryDependencies += "org.apache.avro" % "avro" % "1.11.4" excludeAll (
+    libraryDependencies += "org.apache.avro" % "avro" % "1.11.5" excludeAll (
       ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-core"),
-      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind")
+      ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind"),
+      ExclusionRule(organization = "org.apache.commons", name = "commons-lang3")
     ),
-    libraryDependencies += "org.json"                   % "json"                 % "20250107",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.18.2",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.18.2",
-    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.4",
+    // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
+    libraryDependencies += "org.json"                   % "json"                 % "20250517",
+    // Added because of exclusion in org.apache.avro:avro
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.20.1",
+    // Added because of exclusion in org.apache.avro:avro and com.github.everit-org.json-schema:org.everit.json.schema
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.20.1",
+    // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
+    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.5.0",
+    // Added because of exclusion in org.apache.avro:avro
+    libraryDependencies += "org.apache.commons"         % "commons-lang3"        % "3.20.0",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
@@ -271,7 +278,7 @@ lazy val graphqlJS =
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-MCP *********************************************
- */
+  */
 
 lazy val mcp = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -306,7 +313,7 @@ lazy val mcpJS =
 //    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-AGENT-NETWORK *********************************************
- */
+  */
 
 lazy val agentNetwork = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -319,7 +326,7 @@ lazy val agentNetwork = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
-    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-network-javadoc.jar",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-network-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
@@ -340,7 +347,7 @@ lazy val agentNetworkJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-AGENT-CARD *********************************************
- */
+  */
 
 lazy val agentCard = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -374,7 +381,7 @@ lazy val agentCardJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-OTHER-CARD *********************************************
- */
+  */
 
 lazy val otherCard = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -408,7 +415,7 @@ lazy val otherCardJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-AGENT-METADATA *********************************************
- */
+  */
 
 lazy val agentMetadata = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -421,7 +428,7 @@ lazy val agentMetadata = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
-    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-metadata-javadoc.jar",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-metadata-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
@@ -442,7 +449,7 @@ lazy val agentMetadataJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF-LLM-METADATA *********************************************
- */
+  */
 
 lazy val llmMetadata = crossProject(JSPlatform, JVMPlatform)
   .settings(
@@ -455,7 +462,7 @@ lazy val llmMetadata = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
-    Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-llm-metadata-javadoc.jar",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-llm-metadata-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
