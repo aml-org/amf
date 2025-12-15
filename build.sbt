@@ -84,13 +84,14 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "com.fasterxml.jackson.core", name = "jackson-databind"),
       ExclusionRule(organization = "org.apache.commons", name = "commons-lang3")
     ),
-    libraryDependencies += "org.json"                   % "json"                 % "20250107",
-    // Added because of exclusion in org.apache.avro:avro
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.18.2",
-    // Added because of exclusion in org.apache.avro:avro and com.github.everit-org.json-schema:org.everit.json.schema
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.18.2",
     // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
-    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.4",
+    libraryDependencies += "org.json"                   % "json"                 % "20250517",
+    // Added because of exclusion in org.apache.avro:avro
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.20.1",
+    // Added because of exclusion in org.apache.avro:avro and com.github.everit-org.json-schema:org.everit.json.schema
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.20.1",
+    // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
+    libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.5.0",
     // Added because of exclusion in org.apache.avro:avro
     libraryDependencies += "org.apache.commons"         % "commons-lang3"        % "3.20.0",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
