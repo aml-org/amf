@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.agentnetwork.client.scala.AgentNetworkConfiguration
 import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration}
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.common.transform.PipelineId
@@ -25,6 +26,8 @@ class YamlAnchorsValidationTest
 
   private val ramlConfig = RAMLConfiguration.RAML10().withParsingOptions(ParsingOptions().setMaxYamlReferences(50))
   private val oasConfig  = OASConfiguration.OAS20().withParsingOptions(ParsingOptions().setMaxYamlReferences(50))
+  private val agentConfig =
+    AgentNetworkConfiguration.AgentNetwork().withParsingOptions(ParsingOptions().setMaxYamlReferences(50))
 
   private val baseSchema =
     SyncJsonSchemaCompiler
@@ -231,6 +234,22 @@ class YamlAnchorsValidationTest
 
     for {
       parseResult <- client.parseJsonLDInstance(file, baseSchema)
+      unit        <- Future.successful { parseResult.baseUnit }
+      _           <- client.validate(unit)
+      _           <- Future(client.transform(unit, PipelineId.Editing))
+    } yield {
+      // Size is not 1 in the error in JsonLdInstance, the paths in the arrays are independent, so they start failing in cascade
+      assertThresholdViolationMessage(parseResult.results)
+    }
+  }
+
+  test("AgentNetwork parsing with anchors") {
+
+    val file   = "file://amf-cli/shared/src/test/resources/validations/agent-anchors.yaml"
+    val client = agentConfig.baseUnitClient()
+
+    for {
+      parseResult <- client.parse(file)
       unit        <- Future.successful { parseResult.baseUnit }
       _           <- client.validate(unit)
       _           <- Future(client.transform(unit, PipelineId.Editing))
