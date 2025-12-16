@@ -1,0 +1,28 @@
+schemaVersion: 1.0.0
+label: Verification YAML Bomb
+
+a: &a [ "lol","lol","lol","lol","lol","lol","lol","lol","lol" ]
+b: &b [ *a,*a,*a,*a,*a,*a,*a,*a,*a ]
+c: &c [ *b,*b,*b,*b,*b,*b,*b,*b,*b ]
+d: &d [ *c,*c,*c,*c,*c,*c,*c,*c,*c ]
+e: &e [ *d,*d,*d,*d,*d,*d,*d,*d,*d ]
+f: &f [ *e,*e,*e,*e,*e,*e,*e,*e,*e ]
+g: &g [ *f,*f,*f,*f,*f,*f,*f,*f,*f ]
+h: &h [ *g,*g,*g,*g,*g,*g,*g,*g,*g ]
+i: &i [ *h,*h,*h,*h,*h,*h,*h,*h,*h ]
+
+connections:
+  bomb-connection:
+    kind: llm
+    ref:
+      name: open-ai
+    spec:
+      url: |-
+        https://example.com
+      configuration:
+        bomb_data: *i
+llmProviders:
+  open-ai:
+    label: OpenAI
+    metadata:
+      platform: OpenAI
