@@ -5,6 +5,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.context.EntityContextBuilder
 import amf.core.client.scala.parse.document.{ParserContext, SyamlParsedDocument}
 import amf.core.internal.parser.Root
+import amf.core.internal.utils.AliasCounter
 import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.model.domain.jsonldinstance.{JsonLDArray, JsonLDObject}
@@ -22,7 +23,7 @@ class JsonLDSchemaNativeParser(ctx: ParserContext) {
 
   def parse(root: Root, jsonSchema: Document): JsonLDInstanceDocument = {
     val node    = root.parsed.asInstanceOf[SyamlParsedDocument].document.node
-    val builder = getRootBuilder(node, jsonSchema)
+    val builder = getRootBuilder(node, jsonSchema, ctx)
 
     val ctxBuilder = new EntityContextBuilder()
     val element    = builder.build(ctxBuilder)._1
@@ -35,7 +36,7 @@ class JsonLDSchemaNativeParser(ctx: ParserContext) {
     instance
   }
 
-  private def getRootBuilder(node: YNode, jsonSchema: Document): JsonLDElementBuilder = {
+  private def getRootBuilder(node: YNode, jsonSchema: Document, ctx: ParserContext): JsonLDElementBuilder = {
     val shape: Shape = jsonSchema.encodes match {
       case s: Shape => s
       case other =>
@@ -44,7 +45,12 @@ class JsonLDSchemaNativeParser(ctx: ParserContext) {
     }
 
     JsonLDSchemaNodeParser(shape, node, "encodes", JsonPath.empty, isRoot = true)(
-      new JsonLDParserContext(ctx.eh, validatorFactory = ConfigValidatorFactory, options = ctx.parsingOptions)
+      new JsonLDParserContext(
+        ctx.eh,
+        validatorFactory = ConfigValidatorFactory,
+        options = ctx.parsingOptions,
+        refsCounter = AliasCounter(ctx.parsingOptions.getMaxYamlReferences)
+      )
     ).parse()
   }
 }

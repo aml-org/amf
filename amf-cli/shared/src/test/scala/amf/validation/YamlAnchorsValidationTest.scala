@@ -9,7 +9,10 @@ import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
+import amf.shapes.client.scala.config.JsonLDSchemaConfiguration
+import amf.shapes.client.scala.model.document.JsonSchemaDocument
 import amf.shapes.client.scala.model.domain.ScalarShape
+import amf.shapes.internal.helper.SyncJsonSchemaCompiler
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
 
@@ -22,6 +25,17 @@ class YamlAnchorsValidationTest
 
   private val ramlConfig = RAMLConfiguration.RAML10().withParsingOptions(ParsingOptions().setMaxYamlReferences(50))
   private val oasConfig  = OASConfiguration.OAS20().withParsingOptions(ParsingOptions().setMaxYamlReferences(50))
+
+  private val baseSchema =
+    SyncJsonSchemaCompiler
+      .compile("""{"$schema":"http://json-schema.org/draft-07/schema#","type":"object"""")
+      .baseUnit
+      .asInstanceOf[JsonSchemaDocument]
+  private val jsonLdSchemaConfig =
+    JsonLDSchemaConfiguration
+      .JsonLDSchema()
+      .withParsingOptions(ParsingOptions().setMaxYamlReferences(50))
+      .withJsonLDSchema(baseSchema)
 
   test("payload validation") {
 
@@ -210,9 +224,29 @@ class YamlAnchorsValidationTest
     }
   }
 
+  test("JsonLdInstance parsing with anchors") {
+
+    val file   = "file://amf-cli/shared/src/test/resources/validations/yaml-anchors.yaml"
+    val client = jsonLdSchemaConfig.baseUnitClient()
+
+    for {
+      parseResult <- client.parseJsonLDInstance(file, baseSchema)
+      unit        <- Future.successful { parseResult.baseUnit }
+      _           <- client.validate(unit)
+      _           <- Future(client.transform(unit, PipelineId.Editing))
+    } yield {
+      // Size is not 1 in the error in JsonLdInstance, the paths in the arrays are independent, so they start failing in cascade
+      assertThresholdViolationMessage(parseResult.results)
+    }
+  }
+
   private def assertThresholdViolation(results: Seq[AMFValidationResult]): Assertion = {
     assert(results.size == 1)
-    assert(results.head.message == "Exceeded maximum yaml references threshold")
+    assertThresholdViolationMessage(results)
+  }
+
+  private def assertThresholdViolationMessage(results: Seq[AMFValidationResult]): Assertion = {
+    assert(results.forall(_.message == "Exceeded maximum yaml references threshold"))
   }
 
 }

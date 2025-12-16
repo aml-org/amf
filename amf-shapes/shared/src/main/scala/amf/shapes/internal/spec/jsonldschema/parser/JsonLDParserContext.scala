@@ -5,6 +5,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.ErrorHandlingContext
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
+import amf.core.internal.utils.AliasCounter
 import amf.core.internal.validation.core.ValidationSpecification
 import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model._
@@ -16,7 +17,8 @@ class JsonLDParserContext(
     val eh: AMFErrorHandler,
     val yValueCache: RenderedYValues = RenderedYValues(),
     val validatorFactory: ValidatorFactory,
-    val options: ParsingOptions
+    val options: ParsingOptions,
+    val refsCounter: AliasCounter
 ) extends ErrorHandlingContext
     with ParseErrorHandler
     with IllegalTypeHandler {
