@@ -154,18 +154,51 @@
           }
         },
         "configuration": {
-          "type": "object",
-          "properties": {
-            "model": {
-              "type": "string",
-              "description": "The name of the model to use"
+          "oneOf": [
+            {
+              "title": "Use OpenAI model",
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "The name of the model to use"
+                },
+                "openAI": {
+                  "$ref": "#/definitions/OpenAISettings"
+                }
+              },
+              "required": [
+                "model",
+                "openAI"
+              ],
+              "additionalProperties": false
             },
-            "openAI" : {
-              "$ref": "#/definitions/OpenAISettings"
+            {
+              "title": "Use Gemini Model",
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "The name of the model to use"
+                },
+                "gemini": {
+                  "$ref": "#/definitions/GeminiSettings"
+                }
+              },
+              "required": [
+                "model",
+                "gemini"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "The name of the model to use"
+                }
+              },
+              "required": ["model"],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "model"
           ]
         }
       }
@@ -201,6 +234,41 @@
         "maxOutputTokens": {
           "type": "integer",
           "description": "Maximum number of tokens to generate"
+        }
+      }
+    },
+    "GeminiSettings": {
+      "description": "Gemini specific configuration settings",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thinkingLevel": {
+          "type": "string",
+          "enum": [
+            "LOW",
+            "HIGH"
+          ],
+          "description": "The level of thoughts tokens that the model should generate."
+        },
+        "thinkingBudget": {
+          "type": "number",
+          "description": "Indicates the thinking budget in tokens. 0 is DISABLED. -1 is AUTOMATIC. The default values and allowed ranges are model dependent."
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Controls the degree of randomness in token selection. Lower temperatures are good for prompts that require a less open-ended or creative response, while higher temperatures can lead to more diverse or creative results."
+        },
+        "topP": {
+          "type": "number",
+          "description": "Tokens are selected from the most to least probable until the sum of their probabilities equals this value. Use a lower value for less random responses and a higher value for more random responses."
+        },
+        "responseLogprobs": {
+          "type": "boolean",
+          "description": "Whether to return the log probabilities of the tokens that were chosen by the model at each step"
+        },
+        "maxOutputTokens": {
+          "type": "integer",
+          "description": "Maximum number of tokens that can be generated in the response"
         }
       }
     },
@@ -457,7 +525,8 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "value"
+        "kind",
+        "apiKey"
       ],
       "properties": {
         "kind": {
@@ -899,6 +968,7 @@
         "platform": {
           "type": "string",
           "enum": [
+            "Gemini",
             "OpenAI",
             "AzureOpenai"
           ]
