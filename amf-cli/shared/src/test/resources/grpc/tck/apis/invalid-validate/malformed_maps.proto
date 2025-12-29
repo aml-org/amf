@@ -1,0 +1,12 @@
+syntax = "proto3";
+message TestMessage {
+  map map_message = 1;
+  map<string> str_map = 2;
+  map<string,> str_map2 = 3;
+  map<,string> str_map3 = 4;
+  map<> empty_map = 5;
+  map<string,string str_map6 = 6;
+}
+extend SomeMessage {
+  map<int32, int32> int_map = 1;
+}

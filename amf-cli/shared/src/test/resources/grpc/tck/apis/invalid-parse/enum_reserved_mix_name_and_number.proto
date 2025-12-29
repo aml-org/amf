@@ -1,0 +1,5 @@
+syntax = "proto3";
+enum TestEnum {
+  FOO = 1;
+  reserved 10, "foo";
+}

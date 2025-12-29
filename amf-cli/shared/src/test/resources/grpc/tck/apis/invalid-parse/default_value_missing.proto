@@ -1,0 +1,4 @@
+syntax = "proto3";
+message TestMessage {
+  optional uint32 foo = 1 [default=];
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Foo {
+  int32 field = 1;
+}
+
+extend Foo {
+  int32 extension_field = 100;
+}

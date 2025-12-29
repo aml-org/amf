@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message Foo {
+  reserved "field";
+  int32 field = 1;
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package foo;
+
+message OuterMessage {
+  message MiddleMessage {
+    message InnerMessage {
+      int32 deep_value = 1;
+    }
+    
+    InnerMessage inner = 1;
+    string middle_value = 2;
+  }
+  
+  MiddleMessage middle = 1;
+  string outer_value = 2;
+}
+
+message AnotherMessage {
+  OuterMessage.MiddleMessage.InnerMessage nested_reference = 1;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package foo;
+
+
+message DeprecatedMessage {
+  string value = 1;
+  option deprecated = true;
+}
+message MessageWithOptions {
+  string value = 1;
+  option deprecated = false;
+}

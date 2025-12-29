@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package foo;
+
+
+message MethodRequest {
+  string query = 1;
+}
+message MethodResponse {
+  string result = 1;
+}
+service OptionsService {
+  rpc DeprecatedMethod(MethodRequest) returns (MethodResponse) {
+    option deprecated = true;
+  }
+  rpc IdempotentMethod(MethodRequest) returns (MethodResponse) {
+    option idempotency_level = "IDEMPOTENT";
+  }
+  rpc NoSideEffectsMethod(MethodRequest) returns (MethodResponse) {
+    option idempotency_level = "NO_SIDE_EFFECTS";
+  }
+  option deprecated = true;
+}

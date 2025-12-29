@@ -1,0 +1,4 @@
+syntax = "proto3";
+service TestService {
+  rpc Foo(int32) returns (string);
+}

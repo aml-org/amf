@@ -1,0 +1,31 @@
+// 1. Replaces syntax = "proto3"
+edition = "2023";
+
+package my.new.api;
+
+// 2. You can set global feature defaults for the whole file
+option features.field_presence = IMPLICIT; // Proto3 behavior (default)
+option features.enum_type = OPEN;         // Proto3 behavior (default)
+
+message UserProfile {
+  // 3. New 'field_presence' feature:
+  // You can bring back "REQUIRED" for specific fields safely.
+  string id = 1 [features.field_presence = LEGACY_REQUIRED];
+
+  // 4. This field follows the file-level 'IMPLICIT' (standard proto3)
+  string display_name = 2;
+
+  // 5. Explicitly requesting "EXPLICIT" presence (like 'optional' in proto3)
+  // This ensures 'has_email()' is generated in your code.
+  string email = 3 [features.field_presence = EXPLICIT];
+}
+
+message StatusUpdate {
+  // 6. Control wire-format encoding per field
+  // You can force a field to be 'PACKED' or 'EXPANDED' explicitly.
+  repeated int32 tags = 1 [features.repeated_field_encoding = PACKED];
+
+  // 7. Language-specific features (e.g., C++ performance)
+  // (Requires importing the specific feature set)
+  // string internal_note = 2 [features.(pb.cpp).string_type = VIEW];
+}

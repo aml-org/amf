@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package foo;
+
+
+enum RangedReservedEnum {
+  reserved 50 to 100;
+  reserved 2 to 10;
+  RANGED_UNKNOWN = 0;
+  RANGED_VALUE1 = 1;
+  RANGED_VALUE11 = 11;
+  RANGED_VALUE101 = 101;
+}

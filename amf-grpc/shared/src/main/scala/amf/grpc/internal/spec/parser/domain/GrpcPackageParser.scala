@@ -11,7 +11,7 @@ import org.mulesoft.antlrast.ast.{ASTNode, Node}
 
 class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val ann: Annotations = toAnnotations(ast)
-  val webApi: WebApi = WebApi(ann)
+  val webApi: WebApi   = WebApi(ann)
 
   def parse(): WebApi = {
     parseName() match {
@@ -19,7 +19,9 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
         doc.withPkg(pkg, annotations)
         webApi.withName(pkg, annotations)
       case _ =>
-        astError("Missing protobuf3 package statement", ann)
+        // package statement is not required (protoc doesn't consider it as an error)
+        // astError("Missing protobuf3 package statement", ann)
+        doc.withPkg("default", Annotations.synthesized())
         webApi.withName(ctx.rootContextDocument.split("/").last, ann)
     }
     collectOptions(

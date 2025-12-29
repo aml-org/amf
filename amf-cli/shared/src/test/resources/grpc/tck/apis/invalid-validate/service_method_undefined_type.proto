@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Request {
+  string query = 1;
+}
+
+service MyService {
+  rpc Method(Request) returns (UndefinedResponse);
+}

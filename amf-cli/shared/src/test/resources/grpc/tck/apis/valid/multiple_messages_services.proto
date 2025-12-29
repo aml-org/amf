@@ -1,0 +1,28 @@
+syntax = "proto3";
+package foo;
+
+
+message Request1 {
+  string query = 1;
+}
+
+message Response1 {
+  string result = 1;
+}
+
+message Request2 {
+  int32 id = 1;
+}
+
+message Response2 {
+  bool success = 1;
+}
+
+service Service1 {
+  rpc Method1(Request1) returns (Response1);
+  rpc Method2(Request2) returns (Response2);
+}
+
+service Service2 {
+  rpc AnotherMethod(Request1) returns (Response2);
+}

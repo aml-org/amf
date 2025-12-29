@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message Outer {
+  message Inner {
+    int32 value = 1;
+  }
+  
+  enum Inner {
+    INNER_UNKNOWN = 0;
+  }
+}

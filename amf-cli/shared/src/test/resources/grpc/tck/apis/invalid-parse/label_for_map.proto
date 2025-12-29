@@ -1,0 +1,7 @@
+syntax = "proto3";
+message TestMessage {
+  optional map<int32, int32> int_map = 1;
+  required map<int32, int32> int_map2 = 2;
+  repeated map<int32, int32> int_map3 = 3;
+  optional map map_message = 4;
+}

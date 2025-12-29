@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Key {
+  string value = 1;
+}
+
+message Foo {
+  map<Key, string> map_field = 1;
+}

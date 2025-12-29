@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message Foo {
+  map<double, string> map_field = 1;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package foo;
+
+
+message StreamRequest {
+  int32 id = 1;
+}
+message StreamResponse {
+  string data = 1;
+  int32 sequence = 2;
+}
+service StreamingService {
+  rpc ServerStream(StreamRequest) returns (stream StreamResponse) {}
+  rpc ClientStream(stream StreamRequest) returns (StreamResponse) {}
+  rpc BidirectionalStream(stream StreamRequest) returns (stream StreamResponse) {}
+}

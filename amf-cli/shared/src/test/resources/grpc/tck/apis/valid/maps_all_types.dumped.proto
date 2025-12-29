@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package foo;
+
+
+message MapTypes {
+  map<int32,string> int_to_string = 1;
+  map<int64,string> int64_to_string = 2;
+  map<uint32,string> uint32_to_string = 3;
+  map<uint64,string> uint64_to_string = 4;
+  map<sint32,string> sint32_to_string = 5;
+  map<sint64,string> sint64_to_string = 6;
+  map<fixed32,string> fixed32_to_string = 7;
+  map<fixed64,string> fixed64_to_string = 8;
+  map<sfixed32,string> sfixed32_to_string = 9;
+  map<sfixed64,string> sfixed64_to_string = 10;
+  map<bool,string> bool_to_string = 11;
+  map<string,string> string_to_string = 12;
+  map<string,int32> string_to_int = 13;
+  map<string,NestedMessage> string_to_message = 14;
+  map<string,NestedEnum> string_to_enum = 15;
+}
+message NestedMessage {
+  string value = 1;
+}
+enum NestedEnum {
+  NESTED_UNKNOWN = 0;
+  NESTED_VALUE = 1;
+}

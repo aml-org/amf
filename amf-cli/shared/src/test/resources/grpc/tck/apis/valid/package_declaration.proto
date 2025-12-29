@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package com.example.test;
+
+message PackagedMessage {
+  string value = 1;
+}
+
+service PackagedService {
+  rpc GetData(PackagedMessage) returns (PackagedMessage);
+}

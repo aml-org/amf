@@ -1,0 +1,15 @@
+syntax = "proto3";
+package foo;
+
+
+enum DeprecatedEnum {
+  option deprecated = true;
+  DEPRECATED_UNKNOWN = 0;
+  DEPRECATED_VALUE = 1;
+}
+
+enum EnumWithDeprecatedValue {
+  VALUE_UNKNOWN = 0;
+  VALUE_ACTIVE = 1;
+  VALUE_OLD = 2 [deprecated = true];
+}

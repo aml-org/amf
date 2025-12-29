@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package com.example;
+
+
+message FileOptionsMessage {
+  string value = 1;
+}
+option java_package = "com.example.generated";
+option java_outer_classname = "TestProtos";
+option java_multiple_files = true;
+option optimize_for = "SPEED";
+option go_package = "example.com/test";
+option cc_enable_arenas = true;

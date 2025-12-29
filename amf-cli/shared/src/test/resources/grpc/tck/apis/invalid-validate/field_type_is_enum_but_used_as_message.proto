@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+enum Status {
+  UNKNOWN = 0;
+  OK = 1;
+}
+
+message Foo {
+  repeated Status.value field = 1;
+}

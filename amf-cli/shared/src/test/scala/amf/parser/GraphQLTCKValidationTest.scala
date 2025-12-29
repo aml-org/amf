@@ -4,9 +4,9 @@ class GraphQLTCKValidationTest extends GraphQLValidationTest {
   override def basePath: String = "amf-cli/shared/src/test/resources/graphql/tck/apis"
 
   // Test valid APIs
-  fs.syncFile(s"$basePath/valid").list.foreach { api =>
-    ignore(s"GraphQL TCK > Apis > Valid > $api: should conform") { assertConforms(s"$basePath/valid/$api") }
-  }
+//  fs.syncFile(s"$basePath/valid").list.foreach { api =>
+//    ignore(s"GraphQL TCK > Apis > Valid > $api: should conform") { assertConforms(s"$basePath/valid/$api") }
+//  }
 
   // Test invalid APIs
   fs.syncFile(s"$basePath/invalid")

@@ -1,0 +1,6 @@
+syntax = "proto3";
+message TestMessage {
+  optional int32 foo;
+  !invalid statement ending in a block { blah blah { blah } blah }
+  optional int32 bar = 3 {}
+}

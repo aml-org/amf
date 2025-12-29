@@ -1,0 +1,5 @@
+syntax = "proto3";
+message Baz {}
+service Foo {
+  rpc Bar(Baz) returns(Baz) { option invalid syntax; }
+}

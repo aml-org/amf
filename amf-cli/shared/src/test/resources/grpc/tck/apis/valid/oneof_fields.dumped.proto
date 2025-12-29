@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package foo;
+
+
+message OneofFields {
+  oneof test_oneof {
+    string name = 1;
+    int32 id = 2;
+    NestedMessage message = 3;
+    NestedEnum enum_value = 4;
+  }
+  string other_field = 5;
+  oneof another_oneof {
+    bool flag = 6;
+    bytes data = 7;
+  }
+}
+message NestedMessage {
+  int32 value = 1;
+}
+enum NestedEnum {
+  NESTED_UNKNOWN = 0;
+  NESTED_VALUE = 1;
+}

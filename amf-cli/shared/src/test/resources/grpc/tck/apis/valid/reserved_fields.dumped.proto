@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package foo;
+
+
+message ReservedMessage {
+  int32 field1 = 1;
+  int32 field3 = 3;
+  int32 field8 = 8;
+  int32 field12 = 12;
+  reserved "foo";
+  reserved "bar";
+  reserved 2;
+  reserved 15;
+  reserved 9 to 11;
+}
+enum ReservedEnum {
+  reserved "OLD_NAME";
+  reserved "DEPRECATED";
+  reserved 2;
+  reserved 15;
+  reserved 9 to 11;
+  RESERVED_UNKNOWN = 0;
+  VALUE1 = 1;
+  VALUE3 = 3;
+}

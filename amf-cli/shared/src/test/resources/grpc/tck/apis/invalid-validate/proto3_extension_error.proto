@@ -1,0 +1,5 @@
+syntax = "proto3";
+message Foo { 
+  extensions 100 to 199;
+}
+extend Foo { string foo = 101; }

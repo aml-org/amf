@@ -1,0 +1,561 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "foo"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": []
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#package": [
+      {
+        "@value": "foo"
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.11.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "Grpc"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/source-map/grpc-raw-proto/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "syntax = \"proto3\";\npackage foo;\n\n\nimport \"google/protobuf/any.proto\";\nimport \"google/protobuf/timestamp.proto\";\nimport \"google/protobuf/duration.proto\";\nimport \"google/protobuf/empty.proto\";\nimport \"google/protobuf/struct.proto\";\nimport \"google/protobuf/wrappers.proto\";\n\nmessage WellKnownTypesMessage {\n  google.protobuf.Any any_field = 1;\n  google.protobuf.Timestamp timestamp_field = 2;\n  google.protobuf.Duration duration_field = 3;\n  google.protobuf.Empty empty_field = 4;\n  google.protobuf.Struct struct_field = 5;\n  google.protobuf.Value value_field = 6;\n  google.protobuf.ListValue list_value_field = 7;\n  google.protobuf.Int32Value int32_wrapper = 8;\n  google.protobuf.StringValue string_wrapper = 9;\n  google.protobuf.BoolValue bool_wrapper = 10;\n}\n"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/any_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/any_field/any/google.protobuf.Any",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/any_field/any/google.protobuf.Any/any/google.protobuf.Any"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Any"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Any"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "any_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/timestamp_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/timestamp_field/scalar/google.protobuf.Timestamp",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/timestamp_field/scalar/google.protobuf.Timestamp/scalar/google.protobuf.Timestamp"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Timestamp"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Timestamp"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 2
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "timestamp_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/duration_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/duration_field/scalar/google.protobuf.Duration",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/duration_field/scalar/google.protobuf.Duration/scalar/google.protobuf.Duration"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Duration"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Duration"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 3
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "duration_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/empty_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/empty_field/shape/google.protobuf.Empty",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/empty_field/shape/google.protobuf.Empty/shape/google.protobuf.Empty"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Empty"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Empty"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 4
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "empty_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/struct_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/struct_field/shape/google.protobuf.Struct",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/struct_field/shape/google.protobuf.Struct/shape/google.protobuf.Struct"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Struct"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Struct"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 5
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "struct_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/value_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/value_field/any/google.protobuf.Value",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/value_field/any/google.protobuf.Value/any/google.protobuf.Value"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Value"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Value"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 6
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "value_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/list_value_field",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/list_value_field/shape/google.protobuf.ListValue",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/list_value_field/shape/google.protobuf.ListValue/shape/google.protobuf.ListValue"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.ListValue"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.ListValue"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 7
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "list_value_field"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/int32_wrapper",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/int32_wrapper/scalar/google.protobuf.Int32Value",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/int32_wrapper/scalar/google.protobuf.Int32Value/scalar/google.protobuf.Int32Value"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.Int32Value"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.Int32Value"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 8
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "int32_wrapper"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/string_wrapper",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/string_wrapper/scalar/google.protobuf.StringValue",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/string_wrapper/scalar/google.protobuf.StringValue/scalar/google.protobuf.StringValue"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.StringValue"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.StringValue"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 9
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "string_wrapper"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/bool_wrapper",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/bool_wrapper/scalar/google.protobuf.BoolValue",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/grpc/tck/apis/valid/well_known_types.proto#/declares/shape/.foo.WellKnownTypesMessage/property/property/bool_wrapper/scalar/google.protobuf.BoolValue/scalar/google.protobuf.BoolValue"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "google.protobuf.BoolValue"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "google.protobuf.BoolValue"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#serializationOrder": [
+              {
+                "@value": 10
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "bool_wrapper"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": ".foo.WellKnownTypesMessage"
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "WellKnownTypesMessage"
+          }
+        ]
+      }
+    ]
+  }
+]

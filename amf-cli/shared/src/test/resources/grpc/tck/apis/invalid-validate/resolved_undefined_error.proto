@@ -1,0 +1,6 @@
+package foo.base;
+import "base.proto";
+message qux {
+  optional base.bar baz = 1;
+  optional .base.bar quz = 2;
+}
