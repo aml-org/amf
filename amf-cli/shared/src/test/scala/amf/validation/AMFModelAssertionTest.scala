@@ -3,18 +3,18 @@ package amf.validation
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, SecurityScheme}
-import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
+import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement, ScalarNode, Shape}
-import amf.core.internal.annotations.{DeclaredElement, Inferred, TrackedElement, VirtualElement, VirtualNode}
+import amf.core.internal.annotations.{DeclaredElement, Inferred, VirtualElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Mimes
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{AVROSchemaType, BaseVirtualNode, TargetName}
+import amf.shapes.internal.annotations.{AVROSchemaType, BaseVirtualNode, InlinedFrom, TargetName}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.AMFModelTest
 import amf.testing.BaseUnitUtils._
@@ -877,6 +877,22 @@ class AMFModelAssertionTest extends AMFModelTest {
         // check that the example is tracked by the header, works with or without transformation in 1st or 2nd parse
         schemaExampleAnnotations.isTrackedBy(header.id) shouldBe true
       }
+    }
+  }
+
+  test("OAS 2 API should have an effective-target link to response") {
+    val api = s"$basePath/oas2/request-ref.yaml"
+    oas2Client.parse(api) flatMap { parseResult =>
+      parseResult.results.size shouldBe 1
+      val responses = getFirstOperation(parseResult.baseUnit).responses
+
+      val normalResponse = responses.head
+      val normalPayload = normalResponse.payloads.head
+      normalPayload.schema.annotations.find(classOf[InlinedFrom]).isDefined shouldBe false
+
+      val defaultResponse = responses.last
+      val payload = defaultResponse.payloads.head
+      payload.schema.annotations.find(classOf[InlinedFrom]).isDefined shouldBe true
     }
   }
 }
