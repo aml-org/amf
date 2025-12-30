@@ -1,7 +1,9 @@
 package amf.shapes.internal.annotations
 
 import amf.core.client.scala.model.domain._
-import org.yaml.model.{YMapEntry, YPart}
+import org.yaml.model.{YMapEntry, YPart, YScalar}
+
+case class InlinedFrom(source: YScalar) extends PerpetualAnnotation
 
 case class InlineDefinition() extends Annotation
 
