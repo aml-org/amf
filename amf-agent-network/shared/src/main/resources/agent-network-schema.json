@@ -607,6 +607,152 @@
         }
       }
     },
+    "OAuth2TokenExchangeAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2TokenExchangeAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "OAuth 2.0 Token Exchange (RFC 8693)",
+      "description": "Exchanges incoming bearer token for a new token targeting an upstream service using OAuth 2.0 Token Exchange (RFC 8693).",
+      "required": [
+        "kind",
+        "clientId",
+        "clientSecret",
+        "tokenEndpoint",
+        "targetValue"
+      ],
+      "properties": {
+        "kind": {
+          "const": "oauth2-token-exchange",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The OAuth2 client ID for token exchange."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The OAuth2 client secret for token exchange."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "The OAuth2 token endpoint URL (must support RFC 8693 Token Exchange)."
+        },
+        "targetType": {
+          "type": "string",
+          "enum": [
+            "audience",
+            "resource"
+          ],
+          "default": "audience",
+          "description": "The parameter type for specifying the target service (audience for logical name, resource for physical URI)."
+        },
+        "targetValue": {
+          "type": "string",
+          "description": "The target audience URI or resource URI for the exchanged token."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Optional OAuth2 scope to request for the exchanged token."
+        },
+        "timeout": {
+          "type": "integer",
+          "default": 10000,
+          "description": "Timeout for token exchange requests in milliseconds."
+        }
+      }
+    },
+    "InTaskAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#InTaskAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "In-Task Authentication",
+      "description": "Handles in-task authentication for A2A agents. Extracts OAuth2 tokens from the message metadata, moves them to the Authorization header, and forwards to upstream. Returns auth challenges when no token found.",
+      "required": [
+        "kind",
+        "authorizationEndpoint",
+        "tokenEndpoint",
+        "scopes",
+        "redirectUri"
+      ],
+      "properties": {
+        "kind": {
+          "const": "in-task-auth",
+          "type": "string"
+        },
+        "secondaryAuthProvider": {
+          "type": "string",
+          "default": "",
+          "description": "Name of the IdP provider (e.g., 'okta', 'auth0'). Used for informational purposes in the authentication card."
+        },
+        "authorizationEndpoint": {
+          "type": "string",
+          "description": "OAuth2 authorization endpoint URL (e.g., 'https://domain/oauth2/v1/authorize'). Required for generating the authentication challenge."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "OAuth2 token endpoint URL (e.g., 'https://domain/oauth2/v1/token'). Required for generating the authentication challenge."
+        },
+        "scopes": {
+          "type": "string",
+          "description": "Space or comma separated list of OAuth2 scopes required for step-up authentication (e.g., 'openid profile email transaction:execute')."
+        },
+        "redirectUri": {
+          "type": "string",
+          "description": "OAuth2 redirect URI that the client will use in the authorization flow."
+        },
+        "responseType": {
+          "type": "string",
+          "default": "code",
+          "description": "OAuth2 response type. Typically 'code' for authorization code flow."
+        },
+        "codeChallengeMethod": {
+          "type": "string",
+          "default": "S256",
+          "description": "PKCE code challenge method. Typically 'S256' for SHA-256."
+        },
+        "tokenAudience": {
+          "type": "string",
+          "description": "OAuth2 token audience. The intended recipient of the token (e.g., 'https://hr-a2a-agent.example.com')."
+        },
+        "bodyEncoding": {
+          "type": "string",
+          "default": "form",
+          "description": "Encoding format for token request body. Typically 'form' for application/x-www-form-urlencoded."
+        },
+        "tokenTimeout": {
+          "type": "integer",
+          "default": 300,
+          "description": "Timeout in seconds for token requests."
+        },
+        "userIdHeader": {
+          "type": "string",
+          "default": "X-User-Id",
+          "description": "Header name containing the user ID for user context propagation."
+        },
+        "userEmailHeader": {
+          "type": "string",
+          "default": "X-User-Email",
+          "description": "Header name containing the user email for user context propagation."
+        },
+        "challengeResponseStatusCode": {
+          "type": "integer",
+          "default": 200,
+          "description": "HTTP status code to return for auth-required challenge responses. Typically 200 to maintain JSON-RPC compatibility."
+        }
+      }
+    },
     "Authentication": {
       "@context": {
         "@type": [
@@ -626,6 +772,12 @@
         },
         {
           "$ref": "#/definitions/APIKeyAuth"
+        },
+        {
+          "$ref": "#/definitions/OAuth2TokenExchangeAuth"
+        },
+        {
+          "$ref": "#/definitions/InTaskAuth"
         }
       ]
     },
