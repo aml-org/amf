@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message Foo {
+  int32 field1 = 1 [json_name = "custom"];
+  int32 field2 = 2 [json_name = "custom"];
+}

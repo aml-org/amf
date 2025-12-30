@@ -14,9 +14,9 @@ class GraphQLFederationTCKParsingTest extends GraphQLFederationFunSuiteCycleTest
         cycle(api, api.replace(".graphql", ".jsonld"), GraphQLFederationHint, AmfJsonHint)
       }
 
-      ignore(s"GraphQL Federation TCK > Apis > Valid > $api: dumped GraphQL matches golden") {
-        cycle(api, api.replace(".graphql", ".dumped.graphql"), GraphQLFederationHint, GraphQLFederationHint)
-      }
+//      ignore(s"GraphQL Federation TCK > Apis > Valid > $api: dumped GraphQL matches golden") {
+//        cycle(api, api.replace(".graphql", ".dumped.graphql"), GraphQLFederationHint, GraphQLFederationHint)
+//      }
     }
   }
 }

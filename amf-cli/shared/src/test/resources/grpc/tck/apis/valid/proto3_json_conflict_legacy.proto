@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package foo;
+
+message TestMessage {
+  option deprecated_legacy_json_field_conflicts = true;
+  uint32 fooBar = 1;
+  uint32 foo_bar = 2;
+}

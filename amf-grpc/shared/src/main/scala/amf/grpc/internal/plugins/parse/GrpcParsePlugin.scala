@@ -46,7 +46,7 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
         path(root, Seq(SYNTAX)) match {
           case Some(syntaxNode: Node) =>
             syntaxNode.children.exists {
-              case t: Terminal => t.value == "\"proto3\""
+              case t: Terminal => t.value == "\"proto3\"" || t.value == "'proto3'"
               case _           => false
             }
           case _ => false

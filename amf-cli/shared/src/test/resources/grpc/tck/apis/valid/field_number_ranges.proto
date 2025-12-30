@@ -1,0 +1,12 @@
+syntax = "proto3";
+package foo;
+
+
+message FieldNumberRanges {
+  int32 field1 = 1;
+  int32 field536870911 = 536870911;
+  int32 field_mid_range = 12345;
+  reserved 19000 to 19999;
+  int32 field_before_reserved = 18999;
+  int32 field_after_reserved = 20000;
+}

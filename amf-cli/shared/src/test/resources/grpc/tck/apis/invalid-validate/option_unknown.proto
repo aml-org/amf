@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message Foo {
+  option unknown_option = true;
+  int32 field = 1;
+}

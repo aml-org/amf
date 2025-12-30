@@ -1,0 +1,11 @@
+syntax = "proto3";
+package foo;
+
+
+message Foo {
+  int32 field = 1;
+}
+
+enum Status {
+  FOO = 0;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package foo;
+
+message ComplexNested {
+  message Inner {
+    enum Status {
+      STATUS_UNKNOWN = 0;
+      STATUS_OK = 1;
+      STATUS_ERROR = 2;
+    }
+    
+    message DeepInner {
+      int32 value = 1;
+      Status status = 2;
+    }
+    
+    repeated DeepInner items = 1;
+    map<string, DeepInner> item_map = 2;
+  }
+  
+  Inner inner = 1;
+  repeated Inner inner_list = 2;
+  map<string, Inner> inner_map = 3;
+  
+  oneof choice {
+    Inner inner_option = 4;
+    string string_option = 5;
+  }
+}

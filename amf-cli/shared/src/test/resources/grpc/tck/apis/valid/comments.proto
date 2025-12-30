@@ -1,0 +1,23 @@
+syntax = "proto3";
+package foo;
+
+
+// Top-level comment for the file
+
+// Message comment
+message CommentedMessage {
+  // Field comment
+  string field1 = 1;
+  
+  int32 field2 = 2; // Inline comment
+  
+  /* Block comment
+     spanning multiple lines */
+  bool field3 = 3;
+}
+
+/* Service comment */
+service CommentedService {
+  // Method comment
+  rpc GetData(CommentedMessage) returns (CommentedMessage);
+}

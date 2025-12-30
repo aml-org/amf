@@ -1,0 +1,7 @@
+syntax = "proto3";
+enum TestEnum {
+  HEX_TOO_BIG   =  0x80000000;
+  HEX_TOO_SMALL = -0x80000001;
+  INT_TOO_BIG   =  2147483648;
+  INT_TOO_SMALL = -2147483649;
+}

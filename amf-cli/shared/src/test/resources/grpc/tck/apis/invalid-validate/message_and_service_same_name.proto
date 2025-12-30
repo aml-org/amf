@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message Request {
+  int32 field = 1;
+}
+
+message Conflict {
+  int32 field = 1;
+}
+
+service Conflict {
+  rpc Method(Request) returns (Request);
+}

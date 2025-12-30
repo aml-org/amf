@@ -1,0 +1,23 @@
+syntax = "proto3";
+package foo;
+
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/wrappers.proto";
+
+message WellKnownTypesMessage {
+  google.protobuf.Any any_field = 1;
+  google.protobuf.Timestamp timestamp_field = 2;
+  google.protobuf.Duration duration_field = 3;
+  google.protobuf.Empty empty_field = 4;
+  google.protobuf.Struct struct_field = 5;
+  google.protobuf.Value value_field = 6;
+  google.protobuf.ListValue list_value_field = 7;
+  google.protobuf.Int32Value int32_wrapper = 8;
+  google.protobuf.StringValue string_wrapper = 9;
+  google.protobuf.BoolValue bool_wrapper = 10;
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package foo;
+
+
+message FieldOptionsMessage {
+  string deprecated_field = 1 [deprecated = true];
+  string json_named_field = 2 [json_name = "customJsonName"];
+  string both_options = 3 [deprecated = true, json_name = "oldField"];
+}

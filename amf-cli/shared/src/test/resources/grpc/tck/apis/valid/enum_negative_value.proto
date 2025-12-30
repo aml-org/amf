@@ -1,0 +1,8 @@
+syntax = "proto3";
+package foo;
+
+
+enum NegativeEnum {
+  NEGATIVE_UNKNOWN = 0;
+  NEGATIVE_VALUE = -1;
+}

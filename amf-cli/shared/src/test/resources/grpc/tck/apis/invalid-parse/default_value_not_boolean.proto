@@ -1,0 +1,4 @@
+syntax = "proto3";
+message TestMessage {
+  optional bool foo = 1 [default=blah];
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+package foo;
+
+
+message ScalarTypes {
+  int32 int32_field = 1;
+  int64 int64_field = 2;
+  uint32 uint32_field = 3;
+  uint64 uint64_field = 4;
+  sint32 sint32_field = 5;
+  sint64 sint64_field = 6;
+  fixed32 fixed32_field = 7;
+  fixed64 fixed64_field = 8;
+  sfixed32 sfixed32_field = 9;
+  sfixed64 sfixed64_field = 10;
+  bool bool_field = 11;
+  string string_field = 12;
+  bytes bytes_field = 13;
+  float float_field = 14;
+  double double_field = 15;
+}

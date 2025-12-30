@@ -2,11 +2,8 @@ package amf.grpc.internal.spec.emitter.document
 
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.plugins.syntax.{SourceCodeBlock, StringDocBuilder}
-import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
 import amf.grpc.internal.spec.emitter.domain._
 import amf.shapes.internal.annotations.WellKnownType

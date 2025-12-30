@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package foo;
+
+import "basic_scalar_types.proto";
+import public "enums.proto";
+
+message ImportingMessage {
+  ScalarTypes scalars = 1;
+  TopLevelEnum enum_value = 2;
+}

@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message Foo {
+  oneof test_oneof {
+    repeated int32 values = 1;
+  }
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package foo;
+
+
+message TestMessage {
+  UnknownAny int32 = 1;
+  oneof _foo {
+    int32 __foo = 2;
+  }
+}
