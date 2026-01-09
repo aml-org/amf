@@ -8,13 +8,17 @@ Accepted
 
 ## Context
 
-AMF is adding support for protobuf 3 APIs. They are going to be validated with the standard `protoc` validator.
+AMF is adding support for protobuf 3 APIs in its stack:
+- Syntactic parsing Protobuf3 APIs with ANTLR using [this version](https://github.com/aml-org-emu/amf-antlr-ast/blob/master/grammars/Protobuf3.g4) of the grammar.
+- Semantic parsing with AMF using the `GRPCConfiguration`.
+- Transformation / Resolution with AMF.
+- Validation with the standard [`protoc` validator](https://github.com/protocolbuffers/protobuf).
 
 NOTES: 
-- this means that only the APIs starting with `syntax = "proto3";` will be accepted by the `GRPCConfiguration`
+- only the APIs starting with `syntax = "proto3";` will be accepted by the `GRPCConfiguration`
 - all other versions (e.g. `proto2` or the newer `edition = "2023";`) will be parsed as an `ExternalFragment`
 
-## Decisions
+## Restrictions
 
 In addition to the protoc validations, we have the following AMF validations that we require:
 - we require that the API defines a `package` property, or we add a default one
