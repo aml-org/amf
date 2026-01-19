@@ -17,6 +17,10 @@ ThisBuild / organization := "com.github.amlorg"
 ThisBuild / version      := versions("amf.apicontract")
 ThisBuild / scalaVersion := "2.12.20"
 
+ThisBuild / organizationName := "MuleSoft, Inc."
+ThisBuild / organizationHomepage := Some(url("http://www.mulesoft.com"))
+ThisBuild / licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
+
 ThisBuild / resolvers ++= List(
   ivyLocal,
   Common.releases,
