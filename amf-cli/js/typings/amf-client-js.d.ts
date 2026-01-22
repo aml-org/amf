@@ -6816,6 +6816,10 @@ declare module "amf-client-js" {
     static readonly MCP: ProfileName;
     static readonly AGENT_NETWORK: ProfileName;
     static readonly AGENT_CARD: ProfileName;
+    static readonly OTHER_CARD: ProfileName;
+    static readonly AGENT_METADATA: ProfileName;
+    static readonly LLM_METADATA: ProfileName;
+    static readonly AGENT_GRAPH: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -8962,6 +8966,10 @@ declare module "amf-client-js" {
     static readonly MCP: Spec;
     static readonly AGENT_NETWORK: Spec;
     static readonly AGENT_CARD: Spec;
+    static readonly OTHER_CARD: Spec;
+    static readonly AGENT_METADATA: Spec;
+    static readonly LLM_METADATA: Spec;
+    static readonly AGENT_GRAPH: Spec;
 
     static apply(name: string): Spec;
   }
@@ -9821,6 +9829,39 @@ declare module "amf-client-js" {
     withUnitCache(cache: UnitCache): BaseAgentNetworkConfiguration;
   }
   export class AgentNetworkBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+export class AgentGraphConfiguration extends BaseAgentGraphConfiguration {
+    static AgentGraph(): AgentGraphConfiguration;
+
+    baseUnitClient(): AgentGraphBaseUnitClient;
+  }
+
+  export class BaseAgentGraphConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentGraphConfiguration;
+
+    withErrorHandlerProvider(
+      provider: ErrorHandlerProvider
+    ): BaseAgentGraphConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentGraphConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentGraphConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentGraphConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentGraphConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentGraphConfiguration;
+
+    withTransformationPipeline(
+      pipeline: TransformationPipeline
+    ): BaseAgentGraphConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentGraphConfiguration;
+  }
+  export class AgentGraphBaseUnitClient extends AMLBaseUnitClient {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 

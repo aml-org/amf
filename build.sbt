@@ -486,12 +486,47 @@ lazy val llmMetadataJS =
     .in(file("./amf-llm-metadata/js"))
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
+/** ********************************************** AMF-AGENT-GRAPH *********************************************
+ */
+
+lazy val agentGraph = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-agent-graph"
+    )
+  )
+  .in(file("./amf-agent-graph"))
+  .settings(commonSettings)
+  .dependsOn(shapes)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-graph-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-graph.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.agent-graph"))
+
+lazy val agentGraphJVM =
+  agentGraph.jvm
+    .in(file("./amf-agent-graph/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val agentGraphJS =
+  agentGraph.js
+    .in(file("./amf-agent-graph/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+
+
 /** ********************************************** AMF CLI *********************************************
   */
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql, mcp, agentNetwork, agentCard, otherCard, agentMetadata, llmMetadata)
+  .dependsOn(grpc, graphql, mcp, agentNetwork, agentCard, otherCard, agentMetadata, llmMetadata, agentGraph)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -586,6 +621,7 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .dependsOn(otherCardJVM)
   .dependsOn(agentMetadataJVM)
   .dependsOn(llmMetadataJVM)
+  .dependsOn(agentGraphJVM)
   .disablePlugins(SonarPlugin, NpmOpsPlugin, ScoverageSbtPlugin)
 
 addCommandAlias(
