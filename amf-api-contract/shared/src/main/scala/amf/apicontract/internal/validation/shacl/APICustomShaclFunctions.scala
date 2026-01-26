@@ -13,7 +13,7 @@ import amf.apicontract.client.scala.model.domain.security.{
 }
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
-import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
+import amf.apicontract.internal.metamodel.domain.api.{BaseApiModel, WebApiModel}
 import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.metamodel.domain.security.{
   ApiKeySettingsModel,
@@ -1069,6 +1069,48 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 }
               }
             case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicateServiceName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val services     = element.asInstanceOf[WebApi].endPoints
+          val serviceNames = ListBuffer[String]()
+          services.foreach { service =>
+            val serviceName = service.name.value()
+            if (serviceNames.contains(serviceName)) {
+              validate(
+                validationInfo(
+                  WebApiModel.EndPoints,
+                  s"Duplicated service name '$serviceName'",
+                  service.name.annotations()
+                )
+              )
+            } else {
+              serviceNames += serviceName
+            }
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicateRPCName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val rpcs     = element.asInstanceOf[EndPoint].operations
+          val rpcNames = ListBuffer[String]()
+          rpcs.foreach { rpc =>
+            val rpcName = rpc.name.value()
+            if (rpcNames.contains(rpcName)) {
+              validate(
+                validationInfo(
+                  EndPointModel.Operations,
+                  s"Duplicated RPC name '$rpcName'",
+                  rpc.name.annotations()
+                )
+              )
+            } else {
+              rpcNames += rpcName
+            }
           }
         }
       }

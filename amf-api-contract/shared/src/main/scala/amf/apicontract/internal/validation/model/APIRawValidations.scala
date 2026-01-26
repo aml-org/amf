@@ -1687,6 +1687,18 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("name"),
         constraint = shape("duplicatedOptionNames"),
         severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicateServiceName"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("supportedOperation"),
+        constraint = shape("duplicateRPCName"),
+        severity = SeverityLevels.VIOLATION
       )
     )
 
