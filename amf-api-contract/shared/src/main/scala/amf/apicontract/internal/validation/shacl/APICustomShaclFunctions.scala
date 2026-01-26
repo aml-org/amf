@@ -1272,6 +1272,26 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                     seen += (name -> reserved)
                 }
               }
+
+              // Check if any property name conflicts with reserved field names
+              val reservedSet = seen.keySet
+              shape match {
+                case node: NodeShape =>
+                  node.properties.foreach { property =>
+                    property.name.option().foreach { propName =>
+                      if (reservedSet.contains(propName)) {
+                        validate(
+                          validationInfo(
+                            PropertyShapeModel.Name,
+                            s"Field name '$propName' is reserved",
+                            property.annotations
+                          )
+                        )
+                      }
+                    }
+                  }
+                case _ => // ignore
+              }
             case _ => // ignore
           }
         }
