@@ -4,3 +4,8 @@ message Foo {
   reserved 1;
   int32 field = 1;
 }
+
+enum Boo {
+  reserved 0;
+  VALUE = 0;
+}

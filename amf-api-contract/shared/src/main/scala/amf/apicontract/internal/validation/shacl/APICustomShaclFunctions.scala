@@ -1219,6 +1219,32 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                     seen += (num -> reserved)
                 }
               }
+
+              // Check if any property serializationOrder conflicts with reserved numbers
+              val reservedSet = seen.keySet
+              val propertiesToCheck: Seq[PropertyShape] = shape match {
+                case node: NodeShape =>
+                  node.properties
+                case scalar: ScalarShape =>
+                  scalar.serializationSchema match {
+                    case node: NodeShape => node.properties
+                    case _               => Seq.empty
+                  }
+                case _ => Seq.empty
+              }
+              propertiesToCheck.foreach { property =>
+                property.serializationOrder.option().foreach { order =>
+                  if (reservedSet.contains(order)) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.SerializationOrder,
+                        s"Field number '$order' is reserved",
+                        property.annotations
+                      )
+                    )
+                  }
+                }
+              }
             case _ => // ignore
           }
         }
