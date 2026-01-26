@@ -1016,7 +1016,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               enumValues.groupBy(identity).filter(_._2.size > 1).foreach { case (value, _) =>
                 validate(
                   validationInfo(
-                    PropertyShapeModel.Default,
+                    PropertyShapeModel.Values,
                     s"Duplicated enum value '$value''",
                     scalar.annotations
                   )
@@ -1035,11 +1035,37 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               enumValues.groupBy(identity).filter(_._2.size > 1).foreach { case (value, _) =>
                 validate(
                   validationInfo(
-                    PropertyShapeModel.Default,
+                    PropertyShapeModel.Name,
                     s"Duplicated field name '$value''",
                     obj.annotations
                   )
                 )
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedFieldNumber"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              val serializationNumbers = ListBuffer[Int]()
+              obj.properties.foreach {
+                p =>
+                  p.serializationOrder.option() match {
+                    case Some(n) =>
+                      if (serializationNumbers.contains(n)) {
+                        validate(
+                          validationInfo(
+                            PropertyShapeModel.SerializationOrder,
+                            s"Duplicated field number '$n''",
+                            p.annotations
+                          )
+                        )
+                      } else serializationNumbers += n
+                    case None =>
+                  }
               }
             case _ => // ignore
           }
