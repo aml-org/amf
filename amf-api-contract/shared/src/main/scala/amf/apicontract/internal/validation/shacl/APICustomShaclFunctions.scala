@@ -39,6 +39,7 @@ import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.grpc.Reserved
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.annotations.{DirectiveArguments, ParsedJSONSchema}
 import amf.shapes.internal.domain.metamodel._
@@ -1176,7 +1177,39 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             case _ => // ignore
           }
         }
-      }
+      },
+      new CustomShaclFunction {
+        override val name: String = "reservedNumberValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case shape: AnyShape =>
+              val reservedNumbers = shape.reservedValues.flatMap { reserved =>
+                Option(reserved.range) match {
+                  case Some(range) if range.from.option().isDefined && range.to.option().isDefined =>
+                    (range.from.value() to range.to.value()).map(n => (n, reserved))
+                  case _ =>
+                    reserved.number.option().map(n => (n, reserved)).toSeq
+                }
+              }
+              val seen = scala.collection.mutable.Map[Int, Reserved]()
+              reservedNumbers.foreach { case (num, reserved) =>
+                seen.get(num) match {
+                  case Some(_) =>
+                    validate(
+                      validationInfo(
+                        AnyShapeModel.ReservedValues,
+                        s"Reserved value '$num' overlaps with another reserved declaration",
+                        reserved.annotations
+                      )
+                    )
+                  case None =>
+                    seen += (num -> reserved)
+                }
+              }
+            case _ => // ignore
+          }
+        }
+      },
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {

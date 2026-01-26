@@ -1713,7 +1713,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("emptyEnum"),
         message = "Enum definitions must have at least one value",
         severity = SeverityLevels.VIOLATION
-      )
+      ),
+      AMFValidation(
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("reservedValues"),
+        constraint = shape("reservedNumberValidations"), // gRPC enums have always a serializationSchema with the numbers
+        severity = SeverityLevels.VIOLATION
+      ),
     )
 
     override def validations(): Seq[AMFValidation] = result

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+enum Foo {
+  VALUEF = 0;
+  reserved 1 to 5;
+  reserved 5 to 10;
+}
+
+enum Boo {
+  VALUEB = 0;
+  reserved 1 to 5;
+  reserved 4, 5, 6;
+}
