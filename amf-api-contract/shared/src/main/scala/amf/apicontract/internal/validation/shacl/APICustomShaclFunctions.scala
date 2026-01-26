@@ -1186,7 +1186,20 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               val reservedNumbers = shape.reservedValues.flatMap { reserved =>
                 Option(reserved.range) match {
                   case Some(range) if range.from.option().isDefined && range.to.option().isDefined =>
-                    (range.from.value() to range.to.value()).map(n => (n, reserved))
+                    val from = range.from.value()
+                    val to = range.to.value()
+                    if (from > to) {
+                      validate(
+                        validationInfo(
+                          AnyShapeModel.ReservedValues,
+                          s"Invalid reserved range: start value '$from' is greater than end value '$to'",
+                          reserved.annotations
+                        )
+                      )
+                      Seq.empty
+                    } else {
+                      (from to to).map(n => (n, reserved))
+                    }
                   case _ =>
                     reserved.number.option().map(n => (n, reserved)).toSeq
                 }
