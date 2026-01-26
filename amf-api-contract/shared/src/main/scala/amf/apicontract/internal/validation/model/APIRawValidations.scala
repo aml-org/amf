@@ -1657,7 +1657,15 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object GrpcValidations extends ProfileValidations {
-    private lazy val result                        = Seq()
+    private lazy val result = Seq(
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("name"),
+        constraint = shape("duplicatedCustomJsonName"),
+        severity = SeverityLevels.VIOLATION
+      )
+    )
+
     override def validations(): Seq[AMFValidation] = result
   }
 

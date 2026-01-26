@@ -84,4 +84,28 @@ class GrpcInvalidParseTCKTest extends GrpcFunSuiteCycleTest {
   }
 }
 
-// TODO: add GrpcInvalidValidateTCKTest after validation is done
+class GrpcInvalidValidateTCKTest extends GrpcFunSuiteCycleTest {
+  override def basePath: String = s"amf-cli/shared/src/test/resources/grpc/tck/apis/invalid-validate/"
+
+  val client: AMFBaseUnitClient = GRPCConfiguration.GRPC().baseUnitClient()
+
+  def assertValidation(api: String): Future[Assertion] = {
+    val client = GRPCConfiguration.GRPC().baseUnitClient()
+    for {
+      parsing  <- client.parse(s"file://$api")
+      validate <- client.validate(parsing.baseUnit)
+    } yield {
+      // Some of the validations are implemented in parsing, so we need to check both
+      assert(!parsing.conforms || !validate.conforms)
+    }
+  }
+
+  /** parse, transform, validate and cycle invalid APIs */
+
+  // validate invalid APIs
+  fs.syncFile(s"$basePath").list.foreach { api =>
+    if (api.endsWith(".proto") && !api.endsWith(".dumped.proto")) {
+      test(s"Grpc TCK > Apis > invalid > $api: should not conform") { assertValidation(s"$basePath/$api") }
+    }
+  }
+}

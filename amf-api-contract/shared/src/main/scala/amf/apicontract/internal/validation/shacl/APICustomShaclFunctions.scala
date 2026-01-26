@@ -47,6 +47,8 @@ import amf.shapes.internal.validation.shacl.{BaseCustomShaclFunctions, ShapesCus
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo.validationInfo
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
 
+import scala.collection.mutable.ListBuffer
+
 object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   override protected[amf] val listOfFunctions: Seq[CustomShaclFunction] =
@@ -947,6 +949,39 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                   element.annotations
                 )
               )
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedCustomJsonName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              val jsonNames = ListBuffer[String]()
+              obj.properties.foreach { p =>
+                val jsonNameExtension =
+                  p.customDomainProperties.find(e => e.name.nonEmpty && e.name.value() == "json_name")
+                jsonNameExtension match {
+                  case Some(extension) =>
+                    extension.extension match {
+                      case scalar: ScalarNode =>
+                        val name = scalar.value.value()
+                        if (jsonNames.contains(name)) {
+                          validate(
+                            validationInfo(
+                              PropertyShapeModel.Name,
+                              s"Duplicated json_name value '$name'",
+                              extension.extension.annotations
+                            )
+                          )
+                        } else jsonNames += name
+                      case _ => // ignore
+                    }
+                  case None => // ignore
+                }
+
+              }
+            case _ => // ignore
           }
         }
       }
