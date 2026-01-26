@@ -1703,9 +1703,17 @@ object APIRawValidations extends CommonValidationDefinitions {
       AMFValidation(
         owlClass = shape("ScalarShape"),
         owlProperty = shape("serializationSchema"),
-        constraint = shape("enumNumberValidations"),  // gRPC enums have always a serializationSchema with the numbers
+        constraint = shape("enumNumberValidations"), // gRPC enums have always a serializationSchema with the numbers
         severity = SeverityLevels.VIOLATION
       ),
+      AMFValidation(
+        uri = amfParser("empty-enum"),
+        owlClass = shape("ScalarShape"),
+        owlProperty = shape("values"),
+        constraint = shape("emptyEnum"),
+        message = "Enum definitions must have at least one value",
+        severity = SeverityLevels.VIOLATION
+      )
     )
 
     override def validations(): Seq[AMFValidation] = result
