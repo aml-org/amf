@@ -1699,7 +1699,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = apiContract("supportedOperation"),
         constraint = shape("duplicateRPCName"),
         severity = SeverityLevels.VIOLATION
-      )
+      ),
+      AMFValidation(
+        owlClass = shape("ScalarShape"),
+        owlProperty = shape("serializationSchema"),
+        constraint = shape("enumNumberValidations"),  // gRPC enums have always a serializationSchema with the numbers
+        severity = SeverityLevels.VIOLATION
+      ),
     )
 
     override def validations(): Seq[AMFValidation] = result

@@ -1027,7 +1027,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "duplicatedFieldNumber"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           element match {
-            case obj: NodeShape =>
+            case obj: NodeShape
+                if obj.name.nonEmpty => // the name check is to avoid validating the serializationSchema of an Enum here
               val serializationNumbers = ListBuffer[Int]()
               obj.properties.foreach { p =>
                 p.serializationOrder.option() match {
@@ -1113,6 +1114,68 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             }
           }
         }
+      },
+      new CustomShaclFunction {
+        override val name: String = "enumNumberValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val enum = element.asInstanceOf[ScalarShape]
+          val allowAlias = getExtensionByName("allow_alias", enum).flatMap(getExtensionScalarValue) match {
+            case Some("true") => true
+            case Some("false") =>
+              validate(
+                validationInfo(
+                  ScalarShapeModel.SerializationSchema,
+                  s"Setting 'allow_alias' to false has no effect",
+                  enum.annotations
+                )
+              )
+              false
+            case _ => false
+          }
+          enum.serializationSchema match {
+            case shape: NodeShape =>
+              val serializationNumbers = ListBuffer[Int]()
+              shape.properties.zipWithIndex.foreach { case (property, index) =>
+                val serializationOrder =
+                  property.serializationOrder.value() // I can assume that the serializationOrder is always defined
+                if (index == 0 && serializationOrder != 0) {
+                  validate(
+                    validationInfo(
+                      ScalarShapeModel.SerializationSchema,
+                      s"First enum value must be 0",
+                      property.annotations
+                    )
+                  )
+                }
+                if (serializationNumbers.contains(serializationOrder)) {
+                  if (!allowAlias) {
+                    validate(
+                      validationInfo(
+                        ScalarShapeModel.SerializationSchema,
+                        s"Duplicated enum number '$serializationOrder'",
+                        property.annotations
+                      )
+                    )
+                  }
+                  // add the number to the list anyway because will need it to check if there are aliases
+                  serializationNumbers += serializationOrder
+                } else {
+                  serializationNumbers += serializationOrder
+                }
+              }
+              val existsAliasNumbers = serializationNumbers.groupBy(identity).exists(_._2.size > 1)
+              if (!existsAliasNumbers && allowAlias) {
+                validate(
+                  validationInfo(
+                    ScalarShapeModel.SerializationSchema,
+                    s"'allow_alias' option is unnecessary for enum with no aliases",
+                    enum.annotations
+                  )
+                )
+              }
+            case _ => // ignore
+          }
+        }
       }
     )
 
@@ -1168,5 +1231,10 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
   private def getExtensionsByName(name: String, element: DomainElement): Seq[DomainExtension] = {
     element.customDomainProperties.filter(e => e.name.nonEmpty && e.name.value() == name)
+  }
+
+  private def getExtensionScalarValue(extension: DomainExtension): Option[String] = extension.extension match {
+    case scalar: ScalarNode => Some(scalar.value.value())
+    case _                  => None
   }
 }
