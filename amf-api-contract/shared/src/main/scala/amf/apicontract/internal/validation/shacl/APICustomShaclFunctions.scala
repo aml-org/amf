@@ -1017,8 +1017,27 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 validate(
                   validationInfo(
                     PropertyShapeModel.Default,
-                    s"Duplicated enum value $value",
+                    s"Duplicated enum value '$value''",
                     scalar.annotations
+                  )
+                )
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedPropertyName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              val enumValues = obj.properties.map(_.name.value())
+              enumValues.groupBy(identity).filter(_._2.size > 1).foreach { case (value, _) =>
+                validate(
+                  validationInfo(
+                    PropertyShapeModel.Default,
+                    s"Duplicated field name '$value''",
+                    obj.annotations
                   )
                 )
               }
