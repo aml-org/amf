@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-import "invalid-validate/cyclic_dependency_other.proto";
-
-message Foo {
-  Bar bar = 1;
-}

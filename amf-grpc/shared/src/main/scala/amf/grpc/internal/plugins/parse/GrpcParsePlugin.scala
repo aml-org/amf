@@ -72,4 +72,6 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
   }
 
   override def withIdAdoption: Boolean = true
+
+  override def allowRecursiveReferences: Boolean = false
 }
