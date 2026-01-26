@@ -986,28 +986,6 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         }
       },
       new CustomShaclFunction {
-        override val name: String = "duplicatedCustomDefault"
-        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
-          val extensionName = "default"
-          element match {
-            case obj: NodeShape =>
-              obj.properties.foreach { p =>
-                val defaultExtensions = getExtensionsByName(extensionName, p)
-                if (defaultExtensions.size > 1) {
-                  validate(
-                    validationInfo(
-                      PropertyShapeModel.Default,
-                      s"Duplicated default",
-                      defaultExtensions.head.annotations
-                    )
-                  )
-                }
-              }
-            case _ => // ignore
-          }
-        }
-      },
-      new CustomShaclFunction {
         override val name: String = "duplicatedEnumValue"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           element match {
@@ -1051,21 +1029,44 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case obj: NodeShape =>
               val serializationNumbers = ListBuffer[Int]()
-              obj.properties.foreach {
-                p =>
-                  p.serializationOrder.option() match {
-                    case Some(n) =>
-                      if (serializationNumbers.contains(n)) {
-                        validate(
-                          validationInfo(
-                            PropertyShapeModel.SerializationOrder,
-                            s"Duplicated field number '$n''",
-                            p.annotations
-                          )
+              obj.properties.foreach { p =>
+                p.serializationOrder.option() match {
+                  case Some(n) =>
+                    if (serializationNumbers.contains(n)) {
+                      validate(
+                        validationInfo(
+                          PropertyShapeModel.SerializationOrder,
+                          s"Duplicated field number '$n''",
+                          p.annotations
                         )
-                      } else serializationNumbers += n
-                    case None =>
+                      )
+                    } else serializationNumbers += n
+                  case None =>
+                }
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedOptionNames"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val optionsToValidate = List("default", "json_name")
+          element match {
+            case obj: NodeShape =>
+              obj.properties.foreach { p =>
+                val optionGroups = optionsToValidate.map(o => o -> getExtensionsByName(o, p))
+                optionGroups.foreach { optionsMap =>
+                  if (optionsMap._2.size > 1) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.Default,
+                        s"Duplicated option '${optionsMap._1}'",
+                        optionsMap._2.head.annotations
+                      )
+                    )
                   }
+                }
               }
             case _ => // ignore
           }
