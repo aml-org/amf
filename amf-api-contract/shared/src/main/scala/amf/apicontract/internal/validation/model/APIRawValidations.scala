@@ -1717,7 +1717,13 @@ object APIRawValidations extends CommonValidationDefinitions {
       AMFValidation(
         owlClass = shape("AnyShape"),
         owlProperty = shape("reservedValues"),
-        constraint = shape("reservedNumberValidations"), // gRPC enums have always a serializationSchema with the numbers
+        constraint = shape("reservedNumberValidations"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("reservedValues"),
+        constraint = shape("reservedFieldNameValidations"),
         severity = SeverityLevels.VIOLATION
       ),
     )

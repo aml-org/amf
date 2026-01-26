@@ -1249,6 +1249,33 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           }
         }
       },
+      new CustomShaclFunction {
+        override val name: String = "reservedFieldNameValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case shape: AnyShape =>
+              val reservedNames = shape.reservedValues.flatMap { reserved =>
+                reserved.fieldName.option().map(name => (name, reserved))
+              }
+              val seen = scala.collection.mutable.Map[String, Reserved]()
+              reservedNames.foreach { case (name, reserved) =>
+                seen.get(name) match {
+                  case Some(_) =>
+                    validate(
+                      validationInfo(
+                        AnyShapeModel.ReservedValues,
+                        s"Reserved field name '$name' is duplicated",
+                        reserved.annotations
+                      )
+                    )
+                  case None =>
+                    seen += (name -> reserved)
+                }
+              }
+            case _ => // ignore
+          }
+        }
+      }
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {

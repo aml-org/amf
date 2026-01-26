@@ -85,7 +85,7 @@ class GrpcInvalidParseTCKTest extends GrpcFunSuiteCycleTest {
 }
 
 class GrpcInvalidValidateTCKTest extends GrpcFunSuiteCycleTest {
-  override def basePath: String = s"amf-cli/shared/src/test/resources/grpc/tck/apis/test/test"
+  override def basePath: String = s"amf-cli/shared/src/test/resources/grpc/tck/apis/invalid-validate/"
 
   val client: AMFBaseUnitClient = GRPCConfiguration.GRPC().baseUnitClient()
 
