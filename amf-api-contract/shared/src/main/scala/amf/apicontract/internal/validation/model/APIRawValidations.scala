@@ -1663,6 +1663,12 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("name"),
         constraint = shape("duplicatedCustomJsonName"),
         severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("name"),
+        constraint = shape("duplicatedCustomDefault"),
+        severity = SeverityLevels.VIOLATION
       )
     )
 

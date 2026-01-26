@@ -323,8 +323,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case webApi: WebApi =>
               webApi.endPoints.foreach { endpoint =>
-                val path    = endpoint.path.value()
-                val pattern = """\{([^}]+)\}""".r
+                val path       = endpoint.path.value()
+                val pattern    = """\{([^}]+)\}""".r
                 val pathParams = pattern.findAllMatchIn(path).map(_.group(1)).toList
                 pathParams.foreach { pathParam =>
                   val operationsParams = endpoint.operations.flatMap(_.requests).flatMap(_.uriParameters)
@@ -955,12 +955,12 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       new CustomShaclFunction {
         override val name: String = "duplicatedCustomJsonName"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val extensionName = "json_name"
           element match {
             case obj: NodeShape =>
               val jsonNames = ListBuffer[String]()
               obj.properties.foreach { p =>
-                val jsonNameExtension =
-                  p.customDomainProperties.find(e => e.name.nonEmpty && e.name.value() == "json_name")
+                val jsonNameExtension = getExtensionByName(extensionName, p)
                 jsonNameExtension match {
                   case Some(extension) =>
                     extension.extension match {
@@ -980,6 +980,28 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                   case None => // ignore
                 }
 
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedCustomDefault"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val extensionName = "default"
+          element match {
+            case obj: NodeShape =>
+              obj.properties.foreach { p =>
+                val defaultExtensions = getExtensionsByName(extensionName, p)
+                if (defaultExtensions.size > 1) {
+                  validate(
+                    validationInfo(
+                      PropertyShapeModel.Default,
+                      s"Duplicated default",
+                      defaultExtensions.head.annotations
+                    )
+                  )
+                }
               }
             case _ => // ignore
           }
@@ -1033,4 +1055,11 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
     })
   }
   private def isDuplicated(elemName: String, s: Seq[NamedDomainElement]) = s.count(_.name.value() == elemName) > 1
+
+  private def getExtensionByName(name: String, element: DomainElement): Option[DomainExtension] =
+    getExtensionsByName(name, element).headOption
+
+  private def getExtensionsByName(name: String, element: DomainElement): Seq[DomainExtension] = {
+    element.customDomainProperties.filter(e => e.name.nonEmpty && e.name.value() == name)
+  }
 }
