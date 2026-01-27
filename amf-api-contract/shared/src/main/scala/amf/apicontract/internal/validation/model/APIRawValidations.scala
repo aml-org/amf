@@ -1739,7 +1739,7 @@ object APIRawValidations extends CommonValidationDefinitions {
         owlProperty = sh("property"),
         constraint = shape("FieldNameNormalizationConflict"),
         severity = SeverityLevels.VIOLATION
-      ),
+      )
     )
 
     override def validations(): Seq[AMFValidation] = result
