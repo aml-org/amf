@@ -1205,7 +1205,28 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 }
               }
               val seen = scala.collection.mutable.Map[Int, Reserved]()
+              val minFieldNumber = 0
+              val maxFieldNumber = 536870911
+              val reservedRangeStart = 19000
+              val reservedRangeEnd = 19999
+
+              def isValidFieldNumber(num: Int): Boolean =
+                num >= minFieldNumber && num <= maxFieldNumber
+
+              def isInReservedRange(num: Int): Boolean =
+                num >= reservedRangeStart && num <= reservedRangeEnd
+
               reservedNumbers.foreach { case (num, reserved) =>
+                if (!isValidFieldNumber(num)) {
+                  validate(
+                    validationInfo(
+                      AnyShapeModel.ReservedValues,
+                      s"Reserved number '$num' is out of valid range ($minFieldNumber to $maxFieldNumber)",
+                      reserved.annotations
+                    )
+                  )
+                }
+
                 seen.get(num) match {
                   case Some(_) =>
                     validate(
@@ -1234,7 +1255,23 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               }
               propertiesToCheck.foreach { property =>
                 property.serializationOrder.option().foreach { order =>
-                  if (reservedSet.contains(order)) {
+                  if (!isValidFieldNumber(order)) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.SerializationOrder,
+                        s"Field number '$order' is out of valid range ($minFieldNumber to $maxFieldNumber)",
+                        property.annotations
+                      )
+                    )
+                  } else if (isInReservedRange(order)) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.SerializationOrder,
+                        s"Field number '$order' is in the reserved range ($reservedRangeStart to $reservedRangeEnd)",
+                        property.annotations
+                      )
+                    )
+                  } else if (reservedSet.contains(order)) {
                     validate(
                       validationInfo(
                         PropertyShapeModel.SerializationOrder,
