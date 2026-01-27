@@ -26,8 +26,14 @@ case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext
         ann
       ) as CustomDomainPropertyModel.SerializationOrder
       customDomainProperty set AmfArray(Seq(AmfScalar(domain, ann)), ann) as CustomDomainPropertyModel.Domain
-      customDomainProperty set propertyShape.range as CustomDomainPropertyModel.Schema
-      customDomainProperty.withName(propertyShape.name.value(), ann)
+      Option(propertyShape.range) match {
+        case Some(range) => customDomainProperty set range as CustomDomainPropertyModel.Schema
+        case None        => // ignore
+      }
+      propertyShape.name.option() match {
+        case Some(name) => customDomainProperty.withName(name, ann)
+        case None       => // ignore
+      }
       setterFn(customDomainProperty)
     }
   }
