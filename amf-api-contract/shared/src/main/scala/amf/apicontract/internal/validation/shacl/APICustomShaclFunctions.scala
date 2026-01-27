@@ -1031,7 +1031,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             case obj: NodeShape
                 if obj.name.nonEmpty => // the name check is to avoid validating the serializationSchema of an Enum here
               val serializationNumbers = ListBuffer[Int]()
-              obj.properties.foreach { p =>
+
+              def checkProperty(p: PropertyShape): Unit = {
                 p.serializationOrder.option() match {
                   case Some(n) =>
                     if (serializationNumbers.contains(n)) {
@@ -1044,6 +1045,20 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                       )
                     } else serializationNumbers += n
                   case None =>
+                }
+              }
+
+              obj.properties.foreach { p =>
+                checkProperty(p)
+                // Also check properties inside xone (OneOf) fields
+                p.range match {
+                  case anyShape: AnyShape if anyShape.xone.nonEmpty =>
+                    anyShape.xone.foreach {
+                      case node: NodeShape =>
+                        node.properties.foreach(checkProperty)
+                      case _ => // ignore
+                    }
+                  case _ => // ignore
                 }
               }
             case _ => // ignore
@@ -1337,7 +1352,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
         override val name: String = "emptyOneOf"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           val oneOf = element.asInstanceOf[AnyShape]
-          if (oneOf.fields.exists(ShapeModel.Xone) && oneOf.or.isEmpty) validate(None)
+          if (oneOf.fields.exists(ShapeModel.Xone) && oneOf.xone.isEmpty) validate(None)
         }
       },
     )
