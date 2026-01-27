@@ -37,5 +37,5 @@ object GRPCConfiguration extends APIConfigurationBuilder {
       )
       .withValidationProfile(GrpcValidationProfile, GrpcEffectiveValidations)
       .withPlugin(SyamlForJsonLDSyntaxParsePlugin) // override SYAML
-      .withFallback(AntlrBasedDocumentsFallbackPlugin(false, false, SeverityLevels.WARNING, Spec.GRPC))
+      .withFallback(AntlrBasedDocumentsFallbackPlugin(false, false, SeverityLevels.VIOLATION, Spec.GRPC))
 }
