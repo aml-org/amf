@@ -1657,7 +1657,91 @@ object APIRawValidations extends CommonValidationDefinitions {
   }
 
   object GrpcValidations extends ProfileValidations {
-    private lazy val result                        = Seq()
+    private lazy val result = Seq(
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("name"),
+        constraint = shape("duplicatedCustomJsonName"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = shape("ScalarShape"),
+        owlProperty = sh("in"),
+        constraint = shape("duplicatedEnumValue"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("property"),
+        constraint = shape("duplicatedPropertyName"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("property"),
+        constraint = shape("duplicatedFieldNumber"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("name"),
+        constraint = shape("duplicatedOptionNames"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = apiContract("WebAPI"),
+        owlProperty = apiContract("endpoints"),
+        constraint = shape("duplicateServiceName"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = apiContract("EndPoint"),
+        owlProperty = apiContract("supportedOperation"),
+        constraint = shape("duplicateRPCName"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = shape("ScalarShape"),
+        owlProperty = shape("serializationSchema"),
+        constraint = shape("enumNumberValidations"), // gRPC enums have always a serializationSchema with the numbers
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        uri = amfParser("empty-enum"),
+        owlClass = shape("ScalarShape"),
+        owlProperty = shape("values"),
+        constraint = shape("emptyEnum"),
+        message = "Enum definitions must have at least one value",
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("reservedValues"),
+        constraint = shape("reservedNumberValidations"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = shape("AnyShape"),
+        owlProperty = shape("reservedValues"),
+        constraint = shape("reservedFieldNameValidations"),
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        uri = amfParser("empty-one-of"),
+        owlClass = shape("AnyShape"),
+        owlProperty = sh("xone"),
+        constraint = shape("emptyOneOf"),
+        message = "OneOf definitions must have at least one field",
+        severity = SeverityLevels.VIOLATION
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("property"),
+        constraint = shape("FieldNameNormalizationConflict"),
+        severity = SeverityLevels.VIOLATION
+      )
+    )
+
     override def validations(): Seq[AMFValidation] = result
   }
 

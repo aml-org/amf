@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package default;
+
+
+enum Foo {
+  option allow_alias = true;
+  VALUE1 = 0;
+  VALUE2 = 1;
+  VALUE3 = 1;
+}

@@ -1,6 +1,8 @@
 syntax = "proto3";
+
 enum Foo {
   option allow_alias = true;
-  BAR = 0;
-  BAZ = 1;
+  VALUE1 = 0;
+  VALUE2 = 1;
+  VALUE3 = 1;
 }

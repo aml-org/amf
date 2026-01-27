@@ -1,6 +1,7 @@
 package amf.grpc.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.ScopeNameConflict
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{AmfScalar, NamedDomainElement, Shape}
 import amf.core.internal.annotations.DeclaredElement
@@ -49,6 +50,13 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
         case Some(shapeName) =>
           element.withName(ctx.fullMessagePath(shapeName.value), ann)
           element set (shapeName.value, ann) as ShapeModel.DisplayName
+          // Validation for duplicated Message/Enum names
+          val name = element.name.value()
+          findType(name) match {
+            case Some(_) =>
+              ctx.eh.violation(ScopeNameConflict, element, s"'$name' is already defined in scope", element.annotations)
+            case None => // ignore
+          }
           ctx.declarations += element
           element.add(DeclaredElement())
         case None =>
@@ -154,6 +162,10 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     }
   }
 
+  protected def findType(name: String)(implicit ctx: GrpcWebApiContext): Option[AnyShape] = {
+    ctx.declarations.findType(name, SearchScope.All)
+  }
+
   private def parseScalarRange(n: ASTNode, scalarType: TypeDef, format: Option[String]): ScalarShape = {
     val ann      = toAnnotations(n)
     val scalar   = ScalarShape(ann)
@@ -166,6 +178,15 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
   private def parseIsRepeated(ast: ASTNode): Boolean = ast match {
     case node: Node =>
       find(node, REPEATED).headOption match {
+        case Some(_: Terminal) => true
+        case _                 => false
+      }
+    case _ => false
+  }
+
+  def parseIsOptional(ast: ASTNode): Boolean = ast match {
+    case node: Node =>
+      find(node, OPTIONAL).headOption match {
         case Some(_: Terminal) => true
         case _                 => false
       }

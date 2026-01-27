@@ -3,5 +3,5 @@ syntax = "proto3";
 package foo;
 
 message TestMessage {
-  int32 foo = 1;
+  optional int32 foo = 1;
 }

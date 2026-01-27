@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "invalid-validate/cyclic_dependency.proto";
+import "cyclic_dependency.proto";
 
 message Bar {
   Foo foo = 1;

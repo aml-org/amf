@@ -7,6 +7,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{FIELD_NAME, FIELD_OPTION, FIELD_OPTIONS_ELEMENTS}
+import amf.shapes.client.scala.model.domain.UnresolvedShape
 import org.mulesoft.antlrast.ast.Node
 
 case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
@@ -19,6 +20,7 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
     parseFieldNumber()
     parseFieldRange()
     parseOptions()
+    parseOptional()
     propertyShape
   }
 
@@ -29,6 +31,10 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
         propertyShape.set(PropertyShapeModel.CustomDomainProperties, AmfArray(extensions, ann), ann)
       }
     }
+  }
+
+  private def parseOptional(): Unit = if (parseIsOptional(ast)) {
+    propertyShape.setWithoutId(PropertyShapeModel.MinCount, AmfScalar(0, ann), ann)
   }
 
   def parseFieldName(): Unit = {

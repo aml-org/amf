@@ -37,6 +37,7 @@ object TokenTypes {
   val KEY_TYPE                = "keyType"
   val MAP_NAME                = "mapName"
   val REPEATED                = "REPEATED"
+  val OPTIONAL                = "OPTIONAL"
   val IDENTIFIER              = "ident"
   val KEYWORDS                = "keywords"
   val OPTION_STATEMENT        = "optionStatement"

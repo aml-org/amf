@@ -23,43 +23,47 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
 
   private def parseMessageBody(): Unit = {
     collect(ast, Seq(MESSAGE_BODY, MESSAGE_ELEMENT)).foreach { case messageElement: Node =>
-      val messageElementAst = messageElement.children.head.asInstanceOf[Node]
-      val context           = ctx.nestedMessage(nodeShape.displayName.value())
-      val ann               = toAnnotations(messageElement)
-      messageElementAst.name match {
-        case FIELD =>
-          GrpcFieldParser(messageElementAst)(context).parse(property => {
-            val newProps = nodeShape.properties :+ property
-            nodeShape set (newProps, ann) as NodeShapeModel.Properties
-          })
-        case ENUM_DEF =>
-          GrpcEnumParser(messageElementAst)(context).parse()
-        case ONE_OF =>
-          GrpcOneOfParser(messageElementAst)(context).parseAsProperty { oneOf: PropertyShape =>
-            val newProps = nodeShape.properties :+ oneOf
-            nodeShape set (newProps, ann) as NodeShapeModel.Properties
-          }
-        case MAP_FIELD =>
-          GrpcMapParser(messageElementAst)(context).parse { mapProperty: PropertyShape =>
-            val newProps = nodeShape.properties :+ mapProperty
-            nodeShape set (newProps, ann) as NodeShapeModel.Properties
-          }
-        case MESSAGE_DEF =>
-          GrpcMessageParser(messageElementAst)(context).parse()
-        case OPTION_STATEMENT =>
-          GrpcOptionParser(messageElementAst).parse { extension =>
-            val extensions = nodeShape.customDomainProperties :+ extension
-            nodeShape set (extensions, ann) as NodeShapeModel.CustomDomainProperties
-          }
-        case RESERVED =>
-          GrpcReservedValuesParser(messageElementAst).parse { reservedValues =>
-            nodeShape.withReservedValues(reservedValues, toAnnotations(messageElementAst))
+      messageElement.children.headOption match {
+        case Some(messageElementAst: Node) =>
+          val context           = ctx.nestedMessage(nodeShape.displayName.value())
+          val ann               = toAnnotations(messageElement)
+          messageElementAst.name match {
+            case FIELD =>
+              GrpcFieldParser(messageElementAst)(context).parse(property => {
+                val newProps = nodeShape.properties :+ property
+                nodeShape set (newProps, ann) as NodeShapeModel.Properties
+              })
+            case ENUM_DEF =>
+              GrpcEnumParser(messageElementAst)(context).parse()
+            case ONE_OF =>
+              GrpcOneOfParser(messageElementAst)(context).parseAsProperty { oneOf: PropertyShape =>
+                val newProps = nodeShape.properties :+ oneOf
+                nodeShape set (newProps, ann) as NodeShapeModel.Properties
+              }
+            case MAP_FIELD =>
+              GrpcMapParser(messageElementAst)(context).parse { mapProperty: PropertyShape =>
+                val newProps = nodeShape.properties :+ mapProperty
+                nodeShape set (newProps, ann) as NodeShapeModel.Properties
+              }
+            case MESSAGE_DEF =>
+              GrpcMessageParser(messageElementAst)(context).parse()
+            case OPTION_STATEMENT =>
+              GrpcOptionParser(messageElementAst).parse { extension =>
+                val extensions = nodeShape.customDomainProperties :+ extension
+                nodeShape set (extensions, ann) as NodeShapeModel.CustomDomainProperties
+              }
+            case RESERVED =>
+              GrpcReservedValuesParser(messageElementAst).parse { reservedValues =>
+                nodeShape.withReservedValues(reservedValues, toAnnotations(messageElementAst))
+              }
+            case _ =>
+              astError(
+                s"unexpected Proto3 message element ${messageElement.children.head.name}",
+                toAnnotations(messageElement.children.head)
+              )
           }
         case _ =>
-          astError(
-            s"unexpected Proto3 message element ${messageElement.children.head.name}",
-            toAnnotations(messageElement.children.head)
-          )
+          astError("missing Proto3 message element", toAnnotations(messageElement))
       }
     }
   }
