@@ -68,7 +68,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "syntax = \"proto3\";\n\npackage foo;\n\nmessage TestMessage {\n  int32 foo = 1;\n}\n"
+                "@value": "syntax = \"proto3\";\n\npackage foo;\n\nmessage TestMessage {\n  optional int32 foo = 1;\n}\n"
               }
             ]
           }
@@ -114,6 +114,11 @@
                     "@value": "int32"
                   }
                 ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
               }
             ],
             "http://a.ml/vocabularies/shapes#serializationOrder": [

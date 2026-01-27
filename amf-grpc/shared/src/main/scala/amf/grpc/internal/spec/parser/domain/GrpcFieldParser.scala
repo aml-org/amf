@@ -20,6 +20,7 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
     parseFieldNumber()
     parseFieldRange()
     parseOptions()
+    parseOptional()
     propertyShape
   }
 
@@ -30,6 +31,10 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
         propertyShape.set(PropertyShapeModel.CustomDomainProperties, AmfArray(extensions, ann), ann)
       }
     }
+  }
+
+  private def parseOptional(): Unit = if (parseIsOptional(ast)) {
+    propertyShape.setWithoutId(PropertyShapeModel.MinCount, AmfScalar(0, ann), ann)
   }
 
   def parseFieldName(): Unit = {

@@ -47,7 +47,7 @@ class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: 
   }
 
   private def buildFieldSignature(): String = {
-    s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber"
+    s"$optional$repeated${fieldRange(property.range)} $fieldName = $fieldNumber"
   }
 
   private def position: Position = pos(property.range.annotations)
@@ -57,6 +57,8 @@ class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: 
   private def fieldNumber: Int = property.serializationOrder.option().getOrElse(0)
 
   private def repeated: String = if (property.range.isInstanceOf[ArrayShape]) "repeated " else ""
+
+  private def optional: String = if (property.minCount.option().contains(0)) "optional " else ""
 
 }
 

@@ -184,6 +184,15 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
     case _ => false
   }
 
+  def parseIsOptional(ast: ASTNode): Boolean = ast match {
+    case node: Node =>
+      find(node, OPTIONAL).headOption match {
+        case Some(_: Terminal) => true
+        case _                 => false
+      }
+    case _ => false
+  }
+
   def collectOptions(ast: Node, path: Seq[String], setterFn: DomainExtension => Unit)(implicit
       ctx: GrpcWebApiContext
   ): Unit = {
