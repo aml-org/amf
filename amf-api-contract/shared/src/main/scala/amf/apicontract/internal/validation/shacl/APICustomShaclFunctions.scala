@@ -1355,6 +1355,34 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           if (oneOf.fields.exists(ShapeModel.Xone) && oneOf.xone.isEmpty) validate(None)
         }
       },
+      new CustomShaclFunction {
+        private def normalize(name: String): String = name.toLowerCase.replace("_", "")
+        override val name: String = "FieldNameNormalizationConflict"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              val propertiesWithNormalized = obj.properties.map { p =>
+                val name = p.name.value()
+                (name, normalize(name), p)
+              }
+              propertiesWithNormalized
+                .groupBy(_._2) // group by normalized name
+                .filter(_._2.size > 1) // find conflicts
+                .foreach { case (normalizedName, conflicting) =>
+                  conflicting.tail.foreach { case (originalName, _, prop) =>
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.Name,
+                        s"Field '$originalName' conflicts with field '${conflicting.head._1}' due to normalized name '$normalizedName'",
+                        prop.annotations
+                      )
+                    )
+                  }
+                }
+            case _ => // ignore
+          }
+        }
+      },
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {

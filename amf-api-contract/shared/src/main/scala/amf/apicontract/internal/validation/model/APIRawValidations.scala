@@ -1733,7 +1733,13 @@ object APIRawValidations extends CommonValidationDefinitions {
         constraint = shape("emptyOneOf"),
         message = "OneOf definitions must have at least one field",
         severity = SeverityLevels.VIOLATION
-      )
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("property"),
+        constraint = shape("FieldNameNormalizationConflict"),
+        severity = SeverityLevels.VIOLATION
+      ),
     )
 
     override def validations(): Seq[AMFValidation] = result
