@@ -2,6 +2,7 @@ package amf.grpc.internal.spec.parser.domain
 
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.internal.metamodel.domain.EndPointModel
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.ScopeNameConflict
 import amf.core.internal.parser.domain.Annotations
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
@@ -9,7 +10,7 @@ import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.Node
 
 case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
-  val ann: Annotations = toAnnotations(ast)
+  val ann: Annotations   = toAnnotations(ast)
   val endpoint: EndPoint = EndPoint(ann)
 
   def parse(setterFn: EndPoint => Unit = _ => ()): EndPoint = {
@@ -44,6 +45,17 @@ case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) ext
     path(ast, Seq(SERVICE_NAME, IDENTIFIER)) foreach { node =>
       withOptTerminal(node) {
         case Some(serviceName) =>
+          // The dot is to hack the declaration names... for some reason they are being saved with a dot prefix
+          findType(s".${serviceName.value}") match {
+            case Some(_) =>
+              ctx.eh.violation(
+                ScopeNameConflict,
+                endpoint,
+                s"'${serviceName.value}' is already defined in scope",
+                endpoint.annotations
+              )
+            case _ => // ok
+          }
           endpoint.withName(serviceName.value, toAnnotations(ast))
         case None =>
           astError("missing Protobuf3 service name", endpoint.annotations)

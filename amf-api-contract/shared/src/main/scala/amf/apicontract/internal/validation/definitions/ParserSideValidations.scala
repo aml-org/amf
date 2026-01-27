@@ -457,14 +457,9 @@ object ParserSideValidations extends Validations {
     message = "The provided binding version is not supported"
   )
 
-  val DuplicatedMessage: ValidationSpecification = validation(
-    id = "duplicated-message",
-    message = "Duplicated Message name"
-  )
-
-  val DuplicatedEnum: ValidationSpecification = validation(
-    id = "duplicated-enum",
-    message = "Duplicated Enum name"
+  val ScopeNameConflict: ValidationSpecification = validation(
+    id = "scope-name-conflict",
+    message = "Name is already defined in scope"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(

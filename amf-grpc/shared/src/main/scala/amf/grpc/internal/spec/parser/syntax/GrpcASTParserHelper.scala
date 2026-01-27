@@ -1,7 +1,7 @@
 package amf.grpc.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedEnum, DuplicatedMessage}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.ScopeNameConflict
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{AmfScalar, NamedDomainElement, Shape}
 import amf.core.internal.annotations.DeclaredElement
@@ -54,12 +54,7 @@ trait GrpcASTParserHelper extends AntlrASTParserHelper {
           val name = element.name.value()
           findType(name) match {
             case Some(_) =>
-              element match {
-                case _: ScalarShape =>
-                  ctx.eh.violation(DuplicatedEnum, element, s"Duplicated Enum name $name", element.annotations)
-                case _ =>
-                  ctx.eh.violation(DuplicatedMessage, element, s"Duplicated Message name $name", element.annotations)
-              }
+              ctx.eh.violation(ScopeNameConflict, element, s"'$name' is already defined in scope", element.annotations)
             case None => // ignore
           }
           ctx.declarations += element
