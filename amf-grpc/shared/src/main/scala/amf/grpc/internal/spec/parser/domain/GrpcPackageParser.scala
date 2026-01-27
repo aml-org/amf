@@ -14,6 +14,10 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
   val webApi: WebApi   = WebApi(ann)
 
   def parse(): WebApi = {
+    // validate multiple package statements
+    if (collect(ast, Seq(PACKAGE_STATEMENT)).size > 1) {
+      astError("Multiple protobuf3 package statements", ann)
+    }
     parseName() match {
       case Some((pkg, annotations)) =>
         doc.withPkg(pkg, annotations)
