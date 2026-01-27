@@ -1332,7 +1332,14 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
             case _ => // ignore
           }
         }
-      }
+      },
+      new CustomShaclFunction {
+        override val name: String = "emptyOneOf"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val oneOf = element.asInstanceOf[AnyShape]
+          if (oneOf.fields.exists(ShapeModel.Xone) && oneOf.or.isEmpty) validate(None)
+        }
+      },
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {
