@@ -1202,7 +1202,7 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                 Option(reserved.range) match {
                   case Some(range) if range.from.option().isDefined && range.to.option().isDefined =>
                     val from = range.from.value()
-                    val to = range.to.value()
+                    val to   = range.to.value()
                     if (from > to) {
                       validate(
                         validationInfo(
@@ -1219,11 +1219,11 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                     reserved.number.option().map(n => (n, reserved)).toSeq
                 }
               }
-              val seen = scala.collection.mutable.Map[Int, Reserved]()
-              val minFieldNumber = 0
-              val maxFieldNumber = 536870911
+              val seen               = scala.collection.mutable.Map[Int, Reserved]()
+              val minFieldNumber     = 1
+              val maxFieldNumber     = 536870911
               val reservedRangeStart = 19000
-              val reservedRangeEnd = 19999
+              val reservedRangeEnd   = 19999
 
               def isValidFieldNumber(num: Int): Boolean =
                 num >= minFieldNumber && num <= maxFieldNumber
@@ -1258,17 +1258,13 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
               // Check if any property serializationOrder conflicts with reserved numbers
               val reservedSet = seen.keySet
-              val propertiesToCheck: Seq[PropertyShape] = shape match {
-                case node: NodeShape =>
-                  node.properties
-                case scalar: ScalarShape =>
-                  scalar.serializationSchema match {
-                    case node: NodeShape => node.properties
-                    case _               => Seq.empty
-                  }
-                case _ => Seq.empty
+
+              // Range validations only apply to Message properties (not Enums)
+              val nodeShapeProperties: Seq[PropertyShape] = shape match {
+                case node: NodeShape if node.name.nonEmpty => node.properties
+                case _                                     => Seq.empty
               }
-              propertiesToCheck.foreach { property =>
+              nodeShapeProperties.foreach { property =>
                 property.serializationOrder.option().foreach { order =>
                   if (!isValidFieldNumber(order)) {
                     validate(
@@ -1286,7 +1282,24 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
                         property.annotations
                       )
                     )
-                  } else if (reservedSet.contains(order)) {
+                  }
+                }
+              }
+
+              // Reserved set validation applies to both NodeShape and ScalarShape properties
+              val allPropertiesToCheck: Seq[PropertyShape] = shape match {
+                case node: NodeShape =>
+                  node.properties
+                case scalar: ScalarShape =>
+                  scalar.serializationSchema match {
+                    case node: NodeShape => node.properties
+                    case _               => Seq.empty
+                  }
+                case _ => Seq.empty
+              }
+              allPropertiesToCheck.foreach { property =>
+                property.serializationOrder.option().foreach { order =>
+                  if (reservedSet.contains(order)) {
                     validate(
                       validationInfo(
                         PropertyShapeModel.SerializationOrder,
@@ -1357,32 +1370,38 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
       },
       new CustomShaclFunction {
         private def normalize(name: String): String = name.toLowerCase.replace("_", "")
-        override val name: String = "FieldNameNormalizationConflict"
+        override val name: String                   = "FieldNameNormalizationConflict"
         override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
           element match {
             case obj: NodeShape =>
-              val propertiesWithNormalized = obj.properties.map { p =>
-                val name = p.name.value()
-                (name, normalize(name), p)
-              }
-              propertiesWithNormalized
-                .groupBy(_._2) // group by normalized name
-                .filter(_._2.size > 1) // find conflicts
-                .foreach { case (normalizedName, conflicting) =>
-                  conflicting.tail.foreach { case (originalName, _, prop) =>
-                    validate(
-                      validationInfo(
-                        PropertyShapeModel.Name,
-                        s"Field '$originalName' conflicts with field '${conflicting.head._1}' due to normalized name '$normalizedName'",
-                        prop.annotations
-                      )
-                    )
-                  }
+              // If the deprecated_legacy_json_field_conflicts extension is set to true, the name conflicts are not validated
+              val legacyValidation = getExtensionByName("deprecated_legacy_json_field_conflicts", obj)
+                .flatMap(getExtensionScalarValue)
+                .contains("true")
+
+              if (!legacyValidation) {
+                val propertiesWithNormalized = obj.properties.flatMap { p =>
+                  p.name.option().map(name => (name, normalize(name), p))
                 }
+                propertiesWithNormalized
+                  .groupBy(_._2)         // group by normalized name
+                  .filter(_._2.size > 1) // find conflicts
+                  .foreach { case (normalizedName, conflicting) =>
+                    conflicting.tail.foreach { case (originalName, _, prop) =>
+                      validate(
+                        validationInfo(
+                          PropertyShapeModel.Name,
+                          s"Field '$originalName' conflicts with field '${conflicting.head._1}' due to normalized name '$normalizedName'",
+                          prop.annotations
+                        )
+                      )
+                    }
+                  }
+              }
             case _ => // ignore
           }
         }
-      },
+      }
     )
 
   private def validateObjectAndHasProperties(element: AmfElement): Boolean = {
