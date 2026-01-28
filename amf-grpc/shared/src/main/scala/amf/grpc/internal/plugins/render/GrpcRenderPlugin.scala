@@ -1,7 +1,8 @@
 package amf.grpc.internal.plugins.render
 
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.core.internal.plugins.syntax.{ASTBuilder, StringDocBuilder}
 import amf.core.internal.remote.{Grpc, Syntax}
@@ -13,7 +14,10 @@ object GrpcRenderPlugin extends AMFRenderPlugin {
 
   override def mediaTypes: Seq[String] = Syntax.proto3Mimes.toSeq
 
-  override def applies(element: RenderInfo): Boolean = true
+  override def applies(element: RenderInfo): Boolean = element.unit match {
+    case document: Document => document.encodes.isInstanceOf[Api]
+    case _                  => false
+  }
 
   override def priority: PluginPriority = NormalPriority
 
