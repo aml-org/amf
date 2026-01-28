@@ -196,7 +196,9 @@
                   "description": "The name of the model to use"
                 }
               },
-              "required": ["model"],
+              "required": [
+                "model"
+              ],
               "additionalProperties": false
             }
           ]
@@ -346,6 +348,13 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "headersToPropagate": {
+                    "type": "array",
+                    "description": "The names of the request headers that should be propagated when invoking this tool",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -382,6 +391,13 @@
                       "ref": {
                         "$ref": "references.json#/definitions/ConnectionRef"
                       }
+                    }
+                  },
+                  "headersToPropagate": {
+                    "type": "array",
+                    "description": "The names of the request headers that should be propagated when invoking this agent",
+                    "items": {
+                      "type": "string"
                     }
                   }
                 }
@@ -607,29 +623,37 @@
         }
       }
     },
-    "OAuth2TokenExchangeAuth": {
+    "OAuth2OBOCredentialsAuth": {
       "@context": {
         "@type": [
-          "http://anypoint.com/vocabs/agents#OAuth2TokenExchangeAuth",
+          "http://anypoint.com/vocabs/agents#OAuth2OBOCredentialsAuth",
           "http://anypoint.com/vocabs/agents#Authentication"
         ],
         "@base": "http://anypoint.com/vocabs/agents#"
       },
       "type": "object",
       "additionalProperties": false,
-      "title": "OAuth 2.0 Token Exchange (RFC 8693)",
-      "description": "Exchanges incoming bearer token for a new token targeting an upstream service using OAuth 2.0 Token Exchange (RFC 8693).",
+      "title": "OAuth2 OBO Credential Injection",
+      "description": "Exchanges incoming bearer token for a new token targeting an upstream service using OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow",
       "required": [
         "kind",
+        "flow",
         "clientId",
         "clientSecret",
-        "tokenEndpoint",
-        "targetValue"
+        "tokenEndpoint"
       ],
       "properties": {
         "kind": {
-          "const": "oauth2-token-exchange",
+          "const": "oauth2-obo",
           "type": "string"
+        },
+        "flow": {
+          "type": "string",
+          "enum": [
+            "oauth2-token-exchange",
+            "microsoft-entra-obo"
+          ],
+          "description": "Select the token exchange flow type - Standard OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow."
         },
         "clientId": {
           "type": "string",
@@ -641,7 +665,7 @@
         },
         "tokenEndpoint": {
           "type": "string",
-          "description": "The OAuth2 token endpoint URL (must support RFC 8693 Token Exchange)."
+          "description": "The OAuth2 token endpoint URL for token exchange."
         },
         "targetType": {
           "type": "string",
@@ -650,15 +674,15 @@
             "resource"
           ],
           "default": "audience",
-          "description": "The parameter type for specifying the target service (audience for logical name, resource for physical URI)."
+          "description": "The parameter type for specifying the target service (audience for logical name, resource for physical URI). Used for OAuth 2.0 Token Exchange (RFC 8693)."
         },
         "targetValue": {
           "type": "string",
-          "description": "The target audience URI or resource URI for the exchanged token."
+          "description": "The target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange (RFC 8693)."
         },
         "scope": {
           "type": "string",
-          "description": "Optional OAuth2 scope to request for the exchanged token."
+          "description": "OAuth scope to request. Optional for OAuth 2.0 Token Exchange (RFC 8693). Required for Microsoft Entra OBO (e.g., 'api://downstream-client-id/.default')."
         },
         "timeout": {
           "type": "integer",
@@ -667,18 +691,18 @@
         }
       }
     },
-    "InTaskAuth": {
+    "InTaskAuthorizationCodeAuth": {
       "@context": {
         "@type": [
-          "http://anypoint.com/vocabs/agents#InTaskAuth",
+          "http://anypoint.com/vocabs/agents#InTaskAuthorizationCodeAuth",
           "http://anypoint.com/vocabs/agents#Authentication"
         ],
         "@base": "http://anypoint.com/vocabs/agents#"
       },
       "type": "object",
       "additionalProperties": false,
-      "title": "In-Task Authentication",
-      "description": "Handles in-task authentication for A2A agents. Extracts OAuth2 tokens from the message metadata, moves them to the Authorization header, and forwards to upstream. Returns auth challenges when no token found.",
+      "title": "In-Task Authorization Code",
+      "description": "Handles secondary credentials for in-task authentication using OAuth 2.0 Authorization Code flow. Extracts OAuth2 tokens from message data and injects them into Authorization headers for upstream calls.",
       "required": [
         "kind",
         "authorizationEndpoint",
@@ -688,7 +712,7 @@
       ],
       "properties": {
         "kind": {
-          "const": "in-task-auth",
+          "const": "in-task-authorization-code",
           "type": "string"
         },
         "secondaryAuthProvider": {
@@ -736,16 +760,6 @@
           "default": 300,
           "description": "Timeout in seconds for token requests."
         },
-        "userIdHeader": {
-          "type": "string",
-          "default": "X-User-Id",
-          "description": "Header name containing the user ID for user context propagation."
-        },
-        "userEmailHeader": {
-          "type": "string",
-          "default": "X-User-Email",
-          "description": "Header name containing the user email for user context propagation."
-        },
         "challengeResponseStatusCode": {
           "type": "integer",
           "default": 200,
@@ -774,10 +788,10 @@
           "$ref": "#/definitions/APIKeyAuth"
         },
         {
-          "$ref": "#/definitions/OAuth2TokenExchangeAuth"
+          "$ref": "#/definitions/OAuth2OBOCredentialsAuth"
         },
         {
-          "$ref": "#/definitions/InTaskAuth"
+          "$ref": "#/definitions/InTaskAuthorizationCodeAuth"
         }
       ]
     },
