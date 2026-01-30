@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Foo {
+  int32 field = 1;
+}
+
+extend something.else {
+  int32 default_value = 51234;
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package foo;
+
+
+message EnumAliasMessage {
+  AliasedEnum value = 1;
+}
+enum AliasedEnum {
+  option allow_alias = true;
+  ALIASED_UNKNOWN = 0;
+  ALIASED_VALUE = 1;
+  ALIASED_ALIAS = 1;
+  ALIASED_ANOTHER = 2;
+}

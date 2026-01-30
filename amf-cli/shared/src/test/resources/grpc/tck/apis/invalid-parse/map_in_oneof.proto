@@ -1,0 +1,7 @@
+syntax = "proto3";
+message TestMessage {
+  oneof foo {
+    map<int32, int32> foo_map = 1;
+    map message_field = 2;
+  }
+}

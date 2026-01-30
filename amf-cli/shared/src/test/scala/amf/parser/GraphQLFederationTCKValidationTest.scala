@@ -6,7 +6,7 @@ import amf.core.client.scala.validation.AMFValidationReport
 import amf.graphqlfederation.client.scala.GraphQLFederationConfiguration
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleTests {
 
@@ -48,16 +48,16 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   private def runValidFederationTck(): Unit = runValidTests(basePath, FEDERATION)
 
   private def runValidTests(basePath: String, testNamePrefix: String): Unit = {
-    fs.syncFile(s"$basePath/valid").list.foreach { api =>
-      ignore(s"$testNamePrefix TCK > Apis > Valid > $api: should conform") {
-        assertConforms(s"$basePath/valid/$api")
-      }
-    }
-    validFederationApisInvalidInGraphQL.foreach { api =>
-      ignore(s"$testNamePrefix TCK > Apis > Valid > $api: should conform") {
-        assertConforms(api)
-      }
-    }
+//    fs.syncFile(s"$basePath/valid").list.foreach { api =>
+//      ignore(s"$testNamePrefix TCK > Apis > Valid > $api: should conform") {
+//        assertConforms(s"$basePath/valid/$api")
+//      }
+//    }
+//    validFederationApisInvalidInGraphQL.foreach { api =>
+//      ignore(s"$testNamePrefix TCK > Apis > Valid > $api: should conform") {
+//        assertConforms(api)
+//      }
+//    }
   }
 
   private def runInvalidTests(base: String, testNamePrefix: String, reportProducer: String => String): Unit = {
@@ -84,9 +84,9 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
   def assertConforms(api: String): Future[Assertion] = {
     val client = GraphQLFederationConfiguration.GraphQLFederation().baseUnitClient()
     for {
-      parsing        <- client.parse(s"file://$api")
-      transformation <- Future.successful(client.transform(parsing.baseUnit, PipelineId.Cache))
-      validation     <- client.validate(transformation.baseUnit)
+      parsing <- client.parse(s"file://$api")
+      transformation = client.transform(parsing.baseUnit, PipelineId.Cache)
+      validation <- client.validate(transformation.baseUnit)
     } yield {
       assert(parsing.conforms && transformation.conforms && validation.conforms)
     }
@@ -96,9 +96,9 @@ class GraphQLFederationTCKValidationTest extends GraphQLFederationFunSuiteCycleT
     val client = GraphQLFederationConfiguration.GraphQLFederation().baseUnitClient()
     val apiUri = s"file://$api"
     for {
-      parsing        <- client.parse(apiUri)
-      transformation <- Future.successful(client.transform(parsing.baseUnit, PipelineId.Cache))
-      validation     <- client.validate(transformation.baseUnit)
+      parsing <- client.parse(apiUri)
+      transformation = client.transform(parsing.baseUnit, PipelineId.Cache)
+      validation <- client.validate(transformation.baseUnit)
       actualFile <- {
         val combinedResults = parsing.results ++ transformation.results ++ validation.results
         val actual          = AMFValidationReport(apiUri, GraphQLProfile, combinedResults)

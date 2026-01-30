@@ -1,0 +1,10 @@
+syntax = "proto3";
+message TestMessage {
+  optional int32  foo = 1 [default= 0x7FFFFFFF];
+  optional int32  foo = 1 [default=-0x80000000];
+  optional uint32 foo = 1 [default= 0xFFFFFFFF];
+  optional int64  foo = 1 [default= 0x7FFFFFFFFFFFFFFF];
+  optional int64  foo = 1 [default=-0x8000000000000000];
+  optional uint64 foo = 1 [default= 0xFFFFFFFFFFFFFFFF];
+  optional double foo = 1 [default= 0xabcd];
+}

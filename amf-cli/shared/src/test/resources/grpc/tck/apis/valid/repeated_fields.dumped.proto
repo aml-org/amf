@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package foo;
+
+
+message RepeatedFields {
+  repeated int32 int_list = 1;
+  repeated string string_list = 2;
+  repeated NestedMessage message_list = 3;
+  repeated NestedEnum enum_list = 4;
+}
+message NestedMessage {
+  int32 value = 1;
+}
+enum NestedEnum {
+  NESTED_UNKNOWN = 0;
+  NESTED_VALUE = 1;
+}

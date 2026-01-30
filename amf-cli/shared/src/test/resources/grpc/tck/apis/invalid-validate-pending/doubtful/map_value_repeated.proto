@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message MapEntry {
+  option map_entry = true;
+  string key = 1;
+  repeated int32 value = 2;
+}
+
+message Foo {
+  map<string, int32> map_field = 1;
+}

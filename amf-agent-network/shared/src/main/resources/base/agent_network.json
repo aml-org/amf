@@ -154,18 +154,53 @@
           }
         },
         "configuration": {
-          "type": "object",
-          "properties": {
-            "model": {
-              "type": "string",
-              "description": "The name of the model to use"
+          "oneOf": [
+            {
+              "title": "Use OpenAI model",
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "The name of the model to use"
+                },
+                "openAI": {
+                  "$ref": "#/definitions/OpenAISettings"
+                }
+              },
+              "required": [
+                "model",
+                "openAI"
+              ],
+              "additionalProperties": false
             },
-            "openAI" : {
-              "$ref": "#/definitions/OpenAISettings"
+            {
+              "title": "Use Gemini Model",
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "The name of the model to use"
+                },
+                "gemini": {
+                  "$ref": "#/definitions/GeminiSettings"
+                }
+              },
+              "required": [
+                "model",
+                "gemini"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "The name of the model to use"
+                }
+              },
+              "required": [
+                "model"
+              ],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "model"
           ]
         }
       }
@@ -201,6 +236,41 @@
         "maxOutputTokens": {
           "type": "integer",
           "description": "Maximum number of tokens to generate"
+        }
+      }
+    },
+    "GeminiSettings": {
+      "description": "Gemini specific configuration settings",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thinkingLevel": {
+          "type": "string",
+          "enum": [
+            "LOW",
+            "HIGH"
+          ],
+          "description": "The level of thoughts tokens that the model should generate."
+        },
+        "thinkingBudget": {
+          "type": "number",
+          "description": "Indicates the thinking budget in tokens. 0 is DISABLED. -1 is AUTOMATIC. The default values and allowed ranges are model dependent."
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Controls the degree of randomness in token selection. Lower temperatures are good for prompts that require a less open-ended or creative response, while higher temperatures can lead to more diverse or creative results."
+        },
+        "topP": {
+          "type": "number",
+          "description": "Tokens are selected from the most to least probable until the sum of their probabilities equals this value. Use a lower value for less random responses and a higher value for more random responses."
+        },
+        "responseLogprobs": {
+          "type": "boolean",
+          "description": "Whether to return the log probabilities of the tokens that were chosen by the model at each step"
+        },
+        "maxOutputTokens": {
+          "type": "integer",
+          "description": "Maximum number of tokens that can be generated in the response"
         }
       }
     },
@@ -278,6 +348,13 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "headersToPropagate": {
+                    "type": "array",
+                    "description": "The names of the request headers that should be propagated when invoking this tool",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -314,6 +391,13 @@
                       "ref": {
                         "$ref": "references.json#/definitions/ConnectionRef"
                       }
+                    }
+                  },
+                  "headersToPropagate": {
+                    "type": "array",
+                    "description": "The names of the request headers that should be propagated when invoking this agent",
+                    "items": {
+                      "type": "string"
                     }
                   }
                 }
@@ -457,7 +541,8 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "value"
+        "kind",
+        "apiKey"
       ],
       "properties": {
         "kind": {
@@ -538,6 +623,150 @@
         }
       }
     },
+    "OAuth2OBOCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2OBOCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "OAuth2 OBO Credential Injection",
+      "description": "Exchanges incoming bearer token for a new token targeting an upstream service using OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow",
+      "required": [
+        "kind",
+        "flow",
+        "clientId",
+        "clientSecret",
+        "tokenEndpoint"
+      ],
+      "properties": {
+        "kind": {
+          "const": "oauth2-obo",
+          "type": "string"
+        },
+        "flow": {
+          "type": "string",
+          "enum": [
+            "oauth2-token-exchange",
+            "microsoft-entra-obo"
+          ],
+          "description": "Select the token exchange flow type - Standard OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow."
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The OAuth2 client ID for token exchange."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The OAuth2 client secret for token exchange."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "The OAuth2 token endpoint URL for token exchange."
+        },
+        "targetType": {
+          "type": "string",
+          "enum": [
+            "audience",
+            "resource"
+          ],
+          "default": "audience",
+          "description": "The parameter type for specifying the target service (audience for logical name, resource for physical URI). Used for OAuth 2.0 Token Exchange (RFC 8693)."
+        },
+        "targetValue": {
+          "type": "string",
+          "description": "The target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange (RFC 8693)."
+        },
+        "scope": {
+          "type": "string",
+          "description": "OAuth scope to request. Optional for OAuth 2.0 Token Exchange (RFC 8693). Required for Microsoft Entra OBO (e.g., 'api://downstream-client-id/.default')."
+        },
+        "timeout": {
+          "type": "integer",
+          "default": 10000,
+          "description": "Timeout for token exchange requests in milliseconds."
+        }
+      }
+    },
+    "InTaskAuthorizationCodeAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#InTaskAuthorizationCodeAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "In-Task Authorization Code",
+      "description": "Handles secondary credentials for in-task authentication using OAuth 2.0 Authorization Code flow. Extracts OAuth2 tokens from message data and injects them into Authorization headers for upstream calls.",
+      "required": [
+        "kind",
+        "authorizationEndpoint",
+        "tokenEndpoint",
+        "scopes",
+        "redirectUri"
+      ],
+      "properties": {
+        "kind": {
+          "const": "in-task-authorization-code",
+          "type": "string"
+        },
+        "secondaryAuthProvider": {
+          "type": "string",
+          "default": "",
+          "description": "Name of the IdP provider (e.g., 'okta', 'auth0'). Used for informational purposes in the authentication card."
+        },
+        "authorizationEndpoint": {
+          "type": "string",
+          "description": "OAuth2 authorization endpoint URL (e.g., 'https://domain/oauth2/v1/authorize'). Required for generating the authentication challenge."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "OAuth2 token endpoint URL (e.g., 'https://domain/oauth2/v1/token'). Required for generating the authentication challenge."
+        },
+        "scopes": {
+          "type": "string",
+          "description": "Space or comma separated list of OAuth2 scopes required for step-up authentication (e.g., 'openid profile email transaction:execute')."
+        },
+        "redirectUri": {
+          "type": "string",
+          "description": "OAuth2 redirect URI that the client will use in the authorization flow."
+        },
+        "responseType": {
+          "type": "string",
+          "default": "code",
+          "description": "OAuth2 response type. Typically 'code' for authorization code flow."
+        },
+        "codeChallengeMethod": {
+          "type": "string",
+          "default": "S256",
+          "description": "PKCE code challenge method. Typically 'S256' for SHA-256."
+        },
+        "tokenAudience": {
+          "type": "string",
+          "description": "OAuth2 token audience. The intended recipient of the token (e.g., 'https://hr-a2a-agent.example.com')."
+        },
+        "bodyEncoding": {
+          "type": "string",
+          "default": "form",
+          "description": "Encoding format for token request body. Typically 'form' for application/x-www-form-urlencoded."
+        },
+        "tokenTimeout": {
+          "type": "integer",
+          "default": 300,
+          "description": "Timeout in seconds for token requests."
+        },
+        "challengeResponseStatusCode": {
+          "type": "integer",
+          "default": 200,
+          "description": "HTTP status code to return for auth-required challenge responses. Typically 200 to maintain JSON-RPC compatibility."
+        }
+      }
+    },
     "Authentication": {
       "@context": {
         "@type": [
@@ -557,6 +786,12 @@
         },
         {
           "$ref": "#/definitions/APIKeyAuth"
+        },
+        {
+          "$ref": "#/definitions/OAuth2OBOCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/InTaskAuthorizationCodeAuth"
         }
       ]
     },
@@ -757,7 +992,6 @@
         }
       }
     },
-
     "AgentEntity": {
       "@context": {
         "@type": [
@@ -925,6 +1159,7 @@
         "platform": {
           "type": "string",
           "enum": [
+            "Gemini",
             "OpenAI",
             "AzureOpenai"
           ]

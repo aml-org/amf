@@ -457,6 +457,11 @@ object ParserSideValidations extends Validations {
     message = "The provided binding version is not supported"
   )
 
+  val ScopeNameConflict: ValidationSpecification = validation(
+    id = "scope-name-conflict",
+    message = "Name is already defined in scope"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id        -> all(VIOLATION),
     ExclusiveLicenseIdentifierError.id -> all(VIOLATION),

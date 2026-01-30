@@ -13,7 +13,7 @@ import amf.apicontract.client.scala.model.domain.security.{
 }
 import amf.apicontract.client.scala.model.domain.{EndPoint, Request}
 import amf.apicontract.internal.metamodel.domain._
-import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
+import amf.apicontract.internal.metamodel.domain.api.{BaseApiModel, WebApiModel}
 import amf.apicontract.internal.metamodel.domain.bindings._
 import amf.apicontract.internal.metamodel.domain.security.{
   ApiKeySettingsModel,
@@ -39,6 +39,7 @@ import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, PropertyShapeModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.grpc.Reserved
 import amf.shapes.client.scala.model.domain.operations.AbstractParameter
 import amf.shapes.internal.annotations.{DirectiveArguments, ParsedJSONSchema}
 import amf.shapes.internal.domain.metamodel._
@@ -46,6 +47,8 @@ import amf.shapes.internal.domain.metamodel.operations.{AbstractParameterModel, 
 import amf.shapes.internal.validation.shacl.{BaseCustomShaclFunctions, ShapesCustomShaclFunctions}
 import amf.validation.internal.shacl.custom.CustomShaclValidator.ValidationInfo.validationInfo
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, ValidationInfo}
+
+import scala.collection.mutable.ListBuffer
 
 object APICustomShaclFunctions extends BaseCustomShaclFunctions {
 
@@ -321,8 +324,8 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
           element match {
             case webApi: WebApi =>
               webApi.endPoints.foreach { endpoint =>
-                val path    = endpoint.path.value()
-                val pattern = """\{([^}]+)\}""".r
+                val path       = endpoint.path.value()
+                val pattern    = """\{([^}]+)\}""".r
                 val pathParams = pattern.findAllMatchIn(path).map(_.group(1)).toList
                 pathParams.foreach { pathParam =>
                   val operationsParams = endpoint.operations.flatMap(_.requests).flatMap(_.uriParameters)
@@ -949,6 +952,455 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
               )
           }
         }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedCustomJsonName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val extensionName = "json_name"
+          element match {
+            case obj: NodeShape =>
+              val jsonNames = ListBuffer[String]()
+              obj.properties.foreach { p =>
+                val jsonNameExtension = getExtensionByName(extensionName, p)
+                jsonNameExtension match {
+                  case Some(extension) =>
+                    extension.extension match {
+                      case scalar: ScalarNode =>
+                        val name = scalar.value.value()
+                        if (jsonNames.contains(name)) {
+                          validate(
+                            validationInfo(
+                              PropertyShapeModel.Name,
+                              s"Duplicated json_name value '$name'",
+                              extension.extension.annotations
+                            )
+                          )
+                        } else jsonNames += name
+                      case _ => // ignore
+                    }
+                  case None => // ignore
+                }
+
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedEnumValue"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case scalar: ScalarShape =>
+              val enumValues = scalar.values.collect { case s: ScalarNode => s.value.value() }
+              enumValues.groupBy(identity).filter(_._2.size > 1).foreach { case (value, _) =>
+                validate(
+                  validationInfo(
+                    PropertyShapeModel.Values,
+                    s"Duplicated enum value '$value''",
+                    scalar.annotations
+                  )
+                )
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedPropertyName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              val enumValues = obj.properties.map(_.name.value())
+              enumValues.groupBy(identity).filter(_._2.size > 1).foreach { case (value, _) =>
+                validate(
+                  validationInfo(
+                    PropertyShapeModel.Name,
+                    s"Duplicated field name '$value''",
+                    obj.annotations
+                  )
+                )
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedFieldNumber"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape
+                if obj.name.nonEmpty => // the name check is to avoid validating the serializationSchema of an Enum here
+              val serializationNumbers = ListBuffer[Int]()
+
+              def checkProperty(p: PropertyShape): Unit = {
+                p.serializationOrder.option() match {
+                  case Some(n) =>
+                    if (serializationNumbers.contains(n)) {
+                      validate(
+                        validationInfo(
+                          PropertyShapeModel.SerializationOrder,
+                          s"Duplicated field number '$n''",
+                          p.annotations
+                        )
+                      )
+                    } else serializationNumbers += n
+                  case None =>
+                }
+              }
+
+              obj.properties.foreach { p =>
+                checkProperty(p)
+                // Also check properties inside xone (OneOf) fields
+                p.range match {
+                  case anyShape: AnyShape if anyShape.xone.nonEmpty =>
+                    anyShape.xone.foreach {
+                      case node: NodeShape =>
+                        node.properties.foreach(checkProperty)
+                      case _ => // ignore
+                    }
+                  case _ => // ignore
+                }
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicatedOptionNames"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val optionsToValidate = List("default", "json_name")
+          element match {
+            case obj: NodeShape =>
+              obj.properties.foreach { p =>
+                val optionGroups = optionsToValidate.map(o => o -> getExtensionsByName(o, p))
+                optionGroups.foreach { optionsMap =>
+                  if (optionsMap._2.size > 1) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.Default,
+                        s"Duplicated option '${optionsMap._1}'",
+                        optionsMap._2.head.annotations
+                      )
+                    )
+                  }
+                }
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicateServiceName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val services     = element.asInstanceOf[WebApi].endPoints
+          val serviceNames = ListBuffer[String]()
+          services.foreach { service =>
+            val serviceName = service.name.value()
+            if (serviceNames.contains(serviceName)) {
+              validate(
+                validationInfo(
+                  WebApiModel.EndPoints,
+                  s"Duplicated service name '$serviceName'",
+                  service.name.annotations()
+                )
+              )
+            } else {
+              serviceNames += serviceName
+            }
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "duplicateRPCName"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val rpcs     = element.asInstanceOf[EndPoint].operations
+          val rpcNames = ListBuffer[String]()
+          rpcs.foreach { rpc =>
+            val rpcName = rpc.name.value()
+            if (rpcNames.contains(rpcName)) {
+              validate(
+                validationInfo(
+                  EndPointModel.Operations,
+                  s"Duplicated RPC name '$rpcName'",
+                  rpc.name.annotations()
+                )
+              )
+            } else {
+              rpcNames += rpcName
+            }
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "enumNumberValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val enum = element.asInstanceOf[ScalarShape]
+          val allowAlias = getExtensionByName("allow_alias", enum).flatMap(getExtensionScalarValue) match {
+            case Some("true") => true
+            case Some("false") =>
+              validate(
+                validationInfo(
+                  ScalarShapeModel.SerializationSchema,
+                  s"Setting 'allow_alias' to false has no effect",
+                  enum.annotations
+                )
+              )
+              false
+            case _ => false
+          }
+          enum.serializationSchema match {
+            case shape: NodeShape =>
+              val serializationNumbers = ListBuffer[Int]()
+              shape.properties.zipWithIndex.foreach { case (property, index) =>
+                val serializationOrder =
+                  property.serializationOrder.value() // I can assume that the serializationOrder is always defined
+                if (index == 0 && serializationOrder != 0) {
+                  validate(
+                    validationInfo(
+                      ScalarShapeModel.SerializationSchema,
+                      s"First enum value must be 0",
+                      property.annotations
+                    )
+                  )
+                }
+                if (serializationNumbers.contains(serializationOrder)) {
+                  if (!allowAlias) {
+                    validate(
+                      validationInfo(
+                        ScalarShapeModel.SerializationSchema,
+                        s"Duplicated enum number '$serializationOrder'",
+                        property.annotations
+                      )
+                    )
+                  }
+                  // add the number to the list anyway because will need it to check if there are aliases
+                  serializationNumbers += serializationOrder
+                } else {
+                  serializationNumbers += serializationOrder
+                }
+              }
+              val existsAliasNumbers = serializationNumbers.groupBy(identity).exists(_._2.size > 1)
+              if (!existsAliasNumbers && allowAlias) {
+                validate(
+                  validationInfo(
+                    ScalarShapeModel.SerializationSchema,
+                    s"'allow_alias' option is unnecessary for enum with no aliases",
+                    enum.annotations
+                  )
+                )
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "reservedNumberValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case shape: AnyShape =>
+              val reservedNumbers = shape.reservedValues.flatMap { reserved =>
+                Option(reserved.range) match {
+                  case Some(range) if range.from.option().isDefined && range.to.option().isDefined =>
+                    val from = range.from.value()
+                    val to   = range.to.value()
+                    if (from > to) {
+                      validate(
+                        validationInfo(
+                          AnyShapeModel.ReservedValues,
+                          s"Invalid reserved range: start value '$from' is greater than end value '$to'",
+                          reserved.annotations
+                        )
+                      )
+                      Seq.empty
+                    } else {
+                      (from to to).map(n => (n, reserved))
+                    }
+                  case _ =>
+                    reserved.number.option().map(n => (n, reserved)).toSeq
+                }
+              }
+              val seen               = scala.collection.mutable.Map[Int, Reserved]()
+              val minFieldNumber     = 1
+              val maxFieldNumber     = 536870911
+              val reservedRangeStart = 19000
+              val reservedRangeEnd   = 19999
+
+              def isValidFieldNumber(num: Int): Boolean =
+                num >= minFieldNumber && num <= maxFieldNumber
+
+              def isInReservedRange(num: Int): Boolean =
+                num >= reservedRangeStart && num <= reservedRangeEnd
+
+              reservedNumbers.foreach { case (num, reserved) =>
+                if (!isValidFieldNumber(num)) {
+                  validate(
+                    validationInfo(
+                      AnyShapeModel.ReservedValues,
+                      s"Reserved number '$num' is out of valid range ($minFieldNumber to $maxFieldNumber)",
+                      reserved.annotations
+                    )
+                  )
+                }
+
+                seen.get(num) match {
+                  case Some(_) =>
+                    validate(
+                      validationInfo(
+                        AnyShapeModel.ReservedValues,
+                        s"Reserved value '$num' overlaps with another reserved declaration",
+                        reserved.annotations
+                      )
+                    )
+                  case None =>
+                    seen += (num -> reserved)
+                }
+              }
+
+              // Check if any property serializationOrder conflicts with reserved numbers
+              val reservedSet = seen.keySet
+
+              // Range validations only apply to Message properties (not Enums)
+              val nodeShapeProperties: Seq[PropertyShape] = shape match {
+                case node: NodeShape if node.name.nonEmpty => node.properties
+                case _                                     => Seq.empty
+              }
+              nodeShapeProperties.foreach { property =>
+                property.serializationOrder.option().foreach { order =>
+                  if (!isValidFieldNumber(order)) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.SerializationOrder,
+                        s"Field number '$order' is out of valid range ($minFieldNumber to $maxFieldNumber)",
+                        property.annotations
+                      )
+                    )
+                  } else if (isInReservedRange(order)) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.SerializationOrder,
+                        s"Field number '$order' is in the reserved range ($reservedRangeStart to $reservedRangeEnd)",
+                        property.annotations
+                      )
+                    )
+                  }
+                }
+              }
+
+              // Reserved set validation applies to both NodeShape and ScalarShape properties
+              val allPropertiesToCheck: Seq[PropertyShape] = shape match {
+                case node: NodeShape =>
+                  node.properties
+                case scalar: ScalarShape =>
+                  scalar.serializationSchema match {
+                    case node: NodeShape => node.properties
+                    case _               => Seq.empty
+                  }
+                case _ => Seq.empty
+              }
+              allPropertiesToCheck.foreach { property =>
+                property.serializationOrder.option().foreach { order =>
+                  if (reservedSet.contains(order)) {
+                    validate(
+                      validationInfo(
+                        PropertyShapeModel.SerializationOrder,
+                        s"Field number '$order' is reserved",
+                        property.annotations
+                      )
+                    )
+                  }
+                }
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "reservedFieldNameValidations"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case shape: AnyShape =>
+              val reservedNames = shape.reservedValues.flatMap { reserved =>
+                reserved.fieldName.option().map(name => (name, reserved))
+              }
+              val seen = scala.collection.mutable.Map[String, Reserved]()
+              reservedNames.foreach { case (name, reserved) =>
+                seen.get(name) match {
+                  case Some(_) =>
+                    validate(
+                      validationInfo(
+                        AnyShapeModel.ReservedValues,
+                        s"Reserved field name '$name' is duplicated",
+                        reserved.annotations
+                      )
+                    )
+                  case None =>
+                    seen += (name -> reserved)
+                }
+              }
+
+              // Check if any property name conflicts with reserved field names
+              val reservedSet = seen.keySet
+              shape match {
+                case node: NodeShape =>
+                  node.properties.foreach { property =>
+                    property.name.option().foreach { propName =>
+                      if (reservedSet.contains(propName)) {
+                        validate(
+                          validationInfo(
+                            PropertyShapeModel.Name,
+                            s"Field name '$propName' is reserved",
+                            property.annotations
+                          )
+                        )
+                      }
+                    }
+                  }
+                case _ => // ignore
+              }
+            case _ => // ignore
+          }
+        }
+      },
+      new CustomShaclFunction {
+        override val name: String = "emptyOneOf"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          val oneOf = element.asInstanceOf[AnyShape]
+          if (oneOf.fields.exists(ShapeModel.Xone) && oneOf.xone.isEmpty) validate(None)
+        }
+      },
+      new CustomShaclFunction {
+        private def normalize(name: String): String = name.toLowerCase.replace("_", "")
+        override val name: String                   = "FieldNameNormalizationConflict"
+        override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+          element match {
+            case obj: NodeShape =>
+              // If the deprecated_legacy_json_field_conflicts extension is set to true, the name conflicts are not validated
+              val legacyValidation = getExtensionByName("deprecated_legacy_json_field_conflicts", obj)
+                .flatMap(getExtensionScalarValue)
+                .contains("true")
+
+              if (!legacyValidation) {
+                val propertiesWithNormalized = obj.properties.flatMap { p =>
+                  p.name.option().map(name => (name, normalize(name), p))
+                }
+                propertiesWithNormalized
+                  .groupBy(_._2)         // group by normalized name
+                  .filter(_._2.size > 1) // find conflicts
+                  .foreach { case (normalizedName, conflicting) =>
+                    conflicting.tail.foreach { case (originalName, _, prop) =>
+                      validate(
+                        validationInfo(
+                          PropertyShapeModel.Name,
+                          s"Field '$originalName' conflicts with field '${conflicting.head._1}' due to normalized name '$normalizedName'",
+                          prop.annotations
+                        )
+                      )
+                    }
+                  }
+              }
+            case _ => // ignore
+          }
+        }
       }
     )
 
@@ -998,4 +1450,16 @@ object APICustomShaclFunctions extends BaseCustomShaclFunctions {
     })
   }
   private def isDuplicated(elemName: String, s: Seq[NamedDomainElement]) = s.count(_.name.value() == elemName) > 1
+
+  private def getExtensionByName(name: String, element: DomainElement): Option[DomainExtension] =
+    getExtensionsByName(name, element).headOption
+
+  private def getExtensionsByName(name: String, element: DomainElement): Seq[DomainExtension] = {
+    element.customDomainProperties.filter(e => e.name.nonEmpty && e.name.value() == name)
+  }
+
+  private def getExtensionScalarValue(extension: DomainExtension): Option[String] = extension.extension match {
+    case scalar: ScalarNode => Some(scalar.value.value())
+    case _                  => None
+  }
 }

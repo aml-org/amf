@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Conflict {
+  int32 field = 1;
+}
+
+enum Conflict {
+  VALUE = 0;
+}

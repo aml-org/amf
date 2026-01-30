@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "non/existent/file.proto";
+
+message Foo {
+  int32 field = 1;
+}

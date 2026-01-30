@@ -50,3 +50,12 @@ This is a list of each schema and what dependencies have to be manually included
   - this module has all the dependencies from references.json, llm_metadata.json, some from the a2a.json and some from mcp_metadata.json
 - agent-card
   - in the schema we add a $ref to the AgentCard definition
+
+NOTE:
+in order to update the agent_network schema (or any other), we need to update the following files:
+- copy/paste the new file in the `resources/base/agent_network.json`
+- use a side-to-side diff tool to update the `agent-network-schema.json` file updating the `$ref`'s removing the base path so that it points to the local definitions
+- minify the `agent-network-schema.json` file using [json-minify](https://jsonformatter.org/json-minify)
+- use that in the `internal/plugins/parse/schema/AgentNetworkSchema.scala` file
+- update the examples if needed in the `amf-agent-network/shared/src/test/resources/instances` folder and `AgentNetworkValidationTest` test suite
+  - copied from [here](https://github.com/mulesoft-emu/agent-fabric-specification/blob/master/agent-fabric-transformation/src/test/resources/apps/weather_agent/agent-network.yaml)

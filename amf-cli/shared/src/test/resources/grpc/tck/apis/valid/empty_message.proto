@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package foo;
+
+message EmptyMessage {
+}
+
+message ContainerMessage {
+  EmptyMessage empty = 1;
+  string value = 2;
+}
+
+service EmptyService {
+  rpc DoNothing(EmptyMessage) returns (EmptyMessage);
+}

@@ -1,0 +1,4 @@
+syntax = "proto3";
+message TestMessage {
+  uint32 foo = 1 [json_name="a",json_name="b"];
+}

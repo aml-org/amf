@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package org.test;
+
+
+message EnumMessage {
+  TopLevelEnum top_enum = 1;
+  NestedEnum nested_enum = 2;
+  repeated TopLevelEnum repeated_enum = 3;
+  enum NestedEnum {
+    NESTED_UNKNOWN = 0;
+    NESTED_VALUE1 = 1;
+    NESTED_VALUE2 = 2;
+  }
+}
+enum TopLevelEnum {
+  TOP_LEVEL_UNKNOWN = 0;
+  TOP_LEVEL_VALUE1 = 1;
+  TOP_LEVEL_VALUE2 = 2;
+  TOP_LEVEL_VALUE3 = 3;
+}

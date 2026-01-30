@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package foo;
+
+
+message Request {
+  string query = 1;
+  int32 page_size = 2;
+}
+message Response {
+  repeated string results = 1;
+  int32 total_count = 2;
+}
+service SearchService {
+  rpc Search(Request) returns (Response) {}
+  rpc GetStatus(Request) returns (Response) {}
+}
