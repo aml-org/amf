@@ -11,7 +11,7 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.CustomShaclFunc
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class APIShaclModelValidationPlugin(override val profile: ProfileName)
+class APIShaclModelValidationPlugin(override val profile: ProfileName)
     extends BaseShaclModelValidationPlugin
     with BaseApiValidationPlugin {
 
@@ -24,4 +24,8 @@ case class APIShaclModelValidationPlugin(override val profile: ProfileName)
   ): Future[AMFValidationReport] = Future(validateWithShacl(unit, options: ValidationOptions))
 
   override protected val functions: CustomShaclFunctions = APICustomShaclFunctions.functions
+}
+
+object APIShaclModelValidationPlugin {
+  def apply(profile: ProfileName): APIShaclModelValidationPlugin = new APIShaclModelValidationPlugin(profile)
 }
