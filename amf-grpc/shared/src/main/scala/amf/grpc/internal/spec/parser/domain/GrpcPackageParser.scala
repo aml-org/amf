@@ -26,7 +26,7 @@ class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiCo
         // package statement is not required (protoc doesn't consider it as an error)
         // astError("Missing protobuf3 package statement", ann)
         doc.withPkg("default", Annotations.synthesized())
-        webApi.withName(ctx.rootContextDocument.split("/").last, ann)
+        webApi.withName(ctx.rootContextDocument.split("/").last, Annotations.synthesized())
     }
     collectOptions(
       ast,
