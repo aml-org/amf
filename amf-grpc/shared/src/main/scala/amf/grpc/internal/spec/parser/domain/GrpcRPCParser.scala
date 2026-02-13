@@ -43,7 +43,7 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
   }
 
   private def parseMessageTypes(): (String, String) = {
-    val messages = collect(ast, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
+    val messages = collect(ast, Seq(MESSAGE_TYPE)).map { case n: Node => n.source }
     if (messages.isEmpty) {
       astError("Missing mandatory proto3 rpcName", toAnnotations(ast))
       ("AnonymousOperation", "AnonymousOperation")
