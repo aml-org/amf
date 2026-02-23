@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Metadata Specification",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#AgentMetadata"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
+  "definitions": {
+    "A2AOnMessageListener": {
+      "type": "object",
+      "properties": {
+        "a2a_onMessage": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2AOnMessageNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_onMessage"
+      ]
+    },
+    "A2AOnMessageNodeProperties": {
+      "description": "The A2A Trigger Object defines how external A2A (Agent-to-Agent) events or interactions can initiate or drive orchestrations within the Agent Network workflow. This object specifies the type of trigger, the connection details (defined inline), relevant policies, method filters, and a file reference to the A2A card definition.",
+      "type": "object",
+      "properties": {
+        "card": {
+          "$ref": "../a2a.json#/definitions/AgentCard"
+        },
+        "policies": {
+          "$ref": "graph_commons.json#/definitions/Policies"
+        },
+        "path": {
+          "type": "string",
+          "description": "The relative path of the endpoint this trigger is listening on. If not provided, it defaults to the graph name"
+        }
+      },
+      "required": [
+        "card"
+      ]
+    },
+    "A2ASendMessageNode": {
+      "type": "object",
+      "description": "The primary operation for initiating interactions with external A2A agents. Clients send a message to an agent and receive either a task that tracks the processing or a direct response message.",
+      "properties": {
+        "a2a_sendMessage": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2ASendMessageNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_sendMessage"
+      ]
+    },
+    "A2ASendResponseNode": {
+      "type": "object",
+      "description": "This node is used to generate the response for an a2aOnMessage execution. The response will ALWAYS be a Task object as defined in the A2A specification.\n\nThis node doesn't define the entire Task object but only the status, artifacts and metadata fields. The id, contextId and history are automatically populated by the trigger.NOTE: Notice that this node doesn't specify a connection, since it operates on the context already defined by the a2a_onMessage trigger",
+      "properties": {
+        "a2a_sendResponse": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2ASendResponseProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_sendResponse"
+      ]
+    },
+    "A2ASendStreamNode": {
+      "type": "object",
+      "description": "The a2aSendStream node behaves similarly to a2aSendMessage, but enables real-time streaming of updates throughout message processing, as described in the A2A specification.\n\nThis node accepts the same input parameters as a2aSendMessage. However, its output ports and event transitions are specialized for handling real-time streaming events:",
+      "properties": {
+        "a2a_sendStream": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2ASendStreamProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_sendStream"
+      ]
+    },
+    "A2ASendMessageNodeProperties": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "$ref": "../references.json#/definitions/ConnectionRef"
+        },
+        "configuration": {
+          "$ref": "../a2a.json#/definitions/MessageSendConfiguration",
+          "description": "An optional object specifying additional instructions, preferences, or runtime configuration parameters for how this send-message request should be processed by the recipient agent and the A2A backbone. This could influence output modes, push notification preferences, history limits, blocking behavior, and more."
+        },
+        "message": {
+          "$ref": "../a2a.json#/definitions/Message",
+          "description": "The main content of the send-message operation. This is a Message object (see Message for full specification), and it must contain all required message fields as described in the A2A protocol: a unique ID, sender role, message parts, and any associated metadata or extensions."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "An optional tenant identifier. This string may be used in multi-tenant platforms or environments to explicitly specify which tenant context this message should operate under. If provided, it is typically appended as a path parameter within API endpoints to route the request."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
+        }
+      },
+      "required": [
+        "message",
+        "connection"
+      ]
+    },
+    "A2ASendResponseProperties": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "$ref": "../references.json#/definitions/ConnectionRef"
+        },
+        "status": {
+          "$ref": "../a2a.json#/definitions/TaskStatus",
+          "description": "The 'TaskStatus' object."
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "../a2a.json#/definitions/Artifact"
+          },
+          "description": "An optional array of 'Artifact' objects"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "A2ASendStreamProperties": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "$ref": "../references.json#/definitions/ConnectionRef"
+        },
+        "configuration": {
+          "$ref": "../a2a.json#/definitions/MessageSendConfiguration",
+          "description": "An optional object specifying additional instructions, preferences, or runtime configuration parameters for how this send-message request should be processed by the recipient agent and the A2A backbone. This could influence output modes, push notification preferences, history limits, blocking behavior, and more."
+        },
+        "message": {
+          "$ref": "../a2a.json#/definitions/Message",
+          "description": "The main content of the send-message operation. This is a Message object (see Message for full specification), and it must contain all required message fields as described in the A2A protocol: a unique ID, sender role, message parts, and any associated metadata or extensions."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "An optional tenant identifier. This string may be used in multi-tenant platforms or environments to explicitly specify which tenant context this message should operate under. If provided, it is typically appended as a path parameter within API endpoints to route the request."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
+        },
+        "onInitialResponse": {
+          "type": "string"
+        },
+        "onStatusUpdate": {
+          "type": "string"
+        },
+        "onArtifactUpdate": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "connection"
+      ]
+    }
+  }
+}

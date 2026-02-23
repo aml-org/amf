@@ -1,1 +1,434 @@
-agent-graph: 0.0.1
+agent-network: 2.0.0
+info:
+  title: Customer Support Agent Network
+  description: A multi-agent network for handling customer support inquiries with
+    specialized agents for different domains.
+  version: 1.0.0
+  tags:
+    - customer-support
+    - multi-agent
+    - production
+registry:
+  agents:
+    customer-support-agent:
+      info:
+        title: Customer Support Agent
+        description: Primary agent for handling customer inquiries and routing to
+          specialized agents.
+        version: 1.0.0
+      interfaces:
+        a2a:
+          card:
+            name: Customer Support Agent
+            description: An intelligent agent that handles customer support requests,
+              answers questions, and routes complex issues to specialized agents.
+            url: https://api.example.com/agents/customer-support/a2a
+            version: 1.0.0
+            protocolVersion: 0.3.0
+            capabilities:
+              streaming: true
+              pushNotifications: true
+              stateTransitionHistory: true
+            defaultInputModes:
+              - text/plain
+              - application/json
+            defaultOutputModes:
+              - text/plain
+              - application/json
+            skills:
+              - id: general-inquiry
+                name: General Inquiry Handler
+                description: Handles general customer questions about products, services,
+                  and policies.
+                tags:
+                  - support
+                  - inquiry
+                  - general
+              - id: issue-routing
+                name: Issue Router
+                description: Routes complex issues to specialized support agents based
+                  on the nature of the problem.
+                tags:
+                  - routing
+                  - escalation
+                  - triage
+            provider:
+              organization: Acme Corp
+              url: https://www.acme-corp.com
+      tools:
+        - mcp:
+            ref:
+              name: knowledge-base-mcp
+            include:
+              - name: search_articles
+              - name: get_article
+        - a2a:
+            ref:
+              name: billing-agent
+            connection:
+              name: billing-agent-connection
+      llm:
+        name: openai-gpt4
+    billing-agent:
+      info:
+        title: Billing Support Agent
+        description: Specialized agent for handling billing and payment inquiries.
+        version: 1.0.0
+      interfaces:
+        a2a:
+          card:
+            name: Billing Support Agent
+            description: Handles billing inquiries, payment issues, and invoice questions.
+            url: https://api.example.com/agents/billing/a2a
+            version: 1.0.0
+            protocolVersion: 0.3.0
+            capabilities:
+              streaming: true
+              pushNotifications: false
+            defaultInputModes:
+              - text/plain
+            defaultOutputModes:
+              - text/plain
+              - application/json
+            skills:
+              - id: invoice-lookup
+                name: Invoice Lookup
+                description: Retrieves and explains invoice details for customers.
+                tags:
+                  - billing
+                  - invoice
+                  - lookup
+              - id: payment-status
+                name: Payment Status
+                description: Checks payment status and provides payment history.
+                tags:
+                  - billing
+                  - payment
+                  - status
+            provider:
+              organization: Acme Corp
+              url: https://www.acme-corp.com
+      llm:
+        name: openai-gpt4
+  mcps:
+    knowledge-base-mcp:
+      info:
+        title: Knowledge Base MCP Server
+        description: MCP server providing access to the customer support knowledge
+          base.
+        version: 1.0.0
+      metadata:
+        protocolVersion: '2025-03-26'
+        transport:
+          kind: streamableHttp
+          path: "/mcp"
+        provider:
+          organization: Acme Corp
+          url: https://www.acme-corp.com
+        capabilities:
+          tools:
+            listChanged: true
+        tools:
+          - name: search_articles
+            description: Search the knowledge base for relevant support articles.
+            inputSchema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The search query
+                limit:
+                  type: integer
+                  description: Maximum number of results to return
+              required:
+                - query
+          - name: get_article
+            description: Retrieve a specific knowledge base article by ID.
+            inputSchema:
+              type: object
+              properties:
+                article_id:
+                  type: string
+                  description: The unique identifier of the article
+              required:
+                - article_id
+      urls:
+        - name: production
+          url: https://mcp.example.com/knowledge-base
+    crm-mcp:
+      info:
+        title: CRM MCP Server
+        description: MCP server providing access to customer relationship management
+          data.
+        version: 1.0.0
+      metadata:
+        protocolVersion: '2025-03-26'
+        transport:
+          kind: sse
+          ssePath: "/sse"
+          messagesPath: "/messages"
+        tools:
+          - name: get_customer
+            description: Retrieve customer information by ID or email.
+            inputSchema:
+              type: object
+              properties:
+                customer_id:
+                  type: string
+                email:
+                  type: string
+  llms:
+    openai-gpt4:
+      info:
+        title: OpenAI GPT-4
+        description: OpenAI GPT-4 language model for agent reasoning.
+        version: 1.0.0
+      metadata:
+        platform: OpenAI
+        models:
+          - gpt-4
+          - gpt-4-turbo
+    gemini-pro:
+      info:
+        title: Google Gemini Pro
+        description: Google Gemini Pro language model.
+        version: 1.0.0
+      metadata:
+        platform: Gemini
+        models:
+          - gemini-pro
+          - gemini-pro-vision
+context:
+  connections:
+    billing-agent-connection:
+      type: a2a
+      ref:
+        name: billing-agent
+      url: https://api.example.com/agents/billing/a2a
+      authentication:
+        kind: apiKey
+        apiKey: "{{secrets.billing_api_key}}"
+    openai-connection:
+      type: llm
+      ref:
+        name: openai-gpt4
+      url: https://api.openai.com/v1
+      authentication:
+        kind: apiKey
+        apiKey: "{{secrets.openai_api_key}}"
+        headerName: Authorization
+    knowledge-base-connection:
+      type: mcp
+      ref:
+        name: knowledge-base-mcp
+      url: https://mcp.example.com/knowledge-base
+      authentication:
+        kind: oauth2-client-credentials
+        clientId: "{{secrets.kb_client_id}}"
+        clientSecret: "{{secrets.kb_client_secret}}"
+        token:
+          url: https://auth.example.com/oauth/token
+          timeout: 30
+          bodyEncoding: form
+        scopes:
+          - read:articles
+          - search:articles
+  policies:
+    rate-limiting-policy:
+      ref:
+        name: rate-limit
+        namespace: mulesoft.policies
+      configuration:
+        maxRequests: 100
+        windowSeconds: 60
+    logging-policy:
+      ref:
+        name: request-logging
+        namespace: mulesoft.policies
+      configuration:
+        logLevel: INFO
+        includeHeaders: true
+        includeBody: false
+graphs:
+  customer-support-flow:
+    label: Customer Support Workflow
+    description: Main workflow for handling customer support requests with intelligent
+      routing.
+    nodes:
+      - a2a_onMessage:
+          id: entry-point
+          to: set-context
+          label: Customer Request Entry
+          description: Entry point for incoming customer support requests.
+          card:
+            name: Support Request Handler
+            description: Receives and processes incoming customer support requests.
+            url: https://api.example.com/agents/support-flow/a2a
+            version: 1.0.0
+            protocolVersion: 0.3.0
+            capabilities:
+              streaming: true
+            defaultInputModes:
+              - text/plain
+            defaultOutputModes:
+              - text/plain
+            skills:
+              - id: receive-request
+                name: Receive Request
+                description: Receives customer support requests.
+                tags:
+                  - entry
+                  - receive
+            provider:
+              organization: Acme Corp
+              url: https://www.acme-corp.com
+      - setVariables:
+          id: set-context
+          to: analyze-request
+          label: Initialize Context
+          description: Set initial variables for the workflow context.
+          variables:
+            - name: requestTimestamp
+              label: Request Timestamp
+              description: The timestamp when the request was received
+              value: "{{now()}}"
+            - name: customerMessage
+              label: Customer Message
+              description: The original customer message
+              value: "{{input.message}}"
+      - generation:
+          id: analyze-request
+          to: route-request
+          label: Analyze Customer Request
+          description: Uses LLM to analyze the customer request and determine the appropriate
+            handling path.
+          prompt: |-
+            Analyze the following customer support request and categorize it as one of: 'billing', 'technical', 'general'. Also extract key entities and sentiment.
+            
+            Request: {{variables.customerMessage}}
+            
+            Provide your analysis in JSON format with fields: category, entities, sentiment, summary.
+          llm:
+            connection:
+              name: openai-connection
+            type: openai_llm
+            configuration:
+              model: gpt-4
+              temperature: 0.3
+              maxOutputTokens: 500
+      - switch:
+          id: route-request
+          to: general-response
+          label: Route Based on Category
+          description: Routes the request to the appropriate handler based on the analysis.
+          conditions:
+            - when: "{{output.category == 'billing'}}"
+              to: billing-handler
+            - when: "{{output.category == 'technical'}}"
+              to: technical-handler
+      - a2a_sendMessage:
+          id: billing-handler
+          to: send-response
+          label: Forward to Billing Agent
+          description: Forwards billing-related requests to the specialized billing
+            agent.
+          connection:
+            name: billing-agent-connection
+          message:
+            kind: message
+            messageId: "{{uuid()}}"
+            role: user
+            parts:
+              - kind: text
+                text: "{{variables.customerMessage}}"
+      - reasoning:
+          id: technical-handler
+          to: send-response
+          label: Handle Technical Issue
+          description: Handles technical support issues using knowledge base and LLM
+            reasoning.
+          prompt: |-
+            You are a technical support specialist. Help the customer with their technical issue.
+            
+            Customer Issue: {{variables.customerMessage}}
+            
+            Analysis: {{output}}
+            
+            Provide a helpful, clear response addressing their technical concern.
+          llm:
+            connection:
+              name: openai-connection
+            type: openai_llm
+            configuration:
+              model: gpt-4
+              temperature: 0.5
+          tools:
+            - mcp:
+                ref:
+                  name: knowledge-base-mcp
+                connection:
+                  name: knowledge-base-connection
+          maxNumberOfLoops: 10
+          maxConsecutiveErrors: 3
+          taskTimeoutSecs: 120
+      - orchestrationAgent:
+          id: general-response
+          to: send-response
+          label: Orchestration Agent Handler
+          description: Handles general inquiries using orchestration agent with multiple
+            tools.
+          prompt: |-
+            You are a friendly customer support agent. Help the customer with their inquiry.
+            
+            Customer Message: {{variables.customerMessage}}
+            
+            Use the available tools to find relevant information and provide a helpful response.
+          llm:
+            connection:
+              name: openai-connection
+            type: openai_llm
+            configuration:
+              model: gpt-4
+              temperature: 0.7
+          tools:
+            - mcp:
+                ref:
+                  name: knowledge-base-mcp
+                connection:
+                  name: knowledge-base-connection
+            - a2a:
+                ref:
+                  name: billing-agent
+                connection:
+                  name: billing-agent-connection
+          maxNumberOfLoops: 5
+          maxConsecutiveErrors: 2
+          taskTimeoutSecs: 60
+      - a2a_sendResponse:
+          id: send-response
+          to: cleanup
+          label: Send Response to Client
+          description: Sends the final response back to the client.
+          status:
+            state: completed
+            message:
+              kind: message
+              messageId: "{{uuid()}}"
+              role: agent
+              parts:
+                - kind: text
+                  text: "{{output.response}}"
+      - unsetVariables:
+          id: cleanup
+          to: end
+          label: Cleanup Variables
+          description: Clean up temporary variables after processing.
+          variables:
+            - name: customerMessage
+            - name: requestTimestamp
+      - switch:
+          id: end
+          to: end
+          label: End Node
+          description: Terminal node for the workflow.
+          conditions: []
