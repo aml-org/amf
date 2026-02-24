@@ -1,0 +1,539 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Core Module",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#AgentMetadata"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
+  "definitions": {
+    "SwitchNode": {
+      "type": "object",
+      "description": "The switch node provides branching logic within an Agent Network, allowing dynamic routing of control flow based on the evaluation of one or more conditions. Each switch node contains a conditions array, where each item specifies a when expression and a corresponding to target. The switch evaluates conditions in the order listed: the first branch whose when evaluates to true is selected and its to target is followed. If none match, the default action is to jump to the to node specified at the top level of the switch.when expressions use the same expression language as other graph nodes, e.g., {{variables.value > 5}}. The first matching when's to will be taken; further branches are ignored. A branch with no when acts as the default/else branch.",
+      "properties": {
+        "switch": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/SwitchProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "switch"
+      ]
+    },
+    "ReasoningNode": {
+      "type": "object",
+      "description": "The reasoning node invokes an agent either by definition or by reference, enabling reuse of LLM-powered logic, toolchains, or full graphs from elsewhere in the specification. The reasoning node may accept parameters that define which agent, what prompt or context to use, tool selection, responses, and where to continue after invocation.\n\nThe reasoning node can take two shapes: a reference object or a full definition.",
+      "properties": {
+        "reasoning": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/ReasoningProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "reasoning"
+      ]
+    },
+    "OrchestrationAgentNode": {
+      "type": "object",
+      "description": "The *orchestrationAgent* node is a specialized agent node used for orchestrating multi-agent hand-offs to achieve a specified goal. It includes system prompts specialized to enable identifying the correct agent from a pool of available agents and routing tasks to the identified agents. The node may loop (up to maxLoops) to perform multiple hand-offs until the goal is achieved or the loop limit is reached.",
+      "properties": {
+        "orchestrationAgent": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/OrchestrationAgentProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "orchestrationAgent"
+      ]
+    },
+    "SetVariablesNode": {
+      "type": "object",
+      "description": "Assigns a value to the specified variable. If the variable is undefined, it is instantiated with the provided value. If the variable already exists, its current value MUST be overwritten.",
+      "properties": {
+        "setVariables": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/SetVariablesProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "setVariables"
+      ]
+    },
+    "UnSetVariablesNode": {
+      "type": "object",
+      "description": "Removes a specific variable from the graph's variable store. No action is taken if the variable is undefined or has already been removed",
+      "properties": {
+        "unsetVariables": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/UnSetVariablesProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "unsetVariables"
+      ]
+    },
+    "GenerationNode": {
+      "type": "object",
+      "description": "The *generation* node calls an LLM to generate text or images. It makes a single call to the LLM without tools and without looping. Use this node when the flow requires a one-shot LLM invocation for content generation (e.g. summarization, image generation, or templated text) with no tool use or iterative agent behavior.",
+      "properties": {
+        "generation": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/GenerationProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "generation"
+      ]
+    },
+    "SwitchProperties": {
+      "type": "object",
+      "description": "List of conditional branches. Each includes when (expression) and to (target node).",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "type": "string",
+                "description": "Expression evaluated as the condition for the branch.",
+                "format": "AgentGraphExpression"
+              },
+              "to": {
+                "type": "string",
+                "description": "Node id/label to jump to if the branch is matched."
+              }
+            },
+            "required": [
+              "when",
+              "to"
+            ]
+          }
+        }
+      },
+      "required": [
+        "conditions"
+      ]
+    },
+    "LLMConfiguration": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "connection": {
+              "$ref": "../references.json#/definitions/ConnectionRef"
+            }
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OpenAIConfiguration"
+            },
+            {
+              "$ref": "#/definitions/GeminiConfiguration"
+            }
+          ]
+        }
+      ]
+    },
+    "OpenAIConfiguration": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "openai_llm"
+        },
+        "configuration": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "The name of the model to use"
+            },
+            "reasoningEffort": {
+              "type": "string",
+              "enum": [
+                "NONE",
+                "MINIMAL",
+                "LOW",
+                "MEDIUM",
+                "HIGH"
+              ],
+              "description": "Constrains effort on reasoning for reasoning models. gtp-5.1 defaults to NONE, previous ones default to MEDIUM."
+            },
+            "temperature": {
+              "type": "number",
+              "description": "Controls randomness in the output"
+            },
+            "topP": {
+              "type": "number",
+              "description": "Nucleus sampling parameter"
+            },
+            "topLogprobs": {
+              "type": "integer",
+              "description": "Number of most likely tokens to return at each position"
+            },
+            "maxOutputTokens": {
+              "type": "number",
+              "description": "Maximum number of tokens to generate"
+            }
+          }
+        }
+      }
+    },
+    "GeminiConfiguration": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "gemini_llm"
+        },
+        "configuration": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "The name of the model to use"
+            },
+            "thinkingLevel": {
+              "type": "string",
+              "enum": [
+                "LOW",
+                "HIGH"
+              ],
+              "description": "The level of thoughts tokens that the model should generate."
+            },
+            "thinkingBudget": {
+              "type": "number",
+              "description": "Indicates the thinking budget in tokens. 0 is DISABLED. -1 is AUTOMATIC. The default values and allowed ranges are model dependent."
+            },
+            "temperature": {
+              "type": "number",
+              "description": "Controls the degree of randomness in token selection. Lower temperatures are good for prompts that require a less open-ended or creative response, while higher temperatures can lead to more diverse or creative results."
+            },
+            "topP": {
+              "type": "integer",
+              "description": "Tokens are selected from the most to least probable until the sum of their probabilities equals this value. Use a lower value for less random responses and a higher value for more random responses."
+            },
+            "responseLogprobs": {
+              "type": "boolean",
+              "description": "Whether to return the log probabilities of the tokens that were chosen by the model at each step"
+            },
+            "maxOutputTokens": {
+              "type": "number",
+              "description": "Maximum number of tokens that can be generated in the response"
+            }
+          }
+        }
+      }
+    },
+    "ToolRef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mcp"
+          ],
+          "properties": {
+            "mcp": {
+              "type": "object",
+              "required": [
+                "ref"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "$ref": "../references.json#/definitions/MCPRef"
+                },
+                "connection": {
+                  "$ref": "../references.json#/definitions/ConnectionRef"
+                },
+                "include": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "a2a"
+          ],
+          "properties": {
+            "a2a": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "../references.json#/definitions/AgentRef"
+                },
+                "connection": {
+                  "$ref": "../references.json#/definitions/ConnectionRef"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReasoningProperties": {
+      "required": [
+        "prompt",
+        "llm",
+        "tools"
+      ],
+      "type": "object",
+      "properties": {
+        "llm": {
+          "$ref": "#/definitions/LLMConfiguration"
+        },
+        "prompt": {
+          "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ToolRef"
+          }
+        },
+        "maxNumberOfLoops": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 25
+        },
+        "maxConsecutiveErrors": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 3
+        },
+        "taskTimeoutSecs": {
+          "type": "integer",
+          "description": "A timeout (in seconds) for the total node execution",
+          "default": 60
+        }
+      }
+    },
+    "SetVariablesProperties": {
+      "type": "object",
+      "required": [
+        "variables"
+      ],
+      "properties": {
+        "variables": {
+          "description": "List of variables to set.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the variable to set"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "UnSetVariablesProperties": {
+      "type": "object",
+      "required": [
+        "variables"
+      ],
+      "properties": {
+        "variables": {
+          "description": "List of variables to unset.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the variable to set"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GenerationProperties": {
+      "required": [
+        "prompt",
+        "llm"
+      ],
+      "type": "object",
+      "properties": {
+        "llm": {
+          "$ref": "#/definitions/LLMConfiguration"
+        },
+        "prompt": {
+          "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
+          "type": "string"
+        }
+      }
+    },
+    "OrchestrationAgentProperties": {
+      "required": [
+        "prompt",
+        "llm",
+        "tools"
+      ],
+      "type": "object",
+      "properties": {
+        "llm": {
+          "$ref": "#/definitions/LLMConfiguration"
+        },
+        "prompt": {
+          "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
+          "type": "string"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mcp"
+                ],
+                "properties": {
+                  "mcp": {
+                    "type": "object",
+                    "required": [
+                      "ref"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "ref": {
+                        "$ref": "../references.json#/definitions/MCPRef"
+                      },
+                      "connection": {
+                        "$ref": "../references.json#/definitions/ConnectionRef"
+                      },
+                      "include": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "a2a"
+                ],
+                "properties": {
+                  "a2a": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "ref"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "../references.json#/definitions/AgentRef"
+                      },
+                      "connection": {
+                        "$ref": "../references.json#/definitions/ConnectionRef"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "maxNumberOfLoops": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens"
+        },
+        "maxConsecutiveErrors": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens"
+        },
+        "taskTimeoutSecs": {
+          "type": "integer",
+          "description": "A timeout (in seconds) for the total node execution"
+        }
+      }
+    }
+  }
+}

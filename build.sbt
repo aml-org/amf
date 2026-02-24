@@ -496,7 +496,18 @@ lazy val agentGraph = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-graph"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-graph" / "shared" / "src" / "main" / "resources" / "schema_agent_graph.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentgraph.internal.spec",
+          objectName    = "AgentGraphSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
