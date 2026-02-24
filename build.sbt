@@ -500,7 +500,7 @@ lazy val agentGraph = crossProject(JSPlatform, JVMPlatform)
     commonSettings ++ Seq(
       Compile / sourceGenerators += Def.task {
         SourceGenerators.generateEmbeddedFileSource(
-          inputFile     = file("amf-agent-graph/shared/src/main/resources/schema_agent_graph.json"),
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-graph" / "shared" / "src" / "main" / "resources" / "schema_agent_graph.json",
           outputBaseDir = (Compile / sourceManaged).value,
           packageName   = "amf.agentgraph.internal.spec",
           objectName    = "AgentGraphSchemaContent"
