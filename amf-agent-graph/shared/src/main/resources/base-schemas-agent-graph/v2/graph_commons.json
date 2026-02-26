@@ -5,6 +5,27 @@
     "@base": "http://anypoint.com/vocabs/graph#"
   },
   "definitions": {
+    "BaseListener": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A unique identifier for the object instance within its context."
+        },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the node"
+        },
+        "description": {
+          "type": "string",
+          "description": "A CommonMark string providing a description of the node."
+        },
+        "to": {
+          "type": "string",
+          "description": "The if of the node where the listener will start."
+        }
+      }
+    },
     "BaseNode": {
       "@context": {
         "@type": [
@@ -21,7 +42,8 @@
           "description": "A unique identifier for the object instance within its context."
         },
         "to": {
-          "type": "string"
+          "type": "string",
+          "description": "The id of the node where it will continue once it has finished."
         },
         "label": {
           "type": "string",

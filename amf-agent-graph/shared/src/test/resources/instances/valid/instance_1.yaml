@@ -254,34 +254,35 @@ graphs:
     label: Customer Support Workflow
     description: Main workflow for handling customer support requests with intelligent
       routing.
+    listener:
+      a2a_onMessage:
+        id: entry-point
+        to: set-context
+        label: Customer Request Entry
+        description: Entry point for incoming customer support requests.
+        card:
+          name: Support Request Handler
+          description: Receives and processes incoming customer support requests.
+          url: https://api.example.com/agents/support-flow/a2a
+          version: 1.0.0
+          protocolVersion: 0.3.0
+          capabilities:
+            streaming: true
+          defaultInputModes:
+            - text/plain
+          defaultOutputModes:
+            - text/plain
+          skills:
+            - id: receive-request
+              name: Receive Request
+              description: Receives customer support requests.
+              tags:
+                - entry
+                - receive
+          provider:
+            organization: Acme Corp
+            url: https://www.acme-corp.com
     nodes:
-      - a2a_onMessage:
-          id: entry-point
-          to: set-context
-          label: Customer Request Entry
-          description: Entry point for incoming customer support requests.
-          card:
-            name: Support Request Handler
-            description: Receives and processes incoming customer support requests.
-            url: https://api.example.com/agents/support-flow/a2a
-            version: 1.0.0
-            protocolVersion: 0.3.0
-            capabilities:
-              streaming: true
-            defaultInputModes:
-              - text/plain
-            defaultOutputModes:
-              - text/plain
-            skills:
-              - id: receive-request
-                name: Receive Request
-                description: Receives customer support requests.
-                tags:
-                  - entry
-                  - receive
-            provider:
-              organization: Acme Corp
-              url: https://www.acme-corp.com
       - setVariables:
           id: set-context
           to: analyze-request
