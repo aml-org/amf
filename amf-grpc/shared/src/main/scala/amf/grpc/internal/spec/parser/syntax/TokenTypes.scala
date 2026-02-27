@@ -64,4 +64,5 @@ object TokenTypes {
   val RANGES                  = "ranges"
   val RANGE                   = "range_"
   val RESERVED_FIELD_NAMES    = "reservedFieldNames"
+  val WEAK                    = "weak"
 }

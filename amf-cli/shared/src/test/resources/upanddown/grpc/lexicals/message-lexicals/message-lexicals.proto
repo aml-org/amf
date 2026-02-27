@@ -1,0 +1,10 @@
+syntax = "proto3";
+package mygrpc;
+import "other.proto";
+
+message SearchResponse {
+  string response = 1;
+}
+service SearchService {
+  rpc Search (other.Other) returns (SearchResponse);
+}

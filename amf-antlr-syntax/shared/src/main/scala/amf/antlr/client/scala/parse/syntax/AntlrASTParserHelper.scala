@@ -50,6 +50,12 @@ trait AntlrASTParserHelper {
     }
   }
 
+  def collectTerminal(node: Node, names: Seq[String]): Seq[Terminal] = {
+    node.children.collect {
+      case t: Terminal if names.contains(t.value) => t
+    }
+  }
+
   def path(node: ASTNode, names: Seq[String]): Option[ASTNode] = {
     if (names.isEmpty) {
       Some(node)

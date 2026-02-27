@@ -9,10 +9,10 @@
   },
   "type": "object",
   "required": [
-    "agent-network"
+    "agentNetwork"
   ],
   "properties": {
-    "agent-network": {
+    "agentNetwork": {
       "type": "string",
       "const": "2.0.0",
       "description": "This string MUST be the version number of the Agent Network Specification that the Agent Network Document uses. The agent-network field SHOULD be used by tooling to interpret the Agent Network Document. This is not related to the document's info.version property."
@@ -130,6 +130,9 @@
         "description": {
           "type": "string"
         },
+        "listener": {
+          "$ref": "#/definitions/Listener"
+        },
         "nodes": {
           "type": "array",
           "items": {
@@ -140,14 +143,19 @@
       "required": [
         "label",
         "description",
+        "listener",
         "nodes"
+      ]
+    },
+    "Listener": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/A2AOnMessageListener"
+        }
       ]
     },
     "Node": {
       "oneOf": [
-        {
-          "$ref": "#/definitions/A2AOnMessageListener"
-        },
         {
           "$ref": "#/definitions/A2ASendMessageNode"
         },
@@ -617,7 +625,7 @@
           "$ref": "#/definitions/Authentication"
         },
         "policies": {
-          "$ref": "#/definitions/Policies"
+          "$ref": "#/definitions/NodePolicies"
         }
       }
     },
@@ -655,7 +663,7 @@
           "description": "The Authentication to use when connecting to the MCP server"
         },
         "policies": {
-          "$ref": "#/definitions/Policies"
+          "$ref": "#/definitions/NodePolicies"
         }
       }
     },
@@ -691,7 +699,7 @@
           "description": "The Authentication to use when connecting to the MCP server"
         },
         "policies": {
-          "$ref": "#/definitions/Policies"
+          "$ref": "#/definitions/NodePolicies"
         }
       }
     },
@@ -1103,7 +1111,7 @@
         "a2a_onMessage": {
           "allOf": [
             {
-              "$ref": "#/definitions/BaseNode"
+              "$ref": "#/definitions/BaseListener"
             },
             {
               "$ref": "#/definitions/A2AOnMessageNodeProperties"
@@ -1543,6 +1551,44 @@
         "configuration": {
           "type": "object"
         }
+      }
+    },
+    "PolicyBindingRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#policybinding"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "The reference to a declared policy binding",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "NodePolicies": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/PolicyBindingRef"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "policy": {
+                "$ref": "#/definitions/PolicyBinding"
+              }
+            }
+          }
+        ]
       }
     },
     "ServerCapabilities": {
@@ -2450,7 +2496,8 @@
           "description": "A unique identifier for the object instance within its context."
         },
         "to": {
-          "type": "string"
+          "type": "string",
+          "description": "The id of the node where it will continue once it has finished."
         },
         "label": {
           "type": "string",
@@ -2465,6 +2512,27 @@
         "id",
         "to"
       ]
+    },
+    "BaseListener": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A unique identifier for the object instance within its context."
+        },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the node"
+        },
+        "description": {
+          "type": "string",
+          "description": "A CommonMark string providing a description of the node."
+        },
+        "to": {
+          "type": "string",
+          "description": "The if of the node where the listener will start."
+        }
+      }
     },
     "AgentCapabilities": {
       "description": "Defines optional capabilities supported by an agent.",
@@ -2499,7 +2567,7 @@
           "$ref": "#/definitions/AgentCard"
         },
         "policies": {
-          "$ref": "#/definitions/Policies"
+          "$ref": "#/definitions/NodePolicies"
         },
         "path": {
           "type": "string",

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package test;
+
+message SearchRequest {
+  string request = 1;
+}
+message SearchResponse {
+  string response = 1;
+}
+service SearchService {
+  rpc Search (SearchRequest) returns ();
+}
