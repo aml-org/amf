@@ -841,11 +841,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map/lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#grpc-raw-proto": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map/grpc-raw-proto/element_0"
@@ -952,11 +947,6 @@
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/0/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/0/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#virtual-element": [
@@ -1067,11 +1057,6 @@
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/1/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/1/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#virtual-element": [
@@ -1983,11 +1968,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#encodes",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(187,1)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map/grpc-raw-proto/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto",
       "http://a.ml/vocabularies/document-source-maps#value": "// Protocol Buffers - Google's data interchange format\n// Copyright 2008 Google Inc.  All rights reserved.\n// https://developers.google.com/protocol-buffers/\n//\n// Redistribution and use in source and binary forms, with or without\n// modification, are permitted provided that the following conditions are\n// met:\n//\n//     * Redistributions of source code must retain the above copyright\n// notice, this list of conditions and the following disclaimer.\n//     * Redistributions in binary form must reproduce the above\n// copyright notice, this list of conditions and the following disclaimer\n// in the documentation and/or other materials provided with the\n// distribution.\n//     * Neither the name of Google Inc. nor the names of its\n// contributors may be used to endorse or promote products derived from\n// this software without specific prior written permission.\n//\n// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n// \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\nsyntax = \"proto3\";\n\npackage google.protobuf;\n\nimport \"any.proto\";\nimport \"source_context.proto\";\n\noption csharp_namespace = \"Google.Protobuf.WellKnownTypes\";\noption cc_enable_arenas = true;\noption java_package = \"com.google.protobuf\";\noption java_outer_classname = \"TypeProto\";\noption java_multiple_files = true;\noption objc_class_prefix = \"GPB\";\noption go_package = \"google.golang.org/protobuf/types/known/typepb\";\n\n// A protocol buffer message type.\nmessage Type {\n  // The fully qualified message name.\n  string name = 1;\n  // The list of fields.\n  repeated Field fields = 2;\n  // The list of types appearing in `oneof` definitions in this type.\n  repeated string oneofs = 3;\n  // The protocol buffer options.\n  repeated Option options = 4;\n  // The source context.\n  SourceContext source_context = 5;\n  // The source syntax.\n  Syntax syntax = 6;\n}\n\n// A single field of a message type.\nmessage Field {\n  // Basic field types.\n  enum Kind {\n    // Field type unknown.\n    TYPE_UNKNOWN = 0;\n    // Field type double.\n    TYPE_DOUBLE = 1;\n    // Field type float.\n    TYPE_FLOAT = 2;\n    // Field type int64.\n    TYPE_INT64 = 3;\n    // Field type uint64.\n    TYPE_UINT64 = 4;\n    // Field type int32.\n    TYPE_INT32 = 5;\n    // Field type fixed64.\n    TYPE_FIXED64 = 6;\n    // Field type fixed32.\n    TYPE_FIXED32 = 7;\n    // Field type bool.\n    TYPE_BOOL = 8;\n    // Field type string.\n    TYPE_STRING = 9;\n    // Field type group. Proto2 syntax only, and deprecated.\n    TYPE_GROUP = 10;\n    // Field type message.\n    TYPE_MESSAGE = 11;\n    // Field type bytes.\n    TYPE_BYTES = 12;\n    // Field type uint32.\n    TYPE_UINT32 = 13;\n    // Field type enum.\n    TYPE_ENUM = 14;\n    // Field type sfixed32.\n    TYPE_SFIXED32 = 15;\n    // Field type sfixed64.\n    TYPE_SFIXED64 = 16;\n    // Field type sint32.\n    TYPE_SINT32 = 17;\n    // Field type sint64.\n    TYPE_SINT64 = 18;\n  }\n\n  // Whether a field is optional, required, or repeated.\n  enum Cardinality {\n    // For fields with unknown cardinality.\n    CARDINALITY_UNKNOWN = 0;\n    // For optional fields.\n    CARDINALITY_OPTIONAL = 1;\n    // For required fields. Proto2 syntax only.\n    CARDINALITY_REQUIRED = 2;\n    // For repeated fields.\n    CARDINALITY_REPEATED = 3;\n  }\n\n  // The field type.\n  Kind kind = 1;\n  // The field cardinality.\n  Cardinality cardinality = 2;\n  // The field number.\n  int32 number = 3;\n  // The field name.\n  string name = 4;\n  // The field type URL, without the scheme, for message or enumeration\n  // types. Example: `\"type.googleapis.com/google.protobuf.Timestamp\"`.\n  string type_url = 6;\n  // The index of the field type in `Type.oneofs`, for message or enumeration\n  // types. The first type has index 1; zero means the type is not in the list.\n  int32 oneof_index = 7;\n  // Whether to use alternative packed wire representation.\n  bool packed = 8;\n  // The protocol buffer options.\n  repeated Option options = 9;\n  // The field JSON name.\n  string json_name = 10;\n  // The string value of the default value of this field. Proto2 syntax only.\n  string default_value = 11;\n}\n\n// Enum type definition.\nmessage Enum {\n  // Enum type name.\n  string name = 1;\n  // Enum value definitions.\n  repeated EnumValue enumvalue = 2;\n  // Protocol buffer options.\n  repeated Option options = 3;\n  // The source context.\n  SourceContext source_context = 4;\n  // The source syntax.\n  Syntax syntax = 5;\n}\n\n// Enum value definition.\nmessage EnumValue {\n  // Enum value name.\n  string name = 1;\n  // Enum value number.\n  int32 number = 2;\n  // Protocol buffer options.\n  repeated Option options = 3;\n}\n\n// A protocol buffer option, which can be attached to a message, field,\n// enumeration, etc.\nmessage Option {\n  // The option's name. For protobuf built-in options (options defined in\n  // descriptor.proto), this is the short name. For example, `\"map_entry\"`.\n  // For custom options, it should be the fully-qualified name. For example,\n  // `\"google.api.http\"`.\n  string name = 1;\n  // The option's value packed in an Any message. If the value is a primitive,\n  // the corresponding wrapper type defined in google/protobuf/wrappers.proto\n  // should be used. If the value is an enum, it should be stored as an int32\n  // value using the google.protobuf.Int32Value type.\n  Any value = 2;\n}\n\n// The syntax in which a protocol buffer element is defined.\nenum Syntax {\n  // Syntax `proto2`.\n  SYNTAX_PROTO2 = 0;\n  // Syntax `proto3`.\n  SYNTAX_PROTO3 = 1;\n}\n"
@@ -2203,11 +2183,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/0/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#encodes",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(158,1)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/0/source-map/virtual-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#declares",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
@@ -2407,11 +2382,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#processingData",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#encodes",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,0)-(48,1)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/references/1/source-map/virtual-element/element_0",
