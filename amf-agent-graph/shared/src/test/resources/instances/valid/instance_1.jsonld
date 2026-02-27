@@ -14,7 +14,7 @@
         "http://anypoint.com/vocabs/agents#Network",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#agent-network": "2.0.0",
+      "http://anypoint.com/vocabs/agents#agentNetwork": "2.0.0",
       "http://anypoint.com/vocabs/agents#info": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/info"
       },
@@ -192,9 +192,6 @@
         },
         {
           "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/7"
-        },
-        {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/8"
         }
       ]
     },
@@ -457,16 +454,6 @@
       ],
       "http://a.ml/vocabularies/core#unsetVariables": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/7/unsetVariables"
-      }
-    },
-    {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/8",
-      "@type": [
-        "http://a.ml/vocabularies/core#nodes",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#switch": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/8/switch"
       }
     },
     {
@@ -936,18 +923,6 @@
           "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/7/unsetVariables/variables/1"
         }
       ]
-    },
-    {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/8/switch",
-      "@type": [
-        "http://a.ml/vocabularies/core#switch",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#id": "end",
-      "http://a.ml/vocabularies/core#to": "end",
-      "http://a.ml/vocabularies/core#label": "End Node",
-      "http://a.ml/vocabularies/core#description": "Terminal node for the workflow.",
-      "http://a.ml/vocabularies/core#conditions": []
     },
     {
       "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/interfaces/a2a",

@@ -9,10 +9,10 @@
   },
   "type": "object",
   "required": [
-    "agent-network"
+    "agentNetwork"
   ],
   "properties": {
-    "agent-network": {
+    "agentNetwork": {
       "type": "string",
       "const": "2.0.0",
       "description": "This string MUST be the version number of the Agent Network Specification that the Agent Network Document uses. The agent-network field SHOULD be used by tooling to interpret the Agent Network Document. This is not related to the document's info.version property."

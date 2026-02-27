@@ -1,4 +1,4 @@
-agent-network: 2.0.0
+agentNetwork: 2.0.0
 info:
   title: Customer Support Agent Network
   description: A multi-agent network for handling customer support inquiries with
@@ -427,9 +427,3 @@ graphs:
           variables:
             - name: customerMessage
             - name: requestTimestamp
-      - switch:
-          id: end
-          to: end
-          label: End Node
-          description: Terminal node for the workflow.
-          conditions: []
