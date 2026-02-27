@@ -4,7 +4,7 @@ import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.core.client.scala.parse.document._
 import amf.grpc.internal.spec.common.WellKnownTypes._
 import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
-import amf.grpc.internal.spec.parser.syntax.TokenTypes.{IMPORT_STATEMENT, STRING_LITERAL}
+import amf.grpc.internal.spec.parser.syntax.TokenTypes.{IMPORT_STATEMENT, STRING_LITERAL, WEAK}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 class GrpcReferenceHandler extends ReferenceHandler with GrpcASTParserHelper {
@@ -17,21 +17,29 @@ class GrpcReferenceHandler extends ReferenceHandler with GrpcASTParserHelper {
 
   private def collectImports(antlr: AntlrParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     antlr.ast.rootOption().foreach { root =>
-      collect(root, Seq(IMPORT_STATEMENT, STRING_LITERAL)).foreach { case stmt: Node =>
-        val importString =
-          stmt.children.headOption.map(_.asInstanceOf[Terminal].value.replaceAll("\"", "")).getOrElse("")
-        // Register well-known types in global space
-        if (isWellKnownImport(importString)) {
-          createShapesForImport(importString, toAnnotations(stmt)).foreach { shape =>
-            ctx.globalSpace.update(s".${shape.name.value()}", shape)
+      collect(root, Seq(IMPORT_STATEMENT)).headOption.foreach {
+        case importStmt: Node =>
+          collectTerminal(importStmt, Seq(WEAK)).foreach { terminal =>
+            astError(s"Unsupported import option '${terminal.value}'", toAnnotations(importStmt))(ctx)
           }
-        } else {
-          collector.+=(
-            importString,
-            LibraryReference,
-            stmt.location
-          )
-        }
+      }
+      collect(root, Seq(IMPORT_STATEMENT, STRING_LITERAL)).foreach {
+        case stmt: Node =>
+          val importString =
+            stmt.children.headOption.map(_.asInstanceOf[Terminal].value.replaceAll("\"", "")).getOrElse("")
+          // Register well-known types in global space
+          if (isWellKnownImport(importString)) {
+            createShapesForImport(importString, toAnnotations(stmt)).foreach { shape =>
+              ctx.globalSpace.update(s".${shape.name.value()}", shape)
+            }
+          }
+          else {
+            collector.+=(
+                importString,
+                LibraryReference,
+                stmt.location
+            )
+          }
       }
     }
     collector

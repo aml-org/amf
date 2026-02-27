@@ -2,7 +2,7 @@ package amf.parser
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.core.client.scala.errorhandling.IgnoringErrorHandler
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.grpc.client.scala.GRPCConfiguration
 
@@ -10,7 +10,7 @@ class GrpcParserAssertionTest extends GrpcFunSuiteCycleTests {
   override def basePath: String = "file://amf-cli/shared/src/test/resources/upanddown/grpc/"
 
   private val configuration: AMFConfiguration =
-    GRPCConfiguration.GRPC().withErrorHandlerProvider(() => IgnoringErrorHandler)
+    GRPCConfiguration.GRPC().withErrorHandlerProvider(() => UnhandledErrorHandler)
 
   test("Can parse gRPC spec") {
     for {
