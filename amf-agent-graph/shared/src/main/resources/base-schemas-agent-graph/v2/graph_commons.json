@@ -5,7 +5,7 @@
     "@base": "http://anypoint.com/vocabs/graph#"
   },
   "definitions": {
-    "BaseListener": {
+    "BaseTrigger": {
       "type": "object",
       "properties": {
         "id": {
@@ -22,7 +22,7 @@
         },
         "to": {
           "type": "string",
-          "description": "The if of the node where the listener will start."
+          "description": "The if of the node where the trigger will start."
         }
       }
     },

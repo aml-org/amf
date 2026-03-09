@@ -8,13 +8,13 @@
     "@base": "http://anypoint.com/vocabs/agents#"
   },
   "definitions": {
-    "A2AOnMessageListener": {
+    "A2AOnMessageTrigger": {
       "type": "object",
       "properties": {
         "a2a_onMessage": {
           "allOf": [
             {
-              "$ref": "graph_commons.json#/definitions/BaseListener"
+              "$ref": "graph_commons.json#/definitions/BaseTrigger"
             },
             {
               "$ref": "#/definitions/A2AOnMessageNodeProperties"

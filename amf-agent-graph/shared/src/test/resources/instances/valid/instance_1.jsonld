@@ -165,8 +165,8 @@
       ],
       "http://a.ml/vocabularies/core#label": "Customer Support Workflow",
       "http://a.ml/vocabularies/core#description": "Main workflow for handling customer support requests with intelligent routing.",
-      "http://a.ml/vocabularies/core#listener": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener"
+      "http://a.ml/vocabularies/core#trigger": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger"
       },
       "http://a.ml/vocabularies/core#nodes": [
         {
@@ -302,7 +302,7 @@
       "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/billing-agent-connection/ref"
       },
-      "http://anypoint.com/vocabs/agents#type": "a2a",
+      "http://anypoint.com/vocabs/agents#kind": "a2a",
       "http://anypoint.com/vocabs/agents#authentication": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/billing-agent-connection/authentication"
       },
@@ -318,7 +318,7 @@
       "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/openai-connection/ref"
       },
-      "http://anypoint.com/vocabs/agents#type": "llm",
+      "http://anypoint.com/vocabs/agents#kind": "llm",
       "http://anypoint.com/vocabs/agents#authentication": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/openai-connection/authentication"
       },
@@ -334,7 +334,7 @@
       "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/knowledge-base-connection/ref"
       },
-      "http://anypoint.com/vocabs/agents#type": "mcp",
+      "http://anypoint.com/vocabs/agents#kind": "mcp",
       "http://anypoint.com/vocabs/agents#authentication": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/knowledge-base-connection/authentication"
       },
@@ -367,13 +367,13 @@
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger",
       "@type": [
-        "http://a.ml/vocabularies/core#listener",
+        "http://a.ml/vocabularies/core#trigger",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#a2a_onMessage": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage"
       }
     },
     {
@@ -392,8 +392,8 @@
         "http://a.ml/vocabularies/core#nodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#generation": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation"
+      "http://a.ml/vocabularies/core#generate": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate"
       }
     },
     {
@@ -402,8 +402,8 @@
         "http://a.ml/vocabularies/core#nodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#switch": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/switch"
+      "http://a.ml/vocabularies/core#if": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/if"
       }
     },
     {
@@ -422,8 +422,8 @@
         "http://a.ml/vocabularies/core#nodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#reasoning": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning"
+      "http://a.ml/vocabularies/core#agentLoop": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop"
       }
     },
     {
@@ -432,8 +432,8 @@
         "http://a.ml/vocabularies/core#nodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#orchestrationAgent": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent"
+      "http://a.ml/vocabularies/core#agentOrchestrator": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator"
       }
     },
     {
@@ -759,7 +759,7 @@
       "http://a.ml/vocabularies/core#includeBody": false
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage",
       "@type": [
         "http://a.ml/vocabularies/core#a2a_onMessage",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -769,7 +769,7 @@
       "http://a.ml/vocabularies/core#label": "Customer Request Entry",
       "http://a.ml/vocabularies/core#description": "Entry point for incoming customer support requests.",
       "http://a.ml/vocabularies/core#card": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card"
       }
     },
     {
@@ -792,9 +792,9 @@
       ]
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate",
       "@type": [
-        "http://a.ml/vocabularies/core#generation",
+        "http://a.ml/vocabularies/core#generate",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#id": "analyze-request",
@@ -803,13 +803,13 @@
       "http://a.ml/vocabularies/core#description": "Uses LLM to analyze the customer request and determine the appropriate handling path.",
       "http://a.ml/vocabularies/core#prompt": "Analyze the following customer support request and categorize it as one of: 'billing', 'technical', 'general'. Also extract key entities and sentiment.\n\nRequest: {{variables.customerMessage}}\n\nProvide your analysis in JSON format with fields: category, entities, sentiment, summary.",
       "http://a.ml/vocabularies/core#llm": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation/llm"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate/llm"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/switch",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/if",
       "@type": [
-        "http://a.ml/vocabularies/core#switch",
+        "http://a.ml/vocabularies/core#if",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#id": "route-request",
@@ -818,10 +818,10 @@
       "http://a.ml/vocabularies/core#description": "Routes the request to the appropriate handler based on the analysis.",
       "http://a.ml/vocabularies/core#conditions": [
         {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/switch/conditions/0"
+          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/if/conditions/0"
         },
         {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/switch/conditions/1"
+          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/if/conditions/1"
         }
       ]
     },
@@ -843,9 +843,9 @@
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop",
       "@type": [
-        "http://a.ml/vocabularies/core#reasoning",
+        "http://a.ml/vocabularies/core#agentLoop",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#id": "technical-handler",
@@ -854,11 +854,11 @@
       "http://a.ml/vocabularies/core#description": "Handles technical support issues using knowledge base and LLM reasoning.",
       "http://a.ml/vocabularies/core#prompt": "You are a technical support specialist. Help the customer with their technical issue.\n\nCustomer Issue: {{variables.customerMessage}}\n\nAnalysis: {{output}}\n\nProvide a helpful, clear response addressing their technical concern.",
       "http://a.ml/vocabularies/core#llm": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/llm"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/llm"
       },
       "http://a.ml/vocabularies/core#tools": [
         {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0"
+          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0"
         }
       ],
       "http://a.ml/vocabularies/core#maxNumberOfLoops": 10,
@@ -866,25 +866,26 @@
       "http://a.ml/vocabularies/core#taskTimeoutSecs": 120
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator",
       "@type": [
-        "http://a.ml/vocabularies/core#orchestrationAgent",
+        "http://a.ml/vocabularies/core#agentOrchestrator",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#id": "general-response",
       "http://a.ml/vocabularies/core#to": "send-response",
       "http://a.ml/vocabularies/core#label": "Orchestration Agent Handler",
       "http://a.ml/vocabularies/core#description": "Handles general inquiries using orchestration agent with multiple tools.",
-      "http://a.ml/vocabularies/core#prompt": "You are a friendly customer support agent. Help the customer with their inquiry.\n\nCustomer Message: {{variables.customerMessage}}\n\nUse the available tools to find relevant information and provide a helpful response.",
+      "http://a.ml/vocabularies/core#instructions": "You are a friendly customer support agent. Help the customer with their inquiry.\nUse the available tools to find relevant information and provide a helpful response.",
+      "http://a.ml/vocabularies/core#prompt": "Customer Message: {{variables.customerMessage}}",
       "http://a.ml/vocabularies/core#llm": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/llm"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/llm"
       },
       "http://a.ml/vocabularies/core#tools": [
         {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0"
+          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/0"
         },
         {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1"
+          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1"
         }
       ],
       "http://a.ml/vocabularies/core#maxNumberOfLoops": 5,
@@ -943,13 +944,9 @@
       "http://a.ml/vocabularies/core#ref": {
         "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/tools/0/mcp/ref"
       },
-      "http://a.ml/vocabularies/core#include": [
-        {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/tools/0/mcp/include/0"
-        },
-        {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/tools/0/mcp/include/1"
-        }
+      "http://a.ml/vocabularies/core#allowed": [
+        "search_articles",
+        "get_article"
       ]
     },
     {
@@ -1064,7 +1061,7 @@
       "http://anypoint.com/vocabs/agents#timeout": 30
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card",
       "@type": [
         "http://a.ml/vocabularies/core#card",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1075,7 +1072,7 @@
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/core#protocolVersion": "0.3.0",
       "http://a.ml/vocabularies/core#capabilities": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card/capabilities"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card/capabilities"
       },
       "http://a.ml/vocabularies/core#defaultInputModes": [
         "text/plain"
@@ -1085,11 +1082,11 @@
       ],
       "http://a.ml/vocabularies/core#skills": [
         {
-          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card/skills/0"
+          "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card/skills/0"
         }
       ],
       "http://a.ml/vocabularies/core#provider": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card/provider"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card/provider"
       }
     },
     {
@@ -1115,21 +1112,21 @@
       "http://a.ml/vocabularies/core#value": "{{input.message}}"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation/llm",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate/llm",
       "@type": [
         "http://a.ml/vocabularies/core#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#connection": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation/llm/connection"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate/llm/connection"
       },
-      "http://a.ml/vocabularies/core#type": "openai_llm",
+      "http://a.ml/vocabularies/core#kind": "openai",
       "http://a.ml/vocabularies/core#configuration": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation/llm/configuration"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate/llm/configuration"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/switch/conditions/0",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/if/conditions/0",
       "@type": [
         "http://a.ml/vocabularies/core#conditions",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1138,7 +1135,7 @@
       "http://a.ml/vocabularies/core#to": "billing-handler"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/switch/conditions/1",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/2/if/conditions/1",
       "@type": [
         "http://a.ml/vocabularies/core#conditions",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1170,61 +1167,61 @@
       ]
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/llm",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/llm",
       "@type": [
         "http://a.ml/vocabularies/core#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#connection": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/llm/connection"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/llm/connection"
       },
-      "http://a.ml/vocabularies/core#type": "openai_llm",
+      "http://a.ml/vocabularies/core#kind": "openai",
       "http://a.ml/vocabularies/core#configuration": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/llm/configuration"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/llm/configuration"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0",
       "@type": [
         "http://a.ml/vocabularies/core#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#mcp": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0/mcp"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0/mcp"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/llm",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/llm",
       "@type": [
         "http://a.ml/vocabularies/core#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#connection": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/llm/connection"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/llm/connection"
       },
-      "http://a.ml/vocabularies/core#type": "openai_llm",
+      "http://a.ml/vocabularies/core#kind": "openai",
       "http://a.ml/vocabularies/core#configuration": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/llm/configuration"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/llm/configuration"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/0",
       "@type": [
         "http://a.ml/vocabularies/core#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#mcp": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0/mcp"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/0/mcp"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1",
       "@type": [
         "http://a.ml/vocabularies/core#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#a2a": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1/a2a"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1/a2a"
       }
     },
     {
@@ -1295,22 +1292,6 @@
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "knowledge-base-mcp"
-    },
-    {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/tools/0/mcp/include/0",
-      "@type": [
-        "http://a.ml/vocabularies/core#include",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#name": "search_articles"
-    },
-    {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/tools/0/mcp/include/1",
-      "@type": [
-        "http://a.ml/vocabularies/core#include",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#name": "get_article"
     },
     {
       "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/customer-support-agent/tools/1/a2a/ref",
@@ -1409,7 +1390,7 @@
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card/capabilities",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card/capabilities",
       "@type": [
         "http://a.ml/vocabularies/core#capabilities",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1417,7 +1398,7 @@
       "http://a.ml/vocabularies/core#streaming": true
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card/skills/0",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card/skills/0",
       "@type": [
         "http://a.ml/vocabularies/core#skills",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1431,7 +1412,7 @@
       ]
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/listener/a2a_onMessage/card/provider",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/trigger/a2a_onMessage/card/provider",
       "@type": [
         "http://a.ml/vocabularies/core#provider",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1440,7 +1421,7 @@
       "http://a.ml/vocabularies/core#url": "https://www.acme-corp.com"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation/llm/connection",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate/llm/connection",
       "@type": [
         "http://a.ml/vocabularies/core#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1448,7 +1429,7 @@
       "http://a.ml/vocabularies/core#name": "openai-connection"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generation/llm/configuration",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/1/generate/llm/configuration",
       "@type": [
         "http://a.ml/vocabularies/core#configuration",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1467,7 +1448,7 @@
       "http://a.ml/vocabularies/core#text": "{{variables.customerMessage}}"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/llm/connection",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/llm/connection",
       "@type": [
         "http://a.ml/vocabularies/core#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1475,7 +1456,7 @@
       "http://a.ml/vocabularies/core#name": "openai-connection"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/llm/configuration",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/llm/configuration",
       "@type": [
         "http://a.ml/vocabularies/core#configuration",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1484,20 +1465,20 @@
       "http://a.ml/vocabularies/core#temperature": 0.5
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0/mcp",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0/mcp",
       "@type": [
         "http://a.ml/vocabularies/core#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0/mcp/ref"
-      },
       "http://a.ml/vocabularies/core#connection": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0/mcp/connection"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0/mcp/connection"
+      },
+      "http://a.ml/vocabularies/core#headers": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0/mcp/headers"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/llm/connection",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/llm/connection",
       "@type": [
         "http://a.ml/vocabularies/core#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1505,7 +1486,7 @@
       "http://a.ml/vocabularies/core#name": "openai-connection"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/llm/configuration",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/llm/configuration",
       "@type": [
         "http://a.ml/vocabularies/core#configuration",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1514,29 +1495,26 @@
       "http://a.ml/vocabularies/core#temperature": 0.7
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0/mcp",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/0/mcp",
       "@type": [
         "http://a.ml/vocabularies/core#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0/mcp/ref"
-      },
       "http://a.ml/vocabularies/core#connection": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0/mcp/connection"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/0/mcp/connection"
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1/a2a",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1/a2a",
       "@type": [
         "http://a.ml/vocabularies/core#a2a",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1/a2a/ref"
-      },
       "http://a.ml/vocabularies/core#connection": {
-        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1/a2a/connection"
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1/a2a/connection"
+      },
+      "http://a.ml/vocabularies/core#headers": {
+        "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1/a2a/headers"
       }
     },
     {
@@ -1688,15 +1666,7 @@
       }
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0/mcp/ref",
-      "@type": [
-        "http://a.ml/vocabularies/core#ref",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#name": "knowledge-base-mcp"
-    },
-    {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/reasoning/tools/0/mcp/connection",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0/mcp/connection",
       "@type": [
         "http://a.ml/vocabularies/core#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1704,15 +1674,15 @@
       "http://a.ml/vocabularies/core#name": "knowledge-base-connection"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0/mcp/ref",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/4/agentLoop/tools/0/mcp/headers",
       "@type": [
-        "http://a.ml/vocabularies/core#ref",
+        "http://a.ml/vocabularies/core#headers",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#name": "knowledge-base-mcp"
+      "http://a.ml/vocabularies/core#authorization": "{{headers.authorization}}"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/0/mcp/connection",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/0/mcp/connection",
       "@type": [
         "http://a.ml/vocabularies/core#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -1720,20 +1690,20 @@
       "http://a.ml/vocabularies/core#name": "knowledge-base-connection"
     },
     {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1/a2a/ref",
-      "@type": [
-        "http://a.ml/vocabularies/core#ref",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://a.ml/vocabularies/core#name": "billing-agent"
-    },
-    {
-      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/orchestrationAgent/tools/1/a2a/connection",
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1/a2a/connection",
       "@type": [
         "http://a.ml/vocabularies/core#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#name": "billing-agent-connection"
+    },
+    {
+      "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/5/agentOrchestrator/tools/1/a2a/headers",
+      "@type": [
+        "http://a.ml/vocabularies/core#headers",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#authorization": "{{headers.authorization}}"
     },
     {
       "@id": "file://amf-agent-graph/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/graphs/customer-support-flow/nodes/6/a2a_sendResponse/status/message/parts/0",
