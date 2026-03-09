@@ -59,9 +59,9 @@ registry:
         - mcp:
             ref:
               name: knowledge-base-mcp
-            include:
-              - name: search_articles
-              - name: get_article
+            allowed:
+              - search_articles
+              - get_article
         - a2a:
             ref:
               name: billing-agent
@@ -201,7 +201,7 @@ registry:
 context:
   connections:
     billing-agent-connection:
-      type: a2a
+      kind: a2a
       ref:
         name: billing-agent
       url: https://api.example.com/agents/billing/a2a
@@ -209,7 +209,7 @@ context:
         kind: apiKey
         apiKey: "{{secrets.billing_api_key}}"
     openai-connection:
-      type: llm
+      kind: llm
       ref:
         name: openai-gpt4
       url: https://api.openai.com/v1
@@ -218,7 +218,7 @@ context:
         apiKey: "{{secrets.openai_api_key}}"
         headerName: Authorization
     knowledge-base-connection:
-      type: mcp
+      kind: mcp
       ref:
         name: knowledge-base-mcp
       url: https://mcp.example.com/knowledge-base
@@ -254,7 +254,7 @@ graphs:
     label: Customer Support Workflow
     description: Main workflow for handling customer support requests with intelligent
       routing.
-    listener:
+    trigger:
       a2a_onMessage:
         id: entry-point
         to: set-context
@@ -297,7 +297,7 @@ graphs:
               label: Customer Message
               description: The original customer message
               value: "{{input.message}}"
-      - generation:
+      - generate:
           id: analyze-request
           to: route-request
           label: Analyze Customer Request
@@ -312,12 +312,12 @@ graphs:
           llm:
             connection:
               name: openai-connection
-            type: openai_llm
+            kind: openai
             configuration:
               model: gpt-4
               temperature: 0.3
               maxOutputTokens: 500
-      - switch:
+      - if:
           id: route-request
           to: general-response
           label: Route Based on Category
@@ -342,7 +342,7 @@ graphs:
             parts:
               - kind: text
                 text: "{{variables.customerMessage}}"
-      - reasoning:
+      - agentLoop:
           id: technical-handler
           to: send-response
           label: Handle Technical Issue
@@ -359,49 +359,46 @@ graphs:
           llm:
             connection:
               name: openai-connection
-            type: openai_llm
+            kind: openai
             configuration:
               model: gpt-4
               temperature: 0.5
           tools:
             - mcp:
-                ref:
-                  name: knowledge-base-mcp
                 connection:
                   name: knowledge-base-connection
+                headers:
+                  authorization: "{{headers.authorization}}"
           maxNumberOfLoops: 10
           maxConsecutiveErrors: 3
           taskTimeoutSecs: 120
-      - orchestrationAgent:
+      - agentOrchestrator:
           id: general-response
           to: send-response
           label: Orchestration Agent Handler
           description: Handles general inquiries using orchestration agent with multiple
             tools.
-          prompt: |-
+          instructions: |-
             You are a friendly customer support agent. Help the customer with their inquiry.
-            
-            Customer Message: {{variables.customerMessage}}
-            
             Use the available tools to find relevant information and provide a helpful response.
+          prompt: |-
+            Customer Message: {{variables.customerMessage}}
           llm:
             connection:
               name: openai-connection
-            type: openai_llm
+            kind: openai
             configuration:
               model: gpt-4
               temperature: 0.7
           tools:
             - mcp:
-                ref:
-                  name: knowledge-base-mcp
                 connection:
                   name: knowledge-base-connection
             - a2a:
-                ref:
-                  name: billing-agent
                 connection:
                   name: billing-agent-connection
+                headers:
+                  authorization: "{{headers.authorization}}"
           maxNumberOfLoops: 5
           maxConsecutiveErrors: 2
           taskTimeoutSecs: 60
