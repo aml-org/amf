@@ -11,6 +11,17 @@
   "required": [
     "agentNetwork"
   ],
+  "anyOf": [
+    {
+      "required": ["registry"]
+    },
+    {
+      "required": ["context"]
+    },
+    {
+      "required": ["graphs"]
+    }
+  ],
   "properties": {
     "agentNetwork": {
       "type": "string",
@@ -130,8 +141,8 @@
         "description": {
           "type": "string"
         },
-        "listener": {
-          "$ref": "#/definitions/Listener"
+        "trigger": {
+          "$ref": "#/definitions/Trigger"
         },
         "nodes": {
           "type": "array",
@@ -143,14 +154,14 @@
       "required": [
         "label",
         "description",
-        "listener",
+        "trigger",
         "nodes"
       ]
     },
-    "Listener": {
+    "Trigger": {
       "oneOf": [
         {
-          "$ref": "#/definitions/A2AOnMessageListener"
+          "$ref": "#/definitions/A2AOnMessageTrigger"
         }
       ]
     },
@@ -166,13 +177,16 @@
           "$ref": "#/definitions/A2ASendStreamNode"
         },
         {
-          "$ref": "#/definitions/SwitchNode"
+          "$ref": "#/definitions/MCPCallToolNode"
         },
         {
-          "$ref": "#/definitions/ReasoningNode"
+          "$ref": "#/definitions/IfNode"
         },
         {
-          "$ref": "#/definitions/OrchestrationAgentNode"
+          "$ref": "#/definitions/AgentLoopNode"
+        },
+        {
+          "$ref": "#/definitions/AgentOrchestratorNode"
         },
         {
           "$ref": "#/definitions/SetVariablesNode"
@@ -181,7 +195,7 @@
           "$ref": "#/definitions/UnSetVariablesNode"
         },
         {
-          "$ref": "#/definitions/GenerationNode"
+          "$ref": "#/definitions/GenerateNode"
         }
       ]
     },
@@ -250,7 +264,7 @@
         "password"
       ],
       "properties": {
-        "type": {
+        "kind": {
           "const": "basic",
           "type": "string"
         },
@@ -605,11 +619,11 @@
       "additionalProperties": false,
       "description": "Defines a connection to an agent that exists outside of this domain",
       "required": [
-        "type",
+        "kind",
         "ref"
       ],
       "properties": {
-        "type": {
+        "kind": {
           "const": "a2a",
           "type": "string"
         },
@@ -641,12 +655,12 @@
       "additionalProperties": false,
       "description": "Defines a connection to a LLM that exists outside of this domain",
       "required": [
-        "type",
+        "kind",
         "ref",
         "authentication"
       ],
       "properties": {
-        "type": {
+        "kind": {
           "const": "llm",
           "type": "string"
         },
@@ -680,10 +694,10 @@
       "description": "Defines a connection to a MCP Server that exists outside of this domain",
       "required": [
         "ref",
-        "type"
+        "kind"
       ],
       "properties": {
-        "type": {
+        "kind": {
           "const": "mcp",
           "type": "string"
         },
@@ -810,15 +824,12 @@
                       "ref": {
                         "$ref": "#/definitions/MCPRef"
                       },
-                      "include": {
+                      "allowed": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            }
-                          }
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                          "minLength": 1
                         }
                       }
                     }
@@ -1003,23 +1014,23 @@
         }
       }
     },
-    "OrchestrationAgentNode": {
+    "AgentOrchestratorNode": {
       "type": "object",
-      "description": "The *orchestrationAgent* node is a specialized agent node used for orchestrating multi-agent hand-offs to achieve a specified goal. It includes system prompts specialized to enable identifying the correct agent from a pool of available agents and routing tasks to the identified agents. The node may loop (up to maxLoops) to perform multiple hand-offs until the goal is achieved or the loop limit is reached.",
+      "description": "The agentOrchestrator node is a specialized agentLoop used for orchestrating multi-agent hand-offs to achieve a specified goal. It includes system prompts specialized to enable identifying the correct agent from a pool of available agents and routing tasks to the identified agents. The node may loop (up to maxLoops) to perform multiple hand-offs until the goal is achieved or the loop limit is reached.",
       "properties": {
-        "orchestrationAgent": {
+        "agentOrchestrator": {
           "allOf": [
             {
               "$ref": "#/definitions/BaseNode"
             },
             {
-              "$ref": "#/definitions/OrchestrationAgentProperties"
+              "$ref": "#/definitions/AgentOrchestratorProperties"
             }
           ]
         }
       },
       "required": [
-        "orchestrationAgent"
+        "agentOrchestrator"
       ]
     },
     "A2ASendResponseNode": {
@@ -1041,11 +1052,11 @@
         "a2a_sendResponse"
       ]
     },
-    "GenerationNode": {
+    "GenerateNode": {
       "type": "object",
-      "description": "The *generation* node calls an LLM to generate text or images. It makes a single call to the LLM without tools and without looping. Use this node when the flow requires a one-shot LLM invocation for content generation (e.g. summarization, image generation, or templated text) with no tool use or iterative agent behavior.",
+      "description": "The *generate* node calls an LLM to generate text. It makes a single call to the LLM without tools and without looping. Use this node when the flow requires a one-shot LLM invocation for content generation (e.g. summarization, templated text, etc) with no tool use or iterative agent behavior.",
       "properties": {
-        "generation": {
+        "generate": {
           "allOf": [
             {
               "$ref": "#/definitions/BaseNode"
@@ -1057,8 +1068,67 @@
         }
       },
       "required": [
-        "generation"
+        "generate"
       ]
+    },
+    "MCPCallToolNode": {
+      "type": "object",
+      "description": "The mcp_callTool node is used to explicitly invoke an MCP tool. The call doesn't occur as a decision from an agent node but as a deterministic step defined by the graph author.",
+      "properties": {
+        "mcp_callTool": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/MCPCallToolNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "mcp_callTool"
+      ]
+    },
+    "MCPCallToolNodeProperties": {
+      "type": "object",
+      "description": "Properties for the MCP CallTool node that explicitly invokes an MCP tool as a deterministic step.",
+      "properties": {
+        "connection": {
+          "$ref": "#/definitions/ConnectionRef",
+          "description": "A reference to an MCP connection"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "The name of the tool to call",
+          "format": "AgentGraphExpressionOptional",
+          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+          "minLength": 1
+        },
+        "arguments": {
+          "type": "object",
+          "description": "The tool's input arguments. Can be skipped if the tool takes no arguments",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "headers": {
+          "$ref": "#/definitions/HttpHeaders",
+          "description": "Headers to be added when sending requests to the MCP server. Useful for use cases such as authorization, correlation, etc"
+        }
+      },
+      "required": [
+        "connection",
+        "toolName"
+      ]
+    },
+    "HttpHeaders": {
+      "type": "object",
+      "description": "HTTP headers as key-value pairs. Keys must be valid HTTP header names.",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "propertyNames": {
+        "pattern": "^[!#$%&'*+\\-.0-9A-Z^_`a-z|~]+$"
+      }
     },
     "PolicyRef": {
       "@context": {
@@ -1105,13 +1175,13 @@
         }
       }
     },
-    "A2AOnMessageListener": {
+    "A2AOnMessageTrigger": {
       "type": "object",
       "properties": {
         "a2a_onMessage": {
           "allOf": [
             {
-              "$ref": "#/definitions/BaseListener"
+              "$ref": "#/definitions/BaseTrigger"
             },
             {
               "$ref": "#/definitions/A2AOnMessageNodeProperties"
@@ -1336,42 +1406,42 @@
       ],
       "type": "object"
     },
-    "ReasoningNode": {
+    "AgentLoopNode": {
       "type": "object",
       "description": "The reasoning node invokes an agent either by definition or by reference, enabling reuse of LLM-powered logic, toolchains, or full graphs from elsewhere in the specification. The reasoning node may accept parameters that define which agent, what prompt or context to use, tool selection, responses, and where to continue after invocation.\n\nThe reasoning node can take two shapes: a reference object or a full definition.",
       "properties": {
-        "reasoning": {
+        "agentLoop": {
           "allOf": [
             {
               "$ref": "#/definitions/BaseNode"
             },
             {
-              "$ref": "#/definitions/ReasoningProperties"
+              "$ref": "#/definitions/AgentLoopProperties"
             }
           ]
         }
       },
       "required": [
-        "reasoning"
+        "agentLoop"
       ]
     },
-    "SwitchNode": {
+    "IfNode": {
       "type": "object",
-      "description": "The switch node provides branching logic within an Agent Network, allowing dynamic routing of control flow based on the evaluation of one or more conditions. Each switch node contains a conditions array, where each item specifies a when expression and a corresponding to target. The switch evaluates conditions in the order listed: the first branch whose when evaluates to true is selected and its to target is followed. If none match, the default action is to jump to the to node specified at the top level of the switch.when expressions use the same expression language as other graph nodes, e.g., {{variables.value > 5}}. The first matching when's to will be taken; further branches are ignored. A branch with no when acts as the default/else branch.",
+      "description": "The if node provides branching logic within a graph, allowing dynamic routing of control flow based on the evaluation of one or more conditions. Each if node contains a conditions array, where each item specifies a when expression and a corresponding to target. The if evaluates conditions in the order listed: the first branch whose when evaluates to true is selected and its to target is followed. If none match, the default action is to jump to the to node specified at the top level of the if. When expressions use the same expression language as other graph nodes, e.g., {{variables.value > 5}}. The first matching when's to will be taken; further branches are ignored. A branch with no when acts as the default/else branch.",
       "properties": {
-        "switch": {
+        "if": {
           "allOf": [
             {
               "$ref": "#/definitions/BaseNode"
             },
             {
-              "$ref": "#/definitions/SwitchProperties"
+              "$ref": "#/definitions/IfProperties"
             }
           ]
         }
       },
       "required": [
-        "switch"
+        "if"
       ]
     },
     "ConnectionRef": {
@@ -1886,7 +1956,7 @@
       ],
       "type": "object"
     },
-    "SwitchProperties": {
+    "IfProperties": {
       "type": "object",
       "description": "List of conditional branches. Each includes when (expression) and to (target node).",
       "properties": {
@@ -2099,8 +2169,9 @@
         "status"
       ]
     },
-    "OrchestrationAgentProperties": {
+    "AgentOrchestratorProperties": {
       "required": [
+        "instructions",
         "prompt",
         "llm",
         "tools"
@@ -2110,9 +2181,15 @@
         "llm": {
           "$ref": "#/definitions/LLMConfiguration"
         },
+        "instructions": {
+          "description": "A natural language description of the business process being orchestrated, including steps, restricitons and expected outcomes",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
         "prompt": {
           "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
-          "type": "string"
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
         },
         "tools": {
           "type": "array",
@@ -2128,26 +2205,23 @@
                   "mcp": {
                     "type": "object",
                     "required": [
-                      "ref"
+                      "connection"
                     ],
                     "additionalProperties": false,
                     "properties": {
-                      "ref": {
-                        "$ref": "#/definitions/MCPRef"
-                      },
                       "connection": {
                         "$ref": "#/definitions/ConnectionRef"
                       },
-                      "include": {
+                      "allowed": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            }
-                          }
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                          "minLength": 1
                         }
+                      },
+                      "headers": {
+                        "$ref": "#/definitions/HttpHeaders"
                       }
                     }
                   }
@@ -2164,14 +2238,14 @@
                     "type": "object",
                     "additionalProperties": false,
                     "required": [
-                      "ref"
+                      "connection"
                     ],
                     "properties": {
-                      "ref": {
-                        "$ref": "#/definitions/AgentRef"
-                      },
                       "connection": {
                         "$ref": "#/definitions/ConnectionRef"
+                      },
+                      "headers": {
+                        "$ref": "#/definitions/HttpHeaders"
                       }
                     }
                   }
@@ -2182,15 +2256,18 @@
         },
         "maxNumberOfLoops": {
           "type": "integer",
-          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens"
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 25
         },
         "maxConsecutiveErrors": {
           "type": "integer",
-          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens"
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 3
         },
         "taskTimeoutSecs": {
           "type": "integer",
-          "description": "A timeout (in seconds) for the total node execution"
+          "description": "A timeout (in seconds) for the total node execution",
+          "default": 60
         }
       }
     },
@@ -2241,16 +2318,20 @@
       ],
       "type": "object"
     },
-    "ReasoningProperties": {
+    "AgentLoopProperties": {
       "required": [
         "prompt",
-        "llm",
-        "tools"
+        "llm"
       ],
       "type": "object",
       "properties": {
         "llm": {
           "$ref": "#/definitions/LLMConfiguration"
+        },
+        "systemPrompt": {
+          "description": "A foundational instruction set defining the agent's persona, operational boundaries, and behavioral logic to ensure consistent task execution.",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
         },
         "prompt": {
           "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
@@ -2513,7 +2594,7 @@
         "to"
       ]
     },
-    "BaseListener": {
+    "BaseTrigger": {
       "type": "object",
       "properties": {
         "id": {
@@ -2530,7 +2611,7 @@
         },
         "to": {
           "type": "string",
-          "description": "The if of the node where the listener will start."
+          "description": "The if of the node where the trigger will start."
         }
       }
     },
@@ -2647,26 +2728,23 @@
             "mcp": {
               "type": "object",
               "required": [
-                "ref"
+                "connection"
               ],
               "additionalProperties": false,
               "properties": {
-                "ref": {
-                  "$ref": "#/definitions/MCPRef"
-                },
                 "connection": {
                   "$ref": "#/definitions/ConnectionRef"
                 },
-                "include": {
+                "allowed": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      }
-                    }
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                    "minLength": 1
                   }
+                },
+                "headers": {
+                  "$ref": "#/definitions/HttpHeaders"
                 }
               }
             }
@@ -2683,14 +2761,14 @@
               "type": "object",
               "additionalProperties": false,
               "required": [
-                "ref"
+                "connection"
               ],
               "properties": {
-                "ref": {
-                  "$ref": "#/definitions/AgentRef"
-                },
                 "connection": {
                   "$ref": "#/definitions/ConnectionRef"
+                },
+                "headers": {
+                  "$ref": "#/definitions/HttpHeaders"
                 }
               }
             }
@@ -3285,9 +3363,9 @@
     "OpenAIConfiguration": {
       "type": "object",
       "properties": {
-        "type": {
+        "kind": {
           "type": "string",
-          "const": "openai_llm"
+          "const": "openai"
         },
         "configuration": {
           "type": "object",
@@ -3330,9 +3408,9 @@
     "GeminiConfiguration": {
       "type": "object",
       "properties": {
-        "type": {
+        "kind": {
           "type": "string",
-          "const": "gemini_llm"
+          "const": "gemini"
         },
         "configuration": {
           "type": "object",

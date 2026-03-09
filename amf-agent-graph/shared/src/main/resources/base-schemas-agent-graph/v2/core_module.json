@@ -8,61 +8,71 @@
     "@base": "http://anypoint.com/vocabs/agents#"
   },
   "definitions": {
-    "SwitchNode": {
+    "HttpHeaders": {
       "type": "object",
-      "description": "The switch node provides branching logic within an Agent Network, allowing dynamic routing of control flow based on the evaluation of one or more conditions. Each switch node contains a conditions array, where each item specifies a when expression and a corresponding to target. The switch evaluates conditions in the order listed: the first branch whose when evaluates to true is selected and its to target is followed. If none match, the default action is to jump to the to node specified at the top level of the switch.when expressions use the same expression language as other graph nodes, e.g., {{variables.value > 5}}. The first matching when's to will be taken; further branches are ignored. A branch with no when acts as the default/else branch.",
+      "description": "HTTP headers as key-value pairs. Keys must be valid HTTP header names.",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "propertyNames": {
+        "pattern": "^[!#$%&'*+\\-.0-9A-Z^_`a-z|~]+$"
+      }
+    },
+    "IfNode": {
+      "type": "object",
+      "description": "The if node provides branching logic within a graph, allowing dynamic routing of control flow based on the evaluation of one or more conditions. Each if node contains a conditions array, where each item specifies a when expression and a corresponding to target. The if evaluates conditions in the order listed: the first branch whose when evaluates to true is selected and its to target is followed. If none match, the default action is to jump to the to node specified at the top level of the if. When expressions use the same expression language as other graph nodes, e.g., {{variables.value > 5}}. The first matching when's to will be taken; further branches are ignored. A branch with no when acts as the default/else branch.",
       "properties": {
-        "switch": {
+        "if": {
           "allOf": [
             {
               "$ref": "graph_commons.json#/definitions/BaseNode"
             },
             {
-              "$ref": "#/definitions/SwitchProperties"
+              "$ref": "#/definitions/IfProperties"
             }
           ]
         }
       },
       "required": [
-        "switch"
+        "if"
       ]
     },
-    "ReasoningNode": {
+    "AgentLoopNode": {
       "type": "object",
       "description": "The reasoning node invokes an agent either by definition or by reference, enabling reuse of LLM-powered logic, toolchains, or full graphs from elsewhere in the specification. The reasoning node may accept parameters that define which agent, what prompt or context to use, tool selection, responses, and where to continue after invocation.\n\nThe reasoning node can take two shapes: a reference object or a full definition.",
       "properties": {
-        "reasoning": {
+        "agentLoop": {
           "allOf": [
             {
               "$ref": "graph_commons.json#/definitions/BaseNode"
             },
             {
-              "$ref": "#/definitions/ReasoningProperties"
+              "$ref": "#/definitions/AgentLoopProperties"
             }
           ]
         }
       },
       "required": [
-        "reasoning"
+        "agentLoop"
       ]
     },
-    "OrchestrationAgentNode": {
+    "AgentOrchestratorNode": {
       "type": "object",
-      "description": "The *orchestrationAgent* node is a specialized agent node used for orchestrating multi-agent hand-offs to achieve a specified goal. It includes system prompts specialized to enable identifying the correct agent from a pool of available agents and routing tasks to the identified agents. The node may loop (up to maxLoops) to perform multiple hand-offs until the goal is achieved or the loop limit is reached.",
+      "description": "The agentOrchestrator node is a specialized agentLoop used for orchestrating multi-agent hand-offs to achieve a specified goal. It includes system prompts specialized to enable identifying the correct agent from a pool of available agents and routing tasks to the identified agents. The node may loop (up to maxLoops) to perform multiple hand-offs until the goal is achieved or the loop limit is reached.",
       "properties": {
-        "orchestrationAgent": {
+        "agentOrchestrator": {
           "allOf": [
             {
               "$ref": "graph_commons.json#/definitions/BaseNode"
             },
             {
-              "$ref": "#/definitions/OrchestrationAgentProperties"
+              "$ref": "#/definitions/AgentOrchestratorProperties"
             }
           ]
         }
       },
       "required": [
-        "orchestrationAgent"
+        "agentOrchestrator"
       ]
     },
     "SetVariablesNode": {
@@ -103,11 +113,11 @@
         "unsetVariables"
       ]
     },
-    "GenerationNode": {
+    "GenerateNode": {
       "type": "object",
-      "description": "The *generation* node calls an LLM to generate text or images. It makes a single call to the LLM without tools and without looping. Use this node when the flow requires a one-shot LLM invocation for content generation (e.g. summarization, image generation, or templated text) with no tool use or iterative agent behavior.",
+      "description": "The *generate* node calls an LLM to generate text. It makes a single call to the LLM without tools and without looping. Use this node when the flow requires a one-shot LLM invocation for content generation (e.g. summarization, templated text, etc) with no tool use or iterative agent behavior.",
       "properties": {
-        "generation": {
+        "generate": {
           "allOf": [
             {
               "$ref": "graph_commons.json#/definitions/BaseNode"
@@ -119,10 +129,10 @@
         }
       },
       "required": [
-        "generation"
+        "generate"
       ]
     },
-    "SwitchProperties": {
+    "IfProperties": {
       "type": "object",
       "description": "List of conditional branches. Each includes when (expression) and to (target node).",
       "properties": {
@@ -177,9 +187,9 @@
     "OpenAIConfiguration": {
       "type": "object",
       "properties": {
-        "type": {
+        "kind": {
           "type": "string",
-          "const": "openai_llm"
+          "const": "openai"
         },
         "configuration": {
           "type": "object",
@@ -222,9 +232,9 @@
     "GeminiConfiguration": {
       "type": "object",
       "properties": {
-        "type": {
+        "kind": {
           "type": "string",
-          "const": "gemini_llm"
+          "const": "gemini"
         },
         "configuration": {
           "type": "object",
@@ -277,26 +287,23 @@
             "mcp": {
               "type": "object",
               "required": [
-                "ref"
+                "connection"
               ],
               "additionalProperties": false,
               "properties": {
-                "ref": {
-                  "$ref": "../references.json#/definitions/MCPRef"
-                },
                 "connection": {
                   "$ref": "../references.json#/definitions/ConnectionRef"
                 },
-                "include": {
+                "allowed": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      }
-                    }
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                    "minLength": 1
                   }
+                },
+                "headers": {
+                  "$ref": "#/definitions/HttpHeaders"
                 }
               }
             }
@@ -313,14 +320,14 @@
               "type": "object",
               "additionalProperties": false,
               "required": [
-                "ref"
+                "connection"
               ],
               "properties": {
-                "ref": {
-                  "$ref": "../references.json#/definitions/AgentRef"
-                },
                 "connection": {
                   "$ref": "../references.json#/definitions/ConnectionRef"
+                },
+                "headers": {
+                  "$ref": "#/definitions/HttpHeaders"
                 }
               }
             }
@@ -328,16 +335,20 @@
         }
       ]
     },
-    "ReasoningProperties": {
+    "AgentLoopProperties": {
       "required": [
         "prompt",
-        "llm",
-        "tools"
+        "llm"
       ],
       "type": "object",
       "properties": {
         "llm": {
           "$ref": "#/definitions/LLMConfiguration"
+        },
+        "systemPrompt": {
+          "description": "A foundational instruction set defining the agent's persona, operational boundaries, and behavioral logic to ensure consistent task execution.",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
         },
         "prompt": {
           "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
@@ -440,8 +451,9 @@
         }
       }
     },
-    "OrchestrationAgentProperties": {
+    "AgentOrchestratorProperties": {
       "required": [
+        "instructions",
         "prompt",
         "llm",
         "tools"
@@ -451,9 +463,15 @@
         "llm": {
           "$ref": "#/definitions/LLMConfiguration"
         },
+        "instructions": {
+          "description": "A natural language description of the business process being orchestrated, including steps, restricitons and expected outcomes",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
         "prompt": {
           "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
-          "type": "string"
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
         },
         "tools": {
           "type": "array",
@@ -469,26 +487,23 @@
                   "mcp": {
                     "type": "object",
                     "required": [
-                      "ref"
+                      "connection"
                     ],
                     "additionalProperties": false,
                     "properties": {
-                      "ref": {
-                        "$ref": "../references.json#/definitions/MCPRef"
-                      },
                       "connection": {
                         "$ref": "../references.json#/definitions/ConnectionRef"
                       },
-                      "include": {
+                      "allowed": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            }
-                          }
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                          "minLength": 1
                         }
+                      },
+                      "headers": {
+                        "$ref": "#/definitions/HttpHeaders"
                       }
                     }
                   }
@@ -505,14 +520,14 @@
                     "type": "object",
                     "additionalProperties": false,
                     "required": [
-                      "ref"
+                      "connection"
                     ],
                     "properties": {
-                      "ref": {
-                        "$ref": "../references.json#/definitions/AgentRef"
-                      },
                       "connection": {
                         "$ref": "../references.json#/definitions/ConnectionRef"
+                      },
+                      "headers": {
+                        "$ref": "#/definitions/HttpHeaders"
                       }
                     }
                   }
@@ -523,15 +538,18 @@
         },
         "maxNumberOfLoops": {
           "type": "integer",
-          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens"
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 25
         },
         "maxConsecutiveErrors": {
           "type": "integer",
-          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens"
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 3
         },
         "taskTimeoutSecs": {
           "type": "integer",
-          "description": "A timeout (in seconds) for the total node execution"
+          "description": "A timeout (in seconds) for the total node execution",
+          "default": 60
         }
       }
     }
