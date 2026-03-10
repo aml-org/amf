@@ -120,6 +120,10 @@
           "type": "string",
           "description": "An optional tenant identifier. This string may be used in multi-tenant platforms or environments to explicitly specify which tenant context this message should operate under. If provided, it is typically appended as a path parameter within API endpoints to route the request."
         },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the object."
+        },
         "metadata": {
           "type": "object",
           "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
