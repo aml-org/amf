@@ -35,7 +35,7 @@
       "description": "This string MUST be the version number of the Agent Network Specification that the Agent Network Document uses. The agent-network field SHOULD be used by tooling to interpret the Agent Network Document. This is not related to the document's info.version property."
     },
     "info": {
-      "$ref": "#/definitions/InfoObject"
+      "$ref": "#/definitions/NetworkInfoObject"
     },
     "registry": {
       "$ref": "#/definitions/Registry"
@@ -88,10 +88,6 @@
           "type": "string",
           "description": "A human readable text of what it does. CommonMark syntax MAY be used for rich text representation."
         },
-        "version": {
-          "type": "string",
-          "description": "A version for this element"
-        },
         "tags": {
           "type": "array",
           "items": {
@@ -99,6 +95,73 @@
           }
         }
       }
+    },
+    "NetworkInfoObject": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InfoObject"
+        },
+        {
+          "type": "object",
+          "required": [
+            "title",
+            "version"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "description": "A short summary of the Agent Network purpose"
+            },
+            "termsOfService": {
+              "type": "string",
+              "description": "A URI for the Terms of Service for the API. This MUST be in the form of a URI"
+            },
+            "contact": {
+              "type": "object",
+              "description": "The contact information for the Agent Network",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The identifying name of the contact person/organization"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "The URI for the contact information. This MUST be in the form of a URI"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email address of the contact person/organization. This MUST be in the form of an email address"
+                }
+              }
+            },
+            "license": {
+              "type": "object",
+              "description": "The license information for the Agent Network",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The license name used for the Agent Network"
+                },
+                "identifier": {
+                  "type": "string",
+                  "description": "An SPDX license expression for the API. The `identifier` field is mutually exclusive of the `url` field"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "A URI for the license used for the API. This MUST be in the form of a URI. The `url` field is mutually exclusive of the `identifier` field"
+                }
+              }
+            },
+            "version": {
+              "type": "string",
+              "description": "A version for this element"
+            }
+          }
+        }
+      ]
     },
     "Policies": {
       "@context": {
@@ -142,24 +205,26 @@
       "type": "object",
       "properties": {
         "label": {
-          "type": "string"
+          "type": "string",
+          "description": "An optional short, human-readable display name for the graph"
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "An optional human-readable description of the graph. [CommonMark syntax](https://spec.commonmark.org/) MAY be used for rich text representation"
         },
         "trigger": {
+          "description": "The trigger object that triggers the graph execution",
           "$ref": "#/definitions/Trigger"
         },
         "nodes": {
           "type": "array",
+          "description": "An ordered array of node objects",
           "items": {
             "$ref": "#/definitions/Node"
           }
         }
       },
       "required": [
-        "label",
-        "description",
         "trigger",
         "nodes"
       ]
@@ -1609,6 +1674,10 @@
     },
     "BaseTrigger": {
       "type": "object",
+      "required": [
+        "id",
+        "to"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -1697,6 +1766,10 @@
         "tenant": {
           "type": "string",
           "description": "An optional tenant identifier. This string may be used in multi-tenant platforms or environments to explicitly specify which tenant context this message should operate under. If provided, it is typically appended as a path parameter within API endpoints to route the request."
+        },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the object."
         },
         "metadata": {
           "type": "object",
