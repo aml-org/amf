@@ -275,6 +275,145 @@
         }
       }
     },
+    "OutputStructurePropertySchema": {
+      "description": "Schema definition for a property in the output structure",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "String property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "enum": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pattern": {
+              "type": "string",
+              "description": "Regular expression pattern for validation"
+            },
+            "minLength": {
+              "type": "integer"
+            },
+            "maxLength": {
+              "type": "integer"
+            }
+          },
+          "required": ["type"]
+        },
+        {
+          "type": "object",
+          "description": "Number or integer property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["number", "integer"]
+            },
+            "description": {
+              "type": "string"
+            },
+            "default": {
+              "type": "number"
+            },
+            "enum": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "minimum": {
+              "type": "number"
+            },
+            "maximum": {
+              "type": "number"
+            },
+            "exclusiveMinimum": {
+              "type": "number"
+            },
+            "exclusiveMaximum": {
+              "type": "number"
+            }
+          },
+          "required": ["type"]
+        },
+        {
+          "type": "object",
+          "description": "Boolean property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "boolean"
+            },
+            "description": {
+              "type": "string"
+            },
+            "default": {
+              "type": "boolean"
+            }
+          },
+          "required": ["type"]
+        },
+        {
+          "type": "object",
+          "description": "Array property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "array"
+            },
+            "description": {
+              "type": "string"
+            },
+            "items": {
+              "$ref": "#/definitions/OutputStructurePropertySchema"
+            },
+            "minItems": {
+              "type": "integer"
+            },
+            "maxItems": {
+              "type": "integer"
+            }
+          },
+          "required": ["type", "items"]
+        },
+        {
+          "type": "object",
+          "description": "Object property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "object"
+            },
+            "description": {
+              "type": "string"
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/OutputStructurePropertySchema"
+              }
+            },
+            "required": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["type", "properties"]
+        }
+      ]
+    },
     "ToolRef": {
       "oneOf": [
         {
@@ -359,6 +498,13 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/ToolRef"
+          }
+        },
+        "outputStructure": {
+          "description": "A JSON Schema-like definition that describes the expected structure of the agent's output. Each property maps directly to its schema definition, supporting scalar types, arrays, and nested objects.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/OutputStructurePropertySchema"
           }
         },
         "maxNumberOfLoops": {
