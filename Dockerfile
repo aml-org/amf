@@ -1,5 +1,5 @@
 # Hack for Nexus-IQ, the plugin requires Java 17
-FROM eclipse-temurin:17-focal AS openjdk17
+FROM eclipse-temurin:17-noble AS openjdk17
 
 FROM eclipse-temurin:25-noble
 
