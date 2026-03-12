@@ -1,0 +1,10 @@
+syntax = "proto3";
+import weak "group_missing_body.proto";
+package test;
+
+message SearchRequest {
+  string request = 1;
+}
+message SearchResponse {
+  string response = 1;
+}

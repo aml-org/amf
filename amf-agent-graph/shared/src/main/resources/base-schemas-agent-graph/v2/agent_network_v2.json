@@ -1,0 +1,1083 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Network Specification",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#Network"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
+  "type": "object",
+  "required": [
+    "agentNetwork"
+  ],
+  "anyOf": [
+    {
+      "required": ["registry"]
+    },
+    {
+      "required": ["context"]
+    },
+    {
+      "required": ["graphs"]
+    }
+  ],
+  "properties": {
+    "agentNetwork": {
+      "type": "string",
+      "const": "2.0.0",
+      "description": "This string MUST be the version number of the Agent Network Specification that the Agent Network Document uses. The agent-network field SHOULD be used by tooling to interpret the Agent Network Document. This is not related to the document's info.version property."
+    },
+    "info": {
+      "$ref": "#/definitions/NetworkInfoObject"
+    },
+    "registry": {
+      "$ref": "#/definitions/Registry"
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "connections": {
+          "$ref": "#/definitions/Connections",
+          "description": "The list of connections defined as part of this network."
+        },
+        "policies": {
+          "$ref": "#/definitions/Policies",
+          "description": "The list of MCP servers defined as part of this network."
+        }
+      }
+    },
+    "graphs": {
+      "$ref": "#/definitions/Graphs",
+      "description": "The list of graphs defined as part of this network."
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Registry": {
+      "type": "object",
+      "properties": {
+        "agents": {
+          "$ref": "#/definitions/Agents",
+          "description": "The list of agents defined as part of this network."
+        },
+        "mcps": {
+          "$ref": "#/definitions/MCPs",
+          "description": "The list of MCP servers defined as part of this network."
+        },
+        "llms": {
+          "$ref": "#/definitions/LLMs",
+          "description": "The list of LLM providers defined as part of this network."
+        }
+      }
+    },
+    "InfoObject": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The human readable short text"
+        },
+        "description": {
+          "type": "string",
+          "description": "A human readable text of what it does. CommonMark syntax MAY be used for rich text representation."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NetworkInfoObject": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InfoObject"
+        },
+        {
+          "type": "object",
+          "required": [
+            "title",
+            "version"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "description": "A short summary of the Agent Network purpose"
+            },
+            "termsOfService": {
+              "type": "string",
+              "description": "A URI for the Terms of Service for the API. This MUST be in the form of a URI"
+            },
+            "contact": {
+              "type": "object",
+              "description": "The contact information for the Agent Network",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The identifying name of the contact person/organization"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "The URI for the contact information. This MUST be in the form of a URI"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email address of the contact person/organization. This MUST be in the form of an email address"
+                }
+              }
+            },
+            "license": {
+              "type": "object",
+              "description": "The license information for the Agent Network",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The license name used for the Agent Network"
+                },
+                "identifier": {
+                  "type": "string",
+                  "description": "An SPDX license expression for the API. The `identifier` field is mutually exclusive of the `url` field"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "A URI for the license used for the API. This MUST be in the form of a URI. The `url` field is mutually exclusive of the `identifier` field"
+                }
+              }
+            },
+            "version": {
+              "type": "string",
+              "description": "A version for this element"
+            }
+          }
+        }
+      ]
+    },
+    "Policies": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#policybindings"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared policies",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "graph_commons.json#/definitions/PolicyBinding"
+        }
+      }
+    },
+    "Graphs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#graph"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared graph elements",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/GraphEntity"
+        }
+      }
+    },
+    "GraphEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationHolderDefinitions",
+          "http://anypoint.com/vocabs/graph/declaration/key/kind#nodes/node"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the graph"
+        },
+        "description": {
+          "type": "string",
+          "description": "An optional human-readable description of the graph. [CommonMark syntax](https://spec.commonmark.org/) MAY be used for rich text representation"
+        },
+        "trigger": {
+          "$ref": "#/definitions/Trigger",
+          "description": "The trigger object that triggers the graph execution"
+        },
+        "nodes": {
+          "type": "array",
+          "description": "An ordered array of node objects",
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        }
+      },
+      "required": [
+        "trigger",
+        "nodes"
+      ]
+    },
+    "Trigger": {
+      "oneOf": [
+        {
+          "$ref": "a2a_module.json#/definitions/A2AOnMessageTrigger"
+        }
+      ]
+    },
+    "Node": {
+      "oneOf": [
+        {
+          "$ref": "a2a_module.json#/definitions/A2ASendMessageNode"
+        },
+        {
+          "$ref": "a2a_module.json#/definitions/A2ASendResponseNode"
+        },
+        {
+          "$ref": "a2a_module.json#/definitions/A2ASendStreamNode"
+        },
+        {
+          "$ref": "mcp_module.json#/definitions/MCPCallToolNode"
+        },
+        {
+          "$ref": "core_module.json#/definitions/IfNode"
+        },
+        {
+          "$ref": "core_module.json#/definitions/AgentLoopNode"
+        },
+        {
+          "$ref": "core_module.json#/definitions/AgentOrchestratorNode"
+        },
+        {
+          "$ref": "core_module.json#/definitions/SetVariablesNode"
+        },
+        {
+          "$ref": "core_module.json#/definitions/UnSetVariablesNode"
+        },
+        {
+          "$ref": "core_module.json#/definitions/GenerateNode"
+        }
+      ]
+    },
+    "Agents": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared agents",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/AgentEntity"
+        }
+      }
+    },
+    "LLMs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#llm"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared LLM providers",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/LLMEntity"
+        }
+      }
+    },
+    "MCPs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared MCP servers",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/MCPServerEntity"
+        }
+      }
+    },
+    "BasicAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#BasicAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "title": "Basic Authentication",
+      "description": "Properties for Basic Authentication.",
+      "additionalProperties": false,
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "kind": {
+          "const": "basic",
+          "type": "string"
+        },
+        "username": {
+          "type": "string",
+          "description": "The username for authentication.",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "password": {
+          "type": "string",
+          "description": "The password for authentication.",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "headerName": {
+          "type": "string",
+          "description": "The name of the header where to set the key. If not specified 'Authorization' is set by default."
+        }
+      }
+    },
+    "ApiKeyClientCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#ApiKeyClientCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "clientId",
+        "clientSecret"
+      ],
+      "properties": {
+        "kind": {
+          "const": "apikey-client-credentials",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "object",
+          "description": "The client ID.",
+          "additionalProperties": false,
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "The value for the clientId"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name for the clientId by default is going to be 'client_id'"
+            }
+          }
+        },
+        "clientSecret": {
+          "type": "object",
+          "description": "The client secret.",
+          "additionalProperties": false,
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "The value for the clientSecret"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name for the clientSecret by default is going to be 'client_secret'"
+            }
+          }
+        }
+      }
+    },
+    "APIKeyAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#APIKeyAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "apiKey"
+      ],
+      "properties": {
+        "kind": {
+          "const": "apiKey",
+          "type": "string"
+        },
+        "headerName": {
+          "description": "The name of the header to be used. If not specified Authorization is used.",
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string",
+          "description": "The value of the apiKey"
+        }
+      }
+    },
+    "OAuth2ClientCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2ClientCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "clientId",
+        "clientSecret",
+        "token"
+      ],
+      "title": "OAuth 2.0 Client Credentials Grant",
+      "description": "Properties for the OAuth 2.0 Client Credentials Grant Type.",
+      "properties": {
+        "kind": {
+          "const": "oauth2-client-credentials",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The client ID."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The client secret."
+        },
+        "token": {
+          "type": "object",
+          "description": "Configuration on how to fetch the token.",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The url of the token provider"
+            },
+            "timeout": {
+              "type": "number",
+              "description": "Time in seconds to wait for the service to return the token."
+            },
+            "bodyEncoding": {
+              "type": "string",
+              "enum": [
+                "form",
+                "json"
+              ]
+            }
+          }
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of scopes to request."
+        }
+      }
+    },
+    "OAuth2OBOCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2OBOCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "OAuth2 OBO Credential Injection",
+      "description": "Exchanges incoming bearer token for a new token targeting an upstream service using OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow",
+      "required": [
+        "kind",
+        "flow",
+        "clientId",
+        "clientSecret",
+        "tokenEndpoint"
+      ],
+      "properties": {
+        "kind": {
+          "const": "oauth2-obo",
+          "type": "string"
+        },
+        "flow": {
+          "type": "string",
+          "enum": [
+            "oauth2-token-exchange",
+            "microsoft-entra-obo"
+          ],
+          "description": "Select the token exchange flow type - Standard OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow."
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The OAuth2 client ID for token exchange."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The OAuth2 client secret for token exchange."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "The OAuth2 token endpoint URL for token exchange."
+        },
+        "targetType": {
+          "type": "string",
+          "enum": [
+            "audience",
+            "resource"
+          ],
+          "default": "audience",
+          "description": "The parameter type for specifying the target service (audience for logical name, resource for physical URI). Used for OAuth 2.0 Token Exchange (RFC 8693)."
+        },
+        "targetValue": {
+          "type": "string",
+          "description": "The target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange (RFC 8693)."
+        },
+        "scope": {
+          "type": "string",
+          "description": "OAuth scope to request. Optional for OAuth 2.0 Token Exchange (RFC 8693). Required for Microsoft Entra OBO (e.g., 'api://downstream-client-id/.default')."
+        },
+        "timeout": {
+          "type": "integer",
+          "default": 10000,
+          "description": "Timeout for token exchange requests in milliseconds."
+        }
+      }
+    },
+    "InTaskAuthorizationCodeAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#InTaskAuthorizationCodeAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "In-Task Authorization Code",
+      "description": "Handles secondary credentials for in-task authentication using OAuth 2.0 Authorization Code flow. Extracts OAuth2 tokens from message data and injects them into Authorization headers for upstream calls.",
+      "required": [
+        "kind",
+        "authorizationEndpoint",
+        "tokenEndpoint",
+        "scopes",
+        "redirectUri"
+      ],
+      "properties": {
+        "kind": {
+          "const": "in-task-authorization-code",
+          "type": "string"
+        },
+        "secondaryAuthProvider": {
+          "type": "string",
+          "default": "",
+          "description": "Name of the IdP provider (e.g., 'okta', 'auth0'). Used for informational purposes in the authentication card."
+        },
+        "authorizationEndpoint": {
+          "type": "string",
+          "description": "OAuth2 authorization endpoint URL (e.g., 'https://domain/oauth2/v1/authorize'). Required for generating the authentication challenge."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "OAuth2 token endpoint URL (e.g., 'https://domain/oauth2/v1/token'). Required for generating the authentication challenge."
+        },
+        "scopes": {
+          "type": "string",
+          "description": "Space or comma separated list of OAuth2 scopes required for step-up authentication (e.g., 'openid profile email transaction:execute')."
+        },
+        "redirectUri": {
+          "type": "string",
+          "description": "OAuth2 redirect URI that the client will use in the authorization flow."
+        },
+        "responseType": {
+          "type": "string",
+          "default": "code",
+          "description": "OAuth2 response type. Typically 'code' for authorization code flow."
+        },
+        "codeChallengeMethod": {
+          "type": "string",
+          "default": "S256",
+          "description": "PKCE code challenge method. Typically 'S256' for SHA-256."
+        },
+        "tokenAudience": {
+          "type": "string",
+          "description": "OAuth2 token audience. The intended recipient of the token (e.g., 'https://hr-a2a-agent.example.com')."
+        },
+        "bodyEncoding": {
+          "type": "string",
+          "default": "form",
+          "description": "Encoding format for token request body. Typically 'form' for application/x-www-form-urlencoded."
+        },
+        "tokenTimeout": {
+          "type": "integer",
+          "default": 300,
+          "description": "Timeout in seconds for token requests."
+        },
+        "challengeResponseStatusCode": {
+          "type": "integer",
+          "default": 200,
+          "description": "HTTP status code to return for auth-required challenge responses. Typically 200 to maintain JSON-RPC compatibility."
+        }
+      }
+    },
+    "Authentication": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "anyOf": [
+        {
+          "$ref": "#/definitions/OAuth2ClientCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/BasicAuth"
+        },
+        {
+          "$ref": "#/definitions/ApiKeyClientCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/APIKeyAuth"
+        },
+        {
+          "$ref": "#/definitions/OAuth2OBOCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/InTaskAuthorizationCodeAuth"
+        }
+      ]
+    },
+    "AgentConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#AgentConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defines a connection to an agent that exists outside of this domain",
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "const": "a2a",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "../references.json#/definitions/AgentRef"
+        },
+        "url": {
+          "type": "string",
+          "description": "The base URL for the Agent"
+        },
+        "authentication": {
+          "description": "The authentication to use when connecting to the MCP server",
+          "$ref": "#/definitions/Authentication"
+        },
+        "policies": {
+          "$ref": "graph_commons.json#/definitions/Policies"
+        }
+      }
+    },
+    "LLMConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#LLMConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defines a connection to a LLM that exists outside of this domain",
+      "required": [
+        "kind",
+        "ref",
+        "authentication"
+      ],
+      "properties": {
+        "kind": {
+          "const": "llm",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "../references.json#/definitions/LLMRef"
+        },
+        "url": {
+          "type": "string",
+          "description": "The base URL for the LLM",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "authentication": {
+          "$ref": "#/definitions/Authentication",
+          "description": "The Authentication to use when connecting to the MCP server"
+        },
+        "policies": {
+          "$ref": "graph_commons.json#/definitions/Policies"
+        }
+      }
+    },
+    "MCPServerConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#MCPServerConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defines a connection to a MCP Server that exists outside of this domain",
+      "required": [
+        "ref",
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "mcp",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "../references.json#/definitions/MCPRef"
+        },
+        "url": {
+          "type": "string",
+          "description": "The base URL for the MCP server"
+        },
+        "authentication": {
+          "$ref": "#/definitions/Authentication",
+          "description": "The Authentication to use when connecting to the MCP server"
+        },
+        "policies": {
+          "$ref": "graph_commons.json#/definitions/Policies"
+        }
+      }
+    },
+    "ConnectionElement": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LLMConnection"
+        },
+        {
+          "$ref": "#/definitions/AgentConnection"
+        },
+        {
+          "$ref": "#/definitions/MCPServerConnection"
+        }
+      ]
+    },
+    "Connections": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#connection"
+        ]
+      },
+      "description": "Connection elements",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/ConnectionElement"
+        }
+      }
+    },
+    "AgentEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Agent"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interfaces"
+      ],
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
+        "interfaces": {
+          "type": "object",
+          "description": "The different interfaces this agent supports",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "a2a": {
+              "type": "object",
+              "required": [
+                "card"
+              ],
+              "description": "The Agent to Agent interface definition",
+              "properties": {
+                "card": {
+                  "$ref": "../a2a.json#/definitions/AgentCard"
+                }
+              }
+            },
+            "other": {
+              "type": "object",
+              "required": [
+                "card"
+              ],
+              "properties": {
+                "card": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "urls": {
+          "$ref": "#/definitions/Urls"
+        },
+        "tools": {
+          "description": "The list of tool providers",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mcp"
+                ],
+                "properties": {
+                  "mcp": {
+                    "type": "object",
+                    "required": [
+                      "ref"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "ref": {
+                        "$ref": "../references.json#/definitions/MCPRef"
+                      },
+                      "allowed": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "a2a"
+                ],
+                "properties": {
+                  "a2a": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "ref"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "../references.json#/definitions/AgentRef"
+                      },
+                      "connection": {
+                        "$ref": "../references.json#/definitions/ConnectionRef"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "llm": {
+          "$ref": "../references.json#/definitions/LLMRef"
+        }
+      }
+    },
+    "LLMEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLM"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata"
+      ],
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
+        "metadata": {
+          "$ref": "#/definitions/LLMMetadata"
+        }
+      }
+    },
+    "LLMMetadata": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WellKnownLLM"
+        },
+        {
+          "$ref": "#/definitions/CustomLLM"
+        }
+      ]
+    },
+    "WellKnownLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": [
+            "Gemini",
+            "OpenAI",
+            "AzureOpenai"
+          ]
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CustomLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#CustomLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transcoder",
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "transcoder": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "$ref": "../references.json#/definitions/PolicyRef"
+            }
+          }
+        }
+      }
+    },
+    "Urls": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "name"
+        ]
+      }
+    },
+    "MCPServerEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#MCPServer"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "The definition of the MCP Server entity",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata"
+      ],
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
+        "urls": {
+          "$ref": "#/definitions/Urls"
+        },
+        "metadata": {
+          "$ref": "../mcp_metadata.json#/definitions/MCPServer"
+        }
+      }
+    }
+  }
+}

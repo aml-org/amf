@@ -6,7 +6,7 @@ class AgentGraphEntry(override val version: String) extends IdVersion(version)
 
 object AgentGraphEntry extends IdEntryVersion {
 
-  override protected val idKey: String = "agent-graph"
+  override protected val idKey: String = "agentNetwork"
 
   override protected def getIdVersionFromString(text: String): Option[IdVersion] = {
     // No fixed versions at the moment, so any text could be a version

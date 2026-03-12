@@ -10,7 +10,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Platform
 import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -47,7 +47,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     val customProfileLoaded: Future[(ProfileName, AMLConfiguration)] = Future {
       model match {
         case dialectInstance: DialectInstance =>
-          @silent("deprecated") // Silent can only be used in assignment expressions
+//          @silent("deprecated") // Silent can only be used in assignment expressions
           val definedBy =
             dialectInstance.processingData
               .definedBy()

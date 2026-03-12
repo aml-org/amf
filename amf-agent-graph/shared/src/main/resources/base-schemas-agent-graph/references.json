@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "A json schema with all the types of references",
+  "oneOf": [
+    {"$ref": "#/definitions/PolicyRef" },
+    {"$ref": "#/definitions/MCPRef" },
+    {"$ref": "#/definitions/AgentRef" },
+    {"$ref": "#/definitions/LLMRef" },
+    {"$ref": "#/definitions/ConnectionRef" }
+  ],
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#Reference"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
+  "definitions": {
+    "PolicyRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#policy"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "LLMRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#llm"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "A reference to an LLM Provider",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "AgentRef": {
+      "description": "A Reference to an Agent",
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "MCPRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "Reference to an MCP Server.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "ConnectionRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#connection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "The reference to a connection",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

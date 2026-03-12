@@ -15,4 +15,8 @@ class GrpcUniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest 
     validate("invalid-reference.proto", Some("invalid-reference.report"), configOverride = Some(config))
   }
 
+  test("Valid Request/Response message ref to import proto should work") {
+    validate("import/valid-external-ref.proto", None, configOverride = Some(config))
+  }
+
 }

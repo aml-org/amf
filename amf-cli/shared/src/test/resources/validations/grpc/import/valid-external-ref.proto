@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package test;
+
+import "library.proto";
+
+service TestService {
+  rpc TestMethod (lib.Message1) returns (lib.Message2);
+}

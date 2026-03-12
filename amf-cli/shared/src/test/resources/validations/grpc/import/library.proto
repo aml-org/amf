@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package lib;
+
+message Message1 {
+  repeated string message = 1;
+}
+
+message Message2 {
+  optional string message = 1;
+}

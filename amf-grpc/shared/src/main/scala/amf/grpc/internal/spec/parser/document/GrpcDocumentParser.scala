@@ -8,8 +8,9 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Ant
 import amf.core.client.scala.model.document.{DeclaresModel, Document}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.DeclaredElement
-import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
 import amf.grpc.internal.spec.common.WellKnownTypes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
@@ -72,7 +73,7 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
   private def parseWebAPI(node: Node): Unit = {
     val webApi = GrpcPackageParser(node, doc).parse()
     doc.withLocation(root.location)
-    doc set webApi as FragmentModel.Encodes
+    doc.setWithoutId(DocumentModel.Encodes, webApi, Annotations.inferred())
   }
 
   private def parseMessages(node: Node): Unit = {

@@ -33,21 +33,24 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
 
   private def parseOptions(operation: Operation): Unit = {
     collectOptions(
-      ast,
-      Seq(OPTION_STATEMENT),
-      ex => {
-        val extensions = operation.customDomainProperties :+ ex
-        operation set (extensions, toAnnotations(ast)) as OperationModel.CustomDomainProperties
-      }
+        ast,
+        Seq(OPTION_STATEMENT),
+        ex => {
+          val extensions = operation.customDomainProperties :+ ex
+          operation set (extensions, toAnnotations(ast)) as OperationModel.CustomDomainProperties
+        }
     )
   }
 
-  private def parseMessageTypes(): (String, String) = {
-    val messages = collect(ast, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
-    if (messages.isEmpty) {
-      astError("Missing mandatory proto3 rpcName", toAnnotations(ast))
-      ("AnonymousOperation", "AnonymousOperation")
-    } else {
+  private def parseMessageTypes(): (OperationMessage, OperationMessage) = {
+    val messages = collect(ast, Seq(MESSAGE_TYPE)).map { case n: Node => OperationMessage(n.source, toAnnotations(n)) }
+    if (messages.size != 2) {
+      astError("Invalid number of messages", toAnnotations(ast))
+
+      (OperationMessage("AnonymousOperation", Annotations.synthesized()),
+       OperationMessage("AnonymousOperation", Annotations.synthesized()))
+    }
+    else {
       (messages.head, messages.last)
     }
   }
@@ -65,20 +68,19 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
   private def buildOperation(
       operationName: String,
       operationType: String,
-      requestName: String,
-      responseName: String
+      requestMessage: OperationMessage,
+      responseMessage: OperationMessage
   ): Operation = {
     val ann       = toAnnotations(ast)
     val operation = Operation(ann).withName(operationName, ann)
     operation set (operationName, ann) as OperationModel.OperationId
     operation set (operationType, ann) as OperationModel.Method
 
+    val request = createRequest(requestMessage.name, requestMessage.lexical)
+    operation set AmfArray(Seq(request), requestMessage.lexical) as OperationModel.Request
 
-    val request = createRequest(requestName, ann)
-    operation set AmfArray(Seq(request), ann) as OperationModel.Request
-
-    val response = createResponse(responseName, ann)
-    operation set AmfArray(Seq(response), ann) as OperationModel.Responses
+    val response = createResponse(responseMessage.name, responseMessage.lexical)
+    operation set AmfArray(Seq(response), responseMessage.lexical) as OperationModel.Responses
 
     operation
   }
@@ -133,5 +135,7 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
         "AnonymousOperation"
     }
   }
+
+  private case class OperationMessage(name: String, lexical: Annotations)
 
 }

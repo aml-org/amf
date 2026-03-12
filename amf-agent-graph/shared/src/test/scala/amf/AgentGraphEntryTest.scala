@@ -17,13 +17,13 @@ class AgentGraphEntryTest extends AsyncFunSuiteWithPlatformGlobalExecutionContex
   test("AgentGraph with string agentGraph") {
     val maybeVersion = AgentGraphIdEntry.apply(getRoot(basePath + "any-string.yaml"))
     maybeVersion.nonEmpty shouldBe true
-    maybeVersion.get.version shouldBe "0.0.1"
+    maybeVersion.get.version shouldBe "2.0.0"
   }
 
   test("AgentGraph with number agentGraph") {
     val maybeVersion = AgentGraphIdEntry.apply(getRoot(basePath + "any-number.yaml"))
     maybeVersion.nonEmpty shouldBe true
-    maybeVersion.get.version shouldBe "0.0.1"
+    maybeVersion.get.version shouldBe "2.0.0"
   }
 
   test("AgentGraph without protocol entry") {

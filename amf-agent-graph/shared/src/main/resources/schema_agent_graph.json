@@ -1,11 +1,3995 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Network Specification",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#Network"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
   "type": "object",
-  "required": [ "agent-graph" ],
+  "required": [
+    "agentNetwork"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "registry"
+      ]
+    },
+    {
+      "required": [
+        "context"
+      ]
+    },
+    {
+      "required": [
+        "graphs"
+      ]
+    }
+  ],
   "properties": {
-    "agent-graph": {
+    "agentNetwork": {
       "type": "string",
-      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+      "const": "2.0.0",
+      "description": "This string MUST be the version number of the Agent Network Specification that the Agent Network Document uses. The agent-network field SHOULD be used by tooling to interpret the Agent Network Document. This is not related to the document's info.version property."
+    },
+    "info": {
+      "$ref": "#/definitions/NetworkInfoObject"
+    },
+    "registry": {
+      "$ref": "#/definitions/Registry"
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "connections": {
+          "description": "The list of connections defined as part of this network.",
+          "$ref": "#/definitions/Connections"
+        },
+        "policies": {
+          "description": "The list of MCP servers defined as part of this network.",
+          "$ref": "#/definitions/Policies"
+        }
+      }
+    },
+    "graphs": {
+      "description": "The list of graphs defined as part of this network.",
+      "$ref": "#/definitions/Graphs"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Registry": {
+      "type": "object",
+      "properties": {
+        "agents": {
+          "description": "The list of agents defined as part of this network.",
+          "$ref": "#/definitions/Agents"
+        },
+        "mcps": {
+          "description": "The list of MCP servers defined as part of this network.",
+          "$ref": "#/definitions/MCPs"
+        },
+        "llms": {
+          "description": "The list of LLM providers defined as part of this network.",
+          "$ref": "#/definitions/LLMs"
+        }
+      }
+    },
+    "InfoObject": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The human readable short text"
+        },
+        "description": {
+          "type": "string",
+          "description": "A human readable text of what it does. CommonMark syntax MAY be used for rich text representation."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NetworkInfoObject": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InfoObject"
+        },
+        {
+          "type": "object",
+          "required": [
+            "title",
+            "version"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "description": "A short summary of the Agent Network purpose"
+            },
+            "termsOfService": {
+              "type": "string",
+              "description": "A URI for the Terms of Service for the API. This MUST be in the form of a URI"
+            },
+            "contact": {
+              "type": "object",
+              "description": "The contact information for the Agent Network",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The identifying name of the contact person/organization"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "The URI for the contact information. This MUST be in the form of a URI"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email address of the contact person/organization. This MUST be in the form of an email address"
+                }
+              }
+            },
+            "license": {
+              "type": "object",
+              "description": "The license information for the Agent Network",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The license name used for the Agent Network"
+                },
+                "identifier": {
+                  "type": "string",
+                  "description": "An SPDX license expression for the API. The `identifier` field is mutually exclusive of the `url` field"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "A URI for the license used for the API. This MUST be in the form of a URI. The `url` field is mutually exclusive of the `identifier` field"
+                }
+              }
+            },
+            "version": {
+              "type": "string",
+              "description": "A version for this element"
+            }
+          }
+        }
+      ]
+    },
+    "Policies": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#policybindings"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared policies",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/PolicyBinding"
+        }
+      }
+    },
+    "Graphs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#graph"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared graph elements",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/GraphEntity"
+        }
+      }
+    },
+    "GraphEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationHolderDefinitions",
+          "http://anypoint.com/vocabs/graph/declaration/key/kind#nodes/node"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the graph"
+        },
+        "description": {
+          "type": "string",
+          "description": "An optional human-readable description of the graph. [CommonMark syntax](https://spec.commonmark.org/) MAY be used for rich text representation"
+        },
+        "trigger": {
+          "description": "The trigger object that triggers the graph execution",
+          "$ref": "#/definitions/Trigger"
+        },
+        "nodes": {
+          "type": "array",
+          "description": "An ordered array of node objects",
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        }
+      },
+      "required": [
+        "trigger",
+        "nodes"
+      ]
+    },
+    "Trigger": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/A2AOnMessageTrigger"
+        }
+      ]
+    },
+    "Node": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/A2ASendMessageNode"
+        },
+        {
+          "$ref": "#/definitions/A2ASendResponseNode"
+        },
+        {
+          "$ref": "#/definitions/A2ASendStreamNode"
+        },
+        {
+          "$ref": "#/definitions/MCPCallToolNode"
+        },
+        {
+          "$ref": "#/definitions/IfNode"
+        },
+        {
+          "$ref": "#/definitions/AgentLoopNode"
+        },
+        {
+          "$ref": "#/definitions/AgentOrchestratorNode"
+        },
+        {
+          "$ref": "#/definitions/SetVariablesNode"
+        },
+        {
+          "$ref": "#/definitions/UnSetVariablesNode"
+        },
+        {
+          "$ref": "#/definitions/GenerateNode"
+        }
+      ]
+    },
+    "Agents": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared agents",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/AgentEntity"
+        }
+      }
+    },
+    "LLMs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#llm"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared LLM providers",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/LLMEntity"
+        }
+      }
+    },
+    "MCPs": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
+        ]
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The declared MCP servers",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/MCPServerEntity"
+        }
+      }
+    },
+    "BasicAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#BasicAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "title": "Basic Authentication",
+      "description": "Properties for Basic Authentication.",
+      "additionalProperties": false,
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "kind": {
+          "const": "basic",
+          "type": "string"
+        },
+        "username": {
+          "type": "string",
+          "description": "The username for authentication.",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "password": {
+          "type": "string",
+          "description": "The password for authentication.",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "headerName": {
+          "type": "string",
+          "description": "The name of the header where to set the key. If not specified 'Authorization' is set by default."
+        }
+      }
+    },
+    "ApiKeyClientCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#ApiKeyClientCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "clientId",
+        "clientSecret"
+      ],
+      "properties": {
+        "kind": {
+          "const": "apikey-client-credentials",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "object",
+          "description": "The client ID.",
+          "additionalProperties": false,
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "The value for the clientId"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name for the clientId by default is going to be 'client_id'"
+            }
+          }
+        },
+        "clientSecret": {
+          "type": "object",
+          "description": "The client secret.",
+          "additionalProperties": false,
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "The value for the clientSecret"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name for the clientSecret by default is going to be 'client_secret'"
+            }
+          }
+        }
+      }
+    },
+    "APIKeyAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#APIKeyAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "apiKey"
+      ],
+      "properties": {
+        "kind": {
+          "const": "apiKey",
+          "type": "string"
+        },
+        "headerName": {
+          "description": "The name of the header to be used. If not specified Authorization is used.",
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string",
+          "description": "The value of the apiKey"
+        }
+      }
+    },
+    "OAuth2ClientCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2ClientCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "clientId",
+        "clientSecret",
+        "token"
+      ],
+      "title": "OAuth 2.0 Client Credentials Grant",
+      "description": "Properties for the OAuth 2.0 Client Credentials Grant Type.",
+      "properties": {
+        "kind": {
+          "const": "oauth2-client-credentials",
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The client ID."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The client secret."
+        },
+        "token": {
+          "type": "object",
+          "description": "Configuration on how to fetch the token.",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The url of the token provider"
+            },
+            "timeout": {
+              "type": "number",
+              "description": "Time in seconds to wait for the service to return the token."
+            },
+            "bodyEncoding": {
+              "type": "string",
+              "enum": [
+                "form",
+                "json"
+              ]
+            }
+          }
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of scopes to request."
+        }
+      }
+    },
+    "OAuth2OBOCredentialsAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#OAuth2OBOCredentialsAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "OAuth2 OBO Credential Injection",
+      "description": "Exchanges incoming bearer token for a new token targeting an upstream service using OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow",
+      "required": [
+        "kind",
+        "flow",
+        "clientId",
+        "clientSecret",
+        "tokenEndpoint"
+      ],
+      "properties": {
+        "kind": {
+          "const": "oauth2-obo",
+          "type": "string"
+        },
+        "flow": {
+          "type": "string",
+          "enum": [
+            "oauth2-token-exchange",
+            "microsoft-entra-obo"
+          ],
+          "description": "Select the token exchange flow type - Standard OAuth 2.0 Token Exchange (RFC 8693) or Microsoft Entra ID On-Behalf-Of flow."
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The OAuth2 client ID for token exchange."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The OAuth2 client secret for token exchange."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "The OAuth2 token endpoint URL for token exchange."
+        },
+        "targetType": {
+          "type": "string",
+          "enum": [
+            "audience",
+            "resource"
+          ],
+          "default": "audience",
+          "description": "The parameter type for specifying the target service (audience for logical name, resource for physical URI). Used for OAuth 2.0 Token Exchange (RFC 8693)."
+        },
+        "targetValue": {
+          "type": "string",
+          "description": "The target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange (RFC 8693)."
+        },
+        "scope": {
+          "type": "string",
+          "description": "OAuth scope to request. Optional for OAuth 2.0 Token Exchange (RFC 8693). Required for Microsoft Entra OBO (e.g., 'api://downstream-client-id/.default')."
+        },
+        "timeout": {
+          "type": "integer",
+          "default": 10000,
+          "description": "Timeout for token exchange requests in milliseconds."
+        }
+      }
+    },
+    "InTaskAuthorizationCodeAuth": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#InTaskAuthorizationCodeAuth",
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "title": "In-Task Authorization Code",
+      "description": "Handles secondary credentials for in-task authentication using OAuth 2.0 Authorization Code flow. Extracts OAuth2 tokens from message data and injects them into Authorization headers for upstream calls.",
+      "required": [
+        "kind",
+        "authorizationEndpoint",
+        "tokenEndpoint",
+        "scopes",
+        "redirectUri"
+      ],
+      "properties": {
+        "kind": {
+          "const": "in-task-authorization-code",
+          "type": "string"
+        },
+        "secondaryAuthProvider": {
+          "type": "string",
+          "default": "",
+          "description": "Name of the IdP provider (e.g., 'okta', 'auth0'). Used for informational purposes in the authentication card."
+        },
+        "authorizationEndpoint": {
+          "type": "string",
+          "description": "OAuth2 authorization endpoint URL (e.g., 'https://domain/oauth2/v1/authorize'). Required for generating the authentication challenge."
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "description": "OAuth2 token endpoint URL (e.g., 'https://domain/oauth2/v1/token'). Required for generating the authentication challenge."
+        },
+        "scopes": {
+          "type": "string",
+          "description": "Space or comma separated list of OAuth2 scopes required for step-up authentication (e.g., 'openid profile email transaction:execute')."
+        },
+        "redirectUri": {
+          "type": "string",
+          "description": "OAuth2 redirect URI that the client will use in the authorization flow."
+        },
+        "responseType": {
+          "type": "string",
+          "default": "code",
+          "description": "OAuth2 response type. Typically 'code' for authorization code flow."
+        },
+        "codeChallengeMethod": {
+          "type": "string",
+          "default": "S256",
+          "description": "PKCE code challenge method. Typically 'S256' for SHA-256."
+        },
+        "tokenAudience": {
+          "type": "string",
+          "description": "OAuth2 token audience. The intended recipient of the token (e.g., 'https://hr-a2a-agent.example.com')."
+        },
+        "bodyEncoding": {
+          "type": "string",
+          "default": "form",
+          "description": "Encoding format for token request body. Typically 'form' for application/x-www-form-urlencoded."
+        },
+        "tokenTimeout": {
+          "type": "integer",
+          "default": 300,
+          "description": "Timeout in seconds for token requests."
+        },
+        "challengeResponseStatusCode": {
+          "type": "integer",
+          "default": 200,
+          "description": "HTTP status code to return for auth-required challenge responses. Typically 200 to maintain JSON-RPC compatibility."
+        }
+      }
+    },
+    "Authentication": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Authentication"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "anyOf": [
+        {
+          "$ref": "#/definitions/OAuth2ClientCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/BasicAuth"
+        },
+        {
+          "$ref": "#/definitions/ApiKeyClientCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/APIKeyAuth"
+        },
+        {
+          "$ref": "#/definitions/OAuth2OBOCredentialsAuth"
+        },
+        {
+          "$ref": "#/definitions/InTaskAuthorizationCodeAuth"
+        }
+      ]
+    },
+    "AgentConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#AgentConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defines a connection to an agent that exists outside of this domain",
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "const": "a2a",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/AgentRef"
+        },
+        "url": {
+          "type": "string",
+          "description": "The base URL for the Agent"
+        },
+        "authentication": {
+          "description": "The authentication to use when connecting to the MCP server",
+          "$ref": "#/definitions/Authentication"
+        },
+        "policies": {
+          "$ref": "#/definitions/NodePolicies"
+        }
+      }
+    },
+    "LLMConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#LLMConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defines a connection to a LLM that exists outside of this domain",
+      "required": [
+        "kind",
+        "ref",
+        "authentication"
+      ],
+      "properties": {
+        "kind": {
+          "const": "llm",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/LLMRef"
+        },
+        "url": {
+          "type": "string",
+          "description": "The base URL for the LLM",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "authentication": {
+          "description": "The Authentication to use when connecting to the MCP server",
+          "$ref": "#/definitions/Authentication"
+        },
+        "policies": {
+          "$ref": "#/definitions/NodePolicies"
+        }
+      }
+    },
+    "MCPServerConnection": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection",
+          "http://anypoint.com/vocabs/agents#MCPServerConnection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defines a connection to a MCP Server that exists outside of this domain",
+      "required": [
+        "ref",
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "mcp",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/MCPRef"
+        },
+        "url": {
+          "type": "string",
+          "description": "The base URL for the MCP server"
+        },
+        "authentication": {
+          "description": "The Authentication to use when connecting to the MCP server",
+          "$ref": "#/definitions/Authentication"
+        },
+        "policies": {
+          "$ref": "#/definitions/NodePolicies"
+        }
+      }
+    },
+    "ConnectionElement": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Connection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LLMConnection"
+        },
+        {
+          "$ref": "#/definitions/AgentConnection"
+        },
+        {
+          "$ref": "#/definitions/MCPServerConnection"
+        }
+      ]
+    },
+    "Connections": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+          "http://anypoint.com/vocabs/agents/reference/kind#connection"
+        ]
+      },
+      "description": "Connection elements",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
+          "$ref": "#/definitions/ConnectionElement"
+        }
+      }
+    },
+    "AgentEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Agent"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interfaces"
+      ],
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
+        "interfaces": {
+          "type": "object",
+          "description": "The different interfaces this agent supports",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "a2a": {
+              "type": "object",
+              "required": [
+                "card"
+              ],
+              "description": "The Agent to Agent interface definition",
+              "properties": {
+                "card": {
+                  "$ref": "#/definitions/AgentCard"
+                }
+              }
+            },
+            "other": {
+              "type": "object",
+              "required": [
+                "card"
+              ],
+              "properties": {
+                "card": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "urls": {
+          "$ref": "#/definitions/Urls"
+        },
+        "tools": {
+          "description": "The list of tool providers",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mcp"
+                ],
+                "properties": {
+                  "mcp": {
+                    "type": "object",
+                    "required": [
+                      "ref"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/definitions/MCPRef"
+                      },
+                      "allowed": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "a2a"
+                ],
+                "properties": {
+                  "a2a": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "ref"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/definitions/AgentRef"
+                      },
+                      "connection": {
+                        "$ref": "#/definitions/ConnectionRef"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "llm": {
+          "$ref": "#/definitions/LLMRef"
+        }
+      }
+    },
+    "LLMEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLM"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata"
+      ],
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
+        "metadata": {
+          "$ref": "#/definitions/LLMMetadata"
+        }
+      }
+    },
+    "LLMMetadata": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WellKnownLLM"
+        },
+        {
+          "$ref": "#/definitions/CustomLLM"
+        }
+      ]
+    },
+    "WellKnownLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": [
+            "Gemini",
+            "OpenAI",
+            "AzureOpenai"
+          ]
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CustomLLM": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#LLMMetadata",
+          "http://anypoint.com/vocabs/agents#CustomLLMMetadata"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transcoder",
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "transcoder": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "$ref": "#/definitions/PolicyRef"
+            }
+          }
+        }
+      }
+    },
+    "Urls": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "name"
+        ]
+      }
+    },
+    "MCPServerEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#MCPServer"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "The definition of the MCP Server entity",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata"
+      ],
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
+        "urls": {
+          "$ref": "#/definitions/Urls"
+        },
+        "metadata": {
+          "$ref": "#/definitions/MCPServer"
+        }
+      }
+    },
+    "PolicyBinding": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#PolicyBinding"
+        ]
+      },
+      "description": "The policy to be applied",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "configuration"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/definitions/PolicyRef"
+        },
+        "configuration": {
+          "type": "object"
+        }
+      }
+    },
+    "A2AOnMessageTrigger": {
+      "type": "object",
+      "properties": {
+        "a2a_onMessage": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseTrigger"
+            },
+            {
+              "$ref": "#/definitions/A2AOnMessageNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_onMessage"
+      ]
+    },
+    "A2ASendMessageNode": {
+      "type": "object",
+      "description": "The primary operation for initiating interactions with external A2A agents. Clients send a message to an agent and receive either a task that tracks the processing or a direct response message.",
+      "properties": {
+        "a2a_sendMessage": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2ASendMessageNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_sendMessage"
+      ]
+    },
+    "A2ASendResponseNode": {
+      "type": "object",
+      "description": "This node is used to generate the response for an a2aOnMessage execution. The response will ALWAYS be a Task object as defined in the A2A specification.\n\nThis node doesn't define the entire Task object but only the status, artifacts and metadata fields. The id, contextId and history are automatically populated by the trigger.NOTE: Notice that this node doesn't specify a connection, since it operates on the context already defined by the a2a_onMessage trigger",
+      "properties": {
+        "a2a_sendResponse": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2ASendResponseProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_sendResponse"
+      ]
+    },
+    "A2ASendStreamNode": {
+      "type": "object",
+      "description": "The a2aSendStream node behaves similarly to a2aSendMessage, but enables real-time streaming of updates throughout message processing, as described in the A2A specification.\n\nThis node accepts the same input parameters as a2aSendMessage. However, its output ports and event transitions are specialized for handling real-time streaming events:",
+      "properties": {
+        "a2a_sendStream": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/A2ASendStreamProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "a2a_sendStream"
+      ]
+    },
+    "MCPCallToolNode": {
+      "type": "object",
+      "description": "The mcp_callTool node is used to explicitly invoke an MCP tool. The call doesn't occur as a decision from an agent node but as a deterministic step defined by the graph author.",
+      "properties": {
+        "mcp_callTool": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/MCPCallToolNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "mcp_callTool"
+      ]
+    },
+    "IfNode": {
+      "type": "object",
+      "description": "The if node provides branching logic within a graph, allowing dynamic routing of control flow based on the evaluation of one or more conditions. Each if node contains a conditions array, where each item specifies a when expression and a corresponding to target. The if evaluates conditions in the order listed: the first branch whose when evaluates to true is selected and its to target is followed. If none match, the default action is to jump to the to node specified at the top level of the if. When expressions use the same expression language as other graph nodes, e.g., {{variables.value > 5}}. The first matching when's to will be taken; further branches are ignored. A branch with no when acts as the default/else branch.",
+      "properties": {
+        "if": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/IfProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "if"
+      ]
+    },
+    "AgentLoopNode": {
+      "type": "object",
+      "description": "The reasoning node invokes an agent either by definition or by reference, enabling reuse of LLM-powered logic, toolchains, or full graphs from elsewhere in the specification. The reasoning node may accept parameters that define which agent, what prompt or context to use, tool selection, responses, and where to continue after invocation.\n\nThe reasoning node can take two shapes: a reference object or a full definition.",
+      "properties": {
+        "agentLoop": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/AgentLoopProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "agentLoop"
+      ]
+    },
+    "AgentOrchestratorNode": {
+      "type": "object",
+      "description": "The agentOrchestrator node is a specialized agentLoop used for orchestrating multi-agent hand-offs to achieve a specified goal. It includes system prompts specialized to enable identifying the correct agent from a pool of available agents and routing tasks to the identified agents. The node may loop (up to maxLoops) to perform multiple hand-offs until the goal is achieved or the loop limit is reached.",
+      "properties": {
+        "agentOrchestrator": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/AgentOrchestratorProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "agentOrchestrator"
+      ]
+    },
+    "SetVariablesNode": {
+      "type": "object",
+      "description": "Assigns a value to the specified variable. If the variable is undefined, it is instantiated with the provided value. If the variable already exists, its current value MUST be overwritten.",
+      "properties": {
+        "setVariables": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/SetVariablesProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "setVariables"
+      ]
+    },
+    "UnSetVariablesNode": {
+      "type": "object",
+      "description": "Removes a specific variable from the graph's variable store. No action is taken if the variable is undefined or has already been removed",
+      "properties": {
+        "unsetVariables": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/UnSetVariablesProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "unsetVariables"
+      ]
+    },
+    "GenerateNode": {
+      "type": "object",
+      "description": "The *generate* node calls an LLM to generate text. It makes a single call to the LLM without tools and without looping. Use this node when the flow requires a one-shot LLM invocation for content generation (e.g. summarization, templated text, etc) with no tool use or iterative agent behavior.",
+      "properties": {
+        "generate": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/GenerationProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "generate"
+      ]
+    },
+    "AgentRef": {
+      "description": "A Reference to an Agent",
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#agent"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "NodePolicies": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/PolicyBindingRef"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "policy": {
+                "$ref": "#/definitions/PolicyBinding"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "LLMRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#llm"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "A reference to an LLM Provider",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "MCPRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#mcp"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "Reference to an MCP Server.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "AgentCard": {
+      "description": "The AgentCard is a self-describing manifest for an agent. It provides essential\nmetadata including the agent's identity, capabilities, skills, supported\ncommunication methods, and security requirements.",
+      "properties": {
+        "additionalInterfaces": {
+          "description": "A list of additional supported interfaces (transport and URL combinations).\nThis allows agents to expose multiple transports, potentially at different URLs.\n\nBest practices:\n- SHOULD include all supported transports for completeness\n- SHOULD include an entry matching the main 'url' and 'preferredTransport'\n- MAY reuse URLs if multiple transports are available at the same endpoint\n- MUST accurately declare the transport available at each URL\n\nClients can select any interface from this list based on their transport capabilities\nand preferences. This enables transport negotiation and fallback scenarios.",
+          "items": {
+            "$ref": "#/definitions/AgentInterface"
+          },
+          "type": "array"
+        },
+        "capabilities": {
+          "description": "A declaration of optional capabilities supported by the agent.",
+          "$ref": "#/definitions/AgentCapabilities"
+        },
+        "defaultInputModes": {
+          "description": "Default set of supported input MIME types for all skills, which can be\noverridden on a per-skill basis.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "defaultOutputModes": {
+          "description": "Default set of supported output MIME types for all skills, which can be\noverridden on a per-skill basis.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "A human-readable description of the agent, assisting users and other agents\nin understanding its purpose.",
+          "examples": [
+            "Agent that helps users with recipes and cooking."
+          ],
+          "type": "string"
+        },
+        "documentationUrl": {
+          "description": "An optional URL to the agent's documentation.",
+          "type": "string"
+        },
+        "iconUrl": {
+          "description": "An optional URL to an icon for the agent.",
+          "type": "string"
+        },
+        "name": {
+          "description": "A human-readable name for the agent.",
+          "examples": [
+            "Recipe Agent"
+          ],
+          "type": "string"
+        },
+        "preferredTransport": {
+          "default": "JSONRPC",
+          "description": "The transport protocol for the preferred endpoint (the main 'url' field).\nIf not specified, defaults to 'JSONRPC'.\n\nIMPORTANT: The transport specified here MUST be available at the main 'url'.\nThis creates a binding between the main URL and its supported transport protocol.\nClients should prefer this transport and URL combination when both are supported.",
+          "examples": [
+            "JSONRPC",
+            "GRPC",
+            "HTTP+JSON"
+          ],
+          "type": "string"
+        },
+        "protocolVersion": {
+          "default": "0.3.0",
+          "description": "The version of the A2A protocol this agent supports.",
+          "type": "string"
+        },
+        "provider": {
+          "description": "Information about the agent's service provider.",
+          "$ref": "#/definitions/AgentProvider"
+        },
+        "security": {
+          "description": "A list of security requirement objects that apply to all agent interactions. Each object\nlists security schemes that can be used. Follows the OpenAPI 3.0 Security Requirement Object.\nThis list can be seen as an OR of ANDs. Each object in the list describes one possible\nset of security requirements that must be present on a request. This allows specifying,\nfor example, \"callers must either use OAuth OR an API Key AND mTLS.\"",
+          "examples": [
+            [
+              {
+                "oauth": [
+                  "read"
+                ]
+              },
+              {
+                "api-key": [],
+                "mtls": []
+              }
+            ]
+          ],
+          "items": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "securitySchemes": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SecurityScheme"
+          },
+          "description": "A declaration of the security schemes available to authorize requests. The key is the\nscheme name. Follows the OpenAPI 3.0 Security Scheme Object.",
+          "type": "object"
+        },
+        "signatures": {
+          "description": "JSON Web Signatures computed for this AgentCard.",
+          "items": {
+            "$ref": "#/definitions/AgentCardSignature"
+          },
+          "type": "array"
+        },
+        "skills": {
+          "description": "The set of skills, or distinct capabilities, that the agent can perform.",
+          "items": {
+            "$ref": "#/definitions/AgentSkill"
+          },
+          "type": "array"
+        },
+        "supportsAuthenticatedExtendedCard": {
+          "description": "If true, the agent can provide an extended agent card with additional details\nto authenticated users. Defaults to false.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "The preferred endpoint URL for interacting with the agent.\nThis URL MUST support the transport specified by 'preferredTransport'.",
+          "examples": [
+            "https://api.example.com/a2a/v1"
+          ],
+          "type": "string"
+        },
+        "version": {
+          "description": "The agent's own version number. The format is defined by the provider.",
+          "examples": [
+            "1.0.0"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "capabilities",
+        "defaultInputModes",
+        "defaultOutputModes",
+        "description",
+        "name",
+        "protocolVersion",
+        "skills",
+        "url",
+        "version"
+      ],
+      "type": "object"
+    },
+    "ConnectionRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#connection"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "The reference to a connection",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "PolicyRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#policy"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        }
+      }
+    },
+    "MCPServer": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Server"
+        ]
+      },
+      "type": "object",
+      "required": [
+        "transport"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "protocolVersion": {
+          "type": "string",
+          "enum": [
+            "2024-11-05",
+            "2025-03-26",
+            "2025-06-18",
+            "2025-11-25"
+          ],
+          "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
+        },
+        "transport": {
+          "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server.",
+          "$ref": "#/definitions/MCPTransport"
+        },
+        "provider": {
+          "description": "The service provider of the MCP server.",
+          "$ref": "#/definitions/MCPProvider"
+        },
+        "capabilities": {
+          "$ref": "#/definitions/ServerCapabilities"
+        },
+        "logging": {
+          "type": "object",
+          "properties": {},
+          "description": "Present if the server supports sending log messages to the client.",
+          "additionalProperties": true
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tool"
+          },
+          "description": "A list of tools available in the mcp api. Each tool has a name, description, and input schema that defines the expected input format."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+        },
+        "resourceTemplates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceTemplate"
+          },
+          "description": "A list of resources available in the mcp api. Each resource has a URI, name, description, MIME type, and annotations that provide additional metadata."
+        },
+        "prompts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prompt"
+          },
+          "description": "A list of prompts available in the mcp api. Each prompt has a name, description, and arguments that define the expected input format for the prompt."
+        },
+        "platform": {
+          "type": "string",
+          "description": "The platform the mcp server is running"
+        },
+        "securitySchemes": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SecurityScheme"
+          },
+          "description": "Security scheme details used for authenticating with this agent.",
+          "type": "object"
+        }
+      }
+    },
+    "BaseTrigger": {
+      "type": "object",
+      "required": [
+        "id",
+        "to"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A unique identifier for the object instance within its context."
+        },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the node"
+        },
+        "description": {
+          "type": "string",
+          "description": "A CommonMark string providing a description of the node."
+        },
+        "to": {
+          "type": "string",
+          "description": "The if of the node where the trigger will start."
+        }
+      }
+    },
+    "A2AOnMessageNodeProperties": {
+      "description": "The A2A Trigger Object defines how external A2A (Agent-to-Agent) events or interactions can initiate or drive orchestrations within the Agent Network workflow. This object specifies the type of trigger, the connection details (defined inline), relevant policies, method filters, and a file reference to the A2A card definition.",
+      "type": "object",
+      "properties": {
+        "card": {
+          "$ref": "#/definitions/AgentCard"
+        },
+        "policies": {
+          "$ref": "#/definitions/NodePolicies"
+        },
+        "path": {
+          "type": "string",
+          "description": "The relative path of the endpoint this trigger is listening on. If not provided, it defaults to the graph name"
+        }
+      },
+      "required": [
+        "card"
+      ]
+    },
+    "BaseNode": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/graph#ReferenceHolder",
+          "http://anypoint.com/vocabs/graph/reference/key/kind#to/node",
+          "http://anypoint.com/vocabs/graph#DeclarationHolder",
+          "http://anypoint.com/vocabs/graph/declaration/key/kind#id/node"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A unique identifier for the object instance within its context."
+        },
+        "to": {
+          "type": "string",
+          "description": "The id of the node where it will continue once it has finished."
+        },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the node"
+        },
+        "description": {
+          "type": "string",
+          "description": "A CommonMark string providing a description of the node."
+        }
+      },
+      "required": [
+        "id",
+        "to"
+      ]
+    },
+    "A2ASendMessageNodeProperties": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "$ref": "#/definitions/ConnectionRef"
+        },
+        "configuration": {
+          "description": "An optional object specifying additional instructions, preferences, or runtime configuration parameters for how this send-message request should be processed by the recipient agent and the A2A backbone. This could influence output modes, push notification preferences, history limits, blocking behavior, and more.",
+          "$ref": "#/definitions/MessageSendConfiguration"
+        },
+        "message": {
+          "description": "The main content of the send-message operation. This is a Message object (see Message for full specification), and it must contain all required message fields as described in the A2A protocol: a unique ID, sender role, message parts, and any associated metadata or extensions.",
+          "$ref": "#/definitions/Message"
+        },
+        "tenant": {
+          "type": "string",
+          "description": "An optional tenant identifier. This string may be used in multi-tenant platforms or environments to explicitly specify which tenant context this message should operate under. If provided, it is typically appended as a path parameter within API endpoints to route the request."
+        },
+        "label": {
+          "type": "string",
+          "description": "An optional short, human-readable display name for the object."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
+        }
+      },
+      "required": [
+        "message",
+        "connection"
+      ]
+    },
+    "A2ASendResponseProperties": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "$ref": "#/definitions/ConnectionRef"
+        },
+        "status": {
+          "description": "The 'TaskStatus' object.",
+          "$ref": "#/definitions/TaskStatus"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Artifact"
+          },
+          "description": "An optional array of 'Artifact' objects"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "A2ASendStreamProperties": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "$ref": "#/definitions/ConnectionRef"
+        },
+        "configuration": {
+          "description": "An optional object specifying additional instructions, preferences, or runtime configuration parameters for how this send-message request should be processed by the recipient agent and the A2A backbone. This could influence output modes, push notification preferences, history limits, blocking behavior, and more.",
+          "$ref": "#/definitions/MessageSendConfiguration"
+        },
+        "message": {
+          "description": "The main content of the send-message operation. This is a Message object (see Message for full specification), and it must contain all required message fields as described in the A2A protocol: a unique ID, sender role, message parts, and any associated metadata or extensions.",
+          "$ref": "#/definitions/Message"
+        },
+        "tenant": {
+          "type": "string",
+          "description": "An optional tenant identifier. This string may be used in multi-tenant platforms or environments to explicitly specify which tenant context this message should operate under. If provided, it is typically appended as a path parameter within API endpoints to route the request."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A flexible key-value map (object) that allows for arbitrary additional information, context, or custom properties to be included alongside the send-message request. Clients and platforms may use this to supply implementation-specific context, correlation identifiers, feature hints, or custom operation flags."
+        },
+        "onInitialResponse": {
+          "type": "string"
+        },
+        "onStatusUpdate": {
+          "type": "string"
+        },
+        "onArtifactUpdate": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "connection"
+      ]
+    },
+    "MCPCallToolNodeProperties": {
+      "type": "object",
+      "description": "Properties for the MCP CallTool node that explicitly invokes an MCP tool as a deterministic step.",
+      "properties": {
+        "connection": {
+          "description": "A reference to an MCP connection",
+          "$ref": "#/definitions/ConnectionRef"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "The name of the tool to call",
+          "format": "AgentGraphExpressionOptional",
+          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+          "minLength": 1
+        },
+        "arguments": {
+          "type": "object",
+          "description": "The tool's input arguments. Can be skipped if the tool takes no arguments",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "headers": {
+          "description": "Headers to be added when sending requests to the MCP server. Useful for use cases such as authorization, correlation, etc",
+          "$ref": "#/definitions/HttpHeaders"
+        }
+      },
+      "required": [
+        "connection",
+        "toolName"
+      ]
+    },
+    "IfProperties": {
+      "type": "object",
+      "description": "List of conditional branches. Each includes when (expression) and to (target node).",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "type": "string",
+                "description": "Expression evaluated as the condition for the branch.",
+                "format": "AgentGraphExpression"
+              },
+              "to": {
+                "type": "string",
+                "description": "Node id/label to jump to if the branch is matched."
+              }
+            },
+            "required": [
+              "when",
+              "to"
+            ]
+          }
+        }
+      },
+      "required": [
+        "conditions"
+      ]
+    },
+    "AgentLoopProperties": {
+      "required": [
+        "prompt",
+        "llm"
+      ],
+      "type": "object",
+      "properties": {
+        "llm": {
+          "$ref": "#/definitions/LLMConfiguration"
+        },
+        "systemPrompt": {
+          "description": "A foundational instruction set defining the agent's persona, operational boundaries, and behavioral logic to ensure consistent task execution.",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "prompt": {
+          "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ToolRef"
+          }
+        },
+        "outputStructure": {
+          "description": "A JSON Schema-like definition that describes the expected structure of the agent's output. Each property maps directly to its schema definition, supporting scalar types, arrays, and nested objects.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/OutputStructurePropertySchema"
+          }
+        },
+        "maxNumberOfLoops": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 25
+        },
+        "maxConsecutiveErrors": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 3
+        },
+        "taskTimeoutSecs": {
+          "type": "integer",
+          "description": "A timeout (in seconds) for the total node execution",
+          "default": 60
+        }
+      }
+    },
+    "AgentOrchestratorProperties": {
+      "required": [
+        "instructions",
+        "prompt",
+        "llm",
+        "tools"
+      ],
+      "type": "object",
+      "properties": {
+        "llm": {
+          "$ref": "#/definitions/LLMConfiguration"
+        },
+        "instructions": {
+          "description": "A natural language description of the business process being orchestrated, including steps, restricitons and expected outcomes",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "prompt": {
+          "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
+          "type": "string",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mcp"
+                ],
+                "properties": {
+                  "mcp": {
+                    "type": "object",
+                    "required": [
+                      "connection"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "connection": {
+                        "$ref": "#/definitions/ConnectionRef"
+                      },
+                      "allowed": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                          "minLength": 1
+                        }
+                      },
+                      "headers": {
+                        "$ref": "#/definitions/HttpHeaders"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "a2a"
+                ],
+                "properties": {
+                  "a2a": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "connection"
+                    ],
+                    "properties": {
+                      "connection": {
+                        "$ref": "#/definitions/ConnectionRef"
+                      },
+                      "headers": {
+                        "$ref": "#/definitions/HttpHeaders"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "maxNumberOfLoops": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 25
+        },
+        "maxConsecutiveErrors": {
+          "type": "integer",
+          "description": "The maximum number of loops an execution can take. Useful for keeping it from running too long and consuming too many tokens",
+          "default": 3
+        },
+        "taskTimeoutSecs": {
+          "type": "integer",
+          "description": "A timeout (in seconds) for the total node execution",
+          "default": 60
+        }
+      }
+    },
+    "SetVariablesProperties": {
+      "type": "object",
+      "required": [
+        "variables"
+      ],
+      "properties": {
+        "variables": {
+          "description": "List of variables to set.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the variable to set"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "UnSetVariablesProperties": {
+      "type": "object",
+      "required": [
+        "variables"
+      ],
+      "properties": {
+        "variables": {
+          "description": "List of variables to unset.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the variable to set"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GenerationProperties": {
+      "required": [
+        "prompt",
+        "llm"
+      ],
+      "type": "object",
+      "properties": {
+        "llm": {
+          "$ref": "#/definitions/LLMConfiguration"
+        },
+        "prompt": {
+          "description": "Prompt text or instructions to give the agent/LLM. Supports expressions.",
+          "type": "string"
+        }
+      }
+    },
+    "PolicyBindingRef": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Reference",
+          "http://anypoint.com/vocabs/agents/reference/kind#policybinding"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "description": "The reference to a declared policy binding",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "AgentInterface": {
+      "description": "Declares a combination of a target URL and a transport protocol for interacting with the agent.\nThis allows agents to expose the same functionality over multiple transport mechanisms.",
+      "properties": {
+        "transport": {
+          "description": "The transport protocol supported at this URL.",
+          "examples": [
+            "JSONRPC",
+            "GRPC",
+            "HTTP+JSON"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "description": "The URL where this interface is available. Must be a valid absolute HTTPS URL in production.",
+          "examples": [
+            "https://api.example.com/a2a/v1",
+            "https://grpc.example.com/a2a",
+            "https://rest.example.com/v1"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "transport",
+        "url"
+      ],
+      "type": "object"
+    },
+    "AgentCapabilities": {
+      "description": "Defines optional capabilities supported by an agent.",
+      "properties": {
+        "extensions": {
+          "description": "A list of protocol extensions supported by the agent.",
+          "items": {
+            "$ref": "#/definitions/AgentExtension"
+          },
+          "type": "array"
+        },
+        "pushNotifications": {
+          "description": "Indicates if the agent supports sending push notifications for asynchronous task updates.",
+          "type": "boolean"
+        },
+        "stateTransitionHistory": {
+          "description": "Indicates if the agent provides a history of state transitions for a task.",
+          "type": "boolean"
+        },
+        "streaming": {
+          "description": "Indicates if the agent supports Server-Sent Events (SSE) for streaming responses.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AgentProvider": {
+      "description": "Represents the service provider of an agent.",
+      "examples": [
+        {
+          "organization": "Google",
+          "url": "https://ai.google.dev"
+        }
+      ],
+      "properties": {
+        "organization": {
+          "description": "The name of the agent provider's organization.",
+          "type": "string"
+        },
+        "url": {
+          "description": "A URL for the agent provider's website or relevant documentation.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "url"
+      ],
+      "type": "object"
+    },
+    "SecurityScheme": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/APIKeySecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/HTTPAuthSecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/OAuth2SecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/OpenIdConnectSecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/MutualTLSSecurityScheme"
+        }
+      ],
+      "description": "Defines a security scheme that can be used to secure an agent's endpoints.\nThis is a discriminated union type based on the OpenAPI 3.0 Security Scheme Object."
+    },
+    "AgentCardSignature": {
+      "description": "AgentCardSignature represents a JWS signature of an AgentCard.\nThis follows the JSON format of an RFC 7515 JSON Web Signature (JWS).",
+      "properties": {
+        "header": {
+          "additionalProperties": {},
+          "description": "The unprotected JWS header values.",
+          "type": "object"
+        },
+        "protected": {
+          "description": "The protected JWS header for the signature. This is a Base64url-encoded\nJSON object, as per RFC 7515.",
+          "type": "string"
+        },
+        "signature": {
+          "description": "The computed signature, Base64url-encoded.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protected",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "AgentSkill": {
+      "description": "Represents a distinct capability or function that an agent can perform.",
+      "properties": {
+        "description": {
+          "description": "A detailed description of the skill, intended to help clients or users\nunderstand its purpose and functionality.",
+          "type": "string"
+        },
+        "examples": {
+          "description": "Example prompts or scenarios that this skill can handle. Provides a hint to\nthe client on how to use the skill.",
+          "examples": [
+            [
+              "I need a recipe for bread"
+            ]
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "id": {
+          "description": "A unique identifier for the agent's skill.",
+          "type": "string"
+        },
+        "inputModes": {
+          "description": "The set of supported input MIME types for this skill, overriding the agent's defaults.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "A human-readable name for the skill.",
+          "type": "string"
+        },
+        "outputModes": {
+          "description": "The set of supported output MIME types for this skill, overriding the agent's defaults.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "security": {
+          "description": "Security schemes necessary for the agent to leverage this skill.\nAs in the overall AgentCard.security, this list represents a logical OR of security\nrequirement objects. Each object is a set of security schemes that must be used together\n(a logical AND).",
+          "examples": [
+            [
+              {
+                "google": [
+                  "oidc"
+                ]
+              }
+            ]
+          ],
+          "items": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "description": "A set of keywords describing the skill's capabilities.",
+          "examples": [
+            [
+              "cooking",
+              "customer support",
+              "billing"
+            ]
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "description",
+        "id",
+        "name",
+        "tags"
+      ],
+      "type": "object"
+    },
+    "MCPTransport": {
+      "type": "object",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SseTransport"
+        },
+        {
+          "$ref": "#/definitions/StreamableHttpTransport"
+        },
+        {
+          "$ref": "#/definitions/StdioTransport"
+        }
+      ]
+    },
+    "MCPProvider": {
+      "description": "Represents the service provider of an MCP server.",
+      "examples": [
+        {
+          "organization": "Google",
+          "url": "https://ai.google.dev"
+        }
+      ],
+      "properties": {
+        "organization": {
+          "description": "MCP provider's organization name.",
+          "type": "string"
+        },
+        "url": {
+          "description": "MCP provider's URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "url"
+      ],
+      "type": "object"
+    },
+    "ServerCapabilities": {
+      "type": "object",
+      "description": "Capabilities that a server may support. Known capabilities are defined here, in this schema, but this is not a closed set: any server can define its own, additional capabilities.",
+      "properties": {
+        "completions": {
+          "additionalProperties": true,
+          "description": "Present if the server supports argument autocompletion suggestions.",
+          "properties": {},
+          "type": "object"
+        },
+        "experimental": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "description": "Experimental, non-standard capabilities that the server supports.",
+          "type": "object"
+        },
+        "tasks": {
+          "description": "Present if the server supports task-augmented requests.",
+          "properties": {
+            "cancel": {
+              "additionalProperties": true,
+              "description": "Whether this server supports tasks/cancel.",
+              "properties": {},
+              "type": "object"
+            },
+            "list": {
+              "additionalProperties": true,
+              "description": "Whether this server supports tasks/list.",
+              "properties": {},
+              "type": "object"
+            },
+            "requests": {
+              "description": "Specifies which request types can be augmented with tasks.",
+              "properties": {
+                "tools": {
+                  "description": "Task support for tool-related requests.",
+                  "properties": {
+                    "call": {
+                      "additionalProperties": true,
+                      "description": "Whether the server supports task-augmented tools/call requests.",
+                      "properties": {},
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "logging": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "description": "Present if the server supports sending log messages to the client.",
+              "properties": {},
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server supports sending log messages to the client."
+            }
+          ]
+        },
+        "prompts": {
+          "anyOf": [
+            {
+              "description": "Present if the server offers any prompt templates.",
+              "properties": {
+                "listChanged": {
+                  "description": "Whether this server supports notifications for changes to the prompt list.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server offers any prompt templates. "
+            }
+          ]
+        },
+        "resources": {
+          "anyOf": [
+            {
+              "description": "Present if the server offers any resources to read.",
+              "properties": {
+                "listChanged": {
+                  "description": "Whether this server supports notifications for changes to the resource list.",
+                  "type": "boolean"
+                },
+                "subscribe": {
+                  "description": "Whether this server supports subscribing to resource updates.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server offers any resources to read. "
+            }
+          ]
+        },
+        "tools": {
+          "anyOf": [
+            {
+              "description": "Present if the server offers any tools to call.",
+              "properties": {
+                "listChanged": {
+                  "description": "Whether this server supports notifications for changes to the tool list.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean",
+              "description": "Deprecated: True if the server offers any tools to call."
+            }
+          ]
+        }
+      }
+    },
+    "Tool": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Tool"
+        ]
+      },
+      "description": "Definition for a tool the client can call.",
+      "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
+        "annotations": {
+          "description": "Optional additional tool information.\n\nDisplay name precedence order is: title, annotations.title, then name.",
+          "$ref": "#/definitions/ToolAnnotations"
+        },
+        "description": {
+          "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
+          "type": "string"
+        },
+        "execution": {
+          "description": "Execution-related properties for this tool.",
+          "$ref": "#/definitions/ToolExecution"
+        },
+        "icons": {
+          "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
+          "items": {
+            "$ref": "#/definitions/Icon"
+          },
+          "type": "array"
+        },
+        "inputSchema": {
+          "@context": {
+            "@type": [
+              "http://anypoint.com/vocabs/mcp#ToolInputSchema"
+            ]
+          },
+          "description": "A JSON Schema object defining the expected parameters for the tool.",
+          "properties": {
+            "$schema": {
+              "type": "string"
+            },
+            "properties": {
+              "additionalProperties": {
+                "additionalProperties": true,
+                "properties": {},
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "required": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": {
+              "const": "object",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        "name": {
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "outputSchema": {
+          "@context": {
+            "@type": [
+              "http://anypoint.com/vocabs/mcp#ToolOutputSchema"
+            ]
+          },
+          "description": "An optional JSON Schema object defining the structure of the tool's output returned in\nthe structuredContent field of a CallToolResult.",
+          "properties": {
+            "$schema": {
+              "type": "string"
+            },
+            "properties": {
+              "additionalProperties": {
+                "additionalProperties": true,
+                "properties": {},
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "required": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": {
+              "const": "object",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "inputSchema",
+        "name"
+      ],
+      "type": "object"
+    },
+    "Resource": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Resource"
+        ]
+      },
+      "description": "A known resource that the server is capable of reading.",
+      "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
+        "annotations": {
+          "description": "Optional annotations for the client.",
+          "$ref": "#/definitions/Annotations"
+        },
+        "description": {
+          "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+          "type": "string"
+        },
+        "icons": {
+          "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
+          "items": {
+            "$ref": "#/definitions/Icon"
+          },
+          "type": "array"
+        },
+        "mimeType": {
+          "description": "The MIME type of this resource, if known.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "size": {
+          "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
+          "type": "integer"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
+        },
+        "uri": {
+          "description": "The URI of this resource.",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "uri"
+      ],
+      "type": "object"
+    },
+    "ResourceTemplate": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#ResourceTemplate"
+        ]
+      },
+      "description": "A template description for resources available on the server.",
+      "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
+        "annotations": {
+          "description": "Optional annotations for the client.",
+          "$ref": "#/definitions/Annotations"
+        },
+        "description": {
+          "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type for all resources that match this template. This should only be included if all resources matching this template have the same type.",
+          "type": "string"
+        },
+        "icons": {
+          "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
+          "items": {
+            "$ref": "#/definitions/Icon"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
+        },
+        "uriTemplate": {
+          "description": "A URI template (according to RFC 6570) that can be used to construct resource URIs.",
+          "format": "uri-template",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "uriTemplate"
+      ],
+      "type": "object"
+    },
+    "Prompt": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Prompt"
+        ]
+      },
+      "description": "A prompt or prompt template that the server offers.",
+      "properties": {
+        "_meta": {
+          "additionalProperties": {},
+          "description": "See [General fields: `_meta`](/specification/2025-06-18/basic/index#meta) for notes on `_meta` usage.",
+          "type": "object"
+        },
+        "arguments": {
+          "description": "A list of arguments to use for templating the prompt.",
+          "items": {
+            "$ref": "#/definitions/PromptArgument"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "An optional description of what this prompt provides",
+          "type": "string"
+        },
+        "icons": {
+          "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
+          "items": {
+            "$ref": "#/definitions/Icon"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "MessageSendConfiguration": {
+      "description": "Defines configuration options for a `message/send` or `message/stream` request.",
+      "properties": {
+        "acceptedOutputModes": {
+          "description": "A list of output MIME types the client is prepared to accept in the response.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "blocking": {
+          "description": "If true, the client will wait for the task to complete. The server may reject this if the task is long-running.",
+          "type": "boolean"
+        },
+        "historyLength": {
+          "description": "The number of most recent messages from the task's history to retrieve in the response.",
+          "type": "integer"
+        },
+        "pushNotificationConfig": {
+          "description": "Configuration for the agent to send push notifications for updates after the initial response.",
+          "$ref": "#/definitions/PushNotificationConfig"
+        }
+      },
+      "type": "object"
+    },
+    "Message": {
+      "description": "Represents a single message in the conversation between a user and an agent.",
+      "properties": {
+        "contextId": {
+          "description": "The context identifier for this message, used to group related interactions.",
+          "type": "string"
+        },
+        "extensions": {
+          "description": "The URIs of extensions that are relevant to this message.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "const": "message",
+          "description": "The type of this object, used as a discriminator. Always 'message' for a Message.",
+          "type": "string"
+        },
+        "messageId": {
+          "description": "A unique identifier for the message, typically a UUID, generated by the sender.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {},
+          "description": "Optional metadata for extensions. The key is an extension-specific identifier.",
+          "type": "object"
+        },
+        "parts": {
+          "description": "An array of content parts that form the message body. A message can be\ncomposed of multiple parts of different types (e.g., text and files).",
+          "items": {
+            "$ref": "#/definitions/Part"
+          },
+          "type": "array"
+        },
+        "referenceTaskIds": {
+          "description": "A list of other task IDs that this message references for additional context.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "role": {
+          "description": "Identifies the sender of the message. `user` for the client, `agent` for the service.",
+          "enum": [
+            "agent",
+            "user"
+          ],
+          "type": "string"
+        },
+        "taskId": {
+          "description": "The identifier of the task this message is part of. Can be omitted for the first message of a new task.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "messageId",
+        "parts",
+        "role"
+      ],
+      "type": "object"
+    },
+    "TaskStatus": {
+      "description": "Represents the status of a task at a specific point in time.",
+      "properties": {
+        "message": {
+          "description": "An optional, human-readable message providing more details about the current status.",
+          "$ref": "#/definitions/Message"
+        },
+        "state": {
+          "description": "The current state of the task's lifecycle.",
+          "$ref": "#/definitions/TaskState"
+        },
+        "timestamp": {
+          "description": "An ISO 8601 datetime string indicating when this status was recorded.",
+          "examples": [
+            "2023-10-27T10:00:00Z"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "state"
+      ],
+      "type": "object"
+    },
+    "Artifact": {
+      "description": "Represents a file, data structure, or other resource generated by an agent during a task.",
+      "properties": {
+        "artifactId": {
+          "description": "A unique identifier for the artifact within the scope of the task.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional, human-readable description of the artifact.",
+          "type": "string"
+        },
+        "extensions": {
+          "description": "The URIs of extensions that are relevant to this artifact.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "additionalProperties": {},
+          "description": "Optional metadata for extensions. The key is an extension-specific identifier.",
+          "type": "object"
+        },
+        "name": {
+          "description": "An optional, human-readable name for the artifact.",
+          "type": "string"
+        },
+        "parts": {
+          "description": "An array of content parts that make up the artifact.",
+          "items": {
+            "$ref": "#/definitions/Part"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "artifactId",
+        "parts"
+      ],
+      "type": "object"
+    },
+    "HttpHeaders": {
+      "type": "object",
+      "description": "HTTP headers as key-value pairs. Keys must be valid HTTP header names.",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "propertyNames": {
+        "pattern": "^[!#$%&'*+\\-.0-9A-Z^_`a-z|~]+$"
+      }
+    },
+    "LLMConfiguration": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "connection": {
+              "$ref": "#/definitions/ConnectionRef"
+            }
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OpenAIConfiguration"
+            },
+            {
+              "$ref": "#/definitions/GeminiConfiguration"
+            }
+          ]
+        }
+      ]
+    },
+    "ToolRef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mcp"
+          ],
+          "properties": {
+            "mcp": {
+              "type": "object",
+              "required": [
+                "connection"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "connection": {
+                  "$ref": "#/definitions/ConnectionRef"
+                },
+                "allowed": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+                    "minLength": 1
+                  }
+                },
+                "headers": {
+                  "$ref": "#/definitions/HttpHeaders"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "a2a"
+          ],
+          "properties": {
+            "a2a": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "connection"
+              ],
+              "properties": {
+                "connection": {
+                  "$ref": "#/definitions/ConnectionRef"
+                },
+                "headers": {
+                  "$ref": "#/definitions/HttpHeaders"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OutputStructurePropertySchema": {
+      "description": "Schema definition for a property in the output structure",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "String property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "enum": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pattern": {
+              "type": "string",
+              "description": "Regular expression pattern for validation"
+            },
+            "minLength": {
+              "type": "integer"
+            },
+            "maxLength": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "description": "Number or integer property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "number",
+                "integer"
+              ]
+            },
+            "description": {
+              "type": "string"
+            },
+            "default": {
+              "type": "number"
+            },
+            "enum": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "minimum": {
+              "type": "number"
+            },
+            "maximum": {
+              "type": "number"
+            },
+            "exclusiveMinimum": {
+              "type": "number"
+            },
+            "exclusiveMaximum": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "description": "Boolean property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "boolean"
+            },
+            "description": {
+              "type": "string"
+            },
+            "default": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "description": "Array property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "array"
+            },
+            "description": {
+              "type": "string"
+            },
+            "items": {
+              "$ref": "#/definitions/OutputStructurePropertySchema"
+            },
+            "minItems": {
+              "type": "integer"
+            },
+            "maxItems": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type",
+            "items"
+          ]
+        },
+        {
+          "type": "object",
+          "description": "Object property definition",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "object"
+            },
+            "description": {
+              "type": "string"
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/OutputStructurePropertySchema"
+              }
+            },
+            "required": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "properties"
+          ]
+        }
+      ]
+    },
+    "AgentExtension": {
+      "description": "A declaration of a protocol extension supported by an Agent.",
+      "examples": [
+        {
+          "description": "Google OAuth 2.0 authentication",
+          "required": false,
+          "uri": "https://developers.google.com/identity/protocols/oauth2"
+        }
+      ],
+      "properties": {
+        "description": {
+          "description": "A human-readable description of how this agent uses the extension.",
+          "type": "string"
+        },
+        "params": {
+          "additionalProperties": {},
+          "description": "Optional, extension-specific configuration parameters.",
+          "type": "object"
+        },
+        "required": {
+          "description": "If true, the client must understand and comply with the extension's requirements\nto interact with the agent.",
+          "type": "boolean"
+        },
+        "uri": {
+          "description": "The unique URI identifying the extension.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri"
+      ],
+      "type": "object"
+    },
+    "APIKeySecurityScheme": {
+      "description": "Defines a security scheme using an API key.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "in": {
+          "description": "The location of the API key.",
+          "enum": [
+            "cookie",
+            "header",
+            "query"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the header, query, or cookie parameter to be used.",
+          "type": "string"
+        },
+        "type": {
+          "const": "apiKey",
+          "description": "The type of the security scheme. Must be 'apiKey'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "in",
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "HTTPAuthSecurityScheme": {
+      "description": "Defines a security scheme using HTTP authentication.",
+      "properties": {
+        "bearerFormat": {
+          "description": "A hint to the client to identify how the bearer token is formatted (e.g., \"JWT\").\nThis is primarily for documentation purposes.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "scheme": {
+          "description": "The name of the HTTP Authentication scheme to be used in the Authorization header,\nas defined in RFC7235 (e.g., \"Bearer\").\nThis value should be registered in the IANA Authentication Scheme registry.",
+          "type": "string"
+        },
+        "type": {
+          "const": "http",
+          "description": "The type of the security scheme. Must be 'http'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scheme",
+        "type"
+      ],
+      "type": "object"
+    },
+    "OAuth2SecurityScheme": {
+      "description": "Defines a security scheme using OAuth 2.0.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "flows": {
+          "description": "An object containing configuration information for the supported OAuth 2.0 flows.",
+          "$ref": "#/definitions/OAuthFlows"
+        },
+        "oauth2MetadataUrl": {
+          "description": "URL to the oauth2 authorization server metadata\n[RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.",
+          "type": "string"
+        },
+        "type": {
+          "const": "oauth2",
+          "description": "The type of the security scheme. Must be 'oauth2'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "flows",
+        "type"
+      ],
+      "type": "object"
+    },
+    "OpenIdConnectSecurityScheme": {
+      "description": "Defines a security scheme using OpenID Connect.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "openIdConnectUrl": {
+          "description": "The OpenID Connect Discovery URL for the OIDC provider's metadata.",
+          "type": "string"
+        },
+        "type": {
+          "const": "openIdConnect",
+          "description": "The type of the security scheme. Must be 'openIdConnect'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "openIdConnectUrl",
+        "type"
+      ],
+      "type": "object"
+    },
+    "MutualTLSSecurityScheme": {
+      "description": "Defines a security scheme using mTLS authentication.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "type": {
+          "const": "mutualTLS",
+          "description": "The type of the security scheme. Must be 'mutualTLS'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "SseTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#SseTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/mcp#"
+      },
+      "required": [
+        "kind",
+        "ssePath"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "sse"
+        },
+        "ssePath": {
+          "type": "string",
+          "description": "Path to the SSE endpoint"
+        },
+        "messagesPath": {
+          "type": "string",
+          "description": "Path to the messages endpoint",
+          "format": "AgentGraphExpressionOptional"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StreamableHttpTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#StreamableHttpTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/mcp#"
+      },
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "streamableHttp"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the mcp endpoint"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StdioTransport": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Transport",
+          "http://anypoint.com/vocabs/mcp#StdioTransport"
+        ],
+        "@base": "http://anypoint.com/vocabs/mcp#"
+      },
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "stdio"
+        },
+        "instructions": {
+          "type": "string",
+          "description": "The instructions to run the mcp server"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ToolAnnotations": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#ToolAnnotations"
+        ]
+      },
+      "description": "Additional properties describing a Tool to clients.\n\nNOTE: all properties in ToolAnnotations are **hints**.\nThey are not guaranteed to provide a faithful description of\ntool behavior (including descriptive properties like `title`).\n\nClients should never make tool use decisions based on ToolAnnotations\nreceived from untrusted servers.",
+      "properties": {
+        "destructiveHint": {
+          "description": "If true, the tool may perform destructive updates to its environment.\nIf false, the tool performs only additive updates.\n\n(This property is meaningful only when `readOnlyHint == false`)\n\nDefault: true",
+          "type": "boolean"
+        },
+        "idempotentHint": {
+          "description": "If true, calling the tool repeatedly with the same arguments\nwill have no additional effect on the its environment.\n\n(This property is meaningful only when `readOnlyHint == false`)\n\nDefault: false",
+          "type": "boolean"
+        },
+        "openWorldHint": {
+          "description": "If true, this tool may interact with an \"open world\" of external\nentities. If false, the tool's domain of interaction is closed.\nFor example, the world of a web search tool is open, whereas that\nof a memory tool is not.\n\nDefault: true",
+          "type": "boolean"
+        },
+        "readOnlyHint": {
+          "description": "If true, the tool does not modify its environment.\n\nDefault: false",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "A human-readable title for the tool.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ToolExecution": {
+      "description": "Execution-related properties for a tool.",
+      "properties": {
+        "taskSupport": {
+          "description": "Indicates whether this tool supports task-augmented execution.\nThis allows clients to handle long-running operations through polling\nthe task system.\n\n- \"forbidden\": Tool does not support task-augmented execution (default when absent)\n- \"optional\": Tool may support task-augmented execution\n- \"required\": Tool requires task-augmented execution\n\nDefault: \"forbidden\"",
+          "enum": [
+            "forbidden",
+            "optional",
+            "required"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Icon": {
+      "description": "An optionally-sized icon that can be displayed in a user interface.",
+      "properties": {
+        "mimeType": {
+          "description": "Optional MIME type override if the source MIME type is missing or generic.\nFor example: `\"image/png\"`, `\"image/jpeg\"`, or `\"image/svg+xml\"`.",
+          "type": "string"
+        },
+        "sizes": {
+          "description": "Optional array of strings that specify sizes at which the icon can be used.\nEach string should be in WxH format (e.g., `\"48x48\"`, `\"96x96\"`) or `\"any\"` for scalable formats like SVG.\n\nIf not provided, the client should assume that the icon can be used at any size.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "src": {
+          "description": "A standard URI pointing to an icon resource. May be an HTTP/HTTPS URL or a\n`data:` URI with Base64-encoded image data.\n\nConsumers SHOULD takes steps to ensure URLs serving icons are from the\nsame domain as the client/server or a trusted domain.\n\nConsumers SHOULD take appropriate precautions when consuming SVGs as they can contain\nexecutable JavaScript.",
+          "format": "uri",
+          "type": "string"
+        },
+        "theme": {
+          "description": "Optional specifier for the theme this icon is designed for. `light` indicates\nthe icon is designed to be used with a light background, and `dark` indicates\nthe icon is designed to be used with a dark background.\n\nIf not provided, the client should assume the icon can be used with any theme.",
+          "enum": [
+            "dark",
+            "light"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "src"
+      ],
+      "type": "object"
+    },
+    "Annotations": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Annotations"
+        ]
+      },
+      "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
+      "properties": {
+        "audience": {
+          "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
+          "items": {
+            "$ref": "#/definitions/Role"
+          },
+          "type": "array"
+        },
+        "lastModified": {
+          "description": "The moment the resource was last modified, as an ISO 8601 formatted string.\n\nShould be an ISO 8601 formatted string (e.g., \"2025-01-12T15:00:58Z\").\n\nExamples: last activity timestamp in an open file, timestamp when the resource\nwas attached, etc.",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Describes how important this data is for operating the server.\n\nA value of 1 means \"most important,\" and indicates that the data is\neffectively required, while 0 means \"least important,\" and indicates that\nthe data is entirely optional.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "PromptArgument": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#PromptArgument"
+        ]
+      },
+      "description": "Describes an argument that a prompt can accept.",
+      "properties": {
+        "description": {
+          "description": "A human-readable description of the argument.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+          "type": "string"
+        },
+        "required": {
+          "description": "Whether this argument must be provided.",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "Intended for UI and end-user contexts — optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for Tool,\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "PushNotificationConfig": {
+      "description": "Defines the configuration for setting up push notifications for task updates.",
+      "properties": {
+        "authentication": {
+          "description": "Optional authentication details for the agent to use when calling the notification URL.",
+          "$ref": "#/definitions/PushNotificationAuthenticationInfo"
+        },
+        "id": {
+          "description": "A unique ID for the push notification configuration, set by the client\nto support multiple notification callbacks.",
+          "type": "string"
+        },
+        "token": {
+          "description": "A unique token for this task or session to validate incoming push notifications.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The callback URL where the agent should send push notifications.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    },
+    "Part": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TextPart"
+        },
+        {
+          "$ref": "#/definitions/FilePart"
+        },
+        {
+          "$ref": "#/definitions/DataPart"
+        }
+      ],
+      "description": "A discriminated union representing a part of a message or artifact, which can\nbe text, a file, or structured data."
+    },
+    "TaskState": {
+      "description": "Defines the lifecycle states of a Task.",
+      "enum": [
+        "submitted",
+        "working",
+        "input-required",
+        "completed",
+        "canceled",
+        "failed",
+        "rejected",
+        "auth-required",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "OpenAIConfiguration": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "openai"
+        },
+        "configuration": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "The name of the model to use"
+            },
+            "reasoningEffort": {
+              "type": "string",
+              "enum": [
+                "NONE",
+                "MINIMAL",
+                "LOW",
+                "MEDIUM",
+                "HIGH"
+              ],
+              "description": "Constrains effort on reasoning for reasoning models. gtp-5.1 defaults to NONE, previous ones default to MEDIUM."
+            },
+            "temperature": {
+              "type": "number",
+              "description": "Controls randomness in the output"
+            },
+            "topP": {
+              "type": "number",
+              "description": "Nucleus sampling parameter"
+            },
+            "topLogprobs": {
+              "type": "integer",
+              "description": "Number of most likely tokens to return at each position"
+            },
+            "maxOutputTokens": {
+              "type": "number",
+              "description": "Maximum number of tokens to generate"
+            }
+          }
+        }
+      }
+    },
+    "GeminiConfiguration": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "gemini"
+        },
+        "configuration": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "The name of the model to use"
+            },
+            "thinkingLevel": {
+              "type": "string",
+              "enum": [
+                "LOW",
+                "HIGH"
+              ],
+              "description": "The level of thoughts tokens that the model should generate."
+            },
+            "thinkingBudget": {
+              "type": "number",
+              "description": "Indicates the thinking budget in tokens. 0 is DISABLED. -1 is AUTOMATIC. The default values and allowed ranges are model dependent."
+            },
+            "temperature": {
+              "type": "number",
+              "description": "Controls the degree of randomness in token selection. Lower temperatures are good for prompts that require a less open-ended or creative response, while higher temperatures can lead to more diverse or creative results."
+            },
+            "topP": {
+              "type": "integer",
+              "description": "Tokens are selected from the most to least probable until the sum of their probabilities equals this value. Use a lower value for less random responses and a higher value for more random responses."
+            },
+            "responseLogprobs": {
+              "type": "boolean",
+              "description": "Whether to return the log probabilities of the tokens that were chosen by the model at each step"
+            },
+            "maxOutputTokens": {
+              "type": "number",
+              "description": "Maximum number of tokens that can be generated in the response"
+            }
+          }
+        }
+      }
+    },
+    "OAuthFlows": {
+      "description": "Defines the configuration for the supported OAuth 2.0 flows.",
+      "properties": {
+        "authorizationCode": {
+          "description": "Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0.",
+          "$ref": "#/definitions/AuthorizationCodeOAuthFlow"
+        },
+        "clientCredentials": {
+          "description": "Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0.",
+          "$ref": "#/definitions/ClientCredentialsOAuthFlow"
+        },
+        "implicit": {
+          "description": "Configuration for the OAuth Implicit flow.",
+          "$ref": "#/definitions/ImplicitOAuthFlow"
+        },
+        "password": {
+          "description": "Configuration for the OAuth Resource Owner Password flow.",
+          "$ref": "#/definitions/PasswordOAuthFlow"
+        }
+      },
+      "type": "object"
+    },
+    "Role": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/mcp#Role"
+        ]
+      },
+      "description": "The sender or recipient of messages and data in a conversation.",
+      "enum": [
+        "assistant",
+        "user"
+      ],
+      "type": "string"
+    },
+    "PushNotificationAuthenticationInfo": {
+      "description": "Defines authentication details for a push notification endpoint.",
+      "properties": {
+        "credentials": {
+          "description": "Optional credentials required by the push notification endpoint.",
+          "type": "string"
+        },
+        "schemes": {
+          "description": "A list of supported authentication schemes (e.g., 'Basic', 'Bearer').",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "schemes"
+      ],
+      "type": "object"
+    },
+    "TextPart": {
+      "description": "Represents a text segment within a message or artifact.",
+      "properties": {
+        "kind": {
+          "const": "text",
+          "description": "The type of this part, used as a discriminator. Always 'text'.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {},
+          "description": "Optional metadata associated with this part.",
+          "type": "object"
+        },
+        "text": {
+          "description": "The string content of the text part.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "text"
+      ],
+      "type": "object"
+    },
+    "FilePart": {
+      "description": "Represents a file segment within a message or artifact. The file content can be\nprovided either directly as bytes or as a URI.",
+      "properties": {
+        "file": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FileWithBytes"
+            },
+            {
+              "$ref": "#/definitions/FileWithUri"
+            }
+          ],
+          "description": "The file content, represented as either a URI or as base64-encoded bytes."
+        },
+        "kind": {
+          "const": "file",
+          "description": "The type of this part, used as a discriminator. Always 'file'.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {},
+          "description": "Optional metadata associated with this part.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "file",
+        "kind"
+      ],
+      "type": "object"
+    },
+    "DataPart": {
+      "description": "Represents a structured data segment (e.g., JSON) within a message or artifact.",
+      "properties": {
+        "data": {
+          "additionalProperties": {},
+          "description": "The structured data content.",
+          "type": "object"
+        },
+        "kind": {
+          "const": "data",
+          "description": "The type of this part, used as a discriminator. Always 'data'.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {},
+          "description": "Optional metadata associated with this part.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "data",
+        "kind"
+      ],
+      "type": "object"
+    },
+    "AuthorizationCodeOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Authorization Code flow.",
+      "properties": {
+        "authorizationUrl": {
+          "description": "The authorization URL to be used for this flow.\nThis MUST be a URL and use TLS.",
+          "type": "string"
+        },
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens.\nThis MUST be a URL and use TLS.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        },
+        "tokenUrl": {
+          "description": "The token URL to be used for this flow.\nThis MUST be a URL and use TLS.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "authorizationUrl",
+        "scopes",
+        "tokenUrl"
+      ],
+      "type": "object"
+    },
+    "ClientCredentialsOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Client Credentials flow.",
+      "properties": {
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        },
+        "tokenUrl": {
+          "description": "The token URL to be used for this flow. This MUST be a URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scopes",
+        "tokenUrl"
+      ],
+      "type": "object"
+    },
+    "ImplicitOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Implicit flow.",
+      "properties": {
+        "authorizationUrl": {
+          "description": "The authorization URL to be used for this flow. This MUST be a URL.",
+          "type": "string"
+        },
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "authorizationUrl",
+        "scopes"
+      ],
+      "type": "object"
+    },
+    "PasswordOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Resource Owner Password flow.",
+      "properties": {
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        },
+        "tokenUrl": {
+          "description": "The token URL to be used for this flow. This MUST be a URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scopes",
+        "tokenUrl"
+      ],
+      "type": "object"
+    },
+    "FileWithBytes": {
+      "description": "Represents a file with its content provided directly as a base64-encoded string.",
+      "properties": {
+        "bytes": {
+          "description": "The base64-encoded content of the file.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of the file (e.g., \"application/pdf\").",
+          "type": "string"
+        },
+        "name": {
+          "description": "An optional name for the file (e.g., \"document.pdf\").",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bytes"
+      ],
+      "type": "object"
+    },
+    "FileWithUri": {
+      "description": "Represents a file with its content located at a specific URI.",
+      "properties": {
+        "mimeType": {
+          "description": "The MIME type of the file (e.g., \"application/pdf\").",
+          "type": "string"
+        },
+        "name": {
+          "description": "An optional name for the file (e.g., \"document.pdf\").",
+          "type": "string"
+        },
+        "uri": {
+          "description": "A URL pointing to the file's content.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri"
+      ],
+      "type": "object"
     }
   }
 }

@@ -9,11 +9,11 @@ import amf.antlr.internal.plugins.syntax.{
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
 import amf.apicontract.internal.validation.model.ApiEffectiveValidations.GrpcEffectiveValidations
 import amf.apicontract.internal.validation.model.ApiValidationProfiles.GrpcValidationProfile
-import amf.apicontract.internal.validation.shacl.APIShaclModelValidationPlugin
-import amf.core.client.common.validation.{ProfileNames, SeverityLevels}
+import amf.core.client.common.validation.SeverityLevels
 import amf.core.internal.remote.Spec
 import amf.grpc.internal.plugins.parse.GrpcParsePlugin
 import amf.grpc.internal.plugins.render.GrpcRenderPlugin
+import amf.grpc.internal.plugins.validation.GrpcShaclModelValidationPlugin
 import amf.grpc.internal.transformation.{GrpcCachePipeline, GrpcEditingPipeline, GrpcTransformationPipeline}
 
 object GRPCConfiguration extends APIConfigurationBuilder {
@@ -25,7 +25,7 @@ object GRPCConfiguration extends APIConfigurationBuilder {
           GrpcSyntaxParsePlugin,
           GrpcRenderPlugin,
           AntlrSyntaxRenderPlugin,
-          APIShaclModelValidationPlugin(ProfileNames.GRPC)
+          GrpcShaclModelValidationPlugin()
         )
       )
       .withTransformationPipelines(

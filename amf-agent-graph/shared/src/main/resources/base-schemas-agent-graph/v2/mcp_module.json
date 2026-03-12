@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCP Module Specification",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#AgentMetadata"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
+  "definitions": {
+    "MCPCallToolNode": {
+      "type": "object",
+      "description": "The mcp_callTool node is used to explicitly invoke an MCP tool. The call doesn't occur as a decision from an agent node but as a deterministic step defined by the graph author.",
+      "properties": {
+        "mcp_callTool": {
+          "allOf": [
+            {
+              "$ref": "graph_commons.json#/definitions/BaseNode"
+            },
+            {
+              "$ref": "#/definitions/MCPCallToolNodeProperties"
+            }
+          ]
+        }
+      },
+      "required": [
+        "mcp_callTool"
+      ]
+    },
+    "MCPCallToolNodeProperties": {
+      "type": "object",
+      "description": "Properties for the MCP CallTool node that explicitly invokes an MCP tool as a deterministic step.",
+      "properties": {
+        "connection": {
+          "$ref": "../references.json#/definitions/ConnectionRef",
+          "description": "A reference to an MCP connection"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "The name of the tool to call",
+          "format": "AgentGraphExpressionOptional",
+          "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9_-]*$",
+          "minLength": 1
+        },
+        "arguments": {
+          "type": "object",
+          "description": "The tool's input arguments. Can be skipped if the tool takes no arguments",
+          "format": "AgentGraphExpressionOptional"
+        },
+        "headers": {
+          "$ref": "core_module.json#/definitions/HttpHeaders",
+          "description": "Headers to be added when sending requests to the MCP server. Useful for use cases such as authorization, correlation, etc"
+        }
+      },
+      "required": [
+        "connection",
+        "toolName"
+      ]
+    }
+  }
+}
