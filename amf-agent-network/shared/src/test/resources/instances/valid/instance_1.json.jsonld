@@ -39,7 +39,7 @@
         "http://anypoint.com/vocabs/agents/reference/kind#agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#weather-agent": {
+      "http://anypoint.com/vocabs/agents#weather-agent": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent"
       }
     },
@@ -50,7 +50,7 @@
         "http://anypoint.com/vocabs/agents/reference/kind#agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#my-agent": {
+      "http://anypoint.com/vocabs/agents#my-agent": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/my-agent"
       }
     },
@@ -61,7 +61,7 @@
         "http://anypoint.com/vocabs/agents/reference/kind#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#weather-mcp": {
+      "http://anypoint.com/vocabs/agents#weather-mcp": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcpServers/weather-mcp"
       }
     },
@@ -72,7 +72,7 @@
         "http://anypoint.com/vocabs/agents/reference/kind#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#open-ai": {
+      "http://anypoint.com/vocabs/agents#open-ai": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/llmProviders/open-ai"
       }
     },
@@ -83,10 +83,10 @@
         "http://anypoint.com/vocabs/agents/reference/kind#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ai-connection": {
+      "http://anypoint.com/vocabs/agents#ai-connection": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/ai-connection"
       },
-      "http://a.ml/vocabularies/core#weather-mcp-connection": {
+      "http://anypoint.com/vocabs/agents#weather-mcp-connection": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-mcp-connection"
       }
     },
@@ -144,6 +144,7 @@
       "@type": [
         "http://anypoint.com/vocabs/agents#LLMConnection",
         "http://anypoint.com/vocabs/agents#Connection",
+        "http://anypoint.com/vocabs/agents#ai-connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#ref": {
@@ -159,6 +160,7 @@
       "@type": [
         "http://anypoint.com/vocabs/agents#MCPServerConnection",
         "http://anypoint.com/vocabs/agents#Connection",
+        "http://anypoint.com/vocabs/agents#weather-mcp-connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#ref": {
@@ -172,32 +174,32 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card",
       "@type": [
-        "http://a.ml/vocabularies/core#card",
+        "http://anypoint.com/vocabs/agents#card",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#protocolVersion": "0.2.9",
-      "http://a.ml/vocabularies/core#name": "Agent that now how to handle the weather",
-      "http://a.ml/vocabularies/core#description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
-      "http://a.ml/vocabularies/core#url": "https://${ingressgw.url}/weather-agent",
-      "http://a.ml/vocabularies/core#capabilities": {
+      "http://anypoint.com/vocabs/agents#protocolVersion": "0.2.9",
+      "http://anypoint.com/vocabs/agents#name": "Agent that now how to handle the weather",
+      "http://anypoint.com/vocabs/agents#description": "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
+      "http://anypoint.com/vocabs/agents#url": "https://${ingressgw.url}/weather-agent",
+      "http://anypoint.com/vocabs/agents#capabilities": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/capabilities"
       },
-      "http://a.ml/vocabularies/core#version": "1.0.0",
-      "http://a.ml/vocabularies/core#provider": {
+      "http://anypoint.com/vocabs/agents#version": "1.0.0",
+      "http://anypoint.com/vocabs/agents#provider": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/provider"
       },
-      "http://a.ml/vocabularies/core#securitySchemes": {
+      "http://anypoint.com/vocabs/agents#securitySchemes": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/securitySchemes"
       },
-      "http://a.ml/vocabularies/core#defaultInputModes": [
+      "http://anypoint.com/vocabs/agents#defaultInputModes": [
         "application/json",
         "text/plain"
       ],
-      "http://a.ml/vocabularies/core#defaultOutputModes": [
+      "http://anypoint.com/vocabs/agents#defaultOutputModes": [
         "application/json",
         "image/png"
       ],
-      "http://a.ml/vocabularies/core#skills": [
+      "http://anypoint.com/vocabs/agents#skills": [
         {
           "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/skills/0"
         }
@@ -206,18 +208,18 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec",
       "@type": [
-        "http://a.ml/vocabularies/core#spec",
+        "http://anypoint.com/vocabs/agents#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#llm": {
+      "http://anypoint.com/vocabs/agents#llm": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/llm"
       },
-      "http://a.ml/vocabularies/core#maxNumberOfLoops": 10,
-      "http://a.ml/vocabularies/core#maxConsecutiveErrors": 1,
-      "http://a.ml/vocabularies/core#instructions": [
+      "http://anypoint.com/vocabs/agents#maxNumberOfLoops": 10,
+      "http://anypoint.com/vocabs/agents#maxConsecutiveErrors": 1,
+      "http://anypoint.com/vocabs/agents#instructions": [
         "You are a weather agent"
       ],
-      "http://a.ml/vocabularies/core#tools": [
+      "http://anypoint.com/vocabs/agents#tools": [
         {
           "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0"
         },
@@ -225,7 +227,7 @@
           "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/1"
         }
       ],
-      "http://a.ml/vocabularies/core#links": [
+      "http://anypoint.com/vocabs/agents#links": [
         {
           "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0"
         }
@@ -234,11 +236,11 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/agents/my-agent/metadata",
       "@type": [
-        "http://a.ml/vocabularies/core#metadata",
+        "http://anypoint.com/vocabs/agents#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#platform": "bedrock",
-      "http://a.ml/vocabularies/core#protocol": "a2a"
+      "http://anypoint.com/vocabs/agents#platform": "bedrock",
+      "http://anypoint.com/vocabs/agents#protocol": "a2a"
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcpServers/weather-mcp/metadata",
@@ -246,7 +248,7 @@
         "http://anypoint.com/vocabs/mcp#Server",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#transport": {
+      "http://anypoint.com/vocabs/agents#transport": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/mcpServers/weather-mcp/metadata/transport"
       }
     },
@@ -255,6 +257,7 @@
       "@type": [
         "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata",
         "http://anypoint.com/vocabs/agents#LLMMetadata",
+        "http://anypoint.com/vocabs/agents#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#platform": "OpenAI"
@@ -272,7 +275,6 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/ai-connection/spec",
       "@type": [
-        "http://a.ml/vocabularies/core#spec",
         "http://anypoint.com/vocabs/agents#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
@@ -294,7 +296,6 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/connections/weather-mcp-connection/spec",
       "@type": [
-        "http://a.ml/vocabularies/core#spec",
         "http://anypoint.com/vocabs/agents#spec",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
@@ -303,94 +304,94 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/capabilities",
       "@type": [
-        "http://a.ml/vocabularies/core#capabilities",
+        "http://anypoint.com/vocabs/agents#capabilities",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ]
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/provider",
       "@type": [
-        "http://a.ml/vocabularies/core#provider",
+        "http://anypoint.com/vocabs/agents#provider",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#organization": "Acme Inc.",
-      "http://a.ml/vocabularies/core#url": "https://www.acme.com"
+      "http://anypoint.com/vocabs/agents#organization": "Acme Inc.",
+      "http://anypoint.com/vocabs/agents#url": "https://www.acme.com"
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/securitySchemes",
       "@type": [
-        "http://a.ml/vocabularies/core#securitySchemes",
+        "http://anypoint.com/vocabs/agents#securitySchemes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#anypointApiKey": {
+      "http://anypoint.com/vocabs/agents#anypointApiKey": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/securitySchemes/anypointApiKey"
       }
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/skills/0",
       "@type": [
-        "http://a.ml/vocabularies/core#skills",
+        "http://anypoint.com/vocabs/agents#skills",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#id": "weather-agent-skills",
-      "http://a.ml/vocabularies/core#name": "Handles the weather",
-      "http://a.ml/vocabularies/core#description": "Can calculate the weather for a given location at a given time",
-      "http://a.ml/vocabularies/core#examples": [
+      "http://anypoint.com/vocabs/agents#id": "weather-agent-skills",
+      "http://anypoint.com/vocabs/agents#name": "Handles the weather",
+      "http://anypoint.com/vocabs/agents#description": "Can calculate the weather for a given location at a given time",
+      "http://anypoint.com/vocabs/agents#examples": [
         "What is the weather in buenos aires in 2025 12 of May"
       ],
-      "http://a.ml/vocabularies/core#inputModes": [
+      "http://anypoint.com/vocabs/agents#inputModes": [
         "application/json",
         "text/plain"
       ],
-      "http://a.ml/vocabularies/core#outputModes": [
+      "http://anypoint.com/vocabs/agents#outputModes": [
         "application/json",
         "application/vnd.geo+json",
         "text/html"
       ],
-      "http://a.ml/vocabularies/core#tags": [
+      "http://anypoint.com/vocabs/agents#tags": [
         "weather"
       ]
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/llm",
       "@type": [
-        "http://a.ml/vocabularies/core#llm",
+        "http://anypoint.com/vocabs/agents#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
+      "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/llm/ref"
       },
-      "http://a.ml/vocabularies/core#configuration": {
+      "http://anypoint.com/vocabs/agents#configuration": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/llm/configuration"
       }
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0",
       "@type": [
-        "http://a.ml/vocabularies/core#tools",
+        "http://anypoint.com/vocabs/agents#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#mcp": {
+      "http://anypoint.com/vocabs/agents#mcp": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0/mcp"
       }
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/1",
       "@type": [
-        "http://a.ml/vocabularies/core#tools",
+        "http://anypoint.com/vocabs/agents#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#mcp": {
+      "http://anypoint.com/vocabs/agents#mcp": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/1/mcp"
       }
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0",
       "@type": [
-        "http://a.ml/vocabularies/core#links",
+        "http://anypoint.com/vocabs/agents#links",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#agent": {
+      "http://anypoint.com/vocabs/agents#agent": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0/agent"
       }
     },
@@ -399,7 +400,7 @@
       "@type": [
         "http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
         "http://anypoint.com/vocabs/mcp#Transport",
-        "http://a.ml/vocabularies/core#transport",
+        "http://anypoint.com/vocabs/agents#transport",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/mcp#kind": "streamableHttp",
@@ -416,12 +417,12 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/card/securitySchemes/anypointApiKey",
       "@type": [
-        "http://a.ml/vocabularies/core#anypointApiKey",
+        "http://anypoint.com/vocabs/agents#anypointApiKey",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#type": "apiKey",
-      "http://a.ml/vocabularies/core#in": "header",
-      "http://a.ml/vocabularies/core#name": "client_id/client_secret"
+      "http://anypoint.com/vocabs/agents#type": "apiKey",
+      "http://anypoint.com/vocabs/agents#in": "header",
+      "http://anypoint.com/vocabs/agents#name": "client_id/client_secret"
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/llm/ref",
@@ -435,44 +436,44 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/llm/configuration",
       "@type": [
-        "http://a.ml/vocabularies/core#configuration",
+        "http://anypoint.com/vocabs/agents#configuration",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#model": "gpt-5-nano"
+      "http://anypoint.com/vocabs/agents#model": "gpt-5-nano"
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0/mcp",
       "@type": [
-        "http://a.ml/vocabularies/core#mcp",
+        "http://anypoint.com/vocabs/agents#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
+      "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0/mcp/ref"
       },
-      "http://a.ml/vocabularies/core#connection": {
+      "http://anypoint.com/vocabs/agents#connection": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0/mcp/connection"
       }
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/1/mcp",
       "@type": [
-        "http://a.ml/vocabularies/core#mcp",
+        "http://anypoint.com/vocabs/agents#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
+      "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/1/mcp/ref"
       }
     },
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0/agent",
       "@type": [
-        "http://a.ml/vocabularies/core#agent",
+        "http://anypoint.com/vocabs/agents#agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
+      "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0/agent/ref"
       },
-      "http://a.ml/vocabularies/core#connection": {
+      "http://anypoint.com/vocabs/agents#connection": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0/agent/connection"
       }
     },
@@ -488,10 +489,10 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0/mcp/connection",
       "@type": [
-        "http://a.ml/vocabularies/core#connection",
+        "http://anypoint.com/vocabs/agents#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
+      "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/tools/0/mcp/connection/ref"
       }
     },
@@ -516,10 +517,10 @@
     {
       "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0/agent/connection",
       "@type": [
-        "http://a.ml/vocabularies/core#connection",
+        "http://anypoint.com/vocabs/agents#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#ref": {
+      "http://anypoint.com/vocabs/agents#ref": {
         "@id": "file://amf-agent-network/shared/src/test/resources/instances/valid/instance_1.json#/encodes/brokers/weather-agent/spec/links/0/agent/connection/ref"
       }
     },

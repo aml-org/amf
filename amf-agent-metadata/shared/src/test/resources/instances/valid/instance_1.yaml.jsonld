@@ -86,41 +86,44 @@
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/0/ref",
       "@type": [
+        "http://anypoint.com/vocabs/agents/link#ref",
         "http://a.ml/vocabularies/core#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#groupId": "f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8",
-      "http://a.ml/vocabularies/core#assetId": "my-cool-agent",
-      "http://a.ml/vocabularies/core#version": "1.0.0"
+      "http://anypoint.com/vocabs/agents/link#groupId": "f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8",
+      "http://anypoint.com/vocabs/agents/link#assetId": "my-cool-agent",
+      "http://anypoint.com/vocabs/agents/link#version": "1.0.0"
     },
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/1/ref",
       "@type": [
+        "http://anypoint.com/vocabs/agents/link#ref",
         "http://a.ml/vocabularies/core#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#groupId": "f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8",
-      "http://a.ml/vocabularies/core#assetId": "downstream-system-api",
-      "http://a.ml/vocabularies/core#version": "1.2.3"
+      "http://anypoint.com/vocabs/agents/link#groupId": "f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8",
+      "http://anypoint.com/vocabs/agents/link#assetId": "downstream-system-api",
+      "http://anypoint.com/vocabs/agents/link#version": "1.2.3"
     },
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/2/ref",
       "@type": [
+        "http://anypoint.com/vocabs/agents/link#ref",
         "http://a.ml/vocabularies/core#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#groupId": "com.organization.llms",
-      "http://a.ml/vocabularies/core#assetId": "enterprise-language-model",
-      "http://a.ml/vocabularies/core#version": "2.5-turbo"
+      "http://anypoint.com/vocabs/agents/link#groupId": "com.organization.llms",
+      "http://anypoint.com/vocabs/agents/link#assetId": "enterprise-language-model",
+      "http://anypoint.com/vocabs/agents/link#version": "2.5-turbo"
     },
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/provenance/metadata",
       "@type": [
-        "http://a.ml/vocabularies/core#metadata",
+        "http://anypoint.com/vocabs/agents/link#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://a.ml/vocabularies/core#assetUrl": "https://www.google.com/search?q=https://anypoint.mulesoft.com/exchange/f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8/my-cool-agent/1.0.0/pages/summary/",
-      "http://a.ml/vocabularies/core#publishedDate": "2023-10-27T10:00:00Z"
+      "http://anypoint.com/vocabs/agents/link#assetUrl": "https://www.google.com/search?q=https://anypoint.mulesoft.com/exchange/f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8/my-cool-agent/1.0.0/pages/summary/",
+      "http://anypoint.com/vocabs/agents/link#publishedDate": "2023-10-27T10:00:00Z"
     },
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml",
