@@ -35,30 +35,6 @@ Follows the regular release process (see ~/mulesoft/CLAUDE.md).
 - **For RC**: Add `"release/*"` to branch list in all build and publish stages
 - **For Release**: Remove `"release/*"` from branch list in all publish stages
 
-## Release Steps
-
-### Publishing RC (x.y.z-RC.r)
-1. Check if amf-antlr-ast has a new version and update if needed
-2. Update amf-apicontract.versions with amf-aml RC version from previous step
-3. From develop: `git checkout -b release/x.y.z`
-4. Edit Jenkinsfile: add `"release/*"` to `Build JS Package`, `Publish JVM Artifact`, and `Publish JS Package` stages
-5. Edit amf-apicontract.versions: update version to `x.y.z-RC.r`
-6. Commit: `git commit -m "Publish x.y.z-RC.r"`
-7. Push: `git push -u origin release/x.y.z`
-
-### Publishing Release (x.y.z)
-1. Update amf-apicontract.versions with amf-aml release version
-2. Follow standard three-PR process (setup → master → develop)
-3. After merging to master, manually tag: `git tag x.y.z origin/master && git push origin x.y.z`
-
-### Publishing Hotfix (x.y.z-n)
-1. Checkout/create `support/x.y.z` branch from tag
-2. Cherry-pick required commits
-3. Update version in amf-apicontract.versions to `x.y.z-n`
-4. Check if amf-aml hotfix is also needed and update dependency
-5. Ensure Jenkinsfile has `support/*` in all build/publish stages (for first HF only)
-6. Push and create PR to merge into `support/x.y.z`
-
 ## Dependencies Impact
 After releasing amf, update the version in:
 - amf-metadata (next in release line)
