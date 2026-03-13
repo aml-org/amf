@@ -22,6 +22,11 @@ Follows the regular release process (see ~/mulesoft/CLAUDE.md).
 
 ## Jenkins Configuration
 
+### Dashboard
+- **Base URL**: https://jenkins.build.msap.io/job/application/job/AMF/job/amf
+- **Branch URL format**: `{base-url}/job/{branch-name}` (URL encode `/` as `%252F`)
+- **Example**: https://jenkins.build.msap.io/job/application/job/AMF/job/amf/job/release%252F5.10.1
+
 ### Stages to Modify
 - **Building stages**: `Build JS Package`
 - **Publishing stages**: `Publish JVM Artifact`, `Publish JS Package`
