@@ -89,11 +89,11 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "org.apache.commons", name = "commons-lang3")
     ),
     // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
-    libraryDependencies += "org.json"                   % "json"                 % "20250517",
+    libraryDependencies += "org.json"                   % "json"                 % "20251224",
     // Added because of exclusion in org.apache.avro:avro
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.20.1",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.21.1",
     // Added because of exclusion in org.apache.avro:avro and com.github.everit-org.json-schema:org.everit.json.schema
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.20.1",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.21.1",
     // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
     libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.5.0",
     // Added because of exclusion in org.apache.avro:avro
