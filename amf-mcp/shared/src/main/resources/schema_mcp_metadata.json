@@ -26,12 +26,12 @@
           "description": "The version of the protocol being used. This is used to determine the structure and capabilities of the data."
         },
         "transport": {
-          "$ref": "#/definitions/MCPTransport",
-          "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server."
+          "description": "The transport protocol used for communication. This defines how the data is transmitted between the client and server.",
+          "$ref": "#/definitions/MCPTransport"
         },
         "provider": {
-          "$ref": "#/definitions/MCPProvider",
-          "description": "The service provider of the MCP server."
+          "description": "The service provider of the MCP server.",
+          "$ref": "#/definitions/MCPProvider"
         },
         "capabilities": {
           "$ref": "#/definitions/ServerCapabilities"
@@ -76,7 +76,7 @@
         },
         "securitySchemes": {
           "additionalProperties": {
-            "$ref": "a2a.json#/definitions/SecurityScheme"
+            "$ref": "#/definitions/SecurityScheme"
           },
           "description": "Security scheme details used for authenticating with this agent.",
           "type": "object"
@@ -226,8 +226,8 @@
           "type": "object"
         },
         "annotations": {
-          "$ref": "#/definitions/Annotations",
-          "description": "Optional annotations for the client."
+          "description": "Optional annotations for the client.",
+          "$ref": "#/definitions/Annotations"
         },
         "description": {
           "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
@@ -391,16 +391,16 @@
           "type": "object"
         },
         "annotations": {
-          "$ref": "#/definitions/ToolAnnotations",
-          "description": "Optional additional tool information.\n\nDisplay name precedence order is: title, annotations.title, then name."
+          "description": "Optional additional tool information.\n\nDisplay name precedence order is: title, annotations.title, then name.",
+          "$ref": "#/definitions/ToolAnnotations"
         },
         "description": {
           "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
           "type": "string"
         },
         "execution": {
-          "$ref": "#/definitions/ToolExecution",
-          "description": "Execution-related properties for this tool."
+          "description": "Execution-related properties for this tool.",
+          "$ref": "#/definitions/ToolExecution"
         },
         "icons": {
           "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
@@ -629,8 +629,8 @@
           "type": "object"
         },
         "annotations": {
-          "$ref": "#/definitions/Annotations",
-          "description": "Optional annotations for the client."
+          "description": "Optional annotations for the client.",
+          "$ref": "#/definitions/Annotations"
         },
         "description": {
           "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
@@ -744,7 +744,281 @@
         "src"
       ],
       "type": "object"
+    },
+    "SecurityScheme": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/APIKeySecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/HTTPAuthSecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/OAuth2SecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/OpenIdConnectSecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/MutualTLSSecurityScheme"
+        }
+      ],
+      "description": "Defines a security scheme that can be used to secure an agent's endpoints.\nThis is a discriminated union type based on the OpenAPI 3.0 Security Scheme Object."
+    },
+    "APIKeySecurityScheme": {
+      "description": "Defines a security scheme using an API key.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "in": {
+          "description": "The location of the API key.",
+          "enum": [
+            "cookie",
+            "header",
+            "query"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the header, query, or cookie parameter to be used.",
+          "type": "string"
+        },
+        "type": {
+          "const": "apiKey",
+          "description": "The type of the security scheme. Must be 'apiKey'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "in",
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "HTTPAuthSecurityScheme": {
+      "description": "Defines a security scheme using HTTP authentication.",
+      "properties": {
+        "bearerFormat": {
+          "description": "A hint to the client to identify how the bearer token is formatted (e.g., \"JWT\").\nThis is primarily for documentation purposes.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "scheme": {
+          "description": "The name of the HTTP Authentication scheme to be used in the Authorization header,\nas defined in RFC7235 (e.g., \"Bearer\").\nThis value should be registered in the IANA Authentication Scheme registry.",
+          "type": "string"
+        },
+        "type": {
+          "const": "http",
+          "description": "The type of the security scheme. Must be 'http'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scheme",
+        "type"
+      ],
+      "type": "object"
+    },
+    "OAuth2SecurityScheme": {
+      "description": "Defines a security scheme using OAuth 2.0.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "flows": {
+          "description": "An object containing configuration information for the supported OAuth 2.0 flows.",
+          "$ref": "#/definitions/OAuthFlows"
+        },
+        "oauth2MetadataUrl": {
+          "description": "URL to the oauth2 authorization server metadata\n[RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.",
+          "type": "string"
+        },
+        "type": {
+          "const": "oauth2",
+          "description": "The type of the security scheme. Must be 'oauth2'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "flows",
+        "type"
+      ],
+      "type": "object"
+    },
+    "OpenIdConnectSecurityScheme": {
+      "description": "Defines a security scheme using OpenID Connect.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "openIdConnectUrl": {
+          "description": "The OpenID Connect Discovery URL for the OIDC provider's metadata.",
+          "type": "string"
+        },
+        "type": {
+          "const": "openIdConnect",
+          "description": "The type of the security scheme. Must be 'openIdConnect'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "openIdConnectUrl",
+        "type"
+      ],
+      "type": "object"
+    },
+    "MutualTLSSecurityScheme": {
+      "description": "Defines a security scheme using mTLS authentication.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the security scheme.",
+          "type": "string"
+        },
+        "type": {
+          "const": "mutualTLS",
+          "description": "The type of the security scheme. Must be 'mutualTLS'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "OAuthFlows": {
+      "description": "Defines the configuration for the supported OAuth 2.0 flows.",
+      "properties": {
+        "authorizationCode": {
+          "description": "Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0.",
+          "$ref": "#/definitions/AuthorizationCodeOAuthFlow"
+        },
+        "clientCredentials": {
+          "description": "Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0.",
+          "$ref": "#/definitions/ClientCredentialsOAuthFlow"
+        },
+        "implicit": {
+          "description": "Configuration for the OAuth Implicit flow.",
+          "$ref": "#/definitions/ImplicitOAuthFlow"
+        },
+        "password": {
+          "description": "Configuration for the OAuth Resource Owner Password flow.",
+          "$ref": "#/definitions/PasswordOAuthFlow"
+        }
+      },
+      "type": "object"
+    },
+    "AuthorizationCodeOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Authorization Code flow.",
+      "properties": {
+        "authorizationUrl": {
+          "description": "The authorization URL to be used for this flow.\nThis MUST be a URL and use TLS.",
+          "type": "string"
+        },
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens.\nThis MUST be a URL and use TLS.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        },
+        "tokenUrl": {
+          "description": "The token URL to be used for this flow.\nThis MUST be a URL and use TLS.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "authorizationUrl",
+        "scopes",
+        "tokenUrl"
+      ],
+      "type": "object"
+    },
+    "ClientCredentialsOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Client Credentials flow.",
+      "properties": {
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        },
+        "tokenUrl": {
+          "description": "The token URL to be used for this flow. This MUST be a URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scopes",
+        "tokenUrl"
+      ],
+      "type": "object"
+    },
+    "ImplicitOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Implicit flow.",
+      "properties": {
+        "authorizationUrl": {
+          "description": "The authorization URL to be used for this flow. This MUST be a URL.",
+          "type": "string"
+        },
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "authorizationUrl",
+        "scopes"
+      ],
+      "type": "object"
+    },
+    "PasswordOAuthFlow": {
+      "description": "Defines configuration details for the OAuth 2.0 Resource Owner Password flow.",
+      "properties": {
+        "refreshUrl": {
+          "description": "The URL to be used for obtaining refresh tokens. This MUST be a URL.",
+          "type": "string"
+        },
+        "scopes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The available scopes for the OAuth2 security scheme. A map between the scope\nname and a short description for it.",
+          "type": "object"
+        },
+        "tokenUrl": {
+          "description": "The token URL to be used for this flow. This MUST be a URL.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scopes",
+        "tokenUrl"
+      ],
+      "type": "object"
     }
   }
-
 }

@@ -1,23 +1,21 @@
 #!/usr/bin/env python3
 """
-Bundles agent_network_v2.json into schema_agent_graph.json by resolving
+Bundles a root JSON Schema into a single self-contained schema by resolving
 all external $ref references and inlining them as local #/definitions/... refs.
 
 Usage:
-    python3 bundle_schema.py
+    python3 bundle_schema.py <root_schema> <output_file>
 
-Reads:  base-schemas-agent-graph/v2/agent_network_v2.json (and all referenced schemas)
-Writes: schema_agent_graph.json
+Arguments:
+    root_schema   Absolute path to the root JSON schema file.
+    output_file   Relative path (from cwd) to the bundled output file.
 """
 
+import argparse
 import json
 import os
 import sys
 from copy import deepcopy
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_SCHEMA = os.path.join(SCRIPT_DIR, "base-schemas-agent-graph", "v2", "agent_network_v2.json")
-OUTPUT_FILE = os.path.join(SCRIPT_DIR, "schema_agent_graph.json")
 
 # Cache of loaded schema files (absolute path -> parsed JSON)
 _file_cache: dict[str, dict] = {}
@@ -200,16 +198,35 @@ def collect_definitions(root_file: str) -> tuple[dict, dict]:
     return root_schema, all_definitions
 
 
-def bundle() -> dict:
+def bundle(root_schema_path: str) -> dict:
     """Bundle the root schema into a single self-contained schema."""
-    root_schema, definitions = collect_definitions(ROOT_SCHEMA)
+    root_schema, definitions = collect_definitions(root_schema_path)
     root_schema["definitions"] = definitions
     return root_schema
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Bundle a root JSON Schema into a single self-contained schema."
+    )
+    parser.add_argument(
+        "root_schema",
+        help="Absolute path to the root JSON schema file.",
+    )
+    parser.add_argument(
+        "output_file",
+        help="Relative path (from cwd) to the bundled output file.",
+    )
+    return parser.parse_args()
+
+
 def main():
-    print(f"Bundling: {ROOT_SCHEMA}")
-    bundled = bundle()
+    args = parse_args()
+    root_schema_path = os.path.abspath(args.root_schema)
+    output_file = args.output_file
+
+    print(f"Bundling: {root_schema_path}")
+    bundled = bundle(root_schema_path)
 
     # Validate: check all $refs resolve
     def find_refs(obj, path=""):
@@ -235,11 +252,11 @@ def main():
             print(f"  {name} (at {path})")
         sys.exit(1)
 
-    with open(OUTPUT_FILE, "w") as f:
+    with open(output_file, "w") as f:
         json.dump(bundled, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
-    print(f"Output:   {OUTPUT_FILE}")
+    print(f"Output:   {output_file}")
     print(f"  {len(defs)} definitions, {len(all_refs)} internal refs — all resolved ✓")
 
 
