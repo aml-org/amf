@@ -9,6 +9,7 @@ Bundles JSON Schema files by resolving all external `$ref` references and inlini
   ```bash
   pip install pyyaml
   ```
+- The [agent fabric spec repository](https://github.com/mulesoft-emu/agent-fabric-specification) checked out and updated in locally in the directory `~/mulesoft/agent-fabric-specification` (only needed to run `bundle_all_schemas.py`). 
 
 ## Files
 

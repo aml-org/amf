@@ -291,7 +291,18 @@ lazy val mcp = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-mcp"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-mcp" / "shared" / "src" / "main" / "resources" / "schema_mcp_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.mcp.internal.spec",
+          objectName    = "MCPSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
@@ -326,7 +337,18 @@ lazy val agentNetwork = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-network"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-network" / "shared" / "src" / "main" / "resources" / "schema_agent_network.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentnetwork.internal.spec",
+          objectName    = "AgentNetworkSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
@@ -360,7 +382,18 @@ lazy val agentCard = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-card"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-card" / "shared" / "src" / "main" / "resources" / "schema_agent_card.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentcard.internal.spec",
+          objectName    = "AgentCardSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
@@ -394,7 +427,18 @@ lazy val otherCard = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-other-card"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-other-card" / "shared" / "src" / "main" / "resources" / "schema_other_card.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.othercard.internal.spec",
+          objectName    = "OtherCardSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
@@ -428,7 +472,18 @@ lazy val agentMetadata = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-metadata"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-metadata" / "shared" / "src" / "main" / "resources" / "schema_agent_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentmetadata.internal.spec",
+          objectName    = "AgentMetadataSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
@@ -462,7 +517,18 @@ lazy val llmMetadata = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-llm-metadata"))
-  .settings(commonSettings)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-llm-metadata" / "shared" / "src" / "main" / "resources" / "schema_llm_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.llmmetadata.internal.spec",
+          objectName    = "LLMMetadataSchemaContent"
+        )
+      }.taskValue
+    )
+  )
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
