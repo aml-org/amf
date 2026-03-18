@@ -1,5 +1,0 @@
-package amf.agentgraph.internal.convert
-
-import amf.shapes.internal.convert.ShapesBaseClientConverter
-
-trait AgentGraphBaseClientConverter extends AgentGraphBaseConverter with ShapesBaseClientConverter

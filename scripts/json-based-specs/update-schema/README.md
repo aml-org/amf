@@ -25,7 +25,7 @@ Edit `schemas.yaml` to define the schemas to bundle. Each entry has three fields
 
 ```yaml
 - name: "agent graph"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/v2/agent_network_v2.json"
+  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/agent_network_v2.json"
   output: "amf-agent-graph/shared/src/main/resources/schema_agent_graph.json"
 ```
 
@@ -40,13 +40,13 @@ Edit `schemas.yaml` to define the schemas to bundle. Each entry has three fields
 ### Bundle all schemas
 
 ```bash
-python3 scripts/json-based-specs/bundle_all_schemas.py
+python3 scripts/json-based-specs/update-schema/bundle_all_schemas.py
 ```
 
 ### Bundle a single schema
 
 ```bash
-python3 scripts/json-based-specs/bundle_schema.py <root_schema> <output_file>
+python3 scripts/json-based-specs/update-schema/bundle_schema.py <root_schema> <output_file>
 ```
 
 - **`root_schema`** — Absolute path to the root JSON schema file.
@@ -55,7 +55,7 @@ python3 scripts/json-based-specs/bundle_schema.py <root_schema> <output_file>
 Example:
 
 ```bash
-python3 scripts/json-based-specs/bundle_schema.py \
-  /Users/you/project/base-schemas-agent-graph/v2/agent_network_v2.json \
+python3 scripts/json-based-specs/update-schema/bundle_schema.py \
+  /Users/you/project/base-schemas-agent-graph/agent_network_v2.json \
   schema_agent_graph.json
 ```

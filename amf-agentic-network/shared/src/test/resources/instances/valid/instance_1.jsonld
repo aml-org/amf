@@ -1,0 +1,326 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Agentic Network"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Network",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#agentNetwork": "2.0.0",
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/info"
+      },
+      "http://anypoint.com/vocabs/agents#registry": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry"
+      },
+      "http://anypoint.com/vocabs/agents#context": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "Network with Connection Policies",
+      "http://anypoint.com/vocabs/agents#version": "1.0.0"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#registry",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#agents": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#context",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#policies": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies"
+      },
+      "http://anypoint.com/vocabs/agents#connections": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+        "http://anypoint.com/vocabs/agents/reference/kind#agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#target-agent": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/target-agent"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+        "http://anypoint.com/vocabs/agents/reference/kind#policybindings",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#shared-rate-limit": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies/shared-rate-limit"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+        "http://anypoint.com/vocabs/agents/reference/kind#connection",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#my-connection": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/target-agent",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/target-agent/metadata"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies/shared-rate-limit",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#PolicyBinding",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies/shared-rate-limit/ref"
+      },
+      "http://anypoint.com/vocabs/agents#configuration": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies/shared-rate-limit/configuration"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#AgentConnection",
+        "http://anypoint.com/vocabs/agents#Connection",
+        "http://anypoint.com/vocabs/agents#my-connection",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/ref"
+      },
+      "http://anypoint.com/vocabs/agents#kind": "a2a",
+      "http://anypoint.com/vocabs/agents#authentication": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/authentication"
+      },
+      "http://anypoint.com/vocabs/agents#url": "https://target.example.com",
+      "http://anypoint.com/vocabs/agents#policies": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/registry/agents/target-agent/metadata",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#metadata",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#platform": "Mulesoft",
+      "http://anypoint.com/vocabs/agents#protocol": "a2a"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies/shared-rate-limit/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://anypoint.com/vocabs/agents/reference/kind#policy",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "rate-limit"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/policies/shared-rate-limit/configuration",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#configuration",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#maxRequests": 100,
+      "http://anypoint.com/vocabs/agents#windowSeconds": 60
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents/reference/kind#agent",
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://anypoint.com/vocabs/agents#ref",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "target-agent"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/authentication",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#authentication",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#username": "user",
+      "http://anypoint.com/vocabs/agents#kind": "basic",
+      "http://anypoint.com/vocabs/agents#password": "password"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#policies",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#inbound": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/0"
+        },
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1"
+        }
+      ],
+      "http://anypoint.com/vocabs/agents#outbound": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#inbound",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/0/ref"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#inbound",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#policy": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#outbound",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#policy": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/0/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#ref",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "shared-rate-limit"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#PolicyBinding",
+        "http://anypoint.com/vocabs/agents#policy",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/ref"
+      },
+      "http://anypoint.com/vocabs/agents#configuration": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/configuration"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#PolicyBinding",
+        "http://anypoint.com/vocabs/agents#policy",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/ref"
+      },
+      "http://anypoint.com/vocabs/agents#configuration": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/configuration"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://anypoint.com/vocabs/agents/reference/kind#policy",
+        "http://anypoint.com/vocabs/agents#ref",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#namespace": "mulesoft.policies",
+      "http://anypoint.com/vocabs/agents#name": "logging"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/configuration",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#configuration",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#level": "DEBUG"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://anypoint.com/vocabs/agents/reference/kind#policy",
+        "http://anypoint.com/vocabs/agents#ref",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "circuit-breaker"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/configuration",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#configuration",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#threshold": 5
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

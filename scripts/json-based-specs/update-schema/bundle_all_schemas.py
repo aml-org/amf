@@ -14,7 +14,7 @@ import sys
 import yaml
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", ".."))
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "schemas.yaml")
 BUNDLE_SCRIPT = os.path.join(SCRIPT_DIR, "bundle_schema.py")
 
