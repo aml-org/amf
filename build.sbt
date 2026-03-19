@@ -303,7 +303,7 @@ lazy val mcp = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-mcp-javadoc.jar",
@@ -349,7 +349,7 @@ lazy val agentNetwork = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-network-javadoc.jar",
@@ -394,7 +394,7 @@ lazy val agentCard = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-card-javadoc.jar",
@@ -439,7 +439,7 @@ lazy val otherCard = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-other-card-javadoc.jar",
@@ -484,7 +484,7 @@ lazy val agentMetadata = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-metadata-javadoc.jar",
@@ -529,7 +529,7 @@ lazy val llmMetadata = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-llm-metadata-javadoc.jar",
@@ -574,7 +574,7 @@ lazy val agenticNetwork = crossProject(JSPlatform, JVMPlatform)
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agentic-network-javadoc.jar",

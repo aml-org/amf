@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/BaseUnitProcessingData",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -9,31 +9,31 @@
       "http://a.ml/vocabularies/document#sourceSpec": "Other Card"
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/",
       "@type": [
         "http://anypoint.com/vocabs/agents#OtherCard",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#transport": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/transport"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/transport"
       },
       "http://anypoint.com/vocabs/agents#provider": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/provider"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/provider"
       },
       "http://anypoint.com/vocabs/agents#capabilities": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/capabilities"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/capabilities"
       },
       "http://anypoint.com/vocabs/agents#tools": [
         {
-          "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0"
+          "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0"
         },
         {
-          "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1"
+          "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1"
         }
       ]
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/transport",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/transport",
       "@type": [
         "http://anypoint.com/vocabs/agents#transport",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -42,7 +42,7 @@
       "http://anypoint.com/vocabs/agents#path": "/mcp"
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/provider",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/provider",
       "@type": [
         "http://anypoint.com/vocabs/agents#provider",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -51,7 +51,7 @@
       "http://anypoint.com/vocabs/agents#url": "https://weatherapi.example.com"
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/capabilities",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/capabilities",
       "@type": [
         "http://anypoint.com/vocabs/agents#capabilities",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -62,7 +62,7 @@
       "http://anypoint.com/vocabs/agents#logging": true
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0",
       "@type": [
         "http://anypoint.com/vocabs/agents#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -70,11 +70,11 @@
       "http://anypoint.com/vocabs/agents#name": "get_current_weather",
       "http://anypoint.com/vocabs/agents#description": "Get current weather conditions for a specified location",
       "http://anypoint.com/vocabs/agents#inputSchema": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema"
       }
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1",
       "@type": [
         "http://anypoint.com/vocabs/agents#tools",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -82,32 +82,32 @@
       "http://anypoint.com/vocabs/agents#name": "get_weather_forecast",
       "http://anypoint.com/vocabs/agents#description": "Get weather forecast for a specified location and number of days",
       "http://anypoint.com/vocabs/agents#inputSchema": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema"
       }
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema",
       "@type": [
         "http://anypoint.com/vocabs/agents#inputSchema",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#type": "object",
       "http://anypoint.com/vocabs/agents#properties": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema/properties"
       },
       "http://anypoint.com/vocabs/agents#required": [
         "location"
       ]
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema",
       "@type": [
         "http://anypoint.com/vocabs/agents#inputSchema",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#type": "object",
       "http://anypoint.com/vocabs/agents#properties": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties"
       },
       "http://anypoint.com/vocabs/agents#required": [
         "location",
@@ -115,36 +115,36 @@
       ]
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema/properties",
       "@type": [
         "http://anypoint.com/vocabs/agents#properties",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#location": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties/location"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema/properties/location"
       },
       "http://anypoint.com/vocabs/agents#unit": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties/unit"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema/properties/unit"
       }
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties",
       "@type": [
         "http://anypoint.com/vocabs/agents#properties",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#location": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/location"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties/location"
       },
       "http://anypoint.com/vocabs/agents#days": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/days"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties/days"
       },
       "http://anypoint.com/vocabs/agents#unit": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/unit"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties/unit"
       }
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties/location",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema/properties/location",
       "@type": [
         "http://anypoint.com/vocabs/agents#location",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -153,7 +153,7 @@
       "http://anypoint.com/vocabs/agents#description": "The city and state, e.g. San Francisco, CA"
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/0/inputSchema/properties/unit",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/0/inputSchema/properties/unit",
       "@type": [
         "http://anypoint.com/vocabs/agents#unit",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -166,7 +166,7 @@
       "http://anypoint.com/vocabs/agents#description": "The temperature unit to use. Defaults to celsius."
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/location",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties/location",
       "@type": [
         "http://anypoint.com/vocabs/agents#location",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -175,7 +175,7 @@
       "http://anypoint.com/vocabs/agents#description": "The city and state, e.g. San Francisco, CA"
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/days",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties/days",
       "@type": [
         "http://anypoint.com/vocabs/agents#days",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -186,7 +186,7 @@
       "http://anypoint.com/vocabs/agents#description": "Number of forecast days (1-10)"
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/tools/1/inputSchema/properties/unit",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/tools/1/inputSchema/properties/unit",
       "@type": [
         "http://anypoint.com/vocabs/agents#unit",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -199,7 +199,7 @@
       "http://anypoint.com/vocabs/agents#description": "The temperature unit to use. Defaults to celsius."
     },
     {
-      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json",
+      "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json",
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -209,12 +209,12 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/encodes/"
+          "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/instance_1.json#/BaseUnitProcessingData"
+        "@id": "file://amf-other-card/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData"
       }
     }
   ]

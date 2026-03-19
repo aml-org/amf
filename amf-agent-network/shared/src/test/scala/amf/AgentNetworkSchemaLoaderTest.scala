@@ -1,25 +1,7 @@
 package amf
 
-import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
-import amf.agentnetwork.internal.plugins.parse.schema.AgentNetworkSchemaLoader
-import amf.core.client.common.validation.SeverityLevels
-import amf.core.client.scala.validation.AMFValidationResult
-import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.matchers.should.Matchers
+import amf.shapes.test.JsonSchemaBasedSpecSchemaLoaderTestBase
 
-class AgentNetworkSchemaLoaderTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
-
-  test("Validate that AgentNetwork Schema has no errors") {
-    AgentNetworkSchemaLoader.doc != null shouldBe true
-    AgentNetworkSchemaLoader.schema != null shouldBe true
-    AgentNetworkSchemaLoader.schema.isInstanceOf[NodeShape] shouldBe true
-    filterErrors(AgentNetworkSchemaLoader.errors).size shouldBe 0
-  }
-
-  // Adding this to ignore the "possibly-ignored-pattern-warning" that is not a real error and metadata errors
-  private def filterErrors(errors: Seq[AMFValidationResult]): Seq[AMFValidationResult] = {
-    errors
-      .filterNot(_.severityLevel == SeverityLevels.VIOLATION)
-      .filter(_.validationId == "http://a.ml/vocabularies/data#invalid-type-use")
-  }
+class AgentNetworkSchemaLoaderTest extends JsonSchemaBasedSpecSchemaLoaderTestBase {
+  override def testConfig = AgentNetworkTestConfig.config
 }

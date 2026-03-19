@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -9,7 +9,7 @@
       "http://a.ml/vocabularies/document#sourceSpec": "Agent Card"
     },
     {
-      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -20,7 +20,7 @@
       "http://a.ml/vocabularies/core#url": "https://sranan-currency-agent-6362adf8c655.herokuapp.com/",
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/core#capabilities": {
-        "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities"
+        "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/capabilities"
       },
       "http://a.ml/vocabularies/core#defaultInputModes": [
         "text",
@@ -32,12 +32,12 @@
       ],
       "http://a.ml/vocabularies/core#skills": [
         {
-          "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/skills/0"
+          "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/skills/0"
         }
       ]
     },
     {
-      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/capabilities",
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/capabilities",
       "@type": [
         "http://a.ml/vocabularies/core#capabilities",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -47,7 +47,7 @@
       "http://a.ml/vocabularies/core#stateTransitionHistory": false
     },
     {
-      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/skills/0",
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/skills/0",
       "@type": [
         "http://a.ml/vocabularies/core#skills",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -66,7 +66,7 @@
       ]
     },
     {
-      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml",
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json",
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -76,12 +76,12 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
+          "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
+        "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData"
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json#/BaseUnitProcessingData",
+      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -9,18 +9,18 @@
       "http://a.ml/vocabularies/document#sourceSpec": "LLM Metadata"
     },
     {
-      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json#/encodes/",
+      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://a.ml/vocabularies/core#platform": "openai",
       "http://a.ml/vocabularies/core#policyRef": {
-        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json#/encodes/policyRef"
+        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/policyRef"
       }
     },
     {
-      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json#/encodes/policyRef",
+      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/policyRef",
       "@type": [
         "http://a.ml/vocabularies/core#policyRef",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -30,7 +30,7 @@
       "http://a.ml/vocabularies/core#version": "1.0.0-20250917215110"
     },
     {
-      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json",
+      "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json",
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -40,12 +40,12 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json#/encodes/"
+          "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/instance_1.json#/BaseUnitProcessingData"
+        "@id": "file://amf-llm-metadata/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData"
       }
     }
   ]

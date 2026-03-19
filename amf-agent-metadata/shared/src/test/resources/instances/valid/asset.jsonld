@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -9,7 +9,7 @@
       "http://a.ml/vocabularies/document#sourceSpec": "Agent Metadata"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/",
       "@type": [
         "http://a.ml/vocabularies/core#encodes",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -19,40 +19,40 @@
       "http://a.ml/vocabularies/core#kind": "agent-specification",
       "http://a.ml/vocabularies/core#connections": [
         {
-          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/0"
+          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/0"
         },
         {
-          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/1"
+          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/1"
         },
         {
-          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/2"
+          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/2"
         }
       ],
       "http://a.ml/vocabularies/core#provenance": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/provenance"
+        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance"
       }
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/0",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/0",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#Agent",
         "http://a.ml/vocabularies/core#connections",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents/link#ref": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/0/ref"
+        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/0/ref"
       },
       "http://anypoint.com/vocabs/agents/link#kind": "agent"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/1",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/1",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#MCP",
         "http://a.ml/vocabularies/core#connections",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents/link#ref": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/1/ref"
+        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/1/ref"
       },
       "http://anypoint.com/vocabs/agents/link#allowed": [
         "get_user_details",
@@ -61,30 +61,30 @@
       "http://anypoint.com/vocabs/agents/link#kind": "mcp"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/2",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/2",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#LLM",
         "http://a.ml/vocabularies/core#connections",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents/link#ref": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/2/ref"
+        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/2/ref"
       },
       "http://anypoint.com/vocabs/agents/link#kind": "llm"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/provenance",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance",
       "@type": [
         "http://anypoint.com/vocabs/agents#Provenance",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents/link#kind": "exchange-asset",
       "http://anypoint.com/vocabs/agents/link#metadata": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/provenance/metadata"
+        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance/metadata"
       }
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/0/ref",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/0/ref",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#ref",
         "http://a.ml/vocabularies/core#ref",
@@ -95,7 +95,7 @@
       "http://anypoint.com/vocabs/agents/link#version": "1.0.0"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/1/ref",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/1/ref",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#ref",
         "http://a.ml/vocabularies/core#ref",
@@ -106,7 +106,7 @@
       "http://anypoint.com/vocabs/agents/link#version": "1.2.3"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/connections/2/ref",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/2/ref",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#ref",
         "http://a.ml/vocabularies/core#ref",
@@ -117,7 +117,7 @@
       "http://anypoint.com/vocabs/agents/link#version": "2.5-turbo"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/provenance/metadata",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance/metadata",
       "@type": [
         "http://anypoint.com/vocabs/agents/link#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
@@ -126,7 +126,7 @@
       "http://anypoint.com/vocabs/agents/link#publishedDate": "2023-10-27T10:00:00Z"
     },
     {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml",
+      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json",
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -136,12 +136,12 @@
       ],
       "http://a.ml/vocabularies/document#encodes": [
         {
-          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/encodes/"
+          "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/"
         }
       ],
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/instance_1.yaml#/BaseUnitProcessingData"
+        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData"
       }
     }
   ]
