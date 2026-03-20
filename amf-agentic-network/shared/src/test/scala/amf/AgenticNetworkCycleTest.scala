@@ -1,32 +1,23 @@
 package amf
 
-import amf.core.common.FileAssertionTest
-import amf.core.internal.remote.Mimes
 import amf.agenticnetwork.client.scala.AgenticNetworkConfiguration
-import amf.core.client.scala.config.RenderOptions
-import amf.shapes.client.scala.ShapesConfiguration
-import org.scalatest.Assertion
+import amf.agenticnetwork.internal.plugins.parse.schema.AgenticNetworkSchemaLoader
+import amf.core.internal.remote.Spec
+import amf.shapes.test._
 
-import scala.concurrent.Future
+class AgenticNetworkCycleTest extends JsonSchemaBasedSpecCycleTestBase {
+  override def testConfig: JsonSchemaBasedSpecTestConfig = AgenticNetworkTestConfig.config
+}
 
-class AgenticNetworkCycleTest extends FileAssertionTest {
-  private val basePath: String                 = "amf-agentic-network/shared/src/test/resources/instances/"
-  private val renderOptions                    = RenderOptions().withPrettyPrint
-  private val agentConfig: ShapesConfiguration = AgenticNetworkConfiguration.AgenticNetwork().withRenderOptions(renderOptions)
-
-
-  test("Render AgenticNetwork YAML instance to JSON-LD") {
-    cycle("valid/instance_1.yaml", "valid/instance_1.jsonld")
-  }
-
-  def cycle(source: String, golden: String): Future[Assertion] = {
-    for {
-      parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)
-      actualString = agentConfig.baseUnitClient().render(parsed.baseUnit, Mimes.`application/ld+json`)
-      actualFile <- writeTemporaryFile(golden)(actualString)
-      assertion  <- assertDifferences(actualFile, basePath + golden)
-    } yield {
-      assertion
-    }
-  }
+object AgenticNetworkTestConfig {
+  val config: JsonSchemaBasedSpecTestConfig = JsonSchemaBasedSpecTestConfig(
+    specName     = "AgenticNetwork",
+    basePath     = "amf-agentic-network/shared/src/test/resources/instances/",
+    configuration = AgenticNetworkConfiguration.AgenticNetwork(),
+    schemaLoader = AgenticNetworkSchemaLoader,
+    spec         = Spec.AGENTIC_NETWORK,
+    validInstances = Seq("valid/asset.yaml"),
+    invalidInstances = Seq(InvalidInstance("invalid/asset.yaml", Some(1))),
+    cycleInstances = Seq(CycleInstance("valid/asset.yaml", "valid/asset.jsonld"))
+  )
 }

@@ -1,21 +1,124 @@
-- name: "agentic network"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/agent_network_v2.json"
-  output: "amf-agentic-network/shared/src/main/resources/schema_agentic_network.json"
-- name: "agent network"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/agent_network_v1.json"
-  output: "amf-agent-network/shared/src/main/resources/schema_agent_network.json"
-- name: "agent card"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/agent_card.json"
-  output: "amf-agent-card/shared/src/main/resources/schema_agent_card.json"
-- name: "agent metadata"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/agent_metadata.json"
-  output: "amf-agent-metadata/shared/src/main/resources/schema_agent_metadata.json"
-- name: "llm metadata"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/llm_metadata.json"
-  output: "amf-llm-metadata/shared/src/main/resources/schema_llm_metadata.json"
-- name: "mcp metadata"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/mcp_metadata.json"
-  output: "amf-mcp/shared/src/main/resources/schema_mcp_metadata.json"
-- name: "other card"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/other_card.json"
-  output: "amf-other-card/shared/src/main/resources/schema_other_card.json"
+repositories:
+  amfLocalPath: "~/mulesoft/amf"
+  apbLocalPath: "~/mulesoft/apb"
+  specLocalPath: "~/mulesoft/agent-fabric-specification"
+specs:
+  - name: "agent card"
+    amf-module: "amf-agent-card"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/agent_card.json"
+      amf: "shared/src/main/resources/schema_agent_card.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/agent_card/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/agent_card/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/agent-card"
+          - "apb/shared/src/test/resources/api-project/local/main-agent-card"
+        invalid: "apb/shared/src/test/resources/spec/local/agent-card-invalid"
+  - name: "agent metadata"
+    amf-module: "amf-agent-metadata"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/agent_metadata.json"
+      amf: "shared/src/main/resources/schema_agent_metadata.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/agent_metadata/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/agent_metadata/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/agent-metadata"
+          - "apb/shared/src/test/resources/api-project/local/main-agent-metadata"
+        invalid: "apb/shared/src/test/resources/spec/local/agent-metadata-invalid"
+  - name: "agent network"
+    amf-module: "amf-agent-network"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/agent_network_v1.json"
+      amf: "shared/src/main/resources/schema_agent_network.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/agent_network/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/agent_network/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/agent-network"
+          - "apb/shared/src/test/resources/api-project/local/main-agent-network"
+        invalid: "apb/shared/src/test/resources/spec/local/agent-network-invalid"
+  - name: "agentic network"
+    amf-module: "amf-agentic-network"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/agent_network_v2.json"
+      amf: "shared/src/main/resources/schema_agentic_network.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/agent_network_v2/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/agent_network_v2/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/agentic-network"
+          - "apb/shared/src/test/resources/api-project/local/main-agentic-network"
+        invalid: "apb/shared/src/test/resources/spec/local/agentic-network-invalid"
+  - name: "llm metadata"
+    amf-module: "amf-llm-metadata"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/llm_metadata.json"
+      amf: "shared/src/main/resources/schema_llm_metadata.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/llm_metadata/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/llm_metadata/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/llm-metadata"
+          - "apb/shared/src/test/resources/api-project/local/main-llm-metadata"
+        invalid: "apb/shared/src/test/resources/spec/local/llm-metadata-invalid"
+  - name: "mcp metadata"
+    amf-module: "amf-mcp"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/mcp_metadata.json"
+      amf: "shared/src/main/resources/schema_mcp_metadata.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/mcp_metadata/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/mcp_metadata/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/mcp"
+          - "apb/shared/src/test/resources/api-project/local/main-mcp"
+        invalid: "apb/shared/src/test/resources/spec/local/mcp-invalid"
+  - name: "other card"
+    amf-module: "amf-other-card"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/other_card.json"
+      amf: "shared/src/main/resources/schema_other_card.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/other_card/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/other_card/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/other-card"
+          - "apb/shared/src/test/resources/api-project/local/main-other-card"
+        invalid: "apb/shared/src/test/resources/spec/local/other-card-invalid"

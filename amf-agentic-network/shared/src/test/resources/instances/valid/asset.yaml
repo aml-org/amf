@@ -1,0 +1,299 @@
+agentNetwork: "2.0.0"
+info:
+  title: Complete Agentic Network Example
+  summary: A comprehensive agentic network demonstrating all features with local references
+  version: 1.0.0
+  contact:
+    name: Acme Support
+    url: https://support.acme.com
+    email: support@acme.com
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://acme.com/terms
+  description: This network orchestrates weather and mapping agents with MCP tool servers and LLM providers
+  tags:
+    - weather
+    - mapping
+    - ai
+
+registry:
+  agents:
+    weather-agent:
+      info:
+        title: Weather Agent
+        description: An agent that provides weather information
+        tags:
+          - weather
+          - forecasting
+      metadata:
+        platform: AgentForce
+        protocol: a2a
+        card:
+          a2a:
+            protocolVersion: "0.3.0"
+            name: Weather Agent
+            description: Provides weather forecasts and current conditions for any location
+            url: https://agents.acme.com/weather
+            version: "1.0.0"
+            capabilities:
+              streaming: true
+              pushNotifications: false
+              stateTransitionHistory: true
+            provider:
+              organization: Acme Inc.
+              url: https://www.acme.com
+            defaultInputModes:
+              - application/json
+              - text/plain
+            defaultOutputModes:
+              - application/json
+            skills:
+              - id: get-forecast
+                name: Get Forecast
+                description: Returns a weather forecast for a given location and date range
+                tags:
+                  - weather
+                  - forecast
+                examples:
+                  - What is the weather in Buenos Aires next week?
+                inputModes:
+                  - application/json
+                  - text/plain
+                outputModes:
+                  - application/json
+              - id: get-current-conditions
+                name: Get Current Conditions
+                description: Returns current weather conditions for a location
+                tags:
+                  - weather
+                  - current
+            securitySchemes:
+              bearerAuth:
+                type: http
+                scheme: Bearer
+                bearerFormat: JWT
+            security:
+              - bearerAuth: []
+        tools:
+          - mcp:
+              ref:
+                name: weather-mcp
+              allowed:
+                - get_weather
+                - get_forecast
+          - a2a:
+              ref:
+                name: mapping-agent
+        llm:
+          ref:
+            name: openai-provider
+      urls:
+        - name: documentation
+          url: https://docs.acme.com/agents/weather
+        - name: status
+          url: https://status.acme.com/weather-agent
+
+    mapping-agent:
+      info:
+        title: Mapping Agent
+        description: An agent that provides mapping and geolocation services
+      metadata:
+        platform: Bedrock
+        protocol:
+          - a2a
+          - other
+        card:
+          other:
+            name: Mapping Agent
+            description: Provides route planning and map generation
+            url: https://agents.acme.com/mapping
+            version: "2.1.0"
+            skills:
+              - id: plan-route
+                name: Plan Route
+                description: Plans an optimal route between locations
+                tags:
+                  - routing
+                  - navigation
+
+  mcps:
+    weather-mcp:
+      info:
+        title: Weather MCP Server
+        description: MCP server providing weather data tools
+        tags:
+          - weather
+          - data
+      metadata:
+        protocolVersion: "2025-06-18"
+        transport:
+          kind: streamableHttp
+          path: /weather/mcp
+        provider:
+          organization: Acme Weather
+          url: https://weather.acme.com
+        capabilities:
+          tools:
+            listChanged: true
+          resources:
+            listChanged: false
+            subscribe: true
+          prompts:
+            listChanged: false
+        tools:
+          - name: get_weather
+            description: Gets current weather for a location
+            inputSchema:
+              type: object
+              properties:
+                location:
+                  type: string
+                units:
+                  type: string
+              required:
+                - location
+          - name: get_forecast
+            title: Get Weather Forecast
+            description: Gets a multi-day weather forecast
+            inputSchema:
+              type: object
+              properties:
+                location:
+                  type: string
+                days:
+                  type: integer
+              required:
+                - location
+                - days
+            annotations:
+              readOnlyHint: true
+              openWorldHint: true
+        resources:
+          - name: weather-stations
+            uri: weather://stations/list
+            description: List of available weather stations
+            mimeType: application/json
+        prompts:
+          - name: forecast-prompt
+            description: A prompt template for weather forecasts
+            arguments:
+              - name: location
+                description: The location for the forecast
+                required: true
+              - name: days
+                description: Number of days to forecast
+                required: false
+      urls:
+        - name: api
+          url: https://mcp.acme.com/weather
+
+    geocoding-mcp:
+      info:
+        title: Geocoding MCP Server
+        description: MCP server for geocoding operations
+      metadata:
+        transport:
+          kind: sse
+          ssePath: /geocoding/sse
+          messagesPath: /geocoding/messages
+        tools:
+          - name: geocode
+            description: Converts an address to coordinates
+            inputSchema:
+              type: object
+              properties:
+                address:
+                  type: string
+              required:
+                - address
+
+  llms:
+    openai-provider:
+      info:
+        title: OpenAI GPT Provider
+        description: OpenAI LLM provider for agent reasoning
+        tags:
+          - llm
+          - openai
+      metadata:
+        platform: OpenAI
+        models:
+          - gpt-4o
+          - gpt-4o-mini
+      urls:
+        - name: api
+          url: https://api.openai.com
+
+context:
+  connections:
+    openai-connection:
+      kind: llm
+      ref:
+        name: openai-provider
+      url: https://api.openai.com/v1/
+      authentication:
+        kind: oauth2-client-credentials
+        clientId: my-client-id
+        clientSecret: ${openai.clientSecret}
+        token:
+          url: https://auth.openai.com/token
+          timeout: 30
+          bodyEncoding: json
+        scopes:
+          - models:read
+          - completions:write
+
+    weather-mcp-connection:
+      kind: mcp
+      ref:
+        name: weather-mcp
+      url: https://mcp-weather.acme.com
+      authentication:
+        kind: apiKey
+        headerName: X-API-Key
+        apiKey: ${weather.apiKey}
+
+    mapping-agent-connection:
+      kind: a2a
+      ref:
+        name: mapping-agent
+      url: https://agents.acme.com/mapping/a2a
+      authentication:
+        kind: basic
+        username: agent-user
+        password: ${mapping.password}
+
+brokers:
+  orchestrator-agent:
+    kind: AgentScript
+    implementation: ./scripts/orchestrator.js
+    interfaces:
+      a2a:
+        card:
+          protocolVersion: "0.3.0"
+          name: Orchestrator Agent
+          description: Orchestrates weather and mapping agents to provide comprehensive travel information
+          url: https://agents.acme.com/orchestrator
+          version: "1.0.0"
+          capabilities:
+            streaming: true
+            pushNotifications: true
+          provider:
+            organization: Acme Inc.
+            url: https://www.acme.com
+          defaultInputModes:
+            - application/json
+            - text/plain
+          defaultOutputModes:
+            - application/json
+            - text/html
+          skills:
+            - id: plan-trip
+              name: Plan Trip
+              description: Plans a complete trip including weather and route information
+              tags:
+                - travel
+                - planning
+              examples:
+                - Plan a trip from New York to Boston next weekend

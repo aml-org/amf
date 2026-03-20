@@ -1,36 +1,23 @@
 package amf
 
-import amf.core.common.FileAssertionTest
-import amf.core.internal.remote.Mimes
 import amf.agentmetadata.client.scala.AgentMetadataConfiguration
-import amf.core.client.scala.config.RenderOptions
-import amf.shapes.client.scala.ShapesConfiguration
-import org.scalatest.Assertion
+import amf.agentmetadata.internal.plugins.parse.schema.AgentMetadataSchemaLoader
+import amf.core.internal.remote.Spec
+import amf.shapes.test._
 
-import scala.concurrent.Future
+class AgentMetadataCycleTest extends JsonSchemaBasedSpecCycleTestBase {
+  override def testConfig: JsonSchemaBasedSpecTestConfig = AgentMetadataTestConfig.config
+}
 
-class AgentMetadataCycleTest extends FileAssertionTest {
-  private val basePath: String = "amf-agent-metadata/shared/src/test/resources/instances/"
-  private val renderOptions    = RenderOptions().withPrettyPrint
-  private val agentConfig: ShapesConfiguration =
-    AgentMetadataConfiguration.AgentMetadata().withRenderOptions(renderOptions)
-
-  test("Render AgentMetadata JSON instance to JSON-LD") {
-    cycle("valid/instance_1.json", "valid/instance_1.json.jsonld")
-  }
-
-  test("Render AgentMetadata YAML instance to JSON-LD") {
-    cycle("valid/instance_1.yaml", "valid/instance_1.yaml.jsonld")
-  }
-
-  def cycle(source: String, golden: String): Future[Assertion] = {
-    for {
-      parsed <- agentConfig.baseUnitClient().parse("file://" + basePath + source)
-      actualString = agentConfig.baseUnitClient().render(parsed.baseUnit, Mimes.`application/ld+json`)
-      actualFile <- writeTemporaryFile(golden)(actualString)
-      assertion  <- assertDifferences(actualFile, basePath + golden)
-    } yield {
-      assertion
-    }
-  }
+object AgentMetadataTestConfig {
+  val config: JsonSchemaBasedSpecTestConfig = JsonSchemaBasedSpecTestConfig(
+    specName     = "AgentMetadata",
+    basePath     = "amf-agent-metadata/shared/src/test/resources/instances/",
+    configuration = AgentMetadataConfiguration.AgentMetadata(),
+    schemaLoader = AgentMetadataSchemaLoader,
+    spec         = Spec.AGENT_METADATA,
+    validInstances = Seq("valid/asset.json"),
+    invalidInstances = Seq(InvalidInstance("invalid/asset.json", Some(1))),
+    cycleInstances = Seq(CycleInstance("valid/asset.json", "valid/asset.jsonld"))
+  )
 }
