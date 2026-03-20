@@ -18,11 +18,8 @@ import sys
 import yaml
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", ".."))
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "schemas.yaml")
 BUNDLE_SCRIPT = os.path.join(SCRIPT_DIR, "bundle_schema.py")
-
-INSTANCES_REL_PATH = "shared/src/test/resources/instances"
 
 
 def find_asset_file(directory):
@@ -36,59 +33,104 @@ def find_asset_file(directory):
     return None
 
 
-def update_instances(entry):
-    """Copy source instance files into the module's test resources."""
-    name = entry["name"]
-    module = entry.get("module")
-    instances = entry.get("instances")
+def copy_file(src, dst_dir, filename=None):
+    """Copy a single file into dst_dir, optionally renaming it. Returns True on success."""
+    if not os.path.isfile(src):
+        print(f"  ERROR: source file not found: {src}", file=sys.stderr)
+        return False
+    target = os.path.join(dst_dir, filename or os.path.basename(src))
+    os.makedirs(dst_dir, exist_ok=True)
+    shutil.copy2(src, target)
+    print(f"    {src} -> {target}")
+    return True
 
-    if not module or not instances:
-        print(f"  Skipping instance update for '{name}': missing module or instances config")
-        return True
 
-    target_base = os.path.join(PROJECT_ROOT, module, INSTANCES_REL_PATH)
-
+def update_amf_instances(name, spec_instances, amf_instances, spec_root, amf_root):
+    """Copy source asset.* files into the AMF module's test resources."""
     ok = True
     for kind in ("valid", "invalid"):
-        src_dir = instances.get(kind)
-        if not src_dir:
+        src_rel = spec_instances.get(kind)
+        dst_rel = amf_instances.get(kind)
+        if not src_rel or not dst_rel:
             continue
-        src_dir = os.path.abspath(os.path.expanduser(src_dir))
+
+        src_dir = os.path.join(spec_root, src_rel)
         src_file = find_asset_file(src_dir)
         if not src_file:
             print(f"  ERROR: no asset.* file found in {src_dir}", file=sys.stderr)
             ok = False
             continue
 
-        # Target file has the same name (asset.json or asset.yaml)
-        target_file = os.path.join(target_base, kind, os.path.basename(src_file))
-        os.makedirs(os.path.dirname(target_file), exist_ok=True)
-        shutil.copy2(src_file, target_file)
-        print(f"  {kind}: {src_file} -> {target_file}")
+        dst_dir = os.path.join(amf_root, dst_rel)
+        if not copy_file(src_file, dst_dir):
+            ok = False
+
+    return ok
+
+
+def update_apb_instances(name, spec_instances, apb_instances, spec_root, apb_root):
+    """Copy source asset.* and exchange.json files into APB test resources."""
+    ok = True
+    for kind in ("valid", "invalid"):
+        src_rel = spec_instances.get(kind)
+        dst_entries = apb_instances.get(kind)
+        if not src_rel or not dst_entries:
+            continue
+
+        src_dir = os.path.join(spec_root, src_rel)
+
+        # Find source files
+        asset_file = find_asset_file(src_dir)
+        exchange_file = os.path.join(src_dir, "exchange.json")
+
+        if not asset_file:
+            print(f"  ERROR: no asset.* file found in {src_dir}", file=sys.stderr)
+            ok = False
+            continue
+        if not os.path.isfile(exchange_file):
+            print(f"  ERROR: exchange.json not found in {src_dir}", file=sys.stderr)
+            ok = False
+            continue
+
+        # Normalize dst_entries to a list
+        if isinstance(dst_entries, str):
+            dst_entries = [dst_entries]
+
+        for dst_rel in dst_entries:
+            dst_dir = os.path.join(apb_root, dst_rel)
+            if not copy_file(asset_file, dst_dir):
+                ok = False
+            if not copy_file(exchange_file, dst_dir):
+                ok = False
 
     return ok
 
 
 def main():
     with open(CONFIG_FILE, "r") as f:
-        entries = yaml.safe_load(f)
+        config = yaml.safe_load(f)
 
-    if not isinstance(entries, list):
-        print(f"ERROR: {CONFIG_FILE} must contain a YAML array.", file=sys.stderr)
+    repos = config.get("repositories", {})
+    specs = config.get("specs", [])
+
+    if not isinstance(specs, list):
+        print(f"ERROR: 'specs' in {CONFIG_FILE} must be a list.", file=sys.stderr)
         sys.exit(1)
 
+    # Resolve repository root paths
+    amf_root = os.path.abspath(os.path.expanduser(repos["amfLocalPath"]))
+    apb_root = os.path.abspath(os.path.expanduser(repos["apbLocalPath"]))
+    spec_root = os.path.abspath(os.path.expanduser(repos["specLocalPath"]))
+
     failed = []
-    for entry in entries:
+    for entry in specs:
         name = entry["name"]
-        module = entry["module"]
-        root_schema = entry["rootSchema"]
-        output = entry["output"]
+        module = entry["amf-module"]
+        schema = entry["schema"]
 
-        # Resolve rootSchema as absolute path (expand ~)
-        root_schema = os.path.abspath(os.path.expanduser(root_schema))
-
-        # Resolve output relative to the module inside the project root
-        output = os.path.join(PROJECT_ROOT, module, output)
+        # Resolve schema paths
+        root_schema = os.path.join(spec_root, schema["spec"])
+        output = os.path.join(amf_root, module, schema["amf"])
 
         print(f"\n{'='*60}")
         print(f"Bundling: {name}")
@@ -98,23 +140,36 @@ def main():
 
         result = subprocess.run(
             [sys.executable, BUNDLE_SCRIPT, root_schema, output],
-            cwd=PROJECT_ROOT,
+            cwd=amf_root,
         )
 
         if result.returncode != 0:
             failed.append(name)
             continue
 
-        print(f"Updating instances: {name}")
-        if not update_instances(entry):
-            failed.append(name)
+        # Update instances
+        instances = entry.get("instances", {})
+        spec_instances = instances.get("spec", {})
+        amf_instances = instances.get("amf", {})
+        apb_instances = instances.get("apb", {})
+        module_root = os.path.join(amf_root, module)
+
+        if spec_instances and amf_instances:
+            print(f"Updating AMF instances: {name}")
+            if not update_amf_instances(name, spec_instances, amf_instances, spec_root, module_root):
+                failed.append(name)
+
+        if spec_instances and apb_instances:
+            print(f"Updating APB instances: {name}")
+            if not update_apb_instances(name, spec_instances, apb_instances, spec_root, apb_root):
+                failed.append(name)
 
     print()
     if failed:
-        print(f"FAILED ({len(failed)}/{len(entries)}): {', '.join(failed)}")
+        print(f"FAILED ({len(failed)}/{len(specs)}): {', '.join(failed)}")
         sys.exit(1)
     else:
-        print(f"All {len(entries)} schema(s) bundled and instances updated successfully.")
+        print(f"All {len(specs)} schema(s) bundled and instances updated successfully.")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # JSON-Based Specs — Schema Bundler & Instance Updater
 
-Bundles JSON Schema files by resolving all external `$ref` references and inlining them into a single self-contained schema. Also copies test instance files (valid/invalid) from the source specification repository into each module's test resources.
+Bundles JSON Schema files by resolving all external `$ref` references and inlining them into a single self-contained schema. Also copies test instance files (valid/invalid) from the source specification repository into the AMF and APB projects.
 
 ## Prerequisites
 
@@ -9,40 +9,76 @@ Bundles JSON Schema files by resolving all external `$ref` references and inlini
   ```bash
   pip install pyyaml
   ```
-- The [agent fabric spec repository](https://github.com/mulesoft-emu/agent-fabric-specification) checked out and updated locally in the directory `~/mulesoft/agent-fabric-specification`.
+- The following repositories checked out and updated locally (paths configured in `schemas.yaml`):
+  - [agent-fabric-specification](https://github.com/mulesoft-emu/agent-fabric-specification)
+  - [amf](https://github.com/aml-org-emu/amf)
+  - [apb](https://github.com/aml-org-emu/apb)
 
 ## Files
 
 | File | Description |
 |---|---|
 | `bundle_schema.py` | Bundles a single root schema into a self-contained output file. |
-| `bundle_all_schemas.py` | Reads `schemas.yaml`, runs `bundle_schema.py` for each entry, and copies test instances. |
-| `schemas.yaml` | Configuration file listing the schemas to bundle and their test instances. |
+| `bundle_all_schemas.py` | Reads `schemas.yaml`, runs `bundle_schema.py` for each entry, and copies test instances to AMF and APB. |
+| `schemas.yaml` | Configuration file listing repository paths, schemas to bundle, and test instance locations. |
 
 ## Configuration
 
-Edit `schemas.yaml` to define the schemas to bundle. Each entry has the following fields:
+`schemas.yaml` has two top-level sections: `repositories` and `specs`.
+
+### Repositories
+
+Defines local paths to each project. Supports `~` expansion.
 
 ```yaml
-- name: "agent card"
-  module: "amf-agent-card"
-  rootSchema: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/main/resources/agent_card.json"
-  output: "shared/src/main/resources/schema_agent_card.json"
-  instances:
-    valid: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/test/resources/agent_card/basic/valid"
-    invalid: "~/mulesoft/agent-fabric-specification/agent-fabric-schema/src/test/resources/agent_card/basic/invalid"
+repositories:
+  amfLocalPath: "~/mulesoft/amf"
+  apbLocalPath: "~/mulesoft/apb"
+  specLocalPath: "~/mulesoft/agent-fabric-specification"
+```
+
+### Specs
+
+Each entry in the `specs` list defines a schema and its associated test instances:
+
+```yaml
+specs:
+  - name: "agent card"
+    amf-module: "amf-agent-card"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/agent_card.json"
+      amf: "shared/src/main/resources/schema_agent_card.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/agent_card/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/agent_card/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/agent-card"
+          - "apb/shared/src/test/resources/api-project/local/main-agent-card"
+        invalid: "apb/shared/src/test/resources/spec/local/agent-card-invalid"
 ```
 
 | Field | Description |
 |---|---|
 | `name` | A human-readable label (used in log output). |
-| `module` | The AMF module directory name (e.g., `amf-agent-card`). |
-| `rootSchema` | Absolute path to the root JSON schema file. Supports `~` expansion. |
-| `output` | Path for the bundled output file, relative to the module directory. |
-| `instances.valid` | Absolute path to the directory containing the valid `asset.*` source instance. |
-| `instances.invalid` | Absolute path to the directory containing the invalid `asset.*` source instance. |
+| `amf-module` | The AMF module directory name (e.g., `amf-agent-card`). |
+| `schema.spec` | Path to the root JSON schema, relative to `specLocalPath`. |
+| `schema.amf` | Path for the bundled output, relative to the AMF module directory. |
+| `instances.spec.valid` | Source directory for valid instances, relative to `specLocalPath`. |
+| `instances.spec.invalid` | Source directory for invalid instances, relative to `specLocalPath`. |
+| `instances.amf.valid` | AMF target directory for valid instances, relative to the AMF module. |
+| `instances.amf.invalid` | AMF target directory for invalid instances, relative to the AMF module. |
+| `instances.apb.valid` | APB target directory/directories for valid instances, relative to `apbLocalPath`. Can be a list. |
+| `instances.apb.invalid` | APB target directory for invalid instances, relative to `apbLocalPath`. |
 
-The script looks for an `asset.*` file (e.g., `asset.json` or `asset.yaml`) in each instance source directory and copies it to `<module>/shared/src/test/resources/instances/{valid,invalid}/asset.<ext>`.
+### Instance copying behavior
+
+- **AMF**: Copies `asset.*` (e.g., `asset.json` or `asset.yaml`) from the spec source directory into the AMF module target.
+- **APB**: Copies both `asset.*` and `exchange.json` from the spec source directory into each APB target. The `valid` field can be a list of paths — all are updated.
 
 ## Usage
 
