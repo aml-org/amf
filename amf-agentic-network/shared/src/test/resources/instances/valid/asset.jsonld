@@ -23,6 +23,9 @@
       },
       "http://anypoint.com/vocabs/agents#context": {
         "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context"
+      },
+      "http://anypoint.com/vocabs/agents#brokers": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers"
       }
     },
     {
@@ -31,8 +34,22 @@
         "http://anypoint.com/vocabs/agents#info",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#title": "Network with Connection Policies",
-      "http://anypoint.com/vocabs/agents#version": "1.0.0"
+      "http://anypoint.com/vocabs/agents#title": "Complete Agentic Network Example",
+      "http://anypoint.com/vocabs/agents#summary": "A comprehensive agentic network demonstrating all features with local references",
+      "http://anypoint.com/vocabs/agents#version": "1.0.0",
+      "http://anypoint.com/vocabs/agents#contact": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/info/contact"
+      },
+      "http://anypoint.com/vocabs/agents#license": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/info/license"
+      },
+      "http://anypoint.com/vocabs/agents#termsOfService": "https://acme.com/terms",
+      "http://anypoint.com/vocabs/agents#description": "This network orchestrates weather and mapping agents with MCP tool servers and LLM providers",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "weather",
+        "mapping",
+        "ai"
+      ]
     },
     {
       "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry",
@@ -42,6 +59,12 @@
       ],
       "http://anypoint.com/vocabs/agents#agents": {
         "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents"
+      },
+      "http://anypoint.com/vocabs/agents#mcps": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps"
+      },
+      "http://anypoint.com/vocabs/agents#llms": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms"
       }
     },
     {
@@ -50,12 +73,39 @@
         "http://anypoint.com/vocabs/agents#context",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#policies": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies"
-      },
       "http://anypoint.com/vocabs/agents#connections": {
         "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections"
       }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+        "http://anypoint.com/vocabs/agents/reference/kind#brokers",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#orchestrator-agent": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/info/contact",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#contact",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "Acme Support",
+      "http://anypoint.com/vocabs/agents#url": "https://support.acme.com",
+      "http://anypoint.com/vocabs/agents#email": "support@acme.com"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/info/license",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#license",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "Apache-2.0",
+      "http://anypoint.com/vocabs/agents#url": "https://www.apache.org/licenses/LICENSE-2.0"
     },
     {
       "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents",
@@ -64,19 +114,36 @@
         "http://anypoint.com/vocabs/agents/reference/kind#agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#target-agent": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/target-agent"
+      "http://anypoint.com/vocabs/agents#weather-agent": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent"
+      },
+      "http://anypoint.com/vocabs/agents#mapping-agent": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent"
       }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps",
       "@type": [
         "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
-        "http://anypoint.com/vocabs/agents/reference/kind#policybindings",
+        "http://anypoint.com/vocabs/agents/reference/kind#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#shared-rate-limit": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies/shared-rate-limit"
+      "http://anypoint.com/vocabs/agents#weather-mcp": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp"
+      },
+      "http://anypoint.com/vocabs/agents#geocoding-mcp": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+        "http://anypoint.com/vocabs/agents/reference/kind#llm",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#openai-provider": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider"
       }
     },
     {
@@ -86,222 +153,1068 @@
         "http://anypoint.com/vocabs/agents/reference/kind#connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#my-connection": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection"
+      "http://anypoint.com/vocabs/agents#openai-connection": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection"
+      },
+      "http://anypoint.com/vocabs/agents#weather-mcp-connection": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/weather-mcp-connection"
+      },
+      "http://anypoint.com/vocabs/agents#mapping-agent-connection": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/mapping-agent-connection"
       }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/target-agent",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Agent",
+        "http://anypoint.com/vocabs/agents#Broker",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#kind": "AgentScript",
+      "http://anypoint.com/vocabs/agents#implementation": "./scripts/orchestrator.js",
+      "http://anypoint.com/vocabs/agents#interfaces": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent",
       "@type": [
         "http://anypoint.com/vocabs/agents#Agent",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/info"
+      },
       "http://anypoint.com/vocabs/agents#metadata": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/target-agent/metadata"
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata"
+      },
+      "http://anypoint.com/vocabs/agents#urls": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/urls/0"
+        },
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/urls/1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Agent",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/info"
+      },
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata"
       }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies/shared-rate-limit",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp",
       "@type": [
-        "http://anypoint.com/vocabs/agents#PolicyBinding",
+        "http://anypoint.com/vocabs/agents#MCPServer",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/info"
+      },
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata"
+      },
+      "http://anypoint.com/vocabs/agents#urls": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/urls/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#MCPServer",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/info"
+      },
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#LLM",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider/info"
+      },
+      "http://anypoint.com/vocabs/agents#metadata": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider/metadata"
+      },
+      "http://anypoint.com/vocabs/agents#urls": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider/urls/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#LLMConnection",
+        "http://anypoint.com/vocabs/agents#Connection",
+        "http://anypoint.com/vocabs/agents#openai-connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#ref": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies/shared-rate-limit/ref"
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection/ref"
       },
-      "http://anypoint.com/vocabs/agents#configuration": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies/shared-rate-limit/configuration"
-      }
+      "http://anypoint.com/vocabs/agents#kind": "llm",
+      "http://anypoint.com/vocabs/agents#authentication": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection/authentication"
+      },
+      "http://anypoint.com/vocabs/agents#url": "https://api.openai.com/v1/"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/weather-mcp-connection",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#MCPServerConnection",
+        "http://anypoint.com/vocabs/agents#Connection",
+        "http://anypoint.com/vocabs/agents#weather-mcp-connection",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/weather-mcp-connection/ref"
+      },
+      "http://anypoint.com/vocabs/agents#kind": "mcp",
+      "http://anypoint.com/vocabs/agents#authentication": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/weather-mcp-connection/authentication"
+      },
+      "http://anypoint.com/vocabs/agents#url": "https://mcp-weather.acme.com"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/mapping-agent-connection",
       "@type": [
         "http://anypoint.com/vocabs/agents#AgentConnection",
         "http://anypoint.com/vocabs/agents#Connection",
-        "http://anypoint.com/vocabs/agents#my-connection",
+        "http://anypoint.com/vocabs/agents#mapping-agent-connection",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#ref": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/ref"
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/mapping-agent-connection/ref"
       },
       "http://anypoint.com/vocabs/agents#kind": "a2a",
       "http://anypoint.com/vocabs/agents#authentication": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/authentication"
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/mapping-agent-connection/authentication"
       },
-      "http://anypoint.com/vocabs/agents#url": "https://target.example.com",
-      "http://anypoint.com/vocabs/agents#policies": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies"
+      "http://anypoint.com/vocabs/agents#url": "https://agents.acme.com/mapping/a2a"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#interfaces",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#a2a": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a"
       }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/target-agent/metadata",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "Weather Agent",
+      "http://anypoint.com/vocabs/agents#description": "An agent that provides weather information",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "weather",
+        "forecasting"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata",
       "@type": [
         "http://anypoint.com/vocabs/agents#metadata",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#platform": "Mulesoft",
-      "http://anypoint.com/vocabs/agents#protocol": "a2a"
+      "http://anypoint.com/vocabs/agents#platform": "AgentForce",
+      "http://anypoint.com/vocabs/agents#protocol": "a2a",
+      "http://anypoint.com/vocabs/agents#card": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card"
+      },
+      "http://anypoint.com/vocabs/agents#tools": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/0"
+        },
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/1"
+        }
+      ],
+      "http://anypoint.com/vocabs/agents#llm": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/llm"
+      }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies/shared-rate-limit/ref",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/urls/0",
       "@type": [
+        "http://anypoint.com/vocabs/agents#urls",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "documentation",
+      "http://anypoint.com/vocabs/agents#url": "https://docs.acme.com/agents/weather"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/urls/1",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#urls",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "status",
+      "http://anypoint.com/vocabs/agents#url": "https://status.acme.com/weather-agent"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "Mapping Agent",
+      "http://anypoint.com/vocabs/agents#description": "An agent that provides mapping and geolocation services"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#metadata",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#platform": "Bedrock",
+      "http://anypoint.com/vocabs/agents#protocol": [
+        "a2a",
+        "other"
+      ],
+      "http://anypoint.com/vocabs/agents#card": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata/card"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "Weather MCP Server",
+      "http://anypoint.com/vocabs/agents#description": "MCP server providing weather data tools",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "weather",
+        "data"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Server",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#protocolVersion": "2025-06-18",
+      "http://anypoint.com/vocabs/agents#transport": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/transport"
+      },
+      "http://anypoint.com/vocabs/agents#provider": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/provider"
+      },
+      "http://anypoint.com/vocabs/agents#capabilities": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities"
+      },
+      "http://anypoint.com/vocabs/agents#tools": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0"
+        },
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1"
+        }
+      ],
+      "http://anypoint.com/vocabs/agents#resources": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/resources/0"
+        }
+      ],
+      "http://anypoint.com/vocabs/agents#prompts": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/prompts/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/urls/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#urls",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "api",
+      "http://anypoint.com/vocabs/agents#url": "https://mcp.acme.com/weather"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "Geocoding MCP Server",
+      "http://anypoint.com/vocabs/agents#description": "MCP server for geocoding operations"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Server",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#transport": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/transport"
+      },
+      "http://anypoint.com/vocabs/agents#tools": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "OpenAI GPT Provider",
+      "http://anypoint.com/vocabs/agents#description": "OpenAI LLM provider for agent reasoning",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "llm",
+        "openai"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider/metadata",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#WellKnownLLMMetadata",
+        "http://anypoint.com/vocabs/agents#LLMMetadata",
+        "http://anypoint.com/vocabs/agents#metadata",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#platform": "OpenAI",
+      "http://anypoint.com/vocabs/agents#models": [
+        "gpt-4o",
+        "gpt-4o-mini"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/llms/openai-provider/urls/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#urls",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "api",
+      "http://anypoint.com/vocabs/agents#url": "https://api.openai.com"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents/reference/kind#llm",
         "http://anypoint.com/vocabs/agents#Reference",
-        "http://anypoint.com/vocabs/agents/reference/kind#policy",
+        "http://anypoint.com/vocabs/agents#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "rate-limit"
+      "http://anypoint.com/vocabs/agents#name": "openai-provider"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/policies/shared-rate-limit/configuration",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection/authentication",
       "@type": [
-        "http://anypoint.com/vocabs/agents#configuration",
+        "http://anypoint.com/vocabs/agents#authentication",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#maxRequests": 100,
-      "http://anypoint.com/vocabs/agents#windowSeconds": 60
+      "http://anypoint.com/vocabs/agents#token": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection/authentication/token"
+      },
+      "http://anypoint.com/vocabs/agents#kind": "oauth2-client-credentials",
+      "http://anypoint.com/vocabs/agents#scopes": [
+        "models:read",
+        "completions:write"
+      ],
+      "http://anypoint.com/vocabs/agents#clientSecret": "${openai.clientSecret}",
+      "http://anypoint.com/vocabs/agents#clientId": "my-client-id"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/ref",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/weather-mcp-connection/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents/reference/kind#mcp",
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://anypoint.com/vocabs/agents#ref",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "weather-mcp"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/weather-mcp-connection/authentication",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#authentication",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#apiKey": "${weather.apiKey}",
+      "http://anypoint.com/vocabs/agents#headerName": "X-API-Key",
+      "http://anypoint.com/vocabs/agents#kind": "apiKey"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/mapping-agent-connection/ref",
       "@type": [
         "http://anypoint.com/vocabs/agents/reference/kind#agent",
         "http://anypoint.com/vocabs/agents#Reference",
         "http://anypoint.com/vocabs/agents#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "target-agent"
+      "http://anypoint.com/vocabs/agents#name": "mapping-agent"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/authentication",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/mapping-agent-connection/authentication",
       "@type": [
         "http://anypoint.com/vocabs/agents#authentication",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#username": "user",
+      "http://anypoint.com/vocabs/agents#username": "agent-user",
       "http://anypoint.com/vocabs/agents#kind": "basic",
-      "http://anypoint.com/vocabs/agents#password": "password"
+      "http://anypoint.com/vocabs/agents#password": "${mapping.password}"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a",
       "@type": [
-        "http://anypoint.com/vocabs/agents#policies",
+        "http://anypoint.com/vocabs/agents#a2a",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#inbound": [
+      "http://anypoint.com/vocabs/agents#card": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#card",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#a2a": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#mcp": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/0/mcp"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/1",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#a2a": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/1/a2a"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/llm",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#llm",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/llm/ref"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata/card",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#card",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#other": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata/card/other"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/transport",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#StreamableHttpTransport",
+        "http://anypoint.com/vocabs/mcp#Transport",
+        "http://anypoint.com/vocabs/agents#transport",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/mcp#kind": "streamableHttp",
+      "http://anypoint.com/vocabs/mcp#path": "/weather/mcp"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/provider",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#provider",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#organization": "Acme Weather",
+      "http://anypoint.com/vocabs/agents#url": "https://weather.acme.com"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#tools": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities/tools"
+      },
+      "http://anypoint.com/vocabs/agents#resources": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities/resources"
+      },
+      "http://anypoint.com/vocabs/agents#prompts": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities/prompts"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Tool",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "get_weather",
+      "http://anypoint.com/vocabs/agents#description": "Gets current weather for a location",
+      "http://anypoint.com/vocabs/agents#inputSchema": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Tool",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "get_forecast",
+      "http://anypoint.com/vocabs/agents#title": "Get Weather Forecast",
+      "http://anypoint.com/vocabs/agents#description": "Gets a multi-day weather forecast",
+      "http://anypoint.com/vocabs/agents#inputSchema": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema"
+      },
+      "http://anypoint.com/vocabs/agents#annotations": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/annotations"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/resources/0",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Resource",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "weather-stations",
+      "http://anypoint.com/vocabs/agents#uri": "weather://stations/list",
+      "http://anypoint.com/vocabs/agents#description": "List of available weather stations",
+      "http://anypoint.com/vocabs/agents#mimeType": "application/json"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/prompts/0",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Prompt",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "forecast-prompt",
+      "http://anypoint.com/vocabs/agents#description": "A prompt template for weather forecasts",
+      "http://anypoint.com/vocabs/agents#arguments": [
         {
-          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/0"
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/prompts/0/arguments/0"
         },
         {
-          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1"
-        }
-      ],
-      "http://anypoint.com/vocabs/agents#outbound": [
-        {
-          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0"
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/prompts/0/arguments/1"
         }
       ]
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/0",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/transport",
       "@type": [
-        "http://anypoint.com/vocabs/agents#inbound",
+        "http://anypoint.com/vocabs/mcp#SseTransport",
+        "http://anypoint.com/vocabs/mcp#Transport",
+        "http://anypoint.com/vocabs/agents#transport",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#ref": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/0/ref"
+      "http://anypoint.com/vocabs/mcp#kind": "sse",
+      "http://anypoint.com/vocabs/mcp#ssePath": "/geocoding/sse",
+      "http://anypoint.com/vocabs/mcp#messagesPath": "/geocoding/messages"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#Tool",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "geocode",
+      "http://anypoint.com/vocabs/agents#description": "Converts an address to coordinates",
+      "http://anypoint.com/vocabs/agents#inputSchema": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0/inputSchema"
       }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/openai-connection/authentication/token",
       "@type": [
-        "http://anypoint.com/vocabs/agents#inbound",
+        "http://anypoint.com/vocabs/agents#token",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#policy": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy"
-      }
+      "http://anypoint.com/vocabs/agents#url": "https://auth.openai.com/token",
+      "http://anypoint.com/vocabs/agents#bodyEncoding": "json",
+      "http://anypoint.com/vocabs/agents#timeout": 30
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card",
       "@type": [
-        "http://anypoint.com/vocabs/agents#outbound",
+        "http://anypoint.com/vocabs/agents#card",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#policy": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy"
-      }
-    },
-    {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/0/ref",
-      "@type": [
-        "http://anypoint.com/vocabs/agents#ref",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#name": "shared-rate-limit"
-    },
-    {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy",
-      "@type": [
-        "http://anypoint.com/vocabs/agents#PolicyBinding",
-        "http://anypoint.com/vocabs/agents#policy",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents#ref": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/ref"
+      "http://anypoint.com/vocabs/agents#protocolVersion": "0.3.0",
+      "http://anypoint.com/vocabs/agents#name": "Orchestrator Agent",
+      "http://anypoint.com/vocabs/agents#description": "Orchestrates weather and mapping agents to provide comprehensive travel information",
+      "http://anypoint.com/vocabs/agents#url": "https://agents.acme.com/orchestrator",
+      "http://anypoint.com/vocabs/agents#version": "1.0.0",
+      "http://anypoint.com/vocabs/agents#capabilities": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card/capabilities"
       },
-      "http://anypoint.com/vocabs/agents#configuration": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/configuration"
-      }
+      "http://anypoint.com/vocabs/agents#provider": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card/provider"
+      },
+      "http://anypoint.com/vocabs/agents#defaultInputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://anypoint.com/vocabs/agents#defaultOutputModes": [
+        "application/json",
+        "text/html"
+      ],
+      "http://anypoint.com/vocabs/agents#skills": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card/skills/0"
+        }
+      ]
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a",
       "@type": [
-        "http://anypoint.com/vocabs/agents#PolicyBinding",
-        "http://anypoint.com/vocabs/agents#policy",
+        "http://anypoint.com/vocabs/agents#a2a",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#protocolVersion": "0.3.0",
+      "http://anypoint.com/vocabs/agents#name": "Weather Agent",
+      "http://anypoint.com/vocabs/agents#description": "Provides weather forecasts and current conditions for any location",
+      "http://anypoint.com/vocabs/agents#url": "https://agents.acme.com/weather",
+      "http://anypoint.com/vocabs/agents#version": "1.0.0",
+      "http://anypoint.com/vocabs/agents#capabilities": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/capabilities"
+      },
+      "http://anypoint.com/vocabs/agents#provider": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/provider"
+      },
+      "http://anypoint.com/vocabs/agents#defaultInputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://anypoint.com/vocabs/agents#defaultOutputModes": [
+        "application/json"
+      ],
+      "http://anypoint.com/vocabs/agents#skills": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/skills/0"
+        },
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/skills/1"
+        }
+      ],
+      "http://anypoint.com/vocabs/agents#securitySchemes": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/securitySchemes"
+      },
+      "http://anypoint.com/vocabs/agents#security": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/security/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/0/mcp",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#mcp",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
       "http://anypoint.com/vocabs/agents#ref": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/ref"
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/0/mcp/ref"
       },
-      "http://anypoint.com/vocabs/agents#configuration": {
-        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/configuration"
+      "http://anypoint.com/vocabs/agents#allowed": [
+        "get_weather",
+        "get_forecast"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/1/a2a",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#a2a",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#ref": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/1/a2a/ref"
       }
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/ref",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/llm/ref",
       "@type": [
         "http://anypoint.com/vocabs/agents#Reference",
-        "http://anypoint.com/vocabs/agents/reference/kind#policy",
-        "http://anypoint.com/vocabs/agents#ref",
+        "http://anypoint.com/vocabs/agents/reference/kind#llm",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#namespace": "mulesoft.policies",
-      "http://anypoint.com/vocabs/agents#name": "logging"
+      "http://anypoint.com/vocabs/agents#name": "openai-provider"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/inbound/1/policy/configuration",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata/card/other",
       "@type": [
-        "http://anypoint.com/vocabs/agents#configuration",
+        "http://anypoint.com/vocabs/agents#OtherCard",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#level": "DEBUG"
+      "http://anypoint.com/vocabs/agents#name": "Mapping Agent",
+      "http://anypoint.com/vocabs/agents#description": "Provides route planning and map generation",
+      "http://anypoint.com/vocabs/agents#url": "https://agents.acme.com/mapping",
+      "http://anypoint.com/vocabs/agents#version": "2.1.0",
+      "http://anypoint.com/vocabs/agents#skills": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata/card/other/skills/0"
+        }
+      ]
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/ref",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities/tools",
       "@type": [
+        "http://anypoint.com/vocabs/agents#tools",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#listChanged": true
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities/resources",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#resources",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#listChanged": false,
+      "http://anypoint.com/vocabs/agents#subscribe": true
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/capabilities/prompts",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#prompts",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#listChanged": false
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "object",
+      "http://anypoint.com/vocabs/agents#properties": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema/properties"
+      },
+      "http://anypoint.com/vocabs/agents#required": [
+        "location"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "object",
+      "http://anypoint.com/vocabs/agents#properties": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema/properties"
+      },
+      "http://anypoint.com/vocabs/agents#required": [
+        "location",
+        "days"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/annotations",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#ToolAnnotations",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#readOnlyHint": true,
+      "http://anypoint.com/vocabs/agents#openWorldHint": true
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/prompts/0/arguments/0",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#PromptArgument",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "location",
+      "http://anypoint.com/vocabs/agents#description": "The location for the forecast",
+      "http://anypoint.com/vocabs/agents#required": true
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/prompts/0/arguments/1",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#PromptArgument",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#name": "days",
+      "http://anypoint.com/vocabs/agents#description": "Number of days to forecast",
+      "http://anypoint.com/vocabs/agents#required": false
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0/inputSchema",
+      "@type": [
+        "http://anypoint.com/vocabs/mcp#ToolInputSchema",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "object",
+      "http://anypoint.com/vocabs/agents#properties": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0/inputSchema/properties"
+      },
+      "http://anypoint.com/vocabs/agents#required": [
+        "address"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card/capabilities",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#streaming": true,
+      "http://anypoint.com/vocabs/agents#pushNotifications": true
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card/provider",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#provider",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#organization": "Acme Inc.",
+      "http://anypoint.com/vocabs/agents#url": "https://www.acme.com"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/brokers/orchestrator-agent/interfaces/a2a/card/skills/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#id": "plan-trip",
+      "http://anypoint.com/vocabs/agents#name": "Plan Trip",
+      "http://anypoint.com/vocabs/agents#description": "Plans a complete trip including weather and route information",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "travel",
+        "planning"
+      ],
+      "http://anypoint.com/vocabs/agents#examples": [
+        "Plan a trip from New York to Boston next weekend"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/capabilities",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#streaming": true,
+      "http://anypoint.com/vocabs/agents#pushNotifications": false,
+      "http://anypoint.com/vocabs/agents#stateTransitionHistory": true
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/provider",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#provider",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#organization": "Acme Inc.",
+      "http://anypoint.com/vocabs/agents#url": "https://www.acme.com"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/skills/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#id": "get-forecast",
+      "http://anypoint.com/vocabs/agents#name": "Get Forecast",
+      "http://anypoint.com/vocabs/agents#description": "Returns a weather forecast for a given location and date range",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "weather",
+        "forecast"
+      ],
+      "http://anypoint.com/vocabs/agents#examples": [
+        "What is the weather in Buenos Aires next week?"
+      ],
+      "http://anypoint.com/vocabs/agents#inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "http://anypoint.com/vocabs/agents#outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/skills/1",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#id": "get-current-conditions",
+      "http://anypoint.com/vocabs/agents#name": "Get Current Conditions",
+      "http://anypoint.com/vocabs/agents#description": "Returns current weather conditions for a location",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "weather",
+        "current"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/securitySchemes",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#securitySchemes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#bearerAuth": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/securitySchemes/bearerAuth"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/security/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#security",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#bearerAuth": []
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/0/mcp/ref",
+      "@type": [
+        "http://anypoint.com/vocabs/agents/reference/kind#mcp",
         "http://anypoint.com/vocabs/agents#Reference",
-        "http://anypoint.com/vocabs/agents/reference/kind#policy",
         "http://anypoint.com/vocabs/agents#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#name": "circuit-breaker"
+      "http://anypoint.com/vocabs/agents#name": "weather-mcp"
     },
     {
-      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/context/connections/my-connection/policies/outbound/0/policy/configuration",
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/tools/1/a2a/ref",
       "@type": [
-        "http://anypoint.com/vocabs/agents#configuration",
+        "http://anypoint.com/vocabs/agents/reference/kind#agent",
+        "http://anypoint.com/vocabs/agents#Reference",
+        "http://anypoint.com/vocabs/agents#ref",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents#threshold": 5
+      "http://anypoint.com/vocabs/agents#name": "mapping-agent"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/mapping-agent/metadata/card/other/skills/0",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#id": "plan-route",
+      "http://anypoint.com/vocabs/agents#name": "Plan Route",
+      "http://anypoint.com/vocabs/agents#description": "Plans an optimal route between locations",
+      "http://anypoint.com/vocabs/agents#tags": [
+        "routing",
+        "navigation"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema/properties",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#properties",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#location": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema/properties/location"
+      },
+      "http://anypoint.com/vocabs/agents#units": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema/properties/units"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema/properties",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#properties",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#location": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema/properties/location"
+      },
+      "http://anypoint.com/vocabs/agents#days": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema/properties/days"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0/inputSchema/properties",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#properties",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#address": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0/inputSchema/properties/address"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/agents/weather-agent/metadata/card/a2a/securitySchemes/bearerAuth",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#bearerAuth",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "http",
+      "http://anypoint.com/vocabs/agents#scheme": "Bearer",
+      "http://anypoint.com/vocabs/agents#bearerFormat": "JWT"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema/properties/location",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#location",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "string"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/0/inputSchema/properties/units",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#units",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "string"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema/properties/location",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#location",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "string"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/weather-mcp/metadata/tools/1/inputSchema/properties/days",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#days",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "integer"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/encodes/registry/mcps/geocoding-mcp/metadata/tools/0/inputSchema/properties/address",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#address",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#type": "string"
     },
     {
       "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml",

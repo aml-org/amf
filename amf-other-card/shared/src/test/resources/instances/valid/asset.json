@@ -26,11 +26,16 @@
           },
           "unit": {
             "type": "string",
-            "enum": ["celsius", "fahrenheit"],
+            "enum": [
+              "celsius",
+              "fahrenheit"
+            ],
             "description": "The temperature unit to use. Defaults to celsius."
           }
         },
-        "required": ["location"]
+        "required": [
+          "location"
+        ]
       }
     },
     {
@@ -51,11 +56,17 @@
           },
           "unit": {
             "type": "string",
-            "enum": ["celsius", "fahrenheit"],
+            "enum": [
+              "celsius",
+              "fahrenheit"
+            ],
             "description": "The temperature unit to use. Defaults to celsius."
           }
         },
-        "required": ["location", "days"]
+        "required": [
+          "location",
+          "days"
+        ]
       }
     }
   ]

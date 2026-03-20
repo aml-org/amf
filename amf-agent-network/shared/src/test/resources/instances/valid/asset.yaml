@@ -1,17 +1,8 @@
-# This document is no longer just for broker but it allows us to describe the ai network (like a backend for the visualizer that can be deployed)
-# This makes the brokers, agents, mcps and llms as first class citizens.
-# This not only allows us to deploy brokers but also describe the network that are outside of our platform and visualize it, without the need of crawler
-# This does not replace the Exchange UI but provides a declarative way to describe the entire network
-# Agent Network Specification
 schemaVersion: 1.0.0
-
 label: Weather
-# Global Tags are inherited by all elements in the network
-
-# The list of brokers that are part of the network.
 brokers:
   weather-agent:
-    card: #    The a2a Card
+    card:
       protocolVersion: 0.2.9
       name: Agent that now how to handle the weather
       description: Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.
@@ -47,20 +38,16 @@ brokers:
             - text/html
           tags:
             - weather
-    spec: # The spec section defines behavior. In this case of the broker. This means that this definition can be deployed.
+    spec:
       llm:
         ref:
-          # Declares that needs a connection to the specified llm.
           name: open-ai
         configuration:
           model: gpt-5-nano
-
-      # Configuration of the broker. Should we put this under a configuration section?
       maxNumberOfLoops: 10
       maxConsecutiveErrors: 1
       instructions:
         - You are a weather agent
-      # References the tools to be linked to the broker.
       tools:
         - mcp:
             ref:
@@ -71,7 +58,6 @@ brokers:
         - mcp:
             ref:
               name: weather-mcp
-      # References the agents to be linked to the broker.
       links:
         - agent:
             ref:
@@ -87,10 +73,7 @@ agents:
     label: My Agent
 
 mcpServers:
-  # We can declare the mcp here.
-  # In a future version with the MCP Transcoding work we can potencially create MCP servers automatically form api specs. By adding a spec section to this.
   weather-mcp:
-    # Elements in the network can define additional tags that only applies to them
     tags:
       - Geolocation
     metadata:
@@ -105,9 +88,7 @@ llmProviders:
       platform: OpenAI
 
 
-#This section describes the physical connections to agents, llms and mcps. This represents the real wireing of the nodes.
 connections:
-  #Sugar syntax. If registryRef is not specified the name of the connection is used.
   ai-connection:
     kind: llm
     ref:

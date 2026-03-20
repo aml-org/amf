@@ -54,29 +54,36 @@
       }
     },
     "brokers": {
-      "description": "The list of MCP servers defined as part of this network.",
-      "$ref": "#/definitions/RuntimeAgents"
+      "description": "The list of Brokers defined as part of this network.",
+      "$ref": "#/definitions/Brokers"
     }
   },
   "additionalProperties": false,
   "definitions": {
-    "RuntimeAgents": {
+    "Brokers": {
       "@context": {
         "@type": [
           "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
-          "http://anypoint.com/vocabs/agents/reference/kind#agentscripts"
+          "http://anypoint.com/vocabs/agents/reference/kind#brokers"
         ]
       },
       "type": "object",
       "additionalProperties": false,
-      "description": "The declared agents",
+      "description": "The declared brokers.",
       "patternProperties": {
         "^[a-zA-Z_][a-zA-Z0-9_.-]*$": {
-          "$ref": "#/definitions/RuntimeAgentEntity"
+          "$ref": "#/definitions/BrokerEntity"
         }
       }
     },
-    "RuntimeAgentEntity": {
+    "BrokerEntity": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#Agent",
+          "http://anypoint.com/vocabs/agents#Broker"
+        ]
+      },
+      "description": "A broker agent that orchestrates other agents.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1025,9 +1032,6 @@
               "properties": {
                 "ref": {
                   "$ref": "#/definitions/AgentRef"
-                },
-                "connection": {
-                  "$ref": "#/definitions/ConnectionRef"
                 }
               }
             }
@@ -1512,26 +1516,6 @@
         }
       },
       "type": "object"
-    },
-    "ConnectionRef": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#Reference",
-          "http://anypoint.com/vocabs/agents/reference/kind#connection"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "description": "The reference to a connection",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
     },
     "MCPServer": {
       "@context": {
