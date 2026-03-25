@@ -251,7 +251,6 @@ object AgenticNetworkConfiguration {
               JsonSchemaBasedSpecCachePipeline()
           )
       )
-      .withFallback(ExternalFragmentDomainFallback(strict = false))
 
   private def predefined(): AgenticNetworkConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()

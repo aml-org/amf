@@ -2,14 +2,14 @@ package amf.shapes.internal.transformation
 
 import amf.core.client.common.transform._
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
-import amf.core.internal.transform.stages.UrlShortenerStage
+import amf.core.internal.transform.stages.{SourceInformationStage, UrlShortenerStage}
 
 class JsonSchemaBasedSpecEditingPipeline private (urlShortening: Boolean = true, val name: String)
     extends TransformationPipeline {
 
   private def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
 
-  override def steps: Seq[TransformationStep] = Nil
+  override def steps: Seq[TransformationStep] = Seq() ++ url :+ SourceInformationStage
 }
 
 object JsonSchemaBasedSpecEditingPipeline {

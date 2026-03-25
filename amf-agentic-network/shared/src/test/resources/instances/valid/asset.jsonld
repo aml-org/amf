@@ -1218,6 +1218,11 @@
     },
     {
       "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml",
+      "http://a.ml/vocabularies/document#references": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/references/0"
+        }
+      ],
       "@type": [
         "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
         "http://a.ml/vocabularies/document#Document",
@@ -1234,6 +1239,36 @@
       "http://a.ml/vocabularies/document#processingData": {
         "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/BaseUnitProcessingData"
       }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/references/0",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalFragment",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/references/0/external"
+      },
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/references/0/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/references/0/external",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#raw": "# @dialect: AGENTFABRIC=1\n\nsystem:\n  instructions: \"You are the onboading agent\"\n\nconfig:\n  agent_name: \"employee-onboarding\"\n  label: \"Employee Onboarding Agent\"\n  description: \"An Agent that performs employee onboarding\"\n  default_llm: @llm.open-api-llm\n\nllm:\n  open-api-llm:\n    target: \"connection://open_ai_connection\"\n    kind: \"openAI\"\n    model: \"gpt5-mini\"\n    reasoning_effort: \"LOW\"\n\n  gemini-llm:\n    target: \"connection://gemini_connection\"\n    kind: \"gemini\"\n    model: \"gemini-3-flash-preview\"\n    thinking_level: \"HIGH\"\n    top_p: 0.3\n\ntool_defs:\n  hr_agent:\n     target: \"connection://hr_agent_connection\"\n     kind: \"a2a:send_message\"\n\n\n  send_slack_message:\n     target: \"connection://slack_mcp_connection\"\n     kind: \"mcp:tool\"\n     toolName: \"send-message\"\n     inputs:  # If inputs is defined then it is the full schema? or  can it be partial.\n          channel: string = \"my-default-channel\"\n          message: string\n\n\ntrigger employeeOnboardingTrigger:\n  target: \"brokers://employee-onboarding\"\n  on_message: -> transition to @orchestrator.hrSystemOnboard\n\n\norchestrator hrSystemOnboard:\n  description: \"onboard to HR system\"\n  label: HR onboard # We need labels for UI if not present\n  llm: @llm.gemini-llm\n  system_instructions: ->\n          | You are the **Employee Onboarding Orchestrator**. Your job is to onboard new hires into the HR system\n\n          ## Rules\n          - You MUST NOT add, infer, or assume any values for tools\n          - STRICTLY send only what the user has provided \u2014 no prefilled, default, or placeholder data.\n\n          ## Steps\n            - Create a new-hire record using the HR System agent.\n            - Fetch the address automatically using available tools. Only ask the user if the address cannot be determined.\n  prompt: -> @trigger.employeeOnboardingTrigger.input.message.parts[0].text\n\n\n  tools:\n      my_hr_agent: @tools.hr_agent\n\n      send_message: @tools.send_slack_message\n          with message = ...\n\n  output_structure:\n    properties:\n      name:\n        type: string\n        description: The name of the element\n      country:\n        type: string\n        description: The country name in 3 letters. For example USA, ARG, ENG, ESP\n      employeeID:\n        type: string\n        description: The id of the employee\n\n  # All nodes have a `on_exit` so that there's a single place where it routes or finishes\n  on_exit: -> transition to  @generation.generateHrSlackUpdateMessage\n\ngeneration generateHrSlackUpdateMessage:\n  system_instructions: -> You generate Slack messages. Apply the proper markdown and formatting\n  prompt: ->\n      | Generate a Slack message stating that the employee was onboarded on the HR system.\n      The message should include all the information below in a nice, human readable, conversational format:\n      {!@orchestrator.hr-system-onboard.output}\n  on_exit: -> transition to @execute.sendHrSlackUpdate\n\nexecute sendHrSlackUpdate:\n  do: ->\n    run @tools.send_slack_message\n      with text= @generation.generate-hr-slack-update-message.output\n      with channel_id= \"my-onboarding-channel-id\"\n   on_exit: -> transition to countrySwitch\n\n\nswitch countryRouter:\n  choices:\n    - @orchestrator.argentinaOnboard\n      when: @orchestrator.hrSystemOnboard.output.country  == \"ARG\"\n    - @orchestrator.usOnboard\n      when: @orchestrator.hrSystemOnboard.output.country  == \"USA\"\n    - @echo.invalidCountryResponse\n\necho invalidCountryResponse:\n  kind: \"a2a:response\" #Following the action pattern where we put the protocol : method\n  message: a2a_message(\n      state=\"failed\",\n      parts=[\n              a2a_textPart(\n                  text=\"{!@orchestrator.hrSystemOnboard.output.country} is not a valid country\")\n          ]\n  artifacts: {a2a_parts(*@variables.artifacts)}\n  metadata: None"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/valid/asset.yaml#/references/0/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
     }
   ]
 }
