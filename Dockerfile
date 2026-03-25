@@ -52,13 +52,13 @@ RUN \
 
 VOLUME "$USER_HOME_DIR/.sbt"
 
-# 5. Install Node.js 22.x
+# 5. Install Node.js 20.x
 # Combined setup and install into one block
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g npm@latest && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+      apt-get install -y nodejs && \
+      npm install -g npm@latest && \
+      apt-get clean && \
+      rm -rf /var/lib/apt/lists/*
 
 # 6. Certificate setup for Sonar CLI
 # (Ensure your 'certs/' folder exists in the same directory as this Dockerfile)
