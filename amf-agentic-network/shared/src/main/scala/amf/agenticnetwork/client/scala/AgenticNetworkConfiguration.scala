@@ -16,7 +16,7 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.client.scala.vocabulary.NamespaceAliases
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
-import amf.core.internal.plugins.parse.DomainParsingFallback
+import amf.core.internal.plugins.parse.{DomainParsingFallback, ExternalFragmentDomainFallback}
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
@@ -251,6 +251,7 @@ object AgenticNetworkConfiguration {
               JsonSchemaBasedSpecCachePipeline()
           )
       )
+      .withFallback(ExternalFragmentDomainFallback(strict = false))
 
   private def predefined(): AgenticNetworkConfiguration = {
     val baseConfig = JsonSchemaBasedSpecConfiguration.base()

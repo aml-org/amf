@@ -1,0 +1,36 @@
+agentNetwork: 2.0.0
+info:
+  title: Agent Network 1
+  version: v1
+brokers:
+  agent1:
+    kind: AgentScript
+    implementation: ./agent-script/agent1.agent
+    interfaces:
+      a2a:
+        card:
+          name: My Custom Agent
+          description: An intelligent agent that handles customer support requests,
+            answers questions, and routes complex issues to specialized agents.
+          url: ${ingress.gw}/agent1
+          version: 1.0.0
+          protocolVersion: 0.3.0
+          capabilities:
+            streaming: true
+            pushNotifications: true
+            stateTransitionHistory: true
+          defaultInputModes:
+            - text/plain
+            - application/json
+          defaultOutputModes:
+            - text/plain
+            - application/json
+          skills:
+            - id: general-inquiry
+              name: General Inquiry Handler
+              description: Handles general customer questions about products, services,
+                and policies.
+              tags:
+                - support
+                - inquiry
+                - general

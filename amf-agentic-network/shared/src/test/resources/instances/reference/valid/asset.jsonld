@@ -1,0 +1,95 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Agentic Network"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Network",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#agentNetwork": "2.0.0",
+      "http://anypoint.com/vocabs/agents#info": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/info"
+      },
+      "http://anypoint.com/vocabs/agents#brokers": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/info",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#info",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#title": "Agent Network Reference Example",
+      "http://anypoint.com/vocabs/agents#version": "v1"
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#DeclarationDefinitions",
+        "http://anypoint.com/vocabs/agents/reference/kind#brokers",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#brokerWithReference": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers/brokerWithReference"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers/brokerWithReference",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#Agent",
+        "http://anypoint.com/vocabs/agents#Broker",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#kind": "AgentScript",
+      "http://anypoint.com/vocabs/agents#implementation": "./agent-script/agent1.agent",
+      "http://anypoint.com/vocabs/agents#interfaces": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers/brokerWithReference/interfaces"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers/brokerWithReference/interfaces",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#interfaces",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://anypoint.com/vocabs/agents#a2a": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers/brokerWithReference/interfaces/a2a"
+      }
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/brokers/brokerWithReference/interfaces/a2a",
+      "@type": [
+        "http://anypoint.com/vocabs/agents#a2a",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ]
+    },
+    {
+      "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-agentic-network/shared/src/test/resources/instances/reference/valid/asset.yaml#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

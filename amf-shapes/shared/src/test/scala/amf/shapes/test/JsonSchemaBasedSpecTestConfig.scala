@@ -5,7 +5,7 @@ import amf.shapes.client.scala.JsonSchemaBasedSpecConfiguration
 import amf.shapes.internal.plugins.parser.schema.JsonSchemaBasedSpecSchemaLoader
 
 case class CycleInstance(source: String, golden: String)
-case class InvalidInstance(path: String, expectedErrors: Option[Int])
+case class InvalidInstance(path: String, expectedErrors: Option[Int], expectedMessages: Seq[String] = Nil)
 
 case class JsonSchemaBasedSpecTestConfig(
     specName: String,
