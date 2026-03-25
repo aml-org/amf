@@ -57,6 +57,9 @@
             ]
           }
         },
+        "externalAgentInfo": {
+          "$ref": "#/definitions/ExternalAgentInfo"
+        },
         "provenance": {
           "@context": {
             "@type": [
@@ -78,6 +81,50 @@
             }
           },
           "additionalProperties": false
+        }
+      }
+    },
+    "ExternalAgentInfo": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents#ExternalAgentInfo"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "agentId": {
+          "type": "string"
+        },
+        "resourceName": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "foundationModel": {
+          "type": "string"
+        },
+        "instruction": {
+          "type": "string"
         }
       }
     },
