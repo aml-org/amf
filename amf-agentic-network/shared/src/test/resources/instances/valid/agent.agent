@@ -1,0 +1,117 @@
+# @dialect: AGENTFABRIC=1
+
+system:
+  instructions: "You are the onboading agent"
+
+config:
+  agent_name: "employee-onboarding"
+  label: "Employee Onboarding Agent"
+  description: "An Agent that performs employee onboarding"
+  default_llm: @llm.open-api-llm
+
+llm:
+  open-api-llm:
+    target: "connection://open_ai_connection"
+    kind: "openAI"
+    model: "gpt5-mini"
+    reasoning_effort: "LOW"
+
+  gemini-llm:
+    target: "connection://gemini_connection"
+    kind: "gemini"
+    model: "gemini-3-flash-preview"
+    thinking_level: "HIGH"
+    top_p: 0.3
+
+tool_defs:
+  hr_agent:
+     target: "connection://hr_agent_connection"
+     kind: "a2a:send_message"
+
+
+  send_slack_message:
+     target: "connection://slack_mcp_connection"
+     kind: "mcp:tool"
+     toolName: "send-message"
+     inputs:  # If inputs is defined then it is the full schema? or  can it be partial.
+          channel: string = "my-default-channel"
+          message: string
+
+
+trigger employeeOnboardingTrigger:
+  target: "brokers://employee-onboarding"
+  on_message: -> transition to @orchestrator.hrSystemOnboard
+
+
+orchestrator hrSystemOnboard:
+  description: "onboard to HR system"
+  label: HR onboard # We need labels for UI if not present
+  llm: @llm.gemini-llm
+  system_instructions: ->
+          | You are the **Employee Onboarding Orchestrator**. Your job is to onboard new hires into the HR system
+
+          ## Rules
+          - You MUST NOT add, infer, or assume any values for tools
+          - STRICTLY send only what the user has provided — no prefilled, default, or placeholder data.
+
+          ## Steps
+            - Create a new-hire record using the HR System agent.
+            - Fetch the address automatically using available tools. Only ask the user if the address cannot be determined.
+  prompt: -> @trigger.employeeOnboardingTrigger.input.message.parts[0].text
+
+
+  tools:
+      my_hr_agent: @tools.hr_agent
+
+      send_message: @tools.send_slack_message
+          with message = ...
+
+  output_structure:
+    properties:
+      name:
+        type: string
+        description: The name of the element
+      country:
+        type: string
+        description: The country name in 3 letters. For example USA, ARG, ENG, ESP
+      employeeID:
+        type: string
+        description: The id of the employee
+
+  # All nodes have a `on_exit` so that there's a single place where it routes or finishes
+  on_exit: -> transition to  @generation.generateHrSlackUpdateMessage
+
+generation generateHrSlackUpdateMessage:
+  system_instructions: -> You generate Slack messages. Apply the proper markdown and formatting
+  prompt: ->
+      | Generate a Slack message stating that the employee was onboarded on the HR system.
+      The message should include all the information below in a nice, human readable, conversational format:
+      {!@orchestrator.hr-system-onboard.output}
+  on_exit: -> transition to @execute.sendHrSlackUpdate
+
+execute sendHrSlackUpdate:
+  do: ->
+    run @tools.send_slack_message
+      with text= @generation.generate-hr-slack-update-message.output
+      with channel_id= "my-onboarding-channel-id"
+   on_exit: -> transition to countrySwitch
+
+
+switch countryRouter:
+  choices:
+    - @orchestrator.argentinaOnboard
+      when: @orchestrator.hrSystemOnboard.output.country  == "ARG"
+    - @orchestrator.usOnboard
+      when: @orchestrator.hrSystemOnboard.output.country  == "USA"
+    - @echo.invalidCountryResponse
+
+echo invalidCountryResponse:
+  kind: "a2a:response" #Following the action pattern where we put the protocol : method
+  message: a2a_message(
+      state="failed",
+      parts=[
+              a2a_textPart(
+                  text="{!@orchestrator.hrSystemOnboard.output.country} is not a valid country")
+          ]
+  artifacts: {a2a_parts(*@variables.artifacts)}
+  metadata: None

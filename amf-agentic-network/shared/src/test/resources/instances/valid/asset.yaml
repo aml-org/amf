@@ -267,7 +267,7 @@ context:
 brokers:
   orchestrator-agent:
     kind: AgentScript
-    implementation: ./scripts/orchestrator.js
+    implementation: ./agent.agent
     interfaces:
       a2a:
         card:

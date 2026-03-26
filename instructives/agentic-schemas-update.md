@@ -65,6 +65,10 @@ sbt -mem 16000 -Dgolden.override=true test
 
 > **⚠️ Caution:** This will overwrite the golden files in the project. Always review the changes to make sure they are correct before committing.
 
+> **ℹ️ Info:** In APB there are specific test instances to validate reference resolution. Those instances are not updated by the update script. You need to update them manually in case of a breaking change in the schema.
+
+> **ℹ️ Info:** If you are changing the ID entry or the classifier of the asset, some code will need to be updated. Contact the AMF team for assistance.
+
 ### 4. Create pull requests
 
 Once tests are passing, create a pull request targeting the `develop` branch in each repository (AMF and APB).
