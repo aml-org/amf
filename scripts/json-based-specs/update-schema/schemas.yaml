@@ -122,3 +122,20 @@ specs:
           - "apb/shared/src/test/resources/spec/local/other-card"
           - "apb/shared/src/test/resources/api-project/local/main-other-card"
         invalid: "apb/shared/src/test/resources/spec/local/other-card-invalid"
+  - name: "agent network metadata"
+    amf-module: "amf-agent-network-metadata"
+    schema:
+      spec: "agent-fabric-schema/src/main/resources/agent_network_metadata.json"
+      amf: "shared/src/main/resources/schema_agent_network_metadata.json"
+    instances:
+      spec:
+        valid: "agent-fabric-schema/src/test/resources/agent_network_metadata/basic/valid"
+        invalid: "agent-fabric-schema/src/test/resources/agent_network_metadata/basic/invalid"
+      amf:
+        valid: "shared/src/test/resources/instances/valid"
+        invalid: "shared/src/test/resources/instances/invalid"
+      apb:
+        valid:
+          - "apb/shared/src/test/resources/spec/local/agent-network-metadata"
+          - "apb/shared/src/test/resources/api-project/local/main-agent-network-metadata"
+        invalid: "apb/shared/src/test/resources/spec/local/agent-network-metadata-invalid"

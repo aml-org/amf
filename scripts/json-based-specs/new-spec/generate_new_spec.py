@@ -11,6 +11,7 @@ Usage:
 The script will interactively prompt for all required inputs.
 """
 
+import glob
 import os
 import re
 import sys
@@ -22,6 +23,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 AMF_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", ".."))
 AMF_CORE_ROOT = os.path.abspath(os.path.join(AMF_ROOT, "..", "amf-core"))
 APB_ROOT = os.path.abspath(os.path.join(AMF_ROOT, "..", "apb"))
+SCHEMAS_YAML_PATH = os.path.join(AMF_ROOT, "scripts", "json-based-specs", "update-schema", "schemas.yaml")
 
 
 # ---------------------------------------------------------------------------
@@ -120,10 +122,41 @@ def prompt_yes_no(message: str, default: bool = True) -> bool:
     return result in ("y", "yes")
 
 
+def read_spec_local_path() -> str:
+    """Read specLocalPath from schemas.yaml and return the resolved absolute path."""
+    if not os.path.exists(SCHEMAS_YAML_PATH):
+        print(f"Error: schemas.yaml not found at {SCHEMAS_YAML_PATH}")
+        sys.exit(1)
+    with open(SCHEMAS_YAML_PATH, "r") as f:
+        for line in f:
+            m = re.match(r'\s*specLocalPath:\s*"([^"]+)"', line)
+            if m:
+                return os.path.abspath(os.path.expanduser(m.group(1)))
+    print("Error: specLocalPath not found in schemas.yaml repositories")
+    sys.exit(1)
+
+
+def find_asset_file(directory: str) -> str:
+    """Find the asset.* file in a directory. Returns the path or None."""
+    matches = glob.glob(os.path.join(directory, "asset.*"))
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        print(f"  Warning: multiple asset.* files in {directory}, using first: {matches[0]}")
+        return matches[0]
+    return None
+
+
 def collect_inputs() -> dict:
     print("=" * 60)
     print("  Generate New JsonSchemaBasedSpec Module")
     print("=" * 60)
+    print()
+
+    # Read specLocalPath from schemas.yaml
+    spec_local_path = read_spec_local_path()
+    print(f"  specLocalPath (from schemas.yaml): {spec_local_path}")
+    print(f"  All schema and instance paths should be relative to this directory.")
     print()
 
     spec_name = prompt("Spec name (e.g. 'My Spec', 'Agent Card')")
@@ -136,6 +169,7 @@ def collect_inputs() -> dict:
     module_dir = to_module_dir(spec_name)
     pkg_segment = to_package_segment(spec_name)
     schema_file = to_schema_file_name(spec_name)
+    apb_slug = to_apb_slug(spec_name)
 
     print(f"\n  Derived names:")
     print(f"    Module dir:    {module_dir}")
@@ -144,12 +178,14 @@ def collect_inputs() -> dict:
     print(f"    Schema file:   {schema_file}")
     print()
 
-    # JSON Schema path
-    json_schema_path = prompt("Path to root JSON Schema file (absolute, supports ~)")
-    if not json_schema_path:
+    # JSON Schema path (relative to specLocalPath)
+    spec_schema_rel = prompt("Path to root JSON Schema file (relative to specLocalPath)")
+    if not spec_schema_rel:
         print("Error: JSON Schema path is required")
         sys.exit(1)
-    json_schema_path = os.path.expanduser(json_schema_path)
+    json_schema_path = os.path.join(spec_local_path, spec_schema_rel)
+    if not os.path.exists(json_schema_path):
+        print(f"  Warning: file not found: {json_schema_path}")
 
     # Media type
     print("\nMedia type options:")
@@ -178,23 +214,28 @@ def collect_inputs() -> dict:
             print("Error: ID entry key is required when has_id_entry is True")
             sys.exit(1)
 
-    # Valid instance
-    valid_instance_path = prompt("\nPath to a valid instance file (absolute, supports ~)")
+    # Valid instance directory (relative to specLocalPath)
+    spec_valid_dir_rel = prompt("\nValid instances directory (relative to specLocalPath)")
+    if not spec_valid_dir_rel:
+        print("Error: valid instances directory is required")
+        sys.exit(1)
+    valid_abs_dir = os.path.join(spec_local_path, spec_valid_dir_rel)
+    valid_instance_path = find_asset_file(valid_abs_dir) if os.path.isdir(valid_abs_dir) else None
     if not valid_instance_path:
-        print("Error: valid instance path is required")
-        sys.exit(1)
-    valid_instance_path = os.path.expanduser(valid_instance_path)
-    if not os.path.exists(valid_instance_path):
-        print(f"Warning: file not found: {valid_instance_path}")
+        print(f"  Warning: no asset.* file found in {valid_abs_dir}")
+        # Fallback so the rest of the script doesn't crash
+        valid_instance_path = os.path.join(valid_abs_dir, "asset.json")
 
-    # Invalid instance
-    invalid_instance_path = prompt("Path to an invalid instance file (absolute, supports ~)")
-    if not invalid_instance_path:
-        print("Error: invalid instance path is required")
+    # Invalid instance directory (relative to specLocalPath)
+    spec_invalid_dir_rel = prompt("Invalid instances directory (relative to specLocalPath)")
+    if not spec_invalid_dir_rel:
+        print("Error: invalid instances directory is required")
         sys.exit(1)
-    invalid_instance_path = os.path.expanduser(invalid_instance_path)
-    if not os.path.exists(invalid_instance_path):
-        print(f"Warning: file not found: {invalid_instance_path}")
+    invalid_abs_dir = os.path.join(spec_local_path, spec_invalid_dir_rel)
+    invalid_instance_path = find_asset_file(invalid_abs_dir) if os.path.isdir(invalid_abs_dir) else None
+    if not invalid_instance_path:
+        print(f"  Warning: no asset.* file found in {invalid_abs_dir}")
+        invalid_instance_path = os.path.join(invalid_abs_dir, "asset.json")
 
     # Classifier for APB
     classifier = prompt("\nClassifier string for APB (e.g. 'agent-graph', 'mcp-metadata')")
@@ -214,6 +255,9 @@ def collect_inputs() -> dict:
         "pkg_segment": pkg_segment,
         "schema_file": schema_file,
         "json_schema_path": json_schema_path,
+        "spec_schema_rel": spec_schema_rel,
+        "spec_valid_dir_rel": spec_valid_dir_rel,
+        "spec_invalid_dir_rel": spec_invalid_dir_rel,
         "media_type": media_type,
         "media_type_scala": media_type_scala,
         "parser_class": parser_class,
@@ -226,7 +270,7 @@ def collect_inputs() -> dict:
         "valid_ext": valid_ext,
         "invalid_ext": invalid_ext,
         "classifier": classifier,
-        "apb_slug": to_apb_slug(spec_name),
+        "apb_slug": apb_slug,
         "spec_id": to_spec_id(spec_name),
         "spec_object": to_spec_object_name(spec_name),
         "spec_constant": to_spec_constant_name(spec_name),
@@ -294,7 +338,8 @@ def gen_entry_no_entry_scala(c: dict) -> str:
 
         import amf.shapes.internal.plugins.parser.entry.IdEntryNoEntry
 
-        object {c['camel']}ProtocolEntry extends IdEntryNoEntry
+
+        object {c['camel']}IdEntry extends IdEntryNoEntry
     """)
 
 
@@ -335,8 +380,8 @@ def gen_parse_plugin_scala(c: dict) -> str:
         entry_import = f"import amf.{c['pkg_segment']}.internal.plugins.parse.entry.{c['camel']}IdEntry"
         entry_call = f"{c['camel']}IdEntry(document).nonEmpty"
     else:
-        entry_import = f"import amf.{c['pkg_segment']}.internal.plugins.parse.entry.{c['camel']}ProtocolEntry"
-        entry_call = f"{c['camel']}ProtocolEntry(document).nonEmpty"
+        entry_import = f"import amf.{c['pkg_segment']}.internal.plugins.parse.entry.{c['camel']}IdEntry"
+        entry_call = f"{c['camel']}IdEntry(document).nonEmpty"
 
     return textwrap.dedent(f"""\
         package amf.{c['pkg_segment']}.internal.plugins.parse
@@ -401,7 +446,7 @@ def gen_scala_configuration(c: dict) -> str:
     return textwrap.dedent(f"""\
         package amf.{c['pkg_segment']}.client.scala
 
-        import amf.aml.client.scala.model.document.{{Dialect, DialectInstance}}
+        import amf.aml.client.scala.model.document.Dialect
         import amf.aml.internal.registries.AMLRegistry
         import amf.core.client.scala.adoption.IdAdopterProvider
         import amf.core.client.scala.config._
@@ -617,7 +662,7 @@ def gen_platform_configuration(c: dict) -> str:
     return textwrap.dedent(f"""\
         package amf.{c['pkg_segment']}.client.platform
 
-        import amf.aml.client.platform.model.document.{{Dialect, DialectInstance}}
+        import amf.aml.client.platform.model.document.Dialect
         import amf.aml.client.platform.{{AMLBaseUnitClient, AMLConfigurationState}}
         import amf.aml.internal.convert.VocabulariesClientConverter.{{ClientFuture, ClientList}}
         import amf.core.client.platform.adoption.IdAdopterProvider
@@ -824,51 +869,34 @@ def gen_base_client_converter(c: dict) -> str:
     """)
 
 
-def gen_test_async_fun_suite(c: dict) -> str:
-    return textwrap.dedent("""\
-        package amf.core.common
+def gen_test_cycle_and_config(c: dict) -> str:
+    valid_name = os.path.basename(c["valid_instance_path"])
+    invalid_name = os.path.basename(c["invalid_instance_path"])
+    golden_name = os.path.splitext(valid_name)[0] + ".jsonld"
+    return textwrap.dedent(f"""\
+        package amf
 
-        import amf.core.internal.unsafe.PlatformSecrets
-        import org.scalatest.funsuite.AsyncFunSuite
+        import amf.{c['pkg_segment']}.client.scala.{c['camel']}Configuration
+        import amf.{c['pkg_segment']}.internal.plugins.parse.schema.{c['camel']}SchemaLoader
+        import amf.core.internal.remote.Spec
+        import amf.shapes.test._
 
-        import scala.concurrent.ExecutionContext
+        class {c['camel']}CycleTest extends JsonSchemaBasedSpecCycleTestBase {{
+          override def testConfig: JsonSchemaBasedSpecTestConfig = {c['camel']}TestConfig.config
+        }}
 
-        trait AsyncFunSuiteWithPlatformGlobalExecutionContext extends AsyncFunSuite with PlatformSecrets {
-          override implicit def executionContext: ExecutionContext = platform.globalExecutionContext
-        }
-    """)
-
-
-def gen_test_file_assertion(c: dict) -> str:
-    return textwrap.dedent("""\
-        package amf.core.common
-
-        import org.mulesoft.common.io.{AsyncFile, FileSystem}
-        import org.mulesoft.common.test.Tests.checkDiff
-        import org.scalatest.Assertion
-
-        import scala.concurrent.Future
-
-        trait FileAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
-
-          protected val fs: FileSystem = platform.fs
-
-          protected def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {
-            val file   = tmp(s"${golden.replaceAll("/", "-")}.tmp")
-            val actual = fs.asyncFile(file)
-            actual.write(content).map(_ => actual)
-          }
-
-          protected def assertDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
-            val expected = fs.asyncFile(golden)
-            expected.read().flatMap(_ => checkDiff(actual, expected))
-          }
-
-          /** Return random temporary file name for testing. */
-          def tmp(name: String = ""): String =
-            (platform.tmpdir() + platform.fs.separatorChar + System.nanoTime() + "-" + name)
-              .replaceAll(s"${platform.fs.separatorChar}${platform.fs.separatorChar}", s"${platform.fs.separatorChar}")
-        }
+        object {c['camel']}TestConfig {{
+          val config: JsonSchemaBasedSpecTestConfig = JsonSchemaBasedSpecTestConfig(
+            specName     = "{c['camel']}",
+            basePath     = "{c['module_dir']}/shared/src/test/resources/instances/",
+            configuration = {c['camel']}Configuration.{c['camel']}(),
+            schemaLoader = {c['camel']}SchemaLoader,
+            spec         = Spec.{c['spec_constant']},
+            validInstances = Seq("valid/{valid_name}"),
+            invalidInstances = Seq(InvalidInstance("invalid/{invalid_name}", Some(1))),
+            cycleInstances = Seq(CycleInstance("valid/{valid_name}", "valid/{golden_name}"))
+          )
+        }}
     """)
 
 
@@ -876,66 +904,22 @@ def gen_test_schema_loader(c: dict) -> str:
     return textwrap.dedent(f"""\
         package amf
 
-        import amf.core.client.common.validation.SeverityLevels
-        import amf.core.client.scala.validation.AMFValidationResult
-        import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
-        import amf.{c['pkg_segment']}.internal.plugins.parse.schema.{c['camel']}SchemaLoader
-        import amf.shapes.client.scala.model.domain.NodeShape
-        import org.scalatest.matchers.should.Matchers
+        import amf.shapes.test.JsonSchemaBasedSpecSchemaLoaderTestBase
 
-        class {c['camel']}SchemaLoaderTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {{
-
-          test("Validate that {c['spec_id']} Schema has no errors") {{
-            {c['camel']}SchemaLoader.doc != null shouldBe true
-            {c['camel']}SchemaLoader.schema != null shouldBe true
-            {c['camel']}SchemaLoader.schema.isInstanceOf[NodeShape] shouldBe true
-            filterErrors({c['camel']}SchemaLoader.errors).size shouldBe 0
-          }}
-
-          // Adding this to ignore the "possibly-ignored-pattern-warning" that is not a real error and metadata errors
-          private def filterErrors(errors: Seq[AMFValidationResult]): Seq[AMFValidationResult] = {{
-            errors
-              .filterNot(_.severityLevel == SeverityLevels.VIOLATION)
-              .filter(_.validationId == "http://a.ml/vocabularies/data#invalid-type-use")
-          }}
+        class {c['camel']}SchemaLoaderTest extends JsonSchemaBasedSpecSchemaLoaderTestBase {{
+          override def testConfig = {c['camel']}TestConfig.config
         }}
     """)
 
 
 def gen_test_validation(c: dict) -> str:
-    valid_name = os.path.basename(c["valid_instance_path"])
-    invalid_name = os.path.basename(c["invalid_instance_path"])
     return textwrap.dedent(f"""\
         package amf
 
-        import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
-        import amf.{c['pkg_segment']}.client.scala.{{{c['camel']}BaseUnitClient, {c['camel']}Configuration}}
-        import org.scalatest.matchers.should.Matchers
+        import amf.shapes.test.JsonSchemaBasedSpecValidationTestBase
 
-        class {c['camel']}ValidationTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {{
-
-          private val basePath: String          = "file://{c['module_dir']}/shared/src/test/resources/instances/"
-          private val client: {c['camel']}BaseUnitClient = {c['camel']}Configuration.{c['camel']}().baseUnitClient()
-
-          test("Valid {c['spec_id']} Instance should conforms") {{
-            for {{
-              parseResult      <- client.parse(basePath + "valid/{valid_name}")
-              validationReport <- client.validate(parseResult.baseUnit)
-            }} yield {{
-              parseResult.conforms shouldBe true
-              validationReport.conforms shouldBe true
-            }}
-          }}
-
-          test("Invalid {c['spec_id']} Instance should not conforms") {{
-            for {{
-              parseResult      <- client.parse(basePath + "invalid/{invalid_name}")
-              validationReport <- client.validate(parseResult.baseUnit)
-            }} yield {{
-              parseResult.conforms shouldBe true
-              validationReport.conforms shouldBe false
-            }}
-          }}
+        class {c['camel']}ValidationTest extends JsonSchemaBasedSpecValidationTestBase {{
+          override def testConfig = {c['camel']}TestConfig.config
         }}
     """)
 
@@ -948,8 +932,6 @@ def gen_test_entry(c: dict) -> str:
 
 
 def gen_test_entry_no_id(c: dict) -> str:
-    # For no-entry specs, use the valid instance as "none" entry test
-    valid_name = os.path.basename(c["valid_instance_path"])
     is_yaml = c["valid_ext"] in (".yaml", ".yml")
     if is_yaml:
         parser_import = "org.yaml.parser.YamlParser"
@@ -963,11 +945,11 @@ def gen_test_entry_no_id(c: dict) -> str:
     return textwrap.dedent(f"""\
         package amf
 
+        import amf.{c['pkg_segment']}.internal.plugins.parse.entry.{c['camel']}IdEntry
         import amf.core.client.scala.parse.document.{{SyamlParsedDocument, UnspecifiedReference}}
         import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
         import amf.core.internal.parser.Root
         import amf.core.internal.remote.Mimes
-        import amf.{c['pkg_segment']}.internal.plugins.parse.entry.{c['camel']}ProtocolEntry
         import amf.shapes.internal.plugins.parser.entry.DefaultIdVersion
         import org.mulesoft.common.io.Fs
         import org.scalatest.matchers.should.Matchers
@@ -978,8 +960,8 @@ def gen_test_entry_no_id(c: dict) -> str:
 
           private val basePath: String = "{c['module_dir']}/shared/src/test/resources/instances/entry/"
 
-          test("{c['spec_id']} without protocol entry") {{
-            val maybeVersion = {c['camel']}ProtocolEntry.apply(getRoot(basePath + "none{c['valid_ext']}"))
+          test("{c['camel']} with string protocolVersion") {{
+            val maybeVersion = {c['camel']}IdEntry.apply(getRoot(basePath + "none.json"))
             maybeVersion.nonEmpty shouldBe true
             maybeVersion.get shouldBe DefaultIdVersion
           }}
@@ -996,7 +978,6 @@ def gen_test_entry_no_id(c: dict) -> str:
 
 
 def gen_test_entry_with_id(c: dict) -> str:
-    valid_name = os.path.basename(c["valid_instance_path"])
     is_yaml = c["valid_ext"] in (".yaml", ".yml")
     if is_yaml:
         parser_import = "org.yaml.parser.YamlParser"
@@ -1046,68 +1027,93 @@ def gen_test_entry_with_id(c: dict) -> str:
 
 
 def gen_test_source_spec(c: dict) -> str:
-    valid_name = os.path.basename(c["valid_instance_path"])
     return textwrap.dedent(f"""\
         package amf
 
-        import amf.core.client.common.transform.PipelineId
-        import amf.core.client.scala.config.RenderOptions
-        import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
-        import amf.core.internal.remote.Mimes._
-        import amf.core.internal.remote.Spec
-        import amf.{c['pkg_segment']}.client.scala.{c['camel']}Configuration
-        import amf.shapes.client.scala.model.document.JsonLDInstanceDocument
-        import amf.shapes.client.scala.model.domain.jsonldinstance.JsonLDObject
-        import org.scalatest.matchers.should.Matchers
+        import amf.shapes.test.JsonSchemaBasedSpecSourceSpecTestBase
 
-        import scala.concurrent.Future
-
-        class {c['camel']}SourceSpecTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {{
-
-          private val basePath = "file://{c['module_dir']}/shared/src/test/resources/instances/"
-          private val client   = {c['camel']}Configuration.{c['camel']}().withRenderOptions(RenderOptions().withEntityEmission).baseUnitClient()
-
-          test("Parsed JSON-LD from {c['spec_id']} should have {c['spec_id']} source spec") {{
-            for {{
-              result <- client.parse(basePath + "valid/{valid_name}")
-              jsonld = client.render(result.baseUnit, `application/ld+json`)
-              cycledResult <- client.parseContent(jsonld)
-            }} yield {{
-              result.conforms shouldBe true
-              cycledResult.conforms shouldBe true
-              result.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-              cycledResult.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-              cycledResult.sourceSpec shouldBe Spec.{c['spec_constant']}
-              val encodes       = result.baseUnit.asInstanceOf[JsonLDInstanceDocument].encodes
-              val cycledEncodes = cycledResult.baseUnit.asInstanceOf[JsonLDInstanceDocument].encodes
-              encodes.headOption shouldBe defined
-              cycledEncodes.headOption shouldBe defined
-              encodes.head.isInstanceOf[JsonLDObject] shouldBe true
-              cycledEncodes.head.isInstanceOf[JsonLDObject] shouldBe true
-              val rootPropertiesSize       = encodes.head.asInstanceOf[JsonLDObject].fields.fields().size
-              val cycledRootPropertiesSize = cycledEncodes.head.asInstanceOf[JsonLDObject].fields.fields().size
-              rootPropertiesSize shouldBe cycledRootPropertiesSize
-            }}
-          }}
-
-          test("Transformation (empty) should conforms") {{
-            for {{
-              parseResult <- client.parse(basePath + "valid/{valid_name}")
-              transformationDefault = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Default)
-              transformationEditing = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Editing)
-              transformationCache   = client.transform(parseResult.baseUnit.cloneUnit(), PipelineId.Cache)
-            }} yield {{
-              parseResult.conforms shouldBe true
-              transformationDefault.conforms shouldBe true
-              transformationEditing.conforms shouldBe true
-              transformationCache.conforms shouldBe true
-              transformationDefault.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-              transformationEditing.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-              transformationCache.baseUnit.isInstanceOf[JsonLDInstanceDocument] shouldBe true
-            }}
-          }}
+        class {c['camel']}SourceSpecTest extends JsonSchemaBasedSpecSourceSpecTestBase {{
+          override def testConfig = {c['camel']}TestConfig.config
         }}
     """)
+
+
+# ---------------------------------------------------------------------------
+# TypeScript typings (amf-client-js.d.ts)
+# ---------------------------------------------------------------------------
+
+def gen_typings_block(c: dict) -> str:
+    camel = c["camel"]
+    return (
+        f'\n'
+        f'  export class {camel}Configuration extends Base{camel}Configuration {{\n'
+        f'    static {camel}(): {camel}Configuration;\n'
+        f'\n'
+        f'    baseUnitClient(): {camel}BaseUnitClient;\n'
+        f'  }}\n'
+        f'\n'
+        f'  export class Base{camel}Configuration extends BaseShapesConfiguration {{\n'
+        f'    withDialect(dialect: Dialect): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withErrorHandlerProvider(\n'
+        f'      provider: ErrorHandlerProvider\n'
+        f'    ): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withEventListener(listener: AMFEventListener): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withParsingOptions(parsingOptions: ParsingOptions): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withRenderOptions(renderOptions: RenderOptions): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withResourceLoader(rl: ResourceLoader): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withResourceLoaders(rl: Array<ResourceLoader>): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withTransformationPipeline(\n'
+        f'      pipeline: TransformationPipeline\n'
+        f'    ): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withUnitCache(cache: UnitCache): Base{camel}Configuration;\n'
+        f'  }}\n'
+        f'  export class {camel}BaseUnitClient extends AMLBaseUnitClient {{\n'
+        f'    syncValidate(baseUnit: BaseUnit): AMFValidationReport;\n'
+        f'  }}\n'
+    )
+
+
+def update_typings(c: dict):
+    typings_path = os.path.join(AMF_ROOT, "amf-cli", "js", "typings", "amf-client-js.d.ts")
+
+    if not os.path.exists(typings_path):
+        print(f"\n  Warning: typings file not found at {typings_path}")
+        return
+
+    print(f"\nUpdating amf-client-js.d.ts")
+
+    with open(typings_path, "r") as f:
+        content = f.read()
+
+    camel = c["camel"]
+
+    # Check if already present
+    if f'{camel}Configuration' in content:
+        print(f"  Skipped: {camel}Configuration already present in typings")
+        return
+
+    # Insert before ConfigurationAdapter class
+    marker = '  export class ConfigurationAdapter'
+    marker_pos = content.find(marker)
+    if marker_pos == -1:
+        print("  Warning: Could not find ConfigurationAdapter marker in typings file")
+        return
+
+    block = gen_typings_block(c)
+    content = content[:marker_pos] + block + "\n" + content[marker_pos:]
+
+    with open(typings_path, "w") as f:
+        f.write(content)
+
+    print("  Updated: amf-cli/js/typings/amf-client-js.d.ts")
 
 
 # ---------------------------------------------------------------------------
@@ -1137,7 +1143,7 @@ def create_module(c: dict):
         write_file(os.path.join(base_main, "internal", "plugins", "parse", "entry", f"{camel}IdEntry.scala"),
                    gen_id_entry_scala(c))
     else:
-        write_file(os.path.join(base_main, "internal", "plugins", "parse", "entry", f"{camel}ProtocolEntry.scala"),
+        write_file(os.path.join(base_main, "internal", "plugins", "parse", "entry", f"{camel}IdEntry.scala"),
                    gen_entry_no_entry_scala(c))
 
     # Plugins
@@ -1184,10 +1190,9 @@ def create_module(c: dict):
     # Test files
     base_test = os.path.join(mod, "shared", "src", "test", "scala", "amf")
 
-    write_file(os.path.join(base_test, "core", "common", "AsyncFunSuiteWithPlatformGlobalExecutionContext.scala"),
-               gen_test_async_fun_suite(c))
-    write_file(os.path.join(base_test, "core", "common", "FileAssertionTest.scala"),
-               gen_test_file_assertion(c))
+    # CycleTest + TestConfig (central config object used by all other tests)
+    write_file(os.path.join(base_test, f"{camel}CycleTest.scala"),
+               gen_test_cycle_and_config(c))
     write_file(os.path.join(base_test, f"{camel}SchemaLoaderTest.scala"),
                gen_test_schema_loader(c))
     write_file(os.path.join(base_test, f"{camel}ValidationTest.scala"),
@@ -1222,6 +1227,11 @@ def create_module(c: dict):
     else:
         os.makedirs(os.path.dirname(invalid_dest), exist_ok=True)
         print(f"  Warning: invalid instance not found at {c['invalid_instance_path']}, skipping copy")
+
+    # Golden .jsonld for cycle test — empty placeholder that will be overwritten by first test run
+    golden_name = os.path.splitext(valid_name)[0] + ".jsonld"
+    golden_dest = os.path.join(test_res, "valid", golden_name)
+    write_file(golden_dest, "")
 
     # Entry test resource
     entry_dir = os.path.join(test_res, "entry")
@@ -1288,7 +1298,7 @@ def update_build_sbt(c: dict):
           }}.taskValue
         )
       )
-      .dependsOn(shapes)
+      .dependsOn(shapes % "compile->compile;test->test")
       .jvmSettings(
         libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
         Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "{sbt_name}-javadoc.jar",
@@ -1358,21 +1368,42 @@ def update_build_sbt(c: dict):
 # ---------------------------------------------------------------------------
 
 def update_schemas_yaml(c: dict):
-    yaml_path = os.path.join(AMF_ROOT, "scripts", "json-based-specs", "update-schema", "schemas.yaml")
     print(f"\nUpdating schemas.yaml")
 
-    with open(yaml_path, "r") as f:
+    with open(SCHEMAS_YAML_PATH, "r") as f:
         content = f.read()
 
-    new_entry = textwrap.dedent(f"""\
-    - name: "{c['spec_name'].lower()}"
-      rootSchema: "{c['json_schema_path']}"
-      output: "{c['module_dir']}/shared/src/main/resources/{c['schema_file']}"
-    """)
+    name_lower = c["spec_name"].lower()
+    slug = c["apb_slug"]
+
+    # Check if already present
+    if f'name: "{name_lower}"' in content:
+        print(f"  Skipped: '{name_lower}' already present in schemas.yaml")
+        return
+
+    new_entry = (
+        f'  - name: "{name_lower}"\n'
+        f'    amf-module: "{c["module_dir"]}"\n'
+        f'    schema:\n'
+        f'      spec: "{c["spec_schema_rel"]}"\n'
+        f'      amf: "shared/src/main/resources/{c["schema_file"]}"\n'
+        f'    instances:\n'
+        f'      spec:\n'
+        f'        valid: "{c["spec_valid_dir_rel"]}"\n'
+        f'        invalid: "{c["spec_invalid_dir_rel"]}"\n'
+        f'      amf:\n'
+        f'        valid: "shared/src/test/resources/instances/valid"\n'
+        f'        invalid: "shared/src/test/resources/instances/invalid"\n'
+        f'      apb:\n'
+        f'        valid:\n'
+        f'          - "apb/shared/src/test/resources/spec/local/{slug}"\n'
+        f'          - "apb/shared/src/test/resources/api-project/local/main-{slug}"\n'
+        f'        invalid: "apb/shared/src/test/resources/spec/local/{slug}-invalid"\n'
+    )
 
     content = content.rstrip() + "\n" + new_entry
 
-    with open(yaml_path, "w") as f:
+    with open(SCHEMAS_YAML_PATH, "w") as f:
         f.write(content)
 
     print("  Updated: scripts/json-based-specs/update-schema/schemas.yaml")
@@ -1908,6 +1939,82 @@ def update_apb_for_spec_test(c: dict):
     print("  Updated: APB ForSpecAPBContractClientTest.scala")
 
 
+def gen_apb_typings_block(c: dict) -> str:
+    """Generate typings block for APB's amf.d.ts (no indent, top-level exports)."""
+    camel = c["camel"]
+    return (
+        f'\n'
+        f'export class {camel}Configuration extends Base{camel}Configuration {{\n'
+        f'    static {camel}(): {camel}Configuration;\n'
+        f'\n'
+        f'    baseUnitClient(): {camel}BaseUnitClient;\n'
+        f'}}\n'
+        f'\n'
+        f'export class Base{camel}Configuration extends BaseShapesConfiguration {{\n'
+        f'    withDialect(dialect: Dialect): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withErrorHandlerProvider(\n'
+        f'        provider: ErrorHandlerProvider\n'
+        f'    ): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withEventListener(listener: AMFEventListener): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withParsingOptions(parsingOptions: ParsingOptions): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withRenderOptions(renderOptions: RenderOptions): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withResourceLoader(rl: ResourceLoader): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withResourceLoaders(rl: Array<ResourceLoader>): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withTransformationPipeline(\n'
+        f'        pipeline: TransformationPipeline\n'
+        f'    ): Base{camel}Configuration;\n'
+        f'\n'
+        f'    withUnitCache(cache: UnitCache): Base{camel}Configuration;\n'
+        f'}}\n'
+        f'\n'
+        f'export class {camel}BaseUnitClient extends AMLBaseUnitClient {{\n'
+        f'    syncValidate(baseUnit: BaseUnit): AMFValidationReport;\n'
+        f'}}\n'
+    )
+
+
+def update_apb_typings(c: dict):
+    """Update APB typings files: amf.d.ts and apb.d.ts."""
+    typings_dir = os.path.join(APB_ROOT, "apb", "js", "node-package", "typings")
+    amf_dts = os.path.join(typings_dir, "amf.d.ts")
+    apb_dts = os.path.join(typings_dir, "apb.d.ts")
+
+    camel = c["camel"]
+    marker = 'export class ConfigurationAdapter'
+
+    for path in (amf_dts, apb_dts):
+        if not os.path.exists(path):
+            print(f"  Warning: {path} not found, skipping")
+            continue
+
+        with open(path, "r") as f:
+            content = f.read()
+
+        if f'{camel}Configuration' in content:
+            print(f"  Skipped: {camel}Configuration already present in {os.path.basename(path)}")
+            continue
+
+        marker_pos = content.find(marker)
+        if marker_pos == -1:
+            print(f"  Warning: Could not find ConfigurationAdapter marker in {os.path.basename(path)}")
+            continue
+
+        block = gen_apb_typings_block(c)
+        content = content[:marker_pos] + block + "\n" + content[marker_pos:]
+
+        with open(path, "w") as f:
+            f.write(content)
+
+        print(f"  Updated: {os.path.relpath(path, APB_ROOT)}")
+
+
 def update_apb(c: dict):
     if not os.path.exists(APB_ROOT):
         print(f"\n  Warning: APB project not found at {APB_ROOT}")
@@ -1917,6 +2024,7 @@ def update_apb(c: dict):
     update_apb_classifier(c)
     update_apb_config_provider(c)
     update_apb_build_sbt(c)
+    update_apb_typings(c)
     create_apb_test_resources(c)
     update_apb_api_project_client_test(c)
     update_apb_e2e_test(c)
@@ -1933,21 +2041,22 @@ def main():
     print("\n" + "=" * 60)
     print("  Summary")
     print("=" * 60)
-    print(f"  Spec name:       {config['spec_name']}")
-    print(f"  Module dir:      {config['module_dir']}")
-    print(f"  Package:         amf.{config['pkg_segment']}")
-    print(f"  CamelCase:       {config['camel']}")
-    print(f"  Spec object:     {config['spec_object']}")
-    print(f"  Profile:         {config['profile_object']}")
-    print(f"  Schema file:     {config['schema_file']}")
-    print(f"  JSON Schema:     {config['json_schema_path']}")
-    print(f"  Media type:      {config['media_type']}")
-    print(f"  Has ID entry:    {config['has_id_entry']}")
+    print(f"  Spec name:        {config['spec_name']}")
+    print(f"  Module dir:       {config['module_dir']}")
+    print(f"  Package:          amf.{config['pkg_segment']}")
+    print(f"  CamelCase:        {config['camel']}")
+    print(f"  Spec object:      {config['spec_object']}")
+    print(f"  Profile:          {config['profile_object']}")
+    print(f"  Schema file:      {config['schema_file']}")
+    print(f"  Spec schema:      {config['spec_schema_rel']} (relative to specLocalPath)")
+    print(f"  Media type:       {config['media_type']}")
+    print(f"  Has ID entry:     {config['has_id_entry']}")
     if config["has_id_entry"]:
-        print(f"  ID entry key:    {config['id_entry_key']}")
-    print(f"  Valid instance:  {config['valid_instance_path']}")
-    print(f"  Invalid instance: {config['invalid_instance_path']}")
-    print(f"  Classifier:      {config['classifier']}")
+        print(f"  ID entry key:     {config['id_entry_key']}")
+    print(f"  Valid inst. dir:  {config['spec_valid_dir_rel']} (relative to specLocalPath)")
+    print(f"  Invalid inst. dir: {config['spec_invalid_dir_rel']} (relative to specLocalPath)")
+    print(f"  Classifier:       {config['classifier']}")
+    print(f"  APB slug:         {config['apb_slug']}")
     print()
 
     if not prompt_yes_no("Proceed with generation?"):
@@ -1966,6 +2075,7 @@ def main():
     update_schemas_yaml(config)
     update_amf_core_spec(config)
     update_amf_core_profile_names(config)
+    update_typings(config)
     update_apb(config)
 
     print("\n" + "=" * 60)
@@ -1976,16 +2086,19 @@ def main():
     print(f"  1. Run the schema bundler to populate the schema file:")
     print(f"     cd {AMF_ROOT}/scripts/json-based-specs/update-schema")
     print(f"     python3 bundle_all_schemas.py")
-    print(f"  2. Compile and test (amf):")
+    print(f"  2. Compile:")
     print(f"     sbt {config['sbt_lazy_val']}JVM/compile")
+    print(f"  3. Generate the golden .jsonld file by running CycleTest (empty placeholder was created):")
+    print(f"     sbt \"{config['sbt_lazy_val']}JVM/testOnly amf.{config['camel']}CycleTest\"")
+    print(f"  4. Run all tests:")
     print(f"     sbt {config['sbt_lazy_val']}JVM/test")
-    print(f"  3. Compile and test (apb):")
+    print(f"  5. Review generated files (e.g. invalidInstances error count in TestConfig).")
+    print(f"  6. Verify amf-core changes (Spec.scala, ProfileNames.scala).")
+    print(f"  7. Compile and test (apb):")
     print(f"     sbt apbProjectJVM/compile")
     print(f"     sbt apbJVM/test")
-    print(f"  4. Review the generated files and adjust as needed.")
-    print(f"  5. Verify amf-core changes (Spec.scala, ProfileNames.scala).")
-    print(f"  6. Verify APB changes (Classifier.scala, ConfigProvider.scala, build.sbt).")
-    print(f"  7. Generate the golden .jsonld file for ForSpecAPBContractClientTest.")
+    print(f"  8. Verify APB changes (Classifier.scala, ConfigProvider.scala, build.sbt).")
+    print(f"  9. Generate the golden .jsonld file for ForSpecAPBContractClientTest.")
     print()
 
 
