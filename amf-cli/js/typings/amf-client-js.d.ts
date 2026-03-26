@@ -6820,6 +6820,7 @@ declare module "amf-client-js" {
     static readonly AGENT_METADATA: ProfileName;
     static readonly LLM_METADATA: ProfileName;
     static readonly AGENTIC_NETWORK: ProfileName;
+    static readonly AGENT_NETWORK_METADATA: ProfileName;
   }
   export class PropertyDependencies implements DomainElement {
     customDomainProperties: Array<DomainExtension>;
@@ -8970,6 +8971,7 @@ declare module "amf-client-js" {
     static readonly AGENT_METADATA: Spec;
     static readonly LLM_METADATA: Spec;
     static readonly AGENTIC_NETWORK: Spec;
+    static readonly AGENT_NETWORK_METADATA: Spec;
 
     static apply(name: string): Spec;
   }
@@ -9862,6 +9864,39 @@ export class AgenticNetworkConfiguration extends BaseAgenticNetworkConfiguration
     withUnitCache(cache: UnitCache): BaseAgenticNetworkConfiguration;
   }
   export class AgenticNetworkBaseUnitClient extends AMLBaseUnitClient {
+    syncValidate(baseUnit: BaseUnit): AMFValidationReport;
+  }
+
+  export class AgentNetworkMetadataConfiguration extends BaseAgentNetworkMetadataConfiguration {
+    static AgentNetworkMetadata(): AgentNetworkMetadataConfiguration;
+
+    baseUnitClient(): AgentNetworkMetadataBaseUnitClient;
+  }
+
+  export class BaseAgentNetworkMetadataConfiguration extends BaseShapesConfiguration {
+    withDialect(dialect: Dialect): BaseAgentNetworkMetadataConfiguration;
+
+    withErrorHandlerProvider(
+        provider: ErrorHandlerProvider
+    ): BaseAgenticNetworkConfiguration;
+
+    withEventListener(listener: AMFEventListener): BaseAgentNetworkMetadataConfiguration;
+
+    withParsingOptions(parsingOptions: ParsingOptions): BaseAgentNetworkMetadataConfiguration;
+
+    withRenderOptions(renderOptions: RenderOptions): BaseAgentNetworkMetadataConfiguration;
+
+    withResourceLoader(rl: ResourceLoader): BaseAgentNetworkMetadataConfiguration;
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseAgentNetworkMetadataConfiguration;
+
+    withTransformationPipeline(
+        pipeline: TransformationPipeline
+    ): BaseAgentNetworkMetadataConfiguration;
+
+    withUnitCache(cache: UnitCache): BaseAgentNetworkMetadataConfiguration;
+  }
+  export class AgentNetworkMetadataBaseUnitClient extends AMLBaseUnitClient {
     syncValidate(baseUnit: BaseUnit): AMFValidationReport;
   }
 

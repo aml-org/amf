@@ -37,7 +37,7 @@ The script will interactively prompt for the following inputs:
    - `shared/src/main/scala/amf/myspec/` — Parse plugin, render plugin, validation plugin, schema, entry, configuration, client, converters
    - `js/src/main/scala/` and `jvm/src/main/scala/` — Platform-specific converter traits
    - `shared/src/test/scala/amf/` — CycleTest (with TestConfig), SchemaLoaderTest, ValidationTest, SourceSpecTest, entry test. All tests use shared base classes from `amf.shapes.test._`
-   - `shared/src/test/resources/instances/` — Valid and invalid test instances, entry test resources. The golden `.jsonld` file for the CycleTest must be generated after first run
+   - `shared/src/test/resources/instances/` — Valid and invalid test instances, entry test resources, and an empty `.jsonld` golden placeholder for CycleTest
    - `shared/src/main/resources/` — Schema file placeholder (populated by the bundler)
 
 2. **build.sbt** updates:
@@ -47,18 +47,21 @@ The script will interactively prompt for the following inputs:
 
 3. **schemas.yaml** — New entry with schema paths, instance directories (spec, amf, apb), and module name for the update-schema bundler scripts
 
+4. **amf-client-js.d.ts** — TypeScript typings for the new `Configuration`, `BaseConfiguration`, and `BaseUnitClient` classes
+
 ### In the `amf-core` repo
 
-4. **Spec.scala** — New `case object`, `@JSExport val`, and `unapply` case
-5. **ProfileNames.scala** — New profile object, `val`, `specProfiles` entry, `unapply` and `apply` cases
+5. **Spec.scala** — New `case object`, `@JSExport val`, and `unapply` case
+6. **ProfileNames.scala** — New profile object, `val`, `specProfiles` entry, `unapply` and `apply` cases
 
 ### In the `apb` repo
 
-6. **Classifier.scala** — New classifier constant
-7. **ConfigProvider.scala** — New import, `fromClassifier` case, `fromSpec` case, and error message update
-8. **build.sbt** — New `ProjectRef`/library lazy vals and `.sourceDependency` entries for JVM/JS
-9. **Test resources** — `exchange.json` and `asset.yaml` files for spec, spec-invalid, and api-project test directories
-10. **Test files** — New test cases in `APIProjectClientTest`, `E2EAPBContractClientTest`, and `ForSpecAPBContractClientTest`
+7. **Classifier.scala** — New classifier constant
+8. **ConfigProvider.scala** — New import, `fromClassifier` case, `fromSpec` case, and error message update
+9. **build.sbt** — New `ProjectRef`/library lazy vals and `.sourceDependency` entries for JVM/JS
+10. **TypeScript typings** — `amf.d.ts` and `apb.d.ts` updated with new `Configuration`, `BaseConfiguration`, and `BaseUnitClient` classes
+11. **Test resources** — `exchange.json` and `asset.yaml` files for spec, spec-invalid, and api-project test directories
+12. **Test files** — New test cases in `APIProjectClientTest`, `E2EAPBContractClientTest`, and `ForSpecAPBContractClientTest`
 
 ## ID Entry patterns
 
@@ -78,13 +81,12 @@ The script will interactively prompt for the following inputs:
    sbt mySpecJVM/compile
    ```
 
-3. **Generate the golden `.jsonld` file** for the CycleTest:
+3. **Generate the golden `.jsonld` file** by running the CycleTest (an empty placeholder was created by the script):
    ```bash
    sbt "mySpecJVM/testOnly amf.MySpecCycleTest"
    ```
-   This will fail on the first run. Copy the generated temporary output to `shared/src/test/resources/instances/valid/asset.jsonld` (or the corresponding golden path).
 
-4. **Test**:
+4. **Run all tests**:
    ```bash
    sbt mySpecJVM/test
    ```
