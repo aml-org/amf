@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LLM Metadata Classifier Schema",
+  "$ref": "#/definitions/LLMMetadataClassifier",
+  "definitions": {
+    "LLMMetadataClassifier": {
+      "type": "object",
+      "required": [
+        "platform",
+        "policyRef"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "policyRef": {
+          "type": "object",
+          "required": [
+            "groupId",
+            "assetId",
+            "version"
+          ],
+          "properties": {
+            "groupId": {
+              "type": "string"
+            },
+            "assetId": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        },
+        "provenance": {
+          "$ref": "#/definitions/ProvenanceDefinition"
+        }
+      }
+    },
+    "ProvenanceDefinition": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A urn that identifies the original resource that generated this metadata.",
+          "type": "string",
+          "format": "uri"
+        },
+        "createdAt": {
+          "description": "The timestamp where the original resource was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "description": "The timestamp where the original resource was updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "description": "The version in the target system of this resource",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the resource in the origin system.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The url of the original resource.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

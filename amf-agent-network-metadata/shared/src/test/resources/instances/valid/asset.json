@@ -1,0 +1,26 @@
+{
+  "brokers": [
+    {
+      "protocol": "a2a",
+      "platform": "mule",
+      "kind": "worker",
+      "connections": [
+        {
+          "kind": "agent",
+          "ref": {
+            "groupId": "com.example",
+            "assetId": "other-agent",
+            "version": "1.0.0"
+          }
+        }
+      ]
+    }
+  ],
+  "registry": [
+    {
+      "groupId": "com.example",
+      "assetId": "my-agent",
+      "version": "1.0.0"
+    }
+  ]
+}

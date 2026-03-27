@@ -1,0 +1,73 @@
+{
+  "transport": {
+    "kind": "streamableHttp",
+    "path": "/mcp"
+  },
+  "provider": {
+    "organization": "WeatherAPI Corp",
+    "url": "https://weatherapi.example.com"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false,
+    "logging": true
+  },
+  "tools": [
+    {
+      "name": "get_current_weather",
+      "description": "Get current weather conditions for a specified location",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The city and state, e.g. San Francisco, CA"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "celsius",
+              "fahrenheit"
+            ],
+            "description": "The temperature unit to use. Defaults to celsius."
+          }
+        },
+        "required": [
+          "location"
+        ]
+      }
+    },
+    {
+      "name": "get_weather_forecast",
+      "description": "Get weather forecast for a specified location and number of days",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The city and state, e.g. San Francisco, CA"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Number of forecast days (1-10)"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "celsius",
+              "fahrenheit"
+            ],
+            "description": "The temperature unit to use. Defaults to celsius."
+          }
+        },
+        "required": [
+          "location",
+          "days"
+        ]
+      }
+    }
+  ]
+}

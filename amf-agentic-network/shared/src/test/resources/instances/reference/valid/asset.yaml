@@ -1,0 +1,10 @@
+agentNetwork: 2.0.0
+info:
+  label: Agent Network Reference Example
+  version: v1
+brokers:
+  brokerWithReference:
+    kind: AgentScript
+    implementation: ./agent-script/agent1.agent
+    interfaces:
+      a2a: {}

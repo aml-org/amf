@@ -32,7 +32,7 @@ ThisBuild / resolvers ++= List(
 ThisBuild / credentials ++= Common.credentials()
 
 val npmDeps =
-  List(("ajv", "6.12.6"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.11.3")))
+  List(("ajv", "6.14.0"), ("@aml-org/amf-antlr-parsers", versions("antlr4Version")), (("avro-js", "1.11.3")))
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
@@ -89,11 +89,11 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
       ExclusionRule(organization = "org.apache.commons", name = "commons-lang3")
     ),
     // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
-    libraryDependencies += "org.json"                   % "json"                 % "20250517",
+    libraryDependencies += "org.json"                   % "json"                 % "20251224",
     // Added because of exclusion in org.apache.avro:avro
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.20.1",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core"         % "2.21.1",
     // Added because of exclusion in org.apache.avro:avro and com.github.everit-org.json-schema:org.everit.json.schema
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.20.1",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"     % "2.21.1",
     // Added because of exclusion in com.github.everit-org.json-schema:org.everit.json.schema
     libraryDependencies += "org.apache.commons"         % "commons-collections4" % "4.5.0",
     // Added because of exclusion in org.apache.avro:avro
@@ -291,8 +291,19 @@ lazy val mcp = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-mcp"))
-  .settings(commonSettings)
-  .dependsOn(shapes)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-mcp" / "shared" / "src" / "main" / "resources" / "schema_mcp_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.mcp.internal.spec",
+          objectName    = "MCPSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-mcp-javadoc.jar",
@@ -326,8 +337,19 @@ lazy val agentNetwork = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-network"))
-  .settings(commonSettings)
-  .dependsOn(shapes)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-network" / "shared" / "src" / "main" / "resources" / "schema_agent_network.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentnetwork.internal.spec",
+          objectName    = "AgentNetworkSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-network-javadoc.jar",
@@ -360,8 +382,19 @@ lazy val agentCard = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-card"))
-  .settings(commonSettings)
-  .dependsOn(shapes)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-card" / "shared" / "src" / "main" / "resources" / "schema_agent_card.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentcard.internal.spec",
+          objectName    = "AgentCardSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-agent-card-javadoc.jar",
@@ -394,8 +427,19 @@ lazy val otherCard = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-other-card"))
-  .settings(commonSettings)
-  .dependsOn(shapes)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-other-card" / "shared" / "src" / "main" / "resources" / "schema_other_card.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.othercard.internal.spec",
+          objectName    = "OtherCardSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-other-card-javadoc.jar",
@@ -428,8 +472,19 @@ lazy val agentMetadata = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-agent-metadata"))
-  .settings(commonSettings)
-  .dependsOn(shapes)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-metadata" / "shared" / "src" / "main" / "resources" / "schema_agent_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentmetadata.internal.spec",
+          objectName    = "AgentMetadataSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-metadata-javadoc.jar",
@@ -462,8 +517,19 @@ lazy val llmMetadata = crossProject(JSPlatform, JVMPlatform)
     )
   )
   .in(file("./amf-llm-metadata"))
-  .settings(commonSettings)
-  .dependsOn(shapes)
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-llm-metadata" / "shared" / "src" / "main" / "resources" / "schema_llm_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.llmmetadata.internal.spec",
+          objectName    = "LLMMetadataSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-llm-metadata-javadoc.jar",
@@ -486,58 +552,104 @@ lazy val llmMetadataJS =
     .in(file("./amf-llm-metadata/js"))
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
-/** ********************************************** AMF-AGENT-GRAPH *********************************************
+/** ********************************************** AMF-AGENTIC-NETWORK *********************************************
  */
 
-lazy val agentGraph = crossProject(JSPlatform, JVMPlatform)
+lazy val agenticNetwork = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
-      name := "amf-agent-graph"
+      name := "amf-agentic-network"
     )
   )
-  .in(file("./amf-agent-graph"))
+  .in(file("./amf-agentic-network"))
   .settings(
     commonSettings ++ Seq(
       Compile / sourceGenerators += Def.task {
         SourceGenerators.generateEmbeddedFileSource(
-          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-graph" / "shared" / "src" / "main" / "resources" / "schema_agent_graph.json",
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agentic-network" / "shared" / "src" / "main" / "resources" / "schema_agentic_network.json",
           outputBaseDir = (Compile / sourceManaged).value,
-          packageName   = "amf.agentgraph.internal.spec",
-          objectName    = "AgentGraphSchemaContent"
+          packageName   = "amf.agenticnetwork.internal.spec",
+          objectName    = "AgenticNetworkSchemaContent"
         )
       }.taskValue
     )
   )
-  .dependsOn(shapes)
+  .dependsOn(shapes % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
-    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-graph-javadoc.jar",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agentic-network-javadoc.jar",
     Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-graph.js",
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agentic-network.js",
     npmDependencies ++= npmDeps
   )
-  .settings(AutomaticModuleName.settings("amf.agent-graph"))
+  .settings(AutomaticModuleName.settings("amf.agentic-network"))
 
-lazy val agentGraphJVM =
-  agentGraph.jvm
-    .in(file("./amf-agent-graph/jvm"))
+lazy val agenticNetworkJVM =
+  agenticNetwork.jvm
+    .in(file("./amf-agentic-network/jvm"))
     .disablePlugins(SonarPlugin)
 
-lazy val agentGraphJS =
-  agentGraph.js
-    .in(file("./amf-agent-graph/js"))
+lazy val agenticNetworkJS =
+  agenticNetwork.js
+    .in(file("./amf-agentic-network/js"))
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
+
+
+/** ********************************************** AMF-AGENT-NETWORK-METADATA *********************************************
+  */
+
+lazy val agentNetworkMetadata = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-agent-network-metadata"
+    )
+  )
+  .in(file("./amf-agent-network-metadata"))
+  .settings(
+    commonSettings ++ Seq(
+      Compile / sourceGenerators += Def.task {
+        SourceGenerators.generateEmbeddedFileSource(
+          inputFile     = (ThisBuild / baseDirectory).value / "amf-agent-network-metadata" / "shared" / "src" / "main" / "resources" / "schema_agent_network_metadata.json",
+          outputBaseDir = (Compile / sourceManaged).value,
+          packageName   = "amf.agentnetworkmetadata.internal.spec",
+          objectName    = "AgentNetworkMetadataSchemaContent"
+        )
+      }.taskValue
+    )
+  )
+  .dependsOn(shapes % "compile->compile;test->test")
+  .jvmSettings(
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-network-metadata-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-agent-network-metadata.js",
+    npmDependencies ++= npmDeps
+  )
+  .settings(AutomaticModuleName.settings("amf.agent-network-metadata"))
+
+lazy val agentNetworkMetadataJVM =
+  agentNetworkMetadata.jvm
+    .in(file("./amf-agent-network-metadata/jvm"))
+    .disablePlugins(SonarPlugin)
+
+lazy val agentNetworkMetadataJS =
+  agentNetworkMetadata.js
+    .in(file("./amf-agent-network-metadata/js"))
+    .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
 
 /** ********************************************** AMF CLI *********************************************
   */
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc, graphql, mcp, agentNetwork, agentCard, otherCard, agentMetadata, llmMetadata, agentGraph)
+  .dependsOn(grpc, graphql, mcp, agentNetwork, agentCard, otherCard, agentMetadata, llmMetadata, agenticNetwork, agentNetworkMetadata)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -632,7 +744,8 @@ lazy val adhocCli = (project in file("adhoc-cli"))
   .dependsOn(otherCardJVM)
   .dependsOn(agentMetadataJVM)
   .dependsOn(llmMetadataJVM)
-  .dependsOn(agentGraphJVM)
+  .dependsOn(agenticNetworkJVM)
+  .dependsOn(agentNetworkMetadataJVM)
   .disablePlugins(SonarPlugin, NpmOpsPlugin, ScoverageSbtPlugin)
 
 addCommandAlias(

@@ -1,0 +1,5 @@
+package amf.agenticnetwork.internal.convert
+
+import amf.shapes.internal.convert.ShapesBaseClientConverter
+
+trait AgenticNetworkBaseClientConverter extends AgenticNetworkBaseConverter with ShapesBaseClientConverter

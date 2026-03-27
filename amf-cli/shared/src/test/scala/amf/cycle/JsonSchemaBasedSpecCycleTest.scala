@@ -17,24 +17,24 @@ class JsonSchemaBasedSpecCycleTest extends FileAssertionTest {
   private val config            = MCPConfiguration.MCP()
   private val configWithOptions = MCPConfiguration.MCP().withRenderOptions(renderOptions)
 
-  test("JSON-LD emission from MCP without RenderOption should not emit entities (YAML -> JSON-LD)") {
-    cycle("valid/instance_1.yaml", "cycle/instance-without-entities.jsonld", config)
+  test("JSON-LD emission from MCP without RenderOption should not emit entities (JSON -> JSON-LD)") {
+    cycle("valid/asset.json", "cycle/instance-without-entities.jsonld", config)
   }
 
-  test("JSON-LD emission from MCP with RenderOption should emit entities (YAML -> JSON-LD)") {
-    cycle("valid/instance_1.yaml", "cycle/instance-with-entities.jsonld", configWithOptions)
+  test("JSON-LD emission from MCP with RenderOption should emit entities (JSON -> JSON-LD)") {
+    cycle("valid/asset.json", "cycle/instance-with-entities.jsonld", configWithOptions)
   }
 
-  test("YAML emission from JSON-LD instance should emit correctly  (YAML -> JSON-LD -> YAML)") {
+  test("JSON emission from JSON-LD instance should emit correctly  (JSON -> JSON-LD -> JSON)") {
     cycle(
       "cycle/instance-with-entities.jsonld",
-      "cycle/instance-cycled.jsonld.yaml",
+      "cycle/instance-cycled.jsonld.json",
       configWithOptions,
-      Mimes.`application/yaml`
+      Mimes.`application/json`
     )
   }
 
-  test("JSON-LD emission from JSON-LD instance should emit correctly  (YAML -> JSON-LD -> JSON-LD)") {
+  test("JSON-LD emission from JSON-LD instance should emit correctly  (JSON -> JSON-LD -> JSON-LD)") {
     cycle(
       "cycle/instance-with-entities.jsonld",
       "cycle/instance-cycled.jsonld.jsonld",

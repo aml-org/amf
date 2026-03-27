@@ -44,6 +44,8 @@ abstract class JsonSchemaBasedSpecParsePlugin extends AMFParsePlugin {
     val (unit, _) = SyncJsonLdSchemaParser.parse(specSchema, document, newCtx, document.location)
     unit.processingData.withSourceSpec(spec)
     unit.encodes.headOption.flatMap(_.location()).foreach(unit.withLocation)
+    val references = document.references.map(_.unit)
+    if (references.nonEmpty) unit.withReferences(references)
     unit
   }
 

@@ -1,0 +1,88 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Agent Card"
+    },
+    {
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/",
+      "@type": [
+        "http://a.ml/vocabularies/core#encodes",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#name": "Currency Agent",
+      "http://a.ml/vocabularies/core#protocolVersion": "0.2.5",
+      "http://a.ml/vocabularies/core#description": "Helps with exchanges values between various currencies",
+      "http://a.ml/vocabularies/core#url": "https://sranan-currency-agent-6362adf8c655.herokuapp.com/",
+      "http://a.ml/vocabularies/core#version": "1.0.0",
+      "http://a.ml/vocabularies/core#capabilities": {
+        "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/capabilities"
+      },
+      "http://a.ml/vocabularies/core#defaultInputModes": [
+        "text",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#defaultOutputModes": [
+        "text",
+        "text/plain"
+      ],
+      "http://a.ml/vocabularies/core#skills": [
+        {
+          "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/skills/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/capabilities",
+      "@type": [
+        "http://a.ml/vocabularies/core#capabilities",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#streaming": false,
+      "http://a.ml/vocabularies/core#pushNotifications": false,
+      "http://a.ml/vocabularies/core#stateTransitionHistory": false
+    },
+    {
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/skills/0",
+      "@type": [
+        "http://a.ml/vocabularies/core#skills",
+        "http://a.ml/vocabularies/document#JsonLDObject"
+      ],
+      "http://a.ml/vocabularies/core#id": "convert-currency",
+      "http://a.ml/vocabularies/core#name": "Currency Exchange Rates Tool",
+      "http://a.ml/vocabularies/core#description": "Helps with exchange values between various currencies",
+      "http://a.ml/vocabularies/core#tags": [
+        "currency conversion",
+        "currency exchange",
+        "currency rates"
+      ],
+      "http://a.ml/vocabularies/core#examples": [
+        "What is the exchange rate between USD and EUR?",
+        "How much is 100 USD in EUR?"
+      ]
+    },
+    {
+      "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#JsonLDInstanceDocument",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": [
+        {
+          "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/encodes/"
+        }
+      ],
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-agent-card/shared/src/test/resources/instances/valid/asset.json#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

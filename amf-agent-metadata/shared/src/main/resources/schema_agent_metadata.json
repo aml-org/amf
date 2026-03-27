@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Metadata Specification",
+  "@context": {
+    "@type": [
+      "http://anypoint.com/vocabs/agents#AgentMetadata"
+    ],
+    "@base": "http://anypoint.com/vocabs/agents#"
+  },
+  "$ref": "#/definitions/AgentMetadata",
+  "definitions": {
+    "GAV": {
+      "description": "The asset GAV coordinates.",
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string"
+        },
+        "assetId": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "AgentMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "protocol": {
+          "description": "The protocol that this agents exposes",
+          "type": "string",
+          "enum": [
+            "a2a",
+            "other"
+          ]
+        },
+        "platform": {
+          "description": "The name of the platform this agent run on",
+          "type": "string"
+        },
+        "kind": {
+          "description": "The type of agent for example broker.",
+          "type": "string"
+        },
+        "connections": {
+          "description": "The list of services (MCP, Agents and LLM) that this agent is consuming.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/definitions/AgentLink"
+              },
+              {
+                "$ref": "#/definitions/MCPLink"
+              },
+              {
+                "$ref": "#/definitions/LLMLink"
+              }
+            ]
+          }
+        },
+        "provenance": {
+          "$ref": "#/definitions/ProvenanceDefinition"
+        },
+        "extensions": {
+          "$comment": "This section is not going to be indexed",
+          "additionalProperties": true,
+          "type": "object",
+          "properties": {
+            "agentId": {
+              "type": "string"
+            },
+            "environment": {
+              "description": "The cloud region or geographic zone where the agent runs",
+              "type": "string"
+            },
+            "foundationModel": {
+              "description": "The underlying AI model the agent uses.",
+              "type": "string"
+            },
+            "instruction": {
+              "description": "The agent's system prompt / instruction — what it's been told to do.",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "AgentLink": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents/link#Agent"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents/link#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "ref": {
+          "$ref": "#/definitions/GAV"
+        }
+      }
+    },
+    "MCPLink": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents/link#MCP"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents/link#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "mcp"
+        },
+        "ref": {
+          "$ref": "#/definitions/GAV"
+        },
+        "allowed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "LLMLink": {
+      "@context": {
+        "@type": [
+          "http://anypoint.com/vocabs/agents/link#LLM"
+        ],
+        "@base": "http://anypoint.com/vocabs/agents/link#"
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "llm"
+        },
+        "ref": {
+          "$ref": "#/definitions/GAV"
+        }
+      }
+    },
+    "ProvenanceDefinition": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A urn that identifies the original resource that generated this metadata.",
+          "type": "string",
+          "format": "uri"
+        },
+        "createdAt": {
+          "description": "The timestamp where the original resource was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "description": "The timestamp where the original resource was updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "description": "The version in the target system of this resource",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the resource in the origin system.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The url of the original resource.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
