@@ -38,10 +38,7 @@
         {
           "@id": "file://amf-agent-network-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/brokers/0/connections/0"
         }
-      ],
-      "http://a.ml/vocabularies/core#provenance": {
-        "@id": "file://amf-agent-network-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/brokers/0/provenance"
-      }
+      ]
     },
     {
       "@id": "file://amf-agent-network-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/registry/0",
@@ -64,14 +61,6 @@
         "@id": "file://amf-agent-network-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/brokers/0/connections/0/ref"
       },
       "http://anypoint.com/vocabs/agents/link#kind": "agent"
-    },
-    {
-      "@id": "file://amf-agent-network-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/brokers/0/provenance",
-      "@type": [
-        "http://anypoint.com/vocabs/agents#Provenance",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents/link#kind": "manual"
     },
     {
       "@id": "file://amf-agent-network-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/brokers/0/connections/0/ref",

@@ -92,6 +92,9 @@
         "interfaces"
       ],
       "properties": {
+        "info": {
+          "$ref": "#/definitions/InfoObject"
+        },
         "kind": {
           "type": "string",
           "const": "AgentScript",
@@ -151,7 +154,7 @@
     "InfoObject": {
       "type": "object",
       "properties": {
-        "title": {
+        "label": {
           "type": "string",
           "description": "The human readable short text"
         },
@@ -175,7 +178,7 @@
         {
           "type": "object",
           "required": [
-            "title",
+            "label",
             "version"
           ],
           "properties": {
@@ -295,12 +298,25 @@
     "PolicyBindings": {
       "type": "array",
       "items": {
-        "oneOf": [
+        "anyOf": [
           {
-            "$ref": "#/definitions/PolicyBindingRef"
+            "type": "object",
+            "required": [
+              "ref"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "ref": {
+                "$ref": "#/definitions/PolicyBindingRef"
+              }
+            }
           },
           {
             "type": "object",
+            "required": [
+              "policy"
+            ],
+            "additionalProperties": false,
             "properties": {
               "policy": {
                 "$ref": "#/definitions/PolicyBinding"
