@@ -20,9 +20,10 @@ import amf.shapes.internal.domain.metamodel.jsonldschema.{JsonLDElementModel, Js
 import amf.shapes.internal.spec.jsonldschema.parser.JsonPath
 import org.yaml.model._
 
-class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[String, String] = Map.empty)(implicit
-    ctx: GraphParserContext
-) extends FlattenedGraphParser(startingPoint, overrideAliases) {
+class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[String, String] = Map.empty)(
+    implicit
+    ctx: GraphParserContext)
+    extends FlattenedGraphParser(startingPoint, overrideAliases) {
 
   // This is to avoid register an error when a `findType` miss. I want to process the registered entities in the regular way (e.g.: Document entities) but I will catch the non-existing ones here
   override protected val shouldRegisterMissingTypes: Boolean = false
@@ -53,10 +54,10 @@ class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[
         Some(JsonLDObject(fieldEntries, ann, entityModel, jsonPath).withId(transformedId))
       case None =>
         ctx.eh.violation(
-          UnableToParseNode,
-          transformedId,
-          s"Error parsing JSON-LD node, cannot find ContextEntity for @types $typeIris",
-          map.location
+            UnableToParseNode,
+            transformedId,
+            s"Error parsing JSON-LD node, cannot find ContextEntity for @types $typeIris",
+            map.location
         )
         None
     }
@@ -71,12 +72,13 @@ class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[
 
       map
         .key(propertyIri.iri())
-        .orElse(map.key(compactUriFromContext(propertyIri.iri())))  // iri from JSON-LD could be compacted
+        .orElse(map.key(compactUriFromContext(propertyIri.iri()))) // iri from JSON-LD could be compacted
         .flatMap { entry =>
           traverseJsonLdObjectProperty(entry, propertyIri, propertyValue)
         }
-        .foreach { case (field, value) =>
-          fields.setWithoutId(field, value)
+        .foreach {
+          case (field, value) =>
+            fields.setWithoutId(field, value)
         }
     }
     fields
@@ -98,10 +100,20 @@ class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[
     node.tagType match {
       case YType.Map =>
         val map = node.as[YMap]
-        // All this cases should be JSON-LD links. If not, it is something wrong
+        // If it is a map there are 3 possible cases:
+        // 1. It is a JSON-LD link
+        // 2. It is a typed scalar
+        // 3. It is an error
         if (isReferenceNode(map)) {
           parseReferenceNode(map).flatMap(r => processJsonLdObject(r))
-        } else {
+        }
+        else if (isTypedScalar(map)) {
+          // The existence of @type and @value is checked in `isTypedScalar` method
+          val dataType  = map.key("@type").map(_.value.asScalar.get.value).get.toString
+          val valueNode = map.key("@value").map(_.value).get
+          processJsonLdScalar(valueNode, dataType)
+        }
+        else {
           unexpectedError(iri, node)
           None
         }
@@ -114,6 +126,9 @@ class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[
         None
     }
   }
+
+  private def isTypedScalar(map: YMap): Boolean =
+    map.entries.size == 2 && map.key("@type").isDefined && map.key("@value").isDefined
 
   private def processJsonLdScalar(scalar: YNode, iri: String): Option[JsonLDScalar] = {
     scalar.asScalar.map(s => new JsonLDScalar(s.value, iri))
@@ -160,10 +175,10 @@ class FlattenedJsonLdInstanceParser(startingPoint: String, overrideAliases: Map[
   private def parseReferenceNode(node: YMap): Option[YMap] = retrieveId(node, ctx).flatMap(nodeFromId)
 
   private def unexpectedError(id: String, part: YPart): Unit = ctx.eh.violation(
-    UnableToParseNode,
-    id,
-    s"Unexpected error parsing JSON-LD node",
-    part.location
+      UnableToParseNode,
+      id,
+      s"Unexpected error parsing JSON-LD node",
+      part.location
   )
 }
 

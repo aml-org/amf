@@ -10,6 +10,7 @@
   "$ref": "#/definitions/AgentMetadata",
   "definitions": {
     "GAV": {
+      "description": "The asset GAV coordinates.",
       "type": "object",
       "properties": {
         "groupId": {
@@ -25,9 +26,10 @@
     },
     "AgentMetadata": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "protocol": {
+          "description": "The protocol that this agents exposes",
           "type": "string",
           "enum": [
             "a2a",
@@ -35,12 +37,15 @@
           ]
         },
         "platform": {
+          "description": "The name of the platform this agent run on",
           "type": "string"
         },
         "kind": {
+          "description": "The type of agent for example broker.",
           "type": "string"
         },
         "connections": {
+          "description": "The list of services (MCP, Agents and LLM) that this agent is consuming.",
           "type": "array",
           "items": {
             "type": "object",
@@ -57,74 +62,30 @@
             ]
           }
         },
-        "externalAgentInfo": {
-          "$ref": "#/definitions/ExternalAgentInfo"
-        },
         "provenance": {
-          "@context": {
-            "@type": [
-              "http://anypoint.com/vocabs/agents#Provenance"
-            ],
-            "@base": "http://anypoint.com/vocabs/agents#"
-          },
+          "$ref": "#/definitions/ProvenanceDefinition"
+        },
+        "extensions": {
+          "$comment": "This section is not going to be indexed",
+          "additionalProperties": true,
           "type": "object",
-          "required": [
-            "kind"
-          ],
           "properties": {
-            "kind": {
+            "agentId": {
               "type": "string"
             },
-            "metadata": {
-              "type": "object",
-              "additionalProperties": true
+            "environment": {
+              "description": "The cloud region or geographic zone where the agent runs",
+              "type": "string"
+            },
+            "foundationModel": {
+              "description": "The underlying AI model the agent uses.",
+              "type": "string"
+            },
+            "instruction": {
+              "description": "The agent's system prompt / instruction — what it's been told to do.",
+              "type": "string"
             }
-          },
-          "additionalProperties": false
-        }
-      }
-    },
-    "ExternalAgentInfo": {
-      "@context": {
-        "@type": [
-          "http://anypoint.com/vocabs/agents#ExternalAgentInfo"
-        ],
-        "@base": "http://anypoint.com/vocabs/agents#"
-      },
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "agentId": {
-          "type": "string"
-        },
-        "resourceName": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "version": {
-          "type": "string"
-        },
-        "status": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "environment": {
-          "type": "string"
-        },
-        "foundationModel": {
-          "type": "string"
-        },
-        "instruction": {
-          "type": "string"
+          }
         }
       }
     },
@@ -188,6 +149,39 @@
         },
         "ref": {
           "$ref": "#/definitions/GAV"
+        }
+      }
+    },
+    "ProvenanceDefinition": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A urn that identifies the original resource that generated this metadata.",
+          "type": "string",
+          "format": "uri"
+        },
+        "createdAt": {
+          "description": "The timestamp where the original resource was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "description": "The timestamp where the original resource was updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "description": "The version in the target system of this resource",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the resource in the origin system.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The url of the original resource.",
+          "type": "string"
         }
       }
     }

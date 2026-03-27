@@ -1,6 +1,6 @@
 agentNetwork: "2.0.0"
 info:
-  title: Complete Agentic Network Example
+  label: Complete Agentic Network Example
   summary: A comprehensive agentic network demonstrating all features with local references
   version: 1.0.0
   contact:
@@ -21,7 +21,7 @@ registry:
   agents:
     weather-agent:
       info:
-        title: Weather Agent
+        label: Weather Agent
         description: An agent that provides weather information
         tags:
           - weather
@@ -96,7 +96,7 @@ registry:
 
     mapping-agent:
       info:
-        title: Mapping Agent
+        label: Mapping Agent
         description: An agent that provides mapping and geolocation services
       metadata:
         platform: Bedrock
@@ -120,7 +120,7 @@ registry:
   mcps:
     weather-mcp:
       info:
-        title: Weather MCP Server
+        label: Weather MCP Server
         description: MCP server providing weather data tools
         tags:
           - weather
@@ -154,7 +154,7 @@ registry:
               required:
                 - location
           - name: get_forecast
-            title: Get Weather Forecast
+            label: Get Weather Forecast
             description: Gets a multi-day weather forecast
             inputSchema:
               type: object
@@ -190,7 +190,7 @@ registry:
 
     geocoding-mcp:
       info:
-        title: Geocoding MCP Server
+        label: Geocoding MCP Server
         description: MCP server for geocoding operations
       metadata:
         transport:
@@ -211,7 +211,7 @@ registry:
   llms:
     openai-provider:
       info:
-        title: OpenAI GPT Provider
+        label: OpenAI GPT Provider
         description: OpenAI LLM provider for agent reasoning
         tags:
           - llm

@@ -75,13 +75,23 @@
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance",
       "@type": [
-        "http://anypoint.com/vocabs/agents#Provenance",
+        "http://a.ml/vocabularies/core#provenance",
         "http://a.ml/vocabularies/document#JsonLDObject"
       ],
-      "http://anypoint.com/vocabs/agents/link#kind": "exchange-asset",
-      "http://anypoint.com/vocabs/agents/link#metadata": {
-        "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance/metadata"
-      }
+      "http://a.ml/vocabularies/core#id": "urn:bedrock:123567890",
+      "http://a.ml/vocabularies/core#url": "https://www.google.com/search?q=https://anypoint.mulesoft.com/exchange/f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8/my-cool-agent/1.0.0/pages/summary/",
+      "http://a.ml/vocabularies/core#createdAt": [
+        {
+          "@value": "2023-10-27T10:00:00Z",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      ],
+      "http://a.ml/vocabularies/core#updatedAt": [
+        {
+          "@value": "2025-10-27T10:00:00Z",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      ]
     },
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/connections/0/ref",
@@ -115,15 +125,6 @@
       "http://anypoint.com/vocabs/agents/link#groupId": "com.organization.llms",
       "http://anypoint.com/vocabs/agents/link#assetId": "enterprise-language-model",
       "http://anypoint.com/vocabs/agents/link#version": "2.5-turbo"
-    },
-    {
-      "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json#/encodes/provenance/metadata",
-      "@type": [
-        "http://anypoint.com/vocabs/agents/link#metadata",
-        "http://a.ml/vocabularies/document#JsonLDObject"
-      ],
-      "http://anypoint.com/vocabs/agents/link#assetUrl": "https://www.google.com/search?q=https://anypoint.mulesoft.com/exchange/f8d8c8e8-9f9f-4f4f-8f8f-f8d8c8e8d8f8/my-cool-agent/1.0.0/pages/summary/",
-      "http://anypoint.com/vocabs/agents/link#publishedDate": "2023-10-27T10:00:00Z"
     },
     {
       "@id": "file://amf-agent-metadata/shared/src/test/resources/instances/valid/asset.json",
